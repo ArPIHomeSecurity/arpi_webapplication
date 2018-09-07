@@ -1,0 +1,49 @@
+<div>
+  <mat-table #table [dataSource]="alertHistory">
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <ng-container matColumnDef="arm_type">
+    <mat-header-cell *matHeaderCellDef>Arm type</mat-header-cell>
+    <mat-cell *matCellDef="let alert">
+      <div [ngSwitch]="alert.arm_type">
+        <span *ngSwitchCase="ArmType.AWAY">AWAY</span>
+        <span *ngSwitchCase="ArmType.STAY">STAY</span>
+        <span *ngSwitchCase="ArmType.DISARMED">SABOTAGE</span>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="start_time">
+    <mat-header-cell *matHeaderCellDef>Start time</mat-header-cell>
+    <mat-cell *matCellDef="let alert"> {{alert.start_time}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="end_time">
+    <mat-header-cell *matHeaderCellDef>End time</mat-header-cell>
+    <mat-cell *matCellDef="let alert"> {{alert.end_time}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="sensors">
+    <mat-header-cell *matHeaderCellDef>Sensors</mat-header-cell>
+    <mat-cell *matCellDef="let alert">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Sensor(s)</mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let sensor of alert.sensors">
+          <div *ngIf="sensors && sensorExists(sensor.id); else sensor_doesnt_exists">
+            <a [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}">{{sensor.description}}</a> (Channel: {{sensor.channel}})
+          </div>
+          <ng-template #sensor_doesnt_exists>
+            {{sensor.description}} (Channel: {{sensor.channel}})
+          </ng-template>
+        </div>
+      </mat-expansion-panel>
+    </mat-cell>
+  </ng-container>
+
+  <mat-row *matRowDef="let alert; columns: displayedColumns;" [ngClass]="{'ongoing_alert': !alert.end_time}"></mat-row>
+  </mat-table>
+</div>

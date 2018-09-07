@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Delete user</h1>
+<div mat-dialog-content>
+  <p>Do you want to delete the user?</p>
+  <ul>
+    <li>{{data.name}}</li>
+  </ul>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="true" tabindex="2" color="warn" i18n="@@yes button">Yes</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1" color="primary" i18n="@@cancel button">Cancel</button>
+</div>

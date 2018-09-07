@@ -1,0 +1,78 @@
+<div fxLayout="row" fxLayoutAlign="center"  [fxShow]="email !== null && gsm !== null && subscriptions !== null">
+  <form class="notifications-form" [formGroup]="notificationsForm" (ngSubmit)="onSubmit()"
+      fxLayout="column" fxLayoutAlign="start end" [fxShow]="email !== null" 
+      fxFlex.xl="600px" fxFlex.lg="600px" fxFlex.md="600px" fxFlex.sm="600px" fxFlex.xs="100%">
+    <mat-accordion multi="true">
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Email</mat-panel-title>
+          <mat-panel-description>Email settings for sending notifications</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="smtp_username" placeholder="SMTP user name">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input type="password" matInput formControlName="smtp_password" placeholder="SMTP password">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput formControlName="email_address" placeholder="email address">
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>GSM</mat-panel-title>
+          <mat-panel-description>Mobil settings for sending notifications</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="pin_code"  placeholder="SIM card PIN code">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="phone_number" placeholder="Target phone number">
+        </mat-form-field>
+      </mat-expansion-panel>
+      
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Subscriptions</mat-panel-title>
+          <mat-panel-description>Configure subscriptions</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="mat-table">
+          <div class="mat-header-row">
+            <div class="mat-header-cell">Event</div>
+            <div class="mat-header-cell">Send Email</div>
+            <div class="mat-header-cell">Send SMS</div>
+          </div>
+          <div class="mat-row">
+            <div class="mat-cell">Alert started</div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alert_started_email"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alert_started_sms"></mat-checkbox>
+            </div>
+          </div>
+          <div class="mat-row">
+            <div class="mat-cell">Alert stopped</div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alert_stopped_email"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alert_stopped_sms"></mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </form>
+</div>

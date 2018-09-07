@@ -1,0 +1,50 @@
+<div [fxShow]="sensors !== null">
+  <div *ngIf="sensors && sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
+    <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
+      <mat-card-title ngClass.xs="sensor-title-sm">
+        <div [ngSwitch]="getSensorTypeName(sensor.type_id)" ngClass="sensor-image" ngClass.xs="sensor-image-sm">
+          <img *ngSwitchCase="'Motion'" src="/assets/images/sensor_motion.png"/>
+          <img *ngSwitchCase="'Tamper'" src="/assets/images/sensor_tamper.png"/>
+          <img *ngSwitchCase="'Open'"   src="/assets/images/sensor_open.png"/>
+          <img *ngSwitchCase="'Break'"  src="/assets/images/sensor_break.png"/>
+          <img *ngSwitchDefault src="https://via.placeholder.com/100?text=Unknown"/>
+        </div>
+        <img *ngIf="sensor.alarm==true" src="/assets/images/alarm_bell.png" width="50" height="50"/>
+        {{sensor.description}}
+      </mat-card-title>
+      <mat-card-content layout="row">
+
+        <mat-card-subtitle>
+          <span *ngIf="sensor.enabled; else disabled">
+            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon>Enabled
+          </span>
+          <span [fxShow]="userCanEdit()"> on input channel {{sensor.channel}}</span>
+        </mat-card-subtitle>
+        <ng-template #disabled>
+          <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon>Disabled
+        </ng-template>
+
+        <mat-card-subtitle>Zone: {{getZoneName(sensor.zone_id)}} <button mat-button [routerLink]="['/zone', sensor.zone_id]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button></mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions [fxShow]="userCanEdit()">
+        <button mat-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != MonitoringState.READY"
+          i18n="@@edit button">Edit</button>
+        <button mat-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
+          i18n="@@remove button">Remove</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #no_sensors>
+    <div  ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs">
+      <h1 align="center">No sensors found</h1>
+    </div>
+  </ng-template>
+  
+  <div ngClass.gt-xs="sensor-actions" ngClass.xs="sensor-actions-xs" [fxShow]="userCanEdit()">
+    <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+    <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+    <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+    <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  </div>
+</div>

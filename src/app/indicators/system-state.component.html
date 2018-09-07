@@ -1,0 +1,45 @@
+<mat-chip-list  fxShow fxHide.xs>
+  <div [ngSwitch]="monitoringState">
+    <mat-chip *ngSwitchCase="MonitoringState.STARTUP" class="updating" i18n="@@starting state">Starting up</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.UPDATING_CONFIG" class="updating" i18n="@@updating state">Updating configuration</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.INVALID_CONFIG" class="invalid" i18n="@@invalid state">Invalid configuration</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.SABOTAGE" class="invalid" i18n="@@sabotage state">Sabotage</mat-chip>
+  </div>
+  <div [ngSwitch]="armState">
+    <mat-chip *ngSwitchCase="ArmType.AWAY" class="away" i18n="@@away state">AWAY</mat-chip>
+    <mat-chip *ngSwitchCase="ArmType.STAY" class="stay" i18n="@@stay state">STAY</mat-chip>
+  </div>
+  <div *ngIf="isSensorIndicatorVisible()" [ngSwitch]="sensorAlert">
+    <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state">Sensors</mat-chip>
+    <mat-chip *ngSwitchCase="true" class="alert" i18n="@@sensors state">Sensors</mat-chip>
+  </div>
+  <mat-chip *ngIf="syrenAlert === true" class="alert">
+    <mat-icon mat-list-icon>volume_up</mat-icon>
+  </mat-chip>
+  <mat-chip *ngIf="syrenAlert === false" class="mute">
+    <mat-icon mat-list-icon>volume_mute</mat-icon>
+  </mat-chip>
+</mat-chip-list>
+
+<mat-chip-list fxHide fxShow.xs>
+  <div [ngSwitch]="monitoringState">
+    <mat-chip *ngSwitchCase="MonitoringState.STARTUP" class="updating" i18n="@@starting state short">S</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.UPDATING_CONFIG" class="updating" i18n="@@updating state short">U</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.INVALID_CONFIG" class="invalid" i18n="@@invalid state short">I</mat-chip>
+    <mat-chip *ngSwitchCase="MonitoringState.SABOTAGE" class="invalid" i18n="@@sabotage state short">T</mat-chip>
+  </div>
+  <div [ngSwitch]="armState">
+    <mat-chip *ngSwitchCase="ArmType.AWAY" class="away" i18n="@@away state short">A</mat-chip>
+    <mat-chip *ngSwitchCase="ArmType.STAY" class="stay" i18n="@@stay state short">S</mat-chip>
+  </div>
+  <div [ngSwitch]="sensorAlert">
+    <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state short">S</mat-chip>
+    <mat-chip *ngSwitchCase="true" class="alert" i18n="@@sensors state short">S</mat-chip>
+  </div>
+  <mat-chip *ngIf="syrenAlert === true" class="syren">
+    <mat-icon mat-list-icon>volume_up</mat-icon>
+  </mat-chip>
+  <mat-chip *ngIf="syrenAlert === false" class="mute">
+    <mat-icon mat-list-icon>volume_mute</mat-icon>
+  </mat-chip>
+</mat-chip-list>
