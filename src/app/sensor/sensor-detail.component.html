@@ -21,7 +21,7 @@
     <mat-checkbox formControlName="enabled" color="primary">Enabled</mat-checkbox>
 
     <mat-form-field>
-      <mat-select formControlName="zone_id" placeholder="Zone" (change)="onZoneSelected($event)">
+      <mat-select formControlName="zone_id" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
         <mat-option value="new">New</mat-option>

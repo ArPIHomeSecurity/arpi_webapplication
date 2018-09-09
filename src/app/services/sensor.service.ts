@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -9,117 +9,91 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class SensorService {
   constructor(
-      private http: Http,
-      private authService: AuthenticationService
+    private http: HttpClient,
+    private authService: AuthenticationService
   ) { }
 
 
-  getSensors(onlyAlerting: boolean = false): Observable<Sensor[]> {
+  getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    const params: URLSearchParams = new URLSearchParams();
-    if (onlyAlerting) {
-      params.set('alerting', 'true');
+    const params = new HttpParams();
+    if ( onlyAlerting ) {
+      params.set( 'alerting', 'true' );
     }
 
-    const options = new RequestOptions({headers: headers, params: params});
+    // get sensors from api
+    return this.http.get<Sensor[]>( '/api/sensors/', { headers, params } );
+  }
+
+
+  getSensor( sensorId: number ): Observable<Sensor> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // get sensors from api
-    return this.http.get('/api/sensors/', options)
-      .map((response: Response) => response.json());
+    return this.http.get<Sensor>( '/api/sensor/' + sensorId, { headers } );
   }
 
 
-  getSensor(sensorId: number): Observable<Sensor> {
+  createSensor( sensor: Sensor ): Observable<Sensor> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    // set sensor from api
+    return this.http.post<Sensor>( '/api/sensors/', sensor, { headers } );
+  }
+
+
+  updateSensor( sensor: Sensor ): Observable<Sensor> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    // set sensor from api
+    return this.http.put<Sensor>( '/api/sensor/' + sensor.id, sensor, { headers } );
+  }
+
+  deleteSensor( sensorId: number ): Observable<boolean> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    // set sensor from api
+    return this.http.delete<boolean>( '/api/sensor/' + sensorId, { headers } );
+  }
+
+
+  getAlert( sensorId: number = null ): Observable<boolean> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // get sensors from api
-    return this.http.get('/api/sensor/' + sensorId, options)
-      .map((response: Response) => response.json());
-  }
-
-
-  createSensor(sensor: Sensor): Observable<Sensor> {
-    // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
-
-    // set sensor from api
-    return this.http.post('/api/sensors/', sensor, options)
-      .map((response: Response) => response.json());
-  }
-
-
-  updateSensor(sensor: Sensor): Observable<Sensor> {
-    // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
-
-    // set sensor from api
-    return this.http.put('/api/sensor/' + sensor.id, sensor, options)
-      .map((response: Response) => response.json());
-  }
-  
-  deleteSensor(sensorId: number): Observable<Sensor> {
-    // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
-
-    // set sensor from api
-    return this.http.delete('/api/sensor/' + sensorId, options)
-      .map((response: Response) => response.json());
-  }
-
-
-  getAlert(sensorId: number = null): Observable<boolean> {
-    // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
-
-    // get sensors from api
-    if (sensorId) {
+    if ( sensorId ) {
       const params: URLSearchParams = new URLSearchParams();
-      params.set('sensor_id', sensorId.toString());
-      return this.http.get('/api/sensor/getAlert' + sensorId, options)
-        .map((response: Response) => response.json());
+      params.set( 'sensor_id', sensorId.toString() );
+      return this.http.get<boolean>( '/api/sensor/alert' + sensorId, { headers } );
     }
     else {
-      return this.http.get('/api/sensor/getAlert', options)
-      .map((response: Response) => response.json());
+      return this.http.get<boolean>( '/api/sensor/alert', { headers } );
     }
   }
 
 
   getSensorTypes(): Observable<SensorType[]> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // get sensor types from api
-    return this.http.get('/api/sensortypes', options)
-      .map((response: Response) => response.json());
+    return this.http.get<SensorType[]>( '/api/sensortypes', { headers } );
   }
 
   resetReferences() {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // set sensor from api
-    return this.http.put('/api/sensors/reset-references', null, options)
-      .map((response: Response) => response.json()).subscribe();
+    return this.http.put( '/api/sensors/reset-references', null, { headers } )
+      .map(( response: Response ) => response.json() ).subscribe();
   }
 }
 

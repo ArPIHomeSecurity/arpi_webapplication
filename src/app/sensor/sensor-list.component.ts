@@ -1,14 +1,15 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { SensorDeleteDialog } from './sensor-delete.component';
 import { ArmType, Sensor, SensorType, Zone } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
+import { SensorDeleteDialog } from './sensor-delete.component';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { getMonitoringStateFromString, AuthenticationService, MonitoringService, MonitoringState } from '../services/index';
+import { AuthenticationService, MonitoringService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -48,7 +49,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = getMonitoringStateFromString(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
   }
   
   ngOnDestroy() {
@@ -62,7 +63,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
       this.loader.display(true);
     });
 
-    Observable.forkJoin(
+    forkJoin(
       this.sensorService.getSensors(this.onlyAlerting),
       this.sensorService.getSensorTypes(),
       this.zoneService.getZones())

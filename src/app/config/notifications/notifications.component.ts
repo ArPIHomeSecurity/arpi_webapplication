@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -77,7 +77,7 @@ export class NotificationsComponent implements OnInit {
       this.loader.display(true);
     });
 
-    Observable.forkJoin(
+    forkJoin(
       this.configService.getOption('notifications', 'email'),
       this.configService.getOption('notifications', 'gsm'),
       this.configService.getOption('notifications', 'subscriptions'))

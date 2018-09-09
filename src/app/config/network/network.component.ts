@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -57,8 +57,6 @@ export class NetworkComponent implements OnInit {
   }
 
   updateForm(dyndns: Option, access: Option) {
-    console.log('Dyndns', dyndns);
-    console.log('Access', access);
 
     this.networkForm = this.fb.group({
       dyndns_username: getValue(dyndns.value, 'username'),
@@ -77,7 +75,7 @@ export class NetworkComponent implements OnInit {
       this.loader.display(true);
     });
 
-    Observable.forkJoin(
+    forkJoin(
       this.configService.getOption('network', 'dyndns'),
       this.configService.getOption('network', 'access'))
     .subscribe(results => {

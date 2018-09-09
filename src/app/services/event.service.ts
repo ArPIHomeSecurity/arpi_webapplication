@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -15,7 +14,7 @@ export class EventService {
   socket: any;
   socketConnected$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: Http) {
+  constructor() {
     this.connect();
   }
 

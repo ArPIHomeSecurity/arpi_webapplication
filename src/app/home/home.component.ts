@@ -3,9 +3,10 @@ import { MatSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Rx';
 
-import { ArmType, Alert } from '../models/index';
+import { ArmType, String2ArmType, Alert } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
 import { AlertService, SensorService, EventService } from '../services/index';
-import { MonitoringService, MonitoringState, getMonitoringStateFromString } from '../services/index';
+import { MonitoringService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -22,7 +23,6 @@ export class HomeComponent implements OnInit {
   arm_state: ArmType;
   monitoringState: MonitoringState = MonitoringState.READY;
   sensor_alert: boolean;
-
 
   constructor(
           private snackBar: MatSnackBar,
@@ -47,24 +47,9 @@ export class HomeComponent implements OnInit {
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(arm_state => this.arm_state = arm_state
-    );
+      .subscribe(arm_state => this.arm_state = arm_state);
     this.eventService.listen('arm_state_change')
-      .subscribe(arm_type => {
-         if (arm_type === environment.ARM_DISARM) {
-           this.arm_state = ArmType.DISARMED;
-         }
-         else if (arm_type === environment.ARM_AWAY) {
-           this.arm_state = ArmType.AWAY;
-         }
-         else if (arm_type === environment.ARM_STAY) {
-           this.arm_state = ArmType.STAY;
-         }
-         else {
-           console.error('Unknown arm type!', arm_type);
-         }
-      }
-    );
+      .subscribe(arm_state => this.arm_state = String2ArmType(arm_state));
 
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
@@ -82,7 +67,7 @@ export class HomeComponent implements OnInit {
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = getMonitoringStateFromString(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
   }
 
   arm_changed(event) {

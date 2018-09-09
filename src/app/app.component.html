@@ -49,7 +49,7 @@
         </a>
         <mat-list-item>
           <mat-icon mat-list-icon>language</mat-icon>
-          <mat-select [(value)]="currentLocale" (change)="onLocaleSelected($event)">
+          <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
             <mat-option *ngFor="let locale of locales" [value]="locale.id">{{ locale.name }}</mat-option>
           </mat-select>
         </mat-list-item>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { of } from 'rxjs';
 
 import { ArmType, Alert, AlertSensor, Sensor } from '../models/index';
 import { AlertService, EventService, SensorService } from '../services/index';
@@ -32,14 +32,14 @@ export class AlertListComponent implements OnInit {
   ngOnInit() {
     this.alertService.getAlerts()
       .subscribe(alerts => {
-        this.alertHistory = new AlertHistory(Observable.of(alerts), this.paginator);
+        this.alertHistory = new AlertHistory(of(alerts), this.paginator);
     });
 
     this.eventService.listen('syren_state_change')
       .subscribe(event => {
           this.alertService.getAlerts()
           .subscribe(alerts => {
-            this.alertHistory = new AlertHistory(Observable.of(alerts), this.paginator);
+            this.alertHistory = new AlertHistory(of(alerts), this.paginator);
         });
       }
     );

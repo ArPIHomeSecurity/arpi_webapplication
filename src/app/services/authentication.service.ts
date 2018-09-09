@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -10,24 +10,23 @@ import { EventService } from '../services/event.service';
 export class AuthenticationService {
 
   constructor(
-      private http: Http,
+      private http: HttpClient,
       private eventService: EventService 
   ) { }
 
   login(access_code: string): Observable<boolean> {
-    const headers = new Headers();
-    headers.set('Content-Type', 'application/json');
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post('/api/authenticate', JSON.stringify({access_code: access_code}), {headers: headers})
-      .map((response: Response) => {
+      .map((response) => {
         // login successful if there's a jwt token in the response
-        if (response.json().device_token) {
-          localStorage.setItem('deviceToken', response.json().device_token);
+        if (response['device_token']) {
+          localStorage.setItem('deviceToken', response['device_token']);
         }
-        if (response.json().user_token) {
-          let newUser = JWT(response.json().user_token);
+        if (response['user_token']) {
+          let newUser = JWT(response['user_token']);
           // store user info with jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(newUser));
-          localStorage.setItem('userToken', response.json().user_token);
+          localStorage.setItem('userToken', response['user_token']);
 
           // return true to indicate successful login
           this.eventService.connect();

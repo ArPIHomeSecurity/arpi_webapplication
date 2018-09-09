@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 import { User } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';
@@ -9,76 +8,58 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class UserService {
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private authService: AuthenticationService
   ) { }
 
 
   getUsers(): Observable<User[]> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
     // get users from api
-    return this.http.get('/api/users', options)
-      .map((response: Response) => response.json());
+    return this.http.get<User[]>('/api/users', {headers});
   }
 
 
   getUser(userId: number): Observable<User> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
     // get users from api
-    return this.http.get('/api/user/' + userId, options)
-      .map((response: Response) => response.json());
+    return this.http.get<User>('/api/user/' + userId, {headers});
   }
 
 
   createUser(user: User): Observable<User> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
     // set sensor from api
-    return this.http.post('/api/users', user, options)
-      .map((response: Response) => response.json());
-    }
+    return this.http.post<User>('/api/users', user, {headers});
+  }
 
   updateUser(user: User): Observable<User> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
     // set sensor from api
-    return this.http.put('/api/user/' + user.id, user, options)
-      .map((response: Response) => response.json());
+    return this.http.put<User>('/api/user/' + user.id, user, {headers});
   }
 
-  deleteUser(userId: number): Observable<User> {
+  deleteUser(userId: number): Observable<boolean> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
     // set sensor from api
-    return this.http.delete('/api/user/' + userId, options)
-      .map((response: Response) => response.json());
+    return this.http.delete<boolean>('/api/user/' + userId, {headers});
   }
 
   
-  changeAccessCode(userId: number, acccessCode: string): Observable<User[]> {
+  changeAccessCode(userId: number, acccessCode: string): Observable<boolean> {
     // add authorization header with jwt token
-    const token = this.authService.getToken();
-    const headers = new Headers({'Authorization': 'Bearer ' + token});
-    const options = new RequestOptions({headers: headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
 
-    return this.http.put('/api/user/' + userId, acccessCode, options)
-      .map((response: Response) => response.json());
+    return this.http.put<boolean>('/api/user/' + userId, acccessCode, {headers});
   }
 }

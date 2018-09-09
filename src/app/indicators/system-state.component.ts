@@ -3,8 +3,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
 import { AlertService, EventService, SensorService } from '../services/index';
-import { getMonitoringStateFromString, MonitoringService, MonitoringState } from '../services/index';
+import { MonitoringService } from '../services/index';
 import { ArmType } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
 
 import { environment } from '../../environments/environment';
 
@@ -61,7 +62,7 @@ export class SystemStateComponent implements OnInit {
       }
     );
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = getMonitoringStateFromString(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
     this.eventService.listen('syren_state_change')
       .subscribe(event => {
         this.syrenAlert = event;

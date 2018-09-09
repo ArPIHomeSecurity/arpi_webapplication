@@ -2,10 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,8 +10,9 @@ import { Router } from '@angular/router';
 import { positiveInteger } from '../utils';
 import { SensorDeleteDialog } from './sensor-delete.component';
 import { ArmType, Sensor, SensorType, Zone } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { getMonitoringStateFromString, MonitoringService, MonitoringState } from '../services/index';
+import { MonitoringService } from '../services/index';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
@@ -90,10 +88,10 @@ export class SensorDetailComponent implements OnInit {
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = getMonitoringStateFromString(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
     if (this.sensorId) {
-      Observable.forkJoin(
+      forkJoin(
         this.sensorService.getSensor(this.sensorId),
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
@@ -119,7 +117,7 @@ export class SensorDetailComponent implements OnInit {
       });
     }
     else {
-      Observable.forkJoin(
+      forkJoin(
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
       .subscribe(results => {

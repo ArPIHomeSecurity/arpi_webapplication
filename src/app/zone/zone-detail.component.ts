@@ -3,20 +3,19 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 
+import { ArmType, Sensor, Zone } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
 import { positiveInteger } from '../utils';
 import { ZoneDeleteDialog } from './zone-delete.component';
-import { ArmType, Sensor, Zone } from '../models/index';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { getMonitoringStateFromString, MonitoringService, MonitoringState } from '../services/index';
+import { MonitoringService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -60,7 +59,7 @@ export class ZoneDetailComponent implements OnInit {
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = getMonitoringStateFromString(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
     if (this.zoneId) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -69,7 +68,7 @@ export class ZoneDetailComponent implements OnInit {
         this.loader.display(true);
       });
 
-      Observable.forkJoin(
+      forkJoin(
         this.zoneService.getZone(this.zoneId),
         this.sensorService.getSensors())
       .subscribe(results => {
