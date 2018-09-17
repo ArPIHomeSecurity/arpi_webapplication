@@ -104,16 +104,17 @@ export class ZoneDetailComponent implements OnInit {
     console.log('Zone: ', this.zone);
     let zone = this.prepareSaveZone();
     if (this.zoneId) {
-      this.zoneService.updateZone(zone).subscribe(null,
+      this.zoneService.updateZone(zone).subscribe(
+          _ => this.router.navigate(['/zones']),
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
       );
     }
     else {
-      this.zoneService.createZone(zone).subscribe(null,
+      this.zoneService.createZone(zone).subscribe(
+          _ => this.router.navigate(['/zones']),
           _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
       );
     }
-    this.router.navigate(['/zones']);
   }
 
   onCancel() {
