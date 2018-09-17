@@ -168,29 +168,31 @@ export class SensorDetailComponent implements OnInit {
     let zone = this.prepareZone();
     if (this.new_zone){
       this.zoneService.createZone(zone)
-        .flatMap((zone: any) => {
-          sensor.zone_id = zone.id;
-          if (this.sensor.id != undefined) {
-            return this.sensorService.updateSensor(sensor);
-          }
+        .subscribe(result => {
+            console.log("Zone: ", result);
+            sensor.zone_id = result.id;
+            if (this.sensor.id != undefined) {
+              return this.sensorService.updateSensor(sensor)
+                  .subscribe(_ => this.router.navigate(['/sensors']));
+            }
 
-          return this.sensorService.createSensor(sensor);
-        })
-        .subscribe(result => console.log("Result: ", result),
+            return this.sensorService.createSensor(sensor)
+                .subscribe(_ => this.router.navigate(['/sensors']));
+          },
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
       );
     }
     else {
         if (this.sensor.id) {
-          this.sensorService.updateSensor(sensor).subscribe(null,
+          this.sensorService.updateSensor(sensor).subscribe(
+              _ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION}));
         }
         else {
-          this.sensorService.createSensor(sensor).subscribe(null,
+          this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
         }
     }
-    this.router.navigate(['/sensors']);
   }
 
   onCancel() {
