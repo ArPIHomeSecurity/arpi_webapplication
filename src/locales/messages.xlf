@@ -83,7 +83,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="projectLink" datatype="html">
-        <source>Argus Project on Bitbucket</source>
+        <source>ArPI Home Security</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/app.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -92,7 +92,7 @@
           <context context-type="sourcefile">app/app.component.ts</context>
           <context context-type="linenumber">86</context>
         </context-group>
-        <note priority="1" from="description"> Link to the projects page</note>
+        <note priority="1" from="description">Link to the projects page</note>
         <note priority="1" from="meaning">project link</note>
       </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
