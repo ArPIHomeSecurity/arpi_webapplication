@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
 
-  channel_count: 8,
+  channel_count: 15,
   SNACK_DURATION: 2000,
 
   MONITORING_PORT: 443,
