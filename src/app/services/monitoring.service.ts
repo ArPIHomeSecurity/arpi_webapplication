@@ -70,4 +70,11 @@ export class MonitoringService {
     return this.http.get( '/api/monitoring/state', { headers } )
       .map(( response ) => String2MonitoringState( response['state'] ) );
   }
+  
+  getVersion(): Observable<string> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    return this.http.get( '/api/version', { headers, responseType: 'text' } );
+  }
 }

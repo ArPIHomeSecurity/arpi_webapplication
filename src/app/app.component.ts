@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MediaChange, ObservableMedia } from "@angular/flex-layout";
 import { Subscription } from "rxjs/Subscription";
 
-import { AuthenticationService, LoaderService } from './services/index';
+import { AuthenticationService, LoaderService, MonitoringService } from './services/index';
 
 import { environment } from '../environments/environment';
+import { VERSION } from './version';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +22,14 @@ export class AppComponent implements OnInit {
     {name: 'English', id: 'en'}
   ];
   currentLocale: string;
+  server_version: string;
+  webapplication_version = VERSION;
 
   constructor(
           public media: ObservableMedia,
           private loader: LoaderService,
           private authService: AuthenticationService,
+          private monitoring: MonitoringService,
           private sidenav: ViewContainerRef
   ){
     this.watcher = media.subscribe((change: MediaChange) => {
@@ -46,6 +50,7 @@ export class AppComponent implements OnInit {
     this.loader.status.subscribe(value => {
       this.displayLoader = value;
     });
+    this.monitoring.getVersion().subscribe(version => this.server_version = version);
   }
 
   isLoggedIn() {

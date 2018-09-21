@@ -39,6 +39,10 @@
   flex: 1;
 }
 
+.version {
+  font-size: 10px;
+}
+
 @mixin application-theme($theme) {
   $primary: map-get($theme, primary);
   $warn: map-get($theme, warn);

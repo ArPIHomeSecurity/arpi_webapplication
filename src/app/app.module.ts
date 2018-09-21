@@ -19,7 +19,7 @@ import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from '
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialog } from './zone/index';
 import { UserListComponent, UserDetailComponent, UserDeleteDialog } from './user/index';
 import { SystemStateComponent } from './indicators/system-state.component';
-import { AuthenticationService, AlertService, LoaderService, EventService, SensorService, ZoneService } from './services/index';
+import { AuthenticationService, AlertService, LoaderService, EventService, MonitoringService, SensorService, ZoneService } from './services/index';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component'
 
@@ -106,7 +106,8 @@ import {
     AdminGuard,
     AuthenticationService,
     EventService,
-    LoaderService
+    LoaderService,
+    MonitoringService
   ],
   bootstrap: [AppComponent]
 })

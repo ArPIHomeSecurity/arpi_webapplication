@@ -73,6 +73,10 @@
             <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
           </a>
           <span class="spacer"></span>
+          <div>
+            <div class="version">WebApp {{webapplication_version}}</div>
+            <div class="version">Server {{server_version}}</div>
+          </div>
         </mat-toolbar>
       </div>
     </mat-sidenav-content>
@@ -82,9 +86,13 @@
     <router-outlet></router-outlet>
     <mat-toolbar color="primary">
       <span class="spacer"></span>
-        <a href="https://github.com/arpihomesecurity" target="project">
-          <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
-        </a>
+      <a href="https://github.com/arpihomesecurity" target="project">
+        <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
+      </a>
+      <div>
+        <div class="version">WebApp {{webapplication_version}}</div>
+        <div class="version">Server {{server_version}}</div>
+      </div>
       <span class="spacer"></span>
     </mat-toolbar>
   </ng-template>
