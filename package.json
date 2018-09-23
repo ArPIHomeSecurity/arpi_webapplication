@@ -12,8 +12,8 @@
     "e2e": "ng e2e",
     "translate-hu": "ng xi18n --output-path locales --i18n-locale en && xliffmerge --profile xliffmerge.json en hu",
     "build-development": "ng build --output-path dist-development",
-    "build-default-language": "ng build --aot prod --env=prod --output-path dist-production-$npm_package_default_language --sourcemap=false",
-    "build-translations": "for lang in $npm_package_languages; do ng build --aot -prod --env=prod --output-path=dist-production-$lang --bh /$lang/ --i18n-file=src/locales/messages.$lang.xlf --i18n-format=xlf --locale=$lang --sourcemap=false; done",
+    "build-default-language": "ng build --aot argus --configuration=production --output-path dist-production-$npm_package_default_language --source-map=false",
+    "build-translations": "for lang in $npm_package_languages; do ng build --aot argus --configuration=production --output-path=dist-production-$lang --base-href /$lang/ --i18n-file=src/locales/messages.$lang.xlf --i18n-format=xlf --i18n-locale=$lang --source-map=false; done",
     "build-compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production-$lang/*.js || true && gzip dist-production-$lang/*.css || true; done",
     "build-production": "npm run build-default-language && npm run build-translations && npm run build-compress"
   },
