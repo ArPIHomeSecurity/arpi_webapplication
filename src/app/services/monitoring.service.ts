@@ -42,11 +42,8 @@ export class MonitoringService {
   arm( armtype: ArmType ) {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     const params = new HttpParams().set('type', ArmType2String(armtype));
 
-    console.log("ARm: ", armtype);
-    console.log("Param: ", params);
     this.http.put( '/api/monitoring/arm', null, { headers, params } )
       .subscribe();
   }
