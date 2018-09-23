@@ -101,7 +101,6 @@ export class ZoneDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Zone: ', this.zone);
     let zone = this.prepareSaveZone();
     if (this.zoneId) {
       this.zoneService.updateZone(zone).subscribe(
