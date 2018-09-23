@@ -75,7 +75,8 @@ export class SensorDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (var i = 0; i< environment.channel_count; i++){
+    // channels are numbered 1..15
+    for (var i = 1; i <= environment.channel_count; i++){
       this.channels.push(i);
     }
 
