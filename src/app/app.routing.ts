@@ -5,6 +5,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
 import { LoginComponent } from './login/index';
 import { HomeComponent } from './home/index';
 import { AlertListComponent } from './alert/index';
+import { ClockComponent } from './config/clock/index';
 import { UserListComponent, UserDetailComponent } from './user/index';
 import { SensorListComponent, SensorDetailComponent } from './sensor/index';
 import { ZoneListComponent, ZoneDetailComponent } from './zone/index';
@@ -77,7 +78,12 @@ const appRoutes: Routes = [
     component: NetworkComponent,
     canActivate: [AdminGuard]
   },
-
+  {
+    path: 'config/clock',
+    component: ClockComponent,
+    canActivate: [AdminGuard]
+  },
+  
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
 ];

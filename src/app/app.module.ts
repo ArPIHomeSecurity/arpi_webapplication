@@ -8,11 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TimezonePickerModule } from 'ng2-timezone-selector';
+
 // user authentication
 import { AuthGuard, AdminGuard } from './guards/index';
 import { LoginComponent } from './login/index';
 import { HomeComponent } from './home/index';
 import { AlertListComponent } from './alert/index';
+import { ClockComponent } from './config/clock/index';
 import { NotificationsComponent } from './config/notifications/index';
 import { NetworkComponent } from './config/network/index';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from './sensor/index';
@@ -56,6 +60,7 @@ import {
     ZoneDetailComponent,
     ZoneDeleteDialog,
 
+    ClockComponent,
     NotificationsComponent,
     NetworkComponent,
 
@@ -94,7 +99,11 @@ import {
     MatRadioModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
+    TimezonePickerModule
   ],
   entryComponents: [
     SensorDeleteDialog,

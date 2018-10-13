@@ -38,6 +38,10 @@
           i18n="@@network menu link" [fxShow]="authService.getRole() == 'admin'">
           <mat-icon mat-list-icon>public</mat-icon>Network
         </a>
+        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
+          i18n="@@clock menu link" [fxShow]="authService.getRole() == 'admin'">
+          <mat-icon mat-list-icon>access_time</mat-icon>Clock
+        </a>
         <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
           i18n="@@users menu link" [fxShow]="authService.getRole() == 'admin'">
            <mat-icon mat-list-icon>group</mat-icon>Users

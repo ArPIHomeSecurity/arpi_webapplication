@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 
 import { ArmType, ArmType2String, String2ArmType } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
@@ -42,7 +41,7 @@ export class MonitoringService {
   arm( armtype: ArmType ) {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-    const params = new HttpParams().set('type', ArmType2String(armtype));
+    const params = new HttpParams().set( 'type', ArmType2String( armtype ) );
 
     this.http.put( '/api/monitoring/arm', null, { headers, params } )
       .subscribe();
@@ -67,11 +66,52 @@ export class MonitoringService {
     return this.http.get( '/api/monitoring/state', { headers } )
       .map(( response ) => String2MonitoringState( response['state'] ) );
   }
-  
+
   getVersion(): Observable<string> {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     return this.http.get( '/api/version', { headers, responseType: 'text' } );
   }
+
+  getClock(): Observable<Object> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    return this.http.get<Object>( '/api/clock', { headers } );
+  }
+  
+  synchronizeClock() {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    return this.http.put( '/api/clock/sync', null, { headers } )
+      .catch(( err ) => {
+        console.log( err );
+        return Observable.throw( { description: 'Error Value Emitted' } );
+      } );
+  }
+  
+  changeClock(dateTime, timeZone) {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    let parameters = {}
+    if (timeZone != null) {
+      parameters['timezone'] = timeZone;
+    }
+    if (dateTime != null) {
+      parameters['datetime'] = dateTime;
+    }
+    if (dateTime == null && timeZone == null){
+      return;
+    }
+
+    return this.http.put( '/api/clock', parameters, { headers } )
+      .catch(( err ) => {
+        console.log( err );
+        return Observable.throw( { description: 'Error Value Emitted' } );
+      } );
+  }
 }
+
