@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 
 import { Zone } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';

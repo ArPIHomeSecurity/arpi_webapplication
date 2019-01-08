@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatPaginator } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { ArmType, Alert, AlertSensor, Sensor } from '../models/index';
 import { AlertService, EventService, SensorService } from '../services/index';

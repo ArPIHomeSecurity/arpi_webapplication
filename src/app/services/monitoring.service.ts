@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 
 import { ArmType, ArmType2String, String2ArmType } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
@@ -22,20 +25,20 @@ export class MonitoringService {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    return this.http.get( '/api/monitoring/isAlert', { headers } )
-      .map(( response: HttpResponse<boolean> ) => response.body
-      ).catch(( err: HttpResponse<boolean> ) => {
+    return this.http.get( '/api/monitoring/isAlert', { headers } ).pipe(
+      map(( response: HttpResponse<boolean> ) => response.body
+      ),catchError(( err: HttpResponse<boolean> ) => {
         console.log( err );
-        return Observable.throw( { description: 'Error Value Emitted' } );
-      } );
+        return observableThrowError( { description: 'Error Value Emitted' } );
+      } ),);
   }
 
   getArmState(): Observable<ArmType> {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    return this.http.get<ArmType>( '/api/monitoring/arm', { headers } )
-      .map(( response ) => String2ArmType( response['type'] ) );
+    return this.http.get<ArmType>( '/api/monitoring/arm', { headers } ).pipe(
+      map(( response ) => String2ArmType( response['type'] ) ));
   }
 
   arm( armtype: ArmType ) {
@@ -51,11 +54,11 @@ export class MonitoringService {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    return this.http.put( '/api/monitoring/disarm', null, { headers } )
-      .catch(( err ) => {
+    return this.http.put( '/api/monitoring/disarm', null, { headers } ).pipe(
+      catchError(( err ) => {
         console.log( err );
-        return Observable.throw( { description: 'Error Value Emitted' } );
-      } )
+        return observableThrowError( { description: 'Error Value Emitted' } );
+      } ))
       .subscribe();
   }
 
@@ -63,8 +66,8 @@ export class MonitoringService {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    return this.http.get( '/api/monitoring/state', { headers } )
-      .map(( response ) => String2MonitoringState( response['state'] ) );
+    return this.http.get( '/api/monitoring/state', { headers } ).pipe(
+      map(( response ) => String2MonitoringState( response['state'] ) ));
   }
 
   getVersion(): Observable<string> {
@@ -85,11 +88,11 @@ export class MonitoringService {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    return this.http.put( '/api/clock/sync', null, { headers } )
-      .catch(( err ) => {
+    return this.http.put( '/api/clock/sync', null, { headers } ).pipe(
+      catchError(( err ) => {
         console.log( err );
-        return Observable.throw( { description: 'Error Value Emitted' } );
-      } );
+        return observableThrowError( { description: 'Error Value Emitted' } );
+      } ));
   }
   
   changeClock(dateTime, timeZone) {
@@ -107,11 +110,11 @@ export class MonitoringService {
       return;
     }
 
-    return this.http.put( '/api/clock', parameters, { headers } )
-      .catch(( err ) => {
+    return this.http.put( '/api/clock', parameters, { headers } ).pipe(
+      catchError(( err ) => {
         console.log( err );
-        return Observable.throw( { description: 'Error Value Emitted' } );
-      } );
+        return observableThrowError( { description: 'Error Value Emitted' } );
+      } ));
   }
 }
 

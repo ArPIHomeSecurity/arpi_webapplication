@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 

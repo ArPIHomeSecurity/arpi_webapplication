@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 
 import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
@@ -16,8 +18,8 @@ export class AuthenticationService {
 
   login(access_code: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post('/api/authenticate', JSON.stringify({access_code: access_code}), {headers: headers})
-      .map((response) => {
+    return this.http.post('/api/authenticate', JSON.stringify({access_code: access_code}), {headers: headers}).pipe(
+      map((response) => {
         // login successful if there's a jwt token in the response
         if (response['device_token']) {
           localStorage.setItem('deviceToken', response['device_token']);
@@ -35,7 +37,7 @@ export class AuthenticationService {
           // return false to indicate failed login
           return false;
         }
-      });
+      }));
   }
 
   logout(): void {

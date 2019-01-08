@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 

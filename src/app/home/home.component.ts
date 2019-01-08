@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 import { ArmType, String2ArmType, Alert } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';

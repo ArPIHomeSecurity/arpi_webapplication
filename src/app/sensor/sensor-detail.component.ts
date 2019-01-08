@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

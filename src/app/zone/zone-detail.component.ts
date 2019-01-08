@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
