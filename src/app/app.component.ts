@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { MediaChange, ObservableMedia } from "@angular/flex-layout";
-import { Subscription } from "rxjs";
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Subscription } from 'rxjs';
 
 import { AuthenticationService, LoaderService, MonitoringService } from './services/index';
 
@@ -32,9 +32,9 @@ export class AppComponent implements OnInit {
           private authService: AuthenticationService,
           private monitoring: MonitoringService,
           private sidenav: ViewContainerRef
-  ){
+  ) {
     this.watcher = media.subscribe((change: MediaChange) => {
-      this.small_screen = (change.mqAlias == 'xs' || change.mqAlias == 'sm');
+      this.small_screen = (change.mqAlias === 'xs' || change.mqAlias === 'sm');
     });
 
     this.currentLocale = localStorage.getItem('localeId');
@@ -45,7 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.displayLoader = false;
     this.small_screen = (this.media.isActive('xs') || this.media.isActive('sm'));
     this.loader.status.subscribe(value => {
@@ -59,7 +58,7 @@ export class AppComponent implements OnInit {
   }
 
   getUserName() {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     return currentUser ? currentUser.name : '';
   }
 
@@ -67,26 +66,24 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav') set setSidenav(sidenav: ViewContainerRef) {
       this.sidenav = sidenav;
   }
-  
+
   onLocaleSelected(event) {
-    let current_locale = localStorage.getItem('localeId');
-    console.log("Change locale: ", current_locale, "=>", event.value);
+    const current_locale = localStorage.getItem('localeId');
+    console.log('Change locale: ', current_locale, '=>', event.value);
 
     localStorage.setItem('localeId', event.value);
     if (environment.production) {
-      let new_locale = event.value == environment.DEFAULT_LANGUAGE ? "" : event.value;
+      const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
 
-      const languagePattern = new RegExp("^/(" + environment.LANGUAGES.split(' ').join('|') + ")/");
+      const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
       if (languagePattern.test(location.pathname)) {
         // change the language
-        location.pathname = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''))
-      }
-      else {
+        location.pathname = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''));
+      } else {
         // if the current language isn't the default, add the language
         location.pathname = '/' + new_locale + location.pathname;
       }
-    }
-    else {
+    } else {
       location.reload();
     }
   }

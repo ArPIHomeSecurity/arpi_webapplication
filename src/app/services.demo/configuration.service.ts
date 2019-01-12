@@ -14,20 +14,14 @@ export class ConfigurationService {
 
 
   getOption( option: string, section: string ): Observable<Option> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get configuration option from api
-    return this.http.get<Option>( '/api/config/' + option + '/' + section, { headers } );
+    return this.http.get<Option>( '/api/config/' + option + '/' + section, { } );
   }
 
 
   setOption( option: string, section: string, value: any ) {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get configuration option from api
-    return this.http.put( '/api/config/' + option + '/' + section, value, { headers } )
+    return this.http.put( '/api/config/' + option + '/' + section, value, { } )
       .subscribe();
   }
 }

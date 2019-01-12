@@ -21,7 +21,7 @@ const scheduleMicrotask = Promise.resolve(null);
 
 export class UserListComponent implements OnInit, OnDestroy {
   users: User[] = null;
-  ArmType:any = ArmType;
+  ArmType: any = ArmType;
   armState: ArmType;
   isDestroyed = false;
 
@@ -45,14 +45,11 @@ export class UserListComponent implements OnInit, OnDestroy {
       .subscribe(arm_type => {
         if (arm_type === environment.ARM_DISARM) {
           this.armState = ArmType.DISARMED;
-        }
-        else if (arm_type === environment.ARM_AWAY) {
+        } else if (arm_type === environment.ARM_AWAY) {
           this.armState = ArmType.AWAY;
-        }
-        else if (arm_type === environment.ARM_STAY) {
+        } else if (arm_type === environment.ARM_STAY) {
           this.armState = ArmType.STAY;
-        }
-        else {
+        } else {
           console.error('Unknown arm type!', arm_type);
         }
       }
@@ -80,16 +77,16 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(userId: number) {
-    let dialogRef = this.dialog.open(UserDeleteDialog, {
+    const dialogRef = this.dialog.open(UserDeleteDialog, {
       width: '250px',
       data: {
-        name: this.users.find(x => x.id == userId).name,
+        name: this.users.find(x => x.id === userId).name,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(userId).subscribe(result => this.updateComponent(),
+        this.userService.deleteUser(userId).subscribe(_ => this.updateComponent(),
             _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
         );
       }
