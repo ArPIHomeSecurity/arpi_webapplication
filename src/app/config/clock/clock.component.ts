@@ -15,7 +15,7 @@ const scheduleMicrotask = Promise.resolve( null );
   moduleId: module.id,
   templateUrl: 'clock.component.html',
   styleUrls: ['clock.component.scss'],
-  providers: [MonitoringService]
+  providers: []
 } )
 
 

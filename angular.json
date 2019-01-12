@@ -55,6 +55,46 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "demo": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.demo.ts"
+                },
+                {
+                  "replace": "src/app/services/alert.service.ts",
+                  "with": "src/app/services.demo/alert.service.ts"
+                },
+                {
+                  "replace": "src/app/services/authentication.service.ts",
+                  "with": "src/app/services.demo/authentication.service.ts"
+                },
+                {
+                  "replace": "src/app/services/configuration.service.ts",
+                  "with": "src/app/services.demo/configuration.service.ts"
+                },
+                {
+                  "replace": "src/app/services/event.service.ts",
+                  "with": "src/app/services.demo/event.service.ts"
+                },
+                {
+                  "replace": "src/app/services/monitoring.service.ts",
+                  "with": "src/app/services.demo/monitoring.service.ts"
+                },
+                {
+                  "replace": "src/app/services/sensor.service.ts",
+                  "with": "src/app/services.demo/sensor.service.ts"
+                },
+                {
+                  "replace": "src/app/services/user.service.ts",
+                  "with": "src/app/services.demo/user.service.ts"
+                },
+                {
+                  "replace": "src/app/services/zone.service.ts",
+                  "with": "src/app/services.demo/zone.service.ts"
+                }
+              ]
             }
           }
         },
@@ -66,6 +106,9 @@
           "configurations": {
             "production": {
               "browserTarget": "argus:build:production"
+            },
+            "demo": {
+              "browserTarget": "argus:build:demo"
             }
           }
         },

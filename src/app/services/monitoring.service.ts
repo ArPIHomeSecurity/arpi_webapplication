@@ -27,10 +27,10 @@ export class MonitoringService {
 
     return this.http.get( '/api/monitoring/isAlert', { headers } ).pipe(
       map(( response: HttpResponse<boolean> ) => response.body
-      ),catchError(( err: HttpResponse<boolean> ) => {
+      ), catchError(( err: HttpResponse<boolean> ) => {
         console.log( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
-      } ),);
+      } ), );
   }
 
   getArmState(): Observable<ArmType> {
@@ -83,7 +83,7 @@ export class MonitoringService {
 
     return this.http.get<Object>( '/api/clock', { headers } );
   }
-  
+
   synchronizeClock() {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
@@ -94,19 +94,19 @@ export class MonitoringService {
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ));
   }
-  
+
   changeClock(dateTime, timeZone) {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
-    let parameters = {}
+    const parameters = { };
     if (timeZone != null) {
       parameters['timezone'] = timeZone;
     }
     if (dateTime != null) {
       parameters['datetime'] = dateTime;
     }
-    if (dateTime == null && timeZone == null){
+    if (dateTime == null && timeZone == null) {
       return;
     }
 
@@ -117,4 +117,3 @@ export class MonitoringService {
       } ));
   }
 }
-

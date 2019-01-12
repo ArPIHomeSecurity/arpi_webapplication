@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
   selector: 'system-state',
   templateUrl: './system-state.component.html',
   styleUrls: ['./system-state.component.scss'],
-  providers: [AlertService, MonitoringService, SensorService]
+  providers: []
 })
 export class SystemStateComponent implements OnInit {
   MonitoringState:any = MonitoringState;

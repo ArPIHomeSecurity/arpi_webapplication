@@ -12,7 +12,7 @@ import { AlertService, EventService, SensorService } from '../services/index';
   moduleId: module.id,
   templateUrl: 'alert-list.component.html',
   styleUrls: ['alert-list.component.scss'],
-  providers: [AlertService, SensorService]
+  providers: []
 })
 export class AlertListComponent implements OnInit {
   ArmType:any = ArmType;

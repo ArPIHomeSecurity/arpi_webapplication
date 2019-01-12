@@ -55,7 +55,6 @@ export class UserService {
     return this.http.delete<boolean>('/api/user/' + userId, {headers});
   }
 
-  
   changeAccessCode(userId: number, acccessCode: string): Observable<boolean> {
     // add authorization header with jwt token
     const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});

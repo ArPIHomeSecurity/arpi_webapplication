@@ -2,28 +2,24 @@
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 import { ArmType, Alert, String2ArmType } from '../models/index';
-import { AuthenticationService } from '../services/authentication.service';
 import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AlertService {
 
+  alerts: Alert[] = [];
   constructor(
-    private http: HttpClient,
-    private authService: AuthenticationService
+    private http: HttpClient
   ) { }
 
   getAlerts(): Observable<Alert[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
     // hack: converting arm_type field from string to ArmType
-    return this.http.get<Alert[]>( '/api/alerts', { headers } ).pipe(
+    return this.http.get<Alert[]>( '/api/alerts', { } ).pipe(
       map(( rawAlerts: Object[] ) => {
         for ( const rawAlert of rawAlerts ) {
           rawAlert['arm_type'] = String2ArmType( rawAlert['arm_type'] );
@@ -34,10 +30,7 @@ export class AlertService {
 
 
   getAlert(): Observable<Alert> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
-    return this.http.get<Alert>( '/api/alert', { headers } );
+    return of(null);
   }
 }

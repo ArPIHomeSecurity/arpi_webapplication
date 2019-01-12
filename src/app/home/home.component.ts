@@ -14,11 +14,11 @@ import { environment } from '../../environments/environment';
   moduleId: module.id,
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
-  providers: [AlertService, SensorService, MonitoringService]
+  providers: []
 })
 
 export class HomeComponent implements OnInit {
-  ArmType:any = ArmType;
+  ArmType: any = ArmType;
   alert: Alert;
   arm_state: ArmType;
   monitoringState: MonitoringState = MonitoringState.READY;
@@ -71,23 +71,22 @@ export class HomeComponent implements OnInit {
   }
 
   arm_changed(event) {
-    if (event.value === "AWAY") {
+    if (event.value === 'AWAY') {
       this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
       this.monitoringService.arm(ArmType.AWAY);
-    } else if (event.value === "STAY") {
+    } else if (event.value === 'STAY') {
       this.monitoringService.arm(ArmType.STAY);
       this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
-    }
-    else if (event.value === "DISARMED") {
+    } else if (event.value === 'DISARMED') {
         this.snackBar.open('Disarmed', null, {duration: environment.SNACK_DURATION});
         this.monitoringService.disarm();
       }
   }
-  
-  arm_disabled(){
-    return this.sensor_alert || 
-      this.arm_state != ArmType.DISARMED || 
-      this.monitoringState != MonitoringState.READY ||
-      this.monitoringState == MonitoringState.READY && this.alert;
+
+  arm_disabled() {
+    return this.sensor_alert ||
+      this.arm_state !== ArmType.DISARMED ||
+      this.monitoringState !== MonitoringState.READY ||
+      this.monitoringState === MonitoringState.READY && this.alert;
   }
 }

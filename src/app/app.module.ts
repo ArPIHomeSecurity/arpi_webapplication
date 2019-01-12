@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
@@ -23,9 +23,18 @@ import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from '
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialog } from './zone/index';
 import { UserListComponent, UserDetailComponent, UserDeleteDialog } from './user/index';
 import { SystemStateComponent } from './indicators/system-state.component';
-import { AuthenticationService, AlertService, LoaderService, EventService, MonitoringService, SensorService, ZoneService } from './services/index';
+import {
+  AlertService,
+  AuthenticationService,
+  EventService,
+  LoaderService,
+  MonitoringService,
+  SensorService,
+  ZoneService,
+  UserService
+} from './services/index';
 import { routing } from './app.routing';
-import { PageNotFoundComponent } from './page-not-found.component'
+import { PageNotFoundComponent } from './page-not-found.component';
 
 // material components
 import {
@@ -48,6 +57,7 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { ConfigurationService } from './services.demo/configuration.service';
 
 
 @NgModule({
@@ -66,7 +76,7 @@ import {
 
     UserListComponent,
     UserDetailComponent,
-    UserDeleteDialog, 
+    UserDeleteDialog,
 
     SensorListComponent,
     SensorDetailComponent,
@@ -101,7 +111,7 @@ import {
     MatDialogModule,
     MatProgressSpinnerModule,
 
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TimezonePickerModule
   ],
@@ -111,12 +121,19 @@ import {
     ZoneDeleteDialog
   ],
   providers: [
+    AlertService,
     AuthGuard,
     AdminGuard,
+
+    AlertService,
     AuthenticationService,
+    ConfigurationService,
     EventService,
     LoaderService,
-    MonitoringService
+    MonitoringService,
+    SensorService,
+    UserService,
+    ZoneService
   ],
   bootstrap: [AppComponent]
 })

@@ -41,7 +41,7 @@ class SensorInfo {
   moduleId: module.id,
   templateUrl: './sensor-detail.component.html',
   styleUrls: ['sensor-detail.component.scss'],
-  providers: [MonitoringService, SensorService, ZoneService]
+  providers: []
 })
 export class SensorDetailComponent implements OnInit {
   sensorId: number;
@@ -51,8 +51,8 @@ export class SensorDetailComponent implements OnInit {
   sensorTypes: SensorType [] = [];
   sensorForm: FormGroup;
   zoneForm: FormGroup;
-  new_zone : boolean = false;
-  MonitoringState:any = MonitoringState;
+  new_zone = false;
+  MonitoringState = MonitoringState;
   monitoringState: MonitoringState;
 
   constructor(
@@ -75,7 +75,7 @@ export class SensorDetailComponent implements OnInit {
 
   ngOnInit() {
     // channels are numbered 1..15
-    for (var i = 1; i <= environment.channel_count; i++){
+    for (let i = 1; i <= environment.channel_count; i++){
       this.channels.push(i);
     }
 
@@ -97,7 +97,7 @@ export class SensorDetailComponent implements OnInit {
         this.sensorService.getSensorTypes())
       .subscribe(results => {
           this.sensor = results[0];
-          let info = {
+          const info = {
             channel: this.sensor.channel,
             type_id: this.sensor.type_id,
             zone_id: this.sensor.zone_id,
@@ -115,8 +115,7 @@ export class SensorDetailComponent implements OnInit {
           this.sensorTypes = results[2];
           this.loader.display(false);
       });
-    }
-    else {
+    } else {
       forkJoin(
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
@@ -125,7 +124,7 @@ export class SensorDetailComponent implements OnInit {
         this.sensorTypes = results[1];
 
         this.sensor = new Sensor;
-        let info = {
+        const info = {
           channel: this.sensor.channel,
           type_id: this.sensor.type_id,
           zone_id: this.sensor.zone_id,
@@ -147,7 +146,8 @@ export class SensorDetailComponent implements OnInit {
     this.zoneForm =  this.fb.group({
       zone_name: sensor.zone_name,
       disarmed_alert: sensor.disarmed_delay !== null,
-      disarmed_delay: new FormControl(sensor.disarmed_delay, sensor.disarmed_delay !== null ? [Validators.required, positiveInteger()] : null),
+      disarmed_delay:
+        new FormControl(sensor.disarmed_delay, sensor.disarmed_delay !== null ? [Validators.required, positiveInteger()] : null),
       away_armed_alert: sensor.away_delay !== null,
       away_delay: new FormControl(sensor.away_delay, sensor.away_delay !== null ? [Validators.required, positiveInteger()] : null),
       stay_armed_alert: sensor.stay_delay !== null,
@@ -164,31 +164,29 @@ export class SensorDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    let sensor = this.prepareSensor();
-    let zone = this.prepareZone();
-    if (this.new_zone){
+    const sensor = this.prepareSensor();
+    const zone = this.prepareZone();
+    if (this.new_zone) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            console.log("Zone: ", result);
+            console.log('Zone: ', result);
             sensor.zone_id = result.id;
-            if (this.sensor.id != undefined) {
+            if (this.sensor.id !== undefined) {
               return this.sensorService.updateSensor(sensor)
                   .subscribe(_ => this.router.navigate(['/sensors']));
             }
 
             return this.sensorService.createSensor(sensor)
-                .subscribe(_ => this.router.navigate(['/sensors']));
+                .subscribe(_ => {console.log('Sensor: ', result); this.router.navigate(['/sensors']); });
           },
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
       );
-    }
-    else {
+    } else {
         if (this.sensor.id) {
           this.sensorService.updateSensor(sensor).subscribe(
               _ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION}));
-        }
-        else {
+        } else {
           this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
         }
@@ -228,7 +226,7 @@ export class SensorDetailComponent implements OnInit {
   }
 
   onZoneSelected(event) {
-    this.new_zone = (event.value === "new");
+    this.new_zone = (event.value === 'new');
 
     const controls = this.zoneForm.controls;
     if (this.new_zone) {
@@ -236,8 +234,7 @@ export class SensorDetailComponent implements OnInit {
       controls['away_delay'].setValidators([Validators.required, positiveInteger()]);
       controls['stay_delay'].setValidators([Validators.required, positiveInteger()]);
       controls['zone_name'].setValidators(Validators.required);
-    }
-    else {
+    } else {
       controls['zone_name'].setValidators(null);
       controls['disarmed_delay'].setValidators(null);
       controls['away_delay'].setValidators(null);
@@ -250,8 +247,7 @@ export class SensorDetailComponent implements OnInit {
     const controls = this.zoneForm.controls;
     if (event.checked) {
       controls[delay_name].setValidators([Validators.required, positiveInteger()]);
-    }
-    else {
+    } else {
       controls[delay_name].setValidators(null);
     }
 
@@ -259,7 +255,7 @@ export class SensorDetailComponent implements OnInit {
   }
 
   openDeleteDialog(sensorId: number) {
-    let dialogRef = this.dialog.open(SensorDeleteDialog, {
+    const dialogRef = this.dialog.open(SensorDeleteDialog, {
       width: '250px',
       data: {
         description: this.sensor.description,
@@ -270,13 +266,12 @@ export class SensorDetailComponent implements OnInit {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId)
-            .subscribe(result => {
+            .subscribe(_ => {
               this.router.navigate(['/sensors'])},
               _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
-        }
-        else {
-          this.snackBar.open("Can't delete sensor!", null, {duration: environment.SNACK_DURATION});
+        } else {
+          this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});
         }
       }
     });

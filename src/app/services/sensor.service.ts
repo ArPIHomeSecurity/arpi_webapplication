@@ -74,8 +74,7 @@ export class SensorService {
       const params: URLSearchParams = new URLSearchParams();
       params.set( 'sensor_id', sensorId.toString() );
       return this.http.get<boolean>( '/api/sensor/alert' + sensorId, { headers } );
-    }
-    else {
+    } else {
       return this.http.get<boolean>( '/api/sensor/alert', { headers } );
     }
   }

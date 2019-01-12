@@ -9,7 +9,10 @@
     <mat-sidenav #sidenav [opened]="!small_screen" [mode]="small_screen ? 'over': 'side'" disableClose>
       <!-- sidenav content -->
       <div style="text-align:center; margin:15px 0px">
-        <img src="/assets/images/argus-eye-64.jpg">
+        <img src="assets/images/argus-eye-64.jpg">
+      </div>
+      <div *ngIf="demo">
+        DEMO
       </div>
 
       <mat-nav-list>

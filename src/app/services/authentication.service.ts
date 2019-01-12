@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   constructor(
       private http: HttpClient,
-      private eventService: EventService 
+      private eventService: EventService
   ) { }
 
   login(access_code: string): Observable<boolean> {
@@ -25,13 +25,15 @@ export class AuthenticationService {
           localStorage.setItem('deviceToken', response['device_token']);
         }
         if (response['user_token']) {
-          let newUser = JWT(response['user_token']);
+          const newUser = JWT(response['user_token']);
           // store user info with jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(newUser));
           localStorage.setItem('userToken', response['user_token']);
 
-          // return true to indicate successful login
+          // TODO: ???
           this.eventService.connect();
+
+          // return true to indicate successful login
           return true;
         } else {
           // return false to indicate failed login
@@ -51,17 +53,16 @@ export class AuthenticationService {
   }
 
   getRole(): string {
-    let userToken = localStorage.getItem('userToken');
+    const userToken = localStorage.getItem('userToken');
     if (userToken) {
       return JWT(userToken)['role'];
     }
   }
 
-  getToken() : string {
+  getToken(): string {
     if (localStorage.getItem('userToken')) {
       return localStorage.getItem('userToken');
-    }
-    else if (localStorage.getItem('deviceToken')) {
+    } else if (localStorage.getItem('deviceToken')) {
       return localStorage.getItem('deviceToken');
     }
   }

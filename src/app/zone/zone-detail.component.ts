@@ -25,7 +25,7 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: './zone-detail.component.html',
   styleUrls: ['zone-detail.component.scss'],
-  providers: [MonitoringService, SensorService, ZoneService]
+  providers: []
 })
 export class ZoneDetailComponent implements OnInit {
   zoneId: number;
