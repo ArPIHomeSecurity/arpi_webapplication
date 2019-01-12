@@ -46,5 +46,3 @@ Thumbs.db
 /server/__pycache__/
 /migrations
 /.directory
-
-/src/app/version.ts
