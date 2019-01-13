@@ -494,7 +494,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-viewport\">\n  <mat-toolbar color=\"primary\">\n    <button *ngIf=\"isLoggedIn()\" type=\"button\" mat-button (click)=\"sidenav.toggle()\" [fxShow]=\"small_screen\"><mat-icon>menu</mat-icon></button>\n    <span class=\"spacer\"></span>\n    <system-state></system-state>\n  </mat-toolbar>\n\n  <mat-sidenav-container *ngIf=\"isLoggedIn(); else not_loggedin\" (backdropClick)=\"sidenav.close()\">\n    <mat-sidenav #sidenav [opened]=\"!small_screen\" [mode]=\"small_screen ? 'over': 'side'\" disableClose>\n      <!-- sidenav content -->\n      <div style=\"text-align:center; margin:15px 0px\">\n        <img src=\"assets/images/argus-eye-64.jpg\">\n      </div>\n      <div *ngIf=\"demo\">\n        DEMO\n      </div>\n\n      <mat-nav-list>\n        <a mat-list-item routerLink=\"/\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\" \n          i18n=\"@@home menu link\">\n          <mat-icon mat-list-icon>home</mat-icon>Home\n        </a>\n        <a mat-list-item routerLink=\"/alerts\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@alert history menu link\">\n          <mat-icon mat-list-icon>history</mat-icon>Alert history\n        </a>\n        <h3 mat-subheader i18n=\"Settings menu title\">Settings</h3>\n        <a mat-list-item routerLink=\"/zones\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n           i18n=\"@@zone menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>tab</mat-icon>Zones\n        </a>\n        <a mat-list-item routerLink=\"/sensors\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@sensors menu link\">\n          <mat-icon mat-list-icon>input</mat-icon>Sensors\n        </a>\n        <a mat-list-item routerLink=\"/config/notifications\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@notifications menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>send</mat-icon>Notifications\n        </a>\n        <a mat-list-item routerLink=\"/config/network\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@network menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>public</mat-icon>Network\n        </a>\n        <a mat-list-item routerLink=\"/config/clock\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@clock menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>access_time</mat-icon>Clock\n        </a>\n        <a mat-list-item routerLink=\"/users\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@users menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n           <mat-icon mat-list-icon>group</mat-icon>Users\n        </a>\n        <mat-divider></mat-divider>\n        <a mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@logout menu link\">\n          <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})\n        </a>\n        <mat-list-item>\n          <mat-icon mat-list-icon>language</mat-icon>\n          <mat-select [(value)]=\"currentLocale\" (selectionChange)=\"onLocaleSelected($event)\">\n            <mat-option *ngFor=\"let locale of locales\" [value]=\"locale.id\">{{ locale.name }}</mat-option>\n          </mat-select>\n        </mat-list-item>\n      </mat-nav-list>\n    </mat-sidenav>\n\n    <mat-sidenav-content>\n      <!-- AJAX loading spinner trigerred by the loader service -->\n      <mat-progress-spinner class=\"ajax-loader\" color=\"primary\" mode=\"indeterminate\" [fxShow]=\"displayLoader\"></mat-progress-spinner>\n\n      <!-- main app container -->\n      <div class=\"page-wrapper\">\n        <div class=\"page\">\n          <router-outlet></router-outlet>\n        </div>\n  \n        <!-- footer -->\n        <mat-toolbar color=\"primary\">\n          <span class=\"spacer\"></span>\n          <a href=\"https://github.com/arpihomesecurity\" target=\"project\">\n            <button mat-button color=\"accent\" i18n=\"project link|Link to the projects page@@projectLink\">ArPi Home Security</button>\n          </a>\n          <span class=\"spacer\"></span>\n          <div>\n            <div class=\"version\">WebApp {{webapplication_version}}</div>\n            <div class=\"version\">Server {{server_version}}</div>\n          </div>\n        </mat-toolbar>\n      </div>\n    </mat-sidenav-content>\n  </mat-sidenav-container>\n\n  <ng-template #not_loggedin>\n    <router-outlet></router-outlet>\n    <mat-toolbar color=\"primary\">\n      <span class=\"spacer\"></span>\n      <a href=\"https://github.com/arpihomesecurity\" target=\"project\">\n        <button mat-button color=\"accent\" i18n=\"project link|Link to the projects page@@projectLink\">ArPi Home Security</button>\n      </a>\n      <div>\n        <div class=\"version\">WebApp {{webapplication_version}}</div>\n        <div class=\"version\">Server {{server_version}}</div>\n      </div>\n      <span class=\"spacer\"></span>\n    </mat-toolbar>\n  </ng-template>\n</div>\n"
+module.exports = "<div class=\"app-viewport\">\n  <app-demo></app-demo>\n\n  <mat-toolbar color=\"primary\">\n    <button *ngIf=\"isLoggedIn()\" type=\"button\" mat-button (click)=\"sidenav.toggle()\" [fxShow]=\"small_screen\"><mat-icon>menu</mat-icon></button>\n    <span class=\"spacer\"></span>\n    <system-state></system-state>\n  </mat-toolbar>\n\n  <mat-sidenav-container *ngIf=\"isLoggedIn(); else not_loggedin\" (backdropClick)=\"sidenav.close()\">\n    <mat-sidenav #sidenav [opened]=\"!small_screen\" [mode]=\"small_screen ? 'over': 'side'\" disableClose>\n      <!-- sidenav content -->\n      <div style=\"text-align:center; margin:15px 0px\">\n        <img src=\"assets/images/argus-eye-64.jpg\">\n      </div>\n      <div *ngIf=\"demo\">\n        DEMO\n      </div>\n\n      <mat-nav-list>\n        <a mat-list-item routerLink=\"/\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\" \n          i18n=\"@@home menu link\">\n          <mat-icon mat-list-icon>home</mat-icon>Home\n        </a>\n        <a mat-list-item routerLink=\"/alerts\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@alert history menu link\">\n          <mat-icon mat-list-icon>history</mat-icon>Alert history\n        </a>\n        <h3 mat-subheader i18n=\"Settings menu title\">Settings</h3>\n        <a mat-list-item routerLink=\"/zones\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n           i18n=\"@@zone menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>tab</mat-icon>Zones\n        </a>\n        <a mat-list-item routerLink=\"/sensors\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@sensors menu link\">\n          <mat-icon mat-list-icon>input</mat-icon>Sensors\n        </a>\n        <a mat-list-item routerLink=\"/config/notifications\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@notifications menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>send</mat-icon>Notifications\n        </a>\n        <a mat-list-item routerLink=\"/config/network\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@network menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>public</mat-icon>Network\n        </a>\n        <a mat-list-item routerLink=\"/config/clock\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@clock menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n          <mat-icon mat-list-icon>access_time</mat-icon>Clock\n        </a>\n        <a mat-list-item routerLink=\"/users\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@users menu link\" [fxShow]=\"authService.getRole() == 'admin'\">\n           <mat-icon mat-list-icon>group</mat-icon>Users\n        </a>\n        <mat-divider></mat-divider>\n        <a mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"small_screen ? sidenav.close() : null\"\n          i18n=\"@@logout menu link\">\n          <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})\n        </a>\n        <mat-list-item>\n          <mat-icon mat-list-icon>language</mat-icon>\n          <mat-select [(value)]=\"currentLocale\" (selectionChange)=\"onLocaleSelected($event)\">\n            <mat-option *ngFor=\"let locale of locales\" [value]=\"locale.id\">{{ locale.name }}</mat-option>\n          </mat-select>\n        </mat-list-item>\n      </mat-nav-list>\n    </mat-sidenav>\n\n    <mat-sidenav-content>\n      <!-- AJAX loading spinner trigerred by the loader service -->\n      <mat-progress-spinner class=\"ajax-loader\" color=\"primary\" mode=\"indeterminate\" [fxShow]=\"displayLoader\"></mat-progress-spinner>\n\n      <!-- main app container -->\n      <div class=\"page-wrapper\">\n        <div class=\"page\">\n          <router-outlet></router-outlet>\n        </div>\n  \n        <!-- footer -->\n        <mat-toolbar color=\"primary\">\n          <span class=\"spacer\"></span>\n          <a href=\"https://github.com/arpihomesecurity\" target=\"project\">\n            <button mat-button color=\"accent\" i18n=\"project link|Link to the projects page@@projectLink\">ArPi Home Security</button>\n          </a>\n          <span class=\"spacer\"></span>\n          <div>\n            <div class=\"version\">WebApp {{webapplication_version}}</div>\n            <div class=\"version\">Server {{server_version}}</div>\n          </div>\n        </mat-toolbar>\n      </div>\n    </mat-sidenav-content>\n  </mat-sidenav-container>\n\n  <ng-template #not_loggedin>\n    <router-outlet></router-outlet>\n    <mat-toolbar color=\"primary\">\n      <span class=\"spacer\"></span>\n      <a href=\"https://github.com/arpihomesecurity\" target=\"project\">\n        <button mat-button color=\"accent\" i18n=\"project link|Link to the projects page@@projectLink\">ArPi Home Security</button>\n      </a>\n      <div>\n        <div class=\"version\">WebApp {{webapplication_version}}</div>\n        <div class=\"version\">Server {{server_version}}</div>\n      </div>\n      <span class=\"spacer\"></span>\n    </mat-toolbar>\n  </ng-template>\n</div>\n"
 
 /***/ }),
 
@@ -664,6 +664,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_not_found_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./page-not-found.component */ "./src/app/page-not-found.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _services_demo_configuration_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./services.demo/configuration.service */ "./src/app/services.demo/configuration.service.ts");
+/* harmony import */ var _demo_demo_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./demo/demo.component */ "./src/app/demo/demo.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -698,6 +699,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 // material components
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -721,7 +723,8 @@ var AppModule = /** @class */ (function () {
                 _sensor_index__WEBPACK_IMPORTED_MODULE_16__["SensorDetailComponent"],
                 _sensor_index__WEBPACK_IMPORTED_MODULE_16__["SensorDeleteDialog"],
                 _indicators_system_state_component__WEBPACK_IMPORTED_MODULE_19__["SystemStateComponent"],
-                _page_not_found_component__WEBPACK_IMPORTED_MODULE_22__["PageNotFoundComponent"]
+                _page_not_found_component__WEBPACK_IMPORTED_MODULE_22__["PageNotFoundComponent"],
+                _demo_demo_component__WEBPACK_IMPORTED_MODULE_25__["DemoComponent"]
             ],
             imports: [
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_0__["BrowserAnimationsModule"],
@@ -1370,6 +1373,84 @@ var NotificationsComponent = /** @class */ (function () {
             _services_index__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"]])
     ], NotificationsComponent);
     return NotificationsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/demo/demo.component.html":
+/*!******************************************!*\
+  !*** ./src/app/demo/demo.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<mat-toolbar color=\"secondary\">\n  <span>DEMO</span>\n  <span class=\"spacer\"></span>\n  <button mat-button *ngFor=\"let channel of channels; let i = index\" type=\"button\" (click)=\"swap(i)\">\n    <mat-icon *ngIf=\"channel\">my_location</mat-icon>\n    <mat-icon *ngIf=\"!channel\">trip_origin</mat-icon>\n  </button>\n</mat-toolbar>"
+
+/***/ }),
+
+/***/ "./src/app/demo/demo.component.scss":
+/*!******************************************!*\
+  !*** ./src/app/demo/demo.component.scss ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RlbW8vZGVtby5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/demo/demo.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/demo/demo.component.ts ***!
+  \****************************************/
+/*! exports provided: DemoComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DemoComponent", function() { return DemoComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var DemoComponent = /** @class */ (function () {
+    function DemoComponent(sensorService) {
+        this.sensorService = sensorService;
+        this.channels = [];
+    }
+    DemoComponent.prototype.ngOnInit = function () {
+        // channels are numbered 1..15
+        for (var i = 1; i <= _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].channel_count; i++) {
+            this.channels.push(false);
+        }
+    };
+    DemoComponent.prototype.swap = function (index) {
+        console.log('Index: ', index, 'value: ', this.channels[index]);
+        this.channels[index] = !this.channels[index];
+        this.sensorService._alertSensor(index, this.channels[index]);
+    };
+    DemoComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-demo',
+            template: __webpack_require__(/*! ./demo.component.html */ "./src/app/demo/demo.component.html"),
+            styles: [__webpack_require__(/*! ./demo.component.scss */ "./src/app/demo/demo.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services__WEBPACK_IMPORTED_MODULE_1__["SensorService"]])
+    ], DemoComponent);
+    return DemoComponent;
 }());
 
 
@@ -2966,8 +3047,8 @@ var EventService = /** @class */ (function () {
         this._armState = this._armStateSubject.asObservable();
         this._monitoringStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](_models__WEBPACK_IMPORTED_MODULE_2__["MonitoringState"].READY);
         this._monitoringState = this._monitoringStateSubject.asObservable();
-        this._sensorStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](false);
-        this._sensorState = this._sensorStateSubject.asObservable();
+        this._sensorsStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](false);
+        this._sensorsState = this._sensorsStateSubject.asObservable();
         this._syrenStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
         this._syrenState = this._syrenStateSubject.asObservable();
     }
@@ -2983,7 +3064,7 @@ var EventService = /** @class */ (function () {
             subject = this._alertState;
         }
         else if (event === 'sensors_state_change') {
-            subject = this._sensorState;
+            subject = this._sensorsState;
         }
         else if (event === 'syren_state_change') {
             subject = this._syrenState;
@@ -2993,19 +3074,19 @@ var EventService = /** @class */ (function () {
         }
         return subject;
     };
-    EventService.prototype.updateAlertState = function (alert) {
+    EventService.prototype._updateAlertState = function (alert) {
         this._alertStateSubject.next(alert);
     };
-    EventService.prototype.updateArmState = function (state) {
+    EventService.prototype._updateArmState = function (state) {
         this._armStateSubject.next(state);
     };
-    EventService.prototype.updateMonitoringState = function (state) {
+    EventService.prototype._updateMonitoringState = function (state) {
         this._monitoringStateSubject.next(state);
     };
-    EventService.prototype.updateSensorState = function (state) {
-        this._sensorStateSubject.next(state);
+    EventService.prototype._updateSensorsState = function (state) {
+        this._sensorsStateSubject.next(state);
     };
-    EventService.prototype.updateSyrenState = function (state) {
+    EventService.prototype._updateSyrenState = function (state) {
         this._syrenStateSubject.next(state);
     };
     EventService = __decorate([
@@ -3206,7 +3287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_add_operator_delay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/add/operator/delay */ "./node_modules/rxjs-compat/_esm5/add/operator/delay.js");
-/* harmony import */ var _environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../environments/environment.demo */ "./src/environments/environment.demo.ts");
+/* harmony import */ var _services_event_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/event.service */ "./src/app/services/event.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3222,10 +3304,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var SensorService = /** @class */ (function () {
-    function SensorService(http) {
+    function SensorService(http, eventService) {
         this.http = http;
-        this.sensors = [];
+        this.eventService = eventService;
+        this.sensors = _environments_environment__WEBPACK_IMPORTED_MODULE_6__["SENSORS"];
         this.types = [
             {
                 id: 0,
@@ -3251,13 +3335,14 @@ var SensorService = /** @class */ (function () {
     }
     SensorService.prototype.getSensors = function (onlyAlerting) {
         if (onlyAlerting === void 0) { onlyAlerting = false; }
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.sensors).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.sensors).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
     };
     SensorService.prototype.getSensor = function (sensorId) {
         // get sensors from api
         return this.http.get('/api/sensor/' + sensorId, {});
     };
     SensorService.prototype.createSensor = function (sensor) {
+        console.log('Create sensor: ', sensor);
         if (this.sensors.length === 0) {
             sensor.id = 0;
         }
@@ -3279,28 +3364,40 @@ var SensorService = /** @class */ (function () {
         if (sensorId === void 0) { sensorId = null; }
         if (sensorId) {
             if (sensorId in this.sensors) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.sensors.filter(function (sensor) { return sensor.id === sensorId; })[0].alert).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__["environment"].delay);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.sensors.filter(function (sensor) { return sensor.id === sensorId; })[0].alert).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
             }
             else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__["environment"].delay);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
             }
         }
         else {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__["environment"].delay);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
         }
     };
     SensorService.prototype.getSensorTypes = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.types).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_5__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.types).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
     };
     SensorService.prototype.resetReferences = function () {
         // set sensor from api
         return this.http.put('/api/sensors/reset-references', null, {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response.json(); })).subscribe();
     };
+    SensorService.prototype._alertSensor = function (sensorId, value) {
+        var sensor;
+        if (sensorId != null && this.sensors) {
+            sensor = this.sensors.find(function (s) { return s.id === sensorId; });
+        }
+        if (sensor != null) {
+            console.log('Found sensor: ', sensor);
+            sensor.alert = value;
+            this.eventService._updateSensorsState(sensor.alert);
+        }
+    };
     SensorService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root',
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+            _services_event_service__WEBPACK_IMPORTED_MODULE_5__["EventService"]])
     ], SensorService);
     return SensorService;
 }());
@@ -3397,7 +3494,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment.demo */ "./src/environments/environment.demo.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3414,15 +3511,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ZoneService = /** @class */ (function () {
     function ZoneService(http) {
         this.http = http;
-        this.zones = [];
+        this.zones = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["ZONES"];
     }
     ZoneService.prototype.getZones = function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.zones);
     };
     ZoneService.prototype.getZone = function (zoneId) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.zones.filter(function (zone) { return zone.id === zoneId; })[0]).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.zones.filter(function (zone) { return zone.id === zoneId; })[0]).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
     };
     ZoneService.prototype.createZone = function (zone) {
+        console.log('Create zone: ', zone);
         if (this.zones.length === 0) {
             zone.id = 0;
         }
@@ -4402,12 +4500,14 @@ var ZoneListComponent = /** @class */ (function () {
 /*!**********************************************!*\
   !*** ./src/environments/environment.demo.ts ***!
   \**********************************************/
-/*! exports provided: environment */
+/*! exports provided: environment, SENSORS, ZONES */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SENSORS", function() { return SENSORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZONES", function() { return ZONES; });
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=demo` then `environment.demo.ts` will be used instead.
@@ -4437,6 +4537,8 @@ var environment = {
         USER: 'user'
     }
 };
+var SENSORS = [];
+var ZONES = [];
 
 
 /***/ }),
@@ -4445,12 +4547,14 @@ var environment = {
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
   \*****************************************/
-/*! exports provided: environment */
+/*! exports provided: environment, SENSORS, ZONES */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SENSORS", function() { return SENSORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZONES", function() { return ZONES; });
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=demo` then `environment.demo.ts` will be used instead.
@@ -4480,6 +4584,27 @@ var environment = {
         USER: 'user'
     }
 };
+var SENSORS = [
+    {
+        id: 0,
+        channel: 1,
+        zone_id: 0,
+        type_id: 0,
+        alert: false,
+        description: 'Teszt',
+        enabled: true
+    }
+];
+var ZONES = [
+    {
+        id: 0,
+        name: 'Hall',
+        disarmed_delay: null,
+        away_delay: 0,
+        stay_delay: 0,
+        description: ''
+    }
+];
 
 
 /***/ }),
