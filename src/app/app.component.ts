@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   watcher: Subscription;
   small_screen: boolean;
   alert: boolean;
-  demo = environment.demo;
   locales = [
     {name: 'Magyar', id: 'hu'},
     {name: 'English', id: 'en'}

@@ -28,7 +28,7 @@ export class DemoComponent implements OnInit {
 
   help() {
     const dialogRef = this.dialog.open(DemoHelpDialogComponent, {
-      width: '250px'
+
     });
   }
 
