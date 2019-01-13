@@ -663,8 +663,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
 /* harmony import */ var _page_not_found_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./page-not-found.component */ "./src/app/page-not-found.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_demo_configuration_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./services.demo/configuration.service */ "./src/app/services.demo/configuration.service.ts");
-/* harmony import */ var _demo_demo_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./demo/demo.component */ "./src/app/demo/demo.component.ts");
+/* harmony import */ var _demo_demo_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./demo/demo.component */ "./src/app/demo/demo.component.ts");
+/* harmony import */ var _demo_demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./demo/demo.help.dialog.component */ "./src/app/demo/demo.help.dialog.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -698,6 +698,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // material components
 
+// TODO: remove from production build
 
 
 var AppModule = /** @class */ (function () {
@@ -724,7 +725,8 @@ var AppModule = /** @class */ (function () {
                 _sensor_index__WEBPACK_IMPORTED_MODULE_16__["SensorDeleteDialog"],
                 _indicators_system_state_component__WEBPACK_IMPORTED_MODULE_19__["SystemStateComponent"],
                 _page_not_found_component__WEBPACK_IMPORTED_MODULE_22__["PageNotFoundComponent"],
-                _demo_demo_component__WEBPACK_IMPORTED_MODULE_25__["DemoComponent"]
+                _demo_demo_component__WEBPACK_IMPORTED_MODULE_24__["DemoComponent"],
+                _demo_demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_25__["DemoHelpDialogComponent"]
             ],
             imports: [
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_0__["BrowserAnimationsModule"],
@@ -759,7 +761,8 @@ var AppModule = /** @class */ (function () {
             entryComponents: [
                 _sensor_index__WEBPACK_IMPORTED_MODULE_16__["SensorDeleteDialog"],
                 _user_index__WEBPACK_IMPORTED_MODULE_18__["UserDeleteDialog"],
-                _zone_index__WEBPACK_IMPORTED_MODULE_17__["ZoneDeleteDialog"]
+                _zone_index__WEBPACK_IMPORTED_MODULE_17__["ZoneDeleteDialog"],
+                _demo_demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_25__["DemoHelpDialogComponent"]
             ],
             providers: [
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["AlertService"],
@@ -767,7 +770,7 @@ var AppModule = /** @class */ (function () {
                 _guards_index__WEBPACK_IMPORTED_MODULE_9__["AdminGuard"],
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["AlertService"],
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["AuthenticationService"],
-                _services_demo_configuration_service__WEBPACK_IMPORTED_MODULE_24__["ConfigurationService"],
+                _services_index__WEBPACK_IMPORTED_MODULE_20__["ConfigurationService"],
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["EventService"],
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["LoaderService"],
                 _services_index__WEBPACK_IMPORTED_MODULE_20__["MonitoringService"],
@@ -1386,7 +1389,7 @@ var NotificationsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"secondary\">\n  <span>DEMO</span>\n  <span class=\"spacer\"></span>\n  <button mat-button *ngFor=\"let channel of channels; let i = index\" type=\"button\" (click)=\"swap(i)\">\n    <mat-icon *ngIf=\"channel\">my_location</mat-icon>\n    <mat-icon *ngIf=\"!channel\">trip_origin</mat-icon>\n  </button>\n</mat-toolbar>"
+module.exports = "<mat-toolbar color=\"secondary\">\n  <span>Simulator</span>\n\n  <button mat-button (click)=\"help()\" color=\"primary\">\n    <mat-icon>help</mat-icon>\n  </button>\n\n  <span class=\"spacer\"></span>\n  <button mat-raised-button *ngFor=\"let channel of channels; let i = index\" type=\"button\" (click)=\"swap(i)\" color=\"primary\">\n    CH{{i | number: '2.0-0'}}\n    <mat-icon *ngIf=\"channel\">my_location</mat-icon>\n    <mat-icon *ngIf=\"!channel\">trip_origin</mat-icon>\n  </button>\n</mat-toolbar>"
 
 /***/ }),
 
@@ -1397,7 +1400,7 @@ module.exports = "<mat-toolbar color=\"secondary\">\n  <span>DEMO</span>\n  <spa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RlbW8vZGVtby5jb21wb25lbnQuc2NzcyJ9 */"
+module.exports = "button {\n  margin: 1px 1px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3RyYXZpcy9idWlsZC9BclBJSG9tZVNlY3VyaXR5L2FycGlfd2ViYXBwbGljYXRpb24vc3JjL2FwcC9kZW1vL2RlbW8uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBZSxFQUNoQiIsImZpbGUiOiJzcmMvYXBwL2RlbW8vZGVtby5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImJ1dHRvbiB7XG4gIG1hcmdpbjogMXB4IDFweDtcbn0iXX0= */"
 
 /***/ }),
 
@@ -1412,8 +1415,10 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DemoComponent", function() { return DemoComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./demo.help.dialog.component */ "./src/app/demo/demo.help.dialog.component.ts");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1426,16 +1431,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var DemoComponent = /** @class */ (function () {
-    function DemoComponent(sensorService) {
+    function DemoComponent(dialog, sensorService) {
+        this.dialog = dialog;
         this.sensorService = sensorService;
         this.channels = [];
     }
     DemoComponent.prototype.ngOnInit = function () {
         // channels are numbered 1..15
-        for (var i = 1; i <= _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].channel_count; i++) {
+        for (var i = 1; i <= _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].channel_count; i++) {
             this.channels.push(false);
         }
+    };
+    DemoComponent.prototype.help = function () {
+        var dialogRef = this.dialog.open(_demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_2__["DemoHelpDialogComponent"], {
+            width: '250px'
+        });
     };
     DemoComponent.prototype.swap = function (index) {
         console.log('Index: ', index, 'value: ', this.channels[index]);
@@ -1448,12 +1461,68 @@ var DemoComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./demo.component.html */ "./src/app/demo/demo.component.html"),
             styles: [__webpack_require__(/*! ./demo.component.scss */ "./src/app/demo/demo.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services__WEBPACK_IMPORTED_MODULE_1__["SensorService"]])
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"],
+            _services__WEBPACK_IMPORTED_MODULE_3__["SensorService"]])
     ], DemoComponent);
     return DemoComponent;
 }());
 
 
+
+/***/ }),
+
+/***/ "./src/app/demo/demo.help.dialog.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/demo/demo.help.dialog.component.ts ***!
+  \****************************************************/
+/*! exports provided: DemoHelpDialogComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DemoHelpDialogComponent", function() { return DemoHelpDialogComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var DemoHelpDialogComponent = /** @class */ (function () {
+    function DemoHelpDialogComponent(dialogRef) {
+        this.dialogRef = dialogRef;
+    }
+    DemoHelpDialogComponent.prototype.onClose = function () {
+        this.dialogRef.close();
+    };
+    DemoHelpDialogComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-demo-help-dialog',
+            template: __webpack_require__(/*! ./demo.help.dialog.html */ "./src/app/demo/demo.help.dialog.html"),
+        }),
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"]])
+    ], DemoHelpDialogComponent);
+    return DemoHelpDialogComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/demo/demo.help.dialog.html":
+/*!********************************************!*\
+  !*** ./src/app/demo/demo.help.dialog.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1 mat-dialog-title>ArPI - Home Security System</h1>\n<div mat-dialog-content>\n  <p>Help text</p>\n</div>\n<div mat-dialog-actions>\n  <button mat-button (click)=\"onClose()\" color=\"primary\" cdkFocusInitial>Ok</button>\n</div>\n"
 
 /***/ }),
 
@@ -2779,57 +2848,6 @@ var SensorListComponent = /** @class */ (function () {
             _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"]])
     ], SensorListComponent);
     return SensorListComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/services.demo/configuration.service.ts":
-/*!********************************************************!*\
-  !*** ./src/app/services.demo/configuration.service.ts ***!
-  \********************************************************/
-/*! exports provided: ConfigurationService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigurationService", function() { return ConfigurationService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/authentication.service */ "./src/app/services/authentication.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var ConfigurationService = /** @class */ (function () {
-    function ConfigurationService(http, authService) {
-        this.http = http;
-        this.authService = authService;
-    }
-    ConfigurationService.prototype.getOption = function (option, section) {
-        // get configuration option from api
-        return this.http.get('/api/config/' + option + '/' + section, {});
-    };
-    ConfigurationService.prototype.setOption = function (option, section, value) {
-        // get configuration option from api
-        return this.http.put('/api/config/' + option + '/' + section, value, {})
-            .subscribe();
-    };
-    ConfigurationService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
-            _services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]])
-    ], ConfigurationService);
-    return ConfigurationService;
 }());
 
 
@@ -4545,7 +4563,7 @@ var environment = {
     production: false,
     demo: true,
     delay: 100,
-    channel_count: 15,
+    channel_count: 3,
     SNACK_DURATION: 2000,
     MONITORING_PORT: 8081,
     DEFAULT_LANGUAGE: 'en',
@@ -4594,7 +4612,7 @@ var environment = {
     production: false,
     demo: true,
     delay: 100,
-    channel_count: 15,
+    channel_count: 3,
     SNACK_DURATION: 2000,
     MONITORING_PORT: 8081,
     DEFAULT_LANGUAGE: 'en',
