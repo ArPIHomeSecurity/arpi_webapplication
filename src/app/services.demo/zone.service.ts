@@ -4,12 +4,12 @@ import { Observable, of } from 'rxjs';
 
 import { Zone } from '../models/index';
 
-import { environment } from '../../environments/environment.demo';
+import { environment, ZONES } from '../../environments/environment';
 
 @Injectable()
 export class ZoneService {
 
-  zones: Zone[] = [];
+  zones: Zone[] = ZONES;
 
   constructor(
     private http: HttpClient
@@ -24,6 +24,7 @@ export class ZoneService {
   }
 
   createZone( zone: Zone ): Observable<Zone> {
+    console.log('Create zone: ', zone);
     if (this.zones.length === 0) {
       zone.id = 0;
     } else {

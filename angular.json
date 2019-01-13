@@ -60,7 +60,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.demo.ts"
+                  "with": "src/environments/environment.demo.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component.demo.html"
                 },
                 {
                   "replace": "src/app/services/alert.service.ts",

@@ -35,6 +35,25 @@ export const environment = {
   }
 };
 
-export const SENSORS = [];
+export const SENSORS = [
+  {
+    id: 0,
+    channel: 1,
+    zone_id: 0,
+    type_id: 0,
+    alert: false,
+    description: 'Teszt',
+    enabled: true
+  }
+];
 
-export const ZONES = [];
+export const ZONES = [
+  {
+    id: 0,
+    name: 'Hall',
+    disarmed_delay: null,
+    away_delay: 0,
+    stay_delay: 0,
+    description: ''
+  }
+];

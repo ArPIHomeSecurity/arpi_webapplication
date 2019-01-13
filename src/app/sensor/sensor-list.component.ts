@@ -15,7 +15,6 @@ import { environment } from '../../environments/environment';
 const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'sensor-list.component.html',
   styleUrls: ['sensor-list.component.scss'],
   providers: []

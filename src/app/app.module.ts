@@ -58,6 +58,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { ConfigurationService } from './services.demo/configuration.service';
+import { DemoComponent } from './demo/demo.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { ConfigurationService } from './services.demo/configuration.service';
     SensorDetailComponent,
     SensorDeleteDialog,
     SystemStateComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DemoComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,19 +1,20 @@
 
-import {map, delay} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
 import { Sensor, SensorType } from '../models/index';
-import { environment } from '../../environments/environment.demo';
+import { EventService } from '../services/event.service';
+import { environment, SENSORS } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SensorService {
 
-  sensors: Sensor[] = [];
+  sensors: Sensor[] = SENSORS;
   types: SensorType[] = [
     {
       id: 0,
@@ -38,7 +39,8 @@ export class SensorService {
   ];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private eventService: EventService
   ) {
 
   }
@@ -56,6 +58,7 @@ export class SensorService {
 
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
+    console.log('Create sensor: ', sensor);
     if (this.sensors.length === 0) {
       sensor.id = 0;
     } else {
@@ -81,7 +84,7 @@ export class SensorService {
   getAlert( sensorId: number = null ): Observable<boolean> {
     if ( sensorId ) {
       if (sensorId in this.sensors) {
-        return of( this.sensors.filter(sensor => sensor.id === sensorId)[0].alert).delay(environment.delay);
+        return of(this.sensors.filter(sensor => sensor.id === sensorId)[0].alert).delay(environment.delay);
       } else {
         return of(false).delay(environment.delay);
       }
@@ -99,6 +102,19 @@ export class SensorService {
     // set sensor from api
     return this.http.put( '/api/sensors/reset-references', null, { } ).pipe(
       map(( response: Response ) => response.json() )).subscribe();
+  }
+
+  _alertSensor(sensorId: number, value: boolean) {
+    let sensor;
+    if (sensorId != null && this.sensors) {
+      sensor = this.sensors.find(s => s.id === sensorId);
+    }
+
+    if (sensor != null) {
+      console.log('Found sensor: ', sensor);
+      sensor.alert = value;
+      this.eventService._updateSensorsState(sensor.alert);
+    }
   }
 }
 

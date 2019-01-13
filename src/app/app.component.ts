@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   constructor(
           public media: ObservableMedia,
           private loader: LoaderService,
-          private authService: AuthenticationService,
+          public authService: AuthenticationService,
           private monitoring: MonitoringService,
           private sidenav: ViewContainerRef
   ) {

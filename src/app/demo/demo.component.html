@@ -1,0 +1,8 @@
+<mat-toolbar color="secondary">
+  <span>DEMO</span>
+  <span class="spacer"></span>
+  <button mat-button *ngFor="let channel of channels; let i = index" type="button" (click)="swap(i)">
+    <mat-icon *ngIf="channel">my_location</mat-icon>
+    <mat-icon *ngIf="!channel">trip_origin</mat-icon>
+  </button>
+</mat-toolbar>
