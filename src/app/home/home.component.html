@@ -20,7 +20,7 @@
     <mat-expansion-panel class="alert" color="warn">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <img src="/assets/images/alarm_lamp_white.png"/>
+          <img src="assets/images/alarm_lamp_white.png"/>
         </mat-panel-title>
         <mat-panel-description i18n="@@alert started">
           Alert started on: {{alert.start_time}}
@@ -30,7 +30,7 @@
       <mat-card id="sensor-{{sensor.id}}" class="sensor-short-card" *ngFor="let sensor of alert.sensors">
         <mat-card-header>
           <img mat-card-avatar src="https://via.placeholder.com/40x40?text=S" />
-          <img *ngIf="sensor.alarm==true" src="/assets/images/alarm_bell.png" width="50" height="50"/>
+          <img *ngIf="sensor.alarm==true" src="assets/images/alarm_bell.png" width="50" height="50"/>
           <mat-card-title>{{sensor.description}}</mat-card-title>
           <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>{{sensor.channel}}</mat-card-subtitle>
         </mat-card-header>

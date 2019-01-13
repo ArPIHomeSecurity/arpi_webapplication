@@ -3,13 +3,13 @@
     <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
       <mat-card-title ngClass.xs="sensor-title-sm">
         <div [ngSwitch]="getSensorTypeName(sensor.type_id)" ngClass="sensor-image" ngClass.xs="sensor-image-sm">
-          <img *ngSwitchCase="'Motion'" src="/assets/images/sensor_motion.png"/>
-          <img *ngSwitchCase="'Tamper'" src="/assets/images/sensor_tamper.png"/>
-          <img *ngSwitchCase="'Open'"   src="/assets/images/sensor_open.png"/>
-          <img *ngSwitchCase="'Break'"  src="/assets/images/sensor_break.png"/>
+          <img *ngSwitchCase="'Motion'" src="assets/images/sensor_motion.png"/>
+          <img *ngSwitchCase="'Tamper'" src="assets/images/sensor_tamper.png"/>
+          <img *ngSwitchCase="'Open'"   src="assets/images/sensor_open.png"/>
+          <img *ngSwitchCase="'Break'"  src="assets/images/sensor_break.png"/>
           <img *ngSwitchDefault src="https://via.placeholder.com/100?text=Unknown"/>
         </div>
-        <img *ngIf="sensor.alert" src="/assets/images/alarm_bell.png" width="50" height="50"/>
+        <img *ngIf="sensor.alert" src="assets/images/alarm_bell.png" width="50" height="50"/>
         {{sensor.description}}
       </mat-card-title>
       <mat-card-content layout="row">
