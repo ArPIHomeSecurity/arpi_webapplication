@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable ,  timer, BehaviorSubject } from 'rxjs';
 
 import { Alert, MonitoringState, ArmType } from '../models';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -10,10 +11,10 @@ export class EventService {
   private _alertStateSubject = new BehaviorSubject<Alert>(null);
   private _alertState = this._alertStateSubject.asObservable();
 
-  private _armStateSubject = new BehaviorSubject<ArmType>(ArmType.DISARMED);
+  private _armStateSubject = new BehaviorSubject<string>(environment.ARM_DISARM);
   private _armState = this._armStateSubject.asObservable();
 
-  private _monitoringStateSubject = new BehaviorSubject<MonitoringState>(MonitoringState.READY);
+  private _monitoringStateSubject = new BehaviorSubject<string>(environment.MONITORING_READY);
   private _monitoringState = this._monitoringStateSubject.asObservable();
 
   private _sensorsStateSubject = new BehaviorSubject<boolean>(false);
@@ -49,11 +50,11 @@ export class EventService {
     this._alertStateSubject.next(alert);
   }
 
-  _updateArmState(state: ArmType) {
+  _updateArmState(state: string) {
     this._armStateSubject.next(state);
   }
 
-  _updateMonitoringState(state: MonitoringState) {
+  _updateMonitoringState(state: string) {
     this._monitoringStateSubject.next(state);
   }
 

@@ -7,6 +7,7 @@ import { ArmType, ArmType2String, String2ArmType } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { AuthenticationService } from './authentication.service';
 import { environment } from '../../environments/environment.demo';
+import { EventService } from './event.service';
 
 
 @Injectable()
@@ -17,13 +18,12 @@ export class MonitoringService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthenticationService
-  ) { }
+    private eventService: EventService
+  ) {
+
+  }
 
   is_alert(): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     return of(this.alert);
   }
 
@@ -32,10 +32,14 @@ export class MonitoringService {
   }
 
   arm( armtype: ArmType ) {
+    this.armState = armtype;
+    this.eventService._updateArmState(ArmType2String(armtype));
     return;
   }
 
   disarm() {
+    this.armState = ArmType.DISARMED;
+    this.eventService._updateArmState(ArmType2String(this.armState));
     return;
   }
 
@@ -48,10 +52,7 @@ export class MonitoringService {
   }
 
   getClock(): Observable<Object> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get<Object>( '/api/clock', { headers } );
+    return this.http.get<Object>( '/api/clock', { } );
   }
 
   synchronizeClock() {
