@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
+import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 import { SensorService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -13,6 +15,7 @@ export class DemoComponent implements OnInit {
 
   channels: boolean[] = [];
   constructor(
+    public dialog: MatDialog,
     private sensorService: SensorService
   ) { }
 
@@ -21,6 +24,12 @@ export class DemoComponent implements OnInit {
     for (let i = 1; i <= environment.channel_count; i++) {
       this.channels.push(false);
     }
+  }
+
+  help() {
+    const dialogRef = this.dialog.open(DemoHelpDialogComponent, {
+      width: '250px'
+    });
   }
 
   swap(index: number) {

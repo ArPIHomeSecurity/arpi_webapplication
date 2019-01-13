@@ -26,6 +26,7 @@ import { SystemStateComponent } from './indicators/system-state.component';
 import {
   AlertService,
   AuthenticationService,
+  ConfigurationService,
   EventService,
   LoaderService,
   MonitoringService,
@@ -57,8 +58,10 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule
 } from '@angular/material';
-import { ConfigurationService } from './services.demo/configuration.service';
+
+// TODO: remove from production build
 import { DemoComponent } from './demo/demo.component';
+import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 
 
 @NgModule({
@@ -84,7 +87,8 @@ import { DemoComponent } from './demo/demo.component';
     SensorDeleteDialog,
     SystemStateComponent,
     PageNotFoundComponent,
-    DemoComponent
+    DemoComponent,
+    DemoHelpDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -120,7 +124,8 @@ import { DemoComponent } from './demo/demo.component';
   entryComponents: [
     SensorDeleteDialog,
     UserDeleteDialog,
-    ZoneDeleteDialog
+    ZoneDeleteDialog,
+    DemoHelpDialogComponent
   ],
   providers: [
     AlertService,
