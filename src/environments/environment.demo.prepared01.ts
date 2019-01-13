@@ -57,3 +57,5 @@ export const ZONES = [
     description: ''
   }
 ];
+
+export const ALERTS = [];

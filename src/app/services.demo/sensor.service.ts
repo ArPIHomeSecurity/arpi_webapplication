@@ -7,6 +7,7 @@ import 'rxjs/add/operator/delay';
 
 import { Sensor, SensorType } from '../models/index';
 import { EventService } from '../services/event.service';
+import { MonitoringService } from './monitoring.service';
 import { environment, SENSORS } from '../../environments/environment';
 
 @Injectable({
@@ -39,8 +40,8 @@ export class SensorService {
   ];
 
   constructor(
-    private http: HttpClient,
-    private eventService: EventService
+    private eventService: EventService,
+    private monitoringService: MonitoringService
   ) {
 
   }
@@ -53,7 +54,7 @@ export class SensorService {
 
   getSensor( sensorId: number ): Observable<Sensor> {
     // get sensors from api
-    return this.http.get<Sensor>( '/api/sensor/' + sensorId, { } );
+    return of(this.sensors.find(s => s.id === sensorId));
   }
 
 
@@ -72,12 +73,12 @@ export class SensorService {
 
   updateSensor( sensor: Sensor ): Observable<Sensor> {
     // set sensor from api
-    return this.http.put<Sensor>( '/api/sensor/' + sensor.id, sensor, { } );
+    return of(sensor);
   }
 
   deleteSensor( sensorId: number ): Observable<boolean> {
     // set sensor from api
-    return this.http.delete<boolean>( '/api/sensor/' + sensorId, { } );
+    return of(true);
   }
 
 
@@ -99,9 +100,7 @@ export class SensorService {
   }
 
   resetReferences() {
-    // set sensor from api
-    return this.http.put( '/api/sensors/reset-references', null, { } ).pipe(
-      map(( response: Response ) => response.json() )).subscribe();
+
   }
 
   _alertSensor(sensorId: number, value: boolean) {
@@ -114,6 +113,10 @@ export class SensorService {
       console.log('Found sensor: ', sensor);
       sensor.alert = value;
       this.eventService._updateSensorsState(sensor.alert);
+
+      if (value) {
+        this.monitoringService._onAlert(sensor);
+      }
     }
   }
 }

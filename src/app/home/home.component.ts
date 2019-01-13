@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Observable } from 'rxjs';
-
 import { ArmType, String2ArmType, Alert } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { AlertService, SensorService, EventService } from '../services/index';
@@ -11,7 +9,6 @@ import { MonitoringService } from '../services/index';
 import { environment } from '../../environments/environment';
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   providers: []
@@ -41,7 +38,8 @@ export class HomeComponent implements OnInit {
     );
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
-        this.alert = JSON.parse(alert);
+        // TODO: why JSON parse???
+        this.alert = alert;
       }
     );
 

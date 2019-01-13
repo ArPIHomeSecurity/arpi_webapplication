@@ -44,4 +44,8 @@ export class ZoneService {
     // set sensor from api
     return this.http.delete<boolean>( '/api/zone/' + zoneId, { } );
   }
+
+  _getZone(zone_id: number) {
+    return this.zones.find(z => z.id === zone_id);
+  }
 }

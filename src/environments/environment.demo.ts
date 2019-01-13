@@ -38,3 +38,5 @@ export const environment = {
 export const SENSORS = [];
 
 export const ZONES = [];
+
+export const ALERTS = [];

@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 
 import {throwError as observableThrowError,  Observable, of } from 'rxjs';
 
-import { ArmType, ArmType2String, String2ArmType } from '../models/index';
+import { Alert, ArmType, ArmType2String, String2ArmType, Sensor } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
-import { AuthenticationService } from './authentication.service';
 import { environment } from '../../environments/environment.demo';
+import { AlertService } from './alert.service';
 import { EventService } from './event.service';
+import { ZoneService } from './zone.service';
 
 
 @Injectable()
@@ -17,8 +18,9 @@ export class MonitoringService {
   alert = false;
 
   constructor(
-    private http: HttpClient,
-    private eventService: EventService
+    private alertService: AlertService,
+    private eventService: EventService,
+    private zoneService: ZoneService
   ) {
 
   }
@@ -39,6 +41,7 @@ export class MonitoringService {
 
   disarm() {
     this.armState = ArmType.DISARMED;
+    this.alertService._stopAlert();
     this.eventService._updateArmState(ArmType2String(this.armState));
     return;
   }
@@ -52,7 +55,7 @@ export class MonitoringService {
   }
 
   getClock(): Observable<Object> {
-    return this.http.get<Object>( '/api/clock', { } );
+    return of(null);
   }
 
   synchronizeClock() {
@@ -61,6 +64,17 @@ export class MonitoringService {
 
   changeClock(dateTime, timeZone) {
     return of(true);
+  }
+
+  _onAlert(sensor: Sensor) {
+    const zone = this.zoneService._getZone(sensor.zone_id);
+    if (this.armState === ArmType.AWAY && zone.away_delay != null) {
+      this.alertService._createAlert([sensor], ArmType.AWAY);
+    } else if (this.armState === ArmType.STAY && zone.stay_delay != null) {
+      this.alertService._createAlert([sensor], ArmType.STAY);
+    } else {
+      console.error('Can\'t alert system!!!');
+    }
   }
 }
 
