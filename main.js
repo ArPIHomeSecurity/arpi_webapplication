@@ -1388,7 +1388,7 @@ var NotificationsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"secondary\">\n  <span>ArPI - Simulator</span>\n\n  <button mat-button (click)=\"help()\" class=\"help\">\n    <mat-icon>help</mat-icon>\n  </button>\n\n  <span class=\"spacer\"></span>\n  <button mat-raised-button *ngFor=\"let channel of channels; let i = index\" type=\"button\" (click)=\"swap(i)\" color=\"primary\">\n    CH{{i | number: '2.0-0'}}\n    <mat-icon *ngIf=\"channel\">my_location</mat-icon>\n    <mat-icon *ngIf=\"!channel\">trip_origin</mat-icon>\n  </button>\n</mat-toolbar>"
+module.exports = "<mat-toolbar color=\"secondary\">\n  <span fxHide fxShow.gt-xs=\"true\" >ArPI - Simulator</span>\n  <span fxHide fxShow.xs=\"true\" >Simulator</span>\n\n  <button mat-button (click)=\"help()\" class=\"help\">\n    <mat-icon>help</mat-icon>\n  </button>\n\n  <span class=\"spacer\"></span>\n  <button mat-raised-button *ngFor=\"let channel of channels; let i = index\" type=\"button\" (click)=\"swap(i)\" color=\"primary\">\n    <span fxHide.xs=\"true\">CH{{i | number: '2.0-0'}}</span>\n    <mat-icon *ngIf=\"channel\">my_location</mat-icon>\n    <mat-icon *ngIf=\"!channel\">trip_origin</mat-icon>\n  </button>\n</mat-toolbar>"
 
 /***/ }),
 
@@ -1448,7 +1448,6 @@ var DemoComponent = /** @class */ (function () {
         var dialogRef = this.dialog.open(_demo_help_dialog_component__WEBPACK_IMPORTED_MODULE_2__["DemoHelpDialogComponent"], {});
     };
     DemoComponent.prototype.swap = function (index) {
-        console.log('Index: ', index, 'value: ', this.channels[index]);
         this.channels[index] = !this.channels[index];
         this.sensorService._alertSensor(index, this.channels[index]);
     };
@@ -3067,7 +3066,7 @@ var EventService = /** @class */ (function () {
     function EventService() {
         this._alertStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
         this._alertState = this._alertStateSubject.asObservable();
-        this._armStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ARM_DISARM);
+        this._armStateSubject = rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"].create();
         this._armState = this._armStateSubject.asObservable();
         this._monitoringStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].MONITORING_READY);
         this._monitoringState = this._monitoringStateSubject.asObservable();
@@ -3201,6 +3200,7 @@ var LoaderService = /** @class */ (function () {
         this.status = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](false);
     }
     LoaderService.prototype.display = function (value) {
+        console.log('Loader: ', value);
         this.status.next(value);
     };
     LoaderService = __decorate([
@@ -3260,7 +3260,7 @@ var MonitoringService = /** @class */ (function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.alert);
     };
     MonitoringService.prototype.getArmState = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.armState);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.armState).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
     };
     MonitoringService.prototype.arm = function (armtype) {
         this.armState = armtype;
@@ -3296,7 +3296,7 @@ var MonitoringService = /** @class */ (function () {
         else if (this.armState === _models_index__WEBPACK_IMPORTED_MODULE_2__["ArmType"].STAY && zone.stay_delay != null) {
             this.alertService._createAlert([sensor], _models_index__WEBPACK_IMPORTED_MODULE_2__["ArmType"].STAY);
         }
-        else {
+        else if (this.armState !== _models_index__WEBPACK_IMPORTED_MODULE_2__["ArmType"].DISARMED) {
             console.error('Can\'t alert system!!!');
         }
     };
@@ -3381,7 +3381,6 @@ var SensorService = /** @class */ (function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.sensors.find(function (s) { return s.id === sensorId; }));
     };
     SensorService.prototype.createSensor = function (sensor) {
-        console.log('Create sensor: ', sensor);
         if (this.sensors.length === 0) {
             sensor.id = 0;
         }
@@ -3424,7 +3423,6 @@ var SensorService = /** @class */ (function () {
             sensor = this.sensors.find(function (s) { return s.id === sensorId; });
         }
         if (sensor != null) {
-            console.log('Found sensor: ', sensor);
             sensor.alert = value;
             this.eventService._updateSensorsState(sensor.alert);
             if (value) {
@@ -3457,7 +3455,10 @@ var SensorService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_add_operator_delay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/delay */ "./node_modules/rxjs-compat/_esm5/add/operator/delay.js");
+/* harmony import */ var _models_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/index */ "./src/app/models/index.ts");
+/* harmony import */ var _environments_environment_demo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../environments/environment.demo */ "./src/environments/environment.demo.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3469,50 +3470,36 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
+
 var UserService = /** @class */ (function () {
-    function UserService(http) {
-        this.http = http;
-        this.users = [
-            {
-                id: 0,
-                name: 'Administrator',
-                role: 'admin',
-                access_code: 1234
-            },
-            {
-                id: 1,
-                name: 'User 1',
-                role: 'user',
-                access_code: 1111
-            }
-        ];
+    function UserService() {
+        this.users = _environments_environment_demo__WEBPACK_IMPORTED_MODULE_4__["USERS"];
     }
     UserService.prototype.getUsers = function () {
-        // get users from api
-        return this.http.get('/api/users', {});
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_4__["environment"].delay);
     };
     UserService.prototype.getUser = function (userId) {
-        // get users from api
-        return this.http.get('/api/user/' + userId, {});
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users.find(function (u) { return u.id === userId; })).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_4__["environment"].delay);
     };
     UserService.prototype.createUser = function (user) {
         // set sensor from api
-        return this.http.post('/api/users', user, {});
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(new _models_index__WEBPACK_IMPORTED_MODULE_3__["User"]());
     };
     UserService.prototype.updateUser = function (user) {
-        // set sensor from api
-        return this.http.put('/api/user/' + user.id, user, {});
+        var tmpUser = this.users.find(function (u) { return u.id === user.id; });
+        var index = this.users.indexOf(tmpUser);
+        this.users[index] = user;
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(user);
     };
     UserService.prototype.deleteUser = function (userId) {
-        // set sensor from api
-        return this.http.delete('/api/user/' + userId, {});
-    };
-    UserService.prototype.changeAccessCode = function (userId, acccessCode) {
-        return this.http.put('/api/user/' + userId, acccessCode, {});
+        this.users = this.users.filter(function (u) { return u.id !== userId; });
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(true);
     };
     UserService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [])
     ], UserService);
     return UserService;
 }());
@@ -3760,6 +3747,11 @@ var UserDetailComponent = /** @class */ (function () {
     }
     UserDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
+        // avoid ExpressionChangedAfterItHasBeenCheckedError
+        // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+        scheduleMicrotask.then(function () {
+            _this.loader.display(true);
+        });
         for (var role in _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].ROLE_TYPES) {
             this.roles.push({ 'name': role, 'value': _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].ROLE_TYPES[role] });
         }
@@ -3791,11 +3783,6 @@ var UserDetailComponent = /** @class */ (function () {
             }
         });
         if (this.userId) {
-            // avoid ExpressionChangedAfterItHasBeenCheckedError
-            // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-            scheduleMicrotask.then(function () {
-                _this.loader.display(true);
-            });
             this.userService.getUser(this.userId)
                 .subscribe(function (user) {
                 _this.user = user;
@@ -4543,12 +4530,13 @@ var ZoneListComponent = /** @class */ (function () {
 /*!**********************************************!*\
   !*** ./src/environments/environment.demo.ts ***!
   \**********************************************/
-/*! exports provided: environment, SENSORS, ZONES, ALERTS */
+/*! exports provided: environment, USERS, SENSORS, ZONES, ALERTS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USERS", function() { return USERS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SENSORS", function() { return SENSORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZONES", function() { return ZONES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALERTS", function() { return ALERTS; });
@@ -4581,6 +4569,20 @@ var environment = {
         USER: 'user'
     }
 };
+var USERS = [
+    {
+        id: 0,
+        name: 'Administrator',
+        role: 'admin',
+        access_code: 1234
+    },
+    {
+        id: 1,
+        name: 'User 1',
+        role: 'user',
+        access_code: 1111
+    }
+];
 var SENSORS = [];
 var ZONES = [];
 var ALERTS = [];
@@ -4592,12 +4594,13 @@ var ALERTS = [];
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
   \*****************************************/
-/*! exports provided: environment, SENSORS, ZONES, ALERTS */
+/*! exports provided: environment, USERS, SENSORS, ZONES, ALERTS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USERS", function() { return USERS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SENSORS", function() { return SENSORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZONES", function() { return ZONES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALERTS", function() { return ALERTS; });
@@ -4630,6 +4633,20 @@ var environment = {
         USER: 'user'
     }
 };
+var USERS = [
+    {
+        id: 0,
+        name: 'Administrator',
+        role: 'admin',
+        access_code: 1234
+    },
+    {
+        id: 1,
+        name: 'User 1',
+        role: 'user',
+        access_code: 1111
+    }
+];
 var SENSORS = [
     {
         id: 0,
