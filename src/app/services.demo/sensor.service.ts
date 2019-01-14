@@ -59,7 +59,6 @@ export class SensorService {
 
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
-    console.log('Create sensor: ', sensor);
     if (this.sensors.length === 0) {
       sensor.id = 0;
     } else {
@@ -110,7 +109,6 @@ export class SensorService {
     }
 
     if (sensor != null) {
-      console.log('Found sensor: ', sensor);
       sensor.alert = value;
       this.eventService._updateSensorsState(sensor.alert);
 

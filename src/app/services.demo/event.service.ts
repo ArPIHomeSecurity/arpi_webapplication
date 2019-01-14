@@ -11,7 +11,7 @@ export class EventService {
   private _alertStateSubject = new BehaviorSubject<Alert>(null);
   private _alertState = this._alertStateSubject.asObservable();
 
-  private _armStateSubject = new BehaviorSubject<string>(environment.ARM_DISARM);
+  private _armStateSubject = BehaviorSubject.create();
   private _armState = this._armStateSubject.asObservable();
 
   private _monitoringStateSubject = new BehaviorSubject<string>(environment.MONITORING_READY);

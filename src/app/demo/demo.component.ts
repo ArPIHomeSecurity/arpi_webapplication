@@ -33,7 +33,6 @@ export class DemoComponent implements OnInit {
   }
 
   swap(index: number) {
-    console.log('Index: ', index, 'value: ', this.channels[index]);
     this.channels[index] = !this.channels[index];
     this.sensorService._alertSensor(index, this.channels[index]);
   }

@@ -27,7 +27,7 @@ export class UserDetailComponent implements OnInit {
   userId: number;
   user: User = null;
   userForm: FormGroup;
-  ArmType:any = ArmType;
+  ArmType: any = ArmType;
   roles: any = [];
   armState: ArmType;
 
@@ -49,6 +49,12 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
+
     for (let role in environment.ROLE_TYPES){
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
@@ -79,18 +85,12 @@ export class UserDetailComponent implements OnInit {
       });
 
     if (this.userId) {
-      // avoid ExpressionChangedAfterItHasBeenCheckedError
-      // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-      scheduleMicrotask.then(() => {
-        this.loader.display(true);
-      });
-
       this.userService.getUser(this.userId)
         .subscribe(user => {
-            this.user = user;
-            this.updateForm(this.user);
-            this.loader.display(false);
-        });
+          this.user = user;
+          this.updateForm(this.user);
+          this.loader.display(false);
+      });
     } else {
       this.user = new User;
       this.user.name = null;

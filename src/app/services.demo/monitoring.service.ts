@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
-import {throwError as observableThrowError,  Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { Alert, ArmType, ArmType2String, String2ArmType, Sensor } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
+import { ArmType, ArmType2String, Sensor } from '../models/index';
+import { MonitoringState } from '../models/index';
 import { environment } from '../../environments/environment.demo';
 import { AlertService } from './alert.service';
 import { EventService } from './event.service';
@@ -30,7 +29,7 @@ export class MonitoringService {
   }
 
   getArmState(): Observable<ArmType> {
-    return of(this.armState);
+    return of(this.armState).delay(environment.delay);
   }
 
   arm( armtype: ArmType ) {
@@ -72,7 +71,7 @@ export class MonitoringService {
       this.alertService._createAlert([sensor], ArmType.AWAY);
     } else if (this.armState === ArmType.STAY && zone.stay_delay != null) {
       this.alertService._createAlert([sensor], ArmType.STAY);
-    } else {
+    } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
     }
   }

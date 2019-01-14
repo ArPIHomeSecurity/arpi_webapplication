@@ -1,60 +1,43 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import 'rxjs/add/operator/delay';
 
 import { User } from '../models/index';
+
+import { USERS, environment } from '../../environments/environment.demo';
+
 
 @Injectable()
 export class UserService {
 
-  public users: User[] = [
-    {
-      id: 0,
-      name: 'Administrator',
-      role: 'admin',
-      access_code: 1234
-    },
-    {
-      id: 1,
-      name: 'User 1',
-      role: 'user',
-      access_code: 1111
-    }
-  ];
+  public users: User[] = USERS;
 
   constructor(
-    private http: HttpClient
+
   ) { }
 
-
   getUsers(): Observable<User[]> {
-    // get users from api
-    return this.http.get<User[]>('/api/users', { });
+    return of(this.users).delay(environment.delay);
   }
-
 
   getUser(userId: number): Observable<User> {
-    // get users from api
-    return this.http.get<User>('/api/user/' + userId, { });
+    return of(this.users.find(u => u.id === userId)).delay(environment.delay);
   }
-
 
   createUser(user: User): Observable<User> {
     // set sensor from api
-    return this.http.post<User>('/api/users', user, { });
+    return of(new User());
   }
 
   updateUser(user: User): Observable<User> {
-    // set sensor from api
-    return this.http.put<User>('/api/user/' + user.id, user, { });
+    const tmpUser = this.users.find(u => u.id === user.id);
+    const index = this.users.indexOf(tmpUser);
+    this.users[index] = user;
+    return of(user);
   }
 
   deleteUser(userId: number): Observable<boolean> {
-    // set sensor from api
-    return this.http.delete<boolean>('/api/user/' + userId, { });
-  }
-
-  changeAccessCode(userId: number, acccessCode: string): Observable<boolean> {
-    return this.http.put<boolean>('/api/user/' + userId, acccessCode, { });
+    this.users = this.users.filter(u => u.id !== userId);
+    return of(true);
   }
 }

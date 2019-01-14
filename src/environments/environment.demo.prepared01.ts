@@ -35,6 +35,21 @@ export const environment = {
   }
 };
 
+export const USERS = [
+  {
+    id: 0,
+    name: 'Administrator',
+    role: 'admin',
+    access_code: 1234
+  },
+  {
+    id: 1,
+    name: 'User 1',
+    role: 'user',
+    access_code: 1111
+  }
+];
+
 export const SENSORS = [
   {
     id: 0,
