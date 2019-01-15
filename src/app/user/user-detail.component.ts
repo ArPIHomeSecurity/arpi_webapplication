@@ -51,12 +51,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
-
     for (let role in environment.ROLE_TYPES){
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
@@ -87,6 +81,11 @@ export class UserDetailComponent implements OnInit {
       });
 
     if (this.userId != null) {
+      // avoid ExpressionChangedAfterItHasBeenCheckedError
+      // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+      scheduleMicrotask.then(() => {
+        this.loader.display(true);
+      });
       this.userService.getUser(this.userId)
         .subscribe(user => {
           this.user = user;
@@ -99,7 +98,6 @@ export class UserDetailComponent implements OnInit {
       this.user.role = 'user';
       this.user.access_code = null;
       this.updateForm(this.user);
-      this.loader.display(false);
     }
   }
 
