@@ -3782,7 +3782,7 @@ var UserDetailComponent = /** @class */ (function () {
                 _this.userForm.disable();
             }
         });
-        if (this.userId) {
+        if (this.userId != null) {
             this.userService.getUser(this.userId)
                 .subscribe(function (user) {
                 _this.user = user;
