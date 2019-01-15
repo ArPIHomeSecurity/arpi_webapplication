@@ -3748,11 +3748,6 @@ var UserDetailComponent = /** @class */ (function () {
     }
     UserDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // avoid ExpressionChangedAfterItHasBeenCheckedError
-        // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-        scheduleMicrotask.then(function () {
-            _this.loader.display(true);
-        });
         for (var role in _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].ROLE_TYPES) {
             this.roles.push({ 'name': role, 'value': _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].ROLE_TYPES[role] });
         }
@@ -3784,6 +3779,11 @@ var UserDetailComponent = /** @class */ (function () {
             }
         });
         if (this.userId != null) {
+            // avoid ExpressionChangedAfterItHasBeenCheckedError
+            // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+            scheduleMicrotask.then(function () {
+                _this.loader.display(true);
+            });
             this.userService.getUser(this.userId)
                 .subscribe(function (user) {
                 _this.user = user;
@@ -3797,7 +3797,6 @@ var UserDetailComponent = /** @class */ (function () {
             this.user.role = 'user';
             this.user.access_code = null;
             this.updateForm(this.user);
-            this.loader.display(false);
         }
     };
     UserDetailComponent.prototype.updateForm = function (user) {
