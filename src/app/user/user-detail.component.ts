@@ -25,7 +25,7 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 export class UserDetailComponent implements OnInit {
   userId: number;
-  user: User = null;
+  user: User;
   userForm: FormGroup;
   ArmType: any = ArmType;
   roles: any = [];
@@ -43,9 +43,11 @@ export class UserDetailComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location) {
 
-    this.route.paramMap.subscribe(params =>
-      this.userId = +params.get('id')
-    );
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id') != null) {
+        this.userId = +params.get('id');
+      }
+    });
   }
 
   ngOnInit() {
@@ -115,7 +117,7 @@ export class UserDetailComponent implements OnInit {
   onSubmit() {
     console.log('User: ', this.user);
     const user = this.prepareSaveUser();
-    if (this.userId) {
+    if (this.userId != null) {
       this.userService.updateUser(user).subscribe(null,
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
       );
