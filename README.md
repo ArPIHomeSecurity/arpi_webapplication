@@ -2,4 +2,6 @@
 
 The webappication to control the system (argus_server).
 
-[Travis DEMO builds](https://travis-ci.org/ArPIHomeSecurity/arpi_webapplication.svg?branch=demo)
+[Travis builds](https://www.travis-ci.org/ArPIHomeSecurity/arpi_webapplication)
+
+DEMO branch: [![Build Status](https://www.travis-ci.org/ArPIHomeSecurity/arpi_webapplication.svg?branch=demo)](https://www.travis-ci.org/ArPIHomeSecurity/arpi_webapplication)
