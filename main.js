@@ -3797,6 +3797,7 @@ var UserDetailComponent = /** @class */ (function () {
             this.user.role = 'user';
             this.user.access_code = null;
             this.updateForm(this.user);
+            this.loader.display(false);
         }
     };
     UserDetailComponent.prototype.updateForm = function (user) {
