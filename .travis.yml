@@ -14,7 +14,7 @@ before_script:
   - npm install -g @angular/cli
 
 script:
-  - ng build --configuration=demo --output-path dist/demo --base-href  "https://arpihomesecurity.github.io/arpi_webapplication/"
+  - ng build --configuration=demo --output-path dist/demo --base-href  "https://demo.arpi-security.info/"
 #  - LANGUAGE=en ng test --watch false
 
 deploy:
@@ -27,4 +27,4 @@ deploy:
     branch: demo
   repo: ArPIHomeSecurity/arpi_webapplication
   target_branch: gh-pages
-#  fqdn: demo.arpi-security.info
+  fqdn: demo.arpi-security.info
