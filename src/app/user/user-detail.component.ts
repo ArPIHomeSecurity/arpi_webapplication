@@ -84,7 +84,7 @@ export class UserDetailComponent implements OnInit {
         }
       });
 
-    if (this.userId) {
+    if (this.userId != null) {
       this.userService.getUser(this.userId)
         .subscribe(user => {
           this.user = user;
