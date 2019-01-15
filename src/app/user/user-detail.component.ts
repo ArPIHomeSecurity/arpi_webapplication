@@ -99,6 +99,7 @@ export class UserDetailComponent implements OnInit {
       this.user.role = 'user';
       this.user.access_code = null;
       this.updateForm(this.user);
+      this.loader.display(false);
     }
   }
 
