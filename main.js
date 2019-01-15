@@ -3738,11 +3738,12 @@ var UserDetailComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.snackBar = snackBar;
         this.location = location;
-        this.user = null;
         this.ArmType = _models_index__WEBPACK_IMPORTED_MODULE_6__["ArmType"];
         this.roles = [];
         this.route.paramMap.subscribe(function (params) {
-            return _this.userId = +params.get('id');
+            if (params.get('id') != null) {
+                _this.userId = +params.get('id');
+            }
         });
     }
     UserDetailComponent.prototype.ngOnInit = function () {
@@ -3812,7 +3813,7 @@ var UserDetailComponent = /** @class */ (function () {
         var _this = this;
         console.log('User: ', this.user);
         var user = this.prepareSaveUser();
-        if (this.userId) {
+        if (this.userId != null) {
             this.userService.updateUser(user).subscribe(null, function (_) { return _this.snackBar.open('Failed to update!', null, { duration: _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].SNACK_DURATION }); });
         }
         else {
