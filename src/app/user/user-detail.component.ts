@@ -21,7 +21,7 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: './user-detail.component.html',
   styleUrls: ['user-detail.component.scss'],
-  providers: [MonitoringService, UserService]
+  providers: []
 })
 export class UserDetailComponent implements OnInit {
   userId: number;

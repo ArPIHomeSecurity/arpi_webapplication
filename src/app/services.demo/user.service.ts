@@ -25,8 +25,9 @@ export class UserService {
   }
 
   createUser(user: User): Observable<User> {
-    // set sensor from api
-    return of(new User());
+    user.id = Math.max.apply(Math.max, this.users.map(u => u.id).concat([0])) + 1;
+    this.users.push(user);
+    return of(user);
   }
 
   updateUser(user: User): Observable<User> {

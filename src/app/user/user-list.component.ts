@@ -16,7 +16,7 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: 'user-list.component.html',
   styleUrls: ['user-list.component.scss'],
-  providers: [MonitoringService, UserService]
+  providers: []
 })
 
 export class UserListComponent implements OnInit, OnDestroy {

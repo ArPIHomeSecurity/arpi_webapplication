@@ -25,11 +25,11 @@
               </div>
               <div class="mat-row">
                 <div class="mat-cell">Stay</div >
-                <div class="mat-cell" *ngIf="zone.stay_delay>=0; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.stay_delay}}</div >
+                <div class="mat-cell" *ngIf="zone.stay_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.stay_delay!==null ? zone.stay_delay : "-"}}</div >
               </div>
               <div class="mat-row">
-                <div class="mat-cell">Normal</div >
+                <div class="mat-cell">Disarmed</div >
                 <div class="mat-cell" *ngIf="zone.disarmed_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
                 <div class="mat-cell">{{zone.disarmed_delay!==null ? zone.disarmed_delay : "-"}}</div >
               </div>

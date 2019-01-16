@@ -1,7 +1,4 @@
-
-import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
@@ -59,24 +56,21 @@ export class SensorService {
 
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
-    if (this.sensors.length === 0) {
-      sensor.id = 0;
-    } else {
-      sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id)) + 1;
-    }
-
+    sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1;
     this.sensors.push(sensor);
     return of(sensor);
   }
 
 
   updateSensor( sensor: Sensor ): Observable<Sensor> {
-    // set sensor from api
+    const tmpUser = this.sensors.find(s => s.id === sensor.id);
+    const index = this.sensors.indexOf(tmpUser);
+    this.sensors[index] = sensor;
     return of(sensor);
   }
 
   deleteSensor( sensorId: number ): Observable<boolean> {
-    // set sensor from api
+    this.sensors = this.sensors.filter(s => s.id !== sensorId);
     return of(true);
   }
 

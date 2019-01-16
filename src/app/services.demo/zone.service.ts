@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { Zone } from '../models/index';
@@ -12,7 +11,7 @@ export class ZoneService {
   zones: Zone[] = ZONES;
 
   constructor(
-    private http: HttpClient
+
   ) { }
 
   getZones(): Observable<Zone[]> {
@@ -24,25 +23,21 @@ export class ZoneService {
   }
 
   createZone( zone: Zone ): Observable<Zone> {
-    console.log('Create zone: ', zone);
-    if (this.zones.length === 0) {
-      zone.id = 0;
-    } else {
-      zone.id = Math.max.apply(Math.max, this.zones.map(z => z.id)) + 1;
-    }
-
+    zone.id = Math.max.apply(Math.max, this.zones.map(z => z.id).concat([0])) + 1;
     this.zones.push(zone);
     return of(zone);
   }
 
   updateZone( zone: Zone ): Observable<Zone> {
-    // set sensor from api
-    return this.http.put<Zone>( '/api/zone/' + zone.id, zone, { } );
+    const tmpZone = this.zones.find(z => z.id === zone.id);
+    const index = this.zones.indexOf(tmpZone);
+    this.zones[index] = zone;
+    return of(zone);
   }
 
   deleteZone( zoneId: number ): Observable<boolean> {
-    // set sensor from api
-    return this.http.delete<boolean>( '/api/zone/' + zoneId, { } );
+    this.zones = this.zones.filter(z => z.id !== zoneId);
+    return of(true);
   }
 
   _getZone(zone_id: number) {

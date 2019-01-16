@@ -1,7 +1,4 @@
-
-import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 
@@ -16,7 +13,6 @@ export class AuthenticationService {
   loggedInAs: User = null;
 
   constructor(
-      private http: HttpClient,
       private eventService: EventService,
       private userService: UserService
   ) { }
