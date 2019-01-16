@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  timer, BehaviorSubject } from 'rxjs';
+import { Observable , BehaviorSubject } from 'rxjs';
 
-import { Alert, MonitoringState, ArmType } from '../models';
+import { Alert } from '../models';
 import { environment } from '../../environments/environment';
 
 
@@ -11,8 +11,8 @@ export class EventService {
   private _alertStateSubject = new BehaviorSubject<Alert>(null);
   private _alertState = this._alertStateSubject.asObservable();
 
-  private _armStateSubject = BehaviorSubject.create();
-  private _armState = this._armStateSubject.asObservable();
+  private _armStateSubject = new BehaviorSubject<string>(environment.ARM_DISARM);
+  private _armState = this._armStateSubject.asObservable().delay(environment.delay);
 
   private _monitoringStateSubject = new BehaviorSubject<string>(environment.MONITORING_READY);
   private _monitoringState = this._monitoringStateSubject.asObservable();
