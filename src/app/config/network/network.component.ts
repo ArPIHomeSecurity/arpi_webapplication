@@ -80,8 +80,8 @@ export class NetworkComponent implements OnInit {
     .subscribe(results => {
       this.dyndns = results[0] ? results[0] : JSON.parse(DEFAULT_DYNDNS);
       this.access = results[1] ? results[1] : JSON.parse(DEFAULT_ACCESS);
-      this.dyndns.value = JSON.parse(this.dyndns.value)
-      this.access.value = JSON.parse(this.access.value)
+      this.dyndns.value = this.dyndns.value;
+      this.access.value = this.access.value;
       this.updateForm(this.dyndns, this.access);
       this.loader.display(false);
     });

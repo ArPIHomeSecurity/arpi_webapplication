@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Option } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';
 
+import { environment, CONFIGURATION } from '../../environments/environment';
+
+
 @Injectable()
 export class ConfigurationService {
+
+  configuration: Option[] = CONFIGURATION;
+
   constructor(
-    private http: HttpClient,
     private authService: AuthenticationService
   ) { }
 
 
   getOption( option: string, section: string ): Observable<Option> {
-    // get configuration option from api
-    return this.http.get<Option>( '/api/config/' + option + '/' + section, { } );
+    return of(this.configuration.find(o => o.option === option && o.section === section)).delay(environment.delay);
   }
 
 
   setOption( option: string, section: string, value: any ) {
-    // get configuration option from api
-    return this.http.put( '/api/config/' + option + '/' + section, value, { } )
-      .subscribe();
+    const tmpOption = this.configuration.find(o => o.option === option && o.section === section);
+    if (tmpOption != null) {
+      tmpOption.value = value;
+    } else {
+      this.configuration.push({option: option, section: section, value: value});
+    }
   }
 }

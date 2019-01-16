@@ -35,6 +35,8 @@ export const environment = {
   }
 };
 
+export const CONFIGURATION = [];
+
 export const USERS = [
   {
     id: 0,
