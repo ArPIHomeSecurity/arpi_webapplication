@@ -72,7 +72,7 @@ export const CONFIGURATION = [
     section: 'dyndns',
     value: {
       username: 'user',
-      hostname: 'sdfssdfsdfsd.com',
+      hostname: 'my-example-host.com',
       provider: 'noip',
       password: 'password'
     }
