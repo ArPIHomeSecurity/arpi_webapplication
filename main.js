@@ -697,7 +697,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // material components
 
-// TODO: remove from production build
 
 
 var AppModule = /** @class */ (function () {
@@ -905,7 +904,7 @@ var routing = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"row\" fxLayoutAlign=\"center\" *ngIf=\"clock !== null\">\n  <form class=\"clock-form\" [formGroup]=\"clockForm\" (ngSubmit)=\"onSubmit()\"\n      fxLayout=\"column\" fxLayoutAlign=\"start end\" fxFlex.gt-xs=\"600px\" fxFlex.xs=\"100%\">\n    <mat-accordion>\n      <mat-expansion-panel expanded=\"true\">\n        <mat-expansion-panel-header>\n          <mat-panel-title>Time sources</mat-panel-title>\n        </mat-expansion-panel-header>\n        <div class=\"full-width\" fxLayout.gt-xs=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"space-between center\">\n          <mat-card class=\"clock\">\n            <mat-card-header>\n              <mat-card-title>Network time</mat-card-title>\n              <mat-card-subtitle>{{clock.network === null ? \" - - - \" : clock.network}}</mat-card-subtitle>\n            </mat-card-header>\n          </mat-card>\n            \n          <mat-card class=\"clock\">\n            <mat-card-header>\n              <mat-card-title>System time</mat-card-title>\n              <mat-card-subtitle>{{clock.system === null ? \" - - - \" : clock.system}}</mat-card-subtitle>\n            </mat-card-header>\n          </mat-card>\n      \n          <mat-card class=\"clock\">\n            <mat-card-header>\n              <mat-card-title>Hardware time</mat-card-title>\n              <mat-card-subtitle>{{clock.hw === null ? \" - - - \" : clock.hw}}</mat-card-subtitle>\n            </mat-card-header>\n          </mat-card>\n        </div>\n    \n        <button mat-raised-button type=\"button\" color=\"accent\" class=\"full-width\" (click)=\"onSynchronize()\">Synchronize</button>\n      </mat-expansion-panel>\n\n      <mat-expansion-panel>\n        <mat-expansion-panel-header>\n          <mat-panel-title>Manual settings</mat-panel-title>\n        </mat-expansion-panel-header>\n        <div class=\"full-width\">\n          <mat-form-field class=\"half-width\">\n            <input matInput \n              placeholder=\"New date time\"\n              formControlName=\"dateTime\"\n              [owlDateTimeTrigger]=\"dt\"\n              [owlDateTime]=\"dt\"\n              firstDayOfWeek=\"2\">\n            <owl-date-time #dt></owl-date-time>\n          </mat-form-field>\n      \n          <ng2-timezone-picker\n            class=\"half-width\"\n            [(timezone)]=\"timeZone\"\n            placeholder=\"Select timezone\"\n            showOffset=\"true\"\n            guess=\"true\">\n          </ng2-timezone-picker>\n        </div>\n    \n        <button mat-raised-button color=\"primary\" type=\"submit\">Save</button>\n      </mat-expansion-panel>\n    </mat-accordion>\n  </form>\n</div>\n"
+module.exports = "<div fxLayout=\"row\" fxLayoutAlign=\"center\" *ngIf=\"clock !== null\">\n  <form class=\"clock-form\" [formGroup]=\"clockForm\" (ngSubmit)=\"onSubmit()\"\n      fxLayout=\"column\" fxLayoutAlign=\"start end\" fxFlex.gt-xs=\"600px\" fxFlex.xs=\"100%\">\n    <mat-accordion class=\"full-width\">\n      <mat-expansion-panel expanded=\"true\">\n        <mat-expansion-panel-header>\n          <mat-panel-title>Time sources</mat-panel-title>\n        </mat-expansion-panel-header>\n        <mat-list>\n          <mat-list-item class=\"clock\">\n            Network time <span class=\"spacer\"></span> {{clock.network === null ? \" - - - \" : clock.network}}\n          </mat-list-item>\n            \n          <mat-list-item class=\"clock\">\n            System time <span class=\"spacer\"></span> {{clock.system === null ? \" - - - \" : clock.system}}\n          </mat-list-item>\n      \n          <mat-list-item class=\"clock\">\n            Hardware time <span class=\"spacer\"></span> {{clock.hw === null ? \" - - - \" : clock.hw}}\n          </mat-list-item>\n        </mat-list>\n\n        <button mat-raised-button type=\"button\" color=\"accent\" class=\"full-width\" (click)=\"onSynchronize()\">Synchronize</button>\n      </mat-expansion-panel>\n\n      <mat-expansion-panel>\n        <mat-expansion-panel-header>\n          <mat-panel-title>Manual settings</mat-panel-title>\n        </mat-expansion-panel-header>\n        <div class=\"full-width\">\n          <mat-form-field class=\"half-width\">\n            <input matInput \n              placeholder=\"New date time\"\n              formControlName=\"dateTime\"\n              [owlDateTimeTrigger]=\"dt\"\n              [owlDateTime]=\"dt\"\n              firstDayOfWeek=\"2\">\n            <owl-date-time #dt></owl-date-time>\n          </mat-form-field>\n      \n          <ng2-timezone-picker\n            class=\"half-width\"\n            [(timezone)]=\"timeZone\"\n            placeholder=\"Select timezone\"\n            showOffset=\"true\"\n            guess=\"true\">\n          </ng2-timezone-picker>\n        </div>\n    \n        <button mat-raised-button color=\"primary\" type=\"submit\">Save</button>\n      </mat-expansion-panel>\n    </mat-accordion>\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -954,6 +953,7 @@ var ClockComponent = /** @class */ (function () {
         this.loader = loader;
         this.monitoringService = monitoringService;
         this.clock = null;
+        this.timeZone = '';
         dateTimeAdapter.setLocale('iso-8601');
     }
     ClockComponent.prototype.ngOnInit = function () {
@@ -964,7 +964,6 @@ var ClockComponent = /** @class */ (function () {
         this.clockForm = this.fb.group({
             dateTime: '',
         });
-        console.log("Form: ", this.clockForm);
     };
     ClockComponent.prototype.updateComponent = function () {
         var _this = this;
@@ -976,8 +975,9 @@ var ClockComponent = /** @class */ (function () {
         this.monitoringService.getClock()
             .subscribe(function (clock) {
             _this.clock = clock;
-            _this.timeZone = clock['timezone'];
-            console.log("Clock: ", _this.clock);
+            if (clock != null) {
+                _this.timeZone = clock['timezone'];
+            }
             _this.loader.display(false);
         });
     };
@@ -3227,10 +3227,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _models_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/index */ "./src/app/models/index.ts");
-/* harmony import */ var _environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment.demo */ "./src/environments/environment.demo.ts");
-/* harmony import */ var _alert_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alert.service */ "./src/app/services/alert.service.ts");
-/* harmony import */ var _event_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./event.service */ "./src/app/services/event.service.ts");
-/* harmony import */ var _zone_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./zone.service */ "./src/app/services/zone.service.ts");
+/* harmony import */ var _alert_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert.service */ "./src/app/services/alert.service.ts");
+/* harmony import */ var _event_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./event.service */ "./src/app/services/event.service.ts");
+/* harmony import */ var _zone_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./zone.service */ "./src/app/services/zone.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3255,12 +3255,14 @@ var MonitoringService = /** @class */ (function () {
         this.zoneService = zoneService;
         this.armState = _models_index__WEBPACK_IMPORTED_MODULE_2__["ArmType"].DISARMED;
         this.alert = false;
+        this.datetime = new Date().toLocaleString();
+        this.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
     MonitoringService.prototype.is_alert = function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.alert);
     };
     MonitoringService.prototype.getArmState = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.armState).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.armState).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
     };
     MonitoringService.prototype.arm = function (armtype) {
         this.armState = armtype;
@@ -3274,18 +3276,25 @@ var MonitoringService = /** @class */ (function () {
         return;
     };
     MonitoringService.prototype.getMonitoringState = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(_models_index__WEBPACK_IMPORTED_MODULE_2__["MonitoringState"].READY).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(_models_index__WEBPACK_IMPORTED_MODULE_2__["MonitoringState"].READY).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
     };
     MonitoringService.prototype.getVersion = function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])('Version:DEMO-0.1');
     };
     MonitoringService.prototype.getClock = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])({
+            hw: this.datetime,
+            network: this.datetime,
+            system: this.datetime,
+            timezone: this.timeZone,
+        }).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["environment"].delay);
     };
     MonitoringService.prototype.synchronizeClock = function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(true);
     };
     MonitoringService.prototype.changeClock = function (dateTime, timeZone) {
+        this.datetime = dateTime;
+        this.timeZone = timeZone;
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(true);
     };
     MonitoringService.prototype._onAlert = function (sensor) {
@@ -3302,9 +3311,9 @@ var MonitoringService = /** @class */ (function () {
     };
     MonitoringService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_alert_service__WEBPACK_IMPORTED_MODULE_4__["AlertService"],
-            _event_service__WEBPACK_IMPORTED_MODULE_5__["EventService"],
-            _zone_service__WEBPACK_IMPORTED_MODULE_6__["ZoneService"]])
+        __metadata("design:paramtypes", [_alert_service__WEBPACK_IMPORTED_MODULE_3__["AlertService"],
+            _event_service__WEBPACK_IMPORTED_MODULE_4__["EventService"],
+            _zone_service__WEBPACK_IMPORTED_MODULE_5__["ZoneService"]])
     ], MonitoringService);
     return MonitoringService;
 }());
@@ -3454,7 +3463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_add_operator_delay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/delay */ "./node_modules/rxjs-compat/_esm5/add/operator/delay.js");
-/* harmony import */ var _environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment.demo */ "./src/environments/environment.demo.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3470,13 +3479,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var UserService = /** @class */ (function () {
     function UserService() {
-        this.users = _environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["USERS"];
+        this.users = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["USERS"];
     }
     UserService.prototype.getUsers = function () {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
     };
     UserService.prototype.getUser = function (userId) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users.find(function (u) { return u.id === userId; })).delay(_environments_environment_demo__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.users.find(function (u) { return u.id === userId; })).delay(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].delay);
     };
     UserService.prototype.createUser = function (user) {
         user.id = Math.max.apply(Math.max, this.users.map(function (u) { return u.id; }).concat([0])) + 1;
@@ -4512,72 +4521,6 @@ var ZoneListComponent = /** @class */ (function () {
     return ZoneListComponent;
 }());
 
-
-
-/***/ }),
-
-/***/ "./src/environments/environment.demo.ts":
-/*!**********************************************!*\
-  !*** ./src/environments/environment.demo.ts ***!
-  \**********************************************/
-/*! exports provided: environment, CONFIGURATION, USERS, SENSORS, ZONES, ALERTS */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONFIGURATION", function() { return CONFIGURATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USERS", function() { return USERS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SENSORS", function() { return SENSORS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZONES", function() { return ZONES; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALERTS", function() { return ALERTS; });
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=demo` then `environment.demo.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-var environment = {
-    production: false,
-    demo: true,
-    delay: 100,
-    channel_count: 3,
-    SNACK_DURATION: 2000,
-    MONITORING_PORT: 8081,
-    DEFAULT_LANGUAGE: 'en',
-    LANGUAGES: 'hu',
-    // monitoring arm types
-    ARM_AWAY: 'away',
-    ARM_STAY: 'stay',
-    ARM_DISARM: 'disarm',
-    // monitoring system states
-    MONITORING_STARTUP: 'monitoring_startup',
-    MONITORING_READY: 'monitoring_ready',
-    MONITORING_UPDATING_CONFIG: 'monitoring_updating_config',
-    MONITORING_INVALID_CONFIG: 'monitoring_invalid_config',
-    MONITORING_ARMED: 'monitoring_armed',
-    MONITORING_SABOTAGE: 'monitoring_sabotage',
-    ROLE_TYPES: {
-        ADMIN: 'admin',
-        USER: 'user'
-    }
-};
-var CONFIGURATION = [];
-var USERS = [
-    {
-        id: 0,
-        name: 'Administrator',
-        role: 'admin',
-        access_code: 1234
-    },
-    {
-        id: 1,
-        name: 'User 1',
-        role: 'user',
-        access_code: 1111
-    }
-];
-var SENSORS = [];
-var ZONES = [];
-var ALERTS = [];
 
 
 /***/ }),
