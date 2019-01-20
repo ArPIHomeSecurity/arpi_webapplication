@@ -67,6 +67,10 @@
                   "with": "src/app/app.component.demo.html"
                 },
                 {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
                   "replace": "src/app/services/alert.service.ts",
                   "with": "src/app/services.demo/alert.service.ts"
                 },

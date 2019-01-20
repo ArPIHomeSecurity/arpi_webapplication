@@ -59,6 +59,9 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 
+import { DemoComponent } from './demo/demo.component';
+import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -82,7 +85,9 @@ import {
     SensorDetailComponent,
     SensorDeleteDialog,
     SystemStateComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DemoComponent,
+    DemoHelpDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -118,7 +123,8 @@ import {
   entryComponents: [
     SensorDeleteDialog,
     UserDeleteDialog,
-    ZoneDeleteDialog
+    ZoneDeleteDialog,
+    DemoHelpDialogComponent
   ],
   providers: [
     AlertService,

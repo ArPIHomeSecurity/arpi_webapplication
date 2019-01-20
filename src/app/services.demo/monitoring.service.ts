@@ -4,17 +4,19 @@ import { Observable, of } from 'rxjs';
 
 import { ArmType, ArmType2String, Sensor } from '../models/index';
 import { MonitoringState } from '../models/index';
-import { environment } from '../../environments/environment.demo';
 import { AlertService } from './alert.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
 
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class MonitoringService {
 
   armState = ArmType.DISARMED;
   alert = false;
+  datetime = new Date().toLocaleString();
+  timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   constructor(
     private alertService: AlertService,
@@ -54,7 +56,12 @@ export class MonitoringService {
   }
 
   getClock(): Observable<Object> {
-    return of(null);
+    return of({
+        hw: this.datetime,
+        network: this.datetime,
+        system: this.datetime,
+        timezone: this.timeZone,
+    }).delay(environment.delay);
   }
 
   synchronizeClock() {
@@ -62,6 +69,8 @@ export class MonitoringService {
   }
 
   changeClock(dateTime, timeZone) {
+    this.datetime = dateTime;
+    this.timeZone = timeZone;
     return of(true);
   }
 

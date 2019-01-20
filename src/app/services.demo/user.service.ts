@@ -4,7 +4,7 @@ import 'rxjs/add/operator/delay';
 
 import { User } from '../models/index';
 
-import { USERS, environment } from '../../environments/environment.demo';
+import { USERS, environment } from '../../environments/environment';
 
 
 @Injectable()

@@ -22,7 +22,7 @@ const scheduleMicrotask = Promise.resolve( null );
 export class ClockComponent implements OnInit {
   clockForm: FormGroup;
   clock: Object = null;
-  timeZone;
+  timeZone = '';
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +42,6 @@ export class ClockComponent implements OnInit {
     this.clockForm = this.fb.group( {
       dateTime: '',
     } );
-    console.log("Form: ", this.clockForm);
   }
 
   updateComponent() {
@@ -55,9 +54,11 @@ export class ClockComponent implements OnInit {
     this.monitoringService.getClock()
       .subscribe(clock => {
         this.clock = clock;
-        this.timeZone = clock['timezone'];
-        console.log("Clock: ", this.clock);
-        this.loader.display( false );
+        if (clock != null) {
+          this.timeZone = clock['timezone'];
+        }
+
+        this.loader.display(false);
       });
   }
 
