@@ -110,8 +110,10 @@ export class NetworkComponent implements OnInit {
   }
 
   onSubmit() {
-    this.configService.setOption('network', 'dyndns', this.prepareDyndns());
-    this.configService.setOption('network', 'access', this.prepareAccess());
+    forkJoin(
+      this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
+      this.configService.setOption('network', 'access', this.prepareAccess()))
+    .subscribe(_ => this.updateComponent());
   }
 }
 

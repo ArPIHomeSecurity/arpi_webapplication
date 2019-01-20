@@ -22,12 +22,14 @@ export class ConfigurationService {
   }
 
 
-  setOption( option: string, section: string, value: any ) {
+  setOption( option: string, section: string, value: any ): Observable<boolean> {
     const tmpOption = this.configuration.find(o => o.option === option && o.section === section);
     if (tmpOption != null) {
       tmpOption.value = value;
     } else {
       this.configuration.push({option: option, section: section, value: value});
     }
+
+    return of(true).delay(environment.delay);
   }
 }

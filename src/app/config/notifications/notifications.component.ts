@@ -134,7 +134,8 @@ export class NotificationsComponent implements OnInit {
     const gsm = this.prepareGsm();
     this.configService.setOption('notifications', 'gsm', gsm);
     const subcriptions = this.prepareSubscriptions();
-    this.configService.setOption('notifications', 'subscriptions', subcriptions);
+    this.configService.setOption('notifications', 'subscriptions', subcriptions)
+      .subscribe(_ => this.updateComponent());
   }
 }
 
