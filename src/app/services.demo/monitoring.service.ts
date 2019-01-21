@@ -80,6 +80,8 @@ export class MonitoringService {
       this.alertService._createAlert([sensor], ArmType.AWAY);
     } else if (this.armState === ArmType.STAY && zone.stay_delay != null) {
       this.alertService._createAlert([sensor], ArmType.STAY);
+    } else if (this.armState === ArmType.DISARMED && zone.disarmed_delay != null) {
+      this.alertService._createAlert([sensor], ArmType.DISARMED);
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
     }
