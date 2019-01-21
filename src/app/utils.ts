@@ -4,14 +4,10 @@ import { AbstractControl } from '@angular/forms';
 export function positiveInteger(): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
     const error: ValidationErrors = { integer: true };
-    if (control.value === `${parseInt(control.value, 10)}`) {
-      if (Number(control.value) < 0) {
-        return {invalid: 'Should be a positive value!'};;
-      } else {
-        return null;
-      }
+    if (Number(control.value) < 0 || isNaN(Number(control.value))) {
+      return {invalid: 'Should be a positive value!'};
     } else {
-      return {invalid: 'Invalid value!'};
+      return null;
     }
   };
 }

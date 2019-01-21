@@ -46,9 +46,9 @@ class SensorInfo {
 export class SensorDetailComponent implements OnInit {
   sensorId: number;
   sensor: Sensor = null;
-  channels = [];
-  zones: Zone[] = [];
-  sensorTypes: SensorType [] = [];
+  channels: number[];
+  zones: Zone[];
+  sensorTypes: SensorType[];
   sensorForm: FormGroup;
   zoneForm: FormGroup;
   new_zone = false;
@@ -77,7 +77,8 @@ export class SensorDetailComponent implements OnInit {
 
   ngOnInit() {
     // channels are numbered 1..15
-    for (let i = 1; i <= environment.channel_count; i++){
+    this.channels = [];
+    for (let i = 1; i <= environment.channel_count; i++) {
       this.channels.push(i);
     }
 
@@ -220,9 +221,9 @@ export class SensorDetailComponent implements OnInit {
     return {
       id: sensorModel.zone_id,
       name: zoneModel.zone_name,
-      disarmed_delay: parseInt(zoneModel.disarmed_delay),
-      away_delay: parseInt(zoneModel.away_delay),
-      stay_delay: parseInt(zoneModel.away_delay),
+      disarmed_delay: parseInt(zoneModel.disarmed_delay, 10),
+      away_delay: parseInt(zoneModel.away_delay, 10),
+      stay_delay: parseInt(zoneModel.away_delay, 10),
       description: ''
     };
   }
@@ -269,7 +270,8 @@ export class SensorDetailComponent implements OnInit {
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId)
             .subscribe(_ => {
-              this.router.navigate(['/sensors'])},
+                this.router.navigate(['/sensors']);
+              },
               _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
         } else {
