@@ -50,7 +50,7 @@ export class ZoneDetailComponent implements OnInit {
   ) {
 
     this.route.paramMap.subscribe(params =>
-      this.zoneId = +params.get('id')
+      this.zoneId = params.get('id')
     );
   }
 
