@@ -64,6 +64,11 @@ const appRoutes: Routes = [
     canActivate: [AdminGuard]
   },
   {
+    path: 'zone/add',
+    component: ZoneDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
     path: 'zone/:id',
     component: ZoneDetailComponent,
     canActivate: [AdminGuard]
