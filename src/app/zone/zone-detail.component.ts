@@ -49,11 +49,11 @@ export class ZoneDetailComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
 
-    this.route.paramMap.subscribe(params =>
+    this.route.paramMap.subscribe(params => {
       if (params.get('id') != null) {
         this.zoneId = +params.get('id')
-    }
-    );
+      }
+    });
   }
 
   ngOnInit() {
