@@ -68,9 +68,11 @@ export class SensorDetailComponent implements OnInit {
     private location: Location,
     private snackBar: MatSnackBar) {
 
-    this.route.paramMap.subscribe(params =>
-      this.sensorId = +params.get('id')
-    );
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id') != null) {
+        this.sensorId = +params.get('id');
+      }
+    });
   }
 
   ngOnInit() {
@@ -90,7 +92,7 @@ export class SensorDetailComponent implements OnInit {
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
-    if (this.sensorId) {
+    if (this.sensorId != null) {
       forkJoin(
         this.sensorService.getSensor(this.sensorId),
         this.zoneService.getZones(),
@@ -182,7 +184,7 @@ export class SensorDetailComponent implements OnInit {
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
       );
     } else {
-        if (this.sensor.id) {
+        if (this.sensorId != null) {
           this.sensorService.updateSensor(sensor).subscribe(
               _ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION}));
