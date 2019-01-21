@@ -50,7 +50,9 @@ export class ZoneDetailComponent implements OnInit {
   ) {
 
     this.route.paramMap.subscribe(params =>
-      this.zoneId = params.get('id')
+      if (params.get('id') != null) {
+        this.zoneId = +params.get('id')
+    }
     );
   }
 
@@ -60,7 +62,7 @@ export class ZoneDetailComponent implements OnInit {
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
-    if (this.zoneId) {
+    if (this.zoneId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
       // https://github.com/angular/angular/issues/17572#issuecomment-323465737
       scheduleMicrotask.then(() => {
@@ -101,7 +103,7 @@ export class ZoneDetailComponent implements OnInit {
 
   onSubmit() {
     let zone = this.prepareSaveZone();
-    if (this.zoneId) {
+    if (this.zoneId != null) {
       this.zoneService.updateZone(zone).subscribe(
           _ => this.router.navigate(['/zones']),
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
