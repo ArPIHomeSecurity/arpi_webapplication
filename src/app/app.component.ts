@@ -57,8 +57,11 @@ export class AppComponent implements OnInit {
   }
 
   getUserName() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return currentUser ? currentUser.name : '';
+    return this.authService.getUsername();
+  }
+
+  isAdminUser() {
+    return this.authService.getRole() === environment.ROLE_TYPES.ADMIN;
   }
 
   // helper method to access the sidenav even if it is in ngIf

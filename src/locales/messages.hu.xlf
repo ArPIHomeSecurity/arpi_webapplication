@@ -129,17 +129,13 @@
           <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>" />
           exit_to_app
           <x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>" />
-          Logout (
-          <x id="INTERPOLATION" equiv-text="{{ getUserName() }}" />
-          )
+          Logout (<x id="INTERPOLATION" equiv-text="{{ getUserName() }}" />)
         </source>
         <target state="new">
           <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon>" />
           exit_to_app
           <x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon>" />
-          Kijelentkezés (
-          <x id="INTERPOLATION" equiv-text="{{ getUserName() }}" />
-          )
+          Kijelentkezés (<x id="INTERPOLATION" equiv-text="{{ getUserName() }}" />)
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/app.component.html</context>

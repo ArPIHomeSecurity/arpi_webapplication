@@ -28,16 +28,22 @@ export class AuthenticationService {
   }
 
   isLoggedIn() {
-    return true;
-    // return this.loggedInAs !== null;
+    return this.loggedInAs !== null;
   }
 
   getRole(): string {
-    return 'admin';
-    // return this.loggedInAs.role;
+    if (this.loggedInAs != null) {
+      return this.loggedInAs.role;
+    }
+  }
+
+  getUsername(): string {
+    if (this.loggedInAs != null) {
+      return this.loggedInAs.name;
+    }
   }
 
   getToken(): string {
-    return 'ttookkeenn';
+    return 'secret-token';
   }
 }

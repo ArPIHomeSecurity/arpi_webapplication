@@ -59,6 +59,13 @@ export class AuthenticationService {
     }
   }
 
+  getUsername(): string {
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      return JWT(userToken)['name'];
+    }
+  }
+
   getToken(): string {
     if (localStorage.getItem('userToken')) {
       return localStorage.getItem('userToken');

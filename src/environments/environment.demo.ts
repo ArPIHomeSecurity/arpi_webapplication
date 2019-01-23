@@ -41,13 +41,13 @@ export const USERS = [
   {
     id: 0,
     name: 'Administrator',
-    role: 'admin',
+    role: environment.ROLE_TYPES.ADMIN,
     access_code: 1234
   },
   {
     id: 1,
     name: 'User 1',
-    role: 'user',
+    role: environment.ROLE_TYPES.USER,
     access_code: 1111
   }
 ];
