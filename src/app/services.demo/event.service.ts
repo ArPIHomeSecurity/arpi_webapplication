@@ -46,8 +46,10 @@ export class EventService {
     return subject;
   }
 
-  _updateAlertState(alert: Alert) {
-    this._alertStateSubject.next(alert);
+  _updateAlertState(alert: Alert, delay: number = 0) {
+    setTimeout(() => {
+      this._alertStateSubject.next(alert);
+    }, 1000 * delay);
   }
 
   _updateArmState(state: string) {
