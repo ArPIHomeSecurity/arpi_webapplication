@@ -77,14 +77,25 @@ export class MonitoringService {
   _onAlert(sensor: Sensor) {
     const zone = this.zoneService._getZone(sensor.zone_id);
     if (this.armState === ArmType.AWAY && zone.away_delay != null) {
-      this.alertService._createAlert([sensor], ArmType.AWAY, zone.away_delay);
+      setTimeout(() => {
+        if (this.armState !== ArmType.DISARMED) {
+          this.alertService._createAlert([sensor], ArmType.AWAY);
+        }
+      }, 1000 * zone.away_delay);
     } else if (this.armState === ArmType.STAY && zone.stay_delay != null) {
-      this.alertService._createAlert([sensor], ArmType.STAY, zone.stay_delay);
+      setTimeout(() => {
+        if (this.armState !== ArmType.DISARMED) {
+          this.alertService._createAlert([sensor], ArmType.STAY);
+        }
+      }, 1000 * zone.stay_delay);
     } else if (this.armState === ArmType.DISARMED && zone.disarmed_delay != null) {
-      this.alertService._createAlert([sensor], ArmType.DISARMED, zone.disarmed_delay);
+      setTimeout(() => {
+        if (this.armState !== ArmType.DISARMED) {
+          this.alertService._createAlert([sensor], ArmType.DISARMED);
+        }
+      }, 1000 * zone.disarmed_delay);
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
     }
   }
 }
-

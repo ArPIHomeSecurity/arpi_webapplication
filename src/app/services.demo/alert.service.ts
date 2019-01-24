@@ -27,7 +27,7 @@ export class AlertService {
     return of(this.alerts.find(a => a.end_time != null));
   }
 
-  _createAlert(sensors: Sensor[], armType: ArmType, delay: number = 0) {
+  _createAlert(sensors: Sensor[], armType: ArmType) {
     const alert: Alert = {
       id: this.alerts.length + 1,
       start_time: new Date(),
@@ -36,7 +36,7 @@ export class AlertService {
       sensors: sensors
     };
     this.alerts.push(alert);
-    this.eventService._updateAlertState(alert, delay);
+    this.eventService._updateAlertState(alert);
   }
 
   _stopAlert() {

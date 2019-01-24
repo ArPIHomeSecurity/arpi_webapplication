@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class EventService {
 
+  alertDelayed: boolean;
   private _alertStateSubject = new BehaviorSubject<Alert>(null);
   private _alertState = this._alertStateSubject.asObservable().delay(environment.delay);
 
@@ -46,10 +47,8 @@ export class EventService {
     return subject;
   }
 
-  _updateAlertState(alert: Alert, delay: number = 0) {
-    setTimeout(() => {
-      this._alertStateSubject.next(alert);
-    }, 1000 * delay);
+  _updateAlertState(alert: Alert) {
+    this._alertStateSubject.next(alert);
   }
 
   _updateArmState(state: string) {
