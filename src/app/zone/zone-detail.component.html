@@ -28,7 +28,7 @@
       <textarea matInput placeholder="Description" formControlName="description" required></textarea>
     </mat-form-field>
 
-    <div style="margin-bottom: 1em">
+    <div class="actions">
       <button mat-raised-button color="primary" [disabled]="zoneForm.invalid || monitoringState != MonitoringState.READY"
         i18n="@@save button">Save</button>
       <button *ngIf="zoneId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(zone.id)" [disabled]="getSensors().length > 0 || monitoringState != MonitoringState.READY"

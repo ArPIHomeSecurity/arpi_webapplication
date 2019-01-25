@@ -17,7 +17,7 @@
       <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
     </mat-form-field>
 
-    <div style="margin-bottom: 1em">
+    <div class="actions">
       <button mat-raised-button color="primary" [disabled]="userForm.invalid || armState != ArmType.DISARMED"
         i18n="@@save button">Save</button>
       <button *ngIf="userId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(user.id)" [disabled]="armState != ArmType.DISARMED"

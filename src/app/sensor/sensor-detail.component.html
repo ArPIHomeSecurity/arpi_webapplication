@@ -52,7 +52,7 @@
       </mat-form-field>
     </div>
 
-    <div >
+    <div class="actions">
       <button mat-raised-button color="primary" [disabled]="sensorForm.invalid || monitoringState != MonitoringState.READY"
         i18n="@@save button">Save</button>
       <button *ngIf="sensorId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="monitoringState != MonitoringState.READY"
