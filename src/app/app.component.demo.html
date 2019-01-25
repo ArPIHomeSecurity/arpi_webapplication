@@ -2,7 +2,8 @@
   <app-demo></app-demo>
 
   <mat-toolbar color="primary">
-    <button *ngIf="isLoggedIn()" type="button" mat-button (click)="sidenav.toggle()" [fxShow]="small_screen"><mat-icon>menu</mat-icon></button>
+    <button mat-button *ngIf="isLoggedIn()" (click)="sidenav.toggle()" fxHide.gt-sm="true" class="menu"><mat-icon>menu</mat-icon></button>
+    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true"><mat-icon mat-list-icon>home</mat-icon></button>
     <span class="spacer"></span>
     <system-state></system-state>
   </mat-toolbar>
@@ -16,7 +17,7 @@
 
       <mat-nav-list>
         <a mat-list-item routerLink="/" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null" 
-          i18n="@@home menu link">
+          i18n="@@home menu link" fxHide.lt-md="true">
           <mat-icon mat-list-icon>home</mat-icon>Home
         </a>
         <a mat-list-item routerLink="/alerts" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
@@ -51,7 +52,7 @@
         <mat-divider></mat-divider>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
           i18n="@@logout menu link">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{getUserName()}})
+          <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})
         </a>
         <mat-list-item>
           <mat-icon mat-list-icon>language</mat-icon>
@@ -99,11 +100,11 @@
         <a href="https://github.com/arpihomesecurity" target="project">
           <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
         </a>
+        <span class="spacer"></span>
         <div>
           <div class="version">WebApp {{webapplication_version}}</div>
           <div class="version">Server {{server_version}}</div>
         </div>
-        <span class="spacer"></span>
       </mat-toolbar>
     </div>
   </ng-template>
