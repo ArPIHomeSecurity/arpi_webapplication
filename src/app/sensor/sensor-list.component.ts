@@ -76,7 +76,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
   }
 
   getZoneName(zoneId: number) {
-    if (this.zones.length && zoneId) {
+    if (this.zones.length && zoneId != null) {
         return this.zones.find(x => x.id === zoneId).name;
     }
 
