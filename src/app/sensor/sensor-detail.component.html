@@ -1,6 +1,6 @@
 <div class="sensor-detail" fxLayout="row" fxLayoutAlign="center" [fxShow]="sensor !== null">
   <form *ngIf="sensor; else not_found" class="sensor-form" [formGroup]="sensorForm" (ngSubmit)="onSubmit(sensorForm.value)" novalidate
-        fxLayout="column" fxFlex.xl="600px" fxFlex.lg="600px" fxFlex.md="600px" fxFlex.sm="600px" fxFlex.xs="100%">
+        fxLayout="column" fxFlex.gt-xs="600px" fxFlex.xs="100%">
 
     <mat-form-field>
       <mat-select formControlName="channel" placeholder="Channel">

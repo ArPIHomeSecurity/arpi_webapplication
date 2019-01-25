@@ -1,6 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center" *ngIf="clock !== null">
-  <form class="clock-form" [formGroup]="clockForm" (ngSubmit)="onSubmit()"
-      fxLayout="column" fxFlex.gt-xs="600px" fxFlex.xs="100%">
+  <form class="clock-form" [formGroup]="clockForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="600px" fxFlex.xs="100%">
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
