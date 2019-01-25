@@ -25,7 +25,7 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 export class UserDetailComponent implements OnInit {
   userId: number;
-  user: User;
+  user: User = null;
   userForm: FormGroup;
   ArmType: any = ArmType;
   roles: any = [];
@@ -70,13 +70,19 @@ export class UserDetailComponent implements OnInit {
       .subscribe(arm_type => {
         if (arm_type === environment.ARM_DISARM) {
           this.armState = ArmType.DISARMED;
-          this.userForm.enable();
+          if (this.userForm != null) {
+            this.userForm.enable();
+          }
         } else if (arm_type === environment.ARM_AWAY) {
           this.armState = ArmType.AWAY;
-          this.userForm.disable();
+          if (this.userForm != null) {
+            this.userForm.disable();
+          }
         } else if (arm_type === environment.ARM_STAY) {
           this.armState = ArmType.STAY;
-          this.userForm.disable();
+          if (this.userForm != null) {
+            this.userForm.disable();
+          }
         }
       });
 

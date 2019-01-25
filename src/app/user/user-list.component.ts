@@ -25,6 +25,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   armState: ArmType;
   isDestroyed = false;
 
+  environment = environment;
+
   constructor(
     private router: Router,
     private loader: LoaderService,
