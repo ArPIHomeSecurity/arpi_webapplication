@@ -102,7 +102,7 @@ export class SensorService {
       sensor = this.sensors.find(s => s.id === sensorId);
     }
 
-    if (sensor != null) {
+    if (sensor != null && sensor.enabled) {
       sensor.alert = value;
       this.eventService._updateSensorsState(sensor.alert);
 
