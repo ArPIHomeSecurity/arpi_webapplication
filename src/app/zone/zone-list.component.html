@@ -74,10 +74,9 @@
       <h1 align="center">No zones found</h1>
     </div>
   </ng-template>
-  
-  
-  <div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
-    <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-    <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  </div>
+</div>
+
+<div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
+  <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

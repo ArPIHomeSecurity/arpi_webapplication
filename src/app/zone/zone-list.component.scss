@@ -13,19 +13,17 @@ ul {
 }
 
 .zone-actions {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 85px;
   right: 20px;
   float: right;
-  margin-top: -75px;
 }
 
 .zone-actions-xs {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 65px;
   right: 20px;
   float: right;
-  margin-top: -60px;
 }
 
 .zone-action {

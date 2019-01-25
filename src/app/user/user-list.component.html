@@ -22,9 +22,9 @@
       <h1>No users found</h1>
     </div>
   </ng-template>
+</div>
 
-  <div class="user-actions">
-    <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-    <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  </div>
+<div ngClass.gt-xs="user-actions" ngClass.xs="user-actions-xs">
+  <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

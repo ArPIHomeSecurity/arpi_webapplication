@@ -42,10 +42,10 @@
     </div>
   </ng-template>
   
-  <div ngClass.gt-xs="sensor-actions" ngClass.xs="sensor-actions-xs" [fxShow]="userCanEdit()">
-    <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-    <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-    <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-    <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  </div>
+</div>
+<div ngClass.gt-xs="sensor-actions" ngClass.xs="sensor-actions-xs" [fxShow]="userCanEdit()">
+  <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+  <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+  <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

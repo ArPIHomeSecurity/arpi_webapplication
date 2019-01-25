@@ -49,19 +49,17 @@
 }
 
 .sensor-actions {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 84px;
   right: 20px;
   float: right;
-  margin-top: -143px;
 }
 
 .sensor-actions-xs {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 65px;
   right: 20px;
   float: right;
-  margin-top: -110px;
 }
 
 .sensor-action {
