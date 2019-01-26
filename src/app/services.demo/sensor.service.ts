@@ -12,6 +12,7 @@ import { environment, SENSORS } from '../../environments/environment';
 })
 export class SensorService {
 
+  channels: boolean[] = [];
   sensors: Sensor[] = SENSORS;
   types: SensorType[] = [
     {
@@ -63,8 +64,10 @@ export class SensorService {
 
 
   updateSensor( sensor: Sensor ): Observable<Sensor> {
-    const tmpUser = this.sensors.find(s => s.id === sensor.id);
-    const index = this.sensors.indexOf(tmpUser);
+    const tmpSensor = this.sensors.find(s => s.id === sensor.id);
+    const index = this.sensors.indexOf(tmpSensor);
+    sensor.alert = this.channels[sensor.channel];
+    this.eventService._updateSensorsState(sensor.alert);
     this.sensors[index] = sensor;
     return of(sensor);
   }
@@ -96,10 +99,11 @@ export class SensorService {
 
   }
 
-  _alertSensor(sensorId: number, value: boolean) {
+  _alertChannel(channelId: number, value: boolean) {
     let sensor;
-    if (sensorId != null && this.sensors) {
-      sensor = this.sensors.find(s => s.id === sensorId);
+    if (channelId != null && this.sensors) {
+      sensor = this.sensors.find(s => s.channel === channelId);
+      this.channels[channelId] = value;
     }
 
     if (sensor != null && sensor.enabled) {

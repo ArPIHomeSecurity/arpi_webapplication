@@ -34,6 +34,7 @@ export class DemoComponent implements OnInit {
 
   swap(index: number) {
     this.channels[index] = !this.channels[index];
-    this.sensorService._alertSensor(index, this.channels[index]);
+    // channels start with "1" => shift
+    this.sensorService._alertChannel(index + 1, this.channels[index]);
   }
 }

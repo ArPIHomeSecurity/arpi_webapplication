@@ -19,6 +19,13 @@ import { environment } from '../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
+/**
+ * Channel info
+ */
+class Channel {
+  channel: number;
+  sensor: Sensor;
+}
 
 /**
  * Helper class for storing sensor and zone informations.
@@ -46,7 +53,8 @@ class SensorInfo {
 export class SensorDetailComponent implements OnInit {
   sensorId: number;
   sensor: Sensor = null;
-  channels: number[];
+  sensors: Sensor[];
+  channels: Channel[];
   zones: Zone[];
   sensorTypes: SensorType[];
   sensorForm: FormGroup;
@@ -76,12 +84,6 @@ export class SensorDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // channels are numbered 1..15
-    this.channels = [];
-    for (let i = 1; i <= environment.channel_count; i++) {
-      this.channels.push(i);
-    }
-
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
@@ -96,6 +98,7 @@ export class SensorDetailComponent implements OnInit {
     if (this.sensorId != null) {
       forkJoin(
         this.sensorService.getSensor(this.sensorId),
+        this.sensorService.getSensors(),
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
       .subscribe(results => {
@@ -112,19 +115,25 @@ export class SensorDetailComponent implements OnInit {
             away_delay: null,
             stay_delay: null
           };
-          this.updateForm(info);
 
-          this.zones = results[1];
-          this.sensorTypes = results[2];
+          this.sensors = results[1];
+          this.zones = results[2];
+          this.sensorTypes = results[3];
+          this.channels = this.getFreeChannels(this.sensors);
+
+          this.updateForm(info);
           this.loader.display(false);
       });
     } else {
       forkJoin(
+        this.sensorService.getSensors(),
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
       .subscribe(results => {
-        this.zones = results[0];
-        this.sensorTypes = results[1];
+        this.sensors = results[0];
+        this.zones = results[1];
+        this.sensorTypes = results[2];
+        this.channels = this.getFreeChannels(this.sensors);
 
         this.sensor = new Sensor;
         const info = {
@@ -157,7 +166,7 @@ export class SensorDetailComponent implements OnInit {
       stay_delay: new FormControl(sensor.stay_delay, sensor.stay_delay !== null ? [Validators.required, positiveInteger()] : null)
     });
     this.sensorForm = this.fb.group({
-      channel: new FormControl(sensor.channel, Validators.required),
+      channel: new FormControl(sensor.channel),
       zone_id: new FormControl(sensor.zone_id, Validators.required),
       type_id: new FormControl(sensor.type_id, Validators.required),
       enabled: sensor.enabled,
@@ -183,12 +192,14 @@ export class SensorDetailComponent implements OnInit {
                 .subscribe(_ => {console.log('Sensor: ', result); this.router.navigate(['/sensors']); });
           },
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
-      );
+        );
     } else {
         if (this.sensorId != null) {
-          this.sensorService.updateSensor(sensor).subscribe(
+          this.sensorService.updateSensor(sensor)
+            .subscribe(
               _ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION}));
+              _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+            );
         } else {
           this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
@@ -279,5 +290,23 @@ export class SensorDetailComponent implements OnInit {
         }
       }
     });
+  }
+
+  getFreeChannels(sensors: Sensor[]): Channel[] {
+    // channels are numbered 1..channel count
+    const channels: Channel[] = [{
+      channel: 0,
+      sensor: null
+    }];
+    for (let i = 1; i <= environment.channel_count; i++) {
+      const sensor = sensors.find(s => s.channel === i);
+
+      channels.push({
+        channel: i,
+        sensor: sensor
+      });
+    }
+
+    return channels;
   }
 }
