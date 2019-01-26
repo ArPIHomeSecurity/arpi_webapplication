@@ -178,6 +178,13 @@ export class SensorDetailComponent implements OnInit {
   onSubmit() {
     const sensor = this.prepareSensor();
     const zone = this.prepareZone();
+
+    if (this.channels[sensor.channel].sensor != null) {
+      // disconnect sensor on channel collision
+      this.channels[sensor.channel].sensor.channel = 0;
+      this.sensorService.updateSensor(this.channels[sensor.channel].sensor);
+    }
+
     if (this.new_zone) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
