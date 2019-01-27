@@ -1,5 +1,5 @@
-<div [fxShow]="sensors !== null">
-  <div *ngIf="sensors && sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
+<div *ngIf="sensors != null">
+  <div *ngIf="sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
       <mat-card-header>
         <div mat-card-avatar [ngSwitch]="getSensorTypeName(sensor.type_id)" 

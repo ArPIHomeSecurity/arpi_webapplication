@@ -1,5 +1,5 @@
-<div  [fxShow]="zones !== null && sensors !== null" fxLayout="row" fxLayoutAlign="center">
-  <div *ngIf="zones && zones.length > 0; else no_zones" fxLayout="column" fxLayoutGap="20px" fxFlex.gt-xs="600px" fxFlex.xs="100%">
+<div *ngIf="zones != null && sensors != null">
+  <div *ngIf="zones.length > 0; else no_zones" ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card *ngFor="let zone of zones">
       <mat-card-content layout="row">
   

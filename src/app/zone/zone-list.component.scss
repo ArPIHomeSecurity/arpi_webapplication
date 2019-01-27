@@ -1,7 +1,15 @@
 @charset "UTF-8";
 
-.sensor-list li {
-  list-style: none;
+.zone-list {
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 600px;
+}
+
+.zone-list-xs {
+  padding: 5px;
+  width: 100%;
 }
 
 h3 {

@@ -1,10 +1,13 @@
-.sensor-detail {
-  max-height: none !important;
-  padding: 10px;
+.sensor-form {
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 600px;
 }
 
-form {
-  margin: 15px 0px;
+.sensor-form-xs {
+  padding: 5px;
+  width: 100%;
 }
 
 .mat-form-field {

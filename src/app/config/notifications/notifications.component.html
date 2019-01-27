@@ -1,6 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center"  [fxShow]="email !== null && gsm !== null && subscriptions !== null">
+<div *ngIf="email != null && gsm != null && subscriptions != null">
   <form class="notifications-form" [formGroup]="notificationsForm" (ngSubmit)="onSubmit()"
-    fxFlex.gt-xs="600px" fxFlex.xs="100%">
+      ngClass.gt-xs="notifications-form" ngClass.xs="notifications-form-xs" fxLayout="column" fxLayoutGap="20px">
+
     <mat-accordion multi="true">
 
       <mat-expansion-panel>

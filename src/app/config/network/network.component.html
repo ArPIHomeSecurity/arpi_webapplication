@@ -1,6 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center"  [fxShow]="dyndns !== null && access !== null">
-  <form class="network-form" [formGroup]="networkForm" (ngSubmit)="onSubmit()"
-    fxFlex.gt-xs="600px" fxFlex.xs="100%">
+<div *ngIf="dyndns != null && access != null">
+  <form [formGroup]="networkForm" (ngSubmit)="onSubmit()"
+      ngClass.gt-xs="network-form" ngClass.xs="network-form-xs" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+    
     <mat-accordion multi="true">
 
       <mat-expansion-panel>

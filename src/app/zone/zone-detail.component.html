@@ -1,6 +1,6 @@
-<div [fxShow]="zone !== null" class="zone-detail" fxLayout="row" fxLayoutAlign="center">
-  <form *ngIf="zone; else not_found" class="zone-form" [formGroup]="zoneForm" (ngSubmit)="onSubmit(zoneForm.value)" novalidate
-        fxLayout="column" fxFlex.gt-xs="600px" fxFlex.xs="100%">
+<div *ngIf="zone != null">
+  <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit(zoneForm.value)" novalidate
+      ngClass.gt-xs="zone-form" ngClass.xs="zone-form-xs" fxLayout="column">
 
     <mat-form-field>
       <input matInput placeholder="Name" formControlName="name" required>

@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+.user-list {
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
+}
+
+.user-list-xs {
+  padding: 5px;
+  width: 100%;
+}
+
 .user-actions {
   position: fixed;
   bottom: 85px;

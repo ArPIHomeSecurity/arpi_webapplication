@@ -1,21 +1,14 @@
 @charset "UTF-8";
 
-
 .sensor-list {
-  box-sizing: border-box;
   padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
-  width: 600px;
   margin-right: auto;
   margin-left: auto;
+  width: 600px;
 }
 
 .sensor-list-xs {
-  box-sizing: border-box;
-  padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
+  padding: 5px;
   width: 100%;
 }
 

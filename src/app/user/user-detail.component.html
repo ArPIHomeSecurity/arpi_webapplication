@@ -1,6 +1,6 @@
-<div class="user-detail" fxLayout="row" fxLayoutAlign="center" [fxShow]="user !== null">
-  <form *ngIf="user; else not_found" class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" novalidate
-    fxFlex.gt-xs="600px" fxFlex.xs="100%">
+<div *ngIf="user != null">
+  <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" novalidate
+      ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
 
     <mat-form-field>
       <input matInput placeholder="Name" formControlName="name" required>
