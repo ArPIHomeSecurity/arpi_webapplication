@@ -101,6 +101,10 @@
                 {
                   "replace": "src/app/services/zone.service.ts",
                   "with": "src/app/services.demo/zone.service.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
                 }
               ],
               "optimization": true,
