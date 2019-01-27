@@ -188,7 +188,6 @@ export class SensorDetailComponent implements OnInit {
     if (this.new_zone) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            console.log('Zone: ', result);
             sensor.zone_id = result.id;
             if (this.sensor.id !== undefined) {
               return this.sensorService.updateSensor(sensor)
@@ -196,7 +195,7 @@ export class SensorDetailComponent implements OnInit {
             }
 
             return this.sensorService.createSensor(sensor)
-                .subscribe(_ => {console.log('Sensor: ', result); this.router.navigate(['/sensors']); });
+                .subscribe(_ => this.router.navigate(['/sensors']) );
           },
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
         );

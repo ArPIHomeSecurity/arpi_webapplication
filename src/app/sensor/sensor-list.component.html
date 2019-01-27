@@ -18,7 +18,7 @@
         <mat-card-subtitle>
           <div *ngIf="sensor.channel === 0">Disconnected</div>
           <div *ngIf="sensor.enabled && sensor.channel !== 0">
-            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon>Enabled on input channel {{sensor.channel}}
+            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon>Enabled on input channel CH{{ sensor.channel | number: '2.0-0'}}
           </div>
           <div *ngIf="!sensor.enabled && sensor.channel !== 0">
             <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon>Disabled

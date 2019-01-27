@@ -1,6 +1,6 @@
 <div *ngIf="email != null && gsm != null && subscriptions != null">
   <form class="notifications-form" [formGroup]="notificationsForm" (ngSubmit)="onSubmit()"
-      ngClass.gt-xs="notifications-form" ngClass.xs="notifications-form-xs" fxLayout="column" fxLayoutGap="20px">
+      ngClass.gt-xs="notifications-form" ngClass.xs="notifications-form-xs" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
 
     <mat-accordion multi="true">
 

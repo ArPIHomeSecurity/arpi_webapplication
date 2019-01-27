@@ -10,7 +10,6 @@ export class LoaderService {
   }
 
   display(value: boolean) {
-    console.log('Loader: ', value);
     this.status.next(value);
   }
 }
