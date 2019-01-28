@@ -58,6 +58,7 @@ export class SensorService {
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
     sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1;
+    sensor.alert = this.channels[sensor.channel] && sensor.enabled;
     this.sensors.push(sensor);
     return of(sensor);
   }
@@ -66,7 +67,7 @@ export class SensorService {
   updateSensor( sensor: Sensor ): Observable<Sensor> {
     const tmpSensor = this.sensors.find(s => s.id === sensor.id);
     const index = this.sensors.indexOf(tmpSensor);
-    sensor.alert = this.channels[sensor.channel];
+    sensor.alert = this.channels[sensor.channel] && sensor.enabled;
     this.eventService._updateSensorsState(sensor.alert);
     this.sensors[index] = sensor;
     return of(sensor);
