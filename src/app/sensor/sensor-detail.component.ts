@@ -137,17 +137,18 @@ export class SensorDetailComponent implements OnInit {
 
         this.sensor = new Sensor;
         const info = {
-          channel: this.sensor.channel,
-          type_id: this.sensor.type_id,
-          zone_id: this.sensor.zone_id,
-          enabled: this.sensor.enabled,
-          description: this.sensor.description,
+          channel: 0,
+          type_id: this.sensorTypes[0].id,
+          zone_id: -1,
+          enabled: true,
+          description: null,
 
           zone_name: null,
           disarmed_delay: null,
-          away_delay: null,
-          stay_delay: null
+          away_delay: 0,
+          stay_delay: 0
         };
+        this.new_zone = true;
         this.updateForm(info);
         this.loader.display(false);
       });
@@ -238,15 +239,15 @@ export class SensorDetailComponent implements OnInit {
     return {
       id: sensorModel.zone_id,
       name: zoneModel.zone_name,
-      disarmed_delay: parseInt(zoneModel.disarmed_delay, 10),
-      away_delay: parseInt(zoneModel.away_delay, 10),
-      stay_delay: parseInt(zoneModel.away_delay, 10),
-      description: ''
+      disarmed_delay: !isNaN(parseInt(zoneModel.disarmed_delay, 10)) ? parseInt(zoneModel.disarmed_delay, 10) : null,
+      away_delay: !isNaN(parseInt(zoneModel.away_delay, 10)) ? parseInt(zoneModel.away_delay, 10) : null,
+      stay_delay: !isNaN(parseInt(zoneModel.stay_delay, 10)) ? parseInt(zoneModel.stay_delay, 10) : null,
+      description: zoneModel.zone_name
     };
   }
 
   onZoneSelected(event) {
-    this.new_zone = (event.value === 'new');
+    this.new_zone = (event.value === -1);
 
     const controls = this.zoneForm.controls;
     if (this.new_zone) {

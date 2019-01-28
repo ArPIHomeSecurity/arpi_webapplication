@@ -25,13 +25,12 @@
 
     <mat-form-field>
       <mat-select formControlName="zone_id" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
-        <mat-option>--</mat-option>
         <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
-        <mat-option value="new">New</mat-option>
+        <mat-option [value]="-1">New</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div [formGroup]="zoneForm" [fxHide]="!new_zone">
+    <div [formGroup]="zoneForm" [fxHide]="!new_zone" fxLayout="column">
       <mat-form-field>
         <input matInput placeholder="Zone name" formControlName="zone_name"/>
       </mat-form-field>
