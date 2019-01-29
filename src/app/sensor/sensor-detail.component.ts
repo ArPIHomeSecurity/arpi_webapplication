@@ -120,7 +120,7 @@ export class SensorDetailComponent implements OnInit {
           this.sensors = results[1];
           this.zones = results[2];
           this.sensorTypes = results[3];
-          this.channels = this.getFreeChannels(this.sensors);
+          this.channels = this.generateChannels(this.sensors);
 
           this.updateForm(info);
           this.loader.display(false);
@@ -134,10 +134,10 @@ export class SensorDetailComponent implements OnInit {
         this.sensors = results[0];
         this.zones = results[1];
         this.sensorTypes = results[2];
-        this.channels = this.getFreeChannels(this.sensors);
+        this.channels = this.generateChannels(this.sensors);
 
         this.sensor = new Sensor;
-        const firstFreeChannel = this.channels.find(ch => ch.sensor == null && ch.channel >= 0);
+        const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
         const info = {
           channel: firstFreeChannel ? firstFreeChannel.channel : -1,
           type_id: this.sensorTypes[0].id,
@@ -301,7 +301,7 @@ export class SensorDetailComponent implements OnInit {
     });
   }
 
-  getFreeChannels(sensors: Sensor[]): Channel[] {
+  generateChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
     const channels: Channel[] = [];
     for (let i = 0; i < environment.channel_count; i++) {
