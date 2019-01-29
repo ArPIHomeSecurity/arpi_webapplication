@@ -19,7 +19,7 @@ else {
 console.log("Selected language: ", locale);
 console.log("Current location: ", location.pathname);
 
-if (environment.production) {
+if (environment.production || window.location.hostname === 'demo.arpi-security.info') {
   enableProdMode();
 
   if (location.pathname.startsWith("/" + locale)) {
