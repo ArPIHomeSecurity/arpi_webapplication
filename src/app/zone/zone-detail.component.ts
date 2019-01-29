@@ -81,8 +81,8 @@ export class ZoneDetailComponent implements OnInit {
     } else {
       this.zone = new Zone;
       this.zone.disarmed_delay = null;
-      this.zone.away_delay = null;
-      this.zone.stay_delay = null;
+      this.zone.away_delay = 0;
+      this.zone.stay_delay = 0;
       this.updateForm(this.zone);
     }
   }
