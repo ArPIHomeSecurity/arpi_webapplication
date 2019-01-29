@@ -22,7 +22,7 @@ if (environment.production) {
 
 const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
 
-if (translation_file == null) {
+if (!translation_file) {
   localStorage.setItem('aotTraslation', 'yes');
 
   if (location.pathname.startsWith('/' + locale)) {
