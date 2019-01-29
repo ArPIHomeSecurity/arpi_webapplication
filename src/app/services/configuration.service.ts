@@ -22,7 +22,7 @@ export class ConfigurationService {
   }
 
 
-  setOption( option: string, section: string, value: any ): Observable<boolean> {
+  setOption( option: string, section: string, value: any ): Observable<any> {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 

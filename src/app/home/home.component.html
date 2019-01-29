@@ -32,7 +32,7 @@
           <img mat-card-avatar src="https://via.placeholder.com/40x40?text=S" />
           <img *ngIf="sensor.alarm==true" src="assets/images/alarm_bell.png" width="50" height="50"/>
           <mat-card-title>{{sensor.description}}</mat-card-title>
-          <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>{{sensor.channel}}</mat-card-subtitle>
+          <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content layout="row">
         </mat-card-content>
