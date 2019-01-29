@@ -16,6 +16,7 @@ import { MonitoringService } from '../services/index';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { environment } from '../../environments/environment';
+import { first } from 'rxjs/operators';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -136,8 +137,9 @@ export class SensorDetailComponent implements OnInit {
         this.channels = this.getFreeChannels(this.sensors);
 
         this.sensor = new Sensor;
+        const firstFreeChannel = this.channels.find(ch => ch.sensor == null && ch.channel >= 0);
         const info = {
-          channel: 0,
+          channel: firstFreeChannel ? firstFreeChannel.channel : -1,
           type_id: this.sensorTypes[0].id,
           zone_id: -1,
           enabled: true,
@@ -180,9 +182,9 @@ export class SensorDetailComponent implements OnInit {
     const sensor = this.prepareSensor();
     const zone = this.prepareZone();
 
-    if (this.channels[sensor.channel].sensor != null && sensor.id !== this.channels[sensor.channel].sensor.id) {
+    if (sensor.channel >= 0 && this.channels[sensor.channel].sensor != null && sensor.id !== this.channels[sensor.channel].sensor.id) {
       // disconnect sensor on channel collision
-      this.channels[sensor.channel].sensor.channel = 0;
+      this.channels[sensor.channel].sensor.channel = -1;
       this.sensorService.updateSensor(this.channels[sensor.channel].sensor);
     }
 
@@ -301,19 +303,32 @@ export class SensorDetailComponent implements OnInit {
 
   getFreeChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
-    const channels: Channel[] = [{
-      channel: 0,
-      sensor: null
-    }];
-    for (let i = 1; i <= environment.channel_count; i++) {
+    const channels: Channel[] = [];
+    for (let i = 0; i < environment.channel_count; i++) {
       const sensor = sensors.find(s => s.channel === i);
-
       channels.push({
         channel: i,
         sensor: sensor
       });
     }
 
+    channels.push({
+      channel: -1,
+      sensor: null
+    });
+
     return channels;
+  }
+
+  orderedChannels(): Array<Channel> {
+    return this.channels.concat().sort((ch1, ch2) => {
+      if (ch1.channel > ch2.channel) {
+        return 1;
+      }
+      if (ch1.channel < ch2.channel) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }

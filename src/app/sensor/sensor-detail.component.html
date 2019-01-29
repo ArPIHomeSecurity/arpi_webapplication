@@ -4,9 +4,9 @@
 
     <mat-form-field>
       <mat-select formControlName="channel" placeholder="Channel">
-        <mat-option *ngFor="let channel of channels" [value]="channel.channel">
-          <span *ngIf="channel.channel === 0">Disconnected</span>
-          <span *ngIf="channel.channel !== 0">CH{{ channel.channel | number: '2.0-0' }} <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span></span>
+        <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
+          <span *ngIf="channel.channel === -1">Disconnected</span>
+          <span *ngIf="channel.channel !== -1">CH{{ channel.channel + 1 | number: '2.0-0' }} <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span></span>
         </mat-option>
       </mat-select>
     </mat-form-field>

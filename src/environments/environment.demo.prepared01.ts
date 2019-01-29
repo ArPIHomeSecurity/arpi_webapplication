@@ -104,7 +104,7 @@ export const USERS = [
 export const SENSORS = [
   {
     id: 0,
-    channel: 1,
+    channel: 0,
     zone_id: 0,
     type_id: 0,
     alert: false,

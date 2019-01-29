@@ -21,7 +21,7 @@ export class DemoComponent implements OnInit {
 
   ngOnInit() {
     // channels are numbered 1..15
-    for (let i = 1; i <= environment.channel_count; i++) {
+    for (let i = 0; i < environment.channel_count; i++) {
       this.channels.push(false);
     }
   }
@@ -34,7 +34,6 @@ export class DemoComponent implements OnInit {
 
   swap(index: number) {
     this.channels[index] = !this.channels[index];
-    // channels start with "1" => shift
-    this.sensorService._alertChannel(index + 1, this.channels[index]);
+    this.sensorService._alertChannel(index, this.channels[index]);
   }
 }
