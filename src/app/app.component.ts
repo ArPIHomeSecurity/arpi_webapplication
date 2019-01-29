@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
     console.log('Change locale: ', current_locale, '=>', event.value);
 
     localStorage.setItem('localeId', event.value);
-    if (environment.production || window.location.hostname === 'demo.arpi-security.info') {
+    if (localStorage.getItem('aotTranslation') === 'yes') {
       const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
 
       const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');

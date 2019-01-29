@@ -8,31 +8,30 @@ import { environment } from './environments/environment';
 
 declare const require;
 
-let locale;
-if (localStorage.getItem('localeId') !== null) {
-  locale = localStorage.getItem('localeId');
-}
-else {
+let locale = localStorage.getItem('localeId');
+if (locale === null) {
   locale = 'en';
 }
 
-console.log("Selected language: ", locale);
-console.log("Current location: ", location.pathname);
+console.log('Selected language: ', locale);
+console.log('Current location: ', location.pathname);
 
-if (environment.production || window.location.hostname === 'demo.arpi-security.info') {
+if (environment.production) {
   enableProdMode();
-
-  if (location.pathname.startsWith("/" + locale)) {
-    console.log("Correct locale, no need to redirect!");
-  }
-  else if (locale != 'en') {
-    console.log("Other locale is selected => redirect", locale);
-    location.href = "/" + locale + location.pathname;
-  }
 }
 
-
 const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
+
+if (translation_file == null) {
+  localStorage.setItem('aotTraslation', 'yes');
+
+  if (location.pathname.startsWith('/' + locale)) {
+    console.log('Correct locale, no need to redirect!');
+  } else if (locale !== 'en') {
+    console.log('Other locale is selected => redirect', locale);
+    location.href = '/' + locale + location.pathname;
+  }
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule, { providers: [
   { provide: TRANSLATIONS, useValue: translation_file },
