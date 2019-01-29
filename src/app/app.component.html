@@ -1,7 +1,7 @@
 <div class="app-viewport">
   <mat-toolbar color="primary">
     <button mat-button *ngIf="isLoggedIn()" (click)="sidenav.toggle()" fxHide.gt-sm="true" class="menu"><mat-icon>menu</mat-icon></button>
-    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true"><mat-icon mat-list-icon>home</mat-icon></button>
+    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true"><img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span></button>
     <span class="spacer"></span>
     <system-state></system-state>
   </mat-toolbar>
@@ -9,7 +9,7 @@
   <mat-sidenav-container *ngIf="isLoggedIn(); else not_loggedin" (backdropClick)="sidenav.close()">
     <mat-sidenav #sidenav [opened]="!small_screen" [mode]="small_screen ? 'over': 'side'" disableClose>
       <!-- sidenav content -->
-      <div style="text-align:center; margin:15px 0px">
+      <div class="logo" fxHide.lt-md="true">
         <img src="assets/images/argus-eye-64.jpg">
       </div>
 
