@@ -22,6 +22,8 @@ if (environment.production) {
 
 const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
 
+console.log('Translation: ', translation_file);
+
 if (!translation_file) {
   localStorage.setItem('aotTraslation', 'yes');
 
