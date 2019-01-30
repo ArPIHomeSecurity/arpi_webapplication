@@ -15,11 +15,19 @@ export class AuthenticationService {
   constructor(
       private eventService: EventService,
       private userService: UserService
-  ) { }
+  ) {
+    const userId = sessionStorage.getItem('loggedInAs');
+    if (userId != null) {
+      const usersFound = this.userService.users.filter(u => u.id === Number(userId));
+      this.loggedInAs = usersFound[0];
+    }
+  }
 
   login(access_code: string): Observable<boolean> {
     const foundUsers = this.userService.users.filter(user => String(user.access_code) === access_code);
     this.loggedInAs = foundUsers[0];
+
+    sessionStorage.setItem('loggedInAs', String(this.loggedInAs.id));
     return of( foundUsers.length === 1 );
   }
 
