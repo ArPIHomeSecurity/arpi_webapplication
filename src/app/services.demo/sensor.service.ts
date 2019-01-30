@@ -41,7 +41,10 @@ export class SensorService {
     private eventService: EventService,
     private monitoringService: MonitoringService
   ) {
-
+    // channels are numbered 1..15
+    for (let i = 0; i < environment.channel_count; i++) {
+      this.channels.push(false);
+    }
   }
 
 
