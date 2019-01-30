@@ -33,13 +33,17 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "production-en": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "outputPath": "dist-production",
+              "i18nFile": "src/locales/messages.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -57,57 +61,17 @@
                 }
               ]
             },
-            "demo": {
+            "production-hu": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.demo.prepared01.ts"
-                },
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component.demo.html"
-                },
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/app/services/alert.service.ts",
-                  "with": "src/app/services.demo/alert.service.ts"
-                },
-                {
-                  "replace": "src/app/services/authentication.service.ts",
-                  "with": "src/app/services.demo/authentication.service.ts"
-                },
-                {
-                  "replace": "src/app/services/configuration.service.ts",
-                  "with": "src/app/services.demo/configuration.service.ts"
-                },
-                {
-                  "replace": "src/app/services/event.service.ts",
-                  "with": "src/app/services.demo/event.service.ts"
-                },
-                {
-                  "replace": "src/app/services/monitoring.service.ts",
-                  "with": "src/app/services.demo/monitoring.service.ts"
-                },
-                {
-                  "replace": "src/app/services/sensor.service.ts",
-                  "with": "src/app/services.demo/sensor.service.ts"
-                },
-                {
-                  "replace": "src/app/services/user.service.ts",
-                  "with": "src/app/services.demo/user.service.ts"
-                },
-                {
-                  "replace": "src/app/services/zone.service.ts",
-                  "with": "src/app/services.demo/zone.service.ts"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "outputPath": "dist-production/hu",
+              "i18nFile": "src/locales/messages.hu.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hu",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -124,6 +88,109 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "demo-en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                }
+              ],
+              "outputPath": "dist-demo",
+              "i18nFile": "src/locales/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "baseHref": "https://demo.arpi-security.info",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "demo-hu": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                }
+              ],
+              "outputPath": "dist-demo/hu",
+              "i18nFile": "src/locales/messages.hu.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hu",
+              "baseHref": "https://demo.arpi-security.info/hu",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "demo-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.dev.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                }
+              ],
+              "outputPath": "dist-demo-dev",
             }
           }
         },
@@ -134,10 +201,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "argus:build:production"
+              "browserTarget": "argus:build:production-en"
             },
-            "demo": {
-              "browserTarget": "argus:build:demo"
+            "demo-dev": {
+              "browserTarget": "argus:build:demo-dev"
             }
           }
         },

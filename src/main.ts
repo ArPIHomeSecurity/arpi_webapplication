@@ -20,13 +20,8 @@ if (environment.production) {
   enableProdMode();
 }
 
-const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
 
-console.log('Translation: ', translation_file);
-
-if (!translation_file) {
-  localStorage.setItem('aotTraslation', 'yes');
-
+if (environment.aotTranslations) {
   if (location.pathname.startsWith('/' + locale)) {
     console.log('Correct locale, no need to redirect!');
   } else if (locale !== 'en') {
@@ -35,6 +30,7 @@ if (!translation_file) {
   }
 }
 
+const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
 platformBrowserDynamic().bootstrapModule(AppModule, { providers: [
   { provide: TRANSLATIONS, useValue: translation_file },
   { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },

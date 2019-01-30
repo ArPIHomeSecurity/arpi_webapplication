@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   demo: false,
+  aotTranslations: true,
   delay: 0,
 
   channel_count: 15,

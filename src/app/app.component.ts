@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   currentLocale: string;
   server_version: string;
   webapplication_version = VERSION;
+  environment = environment;
 
   constructor(
           public media: ObservableMedia,
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit {
     console.log('Change locale: ', current_locale, '=>', event.value);
 
     localStorage.setItem('localeId', event.value);
-    if (localStorage.getItem('aotTranslation') === 'yes') {
+    if (environment.aotTranslations) {
       const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
 
       const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
