@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { ArmType, String2ArmType, Alert } from '../models/index';
+import { ArmType, String2ArmType, Alert, SensorType } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { AlertService, SensorService, EventService } from '../services/index';
 import { MonitoringService } from '../services/index';
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   arm_state: ArmType;
   monitoringState: MonitoringState = MonitoringState.READY;
   sensor_alert: boolean;
+  sensorTypes: SensorType [] = [];
 
   constructor(
           private snackBar: MatSnackBar,
@@ -56,6 +57,9 @@ export class HomeComponent implements OnInit {
       }
     );
 
+    this.sensorService.getSensorTypes()
+      .subscribe( st => this.sensorTypes = st );
+
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensor_alert = alert;
@@ -86,5 +90,13 @@ export class HomeComponent implements OnInit {
       this.arm_state !== ArmType.DISARMED ||
       this.monitoringState !== MonitoringState.READY ||
       this.monitoringState === MonitoringState.READY && this.alert;
+  }
+
+  getSensorTypeName(sensorTypeId: number) {
+    if (this.sensorTypes.length) {
+      return this.sensorTypes.find(x => x.id === sensorTypeId).name;
+    }
+
+    return '';
   }
 }
