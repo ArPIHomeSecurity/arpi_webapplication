@@ -756,13 +756,13 @@ MIT
 
 @angular/material/list
 
+@angular/material/toolbar
+
 @angular/material/sidenav
 
 @angular/material/divider
 
 @angular/material/progress-spinner
-
-@angular/material/toolbar
 
 @angular/material/chips
 
