@@ -9,21 +9,25 @@ import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
 
 import { environment } from '../../environments/environment';
+import { getSessionValue, setSessionValue } from '../utils';
 
 @Injectable()
 export class MonitoringService {
 
-  armState = ArmType.DISARMED;
-  alert = false;
-  datetime = new Date().toLocaleString();
-  timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  armState: ArmType;
+  alert: boolean;
+  datetime: string;
+  timeZone: string;
 
   constructor(
     private alertService: AlertService,
     private eventService: EventService,
     private zoneService: ZoneService
   ) {
-
+    this.armState = getSessionValue('MonitoringService.armState', ArmType.DISARMED);
+    this.alert = getSessionValue('MonitoringService.alert', false);
+    this.datetime = getSessionValue('MonitoringService.datetime', new Date().toLocaleString());
+    this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
   }
 
   is_alert(): Observable<boolean> {
@@ -36,12 +40,14 @@ export class MonitoringService {
 
   arm( armtype: ArmType ) {
     this.armState = armtype;
+    setSessionValue('MonitoringService.armState', this.armState);
     this.eventService._updateArmState(ArmType2String(armtype));
     return;
   }
 
   disarm() {
     this.armState = ArmType.DISARMED;
+    setSessionValue('MonitoringService.armState', this.armState);
     this.alertService._stopAlert();
     this.eventService._updateArmState(ArmType2String(this.armState));
     return;
@@ -52,7 +58,7 @@ export class MonitoringService {
   }
 
   getVersion(): Observable<string> {
-    return of('Version:DEMO-0.1');
+    return of('Version:DEMO-0.2');
   }
 
   getClock(): Observable<Object> {
@@ -71,6 +77,8 @@ export class MonitoringService {
   changeClock(dateTime, timeZone) {
     this.datetime = dateTime;
     this.timeZone = timeZone;
+    setSessionValue('MonitoringService.datetime', this.datetime);
+    setSessionValue('MonitoringService.timeZone', this.timeZone);
     return of(true);
   }
 

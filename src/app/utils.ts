@@ -11,3 +11,16 @@ export function positiveInteger(): ValidatorFn {
     }
   };
 }
+
+export function getSessionValue(name: string, defaultValue: any): any {
+  const value = JSON.parse(sessionStorage.getItem(name));
+  if (value != null) {
+    return value;
+  }
+
+  return defaultValue;
+}
+
+export function setSessionValue(name: string, value: any) {
+  sessionStorage.setItem(name, JSON.stringify(value));
+}

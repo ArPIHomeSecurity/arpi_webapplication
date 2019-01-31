@@ -114,6 +114,29 @@ export const SENSORS = [
   }
 ];
 
+export const SENSOR_TYPES = [
+  {
+    id: 0,
+    name: 'Motion',
+    description: 'Motion sensor',
+  },
+  {
+    id: 1,
+    name: 'Break',
+    description: 'Break sensor',
+  },
+  {
+    id: 2,
+    name: 'Open',
+    description: 'Open sensor',
+  },
+  {
+    id: 3,
+    name: 'Tamper',
+    description: 'Tamper sensor',
+  }
+];
+
 export const ZONES = [
   {
     id: 0,

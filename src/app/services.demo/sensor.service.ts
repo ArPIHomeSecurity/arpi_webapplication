@@ -5,37 +5,17 @@ import 'rxjs/add/operator/delay';
 import { Sensor, SensorType } from '../models/index';
 import { EventService } from '../services/event.service';
 import { MonitoringService } from './monitoring.service';
-import { environment, SENSORS } from '../../environments/environment';
+import { environment, SENSORS, SENSOR_TYPES } from '../../environments/environment';
+import { getSessionValue, setSessionValue } from '../utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SensorService {
 
+  sensors: Sensor[];
+  types: SensorType[] = SENSOR_TYPES;
   channels: boolean[] = [];
-  sensors: Sensor[] = SENSORS;
-  types: SensorType[] = [
-    {
-      id: 0,
-      name: 'Motion',
-      description: 'Motion sensor',
-    },
-    {
-      id: 1,
-      name: 'Break',
-      description: 'Break sensor',
-    },
-    {
-      id: 2,
-      name: 'Open',
-      description: 'Open sensor',
-    },
-    {
-      id: 3,
-      name: 'Tamper',
-      description: 'Tamper sensor',
-    }
-  ];
 
   constructor(
     private eventService: EventService,
@@ -45,6 +25,8 @@ export class SensorService {
     for (let i = 0; i < environment.channel_count; i++) {
       this.channels.push(false);
     }
+
+    this.sensors = getSessionValue('SensorService.sensors', SENSORS);
   }
 
 
@@ -63,6 +45,7 @@ export class SensorService {
     sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1;
     sensor.alert = sensor.channel === -1 ? false : this.channels[sensor.channel];
     this.sensors.push(sensor);
+    setSessionValue('SensorService.sensors', this.sensors);
 
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
     this.eventService._updateSensorsState(alertState);
@@ -75,6 +58,7 @@ export class SensorService {
     const index = this.sensors.indexOf(tmpSensor);
     sensor.alert = sensor.channel === -1 ? false : this.channels[sensor.channel];
     this.sensors[index] = sensor;
+    setSessionValue('SensorService.sensors', this.sensors);
 
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
     this.eventService._updateSensorsState(alertState);
@@ -83,6 +67,8 @@ export class SensorService {
 
   deleteSensor( sensorId: number ): Observable<boolean> {
     this.sensors = this.sensors.filter(s => s.id !== sensorId);
+    setSessionValue('SensorService.sensors', this.sensors);
+
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
     this.eventService._updateSensorsState(alertState);
     return of(true);
