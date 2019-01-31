@@ -33,6 +33,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.loggedInAs = null;
+    sessionStorage.removeItem('loggedInAs');
   }
 
   isLoggedIn() {
