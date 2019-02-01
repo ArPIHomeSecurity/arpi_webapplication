@@ -736,9 +736,9 @@ THE SOFTWARE.
 @angular/forms
 MIT
 
-@angular/material/form-field
-
 @angular/material/card
+
+@angular/material/form-field
 
 @angular/material/expansion
 
