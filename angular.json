@@ -100,10 +100,6 @@
                   "with": "src/app/app.module.demo.ts"
                 },
                 {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
-                },
-                {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
                 }
@@ -141,10 +137,6 @@
                   "with": "src/app/app.module.demo.ts"
                 },
                 {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
-                },
-                {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
                 }
@@ -180,10 +172,6 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
                 },
                 {
                   "replace": "src/app/services",
