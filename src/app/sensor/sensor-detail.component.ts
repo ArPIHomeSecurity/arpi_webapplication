@@ -113,8 +113,8 @@ export class SensorDetailComponent implements OnInit {
 
             zone_name: null,
             disarmed_delay: null,
-            away_delay: null,
-            stay_delay: null
+            away_delay: 0,
+            stay_delay: 0
           };
 
           this.sensors = results[1];
