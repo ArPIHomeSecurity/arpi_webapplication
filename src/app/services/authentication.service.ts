@@ -49,7 +49,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn() {
-    return localStorage.getItem('userToken') !== null;
+    return localStorage.getItem('userToken') != null;
   }
 
   getRole(): string {

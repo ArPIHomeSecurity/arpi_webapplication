@@ -5,8 +5,12 @@
   </div>
 
   <mat-toolbar color="primary">
-    <button mat-button *ngIf="isLoggedIn()" (click)="sidenav.toggle()" fxHide.gt-sm="true" class="menu"><mat-icon>menu</mat-icon></button>
-    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true" (click)="sidenav.close()"><img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span></button>
+    <button mat-button *ngIf="isLoggedIn()" (click)="sidenav.toggle()" fxHide.gt-sm="true" class="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true" (click)="sidenav.close()">
+      <img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span>
+    </button>
     <span class="spacer"></span>
     <system-state></system-state>
   </mat-toolbar>
@@ -53,7 +57,7 @@
            <mat-icon mat-list-icon>group</mat-icon>Users
         </a>
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
+        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); small_screen ? sidenav.close() : null"
           i18n="@@logout menu link">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})
         </a>

@@ -6,38 +6,39 @@ import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
 import { UserService } from './user.service';
 import { User } from '../models';
+import { environment } from '../../environments/environment';
+import { getSessionValue, setSessionValue } from '../utils';
 
 @Injectable()
 export class AuthenticationService {
 
-  loggedInAs: User = null;
+  loggedInAs: User;
 
   constructor(
       private eventService: EventService,
       private userService: UserService
   ) {
-    const userId = sessionStorage.getItem('loggedInAs');
-    if (userId != null) {
-      const usersFound = this.userService.users.filter(u => u.id === Number(userId));
-      this.loggedInAs = usersFound[0];
-    }
+    this.loggedInAs = getSessionValue('AuthenticationService.loggedInAs', null);
   }
 
   login(access_code: string): Observable<boolean> {
     const foundUsers = this.userService.users.filter(user => String(user.access_code) === access_code);
-    this.loggedInAs = foundUsers[0];
+    if (foundUsers.length > 0) {
+      this.loggedInAs = foundUsers[0];
+      setSessionValue('AuthenticationService.loggedInAs', this.loggedInAs);
+    }
 
-    sessionStorage.setItem('loggedInAs', String(this.loggedInAs.id));
-    return of( foundUsers.length === 1 );
+    return of( foundUsers.length === 1 ).delay(environment.delay);
   }
 
   logout(): void {
     this.loggedInAs = null;
-    sessionStorage.removeItem('loggedInAs');
+    sessionStorage.removeItem('AuthenticationService.loggedInAs');
   }
 
   isLoggedIn() {
-    return this.loggedInAs !== null;
+    const res = this.loggedInAs != null;
+    return res;
   }
 
   getRole(): string {

@@ -57,6 +57,10 @@ export class AppComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
   getUserName() {
     return this.authService.getUsername();
   }
