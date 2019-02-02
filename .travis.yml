@@ -16,8 +16,6 @@ before_script:
 script:
   - ng build --configuration=demo-en
   - ng build --configuration=demo-hu
-  - cp dist-demo/index.html dist-demo/404.html
-  - cp dist-demo/hu/index.html dist-demo/hu/404.html
 
 deploy:
   provider: pages
