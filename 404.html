@@ -1,15 +1,24 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8" />
     <title>Argus</title>
-    <base href="https://demo.arpi-security.info/">  
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="assets/images/argus-eye-16.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="styles.3765228ea30b76778941.css"></head>
+    <script>
+        // Store the URL the user was trying to access when receiving the 404.
+        sessionStorage.redirect = location.href;
 
-  <body mat-app-background>
-    <app-root></app-root>
-  <script type="text/javascript" src="runtime.ec2944dd8b20ec099bf3.js"></script><script type="text/javascript" src="polyfills.2692dc9b0bb39ca7e2d7.js"></script><script type="text/javascript" src="main.69b784f72f27e0e2a516.js"></script></body>
+        // Immediately redirect to the base URL so we can use the SPA routing.
+        if (location.pathname.startsWith('/hu')) {
+            window.location.href = '/hu';
+        } else {
+            window.location.href = '/';
+        }
+    </script>
+</head>
+    <body>
+        <!-- IE required at least 512 bytes of data to show non-default 404. -->
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </body>
 </html>
