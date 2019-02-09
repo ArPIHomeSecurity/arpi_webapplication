@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
@@ -26,13 +25,13 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: './zone-detail.component.html',
   styleUrls: ['zone-detail.component.scss'],
-  providers: [MonitoringService, SensorService, ZoneService]
+  providers: []
 })
 export class ZoneDetailComponent implements OnInit {
   zoneId: number;
   zone: Zone = null;
-  sensors: Sensor[] = [];
-  MonitoringState:any = MonitoringState;
+  sensors: Sensor[];
+  MonitoringState: any = MonitoringState;
   monitoringState: MonitoringState;
   zoneForm: FormGroup;
 
@@ -50,9 +49,11 @@ export class ZoneDetailComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
 
-    this.route.paramMap.subscribe(params =>
-      this.zoneId = +params.get('id')
-    );
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id') != null) {
+        this.zoneId = +params.get('id');
+      }
+    });
   }
 
   ngOnInit() {
@@ -61,7 +62,7 @@ export class ZoneDetailComponent implements OnInit {
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
-    if (this.zoneId) {
+    if (this.zoneId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
       // https://github.com/angular/angular/issues/17572#issuecomment-323465737
       scheduleMicrotask.then(() => {
@@ -77,12 +78,11 @@ export class ZoneDetailComponent implements OnInit {
           this.sensors = results[1];
           this.loader.display(false);
       });
-    }
-    else {
+    } else {
       this.zone = new Zone;
       this.zone.disarmed_delay = null;
-      this.zone.away_delay = null;
-      this.zone.stay_delay = null;
+      this.zone.away_delay = 0;
+      this.zone.stay_delay = 0;
       this.updateForm(this.zone);
     }
   }
@@ -91,24 +91,23 @@ export class ZoneDetailComponent implements OnInit {
     this.zoneForm = this.fb.group({
       name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
       disarmed_alert: zone.disarmed_delay !== null,
-      disarmed_delay: new FormControl(zone.disarmed_delay, zone.disarmed_delay !== null ? [Validators.required, positiveInteger()] : null),
+      disarmed_delay: new FormControl(zone.disarmed_delay, zone.disarmed_delay != null ? [Validators.required, positiveInteger()] : null),
       away_armed_alert: zone.away_delay !== null,
-      away_delay: new FormControl(zone.away_delay, zone.away_delay !== null ? [Validators.required, positiveInteger()] : null),
+      away_delay: new FormControl(zone.away_delay, zone.away_delay != null ? [Validators.required, positiveInteger()] : null),
       stay_armed_alert: zone.stay_delay !== null,
-      stay_delay: new FormControl(zone.stay_delay, zone.stay_delay !== null ? [Validators.required, positiveInteger()] : null),
+      stay_delay: new FormControl(zone.stay_delay, zone.stay_delay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
 
   onSubmit() {
-    let zone = this.prepareSaveZone();
-    if (this.zoneId) {
+    const zone = this.prepareSaveZone();
+    if (this.zoneId != null) {
       this.zoneService.updateZone(zone).subscribe(
           _ => this.router.navigate(['/zones']),
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
       );
-    }
-    else {
+    } else {
       this.zoneService.createZone(zone).subscribe(
           _ => this.router.navigate(['/zones']),
           _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
@@ -120,8 +119,8 @@ export class ZoneDetailComponent implements OnInit {
     this.location.back();
   }
 
-  getSensors() : Sensor[] {
-    let results: Sensor[] = [];
+  getSensors(): Sensor[] {
+    const results: Sensor[] = [];
     if (this.zone) {
       this.sensors.forEach((sensor) => {
         if (sensor.zone_id === this.zone.id) {
@@ -136,19 +135,19 @@ export class ZoneDetailComponent implements OnInit {
   prepareSaveZone(): Zone {
     const formModel = this.zoneForm.value;
 
-    let zone: Zone = new Zone();
+    const zone: Zone = new Zone();
     zone.id = this.zoneId;
-    zone.name = formModel.name; 
+    zone.name = formModel.name;
     zone.description = formModel.description;
-    zone.disarmed_delay = formModel.disarmed_alert ? parseInt(formModel.disarmed_delay) : null;
-    zone.away_delay = formModel.away_armed_alert ? parseInt(formModel.away_delay) : null;
-    zone.stay_delay = formModel.stay_armed_alert ? parseInt(formModel.stay_delay) : null;
+    zone.disarmed_delay = formModel.disarmed_alert ? parseInt(formModel.disarmed_delay, 10) : null;
+    zone.away_delay = formModel.away_armed_alert ? parseInt(formModel.away_delay, 10) : null;
+    zone.stay_delay = formModel.stay_armed_alert ? parseInt(formModel.stay_delay, 10) : null;
 
     return zone;
   }
 
   openDeleteDialog(zoneId: number) {
-    let dialogRef = this.dialog.open(ZoneDeleteDialog, {
+    const dialogRef = this.dialog.open(ZoneDeleteDialog, {
       width: '250px',
       data: {
         name: this.zone.name,
@@ -159,12 +158,11 @@ export class ZoneDetailComponent implements OnInit {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.zoneService.deleteZone(zoneId)
-            .subscribe(result => this.router.navigate(['/zones']),
+            .subscribe(_ => this.router.navigate(['/zones']),
                 _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
-        }
-        else {
-          this.snackBar.open("Can't delete zone!", null, {duration: environment.SNACK_DURATION});
+        } else {
+          this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
         }
       }
     });
@@ -174,11 +172,10 @@ export class ZoneDetailComponent implements OnInit {
     const controls = this.zoneForm.controls;
     if (event.checked) {
       controls[delay_name].setValidators([Validators.required, positiveInteger()]);
-    }
-    else {
+    } else {
       controls[delay_name].setValidators(null);
     }
-    
+
     controls[delay_name].updateValueAndValidity();
   }
 }

@@ -1,10 +1,12 @@
-<div  [fxShow]="users !== null">
-  <div *ngIf="users && users.length > 0; else no_users" ngClass.gt-xs="user-list" ngClass.xs="user-list-xs" fxLayout="column" fxLayoutGap="15px">
+<div [fxShow]="users !== null" ngClass.gt-xs="user-list" ngClass.xs="user-list-xs" fxLayout="row" fxLayoutAlign="center">
+  <div *ngIf="users && users.length > 0; else no_users" fxLayout="column" fxLayoutGap="20px">
     <mat-card *ngFor="let user of users">
       <mat-card-header>
-        <img mat-card-avatar src="https://via.placeholder.com/40x40?text=S"/>
+        <mat-icon *ngIf="user.role === environment.ROLE_TYPES.ADMIN" mat-list-icon mat-card-avatar class="avatar">person</mat-icon>
+        <mat-icon *ngIf="user.role === environment.ROLE_TYPES.USER" mat-list-icon mat-card-avatar class="avatar">person_outline</mat-icon>
         <mat-card-title>{{user.name}}</mat-card-title>
-        <mat-card-subtitle>{{user.role}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.ADMIN">Administrator</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.USER">User</mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions>
         <button mat-button [routerLink]="['/user', user.id]" color="primary" [disabled]="armState != ArmType.DISARMED"
@@ -20,9 +22,9 @@
       <h1>No users found</h1>
     </div>
   </ng-template>
+</div>
 
-  <div class="user-actions">
-    <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-    <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  </div>
+<div ngClass.gt-xs="user-actions" ngClass.xs="user-actions-xs">
+  <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

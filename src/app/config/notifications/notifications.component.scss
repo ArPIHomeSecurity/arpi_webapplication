@@ -1,9 +1,19 @@
+
 .notifications-form {
-  margin: 15px 0
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 600px;
+}
+
+.notifications-form-xs {
+  padding: 15px;
+  width: 100%;
 }
 
 .half-width{
-  width: 49%;
+  width: 48%;
+  margin: auto 1%;
 }
 
 .full-width {

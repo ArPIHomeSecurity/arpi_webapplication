@@ -1,10 +1,13 @@
-<div class="sensor-detail" fxLayout="row" fxLayoutAlign="center" [fxShow]="sensor !== null">
-  <form *ngIf="sensor; else not_found" class="sensor-form" [formGroup]="sensorForm" (ngSubmit)="onSubmit(sensorForm.value)" novalidate
-        fxLayout="column" fxFlex.xl="600px" fxFlex.lg="600px" fxFlex.md="600px" fxFlex.sm="600px" fxFlex.xs="100%">
+<div *ngIf="sensor != null">
+  <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit(sensorForm.value)" novalidate
+      ngClass.gt-xs="sensor-form" ngClass.xs="sensor-form-xs" fxLayout="column">
 
     <mat-form-field>
       <mat-select formControlName="channel" placeholder="Channel">
-        <mat-option *ngFor="let channel of channels" [value]="channel">CH {{ channel }}</mat-option>
+        <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
+          <span *ngIf="channel.channel === -1">Disconnected</span>
+          <span *ngIf="channel.channel !== -1">CH{{ channel.channel + 1 | number: '2.0-0' }} <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span></span>
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -22,13 +25,12 @@
 
     <mat-form-field>
       <mat-select formControlName="zone_id" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
-        <mat-option>--</mat-option>
         <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
-        <mat-option value="new">New</mat-option>
+        <mat-option [value]="-1">New</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div [formGroup]="zoneForm" [fxHide]="!new_zone">
+    <div [formGroup]="zoneForm" [fxHide]="!new_zone" fxLayout="column">
       <mat-form-field>
         <input matInput placeholder="Zone name" formControlName="zone_name"/>
       </mat-form-field>
@@ -52,7 +54,7 @@
       </mat-form-field>
     </div>
 
-    <div >
+    <div class="actions">
       <button mat-raised-button color="primary" [disabled]="sensorForm.invalid || monitoringState != MonitoringState.READY"
         i18n="@@save button">Save</button>
       <button *ngIf="sensorId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="monitoringState != MonitoringState.READY"

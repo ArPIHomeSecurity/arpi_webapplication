@@ -1,11 +1,16 @@
-.zone-detail {
-  max-height: none !important;
-  padding: 10px;
+
+.zone-form {
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 600px;
 }
 
-form {
-  margin: 15px 0px;
+.zone-form-xs {
+  padding: 5px;
+  width: 100%;
 }
+
 
 .mat-form-field {
   width: 100%;
@@ -13,4 +18,8 @@ form {
 
 mat-checkbox {
   margin: 15px 0px 10px 0px;
+}
+
+.actions button {
+  margin-right: 10px;
 }

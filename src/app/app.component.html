@@ -1,6 +1,16 @@
 <div class="app-viewport">
+
+  <div *ngIf="environment.demo">
+    <app-demo></app-demo>
+  </div>
+
   <mat-toolbar color="primary">
-    <button *ngIf="isLoggedIn()" type="button" mat-button (click)="sidenav.toggle()" [fxShow]="small_screen"><mat-icon>menu</mat-icon></button>
+    <button mat-button *ngIf="isLoggedIn()" (click)="sidenav.toggle()" fxHide.gt-sm="true" class="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true" (click)="sidenav.close()">
+      <img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span>
+    </button>
     <span class="spacer"></span>
     <system-state></system-state>
   </mat-toolbar>
@@ -8,13 +18,13 @@
   <mat-sidenav-container *ngIf="isLoggedIn(); else not_loggedin" (backdropClick)="sidenav.close()">
     <mat-sidenav #sidenav [opened]="!small_screen" [mode]="small_screen ? 'over': 'side'" disableClose>
       <!-- sidenav content -->
-      <div style="text-align:center; margin:15px 0px">
-        <img src="/assets/images/argus-eye-64.jpg">
+      <div class="logo" fxHide.lt-md="true">
+        <img src="assets/images/argus-eye-64.jpg">
       </div>
 
       <mat-nav-list>
         <a mat-list-item routerLink="/" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null" 
-          i18n="@@home menu link">
+          i18n="@@home menu link" fxHide.lt-md="true">
           <mat-icon mat-list-icon>home</mat-icon>Home
         </a>
         <a mat-list-item routerLink="/alerts" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
@@ -23,7 +33,7 @@
         </a>
         <h3 mat-subheader i18n="Settings menu title">Settings</h3>
         <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-           i18n="@@zone menu link" [fxShow]="authService.getRole() == 'admin'">
+           i18n="@@zone menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>tab</mat-icon>Zones
         </a>
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
@@ -31,23 +41,23 @@
           <mat-icon mat-list-icon>input</mat-icon>Sensors
         </a>
         <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-          i18n="@@notifications menu link" [fxShow]="authService.getRole() == 'admin'">
+          i18n="@@notifications menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>send</mat-icon>Notifications
         </a>
         <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-          i18n="@@network menu link" [fxShow]="authService.getRole() == 'admin'">
+          i18n="@@network menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>public</mat-icon>Network
         </a>
         <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-          i18n="@@clock menu link" [fxShow]="authService.getRole() == 'admin'">
+          i18n="@@clock menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>access_time</mat-icon>Clock
         </a>
         <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-          i18n="@@users menu link" [fxShow]="authService.getRole() == 'admin'">
+          i18n="@@users menu link" [fxShow]="isAdminUser()">
            <mat-icon mat-list-icon>group</mat-icon>Users
         </a>
         <mat-divider></mat-divider>
-        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
+        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); small_screen ? sidenav.close() : null"
           i18n="@@logout menu link">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})
         </a>
@@ -87,17 +97,22 @@
   </mat-sidenav-container>
 
   <ng-template #not_loggedin>
-    <router-outlet></router-outlet>
-    <mat-toolbar color="primary">
-      <span class="spacer"></span>
-      <a href="https://github.com/arpihomesecurity" target="project">
-        <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
-      </a>
-      <div>
-        <div class="version">WebApp {{webapplication_version}}</div>
-        <div class="version">Server {{server_version}}</div>
+    <div class="page-wrapper">
+      <div class="page">
+        <router-outlet></router-outlet>
       </div>
-      <span class="spacer"></span>
-    </mat-toolbar>
+
+      <mat-toolbar color="primary">
+        <span class="spacer"></span>
+        <a href="https://github.com/arpihomesecurity" target="project">
+          <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
+        </a>
+        <span class="spacer"></span>
+        <div>
+          <div class="version">WebApp {{webapplication_version}}</div>
+          <div class="version">Server {{server_version}}</div>
+        </div>
+      </mat-toolbar>
+    </div>
   </ng-template>
 </div>

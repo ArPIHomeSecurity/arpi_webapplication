@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
@@ -19,7 +18,7 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: 'zone-list.component.html',
   styleUrls: ['zone-list.component.scss'],
-  providers: [MonitoringService, SensorService, ZoneService]
+  providers: []
 })
 
 export class ZoneListComponent implements OnInit, OnDestroy {

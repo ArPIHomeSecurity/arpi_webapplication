@@ -13,11 +13,11 @@ import { environment } from '../../environments/environment';
   selector: 'system-state',
   templateUrl: './system-state.component.html',
   styleUrls: ['./system-state.component.scss'],
-  providers: [AlertService, MonitoringService, SensorService]
+  providers: []
 })
 export class SystemStateComponent implements OnInit {
-  MonitoringState:any = MonitoringState;
-  ArmType:any = ArmType;
+  MonitoringState: any = MonitoringState;
+  ArmType: any = ArmType;
   sensorAlert: boolean;
   syrenAlert: boolean;
   armState: ArmType;
@@ -44,14 +44,11 @@ export class SystemStateComponent implements OnInit {
       .subscribe(arm_state => {
          if (arm_state === environment.ARM_DISARM) {
              this.armState = ArmType.DISARMED;
-         }
-         else if (arm_state === environment.ARM_AWAY) {
+         } else if (arm_state === environment.ARM_AWAY) {
              this.armState = ArmType.AWAY;
-         }
-         else if (arm_state === environment.ARM_STAY) {
+         } else if (arm_state === environment.ARM_STAY) {
              this.armState = ArmType.STAY;
-         }
-         else {
+         } else {
            console.error('Unknown arm state!!!', arm_state);
          }
       }

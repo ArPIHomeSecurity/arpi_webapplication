@@ -1,34 +1,26 @@
-<div fxLayout="row" fxLayoutAlign="center" *ngIf="clock !== null">
-  <form class="clock-form" [formGroup]="clockForm" (ngSubmit)="onSubmit()"
-      fxLayout="column" fxLayoutAlign="start end" fxFlex.gt-xs="600px" fxFlex.xs="100%">
-    <mat-accordion>
+<div *ngIf="clock != null">
+  <form [formGroup]="clockForm" (ngSubmit)="onSubmit()"
+      ngClass.gt-xs="clock-form" ngClass.xs="clock-form-xs" fxLayout="column" fxLayoutGap="20px">
+
+    <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
           <mat-panel-title>Time sources</mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="full-width" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
-          <mat-card class="clock">
-            <mat-card-header>
-              <mat-card-title>Network time</mat-card-title>
-              <mat-card-subtitle>{{clock.network === null ? " - - - " : clock.network}}</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
+        <mat-list>
+          <mat-list-item class="clock">
+            Network time <span class="spacer"></span> {{clock.network === null ? " - - - " : clock.network}}
+          </mat-list-item>
             
-          <mat-card class="clock">
-            <mat-card-header>
-              <mat-card-title>System time</mat-card-title>
-              <mat-card-subtitle>{{clock.system === null ? " - - - " : clock.system}}</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
+          <mat-list-item class="clock">
+            System time <span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
+          </mat-list-item>
       
-          <mat-card class="clock">
-            <mat-card-header>
-              <mat-card-title>Hardware time</mat-card-title>
-              <mat-card-subtitle>{{clock.hw === null ? " - - - " : clock.hw}}</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
-        </div>
-    
+          <mat-list-item class="clock">
+            Hardware time <span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
+          </mat-list-item>
+        </mat-list>
+
         <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()">Synchronize</button>
       </mat-expansion-panel>
 

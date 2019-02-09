@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 
 import { ArmType, Alert, String2ArmType } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';
@@ -21,13 +23,13 @@ export class AlertService {
 
     // get sensors from api
     // hack: converting arm_type field from string to ArmType
-    return this.http.get<Alert[]>( '/api/alerts', { headers } )
-      .map(( rawAlerts: Object[] ) => {
-        for ( let rawAlert of rawAlerts ) {
-          rawAlert['arm_type'] = String2ArmType( rawAlert["arm_type"] );
+    return this.http.get<Alert[]>( '/api/alerts', { headers } ).pipe(
+      map(( rawAlerts: Object[] ) => {
+        for ( const rawAlert of rawAlerts ) {
+          rawAlert['arm_type'] = String2ArmType( rawAlert['arm_type'] );
         }
         return rawAlerts as Alert[];
-      } );
+      } ));
   }
 
 

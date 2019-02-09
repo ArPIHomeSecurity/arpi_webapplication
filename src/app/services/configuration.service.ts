@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Option } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';
@@ -22,12 +22,11 @@ export class ConfigurationService {
   }
 
 
-  setOption( option: string, section: string, value: any ) {
+  setOption( option: string, section: string, value: any ): Observable<any> {
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // get configuration option from api
-    return this.http.put( '/api/config/' + option + '/' + section, value, { headers } )
-      .subscribe();
+    return this.http.put( '/api/config/' + option + '/' + section, value, { headers } );
   }
 }

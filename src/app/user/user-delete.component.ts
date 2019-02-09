@@ -14,5 +14,4 @@ export class UserDeleteDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

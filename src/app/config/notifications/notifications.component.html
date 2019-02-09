@@ -1,7 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center"  [fxShow]="email !== null && gsm !== null && subscriptions !== null">
+<div *ngIf="email != null && gsm != null && subscriptions != null">
   <form class="notifications-form" [formGroup]="notificationsForm" (ngSubmit)="onSubmit()"
-      fxLayout="column" fxLayoutAlign="start end" [fxShow]="email !== null" 
-      fxFlex.xl="600px" fxFlex.lg="600px" fxFlex.md="600px" fxFlex.sm="600px" fxFlex.xs="100%">
+      ngClass.gt-xs="notifications-form" ngClass.xs="notifications-form-xs" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+
     <mat-accordion multi="true">
 
       <mat-expansion-panel>
@@ -30,7 +30,7 @@
         </mat-expansion-panel-header>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="pin_code"  placeholder="SIM card PIN code">
+          <input matInput formControlName="pin_code" placeholder="SIM card PIN code">
         </mat-form-field>
 
         <mat-form-field class="half-width">

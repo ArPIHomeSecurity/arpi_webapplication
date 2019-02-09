@@ -2,17 +2,25 @@ import { ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 
 export function positiveInteger(): ValidatorFn {
-  return (control: AbstractControl):{[key: string]: any} => {
+  return (control: AbstractControl): {[key: string]: any} => {
     const error: ValidationErrors = { integer: true };
-    if (control.value == `${parseInt(control.value, 10)}`) {
-      if (Number(control.value) < 0) {
-        return {invalid: 'Should be a positive value!'};;
-      } else {
-        return null;
-      }
-    }
-    else {
-      return {invalid: 'Invalid value!'};
+    if (Number(control.value) < 0 || isNaN(Number(control.value))) {
+      return {invalid: 'Should be a positive value!'};
+    } else {
+      return null;
     }
   };
+}
+
+export function getSessionValue(name: string, defaultValue: any): any {
+  const value = JSON.parse(sessionStorage.getItem(name));
+  if (value != null) {
+    return value;
+  }
+
+  return defaultValue;
+}
+
+export function setSessionValue(name: string, value: any) {
+  sessionStorage.setItem(name, JSON.stringify(value));
 }

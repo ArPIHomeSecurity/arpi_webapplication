@@ -1,5 +1,5 @@
-<div  [fxShow]="zones !== null && sensors !== null">
-  <div *ngIf="zones && zones.length > 0; else no_zones" ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs" fxLayout="column" fxLayoutGap="20px" >
+<div *ngIf="zones != null && sensors != null">
+  <div *ngIf="zones.length > 0; else no_zones" ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card *ngFor="let zone of zones">
       <mat-card-content layout="row">
   
@@ -25,11 +25,11 @@
               </div>
               <div class="mat-row">
                 <div class="mat-cell">Stay</div >
-                <div class="mat-cell" *ngIf="zone.stay_delay>=0; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.stay_delay}}</div >
+                <div class="mat-cell" *ngIf="zone.stay_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.stay_delay!==null ? zone.stay_delay : "-"}}</div >
               </div>
               <div class="mat-row">
-                <div class="mat-cell">Normal</div >
+                <div class="mat-cell">Disarmed</div >
                 <div class="mat-cell" *ngIf="zone.disarmed_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
                 <div class="mat-cell">{{zone.disarmed_delay!==null ? zone.disarmed_delay : "-"}}</div >
               </div>
@@ -74,10 +74,9 @@
       <h1 align="center">No zones found</h1>
     </div>
   </ng-template>
-  
-  
-  <div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
-    <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-    <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  </div>
+</div>
+
+<div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
+  <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

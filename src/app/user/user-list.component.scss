@@ -2,23 +2,26 @@
 
 .user-list {
   padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
-  width: 600px;
-  margin: 0 auto -75px auto;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
 }
 
 .user-list-xs {
-  padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
-  margin-bottom: -60px;
+  padding: 5px;
   width: 100%;
 }
 
 .user-actions {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 85px;
+  right: 20px;
+  float: right;
+}
+
+.user-actions-xs {
+  position: fixed;
+  bottom: 85px;
   right: 20px;
   float: right;
 }
@@ -27,4 +30,8 @@
   margin: 5px 0px;
   float: left;
   clear: both;
+}
+
+.avatar {
+  font-size: 40px;
 }

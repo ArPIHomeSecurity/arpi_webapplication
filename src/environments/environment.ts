@@ -5,6 +5,9 @@
 
 export const environment = {
   production: false,
+  demo: false,
+  aotTranslations: true,
+  delay: 0,
 
   channel_count: 15,
   SNACK_DURATION: 2000,

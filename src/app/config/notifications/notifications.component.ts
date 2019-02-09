@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -85,9 +84,9 @@ export class NotificationsComponent implements OnInit {
       this.email = results[0] ? results[0] : JSON.parse(DEFAULT_EMAIL);
       this.gsm = results[1] ? results[1] : JSON.parse(DEFAULT_GSM);
       this.subscriptions = results[2] ? results[2] : JSON.parse(DEFAULT_SUBSCRIPTIONS);
-      this.email.value = JSON.parse(this.email.value)
-      this.gsm.value = JSON.parse(this.gsm.value)
-      this.subscriptions.value = JSON.parse(this.subscriptions.value)
+      this.email.value = this.email.value;
+      this.gsm.value = this.gsm.value;
+      this.subscriptions.value = this.subscriptions.value;
       this.updateForm(this.email, this.gsm, this.subscriptions);
       this.loader.display(false);
     });
@@ -95,7 +94,7 @@ export class NotificationsComponent implements OnInit {
 
   prepareEmail(): any {
     const formModel = this.notificationsForm.value;
-    let email = {
+    const email = {
       'smtp_username': formModel.smtp_username,
       'email_address': formModel.email_address,
     };
@@ -130,12 +129,13 @@ export class NotificationsComponent implements OnInit {
   }
 
   onSubmit() {
-    let email = this.prepareEmail();
+    const email = this.prepareEmail();
     this.configService.setOption('notifications', 'email', email);
-    let gsm = this.prepareGsm();
+    const gsm = this.prepareGsm();
     this.configService.setOption('notifications', 'gsm', gsm);
-    let subcriptions = this.prepareSubscriptions();
-    this.configService.setOption('notifications', 'subscriptions', subcriptions);
+    const subcriptions = this.prepareSubscriptions();
+    this.configService.setOption('notifications', 'subscriptions', subcriptions)
+      .subscribe(_ => this.updateComponent());
   }
 }
 

@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
 
 import { Sensor, SensorType } from '../models/index';
 import { AuthenticationService } from '../services/authentication.service';
@@ -72,8 +74,7 @@ export class SensorService {
       const params: URLSearchParams = new URLSearchParams();
       params.set( 'sensor_id', sensorId.toString() );
       return this.http.get<boolean>( '/api/sensor/alert' + sensorId, { headers } );
-    }
-    else {
+    } else {
       return this.http.get<boolean>( '/api/sensor/alert', { headers } );
     }
   }
@@ -92,8 +93,8 @@ export class SensorService {
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // set sensor from api
-    return this.http.put( '/api/sensors/reset-references', null, { headers } )
-      .map(( response: Response ) => response.json() ).subscribe();
+    return this.http.put( '/api/sensors/reset-references', null, { headers } ).pipe(
+      map(( response: Response ) => response.json() )).subscribe();
   }
 }
 

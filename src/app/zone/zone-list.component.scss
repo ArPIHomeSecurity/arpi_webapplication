@@ -1,24 +1,15 @@
 @charset "UTF-8";
 
 .zone-list {
-  box-sizing: border-box;
   padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
-  width: 600px;
   margin-right: auto;
   margin-left: auto;
+  width: 600px;
 }
 
 .zone-list-xs {
-  box-sizing: border-box;
-  padding: 15px;
-  max-height: none !important;
-  min-height: 100%;
-}
-
-.sensor-list li {
-  list-style: none;
+  padding: 5px;
+  width: 100%;
 }
 
 h3 {
@@ -30,19 +21,17 @@ ul {
 }
 
 .zone-actions {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 85px;
   right: 20px;
   float: right;
-  margin-top: -75px;
 }
 
 .zone-actions-xs {
-  position: sticky;
-  bottom: 20px;
+  position: fixed;
+  bottom: 65px;
   right: 20px;
   float: right;
-  margin-top: -60px;
 }
 
 .zone-action {

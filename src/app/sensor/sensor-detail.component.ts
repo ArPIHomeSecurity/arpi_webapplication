@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
+import { Observable ,  forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,9 +16,17 @@ import { MonitoringService } from '../services/index';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { environment } from '../../environments/environment';
+import { first } from 'rxjs/operators';
 
 const scheduleMicrotask = Promise.resolve(null);
 
+/**
+ * Channel info
+ */
+class Channel {
+  channel: number;
+  sensor: Sensor;
+}
 
 /**
  * Helper class for storing sensor and zone informations.
@@ -42,18 +49,19 @@ class SensorInfo {
   moduleId: module.id,
   templateUrl: './sensor-detail.component.html',
   styleUrls: ['sensor-detail.component.scss'],
-  providers: [MonitoringService, SensorService, ZoneService]
+  providers: []
 })
 export class SensorDetailComponent implements OnInit {
   sensorId: number;
   sensor: Sensor = null;
-  channels = [];
-  zones: Zone[] = [];
-  sensorTypes: SensorType [] = [];
+  sensors: Sensor[];
+  channels: Channel[];
+  zones: Zone[];
+  sensorTypes: SensorType[];
   sensorForm: FormGroup;
   zoneForm: FormGroup;
-  new_zone : boolean = false;
-  MonitoringState:any = MonitoringState;
+  new_zone = false;
+  MonitoringState = MonitoringState;
   monitoringState: MonitoringState;
 
   constructor(
@@ -69,17 +77,14 @@ export class SensorDetailComponent implements OnInit {
     private location: Location,
     private snackBar: MatSnackBar) {
 
-    this.route.paramMap.subscribe(params =>
-      this.sensorId = +params.get('id')
-    );
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id') != null) {
+        this.sensorId = +params.get('id');
+      }
+    });
   }
 
   ngOnInit() {
-    // channels are numbered 1..15
-    for (var i = 1; i <= environment.channel_count; i++){
-      this.channels.push(i);
-    }
-
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
@@ -91,14 +96,15 @@ export class SensorDetailComponent implements OnInit {
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
 
-    if (this.sensorId) {
+    if (this.sensorId != null) {
       forkJoin(
         this.sensorService.getSensor(this.sensorId),
+        this.sensorService.getSensors(),
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
       .subscribe(results => {
           this.sensor = results[0];
-          let info = {
+          const info = {
             channel: this.sensor.channel,
             type_id: this.sensor.type_id,
             zone_id: this.sensor.zone_id,
@@ -107,37 +113,44 @@ export class SensorDetailComponent implements OnInit {
 
             zone_name: null,
             disarmed_delay: null,
-            away_delay: null,
-            stay_delay: null
+            away_delay: 0,
+            stay_delay: 0
           };
-          this.updateForm(info);
 
-          this.zones = results[1];
-          this.sensorTypes = results[2];
+          this.sensors = results[1];
+          this.zones = results[2];
+          this.sensorTypes = results[3];
+          this.channels = this.generateChannels(this.sensors);
+
+          this.updateForm(info);
           this.loader.display(false);
       });
-    }
-    else {
+    } else {
       forkJoin(
+        this.sensorService.getSensors(),
         this.zoneService.getZones(),
         this.sensorService.getSensorTypes())
       .subscribe(results => {
-        this.zones = results[0];
-        this.sensorTypes = results[1];
+        this.sensors = results[0];
+        this.zones = results[1];
+        this.sensorTypes = results[2];
+        this.channels = this.generateChannels(this.sensors);
 
         this.sensor = new Sensor;
-        let info = {
-          channel: this.sensor.channel,
-          type_id: this.sensor.type_id,
-          zone_id: this.sensor.zone_id,
-          enabled: this.sensor.enabled,
-          description: this.sensor.description,
+        const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
+        const info = {
+          channel: firstFreeChannel ? firstFreeChannel.channel : -1,
+          type_id: this.sensorTypes[0].id,
+          zone_id: -1,
+          enabled: true,
+          description: null,
 
           zone_name: null,
           disarmed_delay: null,
-          away_delay: null,
-          stay_delay: null
+          away_delay: 0,
+          stay_delay: 0
         };
+        this.new_zone = true;
         this.updateForm(info);
         this.loader.display(false);
       });
@@ -148,14 +161,15 @@ export class SensorDetailComponent implements OnInit {
     this.zoneForm =  this.fb.group({
       zone_name: sensor.zone_name,
       disarmed_alert: sensor.disarmed_delay !== null,
-      disarmed_delay: new FormControl(sensor.disarmed_delay, sensor.disarmed_delay !== null ? [Validators.required, positiveInteger()] : null),
+      disarmed_delay:
+        new FormControl(sensor.disarmed_delay, sensor.disarmed_delay !== null ? [Validators.required, positiveInteger()] : null),
       away_armed_alert: sensor.away_delay !== null,
       away_delay: new FormControl(sensor.away_delay, sensor.away_delay !== null ? [Validators.required, positiveInteger()] : null),
       stay_armed_alert: sensor.stay_delay !== null,
       stay_delay: new FormControl(sensor.stay_delay, sensor.stay_delay !== null ? [Validators.required, positiveInteger()] : null)
     });
     this.sensorForm = this.fb.group({
-      channel: new FormControl(sensor.channel, Validators.required),
+      channel: new FormControl(sensor.channel),
       zone_id: new FormControl(sensor.zone_id, Validators.required),
       type_id: new FormControl(sensor.type_id, Validators.required),
       enabled: sensor.enabled,
@@ -165,31 +179,37 @@ export class SensorDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    let sensor = this.prepareSensor();
-    let zone = this.prepareZone();
-    if (this.new_zone){
+    const sensor = this.prepareSensor();
+    const zone = this.prepareZone();
+
+    if (sensor.channel >= 0 && this.channels[sensor.channel].sensor != null && sensor.id !== this.channels[sensor.channel].sensor.id) {
+      // disconnect sensor on channel collision
+      this.channels[sensor.channel].sensor.channel = -1;
+      this.sensorService.updateSensor(this.channels[sensor.channel].sensor);
+    }
+
+    if (this.new_zone) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            console.log("Zone: ", result);
             sensor.zone_id = result.id;
-            if (this.sensor.id != undefined) {
+            if (this.sensor.id !== undefined) {
               return this.sensorService.updateSensor(sensor)
                   .subscribe(_ => this.router.navigate(['/sensors']));
             }
 
             return this.sensorService.createSensor(sensor)
-                .subscribe(_ => this.router.navigate(['/sensors']));
+                .subscribe(_ => this.router.navigate(['/sensors']) );
           },
             _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
-      );
-    }
-    else {
-        if (this.sensor.id) {
-          this.sensorService.updateSensor(sensor).subscribe(
+        );
+    } else {
+        if (this.sensorId != null) {
+          this.sensorService.updateSensor(sensor)
+            .subscribe(
               _ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION}));
-        }
-        else {
+              _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+            );
+        } else {
           this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']),
               _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
         }
@@ -221,15 +241,15 @@ export class SensorDetailComponent implements OnInit {
     return {
       id: sensorModel.zone_id,
       name: zoneModel.zone_name,
-      disarmed_delay: parseInt(zoneModel.disarmed_delay),
-      away_delay: parseInt(zoneModel.away_delay),
-      stay_delay: parseInt(zoneModel.away_delay),
-      description: ''
+      disarmed_delay: !isNaN(parseInt(zoneModel.disarmed_delay, 10)) ? parseInt(zoneModel.disarmed_delay, 10) : null,
+      away_delay: !isNaN(parseInt(zoneModel.away_delay, 10)) ? parseInt(zoneModel.away_delay, 10) : null,
+      stay_delay: !isNaN(parseInt(zoneModel.stay_delay, 10)) ? parseInt(zoneModel.stay_delay, 10) : null,
+      description: zoneModel.zone_name
     };
   }
 
   onZoneSelected(event) {
-    this.new_zone = (event.value === "new");
+    this.new_zone = (event.value === -1);
 
     const controls = this.zoneForm.controls;
     if (this.new_zone) {
@@ -237,8 +257,7 @@ export class SensorDetailComponent implements OnInit {
       controls['away_delay'].setValidators([Validators.required, positiveInteger()]);
       controls['stay_delay'].setValidators([Validators.required, positiveInteger()]);
       controls['zone_name'].setValidators(Validators.required);
-    }
-    else {
+    } else {
       controls['zone_name'].setValidators(null);
       controls['disarmed_delay'].setValidators(null);
       controls['away_delay'].setValidators(null);
@@ -251,8 +270,7 @@ export class SensorDetailComponent implements OnInit {
     const controls = this.zoneForm.controls;
     if (event.checked) {
       controls[delay_name].setValidators([Validators.required, positiveInteger()]);
-    }
-    else {
+    } else {
       controls[delay_name].setValidators(null);
     }
 
@@ -260,7 +278,7 @@ export class SensorDetailComponent implements OnInit {
   }
 
   openDeleteDialog(sensorId: number) {
-    let dialogRef = this.dialog.open(SensorDeleteDialog, {
+    const dialogRef = this.dialog.open(SensorDeleteDialog, {
       width: '250px',
       data: {
         description: this.sensor.description,
@@ -271,15 +289,46 @@ export class SensorDetailComponent implements OnInit {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId)
-            .subscribe(result => {
-              this.router.navigate(['/sensors'])},
+            .subscribe(_ => {
+                this.router.navigate(['/sensors']);
+              },
               _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
-        }
-        else {
-          this.snackBar.open("Can't delete sensor!", null, {duration: environment.SNACK_DURATION});
+        } else {
+          this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});
         }
       }
+    });
+  }
+
+  generateChannels(sensors: Sensor[]): Channel[] {
+    // channels are numbered 1..channel count
+    const channels: Channel[] = [];
+    for (let i = 0; i < environment.channel_count; i++) {
+      const sensor = sensors.find(s => s.channel === i);
+      channels.push({
+        channel: i,
+        sensor: sensor
+      });
+    }
+
+    channels.push({
+      channel: -1,
+      sensor: null
+    });
+
+    return channels;
+  }
+
+  orderedChannels(): Array<Channel> {
+    return this.channels.concat().sort((ch1, ch2) => {
+      if (ch1.channel > ch2.channel) {
+        return 1;
+      }
+      if (ch1.channel < ch2.channel) {
+        return -1;
+      }
+      return 0;
     });
   }
 }

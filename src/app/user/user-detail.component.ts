@@ -21,13 +21,13 @@ const scheduleMicrotask = Promise.resolve(null);
   moduleId: module.id,
   templateUrl: './user-detail.component.html',
   styleUrls: ['user-detail.component.scss'],
-  providers: [MonitoringService, UserService]
+  providers: []
 })
 export class UserDetailComponent implements OnInit {
   userId: number;
   user: User = null;
   userForm: FormGroup;
-  ArmType:any = ArmType;
+  ArmType: any = ArmType;
   roles: any = [];
   armState: ArmType;
 
@@ -43,9 +43,11 @@ export class UserDetailComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location) {
 
-    this.route.paramMap.subscribe(params =>
-      this.userId = +params.get('id')
-    );
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id') != null) {
+        this.userId = +params.get('id');
+      }
+    });
   }
 
   ngOnInit() {
@@ -57,10 +59,9 @@ export class UserDetailComponent implements OnInit {
       .subscribe(armState => {
         this.armState = armState;
         if (this.userForm) {
-          if (this.armState == ArmType.DISARMED) {
+          if (this.armState === ArmType.DISARMED) {
             this.userForm.enable();
-          }
-          else {
+          } else {
             this.userForm.disable();
           }
         }
@@ -69,33 +70,35 @@ export class UserDetailComponent implements OnInit {
       .subscribe(arm_type => {
         if (arm_type === environment.ARM_DISARM) {
           this.armState = ArmType.DISARMED;
-          this.userForm.enable();
-        }
-        else if (arm_type === environment.ARM_AWAY) {
+          if (this.userForm != null) {
+            this.userForm.enable();
+          }
+        } else if (arm_type === environment.ARM_AWAY) {
           this.armState = ArmType.AWAY;
-          this.userForm.disable();
-        }
-        else if (arm_type === environment.ARM_STAY) {
+          if (this.userForm != null) {
+            this.userForm.disable();
+          }
+        } else if (arm_type === environment.ARM_STAY) {
           this.armState = ArmType.STAY;
-          this.userForm.disable();
+          if (this.userForm != null) {
+            this.userForm.disable();
+          }
         }
       });
 
-    if (this.userId) {
+    if (this.userId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
       // https://github.com/angular/angular/issues/17572#issuecomment-323465737
       scheduleMicrotask.then(() => {
         this.loader.display(true);
       });
-
       this.userService.getUser(this.userId)
         .subscribe(user => {
-            this.user = user;
-            this.updateForm(this.user);
-            this.loader.display(false);
-        });
-    }
-    else {
+          this.user = user;
+          this.updateForm(this.user);
+          this.loader.display(false);
+      });
+    } else {
       this.user = new User;
       this.user.name = null;
       this.user.role = 'user';
@@ -111,20 +114,19 @@ export class UserDetailComponent implements OnInit {
       accessCode: new FormControl(user.access_code, [Validators.pattern('^\\d{4,8}$')]),
     });
 
-    if (this.armState != ArmType.DISARMED) {
+    if (this.armState !== ArmType.DISARMED) {
       this.userForm.disable();
     }
   }
 
   onSubmit() {
     console.log('User: ', this.user);
-    let user = this.prepareSaveUser();
-    if (this.userId) {
+    const user = this.prepareSaveUser();
+    if (this.userId != null) {
       this.userService.updateUser(user).subscribe(null,
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
       );
-    }
-    else {
+    } else {
       this.userService.createUser(user).subscribe(null,
           _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
     }
@@ -138,9 +140,9 @@ export class UserDetailComponent implements OnInit {
   prepareSaveUser(): User {
     const formModel = this.userForm.value;
 
-    let user: User = new User();
+    const user: User = new User();
     user.id = this.userId;
-    user.name = formModel.name; 
+    user.name = formModel.name;
     user.role = formModel.role;
     user.access_code = formModel.accessCode;
 
@@ -148,7 +150,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   openDeleteDialog(userId: number) {
-    let dialogRef = this.dialog.open(UserDeleteDialog, {
+    const dialogRef = this.dialog.open(UserDeleteDialog, {
       width: '250px',
       data: {
         name: this.user.name,
@@ -158,7 +160,7 @@ export class UserDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.deleteUser(userId)
-          .subscribe(result => this.router.navigate(['/users']),
+          .subscribe(_ => this.router.navigate(['/users']),
               _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION}));
       }
     });

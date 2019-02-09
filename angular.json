@@ -7,27 +7,43 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "targets": {
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
               "src/assets",
-              "src/favicon.ico"
+              "src/404.html"
             ],
             "styles": [
-              "src/styles.css",
-              "src/indigo-orange.scss"
+              "src/styles.scss"
             ],
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "production-en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "dist-production",
+              "i18nFile": "src/locales/messages.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -37,12 +53,140 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "production-hu": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
+              ],
+              "outputPath": "dist-production/hu",
+              "i18nFile": "src/locales/messages.hu.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hu",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
               ]
+            },
+            "demo-en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                }
+              ],
+              "outputPath": "dist-demo",
+              "i18nFile": "src/locales/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "baseHref": "https://demo.arpi-security.info/",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "demo-hu": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                }
+              ],
+              "outputPath": "dist-demo/hu",
+              "i18nFile": "src/locales/messages.hu.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hu",
+              "baseHref": "https://demo.arpi-security.info/hu/",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "demo-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.dev.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                }
+              ],
+              "outputPath": "dist-demo-dev",
             }
           }
         },
@@ -53,7 +197,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "argus:build:production"
+              "browserTarget": "argus:build:production-en"
+            },
+            "demo-dev": {
+              "browserTarget": "argus:build:demo-dev"
             }
           }
         },
@@ -67,17 +214,17 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css",
-              "src/indigo-orange.scss"
+              "src/styles.scss"
             ],
+            "scripts": [],
             "assets": [
+              "src/favicon.ico",
               "src/assets",
-              "src/favicon.ico"
+              "src/404.html"
             ]
           }
         },
@@ -96,23 +243,26 @@
       }
     },
     "argus-e2e": {
-      "root": "e2e",
-      "sourceRoot": "e2e",
+      "root": "e2e/",
       "projectType": "application",
-      "targets": {
+      "prefix": "",
+      "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "argus:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "argus:serve:production"
+            }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -121,14 +271,5 @@
       }
     }
   },
-  "defaultProject": "argus",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "argus"
 }

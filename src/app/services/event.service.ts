@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import 'rxjs/add/operator/map';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 
 import * as io from 'socket.io-client';
 
@@ -24,13 +21,14 @@ export class EventService {
     if (this.socket) {
       this.socket.disconnect();
     }
-    this.socket = io.connect(window.location.protocol + '//' + window.location.hostname + ':' + environment.MONITORING_PORT, { query: "token=" + deviceToken });
+    this.socket = io.connect(
+      window.location.protocol + '//' + window.location.hostname + ':' + environment.MONITORING_PORT, { query: 'token=' + deviceToken });
     this.socket.on('connect', () => this.socketConnected$.next(true));
     this.socket.on('disconnect', () => this.socketConnected$.next(false));
-  
-    //this.socketConnected$.asObservable().subscribe( connected => {
+
+    // this.socketConnected$.asObservable().subscribe( connected => {
     //  console.log('Socket connected: ', connected);
-    //});
+    // });
   }
 
 
@@ -43,7 +41,7 @@ export class EventService {
       // observable is disposed
       return () => {
         this.socket.off(event);
-      }
+      };
     });
   }
 }

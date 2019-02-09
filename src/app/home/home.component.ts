@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Observable } from 'rxjs/Rx';
-
-import { ArmType, String2ArmType, Alert } from '../models/index';
+import { ArmType, String2ArmType, Alert, SensorType } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { AlertService, SensorService, EventService } from '../services/index';
 import { MonitoringService } from '../services/index';
@@ -11,18 +9,18 @@ import { MonitoringService } from '../services/index';
 import { environment } from '../../environments/environment';
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
-  providers: [AlertService, SensorService, MonitoringService]
+  providers: []
 })
 
 export class HomeComponent implements OnInit {
-  ArmType:any = ArmType;
+  ArmType: any = ArmType;
   alert: Alert;
   arm_state: ArmType;
   monitoringState: MonitoringState = MonitoringState.READY;
   sensor_alert: boolean;
+  sensorTypes: SensorType [] = [];
 
   constructor(
           private snackBar: MatSnackBar,
@@ -41,7 +39,8 @@ export class HomeComponent implements OnInit {
     );
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
-        this.alert = JSON.parse(alert);
+        // TODO: why JSON parse???
+        this.alert = alert;
       }
     );
 
@@ -58,6 +57,9 @@ export class HomeComponent implements OnInit {
       }
     );
 
+    this.sensorService.getSensorTypes()
+      .subscribe( st => this.sensorTypes = st );
+
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensor_alert = alert;
@@ -71,23 +73,30 @@ export class HomeComponent implements OnInit {
   }
 
   arm_changed(event) {
-    if (event.value === "AWAY") {
+    if (event.value === 'AWAY') {
       this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
       this.monitoringService.arm(ArmType.AWAY);
-    } else if (event.value === "STAY") {
+    } else if (event.value === 'STAY') {
       this.monitoringService.arm(ArmType.STAY);
       this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
-    }
-    else if (event.value === "DISARMED") {
+    } else if (event.value === 'DISARMED') {
         this.snackBar.open('Disarmed', null, {duration: environment.SNACK_DURATION});
         this.monitoringService.disarm();
       }
   }
-  
-  arm_disabled(){
-    return this.sensor_alert || 
-      this.arm_state != ArmType.DISARMED || 
-      this.monitoringState != MonitoringState.READY ||
-      this.monitoringState == MonitoringState.READY && this.alert;
+
+  arm_disabled() {
+    return this.sensor_alert ||
+      this.arm_state !== ArmType.DISARMED ||
+      this.monitoringState !== MonitoringState.READY ||
+      this.monitoringState === MonitoringState.READY && this.alert;
+  }
+
+  getSensorTypeName(sensorTypeId: number) {
+    if (this.sensorTypes.length) {
+      return this.sensorTypes.find(x => x.id === sensorTypeId).name;
+    }
+
+    return '';
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { MediaChange, ObservableMedia } from "@angular/flex-layout";
-import { Subscription } from "rxjs/Subscription";
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Subscription } from 'rxjs';
 
 import { AuthenticationService, LoaderService, MonitoringService } from './services/index';
 
@@ -24,16 +24,17 @@ export class AppComponent implements OnInit {
   currentLocale: string;
   server_version: string;
   webapplication_version = VERSION;
+  environment = environment;
 
   constructor(
           public media: ObservableMedia,
           private loader: LoaderService,
-          private authService: AuthenticationService,
+          public authService: AuthenticationService,
           private monitoring: MonitoringService,
           private sidenav: ViewContainerRef
-  ){
+  ) {
     this.watcher = media.subscribe((change: MediaChange) => {
-      this.small_screen = (change.mqAlias == 'xs' || change.mqAlias == 'sm');
+      this.small_screen = (change.mqAlias === 'xs' || change.mqAlias === 'sm');
     });
 
     this.currentLocale = localStorage.getItem('localeId');
@@ -44,7 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.displayLoader = false;
     this.small_screen = (this.media.isActive('xs') || this.media.isActive('sm'));
     this.loader.status.subscribe(value => {
@@ -57,35 +57,40 @@ export class AppComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
   getUserName() {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return currentUser ? currentUser.name : '';
+    return this.authService.getUsername();
+  }
+
+  isAdminUser() {
+    return this.authService.getRole() === environment.ROLE_TYPES.ADMIN;
   }
 
   // helper method to access the sidenav even if it is in ngIf
   @ViewChild('sidenav') set setSidenav(sidenav: ViewContainerRef) {
       this.sidenav = sidenav;
   }
-  
+
   onLocaleSelected(event) {
-    let current_locale = localStorage.getItem('localeId');
-    console.log("Change locale: ", current_locale, "=>", event.value);
+    const current_locale = localStorage.getItem('localeId');
+    console.log('Change locale: ', current_locale, '=>', event.value);
 
     localStorage.setItem('localeId', event.value);
-    if (environment.production) {
-      let new_locale = event.value == environment.DEFAULT_LANGUAGE ? "" : event.value;
+    if (environment.aotTranslations) {
+      const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
 
-      const languagePattern = new RegExp("^/(" + environment.LANGUAGES.split(' ').join('|') + ")/");
+      const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
       if (languagePattern.test(location.pathname)) {
         // change the language
-        location.pathname = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''))
-      }
-      else {
+        location.pathname = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''));
+      } else {
         // if the current language isn't the default, add the language
         location.pathname = '/' + new_locale + location.pathname;
       }
-    }
-    else {
+    } else {
       location.reload();
     }
   }
