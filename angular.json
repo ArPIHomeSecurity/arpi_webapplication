@@ -33,6 +33,9 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "outputPath": "dist-development"
+            },
             "production-en": {
               "fileReplacements": [
                 {
@@ -40,8 +43,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputPath": "dist-production",
-              "i18nFile": "src/locales/messages.xlf",
+              "outputPath": "dist-production-en",
+              "i18nFile": "src/locales/messages.en.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "en",
               "optimization": true,
@@ -68,7 +71,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputPath": "dist-production/hu",
+              "baseHref": "/hu/",
+              "outputPath": "dist-production-hu",
               "i18nFile": "src/locales/messages.hu.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "hu",
@@ -98,6 +102,10 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component.demo.html"
                 },
                 {
                   "replace": "src/app/services",
@@ -141,6 +149,10 @@
                   "with": "src/app/app.module.demo.ts"
                 },
                 {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component.demo.html"
+                },
+                {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
                 },
@@ -182,6 +194,10 @@
                   "with": "src/app/app.module.demo.ts"
                 },
                 {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component.demo.html"
+                },
+                {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
                 }
@@ -196,6 +212,9 @@
             "browserTarget": "argus:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "argus:build:development"
+            },
             "production": {
               "browserTarget": "argus:build:production-en"
             },

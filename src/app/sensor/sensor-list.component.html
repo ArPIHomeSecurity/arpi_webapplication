@@ -2,13 +2,13 @@
   <div *ngIf="sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
       <mat-card-header>
-        <div mat-card-avatar [ngSwitch]="getSensorTypeName(sensor.type_id)" 
+        <div mat-card-avatar [ngSwitch]="sensor.type_id" 
             [ngClass]="{'sensor-image': true, 'alerting': sensor.alert}">
-          <img *ngSwitchCase="'Motion'" src="assets/images/sensor_motion.png"/>
-          <img *ngSwitchCase="'Tamper'" src="assets/images/sensor_tamper.png"/>
-          <img *ngSwitchCase="'Open'"   src="assets/images/sensor_open.png"/>
-          <img *ngSwitchCase="'Break'"  src="assets/images/sensor_break.png"/>
-          <img *ngSwitchDefault src="https://via.placeholder.com/100?text=Unknown"/>
+          <img *ngSwitchCase="1" src="assets/images/sensor_tamper.png"/>
+          <img *ngSwitchCase="2" src="assets/images/sensor_motion.png"/>
+          <img *ngSwitchCase="3"   src="assets/images/sensor_open.png"/>
+          <img *ngSwitchCase="4"  src="assets/images/sensor_break.png"/>
+          <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.type_id)}}"/>
         </div>
 
         <mat-card-title ngClass.xs="sensor-title-sm">

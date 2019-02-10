@@ -77,11 +77,10 @@ export class AppComponent implements OnInit {
   onLocaleSelected(event) {
     const current_locale = localStorage.getItem('localeId');
     console.log('Change locale: ', current_locale, '=>', event.value);
-
     localStorage.setItem('localeId', event.value);
+
     if (environment.aotTranslations) {
       const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
-
       const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
       if (languagePattern.test(location.pathname)) {
         // change the language

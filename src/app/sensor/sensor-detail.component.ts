@@ -119,7 +119,7 @@ export class SensorDetailComponent implements OnInit {
 
           this.sensors = results[1];
           this.zones = results[2];
-          this.sensorTypes = results[3];
+          this.sensorTypes = results[3].sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
           this.channels = this.generateChannels(this.sensors);
 
           this.updateForm(info);
