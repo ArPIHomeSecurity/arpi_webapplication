@@ -44,9 +44,6 @@
                 }
               ],
               "outputPath": "dist-production-en",
-              "i18nFile": "src/locales/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -117,9 +114,6 @@
                 }
               ],
               "outputPath": "dist-demo",
-              "i18nFile": "src/locales/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en",
               "baseHref": "https://demo.arpi-security.info/",
               "optimization": true,
               "outputHashing": "all",

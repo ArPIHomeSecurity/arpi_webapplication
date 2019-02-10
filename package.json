@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build-development": "ng build --coonfiguration=development",
     "translate-hu": "ng xi18n --output-path locales --i18n-locale en && xliffmerge --profile xliffmerge.json en hu",
     "build-default-language": "ng build --configuration=production-$npm_package_default_language",
     "build-translations": "ng build --configuration=production-hu",
