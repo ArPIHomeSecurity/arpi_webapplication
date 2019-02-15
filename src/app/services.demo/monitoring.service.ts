@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 
-import { ArmType, ArmType2String, Sensor } from '../models/index';
+import { ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models/index';
 import { MonitoringState } from '../models/index';
 import { AlertService } from './alert.service';
 import { EventService } from './event.service';
@@ -14,6 +14,7 @@ import { getSessionValue, setSessionValue } from '../utils';
 @Injectable()
 export class MonitoringService {
 
+  monitoringState: MonitoringState;
   armState: ArmType;
   alert: boolean;
   datetime: string;
@@ -24,10 +25,24 @@ export class MonitoringService {
     private eventService: EventService,
     private zoneService: ZoneService
   ) {
+    this.monitoringState = getSessionValue('MonitoringService.monitoringState', MonitoringState.STARTUP)
     this.armState = getSessionValue('MonitoringService.armState', ArmType.DISARMED);
     this.alert = getSessionValue('MonitoringService.alert', false);
     this.datetime = getSessionValue('MonitoringService.datetime', new Date().toLocaleString());
     this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+    if (this.monitoringState === MonitoringState.STARTUP) {
+      setTimeout(() => {
+        this.monitoringState = MonitoringState.UPDATING_CONFIG;
+        setSessionValue('MonitoringService.monitoringState', this.monitoringState);
+        this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+        setTimeout(() => {
+          this.monitoringState = MonitoringState.READY;
+          setSessionValue('MonitoringService.monitoringState', this.monitoringState);
+          this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+        }, 3000);
+      }, 2000);
+    }
   }
 
   is_alert(): Observable<boolean> {
@@ -38,23 +53,29 @@ export class MonitoringService {
     return of(this.armState).delay(environment.delay);
   }
 
-  arm( armtype: ArmType ) {
+  arm(armtype: ArmType) {
     this.armState = armtype;
+    this.monitoringState = MonitoringState.ARMED;
     setSessionValue('MonitoringService.armState', this.armState);
+    setSessionValue('MonitoringService.monitoringState', this.monitoringState);
     this.eventService._updateArmState(ArmType2String(armtype));
+    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
     return;
   }
 
   disarm() {
     this.armState = ArmType.DISARMED;
+    this.monitoringState = MonitoringState.READY;
     setSessionValue('MonitoringService.armState', this.armState);
+    setSessionValue('MonitoringService.monitoringState', this.monitoringState);
     this.alertService._stopAlert();
     this.eventService._updateArmState(ArmType2String(this.armState));
+    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
     return;
   }
 
   getMonitoringState(): Observable<MonitoringState> {
-    return of(MonitoringState.READY).delay(environment.delay);
+    return of(this.monitoringState).delay(environment.delay);
   }
 
   getVersion(): Observable<string> {
@@ -105,5 +126,16 @@ export class MonitoringService {
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
     }
+  }
+
+  _resetReferences() {
+    this.monitoringState = MonitoringState.UPDATING_CONFIG;
+    setSessionValue('MonitoringService.monitoringState', this.monitoringState);
+    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    setTimeout(() => {
+      this.monitoringState = MonitoringState.READY;
+      setSessionValue('MonitoringService.monitoringState', this.monitoringState);
+      this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    }, 3000);
   }
 }

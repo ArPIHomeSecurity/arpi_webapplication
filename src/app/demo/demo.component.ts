@@ -23,6 +23,7 @@ export class DemoComponent implements OnInit {
     // channels are numbered 1..15
     for (let i = 0; i < environment.channel_count; i++) {
       this.channels.push(false);
+      this.sensorService._alertChannel(i, this.channels[i]);
     }
   }
 

@@ -31,13 +31,14 @@ export class SensorService {
 
 
   getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
-    return of(this.sensors).delay(environment.delay);
+    // send variables by value
+    return of(Object.assign([], this.sensors)).delay(environment.delay);
   }
 
 
   getSensor( sensorId: number ): Observable<Sensor> {
-    // get sensors from api
-    return of(this.sensors.find(s => s.id === sensorId));
+    // send variables by value
+    return of(Object.assign({}, this.sensors.find(s => s.id === sensorId)));
   }
 
 
@@ -93,7 +94,7 @@ export class SensorService {
   }
 
   resetReferences() {
-
+    this.monitoringService._resetReferences();
   }
 
   _alertChannel(channelId: number, value: boolean) {

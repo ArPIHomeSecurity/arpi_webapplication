@@ -18,11 +18,13 @@ export class ZoneService {
   }
 
   getZones(): Observable<Zone[]> {
-    return of(this.zones);
+    // send variables by value
+    return of(Object.assign([], this.zones)).delay(environment.delay);
   }
 
   getZone( zoneId: number ): Observable<Zone> {
-    return of(this.zones.filter(zone => zone.id === zoneId)[0]).delay(environment.delay);
+    // send variables by value
+    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])).delay(environment.delay);
   }
 
   createZone( zone: Zone ): Observable<Zone> {
