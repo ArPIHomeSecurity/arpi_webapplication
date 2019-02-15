@@ -14,6 +14,8 @@ import { VERSION } from './version';
 })
 export class AppComponent implements OnInit {
   displayLoader: boolean;
+  // display error message of the compoponents
+  message: string;
   watcher: Subscription;
   small_screen: boolean;
   alert: boolean;
@@ -45,11 +47,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displayLoader = false;
     this.small_screen = (this.media.isActive('xs') || this.media.isActive('sm'));
-    this.loader.status.subscribe(value => {
-      this.displayLoader = value;
-    });
+    this.loader.status.subscribe(value => this.displayLoader = value);
+    this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.server_version = version);
   }
 

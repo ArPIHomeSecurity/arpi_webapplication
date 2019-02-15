@@ -57,6 +57,11 @@
   margin: 0px 15px;
 }
 
+.message {
+  margin: 5px;
+  background-color: #f8d7da;
+}
+
 @mixin application-theme($theme) {
   $primary: map-get($theme, primary);
   $warn: map-get($theme, warn);

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Observable ,  forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { ArmType, Sensor, SensorType, Zone } from '../models/index';
+import { Sensor, SensorType, Zone } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { SensorDeleteDialog } from './sensor-delete.component';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
@@ -27,7 +27,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
   sensorTypes: SensorType [] = [];
   MonitoringState: any = MonitoringState;
   monitoringState: MonitoringState;
-  isDestroyed = false;
+  subscriptions: Subscription[];
 
   constructor(
     private authService: AuthenticationService,
@@ -41,18 +41,38 @@ export class SensorListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isDestroyed = false;
     this.updateComponent();
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+    });
+
+    this.subscriptions = [];
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = String2MonitoringState(monitoringState)
+          this.onStateChange();
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.isDestroyed = true;
+    this.subscriptions.forEach(_ => _.unsubscribe());
+    this.subscriptions = [];
+    this.loader.clearMessage();
   }
+
+  onStateChange() {
+    if (this.monitoringState !== MonitoringState.READY) {
+      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    } else {
+      this.loader.clearMessage();
+    }
+  }
+
 
   updateComponent() {
     // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -69,9 +89,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
       this.sensors = results[0];
       this.sensorTypes = results[1];
       this.zones = results[2];
-      if (!this.isDestroyed) {
-        this.loader.display(false);
-      }
+      this.loader.display(false);
     });
   }
 

@@ -1,15 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable ,  forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AbstractControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ArmType, Sensor, Zone } from '../models/index';
+import { Sensor, Zone } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { positiveInteger } from '../utils';
 import { ZoneDeleteDialog } from './zone-delete.component';
@@ -27,13 +26,14 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['zone-detail.component.scss'],
   providers: []
 })
-export class ZoneDetailComponent implements OnInit {
+export class ZoneDetailComponent implements OnInit, OnDestroy {
   zoneId: number;
   zone: Zone = null;
   sensors: Sensor[];
   MonitoringState: any = MonitoringState;
   monitoringState: MonitoringState;
   zoneForm: FormGroup;
+  subscriptions: Subscription[];
 
   constructor(
     private fb: FormBuilder,
@@ -58,9 +58,18 @@ export class ZoneDetailComponent implements OnInit {
 
   ngOnInit() {
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+    });
+
+    this.subscriptions = [];
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = String2MonitoringState(monitoringState);
+
+    }));
 
     if (this.zoneId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -84,6 +93,20 @@ export class ZoneDetailComponent implements OnInit {
       this.zone.away_delay = 0;
       this.zone.stay_delay = 0;
       this.updateForm(this.zone);
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(_ => _.unsubscribe());
+    this.subscriptions = [];
+    this.loader.clearMessage();
+  }
+
+  onStateChange() {
+    if (this.monitoringState !== MonitoringState.READY) {
+      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    } else {
+      this.loader.clearMessage();
     }
   }
 

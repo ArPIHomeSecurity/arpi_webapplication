@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable ,  forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { positiveInteger } from '../utils';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { ArmType, Sensor, SensorType, Zone } from '../models/index';
+import { Sensor, SensorType, Zone } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
 import { MonitoringService } from '../services/index';
@@ -16,7 +16,7 @@ import { MonitoringService } from '../services/index';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { environment } from '../../environments/environment';
-import { first } from 'rxjs/operators';
+
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -35,7 +35,7 @@ class Channel {
   styleUrls: ['sensor-detail.component.scss'],
   providers: []
 })
-export class SensorDetailComponent implements OnInit {
+export class SensorDetailComponent implements OnInit, OnDestroy {
   sensorId: number;
   sensor: Sensor = null;
   sensors: Sensor[];
@@ -46,6 +46,7 @@ export class SensorDetailComponent implements OnInit {
   zoneForm: FormGroup;
   MonitoringState = MonitoringState;
   monitoringState: MonitoringState;
+  subscriptions: Subscription[];
 
   constructor(
     private fb: FormBuilder,
@@ -75,9 +76,18 @@ export class SensorDetailComponent implements OnInit {
     });
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+    });
+
+    this.subscriptions = [];
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = String2MonitoringState(monitoringState);
+          this.onStateChange();
+    }));
 
     if (this.sensorId != null) {
       forkJoin(
@@ -115,6 +125,20 @@ export class SensorDetailComponent implements OnInit {
         this.updateForm(this.sensor);
         this.loader.display(false);
       });
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(_ => _.unsubscribe());
+    this.subscriptions = [];
+    this.loader.clearMessage();
+  }
+
+  onStateChange() {
+    if (this.monitoringState !== MonitoringState.READY) {
+      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    } else {
+      this.loader.clearMessage();
     }
   }
 
