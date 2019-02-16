@@ -17,8 +17,8 @@ import { environment } from '../../environments/environment';
 export class HomeComponent implements OnInit {
   ArmType: any = ArmType;
   alert: Alert;
-  arm_state: ArmType;
-  monitoringState: MonitoringState = MonitoringState.READY;
+  armState: ArmType;
+  monitoringState: MonitoringState;
   sensor_alert: boolean;
   sensorTypes: SensorType [] = [];
 
@@ -46,9 +46,9 @@ export class HomeComponent implements OnInit {
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(arm_state => this.arm_state = arm_state);
+      .subscribe(armState => this.armState = armState);
     this.eventService.listen('arm_state_change')
-      .subscribe(arm_state => this.arm_state = String2ArmType(arm_state));
+      .subscribe(armState => this.armState = String2ArmType(armState));
 
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
 
   arm_disabled() {
     return this.sensor_alert ||
-      this.arm_state !== ArmType.DISARMED ||
+      this.armState !== ArmType.DISARMED ||
       this.monitoringState !== MonitoringState.READY ||
       this.monitoringState === MonitoringState.READY && this.alert;
   }

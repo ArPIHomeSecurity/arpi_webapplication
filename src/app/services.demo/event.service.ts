@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable , BehaviorSubject } from 'rxjs';
+import { Observable , Subject } from 'rxjs';
 
 import { Alert } from '../models';
 import { environment } from '../../environments/environment';
@@ -9,19 +9,19 @@ import { environment } from '../../environments/environment';
 export class EventService {
 
   alertDelayed: boolean;
-  private _alertStateSubject = new BehaviorSubject<Alert>(null);
+  private _alertStateSubject = new Subject<Alert>();
   private _alertState = this._alertStateSubject.asObservable().delay(environment.delay);
 
-  private _armStateSubject = new BehaviorSubject<string>(environment.ARM_DISARM);
+  private _armStateSubject = new Subject<string>();
   private _armState = this._armStateSubject.asObservable().delay(environment.delay);
 
-  private _monitoringStateSubject = new BehaviorSubject<string>(environment.MONITORING_READY);
+  private _monitoringStateSubject = new Subject<string>();
   private _monitoringState = this._monitoringStateSubject.asObservable().delay(environment.delay);
 
-  private _sensorsStateSubject = new BehaviorSubject<boolean>(false);
+  private _sensorsStateSubject = new Subject<boolean>();
   private _sensorsState = this._sensorsStateSubject.asObservable().delay(environment.delay);
 
-  private _syrenStateSubject = new BehaviorSubject<boolean>(null);
+  private _syrenStateSubject = new Subject<boolean>();
   private _syrenState = this._syrenStateSubject.asObservable().delay(environment.delay);
 
   constructor() {

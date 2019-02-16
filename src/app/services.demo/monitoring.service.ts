@@ -46,7 +46,7 @@ export class MonitoringService {
   }
 
   is_alert(): Observable<boolean> {
-    return of(this.alert);
+    return of(this.alert).delay(environment.delay);
   }
 
   getArmState(): Observable<ArmType> {
