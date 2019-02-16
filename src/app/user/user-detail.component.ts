@@ -7,12 +7,12 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialog } from './user-delete.component';
-import { ArmType, User, MonitoringState, String2MonitoringState } from '../models/index';
+import { User } from '../models/index';
 import { EventService, LoaderService, MonitoringService, UserService} from '../services/index';
 
 import { environment } from '../../environments/environment';
-import { Subscription } from 'rxjs';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -23,52 +23,38 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss'],
   providers: []
 })
-export class UserDetailComponent implements OnInit, OnDestroy {
+export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   userId: number;
   user: User = null;
   userForm: FormGroup;
   roles: any = [];
-  monitoringState: MonitoringState;
-  MonitoringState: any = MonitoringState;
-  subscriptions: Subscription[];
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private userService: UserService,
+    private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private location: Location) {
+      super(loader, eventService, monitoringService)
 
-    this.route.paramMap.subscribe(params => {
-      if (params.get('id') != null) {
-        this.userId = +params.get('id');
-      }
-    });
+      this.route.paramMap.subscribe(params => {
+        if (params.get('id') != null) {
+          this.userId = +params.get('id');
+        }
+      });
   }
 
   ngOnInit() {
+    super.initialize();
+
     for (let role in environment.ROLE_TYPES) {
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
-
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChange();
-    });
-
-    this.subscriptions = [];
-    this.subscriptions.push(
-      this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState);
-          this.onStateChange();
-    }));
 
     if (this.userId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -92,17 +78,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(_ => _.unsubscribe());
-    this.subscriptions = [];
-    this.loader.clearMessage();
-  }
-
-  onStateChange() {
-    if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
-    } else {
-      this.loader.clearMessage();
-    }
+    super.destroy();
   }
 
   updateForm(user: User) {
@@ -114,7 +90,6 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('User: ', this.user);
     const user = this.prepareSaveUser();
     if (this.userId != null) {
       this.userService.updateUser(user).subscribe(null,

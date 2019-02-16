@@ -1,19 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { positiveInteger } from '../utils';
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { Sensor, SensorType, Zone } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
-import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { MonitoringService } from '../services/index';
-
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MonitoringState, Sensor, SensorType, Zone } from '../models/index';
+import { positiveInteger } from '../utils';
+import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -35,7 +33,7 @@ class Channel {
   styleUrls: ['sensor-detail.component.scss'],
   providers: []
 })
-export class SensorDetailComponent implements OnInit, OnDestroy {
+export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   sensorId: number;
   sensor: Sensor = null;
   sensors: Sensor[];
@@ -44,50 +42,37 @@ export class SensorDetailComponent implements OnInit, OnDestroy {
   sensorTypes: SensorType[];
   sensorForm: FormGroup;
   zoneForm: FormGroup;
-  MonitoringState = MonitoringState;
-  monitoringState: MonitoringState;
-  subscriptions: Subscription[];
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
     private router: Router,
     public dialog: MatDialog,
     private location: Location,
     private snackBar: MatSnackBar) {
+      super(loader, eventService, monitoringService);
 
-    this.route.paramMap.subscribe(params => {
-      if (params.get('id') != null) {
-        this.sensorId = +params.get('id');
-      }
-    });
+      this.route.paramMap.subscribe(params => {
+        if (params.get('id') != null) {
+          this.sensorId = +params.get('id');
+        }
+      });
   }
 
   ngOnInit() {
+    super.initialize();
+
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
       this.loader.display(true);
     });
-
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChange();
-    });
-
-    this.subscriptions = [];
-    this.subscriptions.push(
-      this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState);
-          this.onStateChange();
-    }));
 
     if (this.sensorId != null) {
       forkJoin(
@@ -129,17 +114,7 @@ export class SensorDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(_ => _.unsubscribe());
-    this.subscriptions = [];
-    this.loader.clearMessage();
-  }
-
-  onStateChange() {
-    if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
-    } else {
-      this.loader.clearMessage();
-    }
+    super.destroy();
   }
 
   updateForm(sensor: Sensor) {

@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { Sensor, Zone } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialog } from './zone-delete.component';
-import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { AuthenticationService, MonitoringService } from '../services/index';
+import { MonitoringState, Sensor, Zone } from '../models/index';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -21,27 +19,28 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 
-export class ZoneListComponent implements OnInit, OnDestroy {
+export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   sensors: Sensor[] = [];
   zones: Zone[] = null;
-  MonitoringState:any = MonitoringState;
-  monitoringState: MonitoringState;
   open: boolean[][] = [];
-  subscriptions: Subscription[];
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private authService: AuthenticationService,
-    private router: Router,
-    private eventService: EventService,
-    private loader: LoaderService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
-    private monitoringService: MonitoringService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-) {}
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
+    super.initialize();
+
     this.open['config'] = []
     this.open['sensors'] = []
 
@@ -51,35 +50,11 @@ export class ZoneListComponent implements OnInit, OnDestroy {
       this.loader.display(true);
     });
 
-    this.monitoringService.getMonitoringState()
-    .subscribe(monitoringState => {
-      this.monitoringState = monitoringState;
-        this.onStateChange();
-    });
-
-    this.subscriptions = [];
-    this.subscriptions.push(
-      this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => {
-        this.monitoringState = String2MonitoringState(monitoringState);
-        this.onStateChange();
-    }));
-
     this.updateComponent();
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(_ => _.unsubscribe());
-    this.subscriptions = [];
-    this.loader.clearMessage();
-  }
-
-  onStateChange() {
-    if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
-    } else {
-      this.loader.clearMessage();
-    }
+    super.destroy();
   }
 
   updateComponent() {
@@ -94,8 +69,8 @@ export class ZoneListComponent implements OnInit, OnDestroy {
     });
   }
 
-  getSensors(zoneId: number) : Sensor[] {
-    let results: Sensor[] = [];
+  getSensors(zoneId: number): Sensor[] {
+    const results: Sensor[] = [];
     this.sensors.forEach((sensor) => {
       if (sensor.zone_id === zoneId) {
         results.push(sensor);
@@ -106,14 +81,14 @@ export class ZoneListComponent implements OnInit, OnDestroy {
   }
 
   userCanEdit() {
-    return this.authService.getRole() == 'admin'
+    return this.authService.getRole() === 'admin';
   }
 
   openDeleteDialog(zoneId: number) {
-    let dialogRef = this.dialog.open(ZoneDeleteDialog, {
+    const dialogRef = this.dialog.open(ZoneDeleteDialog, {
       width: '250px',
       data: {
-        name: this.zones.find(x => x.id == zoneId).name,
+        name: this.zones.find(x => x.id === zoneId).name,
       }
     });
 
@@ -121,11 +96,11 @@ export class ZoneListComponent implements OnInit, OnDestroy {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.zoneService.deleteZone(zoneId)
-            .subscribe(result => this.updateComponent(),
+            .subscribe(_ => this.updateComponent(),
                 _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
         }else {
-          this.snackBar.open("Can't delete zone!", null, {duration: environment.SNACK_DURATION});
+          this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
         }
       }
     });

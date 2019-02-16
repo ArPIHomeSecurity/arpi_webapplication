@@ -74,7 +74,7 @@
       <!-- AJAX loading spinner trigerred by the loader service -->
       <mat-progress-spinner class="ajax-loader" color="primary" mode="indeterminate" [fxShow]="displayLoader"></mat-progress-spinner>
 
-      <mat-card *ngIf="message" class="message">
+      <mat-card *ngIf="message && !displayLoader" class="message">
         {{ message }}
       </mat-card>
 

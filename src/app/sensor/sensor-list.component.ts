@@ -1,14 +1,13 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { Sensor, SensorType, Zone } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { AuthenticationService, MonitoringService } from '../services/index';
+import { MonitoringState, Sensor, SensorType, Zone } from '../models/index';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
 
 import { environment } from '../../environments/environment';
 
@@ -20,58 +19,35 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 
-export class SensorListComponent implements OnInit, OnDestroy {
+export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
   sensors: Sensor[] = null;
   zones: Zone[] = [];
   sensorTypes: SensorType [] = [];
-  MonitoringState: any = MonitoringState;
-  monitoringState: MonitoringState;
-  subscriptions: Subscription[];
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private authService: AuthenticationService,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
+    super.initialize();
+
     this.updateComponent();
-
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChange();
-    });
-
-    this.subscriptions = [];
-    this.subscriptions.push(
-      this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState)
-          this.onStateChange();
-    }));
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(_ => _.unsubscribe());
-    this.subscriptions = [];
-    this.loader.clearMessage();
+    super.destroy();
   }
-
-  onStateChange() {
-    if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
-    } else {
-      this.loader.clearMessage();
-    }
-  }
-
 
   updateComponent() {
     // avoid ExpressionChangedAfterItHasBeenCheckedError
