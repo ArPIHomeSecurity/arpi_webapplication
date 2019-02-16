@@ -55,8 +55,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
         .subscribe(monitoringState => {
           this.monitoringState = String2MonitoringState(monitoringState)
           this.onStateChange();
-      })
-    );
+    }));
   }
 
   ngOnDestroy() {

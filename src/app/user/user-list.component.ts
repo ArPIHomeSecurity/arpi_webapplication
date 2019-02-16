@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { UserDeleteDialog } from './user-delete.component';
-import { ArmType } from '../models/index';
+import { MonitoringState, String2MonitoringState } from '../models/index';
 import { User } from '../models/user';
 import { LoaderService, EventService, MonitoringService, UserService } from '../services/index';
 
 import { environment } from '../../environments/environment';
+import { Subscription } from 'rxjs';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -21,9 +22,9 @@ const scheduleMicrotask = Promise.resolve(null);
 
 export class UserListComponent implements OnInit, OnDestroy {
   users: User[] = null;
-  ArmType: any = ArmType;
-  armState: ArmType;
-  isDestroyed = false;
+  monitoringState: MonitoringState;
+  MonitoringState: any = MonitoringState;
+  subscriptions: Subscription[];
 
   environment = environment;
 
@@ -35,31 +36,38 @@ export class UserListComponent implements OnInit, OnDestroy {
     private userService: UserService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.isDestroyed = false;
-    this.updateComponent();
+    this.monitoringService.getMonitoringState()
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+    });
 
-    this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
-    this.eventService.listen('arm_state_change')
-      .subscribe(arm_type => {
-        if (arm_type === environment.ARM_DISARM) {
-          this.armState = ArmType.DISARMED;
-        } else if (arm_type === environment.ARM_AWAY) {
-          this.armState = ArmType.AWAY;
-        } else if (arm_type === environment.ARM_STAY) {
-          this.armState = ArmType.STAY;
-        } else {
-          console.error('Unknown arm type!', arm_type);
-        }
-      }
-    );
+    this.subscriptions = [];
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = String2MonitoringState(monitoringState);
+          this.onStateChange();
+    }));
+
+    this.updateComponent();
   }
 
   ngOnDestroy() {
-    this.isDestroyed = true;
+    this.subscriptions.forEach(_ => _.unsubscribe());
+    this.subscriptions = [];
+    this.loader.clearMessage();
+  }
+
+  onStateChange() {
+    if (this.monitoringState !== MonitoringState.READY) {
+      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    } else {
+      this.loader.clearMessage();
+    }
   }
 
   updateComponent() {
@@ -72,9 +80,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users;
-        if (!this.isDestroyed) {
-          this.loader.display(false);
-        }
+        this.loader.display(false);
     });
   }
 

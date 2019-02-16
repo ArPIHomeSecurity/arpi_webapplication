@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AbstractControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { UserDeleteDialog } from './user-delete.component';
-import { ArmType, User } from '../models/index';
+import { ArmType, User, MonitoringState, String2MonitoringState } from '../models/index';
 import { EventService, LoaderService, MonitoringService, UserService} from '../services/index';
 
 import { environment } from '../../environments/environment';
+import { Subscription } from 'rxjs';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -23,13 +23,14 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss'],
   providers: []
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent implements OnInit, OnDestroy {
   userId: number;
   user: User = null;
   userForm: FormGroup;
-  ArmType: any = ArmType;
   roles: any = [];
-  armState: ArmType;
+  monitoringState: MonitoringState;
+  MonitoringState: any = MonitoringState;
+  subscriptions: Subscription[];
 
   constructor(
     private fb: FormBuilder,
@@ -51,40 +52,23 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let role in environment.ROLE_TYPES){
+    for (let role in environment.ROLE_TYPES) {
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
 
-    this.monitoringService.getArmState()
-      .subscribe(armState => {
-        this.armState = armState;
-        if (this.userForm) {
-          if (this.armState === ArmType.DISARMED) {
-            this.userForm.enable();
-          } else {
-            this.userForm.disable();
-          }
-        }
-      });
-    this.eventService.listen('arm_state_change')
-      .subscribe(arm_type => {
-        if (arm_type === environment.ARM_DISARM) {
-          this.armState = ArmType.DISARMED;
-          if (this.userForm != null) {
-            this.userForm.enable();
-          }
-        } else if (arm_type === environment.ARM_AWAY) {
-          this.armState = ArmType.AWAY;
-          if (this.userForm != null) {
-            this.userForm.disable();
-          }
-        } else if (arm_type === environment.ARM_STAY) {
-          this.armState = ArmType.STAY;
-          if (this.userForm != null) {
-            this.userForm.disable();
-          }
-        }
-      });
+    this.monitoringService.getMonitoringState()
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+    });
+
+    this.subscriptions = [];
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = String2MonitoringState(monitoringState);
+          this.onStateChange();
+    }));
 
     if (this.userId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -107,16 +91,26 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(_ => _.unsubscribe());
+    this.subscriptions = [];
+    this.loader.clearMessage();
+  }
+
+  onStateChange() {
+    if (this.monitoringState !== MonitoringState.READY) {
+      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    } else {
+      this.loader.clearMessage();
+    }
+  }
+
   updateForm(user: User) {
     this.userForm = this.fb.group({
       name: user.name,
       role: user.role,
       accessCode: new FormControl(user.access_code, [Validators.pattern('^\\d{4,8}$')]),
     });
-
-    if (this.armState !== ArmType.DISARMED) {
-      this.userForm.disable();
-    }
   }
 
   onSubmit() {

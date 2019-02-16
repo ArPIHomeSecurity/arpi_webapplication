@@ -9,9 +9,9 @@
         <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.USER">User</mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions>
-        <button mat-button [routerLink]="['/user', user.id]" color="primary" [disabled]="armState != ArmType.DISARMED"
+        <button mat-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@edit button">Edit</button>
-        <button mat-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="armState != ArmType.DISARMED"
+        <button mat-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@remove button">Remove</button>
       </mat-card-actions>
     </mat-card>
@@ -25,6 +25,6 @@
 </div>
 
 <div ngClass.gt-xs="user-actions" ngClass.xs="user-actions-xs">
-  <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="armState != ArmType.DISARMED" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>

@@ -50,21 +50,22 @@ export class ZoneListComponent implements OnInit, OnDestroy {
     scheduleMicrotask.then(() => {
       this.loader.display(true);
     });
-    this.updateComponent();
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
+    .subscribe(monitoringState => {
+      this.monitoringState = monitoringState;
         this.onStateChange();
     });
 
     this.subscriptions = [];
     this.subscriptions.push(
       this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState);
-          this.onStateChange();
+      .subscribe(monitoringState => {
+        this.monitoringState = String2MonitoringState(monitoringState);
+        this.onStateChange();
     }));
+
+    this.updateComponent();
   }
 
   ngOnDestroy() {

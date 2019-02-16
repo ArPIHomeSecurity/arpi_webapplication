@@ -68,7 +68,7 @@ export class ZoneDetailComponent implements OnInit, OnDestroy {
       this.eventService.listen('system_state_change')
         .subscribe(monitoringState => {
           this.monitoringState = String2MonitoringState(monitoringState);
-
+          this.onStateChange();
     }));
 
     if (this.zoneId != null) {
