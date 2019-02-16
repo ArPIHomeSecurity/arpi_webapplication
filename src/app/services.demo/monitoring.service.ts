@@ -136,6 +136,6 @@ export class MonitoringService {
       this.monitoringState = MonitoringState.READY;
       setSessionValue('MonitoringService.monitoringState', this.monitoringState);
       this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
-    }, 15000);
+    }, 3000);
   }
 }
