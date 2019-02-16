@@ -1,12 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable ,  forkJoin } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { forkJoin } from 'rxjs';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { ConfigurationService, LoaderService } from '../../services/index';
-import { Option } from '../../models/index';
-
-import { environment } from '../../../environments/environment';
+import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { Option } from '../../models';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -31,7 +30,7 @@ const DEFAULT_SUBSCRIPTIONS = JSON.stringify({option:'notifications', section: '
 })
 
 
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
   notificationsForm: FormGroup;
   email: Option = null;
@@ -39,14 +38,25 @@ export class NotificationsComponent implements OnInit {
   subscriptions: Option = null;
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private fb: FormBuilder,
-    private loader: LoaderService,
     private configService: ConfigurationService,
-  ) { }
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
+    super.initialize();
+
     this.updateComponent();
     this.updateForm(JSON.parse(DEFAULT_EMAIL), JSON.parse(DEFAULT_GSM), JSON.parse(DEFAULT_SUBSCRIPTIONS));
+  }
+
+  ngOnDestroy() {
+    super.destroy();
   }
 
   updateForm(email: Option, gsm: Option, subscriptions: Option) {

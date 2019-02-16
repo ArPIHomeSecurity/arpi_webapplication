@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable ,  forkJoin } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 
-import { ConfigurationService, LoaderService } from '../../services/index';
-import { Option } from '../../models/index';
+import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { Option } from '../../models';
 
-import { environment } from '../../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -29,9 +29,7 @@ const DEFAULT_ACCESS = JSON.stringify({option:'network', section: 'access', valu
   styleUrls: ['network.component.scss'],
   providers: [ConfigurationService]
 })
-
-
-export class NetworkComponent implements OnInit {
+export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
   networkForm: FormGroup;
   dyndns: Option = null;
@@ -45,14 +43,25 @@ export class NetworkComponent implements OnInit {
   ]
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private fb: FormBuilder,
-    private loader: LoaderService,
     private configService: ConfigurationService,
-  ) { }
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
+    super.initialize();
+
     this.updateComponent();
     this.updateForm(JSON.parse(DEFAULT_DYNDNS), JSON.parse(DEFAULT_ACCESS));
+  }
+
+  ngOnDestroy() {
+    super.destroy();
   }
 
   updateForm(dyndns: Option, access: Option) {

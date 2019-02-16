@@ -21,7 +21,7 @@
           </mat-list-item>
         </mat-list>
 
-        <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()">Synchronize</button>
+        <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()" [disabled]="monitoringState != MonitoringState.READY">Synchronize</button>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -48,7 +48,7 @@
           </ng2-timezone-picker>
         </div>
     
-        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != MonitoringState.READY">Save</button>
       </mat-expansion-panel>
     </mat-accordion>
   </form>
