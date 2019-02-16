@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 
-import { ArmType, Alert, Sensor } from '../models/index';
+import { ArmType, Alert, Sensor } from '../models';
 import { environment, ALERTS } from '../../environments/environment';
 import { EventService } from '../services/event.service';
 import { getSessionValue, setSessionValue } from '../utils';

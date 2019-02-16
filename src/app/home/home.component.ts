@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { ArmType, String2ArmType, Alert, SensorType } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
-import { AlertService, SensorService, EventService } from '../services/index';
-import { MonitoringService } from '../services/index';
+import { ArmType, String2ArmType, Alert, SensorType } from '../models';
+import { MonitoringState, String2MonitoringState } from '../models';
+import { AlertService, SensorService, EventService } from '../services';
+import { MonitoringService } from '../services';
 
 import { environment } from '../../environments/environment';
 

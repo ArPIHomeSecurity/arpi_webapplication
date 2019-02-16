@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { MonitoringState, Sensor, SensorType, Zone } from '../models/index';
+import { MonitoringState, Sensor, SensorType, Zone } from '../models';
 import { positiveInteger } from '../utils';
-import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
+import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 

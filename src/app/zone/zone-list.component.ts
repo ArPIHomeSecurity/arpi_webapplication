@@ -5,8 +5,8 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialog } from './zone-delete.component';
-import { MonitoringState, Sensor, Zone } from '../models/index';
-import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
+import { MonitoringState, Sensor, Zone } from '../models';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 

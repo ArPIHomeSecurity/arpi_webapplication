@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { User } from '../models/index';
-import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../models';
+import { AuthenticationService } from '../services';
 
 @Injectable()
 export class UserService {

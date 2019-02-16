@@ -5,12 +5,8 @@ import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
-
-
-import { ArmType, ArmType2String, String2ArmType } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
-import { AuthenticationService } from '../services/authentication.service';
-import { environment } from '../../environments/environment';
+import { ArmType, ArmType2String, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
+import { AuthenticationService } from '../services';
 
 
 @Injectable()

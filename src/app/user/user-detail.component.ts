@@ -2,15 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialog } from './user-delete.component';
-import { User } from '../models/index';
-import { EventService, LoaderService, MonitoringService, UserService} from '../services/index';
+import { User } from '../models';
+import { EventService, LoaderService, MonitoringService, UserService} from '../services';
 
 import { environment } from '../../environments/environment';
 

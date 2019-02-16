@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Zone } from '../models/index';
+import { Zone } from '../models';
 
 import { environment, ZONES } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';

@@ -5,8 +5,8 @@ import { MatPaginator } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 
-import { ArmType, Alert, AlertSensor, Sensor } from '../models/index';
-import { AlertService, EventService, SensorService } from '../services/index';
+import { ArmType, Alert, Sensor } from '../models';
+import { AlertService, EventService, SensorService } from '../services';
 
 @Component({
   moduleId: module.id,

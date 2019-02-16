@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
 
-import { AuthenticationService, LoaderService, MonitoringService } from './services/index';
+import { AuthenticationService, LoaderService, MonitoringService } from './services';
 
 import { environment } from '../environments/environment';
 import { VERSION } from './version';

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 
-import { ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models/index';
-import { MonitoringState } from '../models/index';
+import { ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models';
+import { MonitoringState } from '../models';
 import { AlertService } from './alert.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';

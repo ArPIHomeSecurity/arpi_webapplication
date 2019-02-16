@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
-import { Sensor, SensorType } from '../models/index';
+import { Sensor, SensorType } from '../models';
 import { EventService } from '../services/event.service';
 import { MonitoringService } from './monitoring.service';
 import { environment, SENSORS, SENSOR_TYPES } from '../../environments/environment';

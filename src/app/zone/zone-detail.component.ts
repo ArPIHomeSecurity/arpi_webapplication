@@ -3,16 +3,15 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialog } from './zone-delete.component';
-import { MonitoringState, Sensor, Zone } from '../models/index';
+import { MonitoringState, Sensor, Zone } from '../models';
 import { positiveInteger } from '../utils';
-import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services/index';
+import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 

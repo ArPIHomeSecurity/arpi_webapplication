@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Option } from '../models/index';
+import { Option } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 
 import { environment, CONFIGURATION } from '../../environments/environment';

@@ -1,16 +1,16 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard, AdminGuard } from './guards/index';
+import { AuthGuard, AdminGuard } from './guards';
 
-import { LoginComponent } from './login/index';
-import { HomeComponent } from './home/index';
-import { AlertListComponent } from './alert/index';
-import { ClockComponent } from './config/clock/index';
-import { UserListComponent, UserDetailComponent } from './user/index';
-import { SensorListComponent, SensorDetailComponent } from './sensor/index';
-import { ZoneListComponent, ZoneDetailComponent } from './zone/index';
-import { NotificationsComponent } from './config/notifications/index';
-import { NetworkComponent } from './config/network/index';
+import { LoginComponent } from './login';
+import { HomeComponent } from './home';
+import { AlertListComponent } from './alert';
+import { ClockComponent } from './config/clock';
+import { UserListComponent, UserDetailComponent } from './user';
+import { SensorListComponent, SensorDetailComponent } from './sensor';
+import { ZoneListComponent, ZoneDetailComponent } from './zone';
+import { NotificationsComponent } from './config/notifications';
+import { NetworkComponent } from './config/network';
 
 const appRoutes: Routes = [
   {

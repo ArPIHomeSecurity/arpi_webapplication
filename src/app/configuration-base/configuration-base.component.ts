@@ -7,7 +7,7 @@ export class ConfigurationBaseComponent {
 
   monitoringState: MonitoringState;
   MonitoringState: any = MonitoringState;
-  subscriptions: Subscription[];
+  baseSubscriptions: Subscription[];
 
   constructor(
     public loader: LoaderService,
@@ -22,8 +22,8 @@ export class ConfigurationBaseComponent {
         this.onStateChange();
     });
 
-    this.subscriptions = [];
-    this.subscriptions.push(
+    this.baseSubscriptions = [];
+    this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
         .subscribe(monitoringState => {
           this.monitoringState = String2MonitoringState(monitoringState);
@@ -32,8 +32,8 @@ export class ConfigurationBaseComponent {
   }
 
   destroy() {
-    this.subscriptions.forEach(_ => _.unsubscribe());
-    this.subscriptions = [];
+    this.baseSubscriptions.forEach(_ => _.unsubscribe());
+    this.baseSubscriptions = [];
     this.loader.clearMessage();
   }
 
