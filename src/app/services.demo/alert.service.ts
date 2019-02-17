@@ -22,6 +22,9 @@ export class AlertService {
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
     this.syren = getSessionValue('AlertService.syren', null);
+    this.syrenId = getSessionValue('AlertService.syrenId', null);
+
+    clearInterval(this.syrenId);
 
     if (this.syren != null) {
       this._startSyren();
@@ -65,10 +68,11 @@ export class AlertService {
   }
 
   _startSyren() {
-    this.syrenId = setInterval(() => {
+    this.syrenId = window.setInterval(() => {
       this.syren = !this.syren;
       this.eventService._updateSyrenState(this.syren);
     }, 5000);
+    setSessionValue('AlertService.syrenId', this.syrenId);
   }
 
   _stopAlert() {

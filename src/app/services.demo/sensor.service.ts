@@ -21,7 +21,7 @@ export class SensorService {
     private eventService: EventService,
     private monitoringService: MonitoringService
   ) {
-    // channels are numbered 1..15
+    // channels are numbered 1..N
     for (let i = 0; i < environment.channel_count; i++) {
       this.channels.push(false);
     }
@@ -77,15 +77,16 @@ export class SensorService {
 
 
   getAlert( sensorId: number = null ): Observable<boolean> {
-    if ( sensorId ) {
-      if (sensorId in this.sensors) {
-        return of(this.sensors.filter(sensor => sensor.id === sensorId)[0].alert).delay(environment.delay);
-      } else {
-        return of(false).delay(environment.delay);
+    if (sensorId != null) {
+      const sensor = this.sensors.find(sensor => sensor.id === sensorId);
+      if (sensor) {
+        return of(sensor.alert).delay(environment.delay);
       }
     } else {
-      return of(false).delay(environment.delay);
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2)).delay(environment.delay);
     }
+
+    return of(false).delay(environment.delay);
   }
 
 
@@ -106,6 +107,7 @@ export class SensorService {
 
     if (sensor != null) {
       sensor.alert = value;
+      setSessionValue('SensorService.sensors', this.sensors);
 
       const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2);
       this.eventService._updateSensorsState(alertState);
