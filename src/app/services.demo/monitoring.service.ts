@@ -119,9 +119,7 @@ export class MonitoringService {
       }, 1000 * zone.stay_delay);
     } else if (this.armState === ArmType.DISARMED && zone.disarmed_delay != null && sensor.enabled) {
       setTimeout(() => {
-        if (this.armState !== ArmType.DISARMED) {
-          this.alertService._createAlert([sensor], ArmType.DISARMED);
-        }
+        this.alertService._createAlert([sensor], ArmType.DISARMED);
       }, 1000 * zone.disarmed_delay);
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
