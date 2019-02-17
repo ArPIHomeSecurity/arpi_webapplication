@@ -12,10 +12,20 @@ import { getSessionValue, setSessionValue } from '../utils';
 export class AlertService {
 
   alerts: Alert[];
+
+  // true=syren / false=syren muted / null=no syren
+  syren: boolean;
+  syrenId: number;
+
   constructor(
     private eventService: EventService
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
+    this.syren = getSessionValue('AlertService.syren', null);
+
+    if (this.syren != null) {
+      this._startSyren();
+    }
   }
 
   getAlerts(): Observable<Alert[]> {
@@ -46,16 +56,31 @@ export class AlertService {
       sensors: sensors
     };
     this.alerts.push(alert);
+    this.syren = true;
     setSessionValue('AlertService.alerts', this.alerts);
+    setSessionValue('AlertService.syren', this.syren);
     this.eventService._updateAlertState(alert);
+    this.eventService._updateSyrenState(this.syren);
+    this._startSyren();
+  }
+
+  _startSyren() {
+    this.syrenId = setInterval(() => {
+      this.syren = !this.syren;
+      this.eventService._updateSyrenState(this.syren);
+    }, 5000);
   }
 
   _stopAlert() {
     const alert = this.alerts.find(a => a.end_time == null);
     if (alert != null) {
       alert.end_time = new Date().toISOString();
+      this.syren = null;
+      clearInterval(this.syrenId);
       setSessionValue('AlertService.alerts', this.alerts);
+      setSessionValue('AlertService.syren', this.syren);
       this.eventService._updateAlertState(null);
+      this.eventService._updateSyrenState(this.syren);
     }
   }
 }
