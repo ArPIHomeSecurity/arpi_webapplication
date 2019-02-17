@@ -9,8 +9,8 @@ export enum ArmType {
 export class Alert {
   id: number;
   arm_type: ArmType;
-  start_time: Date;
-  end_time: Date;
+  start_time: string;
+  end_time: string;
   sensors: AlertSensor[];
 }
 
