@@ -93,8 +93,7 @@ export class SensorService {
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     // set sensor from api
-    return this.http.put( '/api/sensors/reset-references', null, { headers } ).pipe(
-      map(( response: Response ) => response.json() )).subscribe();
+    return this.http.put( '/api/sensors/reset-references', null, { headers } ).subscribe();
   }
 }
 

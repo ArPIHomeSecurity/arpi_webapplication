@@ -29,14 +29,13 @@
       
       <mat-card id="sensor-{{sensor.id}}" class="sensor-short-card" *ngFor="let sensor of alert.sensors">
         <mat-card-header>
-          <div mat-card-avatar [ngSwitch]="getSensorTypeName(sensor.type_id)" class="sensor-image">
-            <img *ngSwitchCase="'Motion'" src="assets/images/sensor_motion.png"/>
-            <img *ngSwitchCase="'Tamper'" src="assets/images/sensor_tamper.png"/>
-            <img *ngSwitchCase="'Open'"   src="assets/images/sensor_open.png"/>
-            <img *ngSwitchCase="'Break'"  src="assets/images/sensor_break.png"/>
-            <img *ngSwitchDefault src="https://via.placeholder.com/100?text=Unknown"/>
+          <div mat-card-avatar [ngSwitch]="sensor.type_id" class="sensor-image">
+            <img *ngSwitchCase="1" src="assets/images/sensor_tamper.png"/>
+            <img *ngSwitchCase="2" src="assets/images/sensor_motion.png"/>
+            <img *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
+            <img *ngSwitchCase="4" src="assets/images/sensor_break.png"/>
+            <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.type_id)}}"/>
           </div>
-          <img *ngIf="sensor.alarm==true" src="assets/images/alarm_bell.png" width="50" height="50"/>
           <mat-card-title>{{sensor.description}}</mat-card-title>
           <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
         </mat-card-header>

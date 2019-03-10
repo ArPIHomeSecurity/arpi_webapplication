@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   alert: Alert;
   arm_state: ArmType;
   monitoringState: MonitoringState = MonitoringState.READY;
-  sensor_alert: boolean;
+  sensorAlert: boolean;
   sensorTypes: SensorType [] = [];
 
   constructor(
@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
     );
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
-        // TODO: why JSON parse???
         this.alert = alert;
       }
     );
@@ -53,7 +52,7 @@ export class HomeComponent implements OnInit {
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
       .subscribe(alert => {
-        this.sensor_alert = alert;
+        this.sensorAlert = alert;
       }
     );
 
@@ -62,7 +61,7 @@ export class HomeComponent implements OnInit {
 
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
-        this.sensor_alert = alert;
+        this.sensorAlert = alert;
       }
     );
 
@@ -86,14 +85,14 @@ export class HomeComponent implements OnInit {
   }
 
   arm_disabled() {
-    return this.sensor_alert ||
+    return this.sensorAlert ||
       this.arm_state !== ArmType.DISARMED ||
       this.monitoringState !== MonitoringState.READY ||
       this.monitoringState === MonitoringState.READY && this.alert;
   }
 
   getSensorTypeName(sensorTypeId: number) {
-    if (this.sensorTypes.length) {
+    if (this.sensorTypes.length && sensorTypeId != null) {
       return this.sensorTypes.find(x => x.id === sensorTypeId).name;
     }
 

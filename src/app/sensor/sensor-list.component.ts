@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Observable ,  forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { ArmType, Sensor, SensorType, Zone } from '../models/index';
+import { Sensor, SensorType, Zone } from '../models/index';
 import { MonitoringState, String2MonitoringState } from '../models/index';
 import { SensorDeleteDialog } from './sensor-delete.component';
 import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
@@ -48,9 +48,18 @@ export class SensorListComponent implements OnInit, OnDestroy {
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+
+    // TODO: update only one sensor instead of the whole page
+    this.eventService.listen('sensors_state_change')
+      .subscribe(_ => {
+        if (!this.isDestroyed) {
+          this.updateComponent();
+        }
+      });
   }
 
   ngOnDestroy() {
+    // TODO: unsubscribe changes when destroyed
     this.isDestroyed = true;
   }
 

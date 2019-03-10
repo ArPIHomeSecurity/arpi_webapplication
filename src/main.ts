@@ -9,11 +9,11 @@ import { environment } from './environments/environment';
 declare const require;
 
 let locale = localStorage.getItem('localeId');
-if (locale === null) {
-  locale = 'en';
+console.log('Selected language: ', locale);
+if (locale === 'en') {
+  locale = null;
 }
 
-console.log('Selected language: ', locale);
 console.log('Current location: ', location.pathname);
 
 if (environment.production) {
@@ -30,7 +30,7 @@ if (environment.aotTranslations) {
   }
 }
 
-const translation_file = require(`raw-loader!./locales/messages.${locale}.xlf`);
+const translation_file = locale != null ? require(`raw-loader!./locales/messages.${locale}.xlf`) : null;
 platformBrowserDynamic().bootstrapModule(AppModule, { providers: [
   { provide: TRANSLATIONS, useValue: translation_file },
   { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },

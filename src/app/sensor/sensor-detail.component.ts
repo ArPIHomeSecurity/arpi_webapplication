@@ -140,7 +140,7 @@ export class SensorDetailComponent implements OnInit {
         const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
         const info = {
           channel: firstFreeChannel ? firstFreeChannel.channel : -1,
-          type_id: this.sensorTypes[0].id,
+          type_id: 0,
           zone_id: -1,
           enabled: true,
           description: null,
