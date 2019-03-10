@@ -53,7 +53,7 @@ export class AlertService {
   _createAlert(sensors: Sensor[], armType: ArmType) {
     const alert: Alert = {
       id: this.alerts.length + 1,
-      start_time: new Date().toISOString(),
+      start_time: new Date().toLocaleString(),
       end_time: null,
       arm_type: armType,
       sensors: sensors
@@ -78,7 +78,7 @@ export class AlertService {
   _stopAlert() {
     const alert = this.alerts.find(a => a.end_time == null);
     if (alert != null) {
-      alert.end_time = new Date().toISOString();
+      alert.end_time = new Date().toLocaleString();
       this.syren = null;
       clearInterval(this.syrenId);
       setSessionValue('AlertService.alerts', this.alerts);
