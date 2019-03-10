@@ -58,7 +58,6 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule
 } from '@angular/material';
-import { ConfigurationBaseComponent } from './configuration-base/configuration-base.component';
 
 
 @NgModule({
@@ -83,8 +82,7 @@ import { ConfigurationBaseComponent } from './configuration-base/configuration-b
     SensorDetailComponent,
     SensorDeleteDialog,
     SystemStateComponent,
-    PageNotFoundComponent,
-    ConfigurationBaseComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserAnimationsModule,
