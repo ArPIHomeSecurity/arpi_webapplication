@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialog } from './sensor-delete.component';
 import { MonitoringState, Sensor, SensorType, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
@@ -23,6 +24,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   sensors: Sensor[] = null;
   zones: Zone[] = [];
   sensorTypes: SensorType [] = [];
+  isDestroyed = false;
 
   constructor(
     public loader: LoaderService,

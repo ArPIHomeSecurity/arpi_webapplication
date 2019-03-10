@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 
 import { Zone } from '../models';
-import { AuthenticationService } from '../services';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class ZoneService {

@@ -9,12 +9,11 @@ import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { MonitoringState, Sensor, SensorType, Zone } from '../models';
+import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
 import { positiveInteger } from '../utils';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
-
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -66,13 +65,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    private sensorService: SensorService,
 
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
-    private sensorService: SensorService,
     private zoneService: ZoneService,
     private router: Router,
     public dialog: MatDialog,
