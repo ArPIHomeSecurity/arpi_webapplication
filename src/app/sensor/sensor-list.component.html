@@ -4,10 +4,10 @@
       <mat-card-header>
         <div mat-card-avatar [ngSwitch]="sensor.type_id" 
             [ngClass]="{'sensor-image': true, 'alerting': sensor.alert}">
+          <img *ngSwitchCase="0" src="assets/images/sensor_motion.png"/>
           <img *ngSwitchCase="1" src="assets/images/sensor_tamper.png"/>
-          <img *ngSwitchCase="2" src="assets/images/sensor_motion.png"/>
-          <img *ngSwitchCase="3"   src="assets/images/sensor_open.png"/>
-          <img *ngSwitchCase="4"  src="assets/images/sensor_break.png"/>
+          <img *ngSwitchCase="2" src="assets/images/sensor_open.png"/>
+          <img *ngSwitchCase="3" src="assets/images/sensor_break.png"/>
           <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.type_id)}}"/>
         </div>
 

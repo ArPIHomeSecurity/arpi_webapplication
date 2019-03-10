@@ -122,8 +122,8 @@ export const SENSOR_TYPES = [
   },
   {
     id: 1,
-    name: 'Break',
-    description: 'Break sensor',
+    name: 'Tamper',
+    description: 'Tamper sensor',
   },
   {
     id: 2,
@@ -132,8 +132,8 @@ export const SENSOR_TYPES = [
   },
   {
     id: 3,
-    name: 'Tamper',
-    description: 'Tamper sensor',
+    name: 'Break',
+    description: 'Break sensor',
   }
 ];
 
