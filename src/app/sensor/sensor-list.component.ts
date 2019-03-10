@@ -4,11 +4,9 @@ import { forkJoin } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { Sensor, SensorType, Zone } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
 import { SensorDeleteDialog } from './sensor-delete.component';
-import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { AuthenticationService, MonitoringService } from '../services/index';
+import { MonitoringState, Sensor, SensorType, Zone } from '../models';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -20,34 +18,30 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 
-export class SensorListComponent implements OnInit, OnDestroy {
+export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
   sensors: Sensor[] = null;
   zones: Zone[] = [];
   sensorTypes: SensorType [] = [];
-  MonitoringState: any = MonitoringState;
-  monitoringState: MonitoringState;
-  isDestroyed = false;
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private authService: AuthenticationService,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
-    this.isDestroyed = false;
-    this.updateComponent();
+    super.initialize();
 
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+    this.updateComponent();
 
     // TODO: update only one sensor instead of the whole page
     this.eventService.listen('sensors_state_change')
@@ -60,7 +54,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // TODO: unsubscribe changes when destroyed
-    this.isDestroyed = true;
+    super.destroy();
   }
 
   updateComponent() {
@@ -78,9 +72,7 @@ export class SensorListComponent implements OnInit, OnDestroy {
       this.sensors = results[0];
       this.sensorTypes = results[1];
       this.zones = results[2];
-      if (!this.isDestroyed) {
-        this.loader.display(false);
-      }
+      this.loader.display(false);
     });
   }
 

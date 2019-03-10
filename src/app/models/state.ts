@@ -11,8 +11,7 @@ export enum MonitoringState {
 }
 
 
-
-export function String2MonitoringState( systemState: string ): MonitoringState {
+export function String2MonitoringState(systemState: string): MonitoringState {
   switch ( systemState ) {
     case environment.MONITORING_READY:
       return MonitoringState.READY;
@@ -27,6 +26,26 @@ export function String2MonitoringState( systemState: string ): MonitoringState {
     case environment.MONITORING_ARMED:
       return MonitoringState.ARMED;
     default:
-      console.error( 'Unknown monitoring state!' + systemState );
+      console.error('Unknown monitoring state!' + systemState);
+  }
+}
+
+
+export function MonitoringState2String(systemState: MonitoringState): string {
+  switch ( systemState ) {
+    case MonitoringState.READY:
+      return environment.MONITORING_READY;
+    case MonitoringState.UPDATING_CONFIG:
+      return environment.MONITORING_UPDATING_CONFIG;
+    case MonitoringState.INVALID_CONFIG:
+      return environment.MONITORING_INVALID_CONFIG;
+    case MonitoringState.SABOTAGE:
+      return environment.MONITORING_SABOTAGE;
+    case MonitoringState.STARTUP:
+      return environment.MONITORING_STARTUP;
+    case MonitoringState.ARMED:
+      return environment.MONITORING_ARMED;
+    default:
+      console.error('Unknown monitoring state!' + systemState);
   }
 }

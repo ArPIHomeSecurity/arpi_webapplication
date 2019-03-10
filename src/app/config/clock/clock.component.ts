@@ -1,12 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable ,  forkJoin } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MonitoringService, LoaderService } from '../../services/index';
-
-import { environment } from '../../../environments/environment';
-
+import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { DateTimeAdapter } from 'ng-pick-datetime';
+import { EventService, MonitoringService, LoaderService } from '../../services';
 
 const scheduleMicrotask = Promise.resolve( null );
 
@@ -19,23 +16,32 @@ const scheduleMicrotask = Promise.resolve( null );
 } )
 
 
-export class ClockComponent implements OnInit {
+export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   clockForm: FormGroup;
   clock: Object = null;
   timeZone = '';
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private fb: FormBuilder,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     dateTimeAdapter: DateTimeAdapter<any>,
   ) {
+    super(loader, eventService, monitoringService)
     dateTimeAdapter.setLocale('iso-8601');
   }
 
   ngOnInit() {
+    super.initialize();
+
     this.updateComponent();
     this.updateForm();
+  }
+
+  ngOnDestroy() {
+    super.destroy();
   }
 
   updateForm() {

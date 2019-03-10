@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialog } from './user-delete.component';
-import { ArmType } from '../models/index';
 import { User } from '../models/user';
-import { LoaderService, EventService, MonitoringService, UserService } from '../services/index';
+import { LoaderService, EventService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -19,47 +18,29 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 
-export class UserListComponent implements OnInit, OnDestroy {
+export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   users: User[] = null;
-  ArmType: any = ArmType;
-  armState: ArmType;
-  isDestroyed = false;
-
   environment = environment;
 
   constructor(
-    private router: Router,
-    private loader: LoaderService,
-    private eventService: EventService,
-    private monitoringService: MonitoringService,
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
     private userService: UserService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    super(loader, eventService, monitoringService);
+  }
 
   ngOnInit() {
-    this.isDestroyed = false;
-    this.updateComponent();
+    super.initialize();
 
-    this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
-    this.eventService.listen('arm_state_change')
-      .subscribe(arm_type => {
-        if (arm_type === environment.ARM_DISARM) {
-          this.armState = ArmType.DISARMED;
-        } else if (arm_type === environment.ARM_AWAY) {
-          this.armState = ArmType.AWAY;
-        } else if (arm_type === environment.ARM_STAY) {
-          this.armState = ArmType.STAY;
-        } else {
-          console.error('Unknown arm type!', arm_type);
-        }
-      }
-    );
+    this.updateComponent();
   }
 
   ngOnDestroy() {
-    this.isDestroyed = true;
+    super.destroy();
   }
 
   updateComponent() {
@@ -72,9 +53,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users;
-        if (!this.isDestroyed) {
-          this.loader.display(false);
-        }
+        this.loader.display(false);
     });
   }
 

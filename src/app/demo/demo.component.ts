@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 import { SensorService } from '../services';
+import { getSessionValue, setSessionValue } from '../utils';
 
 import { environment } from '../../environments/environment';
 
@@ -17,23 +18,27 @@ export class DemoComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private sensorService: SensorService
-  ) { }
+  ) {
+    const channels: boolean[] = [];
+    // channels are numbered 1..N
+    for (let i = 0; i < environment.channel_count; i++) {
+      channels.push(false);
+    }
+
+    this.channels = getSessionValue('DemoComponent.channels', channels);
+  }
 
   ngOnInit() {
-    // channels are numbered 1..15
-    for (let i = 0; i < environment.channel_count; i++) {
-      this.channels.push(false);
-    }
+
   }
 
   help() {
-    const dialogRef = this.dialog.open(DemoHelpDialogComponent, {
-
-    });
+    this.dialog.open(DemoHelpDialogComponent, {});
   }
 
   swap(index: number) {
     this.channels[index] = !this.channels[index];
+    setSessionValue('DemoComponent.channels', this.channels);
     this.sensorService._alertChannel(index, this.channels[index]);
   }
 }

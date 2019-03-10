@@ -1,15 +1,15 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
   <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
-    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="arm_state">
-      <mat-button-toggle id="arm-away" value="AWAY" [checked]="arm_state == ArmType.AWAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
+    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState">
+      <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
         i18n="@@away button">
         AWAY
       </mat-button-toggle>
-      <mat-button-toggle id="disarm" value="DISARMED" [checked]="arm_state == ArmType.DISARMED && !alert" (change)="arm_changed($event)"
+      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == ArmType.DISARMED && !alert" (change)="arm_changed($event)"
         i18n="@@disarm button">
         OFF
       </mat-button-toggle>
-      <mat-button-toggle id="arm-stay" value="STAY" [checked]="arm_state == ArmType.STAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
+      <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == ArmType.STAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
         i18n="@@stay button">
         STAY
       </mat-button-toggle>

@@ -12,16 +12,16 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
 
 // user authentication
-import { AuthGuard, AdminGuard } from './guards/index';
-import { LoginComponent } from './login/index';
-import { HomeComponent } from './home/index';
-import { AlertListComponent } from './alert/index';
-import { ClockComponent } from './config/clock/index';
-import { NotificationsComponent } from './config/notifications/index';
-import { NetworkComponent } from './config/network/index';
-import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from './sensor/index';
-import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialog } from './zone/index';
-import { UserListComponent, UserDetailComponent, UserDeleteDialog } from './user/index';
+import { AuthGuard, AdminGuard } from './guards';
+import { LoginComponent } from './login';
+import { HomeComponent } from './home';
+import { AlertListComponent } from './alert';
+import { ClockComponent } from './config/clock';
+import { NotificationsComponent } from './config/notifications';
+import { NetworkComponent } from './config/network';
+import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from './sensor';
+import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialog } from './zone';
+import { UserListComponent, UserDetailComponent, UserDeleteDialog } from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
 import {
   AlertService,
@@ -33,7 +33,7 @@ import {
   SensorService,
   ZoneService,
   UserService
-} from './services/index';
+} from './services';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -58,6 +58,7 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { ConfigurationBaseComponent } from './configuration-base/configuration-base.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import {
     SensorDetailComponent,
     SensorDeleteDialog,
     SystemStateComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ConfigurationBaseComponent
   ],
   imports: [
     BrowserAnimationsModule,

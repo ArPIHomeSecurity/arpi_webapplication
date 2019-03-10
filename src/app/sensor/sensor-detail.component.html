@@ -30,9 +30,9 @@
       </mat-select>
     </mat-form-field>
 
-    <div [formGroup]="zoneForm" [fxHide]="!new_zone" fxLayout="column">
+    <div *ngIf="sensor.zone_id === -1" [formGroup]="zoneForm" fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Zone name" formControlName="zone_name"/>
+        <input matInput placeholder="Zone name" formControlName="zone_name" required/>
       </mat-form-field>
 
       <mat-checkbox formControlName="disarmed_alert" color="primary" (change)="alertWhenChanged($event, 'disarmed_delay')">Alert when disarmed</mat-checkbox>

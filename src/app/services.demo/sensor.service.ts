@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
-import { Sensor, SensorType } from '../models/index';
+import { Sensor, SensorType } from '../models';
 import { EventService } from '../services/event.service';
 import { MonitoringService } from './monitoring.service';
 import { environment, SENSORS, SENSOR_TYPES } from '../../environments/environment';
@@ -21,7 +21,7 @@ export class SensorService {
     private eventService: EventService,
     private monitoringService: MonitoringService
   ) {
-    // channels are numbered 1..15
+    // channels are numbered 1..N
     for (let i = 0; i < environment.channel_count; i++) {
       this.channels.push(false);
     }
@@ -31,13 +31,14 @@ export class SensorService {
 
 
   getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
-    return of(this.sensors).delay(environment.delay);
+    // send variables by value
+    return of(Object.assign([], this.sensors)).delay(environment.delay);
   }
 
 
   getSensor( sensorId: number ): Observable<Sensor> {
-    // get sensors from api
-    return of(this.sensors.find(s => s.id === sensorId));
+    // send variables by value
+    return of(Object.assign({}, this.sensors.find(s => s.id === sensorId)));
   }
 
 
@@ -76,15 +77,16 @@ export class SensorService {
 
 
   getAlert( sensorId: number = null ): Observable<boolean> {
-    if ( sensorId ) {
-      if (sensorId in this.sensors) {
-        return of(this.sensors.filter(sensor => sensor.id === sensorId)[0].alert).delay(environment.delay);
-      } else {
-        return of(false).delay(environment.delay);
+    if (sensorId != null) {
+      const sensor = this.sensors.find(sensor => sensor.id === sensorId);
+      if (sensor) {
+        return of(sensor.alert).delay(environment.delay);
       }
     } else {
-      return of(false).delay(environment.delay);
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2)).delay(environment.delay);
     }
+
+    return of(false).delay(environment.delay);
   }
 
 
@@ -93,7 +95,7 @@ export class SensorService {
   }
 
   resetReferences() {
-
+    this.monitoringService._resetReferences();
   }
 
   _alertChannel(channelId: number, value: boolean) {
@@ -105,6 +107,7 @@ export class SensorService {
 
     if (sensor != null) {
       sensor.alert = value;
+      setSessionValue('SensorService.sensors', this.sensors);
 
       const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2);
       this.eventService._updateSensorsState(alertState);

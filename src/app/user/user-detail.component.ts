@@ -1,16 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AbstractControl } from '@angular/forms';
-
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialog } from './user-delete.component';
-import { ArmType, User } from '../models/index';
-import { EventService, LoaderService, MonitoringService, UserService} from '../services/index';
+import { User } from '../models';
+import { EventService, LoaderService, MonitoringService, UserService} from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -23,68 +22,38 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss'],
   providers: []
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   userId: number;
   user: User = null;
   userForm: FormGroup;
-  ArmType: any = ArmType;
   roles: any = [];
-  armState: ArmType;
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private userService: UserService,
+    private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private location: Location) {
+      super(loader, eventService, monitoringService)
 
-    this.route.paramMap.subscribe(params => {
-      if (params.get('id') != null) {
-        this.userId = +params.get('id');
-      }
-    });
+      this.route.paramMap.subscribe(params => {
+        if (params.get('id') != null) {
+          this.userId = +params.get('id');
+        }
+      });
   }
 
   ngOnInit() {
-    for (let role in environment.ROLE_TYPES){
+    super.initialize();
+
+    for (let role in environment.ROLE_TYPES) {
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
-
-    this.monitoringService.getArmState()
-      .subscribe(armState => {
-        this.armState = armState;
-        if (this.userForm) {
-          if (this.armState === ArmType.DISARMED) {
-            this.userForm.enable();
-          } else {
-            this.userForm.disable();
-          }
-        }
-      });
-    this.eventService.listen('arm_state_change')
-      .subscribe(arm_type => {
-        if (arm_type === environment.ARM_DISARM) {
-          this.armState = ArmType.DISARMED;
-          if (this.userForm != null) {
-            this.userForm.enable();
-          }
-        } else if (arm_type === environment.ARM_AWAY) {
-          this.armState = ArmType.AWAY;
-          if (this.userForm != null) {
-            this.userForm.disable();
-          }
-        } else if (arm_type === environment.ARM_STAY) {
-          this.armState = ArmType.STAY;
-          if (this.userForm != null) {
-            this.userForm.disable();
-          }
-        }
-      });
 
     if (this.userId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -107,20 +76,19 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    super.destroy();
+  }
+
   updateForm(user: User) {
     this.userForm = this.fb.group({
       name: user.name,
       role: user.role,
       accessCode: new FormControl(user.access_code, [Validators.pattern('^\\d{4,8}$')]),
     });
-
-    if (this.armState !== ArmType.DISARMED) {
-      this.userForm.disable();
-    }
   }
 
   onSubmit() {
-    console.log('User: ', this.user);
     const user = this.prepareSaveUser();
     if (this.userId != null) {
       this.userService.updateUser(user).subscribe(null,

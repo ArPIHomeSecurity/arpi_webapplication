@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
 
-import { AlertService, EventService, SensorService } from '../services/index';
-import { MonitoringService } from '../services/index';
-import { ArmType } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
+import { AlertService, EventService, SensorService } from '../services';
+import { MonitoringService } from '../services';
+import { ArmType, String2ArmType } from '../models';
+import { MonitoringState, String2MonitoringState } from '../models';
 
 import { environment } from '../../environments/environment';
 
@@ -19,9 +17,11 @@ export class SystemStateComponent implements OnInit {
   MonitoringState: any = MonitoringState;
   ArmType: any = ArmType;
   sensorAlert: boolean;
+
+  // true=syren / false=syren muted / null=no syren
   syrenAlert: boolean;
   armState: ArmType;
-  monitoringState: MonitoringState = MonitoringState.READY;
+  monitoringState: MonitoringState;
 
   constructor(
           private alertService: AlertService,
@@ -36,35 +36,18 @@ export class SystemStateComponent implements OnInit {
     this.sensorService.getAlert()
       .subscribe(alert =>  this.sensorAlert = alert);
     this.alertService.getAlert()
-      .subscribe(alert => this.syrenAlert = (alert !== null) ? true : null);
+      .subscribe(alert => this.syrenAlert = (alert != null) ? true : null);
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
 
     this.eventService.listen('arm_state_change')
-      .subscribe(arm_state => {
-         if (arm_state === environment.ARM_DISARM) {
-             this.armState = ArmType.DISARMED;
-         } else if (arm_state === environment.ARM_AWAY) {
-             this.armState = ArmType.AWAY;
-         } else if (arm_state === environment.ARM_STAY) {
-             this.armState = ArmType.STAY;
-         } else {
-           console.error('Unknown arm state!!!', arm_state);
-         }
-      }
-    );
+      .subscribe(armState => this.armState = String2ArmType(armState));
     this.eventService.listen('sensors_state_change')
-      .subscribe(alert => {
-        this.sensorAlert = alert;
-      }
-    );
+      .subscribe(alert => this.sensorAlert = alert);
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
     this.eventService.listen('syren_state_change')
-      .subscribe(event => {
-        this.syrenAlert = event;
-      }
-    );
+      .subscribe(event => this.syrenAlert = event);
   }
 
   isSensorIndicatorVisible(){

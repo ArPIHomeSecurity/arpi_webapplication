@@ -1,20 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable ,  forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AbstractControl } from '@angular/forms';
-
-import { ArmType, Sensor, Zone } from '../models/index';
-import { MonitoringState, String2MonitoringState } from '../models/index';
-import { positiveInteger } from '../utils';
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialog } from './zone-delete.component';
-import { EventService, LoaderService, SensorService, ZoneService } from '../services/index';
-import { MonitoringService } from '../services/index';
+import { MonitoringState, Sensor, Zone } from '../models';
+import { positiveInteger } from '../utils';
+import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -27,20 +24,19 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['zone-detail.component.scss'],
   providers: []
 })
-export class ZoneDetailComponent implements OnInit {
+export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   zoneId: number;
   zone: Zone = null;
   sensors: Sensor[];
-  MonitoringState: any = MonitoringState;
-  monitoringState: MonitoringState;
   zoneForm: FormGroup;
 
   constructor(
+    public loader: LoaderService,
+    public eventService: EventService,
+    public monitoringService: MonitoringService,
+
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private eventService: EventService,
-    private loader: LoaderService,
-    private monitoringService: MonitoringService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
     private router: Router,
@@ -48,6 +44,7 @@ export class ZoneDetailComponent implements OnInit {
     private location: Location,
     private snackBar: MatSnackBar
   ) {
+    super(loader, eventService, monitoringService);
 
     this.route.paramMap.subscribe(params => {
       if (params.get('id') != null) {
@@ -57,10 +54,7 @@ export class ZoneDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+    super.initialize();
 
     if (this.zoneId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -85,6 +79,10 @@ export class ZoneDetailComponent implements OnInit {
       this.zone.stay_delay = 0;
       this.updateForm(this.zone);
     }
+  }
+
+  ngOnDestroy() {
+    super.destroy();
   }
 
   updateForm(zone: Zone) {

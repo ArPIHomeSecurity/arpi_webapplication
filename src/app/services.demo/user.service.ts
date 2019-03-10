@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/operator/delay';
 
-import { User } from '../models/index';
+import { User } from '../models';
 
 import { environment, USERS } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
