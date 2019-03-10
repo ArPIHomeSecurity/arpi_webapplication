@@ -94,8 +94,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.monitoringService.getMonitoringState()
       .subscribe(monitoringState => this.monitoringState = monitoringState);
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+    this.baseSubscriptions.push(
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState))
+    );
 
     if (this.sensorId != null) {
       forkJoin(
@@ -139,7 +141,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
         this.sensor = new Sensor;
         const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
-				this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
+        this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
         this.sensor.zone_id = -1;
         this.sensor.type_id = this.sensorTypes[0].id;
 

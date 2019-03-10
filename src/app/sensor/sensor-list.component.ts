@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
@@ -24,7 +24,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   sensors: Sensor[] = null;
   zones: Zone[] = [];
   sensorTypes: SensorType [] = [];
-  isDestroyed = false;
 
   constructor(
     public loader: LoaderService,
@@ -46,25 +45,25 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     this.updateComponent();
 
     // TODO: update only one sensor instead of the whole page
-    this.eventService.listen('sensors_state_change')
-      .subscribe(_ => {
-        if (!this.isDestroyed) {
-          this.updateComponent();
-        }
-      });
+    this.baseSubscriptions.push(
+      this.eventService.listen('sensors_state_change')
+        .subscribe(_ => this.updateComponent(false))
+    );
   }
 
   ngOnDestroy() {
-    // TODO: unsubscribe changes when destroyed
     super.destroy();
   }
 
-  updateComponent() {
+  updateComponent(displayLoader = true) {
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
+    if (displayLoader) {
+      // no need to display loader if it's a reload
+      scheduleMicrotask.then(() => {
+        this.loader.display(true);
+      });
+    }
 
     forkJoin(
       this.sensorService.getSensors(this.onlyAlerting),
