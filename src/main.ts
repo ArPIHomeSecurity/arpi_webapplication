@@ -10,17 +10,11 @@ declare const require;
 
 let locale = localStorage.getItem('localeId');
 console.log('Selected language: ', locale);
-if (locale === 'en') {
-  locale = null;
+if (locale === null) {
+  locale = 'en';
 }
 
 console.log('Current location: ', location.pathname);
-
-if (environment.production) {
-  enableProdMode();
-}
-
-
 if (environment.aotTranslations) {
   if (location.pathname.startsWith('/' + locale)) {
     console.log('Correct locale, no need to redirect!');
@@ -30,7 +24,11 @@ if (environment.aotTranslations) {
   }
 }
 
-const translation_file = locale != null ? require(`raw-loader!./locales/messages.${locale}.xlf`) : null;
+if (environment.production) {
+  enableProdMode();
+}
+
+const translation_file = locale !== 'en' ? require(`raw-loader!./locales/messages.${locale}.xlf`) : null;
 platformBrowserDynamic().bootstrapModule(AppModule, { providers: [
   { provide: TRANSLATIONS, useValue: translation_file },
   { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
