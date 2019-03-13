@@ -40,7 +40,7 @@ export class EventService {
 
       // observable is disposed
       return () => {
-        this.socket.off(event);
+        this.socket.off(event, observer);
       };
     });
   }
