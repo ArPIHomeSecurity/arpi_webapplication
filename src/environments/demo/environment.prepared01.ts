@@ -116,22 +116,22 @@ export const SENSORS = [
 
 export const SENSOR_TYPES = [
   {
-    id: 0,
+    id: 1,
     name: 'Motion',
     description: 'Motion sensor',
   },
   {
-    id: 1,
+    id: 2,
     name: 'Tamper',
     description: 'Tamper sensor',
   },
   {
-    id: 2,
+    id: 3,
     name: 'Open',
     description: 'Open sensor',
   },
   {
-    id: 3,
+    id: 4,
     name: 'Break',
     description: 'Break sensor',
   }
