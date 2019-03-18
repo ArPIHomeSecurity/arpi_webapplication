@@ -242,9 +242,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.zone_id,
       name: zoneModel.zone_name,
-      disarmed_delay: !isNaN(parseInt(zoneModel.disarmed_delay, 10)) ? parseInt(zoneModel.disarmed_delay, 10) : null,
-      away_delay: !isNaN(parseInt(zoneModel.away_delay, 10)) ? parseInt(zoneModel.away_delay, 10) : null,
-      stay_delay: !isNaN(parseInt(zoneModel.stay_delay, 10)) ? parseInt(zoneModel.stay_delay, 10) : null,
+      disarmed_delay: zoneModel.disarmed_alert ? parseInt(zoneModel.disarmed_delay, 10) : null,
+      away_delay: zoneModel.away_armed_alert ? parseInt(zoneModel.away_delay, 10) : null,
+      stay_delay: zoneModel.stay_armed_alert ? parseInt(zoneModel.stay_delay, 10) : null,
       description: zoneModel.zone_name
     };
   }
