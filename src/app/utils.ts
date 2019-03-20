@@ -24,3 +24,11 @@ export function getSessionValue(name: string, defaultValue: any): any {
 export function setSessionValue(name: string, value: any) {
   sessionStorage.setItem(name, JSON.stringify(value));
 }
+
+export function getValue(value: any, attribute: string, default_value: any = '') {
+  // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
+  if (value) {
+    return value ? value[attribute] : default_value;
+  }
+  return default_value;
+}

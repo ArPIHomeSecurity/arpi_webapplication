@@ -27,6 +27,7 @@ export class ConfigurationService {
 
   setOption( option: string, section: string, value: any ): Observable<boolean> {
     const tmpOption = this.configuration.find(o => o.option === option && o.section === section);
+    value = JSON.stringify(value);
     if (tmpOption != null) {
       tmpOption.value = value;
     } else {

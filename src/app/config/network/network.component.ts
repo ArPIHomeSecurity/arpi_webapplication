@@ -6,21 +6,14 @@ import { forkJoin } from 'rxjs';
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option } from '../../models';
+import { getValue } from '../../utils';
 
 
 const scheduleMicrotask = Promise.resolve(null);
 
-function getValue(value: any, attribute: string, default_value: any = '') {
-  //console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
-  if (value) {
-    return value ? value[attribute] : default_value;
-  }
-  return default_value;
-}
-
 // use string as constant instead of complex type to avoid changing it through a reference
-const DEFAULT_DYNDNS = JSON.stringify({option:'network', section: 'dyndns', value: '{"username":"", "password":"", "hostname": "", "provider": ""}'});
-const DEFAULT_ACCESS = JSON.stringify({option:'network', section: 'access', value: '{"ssh":""}'});
+const DEFAULT_DYNDNS = {option: 'network', section: 'dyndns', value: '{"username":"", "password":"", "hostname": "", "provider": ""}'};
+const DEFAULT_ACCESS = {option: 'network', section: 'access', value: '{"ssh":""}'};
 
 
 @Component({
@@ -34,7 +27,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   networkForm: FormGroup;
   dyndns: Option = null;
   access: Option = null;
-  
+
   // values from the noipy python module 
   PROVIDERS = [
       {value: 'noip', label: 'www.noip.com'},
@@ -57,7 +50,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     super.initialize();
 
     this.updateComponent();
-    this.updateForm(JSON.parse(DEFAULT_DYNDNS), JSON.parse(DEFAULT_ACCESS));
+    this.updateForm(DEFAULT_DYNDNS, DEFAULT_ACCESS);
   }
 
   ngOnDestroy() {
@@ -87,10 +80,10 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       this.configService.getOption('network', 'dyndns'),
       this.configService.getOption('network', 'access'))
     .subscribe(results => {
-      this.dyndns = results[0] ? results[0] : JSON.parse(DEFAULT_DYNDNS);
-      this.access = results[1] ? results[1] : JSON.parse(DEFAULT_ACCESS);
-      this.dyndns.value = this.dyndns.value;
-      this.access.value = this.access.value;
+      this.dyndns = results[0] ? results[0] : DEFAULT_DYNDNS;
+      this.access = results[1] ? results[1] : DEFAULT_ACCESS;
+      this.dyndns.value = JSON.parse(this.dyndns.value);
+      this.access.value = JSON.parse(this.access.value);
       this.updateForm(this.dyndns, this.access);
       this.loader.display(false);
     });
@@ -98,7 +91,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   prepareDyndns(): any {
     const formModel = this.networkForm.value;
-    let dyndns = {
+    const dyndns = {
       'username': formModel.dyndns_username,
       'hostname': formModel.dyndns_hostname,
       'provider': formModel.dyndns_provider
