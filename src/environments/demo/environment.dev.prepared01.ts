@@ -40,50 +40,27 @@ export const CONFIGURATION = [
   {
     option: 'notifications',
     section: 'email',
-    value: {
-      smtp_username: 'test_user',
-      email_address: 'target_user@domain.com',
-      smtp_password: 'password'
-    }
+    value: '{"smtp_username": "test_user", "email_address": "target_user@domain.com", "smtp_password": "password"}'
   },
   {
     option: 'notifications',
     section: 'gsm',
-    value: {
-      pin_code: '1234',
-      phone_number: '0036123456789'
-    }
+    value: '{"pin_code": "1234", "phone_number": "0036123456789"}'
   },
   {
     option: 'notifications',
     section: 'subscriptions',
-    value: {
-      email: {
-        alert_started: true,
-        alert_stopped: true
-      },
-      sms: {
-        alert_started: true,
-        alert_stopped: true
-      }
-    }
+    value: '{"email": {"alert_started": true, "alert_stopped": true}, "sms": { "alert_started": true, "alert_stopped": true}}'
   },
   {
     option: 'network',
     section: 'dyndns',
-    value: {
-      username: 'user',
-      hostname: 'my-example-host.com',
-      provider: 'noip',
-      password: 'password'
-    }
+    value: '{"username": "user", "hostname": "my-example-host.com", "provider": "noip", "password": "password"}'
   },
   {
     option: 'network',
     section: 'access',
-    value: {
-      ssh: true
-    }
+    value: '{"ssh": true}'
   }
 ];
 
@@ -107,7 +84,7 @@ export const SENSORS = [
     id: 0,
     channel: 0,
     zone_id: 0,
-    type_id: 0,
+    type_id: 1,
     alert: false,
     description: 'Teszt',
     enabled: true
