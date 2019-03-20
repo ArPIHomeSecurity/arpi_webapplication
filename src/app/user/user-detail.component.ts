@@ -91,14 +91,13 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const user = this.prepareSaveUser();
     if (this.userId != null) {
-      this.userService.updateUser(user).subscribe(null,
+      this.userService.updateUser(user).subscribe(_ => this.router.navigate(['/users']),
           _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
       );
     } else {
-      this.userService.createUser(user).subscribe(null,
+      this.userService.createUser(user).subscribe(_ => this.router.navigate(['/users']),
           _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
     }
-    this.router.navigate(['/users']);
   }
 
   onCancel() {
