@@ -194,9 +194,13 @@
                 {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
                 }
               ],
-              "outputPath": "dist-demo-dev",
+              "outputPath": "dist-demo-dev"
             }
           }
         },
