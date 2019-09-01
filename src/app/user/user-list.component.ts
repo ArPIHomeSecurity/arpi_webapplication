@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { UserDeleteDialog } from './user-delete.component';
+import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models/user';
 import { LoaderService, EventService, MonitoringService, UserService } from '../services';
 
@@ -58,7 +58,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   openDeleteDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserDeleteDialog, {
+    const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
       data: {
         name: this.users.find(x => x.id === userId).name,

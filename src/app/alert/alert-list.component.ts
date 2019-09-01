@@ -8,6 +8,19 @@ import { Observable, of } from 'rxjs';
 import { ArmType, Alert, Sensor } from '../models';
 import { AlertService, EventService, SensorService } from '../services';
 
+export class AlertHistory extends DataSource<any> {
+  constructor(private _alert_history: Observable<Alert[]>, private _paginator: MatPaginator) {
+    super();
+  }
+
+  connect(): Observable<Alert[]> {
+    return this._alert_history;
+  }
+
+  disconnect() {}
+}
+
+
 @Component({
   moduleId: module.id,
   templateUrl: 'alert-list.component.html',
@@ -15,8 +28,8 @@ import { AlertService, EventService, SensorService } from '../services';
   providers: []
 })
 export class AlertListComponent implements OnInit {
-  ArmType:any = ArmType;
-  alertHistory : AlertHistory | null;
+  ArmType: any = ArmType;
+  alertHistory: AlertHistory | null;
   displayedColumns = ['arm_type', 'start_time', 'end_time', 'sensors'];
   sensors: Sensor[];
 
@@ -58,16 +71,4 @@ export class AlertListComponent implements OnInit {
     });
     return exists;
   }
-}
-
-export class AlertHistory extends DataSource<any> {
-  constructor(private _alert_history: Observable<Alert[]>, private _paginator: MatPaginator) {
-    super();
-  }
-
-  connect(): Observable<Alert[]>{
-    return this._alert_history;
-  }
-
-  disconnect() {}
 }

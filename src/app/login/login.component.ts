@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.model.access_code)
       .subscribe(result => {
-        if (result === true) {
+        if (result) {
           this.router.navigate(['/']);
         } else {
           this.error = 'Incorrect access code!';

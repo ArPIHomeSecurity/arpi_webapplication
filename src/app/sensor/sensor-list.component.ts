@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { SensorDeleteDialog } from './sensor-delete.component';
+import { SensorDeleteDialogComponent } from './sensor-delete.component';
 import { MonitoringState, Sensor, SensorType, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
@@ -98,7 +98,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(sensorId: number) {
-    const dialogRef = this.dialog.open(SensorDeleteDialog, {
+    const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
       width: '250px',
       data: {
         description: this.sensors.find(x => x.id === sensorId).description,

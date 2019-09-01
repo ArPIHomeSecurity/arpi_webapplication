@@ -29,7 +29,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     private fb: FormBuilder,
     dateTimeAdapter: DateTimeAdapter<any>,
   ) {
-    super(loader, eventService, monitoringService)
+    super(loader, eventService, monitoringService);
     dateTimeAdapter.setLocale('iso-8601');
   }
 

@@ -88,7 +88,6 @@ const appRoutes: Routes = [
     component: ClockComponent,
     canActivate: [AdminGuard]
   },
-  
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
 ];

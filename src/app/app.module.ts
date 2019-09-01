@@ -19,9 +19,9 @@ import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
-import { SensorListComponent, SensorDetailComponent, SensorDeleteDialog } from './sensor';
-import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialog } from './zone';
-import { UserListComponent, UserDetailComponent, UserDeleteDialog } from './user';
+import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
+import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
+import { UserListComponent, UserDetailComponent, UserDeleteDialogComponent } from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
 import {
   AlertService,
@@ -68,7 +68,7 @@ import {
     AlertListComponent,
     ZoneListComponent,
     ZoneDetailComponent,
-    ZoneDeleteDialog,
+    ZoneDeleteDialogComponent,
 
     ClockComponent,
     NotificationsComponent,
@@ -76,11 +76,11 @@ import {
 
     UserListComponent,
     UserDetailComponent,
-    UserDeleteDialog,
+    UserDeleteDialogComponent,
 
     SensorListComponent,
     SensorDetailComponent,
-    SensorDeleteDialog,
+    SensorDeleteDialogComponent,
     SystemStateComponent,
     PageNotFoundComponent
   ],
@@ -116,9 +116,9 @@ import {
     TimezonePickerModule
   ],
   entryComponents: [
-    SensorDeleteDialog,
-    UserDeleteDialog,
-    ZoneDeleteDialog
+    SensorDeleteDialogComponent,
+    UserDeleteDialogComponent,
+    ZoneDeleteDialogComponent
   ],
   providers: [
     AlertService,

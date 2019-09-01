@@ -10,7 +10,7 @@ import { getValue } from '../../utils';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-//use string as constant instead of complex type to avoid changing it through a reference
+// use string as constant instead of complex type to avoid changing it through a reference
 const DEFAULT_EMAIL = {
   option: 'notifications',
   section: 'email',
@@ -136,7 +136,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
         'alert_started': formModel.alert_started_email,
         'alert_stopped': formModel.alert_stopped_email,
       },
-      'sms':{
+      'sms': {
         'alert_started': formModel.alert_started_sms,
         'alert_stopped': formModel.alert_stopped_sms
       }

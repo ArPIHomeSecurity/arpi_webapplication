@@ -8,7 +8,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { SensorDeleteDialog } from './sensor-delete.component';
+import { SensorDeleteDialogComponent } from './sensor-delete.component';
 import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
 import { positiveInteger } from '../utils';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
@@ -189,7 +189,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     if (this.sensor.zone_id === -1) {
-      const zone = this.prepareZone();
       this.zoneService.createZone(zone)
         .subscribe(result => {
             sensor.zone_id = result.id;
@@ -287,7 +286,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   openDeleteDialog(sensorId: number) {
-    const dialogRef = this.dialog.open(SensorDeleteDialog, {
+    const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
       width: '250px',
       data: {
         description: this.sensor.description,

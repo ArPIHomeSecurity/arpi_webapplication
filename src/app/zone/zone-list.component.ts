@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { ZoneDeleteDialog } from './zone-delete.component';
+import { ZoneDeleteDialogComponent } from './zone-delete.component';
 import { MonitoringState, Sensor, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
@@ -41,8 +41,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   ngOnInit() {
     super.initialize();
 
-    this.open['config'] = []
-    this.open['sensors'] = []
+    this.open['config'] = [];
+    this.open['sensors'] = [];
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
@@ -85,7 +85,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   openDeleteDialog(zoneId: number) {
-    const dialogRef = this.dialog.open(ZoneDeleteDialog, {
+    const dialogRef = this.dialog.open(ZoneDeleteDialogComponent, {
       width: '250px',
       data: {
         name: this.zones.find(x => x.id === zoneId).name,
@@ -99,7 +99,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
             .subscribe(_ => this.updateComponent(),
                 _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
-        }else {
+        } else {
           this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
         }
       }

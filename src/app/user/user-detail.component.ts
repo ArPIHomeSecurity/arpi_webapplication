@@ -7,7 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { UserDeleteDialog } from './user-delete.component';
+import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models';
 import { EventService, LoaderService, MonitoringService, UserService} from '../services';
 
@@ -39,7 +39,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private location: Location) {
-      super(loader, eventService, monitoringService)
+      super(loader, eventService, monitoringService);
 
       this.route.paramMap.subscribe(params => {
         if (params.get('id') != null) {
@@ -51,7 +51,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   ngOnInit() {
     super.initialize();
 
-    for (let role in environment.ROLE_TYPES) {
+    for (const role in environment.ROLE_TYPES) {
       this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
     }
 
@@ -117,7 +117,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserDeleteDialog, {
+    const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
       data: {
         name: this.user.name,

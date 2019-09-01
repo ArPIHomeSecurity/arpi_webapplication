@@ -8,7 +8,7 @@ import { MonitoringState, String2MonitoringState } from '../models';
 import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'system-state',
+  selector: 'app-system-state',
   templateUrl: './system-state.component.html',
   styleUrls: ['./system-state.component.scss'],
   providers: []
@@ -50,7 +50,7 @@ export class SystemStateComponent implements OnInit {
       .subscribe(event => this.syrenAlert = event);
   }
 
-  isSensorIndicatorVisible(){
+  isSensorIndicatorVisible() {
     return this.monitoringState === MonitoringState.ARMED ||
       this.monitoringState === MonitoringState.READY;
   }

@@ -28,12 +28,12 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   dyndns: Option = null;
   access: Option = null;
 
-  // values from the noipy python module 
+  // values from the noipy python module
   PROVIDERS = [
       {value: 'noip', label: 'www.noip.com'},
       {value: 'dyn', label: 'www.dyndns.org'},
-      {value: 'duck', label:'www.duckdns.org'},
-  ]
+      {value: 'duck', label: 'www.duckdns.org'},
+  ];
 
   constructor(
     public loader: LoaderService,

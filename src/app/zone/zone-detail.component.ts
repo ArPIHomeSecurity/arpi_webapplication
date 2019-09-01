@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { ZoneDeleteDialog } from './zone-delete.component';
+import { ZoneDeleteDialogComponent } from './zone-delete.component';
 import { MonitoringState, Sensor, Zone } from '../models';
 import { positiveInteger } from '../utils';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
@@ -145,7 +145,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(zoneId: number) {
-    const dialogRef = this.dialog.open(ZoneDeleteDialog, {
+    const dialogRef = this.dialog.open(ZoneDeleteDialogComponent, {
       width: '250px',
       data: {
         name: this.zone.name,
