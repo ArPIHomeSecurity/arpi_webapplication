@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';

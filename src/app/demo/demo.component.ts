@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 import { SensorService } from '../services';

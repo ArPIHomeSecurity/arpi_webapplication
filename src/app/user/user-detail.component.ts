@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
