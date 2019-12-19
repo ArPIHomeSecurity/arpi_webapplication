@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models';
 import { MonitoringState } from '../models';
@@ -46,11 +47,11 @@ export class MonitoringService {
   }
 
   is_alert(): Observable<boolean> {
-    return of(this.alert).delay(environment.delay);
+    return of(this.alert).pipe(delay(environment.delay));
   }
 
   getArmState(): Observable<ArmType> {
-    return of(this.armState).delay(environment.delay);
+    return of(this.armState).pipe(delay(environment.delay));
   }
 
   arm(armtype: ArmType) {
@@ -75,7 +76,7 @@ export class MonitoringService {
   }
 
   getMonitoringState(): Observable<MonitoringState> {
-    return of(this.monitoringState).delay(environment.delay);
+    return of(this.monitoringState).pipe(delay(environment.delay));
   }
 
   getVersion(): Observable<string> {
@@ -88,7 +89,7 @@ export class MonitoringService {
         network: this.datetime,
         system: this.datetime,
         timezone: this.timeZone,
-    }).delay(environment.delay);
+    }).pipe(delay(environment.delay));
   }
 
   synchronizeClock() {

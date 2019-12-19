@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { User } from '../models';
 
@@ -19,11 +20,11 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    return of(this.users).delay(environment.delay);
+    return of(this.users).pipe(delay(environment.delay));
   }
 
   getUser(userId: number): Observable<User> {
-    return of(this.users.find(u => u.id === userId)).delay(environment.delay);
+    return of(this.users.find(u => u.id === userId)).pipe(delay(environment.delay));
   }
 
   createUser(user: User): Observable<User> {

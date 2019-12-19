@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 
 import * as JWT from 'jwt-decode';
@@ -28,7 +29,7 @@ export class AuthenticationService {
       setSessionValue('AuthenticationService.loggedInAs', this.loggedInAs);
     }
 
-    return of( foundUsers.length === 1 ).delay(environment.delay);
+    return of( foundUsers.length === 1 ).pipe(delay(environment.delay));
   }
 
   logout(): void {

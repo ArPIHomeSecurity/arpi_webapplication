@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/operator/delay';
+import { delay } from 'rxjs/operators';
 
 import { Sensor, SensorType } from '../models';
 import { EventService } from '../services/event.service';
@@ -32,7 +32,7 @@ export class SensorService {
 
   getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
     // send variables by value
-    return of(Object.assign([], this.sensors)).delay(environment.delay);
+    return of(Object.assign([], this.sensors)).pipe(delay(environment.delay));
   }
 
 
@@ -80,18 +80,18 @@ export class SensorService {
     if (sensorId != null) {
       const sensor = this.sensors.find(sensor => sensor.id === sensorId);
       if (sensor) {
-        return of(sensor.alert).delay(environment.delay);
+        return of(sensor.alert).pipe(delay(environment.delay));
       }
     } else {
-      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2)).delay(environment.delay);
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2)).pipe(delay(environment.delay));
     }
 
-    return of(false).delay(environment.delay);
+    return of(false).pipe(delay(environment.delay));
   }
 
 
   getSensorTypes(): Observable<SensorType[]> {
-    return of(this.types).delay(environment.delay);
+    return of(this.types).pipe(delay(environment.delay));
   }
 
   resetReferences() {

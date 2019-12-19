@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { Zone } from '../models';
 
@@ -19,12 +20,12 @@ export class ZoneService {
 
   getZones(): Observable<Zone[]> {
     // send variables by value
-    return of(Object.assign([], this.zones)).delay(environment.delay);
+    return of(Object.assign([], this.zones)).pipe(delay(environment.delay));
   }
 
   getZone( zoneId: number ): Observable<Zone> {
     // send variables by value
-    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])).delay(environment.delay);
+    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])).pipe(delay(environment.delay));
   }
 
   createZone( zone: Zone ): Observable<Zone> {

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
+import { delay } from 'rxjs/operators';
 
 import { ArmType, Alert, Sensor } from '../models';
 import { environment, ALERTS } from '../../environments/environment';
@@ -41,13 +41,13 @@ export class AlertService {
       }
       return 0;
     });
-    return of(sortedAlerts).delay(environment.delay);
+    return of(sortedAlerts).pipe(delay(environment.delay));
   }
 
 
   getAlert(): Observable<Alert> {
     // get sensors from api
-    return of(this.alerts.find(a => a.end_time === null)).delay(environment.delay);
+    return of(this.alerts.find(a => a.end_time === null)).pipe(delay(environment.delay));
   }
 
   _createAlert(sensors: Sensor[], armType: ArmType) {
