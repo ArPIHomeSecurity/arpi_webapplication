@@ -7,27 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="assets/images/argus-eye-16.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <!-- Github Pages hack to allow SPA refresh without receiving 404. -->
-    <script>
-        (function () {
-          // Retrieve the URL the user was trying to access when receiving the 404.
-          var redirect = sessionStorage.redirect;
-          // Remove the URL from sessionStorage.
-          delete sessionStorage.redirect;
-          // Check if we actually need to redirect.
-          console.log('Change location: ', location.href, redirect)
-          if (redirect && redirect != location.href) {
-            // We need to redirect to the URL the user was trying to access.
-            history.replaceState(null, null, redirect);
-          }
-        })();
-    </script>
-    <!-- /Github Pages hack. -->
-  <link rel="stylesheet" href="styles.2a5e0f417bc7cab0ef50.css"></head>
-  
+  <link rel="stylesheet" href="styles.bcf800538ce886902196.css"></head>
+
   <body mat-app-background>
     <app-root></app-root>
-  <script type="text/javascript" src="runtime.ec2944dd8b20ec099bf3.js"></script><script type="text/javascript" src="polyfills.2692dc9b0bb39ca7e2d7.js"></script><script type="text/javascript" src="main.c26903bf420e8b27d5bb.js"></script></body>
-  
+  <script src="runtime.a8ef3a8272419c2e2c66.js" defer></script><script src="polyfills-es5.1d9605259c21cd7bdf66.js" nomodule defer></script><script src="polyfills.98fb32c5eae3f82fa814.js" defer></script><script src="main.65c79b43388b978caa0d.js" defer></script></body>
 </html>
