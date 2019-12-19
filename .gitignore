@@ -40,9 +40,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+.directory
 
 # python flask server
 /server_pyenv/
 /server/__pycache__/
 /migrations
-/.directory
