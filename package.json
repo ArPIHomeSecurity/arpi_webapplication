@@ -25,7 +25,6 @@
     "@angular/core": "^8.2.14",
     "@angular/flex-layout": "^8.0.0-beta.27",
     "@angular/forms": "^8.2.14",
-    "@angular/http": "^7.2.15",
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
@@ -40,7 +39,7 @@
     "rxjs": "^6.5.3",
     "rxjs-tslint": "^0.1.7",
     "socket.io-client": "^2.3.0",
-    "zone.js": "^0.10.2"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.20",
@@ -66,5 +65,8 @@
     "typescript": "^3.5.3",
     "webpack": "^4.41.3",
     "webpack-dev-server": "^3.10.0"
+  },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
   }
 }
