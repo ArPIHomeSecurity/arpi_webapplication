@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   }
 
   // helper method to access the sidenav even if it is in ngIf
-  @ViewChild('sidenav') set setSidenav(sidenav: ViewContainerRef) {
+  @ViewChild('sidenav', {static: false}) set setSidenav(sidenav: ViewContainerRef) {
       this.sidenav = sidenav;
   }
 

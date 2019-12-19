@@ -28,7 +28,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-const translation_file = locale !== 'en' ? require(`raw-loader!./locales/messages.${locale}.xlf`) : null;
+const translation_file = locale !== 'en' ? require(`raw-loader!./locales/messages.${locale}.xlf`).default : null;
 platformBrowserDynamic().bootstrapModule(AppModule, { providers: [
   { provide: TRANSLATIONS, useValue: translation_file },
   { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
