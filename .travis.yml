@@ -8,7 +8,7 @@ node_js:
 
 branches:
   only:
-    - master
+    - demo
 
 before_script:
   - npm install -g @angular/cli
@@ -24,7 +24,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: true
   on:
-    branch: master
+    branch: demo
   repo: ArPIHomeSecurity/arpi_webapplication
   target_branch: gh-pages
   fqdn: demo.arpi-security.info
