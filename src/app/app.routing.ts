@@ -5,12 +5,13 @@ import { AuthGuard, AdminGuard } from './guards';
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
 import { AlertListComponent } from './alert';
-import { ClockComponent } from './config/clock';
-import { UserListComponent, UserDetailComponent } from './user';
-import { SensorListComponent, SensorDetailComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent } from './zone';
+import { SensorListComponent, SensorDetailComponent } from './sensor';
+import { KeypadComponent } from './keypad';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
+import { ClockComponent } from './config/clock';
+import { UserListComponent, UserDetailComponent } from './user';
 
 const appRoutes: Routes = [
   {
@@ -71,6 +72,11 @@ const appRoutes: Routes = [
   {
     path: 'zone/:id',
     component: ZoneDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'keypad',
+    component: KeypadComponent,
     canActivate: [AdminGuard]
   },
   {

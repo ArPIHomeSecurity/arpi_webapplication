@@ -5,7 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { ArmType, ArmType2String, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
+import { ArmType, ArmType2String, KeypadType, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 
 
@@ -111,5 +111,13 @@ export class MonitoringService {
         console.log( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ));
+  }
+
+  getKeypadTypes(): Observable<KeypadType[]> {
+    // add authorization header with jwt token
+    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
+
+    // get sensor types from api
+    return this.http.get<KeypadType[]>( '/api/keypadtypes', { headers } );
   }
 }

@@ -60,7 +60,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   zoneForm: FormGroup;
   new_zone = false;
   MonitoringState = MonitoringState;
-  monitoringState: MonitoringState;
 
   constructor(
     public loader: LoaderService,
@@ -93,8 +92,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.loader.display(true);
     });
 
-    this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
         .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState))
