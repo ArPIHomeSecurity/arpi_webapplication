@@ -15,16 +15,12 @@ export class KeypadService {
   ) { }
 
   /** Not implemented yet */
-  getKeypads( onlyAlerting: boolean = false ): Observable<Keypad[]> {
+  getKeypads(): Observable<Keypad[]> {
 
     // add authorization header with jwt token
     const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
     const params = new HttpParams();
-    if ( onlyAlerting ) {
-      params.set( 'alerting', 'true' );
-    }
-
     // get keypads from api
     return this.http.get<Keypad[]>( '/api/keypads/', { headers, params } );
   }

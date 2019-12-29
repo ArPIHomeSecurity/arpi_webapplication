@@ -134,3 +134,19 @@ export const ZONES = [
 ];
 
 export const ALERTS = [];
+
+export const KEYPAD_TYPES = [
+  {
+    id: 1,
+    name: 'DSC',
+    description: 'DSC keybus (DSC PC-1555RKZ)'
+  }
+];
+
+export const KEYPADS = [
+  {
+    id: 1,
+    enabled: true,
+    type_id: 1
+  }
+];

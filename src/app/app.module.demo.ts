@@ -19,6 +19,7 @@ import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
+import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
 import { UserListComponent, UserDetailComponent, UserDeleteDialogComponent } from './user';
@@ -28,11 +29,12 @@ import {
   AuthenticationService,
   ConfigurationService,
   EventService,
+  KeypadService,
   LoaderService,
   MonitoringService,
   SensorService,
-  ZoneService,
-  UserService
+  UserService,
+  ZoneService
 } from './services';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -73,6 +75,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     ZoneDetailComponent,
     ZoneDeleteDialogComponent,
 
+    KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     NetworkComponent,
@@ -135,6 +138,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     AuthenticationService,
     ConfigurationService,
     EventService,
+    KeypadService,
     LoaderService,
     MonitoringService,
     SensorService,

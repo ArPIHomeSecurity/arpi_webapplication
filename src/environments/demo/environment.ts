@@ -1,3 +1,5 @@
+import { KeypadType, Keypad } from "src/app/models/keypad";
+
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=demo` then `environment.demo.ts` will be used instead.
@@ -81,3 +83,19 @@ export const SENSORS = [];
 export const ZONES = [];
 
 export const ALERTS = [];
+
+export const KEYPAD_TYPES = [
+  {
+    id: 1,
+    name: 'DSC',
+    description: 'DSC keybus (DSC PC-1555RKZ)'
+  }
+];
+
+export const KEYPADS = [
+  {
+    id: 1,
+    enabled: true,
+    type_id: 1
+  }
+];
