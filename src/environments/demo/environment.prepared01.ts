@@ -119,9 +119,9 @@ export const ZONES = [
     id: 0,
     name: 'Hall',
     disarmed_delay: null,
-    away_delay: 5,
-    stay_delay: 0,
-    description: 'Hall movement, alert immediately'
+    away_delay: 0,
+    stay_delay: 5,
+    description: 'Hall movement, alert with delay if stay armed'
   },
   {
     id: 1,
