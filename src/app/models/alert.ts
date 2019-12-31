@@ -6,9 +6,15 @@ export enum ArmType {
   STAY = 2
 }
 
+export enum AlertType {
+  SABOTAGE = 0,
+  AWAY = 1,
+  STAY = 2
+}
+
 export class Alert {
   id: number;
-  arm_type: ArmType;
+  alert_type: AlertType;
   start_time: string;
   end_time: string;
   sensors: AlertSensor[];
@@ -30,7 +36,7 @@ export function String2ArmType( armType: string ): ArmType {
     case environment.ARM_STAY:
       return ArmType.STAY;
     default:
-      console.error( 'Unknown arm type!' + armType );
+      console.error( 'Unknown arm type!', armType );
   }
 }
 
@@ -41,5 +47,28 @@ export function ArmType2String( armType: ArmType): string {
     return environment.ARM_STAY;
   } else if ( armType === ArmType.DISARMED ) {
     return environment.ARM_DISARM;
+  }
+}
+
+export function String2AlertType( alertType: string ): AlertType {
+  switch ( alertType ) {
+    case environment.ALERT_SABOTAGE:
+      return AlertType.SABOTAGE;
+    case environment.ALERT_AWAY:
+      return AlertType.AWAY;
+    case environment.ALERT_STAY:
+      return AlertType.STAY;
+    default:
+      console.error( 'Unknown alert type!' + alertType );
+  }
+}
+
+export function AlertType2String( alertType: AlertType): string {
+  if ( alertType === AlertType.AWAY ) {
+    return environment.ALERT_AWAY;
+  } else if ( alertType === AlertType.STAY ) {
+    return environment.ALERT_STAY;
+  } else if ( alertType === AlertType.SABOTAGE ) {
+    return environment.ALERT_SABOTAGE;
   }
 }

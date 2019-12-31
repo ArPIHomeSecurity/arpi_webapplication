@@ -2,13 +2,13 @@
   <mat-table #table [dataSource]="alertHistory">
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-  <ng-container matColumnDef="arm_type">
-    <mat-header-cell *matHeaderCellDef>Arm type</mat-header-cell>
+  <ng-container matColumnDef="alert_type">
+    <mat-header-cell *matHeaderCellDef>Alert type</mat-header-cell>
     <mat-cell *matCellDef="let alert">
-      <div [ngSwitch]="alert.arm_type">
-        <span *ngSwitchCase="ArmType.AWAY">AWAY</span>
-        <span *ngSwitchCase="ArmType.STAY">STAY</span>
-        <span *ngSwitchCase="ArmType.DISARMED">SABOTAGE</span>
+      <div [ngSwitch]="alert.alert_type">
+        <span *ngSwitchCase="AlertType.AWAY">AWAY</span>
+        <span *ngSwitchCase="AlertType.STAY">STAY</span>
+        <span *ngSwitchCase="AlertType.SABOTAGE">SABOTAGE</span>
       </div>
     </mat-cell>
   </ng-container>

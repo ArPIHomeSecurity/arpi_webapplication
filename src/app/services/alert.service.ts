@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-import { Alert, String2ArmType } from '../models';
+import { Alert, String2AlertType } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 
 
@@ -26,7 +26,7 @@ export class AlertService {
     return this.http.get<Alert[]>( '/api/alerts', { headers } ).pipe(
       map(( rawAlerts: Object[] ) => {
         for ( const rawAlert of rawAlerts ) {
-          rawAlert['arm_type'] = String2ArmType( rawAlert['arm_type'] );
+          rawAlert['alert_type'] = String2AlertType( rawAlert['alert_type'] );
         }
         return rawAlerts as Alert[];
       } ));

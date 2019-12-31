@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 
-import { ArmType, Alert, Sensor } from '../models';
+import { AlertType, Alert, Sensor } from '../models';
 import { AlertService, EventService, SensorService } from '../services';
 
 export class AlertHistory extends DataSource<any> {
@@ -28,15 +28,14 @@ export class AlertHistory extends DataSource<any> {
   providers: []
 })
 export class AlertListComponent implements OnInit {
-  ArmType: any = ArmType;
+  AlertType: any = AlertType;
   alertHistory: AlertHistory | null;
-  displayedColumns = ['arm_type', 'start_time', 'end_time', 'sensors'];
+  displayedColumns = ['alert_type', 'start_time', 'end_time', 'sensors'];
   sensors: Sensor[];
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   constructor(
-    private router: Router,
     private alertService: AlertService,
     private eventService: EventService,
     private sensorService: SensorService) {}

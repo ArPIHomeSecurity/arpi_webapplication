@@ -18,9 +18,14 @@ export const environment = {
   LANGUAGES: 'hu',
 
   // monitoring arm types
-  ARM_AWAY: 'away',
-  ARM_STAY: 'stay',
+  ARM_AWAY: 'arm_away',
+  ARM_STAY: 'arm_stay',
   ARM_DISARM: 'disarm',
+
+  // alert types
+  ALERT_AWAY: 'alert_away',
+  ALERT_STAY: 'alert_stay',
+  ALERT_SABOTAGE: 'alert_sabotage',
 
   // monitoring system states
   MONITORING_STARTUP: 'monitoring_startup',
