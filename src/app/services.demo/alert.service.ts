@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { ArmType, Alert, Sensor } from '../models';
+import { AlertType, Alert, Sensor } from '../models';
 import { environment, ALERTS } from '../../environments/environment';
 import { EventService } from '../services/event.service';
 import { getSessionValue, setSessionValue } from '../utils';
@@ -50,12 +50,12 @@ export class AlertService {
     return of(this.alerts.find(a => a.end_time === null)).pipe(delay(environment.delay));
   }
 
-  _createAlert(sensors: Sensor[], armType: ArmType) {
+  _createAlert(sensors: Sensor[], alertType: AlertType) {
     const alert: Alert = {
       id: this.alerts.length + 1,
       start_time: new Date().toLocaleString(),
       end_time: null,
-      arm_type: armType,
+      alert_type: alertType,
       sensors: sensors
     };
     this.alerts.push(alert);

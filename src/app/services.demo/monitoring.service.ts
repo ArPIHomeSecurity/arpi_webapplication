@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models';
+import { AlertType, ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models';
 import { MonitoringState } from '../models';
 import { AlertService } from './alert.service';
 import { EventService } from './event.service';
@@ -110,7 +110,7 @@ export class MonitoringService {
       setTimeout(() => {
         if (this.armState !== ArmType.DISARMED) {
           if (sensor.alert) {
-            this.alertService._createAlert([sensor], ArmType.AWAY);
+            this.alertService._createAlert([sensor], AlertType.AWAY);
           }
         }
       }, 1000 * zone.away_delay);
@@ -118,13 +118,13 @@ export class MonitoringService {
       setTimeout(() => {
         if (this.armState !== ArmType.DISARMED) {
           if (sensor.alert) {
-            this.alertService._createAlert([sensor], ArmType.STAY);
+            this.alertService._createAlert([sensor], AlertType.STAY);
           }
         }
       }, 1000 * zone.stay_delay);
     } else if (this.armState === ArmType.DISARMED && zone.disarmed_delay != null && sensor.enabled) {
       setTimeout(() => {
-        this.alertService._createAlert([sensor], ArmType.DISARMED);
+        this.alertService._createAlert([sensor], AlertType.SABOTAGE);
       }, 1000 * zone.disarmed_delay);
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
