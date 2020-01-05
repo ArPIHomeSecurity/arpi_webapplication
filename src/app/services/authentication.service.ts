@@ -2,14 +2,14 @@
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable, Subject } from 'rxjs';
 
 import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
 
 @Injectable()
 export class AuthenticationService {
+  private _isDeviceRegistered = new Subject<boolean>();
 
   constructor(
       private http: HttpClient,
@@ -23,6 +23,8 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (response['device_token']) {
           localStorage.setItem('deviceToken', response['device_token']);
+          this.eventService.connect();
+          this._isDeviceRegistered.next(true);
         }
         if (response['user_token']) {
           const newUser = JWT(response['user_token']);
@@ -30,8 +32,6 @@ export class AuthenticationService {
           localStorage.setItem('currentUser', JSON.stringify(newUser));
           localStorage.setItem('userToken', response['user_token']);
 
-          // TODO: ???
-          this.eventService.connect();
 
           // return true to indicate successful login
           return true;
@@ -49,7 +49,12 @@ export class AuthenticationService {
   }
 
   isLoggedIn() {
-    return localStorage.getItem('userToken') != null;
+    try {
+      return JWT(localStorage.getItem('userToken'));
+    } catch (error) {
+        // console.error('Invalid token');
+    }
+    return false;
   }
 
   getRole(): string {
@@ -72,5 +77,9 @@ export class AuthenticationService {
     } else if (localStorage.getItem('deviceToken')) {
       return localStorage.getItem('deviceToken');
     }
+  }
+
+  isDeviceRegistered(): Observable<boolean> {
+    return this._isDeviceRegistered;
   }
 }

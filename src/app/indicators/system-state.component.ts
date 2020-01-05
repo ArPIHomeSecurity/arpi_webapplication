@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertService, EventService, SensorService } from '../services';
+import { AlertService, EventService, SensorService, AuthenticationService } from '../services';
 import { MonitoringService } from '../services';
 import { ArmType, String2ArmType } from '../models';
 import { MonitoringState, String2MonitoringState } from '../models';
 
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-system-state',
@@ -24,13 +23,27 @@ export class SystemStateComponent implements OnInit {
   monitoringState: MonitoringState;
 
   constructor(
-          private alertService: AlertService,
-          private eventService: EventService,
-          private sensorService: SensorService,
-          private monitoringService: MonitoringService
+    private authService: AuthenticationService,
+    private alertService: AlertService,
+    private eventService: EventService,
+    private sensorService: SensorService,
+    private monitoringService: MonitoringService
   ) { }
 
   ngOnInit() {
+    if (this.authService.getToken()) {
+      this.updateComponent();
+    } else {
+      this.authService.isDeviceRegistered()
+      .subscribe( isRegistered => {
+        if (isRegistered) {
+          this.updateComponent();
+        }
+      });
+    }
+  }
+  
+  updateComponent() {
     this.monitoringService.getArmState()
       .subscribe(armState => this.armState = armState);
     this.sensorService.getAlert()
