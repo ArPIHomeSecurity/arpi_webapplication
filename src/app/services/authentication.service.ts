@@ -3,6 +3,7 @@ import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
@@ -16,7 +17,23 @@ export class AuthenticationService {
       private eventService: EventService
   ) { }
 
-  login(access_code: string): Observable<boolean> {
+  registerDevice(name: string, registration_code: string): Observable<boolean> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post('/api/register_device', JSON.stringify({name: name, registration_code: registration_code}), {headers: headers}).pipe(
+      map((response) => {
+        // login successful if there's a jwt token in the response
+        if (response['device_token']) {
+          localStorage.setItem('deviceToken', response['device_token']);
+          this.eventService.connect();
+          this._isDeviceRegistered.next(true);
+          return true;
+        }
+
+        return false;
+      }));
+  }
+
+  login(access_code: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post('/api/authenticate', JSON.stringify({access_code: access_code}), {headers: headers}).pipe(
       map((response) => {
@@ -31,7 +48,6 @@ export class AuthenticationService {
           // store user info with jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(newUser));
           localStorage.setItem('userToken', response['user_token']);
-
 
           // return true to indicate successful login
           return true;
@@ -80,6 +96,8 @@ export class AuthenticationService {
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this._isDeviceRegistered;
+    return this._isDeviceRegistered.pipe(
+      startWith(!!localStorage.getItem('deviceToken'))
+    );
   }
 }

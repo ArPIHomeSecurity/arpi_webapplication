@@ -1,30 +1,66 @@
 <div fxLayout="row" fxLayoutAlign="center">
-  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+  <form *ngIf="!isRegistered" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm">
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title i18n="Register device">Login</mat-card-title>
+      </mat-card-header>
+
+      <mat-form-field>
+        <input matInput
+          type="name"
+          i18n-placeholder="Name"
+          placeholder="Name"
+          name="name"
+          [formControl]="name"
+          required
+          autofocus>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <input matInput
+          type="password"
+          i18n-placeholder="Regstration code"
+          placeholder="Registration code"
+          name="registration_code"
+          [formControl]="registration_code"
+          required
+          autofocus>
+      </mat-form-field>
+
+      <div class="form-group">
+        <button mat-raised-button [disabled]="loading || !f.form.valid" color="primary" i18n="Register button">Register</button>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      </div>
+      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+    </mat-card>
+  </form>
+
+  <form *ngIf="isRegistered" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm">
 
     <mat-card>
       <mat-card-header>
         <mat-card-title i18n="Login title">Login</mat-card-title>
       </mat-card-header>
 
-      <mat-form-field>
+        <mat-form-field>
         <input matInput
-          type="password"
+          type="accessCode"
           i18n-placeholder="Access code"
           placeholder="Access code"
-          name="access_code"
-          value="1111"
-          [(ngModel)]="model.access_code"
-          #access_code="ngModel"
+          name="accessCode"
+          [formControl]="accessCode"
           required
           autofocus>
       </mat-form-field>
 
       <div class="form-group">
-        <button mat-raised-button [disabled]="loading" color="primary" i18n="Login button">Login</button>
+        <button mat-raised-button [disabled]="loading || !f.form.valid" color="primary" i18n="Login button">Login</button>
         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
       </div>
       <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
-  </mat-card>
+    </mat-card>
   </form>
 </div>
