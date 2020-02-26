@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models';
-import { EventService, LoaderService, MonitoringService, UserService} from '../services';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -30,17 +30,19 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   roles: any = [];
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
+
     private fb: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private location: Location) {
-      super(loader, eventService, monitoringService);
+      super(authService, eventService, loader, monitoringService, router);
 
       this.route.paramMap.subscribe(params => {
         if (params.get('id') != null) {
@@ -64,10 +66,16 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       });
       this.userService.getUser(this.userId)
         .subscribe(user => {
-          this.user = user;
-          this.updateForm(this.user);
-          this.loader.display(false);
-      });
+            this.user = user;
+            this.updateForm(this.user);
+            this.loader.display(false);
+        },
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      );
     } else {
       this.user = new User;
       this.user.name = null;
@@ -93,11 +101,26 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     const user = this.prepareSaveUser();
     if (this.userId != null) {
       this.userService.updateUser(user).subscribe(_ => this.router.navigate(['/users']),
-          _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+          else {
+            this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION});
+          }
+        }
       );
     } else {
       this.userService.createUser(user).subscribe(_ => this.router.navigate(['/users']),
-          _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+          else {
+            this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
+          }
+        }
+      )
     }
   }
 
@@ -129,7 +152,15 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       if (result) {
         this.userService.deleteUser(userId)
           .subscribe(_ => this.router.navigate(['/users']),
-              _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION}));
+          error => {
+            if (error.status == 403) {
+              super.logout();
+            }
+            else {
+              this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+            }
+          }
+        )
       }
     });
   }

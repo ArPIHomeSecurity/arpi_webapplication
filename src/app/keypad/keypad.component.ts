@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
+import { AuthenticationService, EventService, KeypadService, LoaderService, MonitoringService } from '../services';
 import { Keypad, KeypadType } from '../models';
 
 const scheduleMicrotask = Promise.resolve( null );
@@ -22,14 +23,16 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   keypadTypes: KeypadType[];
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
 
     private fb: FormBuilder,
     private keypadService: KeypadService,
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService, eventService, loader, monitoringService, router);
   }
 
   ngOnInit() {
@@ -67,8 +70,13 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
       this.keypad = keypad;
       this.updateForm();
     }, error => {
-      this.keypad = new Keypad();
-      this.updateForm();
+      if (error.status == 403) {
+        super.logout();
+      }
+      else {
+        this.keypad = new Keypad();
+        this.updateForm();
+      }
     });
 
     this.keypadService.getKeypadTypes()
@@ -93,7 +101,13 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
 
   onSubmit() {
     this.keypadService.updateKeypad(this.prepareKeypad())
-      .subscribe(_ => this.updateComponent());
+      .subscribe(_ => this.updateComponent(),
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 }
 

@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option } from '../../models';
 import { getValue } from '../../utils';
 
@@ -36,14 +37,16 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   ];
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
 
     private fb: FormBuilder,
     private configService: ConfigurationService,
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService, eventService, loader, monitoringService, router);
   }
 
   ngOnInit() {
@@ -80,13 +83,19 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       this.configService.getOption('network', 'dyndns'),
       this.configService.getOption('network', 'access'))
     .subscribe(results => {
-      this.dyndns = results[0] ? results[0] : DEFAULT_DYNDNS;
-      this.access = results[1] ? results[1] : DEFAULT_ACCESS;
-      this.dyndns.value = JSON.parse(this.dyndns.value);
-      this.access.value = JSON.parse(this.access.value);
-      this.updateForm(this.dyndns, this.access);
-      this.loader.display(false);
-    });
+        this.dyndns = results[0] ? results[0] : DEFAULT_DYNDNS;
+        this.access = results[1] ? results[1] : DEFAULT_ACCESS;
+        this.dyndns.value = JSON.parse(this.dyndns.value);
+        this.access.value = JSON.parse(this.access.value);
+        this.updateForm(this.dyndns, this.access);
+        this.loader.display(false);
+      },
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 
   prepareDyndns(): any {
@@ -115,7 +124,13 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     forkJoin(
       this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
       this.configService.setOption('network', 'access', this.prepareAccess()))
-    .subscribe(_ => this.updateComponent());
+    .subscribe(_ => this.updateComponent(),
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 }
 

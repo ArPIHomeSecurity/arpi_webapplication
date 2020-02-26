@@ -4,6 +4,7 @@ import { AlertService, EventService, SensorService, AuthenticationService } from
 import { MonitoringService } from '../services';
 import { ArmType, String2ArmType } from '../models';
 import { MonitoringState, String2MonitoringState } from '../models';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class SystemStateComponent implements OnInit {
     private authService: AuthenticationService,
     private alertService: AlertService,
     private eventService: EventService,
+    private router: Router,
     private sensorService: SensorService,
     private monitoringService: MonitoringService
   ) { }
@@ -35,7 +37,7 @@ export class SystemStateComponent implements OnInit {
       this.updateComponent();
     } else {
       this.authService.isDeviceRegistered()
-      .subscribe( isRegistered => {
+      .subscribe(isRegistered => {
         if (isRegistered) {
           this.updateComponent();
         }
@@ -45,22 +47,78 @@ export class SystemStateComponent implements OnInit {
   
   updateComponent() {
     this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
+      .subscribe(armState => this.armState = armState,
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.sensorService.getAlert()
-      .subscribe(alert =>  this.sensorAlert = alert);
+      .subscribe(alert =>  this.sensorAlert = alert,
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.alertService.getAlert()
-      .subscribe(alert => this.syrenAlert = (alert != null) ? true : null);
+      .subscribe(alert => this.syrenAlert = (alert != null) ? true : null,
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
+      .subscribe(monitoringState => this.monitoringState = monitoringState,
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
 
     this.eventService.listen('arm_state_change')
-      .subscribe(armState => this.armState = String2ArmType(armState));
+      .subscribe(armState => this.armState = String2ArmType(armState),
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.eventService.listen('sensors_state_change')
-      .subscribe(alert => this.sensorAlert = alert);
+      .subscribe(alert => this.sensorAlert = alert,
+        error => {
+          if (error.status == 403) {
+            this.authService.logout();
+            this.router.navigate(['']);
+          }
+        }
+    );
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState),
+      error => {
+        if (error.status == 403) {
+          this.authService.logout();
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.eventService.listen('syren_state_change')
-      .subscribe(event => this.syrenAlert = event);
+      .subscribe(event => this.syrenAlert = event,
+        error => {
+          if (error.status == 403) {
+            this.authService.logout();
+            this.router.navigate(['']);
+          }
+        }
+    );
   }
 
   isSensorIndicatorVisible() {

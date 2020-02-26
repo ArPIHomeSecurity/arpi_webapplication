@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models/user';
-import { LoaderService, EventService, MonitoringService, UserService } from '../services';
+import { AuthenticationService, LoaderService, EventService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -24,14 +25,17 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   environment = environment;
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
+
     private userService: UserService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService,eventService, loader, monitoringService, router);
   }
 
   ngOnInit() {
@@ -55,7 +59,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
       .subscribe(users => {
         this.users = users;
         this.loader.display(false);
-    });
+      },
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 
   openDeleteDialog(userId: number) {
@@ -69,7 +79,14 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.deleteUser(userId).subscribe(_ => this.updateComponent(),
-            _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+          error => {
+            if (error.status == 403) {
+              super.logout();
+            }
+            else {
+              this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
+            }
+          }
         );
       }
     });

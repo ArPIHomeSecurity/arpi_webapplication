@@ -1,18 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
 import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
 import { positiveInteger } from '../utils';
-import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -62,19 +61,20 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   MonitoringState = MonitoringState;
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    private sensorService: SensorService,
+    public router: Router,
 
+    private sensorService: SensorService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private zoneService: ZoneService,
-    private router: Router,
     public dialog: MatDialog,
     private location: Location,
     private snackBar: MatSnackBar) {
-      super(loader, eventService, monitoringService);
+      super(authService, eventService, loader, monitoringService, router);
 
       this.route.paramMap.subscribe(params => {
         if (params.get('id') != null) {
@@ -94,7 +94,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState))
+        .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState),
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      )
     );
 
     if (this.sensorId != null) {
@@ -125,27 +131,39 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
           this.updateForm(this.sensor);
           this.loader.display(false);
-      });
+        },
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      );
     } else {
       forkJoin(
         this.sensorService.getSensors(),
         this.sensorService.getSensorTypes(),
         this.zoneService.getZones())
       .subscribe(results => {
-        this.sensors = results[0];
-        this.sensorTypes = results[1];
-        this.zones = results[2];
-        this.channels = this.generateChannels(this.sensors);
+          this.sensors = results[0];
+          this.sensorTypes = results[1];
+          this.zones = results[2];
+          this.channels = this.generateChannels(this.sensors);
 
-        this.sensor = new Sensor;
-        const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
-        this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
-        this.sensor.zone_id = -1;
-        this.sensor.type_id = this.sensorTypes[0].id;
+          this.sensor = new Sensor;
+          const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
+          this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
+          this.sensor.zone_id = -1;
+          this.sensor.type_id = this.sensorTypes[0].id;
 
-        this.updateForm(this.sensor);
-        this.loader.display(false);
-      });
+          this.updateForm(this.sensor);
+          this.loader.display(false);
+        },
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      );
     }
   }
 
@@ -198,18 +216,41 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
             return this.sensorService.createSensor(sensor)
               .subscribe(_ => this.router.navigate(['/sensors']) );
           },
-            _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+            error => {
+              if (error.status == 403) {
+                super.logout();
+              }
+              else {
+                this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
+              }
+            }
         );
     } else {
         if (this.sensorId != null) {
           this.sensorService.updateSensor(sensor)
             .subscribe(
               _ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+              error => {
+                if (error.status == 403) {
+                  super.logout();
+                }
+                else {
+                  this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+                }
+              }
             );
         } else {
-          this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION}));
+          this.sensorService.createSensor(sensor)
+            .subscribe(_ => this.router.navigate(['/sensors']),
+              error => {
+                if (error.status == 403) {
+                  super.logout();
+                }
+                else {
+                  this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
+                }
+              }
+          );
         }
     }
   }
@@ -298,7 +339,14 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
             .subscribe(_ => {
                 this.router.navigate(['/sensors']);
               },
-              _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+              error => {
+                if (error.status == 403) {
+                  super.logout();
+                }
+                else {
+                  this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
+                }
+              }
           );
         } else {
           this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});

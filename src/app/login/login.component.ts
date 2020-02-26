@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
     this.error = '';
-    console.log("Login", this)
+
     if (this.accessCode.value) {
       this.authenticationService.login(this.accessCode.value)
         .subscribe(result => {

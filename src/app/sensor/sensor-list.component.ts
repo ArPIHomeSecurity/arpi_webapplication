@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,17 +28,18 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   sensorTypes: SensorType [] = [];
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
 
-    private authService: AuthenticationService,
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService, eventService, loader, monitoringService, router);
   }
 
   ngOnInit() {
@@ -47,7 +50,13 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     // TODO: update only one sensor instead of the whole page
     this.baseSubscriptions.push(
       this.eventService.listen('sensors_state_change')
-        .subscribe(_ => this.updateComponent(false))
+        .subscribe(_ => this.updateComponent(false),
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      )
     );
   }
 
@@ -70,11 +79,17 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       this.sensorService.getSensorTypes(),
       this.zoneService.getZones())
     .subscribe(results => {
-      this.sensors = results[0];
-      this.sensorTypes = results[1];
-      this.zones = results[2];
-      this.loader.display(false);
-    });
+        this.sensors = results[0];
+        this.sensorTypes = results[1];
+        this.zones = results[2];
+        this.loader.display(false);
+      },
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 
   getZoneName(zoneId: number) {
@@ -109,7 +124,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId).subscribe( _ => this.updateComponent(),
-              _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+              error => {
+                if (error.status == 403) {
+                  super.logout();
+                }
+                else {
+                  this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
+                }
+              }
           );
         } else {
           this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});

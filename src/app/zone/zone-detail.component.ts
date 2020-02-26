@@ -12,7 +12,7 @@ import { ConfigurationBaseComponent } from '../configuration-base/configuration-
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
 import { MonitoringState, Sensor, Zone } from '../models';
 import { positiveInteger } from '../utils';
-import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -32,20 +32,21 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   zoneForm: FormGroup;
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
 
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private sensorService: SensorService,
     private zoneService: ZoneService,
-    private router: Router,
     public dialog: MatDialog,
     private location: Location,
     private snackBar: MatSnackBar
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService, eventService, loader, monitoringService, router);
 
     this.route.paramMap.subscribe(params => {
       if (params.get('id') != null) {
@@ -72,7 +73,13 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
           this.updateForm(this.zone);
           this.sensors = results[1];
           this.loader.display(false);
-      });
+        },
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+        }
+      );
     } else {
       this.zone = new Zone;
       this.zone.disarmed_delay = null;
@@ -104,12 +111,26 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     if (this.zoneId != null) {
       this.zoneService.updateZone(zone).subscribe(
           _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+          error => {
+            if (error.status == 403) {
+              super.logout();
+            }
+            else {
+              this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION});
+            }
+          }
       );
     } else {
       this.zoneService.createZone(zone).subscribe(
-          _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+        _ => this.router.navigate(['/zones']),
+        error => {
+          if (error.status == 403) {
+            super.logout();
+          }
+          else {
+            this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
+          }
+        }
       );
     }
   }

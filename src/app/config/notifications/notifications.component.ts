@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option } from '../../models';
 import { getValue } from '../../utils';
 
@@ -43,14 +44,16 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   subscriptions: Option = null;
 
   constructor(
+    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
+    public router: Router,
 
     private fb: FormBuilder,
     private configService: ConfigurationService,
   ) {
-    super(loader, eventService, monitoringService);
+    super(authService, eventService, loader, monitoringService, router);
   }
 
   ngOnInit() {
@@ -96,15 +99,21 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       this.configService.getOption('notifications', 'gsm'),
       this.configService.getOption('notifications', 'subscriptions'))
     .subscribe(results => {
-      this.email = results[0] ? results[0] : DEFAULT_EMAIL;
-      this.gsm = results[1] ? results[1] : DEFAULT_GSM;
-      this.subscriptions = results[2] ? results[2] : DEFAULT_SUBSCRIPTIONS;
-      this.email.value = JSON.parse(this.email.value);
-      this.gsm.value = JSON.parse(this.gsm.value);
-      this.subscriptions.value = JSON.parse(this.subscriptions.value);
-      this.updateForm(this.email, this.gsm, this.subscriptions);
-      this.loader.display(false);
-    });
+        this.email = results[0] ? results[0] : DEFAULT_EMAIL;
+        this.gsm = results[1] ? results[1] : DEFAULT_GSM;
+        this.subscriptions = results[2] ? results[2] : DEFAULT_SUBSCRIPTIONS;
+        this.email.value = JSON.parse(this.email.value);
+        this.gsm.value = JSON.parse(this.gsm.value);
+        this.subscriptions.value = JSON.parse(this.subscriptions.value);
+        this.updateForm(this.email, this.gsm, this.subscriptions);
+        this.loader.display(false);
+      },
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 
   prepareEmail(): any {
@@ -152,7 +161,13 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       this.configService.setOption('notifications', 'gsm', gsm),
       this.configService.setOption('notifications', 'subscriptions', subcriptions)
     )
-    .subscribe(_ => this.updateComponent());
+    .subscribe(_ => this.updateComponent(),
+      error => {
+        if (error.status == 403) {
+          super.logout();
+        }
+      }
+    );
   }
 }
 

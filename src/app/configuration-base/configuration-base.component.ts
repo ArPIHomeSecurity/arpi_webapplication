@@ -1,7 +1,8 @@
 import { Subscription } from 'rxjs';
 
 import { MonitoringState, String2MonitoringState } from '../models';
-import { LoaderService, EventService, MonitoringService } from '../services';
+import { LoaderService, EventService, MonitoringService, AuthenticationService } from '../services';
+import { Router } from '@angular/router';
 
 export class ConfigurationBaseComponent {
 
@@ -10,9 +11,11 @@ export class ConfigurationBaseComponent {
   baseSubscriptions: Subscription[];
 
   constructor(
-    public loader: LoaderService,
+    public authService: AuthenticationService,
     public eventService: EventService,
-    public monitoringService: MonitoringService
+    public loader: LoaderService,
+    public monitoringService: MonitoringService,
+    public router: Router
   ) { }
 
   initialize() {
@@ -20,7 +23,11 @@ export class ConfigurationBaseComponent {
       .subscribe(monitoringState => {
         this.monitoringState = monitoringState;
         this.onStateChange();
-    });
+      },
+      error => {
+        this.logout();
+      }
+    );
 
     this.baseSubscriptions = [];
     this.baseSubscriptions.push(
@@ -28,13 +35,28 @@ export class ConfigurationBaseComponent {
         .subscribe(monitoringState => {
           this.monitoringState = String2MonitoringState(monitoringState);
           this.onStateChange();
-    }));
+        },
+        error => {
+          if (error.status == 403) {
+            this.logout();
+          }
+        }
+      )
+    );
   }
 
   destroy() {
-    this.baseSubscriptions.forEach(_ => _.unsubscribe());
-    this.baseSubscriptions = [];
+    if (this.baseSubscriptions) {
+      this.baseSubscriptions.forEach(_ => _.unsubscribe());
+      this.baseSubscriptions = [];
+    }
     this.loader.clearMessage();
+    this.loader.display(false);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   onStateChange() {

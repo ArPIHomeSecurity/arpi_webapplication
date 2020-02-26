@@ -27,15 +27,17 @@ export class EventService {
     this.socket.on('connect', () => this.socketConnected$.next(true));
     this.socket.on('disconnect', () => this.socketConnected$.next(false));
 
-    // this.socketConnected$.asObservable().subscribe( connected => {
-    //  console.log('Socket connected: ', connected);
-    // });
+    this.socketConnected$.asObservable().subscribe( connected => {
+      // console.log('Socket connected: ', connected);
+    });
   }
 
 
   listen(event: string): Observable<any> {
     return new Observable(observer => {
       this.socket.on(event, data => {
+        // console.log("Event:", event);
+        // console.log("Data:", data);
         observer.next(data);
       });
 

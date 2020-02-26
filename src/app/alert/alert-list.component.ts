@@ -44,7 +44,13 @@ export class AlertListComponent implements OnInit {
     this.alertService.getAlerts()
       .subscribe(alerts => {
         this.alertHistory = new AlertHistory(of(alerts), this.paginator);
-    });
+      },
+      error => {
+        if (error.status == 403) {
+          
+        }
+      }
+    );
 
     this.eventService.listen('syren_state_change')
       .subscribe(event => {
