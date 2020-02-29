@@ -34,6 +34,7 @@ export const environment = {
   MONITORING_INVALID_CONFIG: 'monitoring_invalid_config',
   MONITORING_ARMED: 'monitoring_armed',
   MONITORING_SABOTAGE: 'monitoring_sabotage',
+  MONITORING_ERROR: 'monitoring_error',
 
   ROLE_TYPES : {
     ADMIN: 'admin',
