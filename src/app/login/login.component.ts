@@ -101,7 +101,13 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          this.error = 'Failed to authenticate!';
+          if (error.error['error'] == 'invalid user id') {
+            this.error = 'Registered user is unknown!';
+          }
+          else {
+            this.error = 'Failed to authenticate!';
+          }
+
           this.loading = false;
         }
       );
