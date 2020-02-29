@@ -1,9 +1,10 @@
 
-import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Observable, Subject } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
@@ -14,12 +15,13 @@ export class AuthenticationService {
 
   constructor(
       private http: HttpClient,
-      private eventService: EventService
+      private eventService: EventService,
+      private router: Router
   ) { }
 
-  registerDevice(name: string, registration_code: string): Observable<boolean> {
+  registerDevice(registration_code: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post('/api/register_device', JSON.stringify({name: name, registration_code: registration_code}), {headers: headers}).pipe(
+    return this.http.post('/api/register_device', JSON.stringify({registration_code: registration_code}), {headers: headers}).pipe(
       map((response) => {
         // login successful if there's a jwt token in the response
         if (response['device_token']) {
@@ -99,5 +101,9 @@ export class AuthenticationService {
     return this._isDeviceRegistered.pipe(
       startWith(!!localStorage.getItem('deviceToken'))
     );
+  }
+
+  unRegisterDevice(){
+    localStorage.removeItem("deviceToken");
   }
 }

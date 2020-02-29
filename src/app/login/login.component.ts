@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../services';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   moduleId: module.id,
@@ -11,9 +11,13 @@ import { AuthenticationService } from '../services';
 })
 
 export class LoginComponent implements OnInit {
-  name = new FormControl();
-  registration_code = new FormControl();
-  accessCode = new FormControl();
+  @ViewChild('rc_field', {static: false}) rc_field: ElementRef;
+  @ViewChild('ac_field', {static: false}) ac_field: ElementRef;
+
+  registerForm: FormGroup;
+  registerCode: FormControl;
+  loginForm: FormGroup;
+  accessCode: FormControl;
   isRegistered = false;
   loading = false;
   error = '';
@@ -27,7 +31,58 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.isDeviceRegistered()
-      .subscribe(isRegistered => this.isRegistered = isRegistered);
+      .subscribe(isRegistered => {
+        this.isRegistered = isRegistered;
+        setTimeout (() => {
+          if (isRegistered) {
+            this.ac_field.nativeElement.focus();
+          }
+          else {
+            this.rc_field.nativeElement.focus();
+          }
+        }, 0.5);
+      });
+    
+    this.updateForms();
+  }
+
+  updateForms(){
+    this.registerForm = new FormGroup({
+      registerCode: this.registerCode = new FormControl('', Validators.required)
+    });
+    this.loginForm = new FormGroup({
+      accessCode: this.accessCode = new FormControl('', Validators.required)
+    });
+  }
+
+  register() {
+    this.loading = true;
+    this.error = '';
+
+    if (this.registerCode.value) {
+      this.authenticationService.registerDevice(this.registerCode.value)
+        .subscribe(result => {
+          this.registerCode.setValue(null);
+          if (result) {
+            setTimeout (() => {
+              this.loginForm.reset();
+              this.ac_field.nativeElement.focus();
+            }, 0.5);
+          } else {
+            this.error = 'Invalid registration code!';
+          }
+          this.loading = false;
+        },
+        error => {
+          this.error = 'Failed to register device!';
+          this.loading = false;
+        }
+      );
+    }
+    else {
+      this.loading = false;
+      this.error = 'Fill required field(s)!';
+    }
   }
 
   login() {
@@ -37,27 +92,33 @@ export class LoginComponent implements OnInit {
     if (this.accessCode.value) {
       this.authenticationService.login(this.accessCode.value)
         .subscribe(result => {
+          this.accessCode.setValue(null);
           if (result) {
             this.router.navigate(['/']);
           } else {
             this.error = 'Incorrect access code!';
             this.loading = false;
           }
-        });
-    }else if (this.name.value && this.registration_code.value) {
-      this.authenticationService.registerDevice(this.name.value, this.registration_code.value)
-        .subscribe(result => {
-          if (result) {
-            // this.router.navigate(['/']);
-          } else {
-            this.error = 'Incorrect name or password!';
-          }
+        },
+        error => {
+          this.error = 'Failed to authenticate!';
           this.loading = false;
-        });
+        }
+      );
     }
     else {
-      this.error = 'Fill fields!';
       this.loading = false;
+      this.error = 'Fill required field(s)!';
     }
+  }
+
+  unregister(){
+    this.authenticationService.unRegisterDevice();
+    this.isRegistered = false;
+    this.accessCode.setValue(null);
+    setTimeout (() => {
+      this.registerForm.reset();
+      this.rc_field.nativeElement.focus();
+    }, 0.5);
   }
 }
