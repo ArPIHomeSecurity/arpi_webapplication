@@ -74,7 +74,12 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          this.error = 'Failed to register device!';
+          if (error.error['error'] == 'expired registration') {
+            this.error = 'Registration code expired!';
+          }
+          else {
+            this.error = 'Failed to register device!';
+          }
           this.loading = false;
         }
       );
