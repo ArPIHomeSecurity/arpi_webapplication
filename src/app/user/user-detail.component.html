@@ -13,7 +13,8 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Access code" formControlName="accessCode" type="password">
+      <input matInput placeholder="New access code" formControlName="accessCode" [type]="hide ? 'password' : 'text'">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
     </mat-form-field>
 
