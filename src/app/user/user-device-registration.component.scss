@@ -1,0 +1,27 @@
+
+.half-width{
+  width: 48%;
+  margin: auto 1%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.counter {
+  text-align: right;
+}
+
+.registration {
+  text-align: center;
+  margin: 15px 0px;
+
+  .code {
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 1px double #000000;
+    margin: 10px 0px;
+    padding: 10px;
+  }
+}

@@ -4,7 +4,7 @@
   padding: 15px;
   margin-right: auto;
   margin-left: auto;
-  width: 300px;
+  width: 400px;
 }
 
 .user-list-xs {
@@ -32,6 +32,15 @@
   clear: both;
 }
 
+.mat-card-avatar {
+  width: 60px;
+  height: 60px;
+}
+
 .avatar {
-  font-size: 40px;
+  font-size: 60px;
+}
+
+.registration {
+  margin: 10px 0px;
 }

@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Device registration</h1>
+<div mat-dialog-content>
+  <div *ngIf="user.has_registration_code">
+   
+  </div>
+  <form [formGroup]="registrationForm">
+    
+    <label>Select expiry</label>
+    <mat-radio-group formControlName="mode" (change)="onModeChanged($event)">
+      <mat-radio-button *ngFor="let mode of modes" [value]="mode.value">{{mode.name}}</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="half-width">
+      <input matInput formControlName="counter" type="number" class="counter">
+    </mat-form-field>
+
+    <mat-form-field class="half-width">
+      <mat-select formControlName="unit">
+        <mat-option *ngFor="let unit of units" [value]="unit.value" required>
+          {{unit.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div *ngIf="registration_code" class="registration">
+  Device registration code
+  <div class="code">{{registration_code}}</div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="getNewCode()" tabindex="2" color="primary" [disabled]="!registrationForm.valid || registration_code">Get new code</button>
+  <button mat-button (click)="onClickClose()" tabindex="-1">Close</button>
+</div>

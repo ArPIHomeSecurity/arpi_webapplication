@@ -10,6 +10,7 @@ import { User } from '../models/user';
 import { AuthenticationService, LoaderService, EventService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
+import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -90,5 +91,21 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
         );
       }
     });
+  }
+
+  openDeviceRegistrationDialog(userId: number) {
+    const dialogRef = this.dialog.open(UserDeviceRegistrationDialogComponent, {
+      width: '250px',
+      data: this.users.find(x => x.id === userId),
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.updateComponent();
+    });
+  }
+
+  removeRegistrationCode(userId: number){
+    this.authService.deleteRegistrationCode(userId)
+      .subscribe(_ => this.updateComponent());
   }
 }

@@ -18,6 +18,12 @@
       <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
     </mat-form-field>
 
+    <mat-form-field>
+      <textarea matInput placeholder="Comment" formControlName="comment" type="text"></textarea>
+    </mat-form-field>
+
+    <!-- mat-checkbox formControlName="has_registration_code">Device registration<br/>{{user.registration_expiry}}</mat-checkbox-->
+
     <div class="actions">
       <button mat-raised-button color="primary" [disabled]="userForm.invalid || monitoringState != MonitoringState.READY"
         i18n="@@save button">Save</button>

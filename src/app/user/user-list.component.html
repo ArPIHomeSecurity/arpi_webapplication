@@ -2,17 +2,32 @@
   <div *ngIf="users && users.length > 0; else no_users" fxLayout="column" fxLayoutGap="20px">
     <mat-card *ngFor="let user of users">
       <mat-card-header>
-        <mat-icon *ngIf="user.role === environment.ROLE_TYPES.ADMIN" mat-list-icon mat-card-avatar class="avatar">person</mat-icon>
+        <mat-icon mat-card-avatar *ngIf="user.role === environment.ROLE_TYPES.ADMIN" mat-list-icon mat-card-avatar class="avatar">person</mat-icon>
         <mat-icon *ngIf="user.role === environment.ROLE_TYPES.USER" mat-list-icon mat-card-avatar class="avatar">person_outline</mat-icon>
         <mat-card-title>{{user.name}}</mat-card-title>
         <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.ADMIN">Administrator</mat-card-subtitle>
         <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.USER">User</mat-card-subtitle>
+        <mat-card-subtitle>{{user.comment}}</mat-card-subtitle>
       </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="user.has_registration_code" class="registration">
+          <mat-chip-list>
+            <mat-chip *ngIf="user.registration_expiry" matTooltip="User has device registration code expiring on {{user.registration_expiry}">
+              Registration: {{user.registration_expiry}}<mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
+            </mat-chip>
+            <mat-chip *ngIf="!user.registration_expiry" matTooltip="User has device registration code for unlimited time">
+              Registration: unlimited time<mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-card-content>
       <mat-card-actions>
         <button mat-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@edit button">Edit</button>
         <button mat-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@remove button">Remove</button>
+        <button mat-button (click)="openDeviceRegistrationDialog(user.id)" color="warn" [disabled]="user.has_registration_code || monitoringState != MonitoringState.READY"
+          i18n="@@remove button">Device registration</button>
       </mat-card-actions>
     </mat-card>
   </div>
