@@ -99,7 +99,9 @@ export class LoginComponent implements OnInit {
         .subscribe(result => {
           this.accessCode.setValue(null);
           if (result) {
-            this.router.navigate(['/']);
+            // after login navigate to returnUrl or home
+            let returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
+            this.router.navigate([returnUrl || '/']);
           } else {
             this.error = 'Incorrect access code!';
             this.loading = false;
