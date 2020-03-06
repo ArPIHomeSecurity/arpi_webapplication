@@ -9,12 +9,13 @@
       <mat-form-field>
         <input matInput
           #rc_field
-          type="password"
+          [type]="hide ? 'password' : 'text'"
           [formControl]="registerCode"
           placeholder="Registration code"
           i18n-placeholder="Regstration code"
           required
           autofocus>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
       <div class="form-group">
@@ -34,12 +35,13 @@
         <mat-form-field>
         <input matInput
           #ac_field
-          type="password"
+          [type]="hide ? 'password' : 'text'"
           [formControl]="accessCode"
           placeholder="Access code"
           i18n-placeholder="Access code"
           required
           autofocus>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
       <div class="form-group actions">
