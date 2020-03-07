@@ -41,9 +41,9 @@ export class UserService {
   }
 
   generateRegistrationCode(userId: number, expiry: string) {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (expiry) {
-      params.set('expiry', expiry);
+      params = params.set('expiry', expiry);
     }
 
     return this.http.get('/api/user/'+userId+'/registration_code', {params: params});
