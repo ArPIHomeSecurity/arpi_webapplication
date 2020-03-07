@@ -114,14 +114,4 @@ export class AuthenticationService {
   unRegisterDevice(){
     localStorage.removeItem("deviceToken");
   }
-
-  generateRegistrationCode(userId: number, expiry: string) {
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('userToken')});
-    return this.http.get('/api/user/'+userId+'/registration_code', {headers: headers, params: {expiry: expiry}});
-  }
-
-  deleteRegistrationCode(userId: number) {
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem('userToken')});
-    return this.http.delete('/api/user/'+userId+'/registration_code', {headers: headers});
-  }
 }

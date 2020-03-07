@@ -25,7 +25,6 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   environment = environment;
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
@@ -93,7 +92,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   removeRegistrationCode(userId: number){
-    this.authService.deleteRegistrationCode(userId)
+    this.userService.deleteRegistrationCode(userId)
       .subscribe(_ => this.updateComponent());
   }
 }

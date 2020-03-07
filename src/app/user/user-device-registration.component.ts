@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { User } from '../models';
-import { AuthenticationService } from '../services';
+import { UserService } from '../services';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
-    public authService: AuthenticationService,
+    public userService: UserService,
     private fb: FormBuilder
   ) {
     console.log("User: ", this.user);
@@ -58,7 +58,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
       console.error("Unknown expiry mode: ", this.registrationForm.controls.mode.value)
     }
 
-    this.authService.generateRegistrationCode(this.user.id, expiry)
+    this.userService.generateRegistrationCode(this.user.id, expiry)
       .subscribe(code => {
         this.registration_code = code['code'];
       });

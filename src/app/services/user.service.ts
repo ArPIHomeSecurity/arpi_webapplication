@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '../models';
@@ -38,5 +38,18 @@ export class UserService {
   deleteUser(userId: number): Observable<boolean> {
     // set sensor from api
     return this.http.delete<boolean>('/api/user/' + userId);
+  }
+
+  generateRegistrationCode(userId: number, expiry: string) {
+    const params = new HttpParams();
+    if (expiry) {
+      params.set('expiry', expiry);
+    }
+
+    return this.http.get('/api/user/'+userId+'/registration_code', {params: params});
+  }
+
+  deleteRegistrationCode(userId: number) {
+    return this.http.delete('/api/user/'+userId+'/registration_code');
   }
 }
