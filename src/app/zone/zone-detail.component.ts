@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,7 +11,7 @@ import { ConfigurationBaseComponent } from '../configuration-base/configuration-
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
 import { MonitoringState, Sensor, Zone } from '../models';
 import { positiveInteger } from '../utils';
-import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -32,7 +31,6 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   zoneForm: FormGroup;
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
@@ -46,7 +44,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     private location: Location,
     private snackBar: MatSnackBar
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
 
     this.route.paramMap.subscribe(params => {
       if (params.get('id') != null) {
@@ -73,11 +71,6 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
           this.updateForm(this.zone);
           this.sensors = results[1];
           this.loader.display(false);
-        },
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
         }
       );
     } else {
@@ -109,29 +102,17 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const zone = this.prepareSaveZone();
     if (this.zoneId != null) {
-      this.zoneService.updateZone(zone).subscribe(
+      this.zoneService.updateZone(zone)
+        .subscribe(
           _ => this.router.navigate(['/zones']),
-          error => {
-            if (error.status == 403) {
-              super.logout();
-            }
-            else {
-              this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION});
-            }
-          }
-      );
+          error => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+        );
     } else {
-      this.zoneService.createZone(zone).subscribe(
-        _ => this.router.navigate(['/zones']),
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
-          else {
-            this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
-          }
-        }
-      );
+      this.zoneService.createZone(zone)
+        .subscribe(
+          _ => this.router.navigate(['/zones']),
+          error => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+        );
     }
   }
 

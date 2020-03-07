@@ -18,12 +18,9 @@ export class AlertService {
   ) { }
 
   getAlerts(): Observable<Alert[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
     // hack: converting arm_type field from string to ArmType
-    return this.http.get<Alert[]>( '/api/alerts', { headers } ).pipe(
+    return this.http.get<Alert[]>('/api/alerts').pipe(
       map(( rawAlerts: Object[] ) => {
         for ( const rawAlert of rawAlerts ) {
           rawAlert['alert_type'] = String2AlertType( rawAlert['alert_type'] );
@@ -34,10 +31,7 @@ export class AlertService {
 
 
   getAlert(): Observable<Alert> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
-    return this.http.get<Alert>( '/api/alert', { headers } );
+    return this.http.get<Alert>('/api/alert');
   }
 }

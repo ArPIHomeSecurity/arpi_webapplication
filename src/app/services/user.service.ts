@@ -14,44 +14,29 @@ export class UserService {
 
 
   getUsers(): Observable<User[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
-
     // get users from api
-    return this.http.get<User[]>('/api/users', {headers});
+    return this.http.get<User[]>('/api/users');
   }
 
 
   getUser(userId: number): Observable<User> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
-
     // get users from api
-    return this.http.get<User>('/api/user/' + userId, {headers});
+    return this.http.get<User>('/api/user/' + userId);
   }
 
 
   createUser(user: User): Observable<User> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
-
     // set sensor from api
-    return this.http.post<User>('/api/users', user, {headers});
+    return this.http.post<User>('/api/users', user);
   }
 
   updateUser(user: User): Observable<User> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
-
     // set sensor from api
-    return this.http.put<User>('/api/user/' + user.id, user, {headers});
+    return this.http.put<User>('/api/user/' + user.id, user);
   }
 
   deleteUser(userId: number): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.getToken()});
-
     // set sensor from api
-    return this.http.delete<boolean>('/api/user/' + userId, {headers});
+    return this.http.delete<boolean>('/api/user/' + userId);
   }
 }

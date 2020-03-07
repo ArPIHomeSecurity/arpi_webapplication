@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models';
-import { AuthenticationService, EventService, LoaderService, MonitoringService, UserService } from '../services';
+import { EventService, LoaderService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -30,7 +29,6 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   roles: any = [];
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
@@ -42,7 +40,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private location: Location) {
-      super(authService, eventService, loader, monitoringService, router);
+      super(eventService, loader, monitoringService);
 
       this.route.paramMap.subscribe(params => {
         if (params.get('id') != null) {
@@ -69,11 +67,6 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
             this.user = user;
             this.updateForm(this.user);
             this.loader.display(false);
-        },
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
         }
       );
     } else {
@@ -108,27 +101,17 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const user = this.prepareSaveUser();
     if (this.userId != null) {
-      this.userService.updateUser(user).subscribe(_ => this.router.navigate(['/users']),
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
-          else {
-            this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION});
-          }
-        }
-      );
+      this.userService.updateUser(user)
+        .subscribe(
+          _ => this.router.navigate(['/users']),
+          error => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+        );
     } else {
-      this.userService.createUser(user).subscribe(_ => this.router.navigate(['/users']),
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
-          else {
-            this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION});
-          }
-        }
-      )
+      this.userService.createUser(user)
+        .subscribe(
+          _ => this.router.navigate(['/users']),
+          error => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+        );
     }
   }
 
@@ -159,16 +142,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.deleteUser(userId)
-          .subscribe(_ => this.router.navigate(['/users']),
-          error => {
-            if (error.status == 403) {
-              super.logout();
-            }
-            else {
-              this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
-            }
-          }
-        )
+          .subscribe(
+            _ => this.router.navigate(['/users']),
+            error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+          );
       }
     });
   }

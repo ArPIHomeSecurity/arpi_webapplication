@@ -44,11 +44,6 @@ export class AlertListComponent implements OnInit {
     this.alertService.getAlerts()
       .subscribe(alerts => {
         this.alertHistory = new AlertHistory(of(alerts), this.paginator);
-      },
-      error => {
-        if (error.status == 403) {
-          
-        }
       }
     );
 

@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option } from '../../models';
 import { getValue } from '../../utils';
 
@@ -37,16 +36,14 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   ];
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private fb: FormBuilder,
     private configService: ConfigurationService,
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -89,11 +86,6 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
         this.access.value = JSON.parse(this.access.value);
         this.updateForm(this.dyndns, this.access);
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
   }
@@ -124,12 +116,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     forkJoin(
       this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
       this.configService.setOption('network', 'access', this.prepareAccess()))
-    .subscribe(_ => this.updateComponent(),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
+    .subscribe(_ => this.updateComponent()
     );
   }
 }

@@ -4,11 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArmType, String2ArmType, Alert, SensorType } from '../models';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { MonitoringState, String2MonitoringState } from '../models';
-import { AlertService, EventService, LoaderService, SensorService, AuthenticationService } from '../services';
+import { AlertService, EventService, LoaderService, SensorService } from '../services';
 import { MonitoringService } from '../services';
 
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+
 
 @Component({
   templateUrl: 'home.component.html',
@@ -25,17 +25,15 @@ export class HomeComponent extends ConfigurationBaseComponent implements OnInit,
   sensorTypes: SensorType [] = [];
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private snackBar: MatSnackBar,
     private alertService: AlertService,
     private sensorService: SensorService,
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -45,90 +43,40 @@ export class HomeComponent extends ConfigurationBaseComponent implements OnInit,
     this.alertService.getAlert()
       .subscribe(alert => {
         this.alert = alert;
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState,
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
-    );
+      .subscribe(armState => this.armState = armState);
     this.eventService.listen('arm_state_change')
-      .subscribe(armState => this.armState = String2ArmType(armState),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
-    );
+      .subscribe(armState => this.armState = String2ArmType(armState));
 
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
       .subscribe(alert => {
         this.sensorAlert = alert;
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
 
     this.sensorService.getSensorTypes()
-      .subscribe(st => this.sensorTypes = st,
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
-        }
-    );
+      .subscribe(st => this.sensorTypes = st);
 
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensorAlert = alert;
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState,
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
-    );
+      .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
-    );
+      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
   }
 
   ngOnDestroy() {

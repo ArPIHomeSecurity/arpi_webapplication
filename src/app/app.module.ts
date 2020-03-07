@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -36,6 +36,7 @@ import {
   UserService,
   ZoneService
 } from './services';
+import { AppHttpInterceptor } from './app.http.interceptor';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -142,7 +143,13 @@ import {
     MonitoringService,
     SensorService,
     UserService,
-    ZoneService
+    ZoneService,
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

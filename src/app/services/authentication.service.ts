@@ -48,7 +48,6 @@ export class AuthenticationService {
         if (response['user_token']) {
           const newUser = JWT(response['user_token']);
           // store user info with jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(newUser));
           localStorage.setItem('userToken', response['user_token']);
 
           // return true to indicate successful login
@@ -62,8 +61,8 @@ export class AuthenticationService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
     localStorage.removeItem('userToken');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn() {
@@ -90,11 +89,20 @@ export class AuthenticationService {
   }
 
   getToken(): string {
-    if (localStorage.getItem('userToken')) {
-      return localStorage.getItem('userToken');
-    } else if (localStorage.getItem('deviceToken')) {
-      return localStorage.getItem('deviceToken');
+    if (this.getUserToken()) {
+      return this.getUserToken();
     }
+    else if (this.getDeviceToken()) {
+      return this.getDeviceToken();
+    }
+  }
+
+  getUserToken(): string {
+    return localStorage.getItem('userToken');
+  }
+
+  getDeviceToken() {
+    return localStorage.getItem('deviceToken');
   }
 
   isDeviceRegistered(): Observable<boolean> {

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { forkJoin } from 'rxjs';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
@@ -14,6 +12,7 @@ import { AuthenticationService, EventService, LoaderService, MonitoringService, 
 import { environment } from '../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
+
 
 @Component({
   moduleId: module.id,
@@ -32,14 +31,13 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     public eventService: EventService,
     public loader: LoaderService,
     public monitoringService: MonitoringService,
-    public router: Router,
     
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -70,11 +68,6 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
         this.zones = results[0];
         this.sensors = results[1];
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403){
-          super.logout();
-        }
       }
     );
   }
@@ -108,15 +101,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
           this.zoneService.deleteZone(zoneId)
             .subscribe(
               _ => this.updateComponent(),
-              error => {
-                if (error.status == 403) {
-                  super.logout();
-                }
-                else{
-                  this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
-                }
-              }
-          );
+              error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+            );
         } else {
           this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
         }

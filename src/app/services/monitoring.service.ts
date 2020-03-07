@@ -18,10 +18,7 @@ export class MonitoringService {
   ) { }
 
   is_alert(): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get( '/api/monitoring/isAlert', { headers } ).pipe(
+    return this.http.get('/api/monitoring/isAlert').pipe(
       map(( response: HttpResponse<boolean> ) => response.body
       ), catchError(( err: HttpResponse<boolean> ) => {
         console.log( err );
@@ -30,27 +27,18 @@ export class MonitoringService {
   }
 
   getArmState(): Observable<ArmType> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get<ArmType>( '/api/monitoring/arm', { headers } ).pipe(
+    return this.http.get<ArmType>('/api/monitoring/arm').pipe(
       map(( response ) => String2ArmType( response['type'] ) ));
   }
 
   arm( armtype: ArmType ) {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
     const params = new HttpParams().set( 'type', ArmType2String( armtype ) );
 
-    this.http.put( '/api/monitoring/arm', null, { headers, params } )
-      .subscribe();
+    this.http.put('/api/monitoring/arm', null, { params } ).subscribe();
   }
 
   disarm() {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.put( '/api/monitoring/disarm', null, { headers } ).pipe(
+    return this.http.put('/api/monitoring/disarm', null).pipe(
       catchError(( err ) => {
         console.log( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
@@ -59,32 +47,20 @@ export class MonitoringService {
   }
 
   getMonitoringState(): Observable<MonitoringState> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get( '/api/monitoring/state', { headers } ).pipe(
+    return this.http.get('/api/monitoring/state').pipe(
       map(( response ) => String2MonitoringState( response['state'] ) ));
   }
 
   getVersion(): Observable<string> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get( '/api/version', { headers, responseType: 'text' } );
+    return this.http.get('/api/version', {responseType: 'text'});
   }
 
   getClock(): Observable<Object> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.get<Object>( '/api/clock', { headers } );
+    return this.http.get<Object>('/api/clock');
   }
 
   synchronizeClock() {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    return this.http.put( '/api/clock/sync', null, { headers } ).pipe(
+    return this.http.put('/api/clock/sync', null).pipe(
       catchError(( err ) => {
         console.log( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
@@ -92,9 +68,6 @@ export class MonitoringService {
   }
 
   changeClock(dateTime, timeZone) {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     const parameters = { };
     if (timeZone != null) {
       parameters['timezone'] = timeZone;
@@ -106,7 +79,7 @@ export class MonitoringService {
       return;
     }
 
-    return this.http.put( '/api/clock', parameters, { headers } ).pipe(
+    return this.http.put('/api/clock', parameters).pipe(
       catchError(( err ) => {
         console.log( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
@@ -114,10 +87,7 @@ export class MonitoringService {
   }
 
   getKeypadTypes(): Observable<KeypadType[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensor types from api
-    return this.http.get<KeypadType[]>( '/api/keypadtypes', { headers } );
+    return this.http.get<KeypadType[]>('/api/keypadtypes');
   }
 }

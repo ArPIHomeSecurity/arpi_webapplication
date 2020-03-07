@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
 
@@ -32,14 +31,13 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -50,13 +48,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     // TODO: update only one sensor instead of the whole page
     this.baseSubscriptions.push(
       this.eventService.listen('sensors_state_change')
-        .subscribe(_ => this.updateComponent(false),
-        error => {
-          if (error.status == 403) {
-            super.logout();
-          }
-        }
-      )
+        .subscribe(_ => this.updateComponent(false))
     );
   }
 
@@ -83,11 +75,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.sensorTypes = results[1];
         this.zones = results[2];
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
   }
@@ -124,14 +111,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId).subscribe( _ => this.updateComponent(),
-              error => {
-                if (error.status == 403) {
-                  super.logout();
-                }
-                else {
-                  this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
-                }
-              }
+              error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
           );
         } else {
           this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});

@@ -16,56 +16,36 @@ export class KeypadService {
 
   /** Not implemented yet */
   getKeypads(): Observable<Keypad[]> {
-
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
-    const params = new HttpParams();
     // get keypads from api
-    return this.http.get<Keypad[]>( '/api/keypads/', { headers, params } );
+    return this.http.get<Keypad[]>('/api/keypads/');
   }
 
 
   getKeypad( keypadId: number ): Observable<Keypad> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get keypads from api
-    return this.http.get<Keypad>( '/api/keypad/' + keypadId, { headers } );
+    return this.http.get<Keypad>('/api/keypad/' + keypadId);
   }
 
 
   createKeypad( keypad: Keypad ): Observable<Keypad> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set keypad from api
-    return this.http.post<Keypad>( '/api/keypads/', keypad, { headers } );
+    return this.http.post<Keypad>('/api/keypads/', keypad);
   }
 
 
   updateKeypad( keypad: Keypad ): Observable<Keypad> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set keypad from api
-    return this.http.put<Keypad>( '/api/keypad/' + keypad.id, keypad, { headers } );
+    return this.http.put<Keypad>('/api/keypad/' + keypad.id, keypad);
   }
 
   deleteKeypad( keypadId: number ): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set keypad from api
-    return this.http.delete<boolean>( '/api/keypad/' + keypadId, { headers } );
+    return this.http.delete<boolean>('/api/keypad/' + keypadId);
   }
 
   getKeypadTypes(): Observable<KeypadType[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get keypad types from api
-    return this.http.get<KeypadType[]>( '/api/keypadtypes', { headers } );
+    return this.http.get<KeypadType[]>('/api/keypadtypes');
   }
 }
 

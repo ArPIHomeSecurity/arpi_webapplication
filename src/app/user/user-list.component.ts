@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,13 +29,12 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private userService: UserService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(authService,eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -60,11 +58,6 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
       .subscribe(users => {
         this.users = users;
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
   }
@@ -79,16 +72,11 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(userId).subscribe(_ => this.updateComponent(),
-          error => {
-            if (error.status == 403) {
-              super.logout();
-            }
-            else {
-              this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION});
-            }
-          }
-        );
+        this.userService.deleteUser(userId)
+          .subscribe(
+            _ => this.updateComponent(),
+            error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+          );
       }
     });
   }

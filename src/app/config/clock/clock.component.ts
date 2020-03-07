@@ -23,16 +23,14 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   timeZone = '';
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private fb: FormBuilder,
     dateTimeAdapter: DateTimeAdapter<any>,
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
     dateTimeAdapter.setLocale('iso-8601');
   }
 
@@ -50,7 +48,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   updateForm() {
     this.clockForm = this.fb.group( {
       dateTime: '',
-    } );
+    });
   }
 
   updateComponent() {
@@ -68,23 +66,13 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
         }
 
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
   }
 
   onSynchronize() {
     this.monitoringService.synchronizeClock()
-      .subscribe(_ => this.updateComponent(),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
+      .subscribe(_ => this.updateComponent()
     );
   }
 
@@ -92,12 +80,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   onSubmit() {
     const formModel = this.clockForm.value;
     this.monitoringService.changeClock(formModel.dateTime, this.timeZone)
-      .subscribe(_ => this.updateComponent(),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
+      .subscribe(_ => this.updateComponent()
     );
   }
 }

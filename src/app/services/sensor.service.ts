@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 
 import { Sensor, SensorType } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
+
 
 @Injectable()
 export class SensorService {
@@ -16,83 +15,60 @@ export class SensorService {
 
 
   getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     const params = new HttpParams();
     if ( onlyAlerting ) {
       params.set( 'alerting', 'true' );
     }
 
     // get sensors from api
-    return this.http.get<Sensor[]>( '/api/sensors/', { headers, params } );
+    return this.http.get<Sensor[]>('/api/sensors/', {params});
   }
 
 
   getSensor( sensorId: number ): Observable<Sensor> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
-    return this.http.get<Sensor>( '/api/sensor/' + sensorId, { headers } );
+    return this.http.get<Sensor>('/api/sensor/' + sensorId);
   }
 
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set sensor from api
-    return this.http.post<Sensor>( '/api/sensors/', sensor, { headers } );
+    return this.http.post<Sensor>('/api/sensors/', sensor);
   }
 
 
   updateSensor( sensor: Sensor ): Observable<Sensor> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set sensor from api
-    return this.http.put<Sensor>( '/api/sensor/' + sensor.id, sensor, { headers } );
+    return this.http.put<Sensor>('/api/sensor/' + sensor.id, sensor);
   }
 
-  deleteSensor( sensorId: number ): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
 
+  deleteSensor( sensorId: number ): Observable<boolean> {
     // set sensor from api
-    return this.http.delete<boolean>( '/api/sensor/' + sensorId, { headers } );
+    return this.http.delete<boolean>('/api/sensor/' + sensorId);
   }
 
 
   getAlert( sensorId: number = null ): Observable<boolean> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensors from api
     if ( sensorId ) {
       const params: URLSearchParams = new URLSearchParams();
       params.set( 'sensor_id', sensorId.toString() );
-      return this.http.get<boolean>( '/api/sensor/alert' + sensorId, { headers } );
+      return this.http.get<boolean>('/api/sensor/alert' + sensorId);
     } else {
-      return this.http.get<boolean>( '/api/sensor/alert', { headers } );
+      return this.http.get<boolean>('/api/sensor/alert');
     }
   }
 
 
   getSensorTypes(): Observable<SensorType[]> {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // get sensor types from api
-    return this.http.get<SensorType[]>( '/api/sensortypes', { headers } );
+    return this.http.get<SensorType[]>('/api/sensortypes');
   }
 
   resetReferences() {
-    // add authorization header with jwt token
-    const headers = new HttpHeaders( { 'Authorization': 'Bearer ' + this.authService.getToken() } );
-
     // set sensor from api
-    return this.http.put( '/api/sensors/reset-references', null, { headers } ).subscribe();
+    return this.http.put('/api/sensors/reset-references', null).subscribe();
   }
 }
 

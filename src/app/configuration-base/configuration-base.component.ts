@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 
 import { MonitoringState, String2MonitoringState } from '../models';
-import { LoaderService, EventService, MonitoringService, AuthenticationService } from '../services';
-import { Router } from '@angular/router';
+import { LoaderService, EventService, MonitoringService } from '../services';
+
 
 export class ConfigurationBaseComponent {
 
@@ -11,11 +11,9 @@ export class ConfigurationBaseComponent {
   baseSubscriptions: Subscription[];
 
   constructor(
-    public authService: AuthenticationService,
     public eventService: EventService,
     public loader: LoaderService,
     public monitoringService: MonitoringService,
-    public router: Router
   ) { }
 
   initialize() {
@@ -23,9 +21,6 @@ export class ConfigurationBaseComponent {
       .subscribe(monitoringState => {
         this.monitoringState = monitoringState;
         this.onStateChange();
-      },
-      error => {
-        this.logout();
       }
     );
 
@@ -35,11 +30,6 @@ export class ConfigurationBaseComponent {
         .subscribe(monitoringState => {
           this.monitoringState = String2MonitoringState(monitoringState);
           this.onStateChange();
-        },
-        error => {
-          if (error.status == 403) {
-            this.logout();
-          }
         }
       )
     );
@@ -52,11 +42,6 @@ export class ConfigurationBaseComponent {
     }
     this.loader.clearMessage();
     this.loader.display(false);
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
   onStateChange() {

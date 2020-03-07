@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option } from '../../models';
 import { getValue } from '../../utils';
 
@@ -44,16 +43,14 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   subscriptions: Option = null;
 
   constructor(
-    public authService: AuthenticationService,
     public loader: LoaderService,
     public eventService: EventService,
     public monitoringService: MonitoringService,
-    public router: Router,
 
     private fb: FormBuilder,
     private configService: ConfigurationService,
   ) {
-    super(authService, eventService, loader, monitoringService, router);
+    super(eventService, loader, monitoringService);
   }
 
   ngOnInit() {
@@ -107,11 +104,6 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
         this.subscriptions.value = JSON.parse(this.subscriptions.value);
         this.updateForm(this.email, this.gsm, this.subscriptions);
         this.loader.display(false);
-      },
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
       }
     );
   }
@@ -161,13 +153,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       this.configService.setOption('notifications', 'gsm', gsm),
       this.configService.setOption('notifications', 'subscriptions', subcriptions)
     )
-    .subscribe(_ => this.updateComponent(),
-      error => {
-        if (error.status == 403) {
-          super.logout();
-        }
-      }
-    );
+    .subscribe(_ => this.updateComponent());
   }
 }
 
