@@ -46,7 +46,6 @@ export class AuthenticationService {
           this._isDeviceRegistered.next(true);
         }
         if (response['user_token']) {
-          const newUser = JWT(response['user_token']);
           // store user info with jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('userToken', response['user_token']);
 
