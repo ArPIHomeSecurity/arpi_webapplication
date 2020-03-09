@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import * as JWT from 'jwt-decode';
 import { EventService } from '../services/event.service';
+import { UserSession } from '../models';
 
 @Injectable()
 export class AuthenticationService {
   private _isDeviceRegistered = new Subject<boolean>();
+  private _userSession = new Subject<UserSession>();
 
   constructor(
       private http: HttpClient,
@@ -47,7 +49,7 @@ export class AuthenticationService {
         }
         if (response['user_token']) {
           // store user info with jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('userToken', response['user_token']);
+          this.updateUserToken(response['user_token']);
 
           // return true to indicate successful login
           return true;
@@ -61,6 +63,7 @@ export class AuthenticationService {
   logout(): void {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('userToken');
+    this._userSession.next(null);
     this.router.navigate(['/login']);
   }
 
@@ -76,14 +79,25 @@ export class AuthenticationService {
   getRole(): string {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
-      return JWT(userToken)['role'];
+      try {
+        return JWT(userToken)['role'];
+      }
+      catch (error) {
+
+      }
+      return '';
     }
   }
 
   getUsername(): string {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
-      return JWT(userToken)['name'];
+      try {
+        return JWT(userToken)['name'];
+      }
+      catch (error) {
+      }
+      return '';
     }
   }
 
@@ -98,6 +112,25 @@ export class AuthenticationService {
 
   getUserToken(): string {
     return localStorage.getItem('userToken');
+  }
+
+  updateUserToken(token: string) {
+    localStorage.setItem('userToken', token);
+    try {
+      this._userSession.next(JWT(token));
+    } catch (error) {
+
+    }
+  }
+
+  getUserSession(): Observable<UserSession> {
+    let session: UserSession;
+    try {
+      session = JWT(localStorage.getItem('userToken'));
+      return this._userSession.pipe(startWith(session));
+    }
+    catch (error) {}
+    return this._userSession.pipe(startWith(null));
   }
 
   getDeviceToken() {

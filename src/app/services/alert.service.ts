@@ -1,20 +1,18 @@
 
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
 import { Alert, String2AlertType } from '../models';
-import { AuthenticationService } from '../services/authentication.service';
 
 
 @Injectable()
 export class AlertService {
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthenticationService
+    private http: HttpClient
   ) { }
 
   getAlerts(): Observable<Alert[]> {

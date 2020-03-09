@@ -26,7 +26,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
                         const userToken = event.headers.get("User-Token");
                         if (userToken) {
-                            localStorage.setItem('userToken', userToken);
+                            this.authService.updateUserToken(userToken);
                         }
                     }
                     return event;

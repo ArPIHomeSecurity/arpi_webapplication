@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material';
 
 import { ArmType, String2ArmType, Alert, SensorType } from '../models';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';

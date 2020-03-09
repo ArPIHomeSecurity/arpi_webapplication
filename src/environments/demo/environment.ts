@@ -19,6 +19,9 @@ export const environment = {
   DEFAULT_LANGUAGE: 'en',
   LANGUAGES: 'hu',
 
+  // authentication toket valid for 15 mins
+  USER_TOKEN_EXPIRY: 60*15,
+
   // monitoring arm types
   ARM_AWAY: 'away',
   ARM_STAY: 'stay',

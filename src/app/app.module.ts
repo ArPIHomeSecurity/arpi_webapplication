@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
+import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
 import { AuthGuard, AdminGuard } from './guards';
@@ -59,7 +60,8 @@ import {
   MatRadioModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTooltipModule
 } from '@angular/material';
 
 
@@ -102,6 +104,7 @@ import {
     routing,
     MatInputModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
@@ -119,6 +122,7 @@ import {
     MatDialogModule,
     MatProgressSpinnerModule,
 
+    CountdownModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TimezonePickerModule

@@ -62,6 +62,10 @@
   background-color: #f8d7da;
 }
 
+.count-down {
+  margin: 0 15px;
+}
+
 @mixin application-theme($theme) {
   $primary: map-get($theme, primary);
   $warn: map-get($theme, warn);
