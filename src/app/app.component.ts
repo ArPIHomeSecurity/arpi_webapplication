@@ -72,7 +72,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     this.authService.getUserSession()
       .subscribe(userSession => {
-        console.log("Session: ", userSession);
         this.userSession = userSession;
         if (userSession && this.countdown) {
           this.countdown.restart();
@@ -123,7 +122,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   handleCountdown($event) {
-    console.log("Countdown: ", $event)
     if ($event.action == 'notify') {
       this.snackBar.open('You session will expirey in '+(environment.USER_TOKEN_EXPIRY/3/60)+' minutes!', null, {duration: environment.SNACK_DURATION});
     }
