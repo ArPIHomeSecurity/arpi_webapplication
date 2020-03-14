@@ -60,7 +60,8 @@ export class LoginComponent implements OnInit {
     this.error = '';
 
     if (this.registerCode.value) {
-      this.authenticationService.registerDevice(this.registerCode.value)
+      let re  = /-/gi;
+      this.authenticationService.registerDevice(this.registerCode.value.replace(re, ''))
         .subscribe(result => {
           this.registerCode.setValue(null);
           if (result) {

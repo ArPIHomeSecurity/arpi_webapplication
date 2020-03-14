@@ -3,13 +3,15 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material';
 import { CountdownComponent } from 'ngx-countdown';
 
+import * as humanizeDuration from 'humanize-duration';
+
 import { Subscription } from 'rxjs';
 
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 
 import { environment } from '../environments/environment';
 import { VERSION } from './version';
-import { UserSession } from './models';
+
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     format: 'mm:ss',
     notify: [environment.USER_TOKEN_EXPIRY/3]
   };
-  userSession: UserSession = null;
+  isSessionValid: boolean;
   
   constructor(
     public mediaObserver: MediaObserver,
@@ -60,6 +62,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     this.versions = {server_version: '', webapplication_version: VERSION};
+    this.isSessionValid = false;
   }
 
   ngOnInit() {
@@ -70,10 +73,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(){
-    this.authService.getUserSession()
-      .subscribe(userSession => {
-        this.userSession = userSession;
-        if (userSession && this.countdown) {
+    this.authService.isSessionValid()
+      .subscribe(isSessionValid => {
+        this.isSessionValid = isSessionValid;
+        if (this.isSessionValid && this.countdown) {
           this.countdown.restart();
         }
       });
@@ -123,7 +126,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   handleCountdown($event) {
     if ($event.action == 'notify') {
-      this.snackBar.open('You session will expirey in '+(environment.USER_TOKEN_EXPIRY/3/60)+' minutes!', null, {duration: environment.SNACK_DURATION});
+      const current_locale = localStorage.getItem('localeId');
+      this.snackBar.open('You session will expirey in ' + humanizeDuration((environment.USER_TOKEN_EXPIRY/3)*1000, {language: current_locale})+'!', null, {duration: environment.SNACK_DURATION});
     }
     else if ($event.action == 'done') {
       this.snackBar.open('Session expired, logged out!', null, {duration: environment.SNACK_DURATION});

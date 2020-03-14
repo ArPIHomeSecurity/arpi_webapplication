@@ -1,40 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
+import { delay, map, startWith } from 'rxjs/operators';
 
-
-import * as JWT from 'jwt-decode';
-import { EventService } from '../services/event.service';
 import { UserService } from './user.service';
 import { User } from '../models';
 import { environment } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '../utils';
 
 @Injectable()
 export class AuthenticationService {
 
+  private _isDeviceRegisteredSubject = new Subject<boolean>();
+  private _sessionValidSubject = new Subject<boolean>();
+
   loggedInAs: User;
 
   constructor(
-      private eventService: EventService,
+      private router: Router,
       private userService: UserService
   ) {
     this.loggedInAs = getSessionValue('AuthenticationService.loggedInAs', null);
   }
 
   login(access_code: string): Observable<boolean> {
-    const foundUsers = this.userService.users.filter(user => String(user.access_code) === access_code);
-    if (foundUsers.length > 0) {
-      this.loggedInAs = foundUsers[0];
+    this.getDeviceToken();
+    const tmpUser = this.userService.users.find(user => String(user.access_code) === access_code);
+    if (tmpUser) {
+      this.loggedInAs = tmpUser;
       setSessionValue('AuthenticationService.loggedInAs', this.loggedInAs);
+      this.updateUserToken('user.session');
     }
 
-    return of( foundUsers.length === 1 ).pipe(delay(environment.delay));
+    return of( !!tmpUser ).pipe(delay(environment.delay));
   }
 
   logout(): void {
     this.loggedInAs = null;
+    this.updateUserToken(null);
     sessionStorage.removeItem('AuthenticationService.loggedInAs');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn() {
@@ -55,6 +60,47 @@ export class AuthenticationService {
   }
 
   getToken(): string {
-    return 'secret-token';
+    return 'token';
+  }
+
+  getUserToken(): string {
+    return 'user.token';
+  }
+
+  updateUserToken(token: string) {
+    this._sessionValidSubject.next(!!this.loggedInAs);
+  }
+
+  isSessionValid(): Observable<boolean> {
+    return this._sessionValidSubject.asObservable().pipe(startWith(false));
+  }
+
+  getDeviceToken() {
+    return 'device.token';
+  }
+
+  registerDevice(registration_code: string): Observable<boolean> {
+    const tmpUser = this.userService.users.find(user => String(user.registration_code) === registration_code);
+    const index = this.userService.users.indexOf(tmpUser);
+    if (tmpUser) {
+      tmpUser.registration_code = null;
+      tmpUser.registration_expiry = null;
+      tmpUser.has_registration_code = false;
+      this.userService.updateUser(tmpUser);
+
+      setLocalValue('AuthenticationService.registeredDevice', true);
+      this._isDeviceRegisteredSubject.next(true);
+    }
+
+    return of( !!tmpUser ).pipe(delay(environment.delay));
+  }
+
+  unRegisterDevice(){
+    setLocalValue('AuthenticationService.registeredDevice', false);
+    this._isDeviceRegisteredSubject.next(false);
+  }
+
+  isDeviceRegistered(): Observable<boolean> {
+    return this._isDeviceRegisteredSubject.asObservable().pipe(startWith(getLocalValue('AuthenticationService.registeredDevice', false)));
   }
 }

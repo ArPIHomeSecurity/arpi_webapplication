@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
+import { AuthenticationService } from './authentication.service';
 import { Zone } from '../models';
-
 import { environment, ZONES } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
+
 
 @Injectable()
 export class ZoneService {
@@ -13,19 +14,33 @@ export class ZoneService {
   zones: Zone[];
 
   constructor(
-
+    private authService: AuthenticationService
   ) {
     this.zones = getSessionValue('ZoneService.zones', ZONES);
   }
 
   getZones(): Observable<Zone[]> {
     // send variables by value
-    return of(Object.assign([], this.zones)).pipe(delay(environment.delay));
+    return of(Object.assign([], this.zones))
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   getZone( zoneId: number ): Observable<Zone> {
     // send variables by value
-    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])).pipe(delay(environment.delay));
+    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0]))
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   createZone( zone: Zone ): Observable<Zone> {

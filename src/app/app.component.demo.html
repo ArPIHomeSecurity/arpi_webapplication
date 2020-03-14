@@ -10,6 +10,9 @@
       <img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span>
     </button>
     <span class="spacer"></span>
+    <div matTooltip="Session expiry countdown">
+      <countdown #counter *ngIf="isSessionValid" [config]="countdownConfig" (event)="handleCountdown($event)"></countdown>
+    </div>
     <app-system-state></app-system-state>
   </mat-toolbar>
 
@@ -76,6 +79,10 @@
       <!-- AJAX loading spinner trigerred by the loader service -->
       <mat-progress-spinner class="ajax-loader" color="primary" mode="indeterminate" [fxShow]="displayLoader"></mat-progress-spinner>
 
+      <mat-card *ngIf="message && !displayLoader" class="message">
+        {{ message }}
+      </mat-card>
+
       <!-- main app container -->
       <div class="page-wrapper">
         <div class="page">
@@ -90,8 +97,8 @@
           </a>
           <span class="spacer"></span>
           <div>
-            <div class="version">WebApp {{webapplication_version}}</div>
-            <div class="version">Server {{server_version}}</div>
+            <div class="version">WebApp {{versions.webapplication_version}}</div>
+            <div class="version">Server {{versions.server_version}}</div>
           </div>
         </mat-toolbar>
       </div>
@@ -111,8 +118,8 @@
         </a>
         <span class="spacer"></span>
         <div>
-          <div class="version">WebApp {{webapplication_version}}</div>
-          <div class="version">Server {{server_version}}</div>
+          <div class="version">WebApp {{versions.webapplication_version}}</div>
+          <div class="version">Server {{versions.server_version}}</div>
         </div>
       </mat-toolbar>
     </div>

@@ -21,8 +21,21 @@ export function getSessionValue(name: string, defaultValue: any): any {
   return defaultValue;
 }
 
+export function getLocalValue(name: string, defaultValue: any): any {
+  const value = JSON.parse(localStorage.getItem(name));
+  if (value != null) {
+    return value;
+  }
+
+  return defaultValue;
+}
+
 export function setSessionValue(name: string, value: any) {
   sessionStorage.setItem(name, JSON.stringify(value));
+}
+
+export function setLocalValue(name: string, value: any) {
+  localStorage.setItem(name, JSON.stringify(value));
 }
 
 export function getValue(value: any, attribute: string, default_value: any = '') {

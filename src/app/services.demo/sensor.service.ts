@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
-import { Sensor, SensorType } from '../models';
-import { EventService } from '../services/event.service';
+import { AuthenticationService } from './authentication.service';
+import { EventService } from './event.service';
 import { MonitoringService } from './monitoring.service';
+import { Sensor, SensorType } from '../models';
 import { environment, SENSORS, SENSOR_TYPES } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
 
@@ -18,6 +19,7 @@ export class SensorService {
   channels: boolean[] = [];
 
   constructor(
+    private authService: AuthenticationService,
     private eventService: EventService,
     private monitoringService: MonitoringService
   ) {
@@ -32,7 +34,14 @@ export class SensorService {
 
   getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
     // send variables by value
-    return of(Object.assign([], this.sensors)).pipe(delay(environment.delay));
+    return of(Object.assign([], this.sensors))
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
 
@@ -80,18 +89,46 @@ export class SensorService {
     if (sensorId != null) {
       const sensor = this.sensors.find(sensor => sensor.id === sensorId);
       if (sensor) {
-        return of(sensor.alert).pipe(delay(environment.delay));
+        return of(sensor.alert)
+          .pipe(
+            delay(environment.delay),
+            map(_ => {
+              this.authService.updateUserToken('user.session');
+              return _;
+            })
+          );
       }
     } else {
-      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2)).pipe(delay(environment.delay));
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2))
+        .pipe(
+          delay(environment.delay),
+          map(_ => {
+            this.authService.updateUserToken('user.session');
+            return _;
+          })
+        );
     }
 
-    return of(false).pipe(delay(environment.delay));
+    return of(false)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
 
   getSensorTypes(): Observable<SensorType[]> {
-    return of(this.types).pipe(delay(environment.delay));
+    return of(this.types)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   resetReferences() {

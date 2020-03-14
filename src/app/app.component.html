@@ -9,7 +9,7 @@
     </button>
     <span class="spacer"></span>
     <div matTooltip="Session expiry countdown">
-      <countdown #counter *ngIf="userSession" [config]="countdownConfig" (event)="handleCountdown($event)"></countdown>
+      <countdown #counter *ngIf="isSessionValid" [config]="countdownConfig" (event)="handleCountdown($event)"></countdown>
     </div>
     <app-system-state></app-system-state>
   </mat-toolbar>

@@ -1,5 +1,3 @@
-import { KeypadType, Keypad } from "src/app/models/keypad";
-
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=demo` then `environment.demo.ts` will be used instead.
@@ -34,6 +32,7 @@ export const environment = {
   MONITORING_INVALID_CONFIG: 'monitoring_invalid_config',
   MONITORING_ARMED: 'monitoring_armed',
   MONITORING_SABOTAGE: 'monitoring_sabotage',
+  MONITORING_ERROR: 'monitoring_error',
 
   ROLE_TYPES : {
     ADMIN: 'admin',
@@ -47,14 +46,22 @@ export const USERS = [
   {
     id: 0,
     name: 'Administrator',
+    email: 'admin@example.com',
     role: environment.ROLE_TYPES.ADMIN,
-    access_code: 1234
+    has_registration_code: true,
+    access_code: 1234,
+    comment: '',
+    registration_expiry: new Date().toLocaleString()
   },
   {
     id: 1,
     name: 'User 1',
+    email: 'user1@example.com',
     role: environment.ROLE_TYPES.USER,
-    access_code: 1111
+    has_registration_code: true,
+    access_code: 1111,
+    comment: '',
+    registration_expiry: new Date().toLocaleString()
   }
 ];
 

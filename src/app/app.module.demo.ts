@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
+import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
 import { AuthGuard, AdminGuard } from './guards';
@@ -22,7 +23,7 @@ import { NetworkComponent } from './config/network';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
-import { UserListComponent, UserDetailComponent, UserDeleteDialogComponent } from './user';
+import { UserListComponent, UserDetailComponent, UserDeleteDialogComponent, UserDeviceRegistrationDialogComponent } from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
 import {
   AlertService,
@@ -58,7 +59,8 @@ import {
   MatRadioModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { DemoComponent } from './demo/demo.component';
@@ -83,6 +85,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     UserListComponent,
     UserDetailComponent,
     UserDeleteDialogComponent,
+    UserDeviceRegistrationDialogComponent,
 
     SensorListComponent,
     SensorDetailComponent,
@@ -119,6 +122,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     MatDialogModule,
     MatProgressSpinnerModule,
 
+    CountdownModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TimezonePickerModule
@@ -126,6 +130,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
   entryComponents: [
     SensorDeleteDialogComponent,
     UserDeleteDialogComponent,
+    UserDeviceRegistrationDialogComponent,
     ZoneDeleteDialogComponent,
     DemoHelpDialogComponent
   ],

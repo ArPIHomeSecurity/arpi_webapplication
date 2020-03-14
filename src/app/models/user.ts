@@ -8,9 +8,3 @@ export class User {
   access_code: number;
   comment: string;
 }
-
-export class UserSession {
-  name: string;
-  role: string;
-  timestamp: string;
-}

@@ -1,11 +1,12 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
+import { AuthenticationService } from './authentication.service';
+import { EventService } from './event.service';
 import { AlertType, Alert, Sensor } from '../models';
 import { environment, ALERTS } from '../../environments/environment';
-import { EventService } from '../services/event.service';
 import { getSessionValue, setSessionValue } from '../utils';
 
 @Injectable()
@@ -18,6 +19,7 @@ export class AlertService {
   syrenId: number;
 
   constructor(
+    private authService: AuthenticationService,
     private eventService: EventService
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
@@ -41,7 +43,14 @@ export class AlertService {
       }
       return 0;
     });
-    return of(sortedAlerts).pipe(delay(environment.delay));
+    return of(sortedAlerts)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
 

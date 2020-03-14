@@ -60,7 +60,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
     this.userService.generateRegistrationCode(this.user.id, expiry)
       .subscribe(code => {
-        this.registration_code = code['code'];
+        this.registration_code = code['code'].match(/.{1,3}/g).join("-");
       });
   }
 

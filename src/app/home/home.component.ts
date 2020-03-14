@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
 import { ArmType, String2ArmType, Alert, SensorType } from '../models';
-import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { MonitoringState, String2MonitoringState } from '../models';
 import { AlertService, EventService, LoaderService, SensorService } from '../services';
 import { MonitoringService } from '../services';
@@ -16,7 +15,7 @@ import { environment } from '../../environments/environment';
   providers: []
 })
 
-export class HomeComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy  {
+export class HomeComponent implements OnInit {
   ArmType: any = ArmType;
   alert: Alert;
   armState: ArmType;
@@ -33,12 +32,10 @@ export class HomeComponent extends ConfigurationBaseComponent implements OnInit,
     private alertService: AlertService,
     private sensorService: SensorService,
   ) {
-    super(eventService, loader, monitoringService);
+    
   }
 
   ngOnInit() {
-    super.initialize();
-
     // ALERT STATE: read and subscribe for changes
     this.alertService.getAlert()
       .subscribe(alert => {
@@ -77,10 +74,6 @@ export class HomeComponent extends ConfigurationBaseComponent implements OnInit,
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
-  }
-
-  ngOnDestroy() {
-    super.destroy();
   }
 
   arm_changed(event) {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
+import { AuthenticationService } from './authentication.service';
 import { Option } from '../models';
-import { AuthenticationService } from '../services/authentication.service';
 
 import { environment, CONFIGURATION } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
@@ -22,7 +22,14 @@ export class ConfigurationService {
 
 
   getOption( option: string, section: string ): Observable<Option> {
-    return of(this.configuration.find(o => o.option === option && o.section === section)).pipe(delay(environment.delay));
+    return of(this.configuration.find(o => o.option === option && o.section === section))
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
 
@@ -36,6 +43,13 @@ export class ConfigurationService {
     }
 
     setSessionValue('ConfigurationService.configuration', this.configuration);
-    return of(true).pipe(delay(environment.delay));
+    return of(true)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 }

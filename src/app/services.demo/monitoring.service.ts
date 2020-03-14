@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
-import { AlertType, ArmType, ArmType2String, Sensor, MonitoringState2String } from '../models';
-import { MonitoringState } from '../models';
 import { AlertService } from './alert.service';
+import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
+import { AlertType, ArmType, ArmType2String, Sensor, MonitoringState, MonitoringState2String } from '../models';
 
 import { environment } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
@@ -23,6 +23,7 @@ export class MonitoringService {
 
   constructor(
     private alertService: AlertService,
+    private authService: AuthenticationService,
     private eventService: EventService,
     private zoneService: ZoneService
   ) {
@@ -47,11 +48,25 @@ export class MonitoringService {
   }
 
   is_alert(): Observable<boolean> {
-    return of(this.alert).pipe(delay(environment.delay));
+    return of(this.alert)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   getArmState(): Observable<ArmType> {
-    return of(this.armState).pipe(delay(environment.delay));
+    return of(this.armState)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   arm(armtype: ArmType) {
@@ -61,6 +76,7 @@ export class MonitoringService {
     setSessionValue('MonitoringService.monitoringState', this.monitoringState);
     this.eventService._updateArmState(ArmType2String(armtype));
     this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    this.authService.updateUserToken('user.token');
     return;
   }
 
@@ -72,11 +88,19 @@ export class MonitoringService {
     this.alertService._stopAlert();
     this.eventService._updateArmState(ArmType2String(this.armState));
     this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    this.authService.updateUserToken('user.token');
     return;
   }
 
   getMonitoringState(): Observable<MonitoringState> {
-    return of(this.monitoringState).pipe(delay(environment.delay));
+    return of(this.monitoringState)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   getVersion(): Observable<string> {
@@ -89,11 +113,25 @@ export class MonitoringService {
         network: this.datetime,
         system: this.datetime,
         timezone: this.timeZone,
-    }).pipe(delay(environment.delay));
+    })
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   synchronizeClock() {
-    return of(true);
+    return of(true)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   changeClock(dateTime, timeZone) {
@@ -101,7 +139,14 @@ export class MonitoringService {
     this.timeZone = timeZone;
     setSessionValue('MonitoringService.datetime', this.datetime);
     setSessionValue('MonitoringService.timeZone', this.timeZone);
-    return of(true);
+    return of(true)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          this.authService.updateUserToken('user.session');
+          return _;
+        })
+      );
   }
 
   _onAlert(sensor: Sensor) {
