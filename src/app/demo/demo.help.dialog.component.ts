@@ -13,6 +13,12 @@ export class DemoHelpDialogComponent {
 
   }
 
+  onResetDemo(){
+    sessionStorage.clear();
+    localStorage.clear();
+    window.location.reload();
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }

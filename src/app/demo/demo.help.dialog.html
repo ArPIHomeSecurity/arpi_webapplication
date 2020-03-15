@@ -2,6 +2,17 @@
 <div mat-dialog-content>
   <p>This site demonstrates the features of the <a href="https://www.arpi-security.info">ArPI home security system</a>.</p>
   <p>In the top toolbar you can find buttons for the input channels of the system to simulate the interactions with the sensors.</p>
+  <p>This page uses a mock implementation of the real backend system. May contain errors not existing in the real system.</p>
+
+  <p>You need two types of code to access the application.
+    The first code registers your device for a user.
+    After registering the device you can access the application only with the 'access code'.</p>
+  <p>User registration codes:</p>
+  <ul>
+    <li>Admin - ABC-DEF-000-001</li>
+    <li>User  - ABC-DEF-000-002</li>
+  </ul>
+
   <p>User access codes:</p>
   <ul>
     <li>Admin - 1234</li>
@@ -11,4 +22,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()" color="primary" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onResetDemo()" color="accent">Reset demo</button>
 </div>

@@ -80,7 +80,7 @@ export const USERS = [
     email: 'admin@example.com',
     role: environment.ROLE_TYPES.ADMIN,
     has_registration_code: true,
-    registration_code: 'ASDF1234',
+    registration_code: 'ABCDEF000001',
     access_code: 1234,
     comment: '',
     registration_expiry: new Date().toLocaleString()
@@ -90,6 +90,7 @@ export const USERS = [
     name: 'User 1',
     email: 'user1@example.com',
     role: environment.ROLE_TYPES.USER,
+    registration_code: 'ABCDEF000002',
     has_registration_code: true,
     access_code: 1111,
     comment: '',
