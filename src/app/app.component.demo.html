@@ -42,7 +42,7 @@
           <mat-icon mat-list-icon>input</mat-icon>Sensors
         </a>
         <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"
-          i18n="@@keypads menu link">
+          i18n="@@keypad menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>grid_on</mat-icon>Keypad
         </a>
         <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="small_screen ? sidenav.close() : null"

@@ -112,6 +112,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     routing,
     MatInputModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatListModule,
     MatButtonModule,

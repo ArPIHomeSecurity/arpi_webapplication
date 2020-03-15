@@ -27,7 +27,7 @@
         <button mat-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@remove button">Remove</button>
         <button mat-button (click)="openDeviceRegistrationDialog(user.id)" color="warn" [disabled]="user.has_registration_code || monitoringState != MonitoringState.READY"
-          i18n="@@remove button">Device registration</button>
+          i18n="@@register_device button">Device registration</button>
       </mat-card-actions>
     </mat-card>
   </div>

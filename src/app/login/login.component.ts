@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   isRegistered = false;
   loading = false;
   error = '';
+  hide: boolean = true;
 
   constructor(
     private dialog: MatDialog,

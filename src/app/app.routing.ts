@@ -25,10 +25,10 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-      path: 'alerts',
-      component: AlertListComponent,
-      canActivate: [AuthGuard]
-    },
+    path: 'alerts',
+    component: AlertListComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'users',
     component: UserListComponent,

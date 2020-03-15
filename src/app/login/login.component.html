@@ -39,6 +39,9 @@
           [formControl]="accessCode"
           placeholder="Access code"
           i18n-placeholder="Access code"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          digitOnly
           required
           autofocus>
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
