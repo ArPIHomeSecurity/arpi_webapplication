@@ -12,6 +12,11 @@
   text-align: right;
 }
 
+.expiry-mode {
+  display: flex;
+  flex-direction: column;
+}
+
 .registration {
   text-align: center;
   margin: 15px 0px;

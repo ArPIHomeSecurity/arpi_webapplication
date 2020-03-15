@@ -6,12 +6,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { User } from '../models/user';
-import { AuthenticationService, LoaderService, EventService, MonitoringService, UserService } from '../services';
+import { LoaderService, EventService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
 
 const scheduleMicrotask = Promise.resolve(null);
+
 
 @Component({
   moduleId: module.id,
@@ -82,7 +83,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
   openDeviceRegistrationDialog(userId: number) {
     const dialogRef = this.dialog.open(UserDeviceRegistrationDialogComponent, {
-      width: '250px',
+      width: '350px',
       data: this.users.find(x => x.id === userId),
     });
 

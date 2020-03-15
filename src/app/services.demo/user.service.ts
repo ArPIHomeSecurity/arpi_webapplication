@@ -71,6 +71,10 @@ export class UserService {
     const tmpUser = this.users.find(u => u.id === userId);
     const index = this.users.indexOf(tmpUser);
     let code = Math.random().toString(26).substring(2, 16).toUpperCase();
+    while (code.length != 12) {
+      code = Math.random().toString(26).substring(2, 16).toUpperCase();
+    }
+
     this.users[index].registration_code = code;
     this.users[index].has_registration_code = true;
     if (expiry) {

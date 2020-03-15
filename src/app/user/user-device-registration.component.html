@@ -6,7 +6,7 @@
   <form [formGroup]="registrationForm">
     
     <label>Select expiry</label>
-    <mat-radio-group formControlName="mode" (change)="onModeChanged($event)">
+    <mat-radio-group formControlName="mode" (change)="onModeChanged($event)" class="expiry-mode">
       <mat-radio-button *ngFor="let mode of modes" [value]="mode.value">{{mode.name}}</mat-radio-button>
     </mat-radio-group>
 
@@ -27,10 +27,14 @@
 
 <div *ngIf="registration_code" class="registration">
   Device registration code
-  <div class="code">{{registration_code}}</div>
+  <div class="code">
+    {{registration_code}}
+    <button mat-icon-button *ngIf="registration_code" (click)="copyText(registration_code)"><mat-icon>file_copy</mat-icon></button>
+  </div>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="getNewCode()" tabindex="2" color="primary" [disabled]="!registrationForm.valid || registration_code">Get new code</button>
+  <button mat-raised-button [disabled]="!registrationForm.valid || registration_code" (click)="getNewCode()" tabindex="2" color="primary">Get new code</button>
+  
   <button mat-button (click)="onClickClose()" tabindex="-1">Close</button>
 </div>

@@ -1,9 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { User } from '../models';
 import { UserService } from '../services';
+
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -20,9 +23,9 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
     public userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
-    console.log("User: ", this.user);
     this.modes = [
       {name: 'Unlimited time', value: 'no_expiry'},
       {name: 'With expiry', value: 'expiry'}
@@ -54,6 +57,9 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
         console.error("Uknown time unit: ", this.registrationForm.controls.unit.value)
       }
     }
+    else if (this.registrationForm.controls.mode.value == 'no_expiry') {
+
+    }
     else {
       console.error("Unknown expiry mode: ", this.registrationForm.controls.mode.value)
     }
@@ -80,5 +86,21 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
       this.registrationForm.controls.counter.disable();
       this.registrationForm.controls.unit.disable();
     }
+  }
+
+  copyText(val: string){
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.snackBar.open('Copied to clipboard!', null, {duration: environment.SNACK_DURATION});
   }
 }

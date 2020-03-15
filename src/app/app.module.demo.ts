@@ -23,7 +23,13 @@ import { NetworkComponent } from './config/network';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
-import { UserListComponent, UserDetailComponent, UserDeleteDialogComponent, UserDeviceRegistrationDialogComponent } from './user';
+import { 
+  UserListComponent,
+  UserDetailComponent,
+  UserDeleteDialogComponent,
+  UserDeviceRegistrationDialogComponent,
+  UserDeviceUnregisterDialogComponent
+} from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
 import {
   AlertService,
@@ -86,6 +92,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     UserDetailComponent,
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
+    UserDeviceUnregisterDialogComponent,
 
     SensorListComponent,
     SensorDetailComponent,
@@ -131,6 +138,8 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     SensorDeleteDialogComponent,
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
+    UserDeviceUnregisterDialogComponent,
+
     ZoneDeleteDialogComponent,
     DemoHelpDialogComponent
   ],
