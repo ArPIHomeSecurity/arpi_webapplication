@@ -83,10 +83,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   updateForm(user: User) {
-    const accessCode = new FormControl(user.access_code, [Validators.pattern('^\\d{4,8}$')]);
+    const accessCode = new FormControl(user.access_code, [Validators.pattern('^\\d{4,12}$')]);
 
     if (!user.id) {
-      accessCode.setValidators([Validators.required, Validators.pattern('^\\d{4,8}$')]);
+      accessCode.setValidators([Validators.required, Validators.pattern('^\\d{4,12}$')]);
     }
 
     this.userForm = this.fb.group({
