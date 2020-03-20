@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CountdownComponent } from 'ngx-countdown';
 
 import * as humanizeDuration from 'humanize-duration';

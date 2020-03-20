@@ -21,7 +21,7 @@ export class MonitoringService {
     return this.http.get('/api/monitoring/isAlert').pipe(
       map(( response: HttpResponse<boolean> ) => response.body
       ), catchError(( err: HttpResponse<boolean> ) => {
-        console.log( err );
+        console.error( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ), );
   }
@@ -40,7 +40,7 @@ export class MonitoringService {
   disarm() {
     return this.http.put('/api/monitoring/disarm', null).pipe(
       catchError(( err ) => {
-        console.log( err );
+        console.error( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ))
       .subscribe();
@@ -62,7 +62,7 @@ export class MonitoringService {
   synchronizeClock() {
     return this.http.put('/api/clock/sync', null).pipe(
       catchError(( err ) => {
-        console.log( err );
+        console.error( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ));
   }
@@ -81,7 +81,7 @@ export class MonitoringService {
 
     return this.http.put('/api/clock', parameters).pipe(
       catchError(( err ) => {
-        console.log( err );
+        console.error( err );
         return observableThrowError( { description: 'Error Value Emitted' } );
       } ));
   }
