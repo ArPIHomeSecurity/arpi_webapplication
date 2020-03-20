@@ -4,19 +4,28 @@
   "newProjectRoot": "projects",
   "projects": {
     "argus": {
+      "i18n": {
+        "locales": {
+          "hu": {
+            "translation": "src/locales/messages.hu.xlf",
+            "baseHref": "https://demo.arpi-security.info/hu/"
+          }
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -34,6 +43,12 @@
           },
           "configurations": {
             "development": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "outputPath": "dist-development"
             },
             "production-en": {
@@ -58,6 +73,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -68,10 +87,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "/hu/",
               "outputPath": "dist-production-hu",
               "i18nFile": "src/locales/messages.hu.xlf",
-              "i18nFormat": "xlf",
               "i18nLocale": "hu",
               "optimization": true,
               "outputHashing": "all",
@@ -87,6 +104,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -129,6 +150,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -155,11 +180,10 @@
                   "with": "src/index.demo.html"
                 }
               ],
-              "outputPath": "dist-demo/hu",
-              "i18nFile": "src/locales/messages.hu.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "hu",
-              "baseHref": "https://demo.arpi-security.info/hu/",
+            "localize": [
+              "hu"
+            ],
+              "outputPath": "dist-demo",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -174,10 +198,20 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
             "demo-dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

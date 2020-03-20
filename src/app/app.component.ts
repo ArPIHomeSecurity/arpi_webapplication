@@ -19,7 +19,7 @@ import { VERSION } from './version';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('counter', { static: false }) private countdown: CountdownComponent;
+  @ViewChild('counter') private countdown: CountdownComponent;
 
   displayLoader: boolean;
   // display error message of the compoponents
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   // helper method to access the sidenav even if it is in ngIf
-  @ViewChild('sidenav', {static: false}) set setSidenav(sidenav: ViewContainerRef) {
+  @ViewChild('sidenav') set setSidenav(sidenav: ViewContainerRef) {
       this.sidenav = sidenav;
   }
 

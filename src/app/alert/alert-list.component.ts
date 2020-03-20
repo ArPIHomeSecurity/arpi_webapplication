@@ -33,7 +33,7 @@ export class AlertListComponent implements OnInit {
   displayedColumns = ['alert_type', 'start_time', 'end_time', 'sensors'];
   sensors: Sensor[];
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private alertService: AlertService,

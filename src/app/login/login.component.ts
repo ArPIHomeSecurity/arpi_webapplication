@@ -14,8 +14,8 @@ import { UserDeviceUnregisterDialogComponent } from '../user';
 })
 
 export class LoginComponent implements OnInit {
-  @ViewChild('rc_field', {static: false}) rc_field: ElementRef;
-  @ViewChild('ac_field', {static: false}) ac_field: ElementRef;
+  @ViewChild('rc_field') rc_field: ElementRef;
+  @ViewChild('ac_field') ac_field: ElementRef;
 
   registerForm: FormGroup;
   registerCode: FormControl;
