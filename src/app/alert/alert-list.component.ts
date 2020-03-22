@@ -22,7 +22,6 @@ export class AlertHistory extends DataSource<any> {
 
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'alert-list.component.html',
   styleUrls: ['alert-list.component.scss'],
   providers: []

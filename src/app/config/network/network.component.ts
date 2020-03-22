@@ -17,7 +17,6 @@ const DEFAULT_ACCESS = {option: 'network', section: 'access', value: '{"ssh":""}
 
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'network.component.html',
   styleUrls: ['network.component.scss'],
   providers: [ConfigurationService]

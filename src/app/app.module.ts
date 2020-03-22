@@ -9,7 +9,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { TimezonePickerModule } from 'ng2-timezone-selector';
 import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
@@ -129,8 +128,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
     CountdownModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    TimezonePickerModule
+    OwlNativeDateTimeModule
   ],
   entryComponents: [
     SensorDeleteDialogComponent,

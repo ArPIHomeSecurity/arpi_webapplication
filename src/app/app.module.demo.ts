@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { TimezonePickerModule } from 'ng2-timezone-selector';
 import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
@@ -47,27 +46,26 @@ import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 // material components
-import {
-  MatInputModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatListModule,
-  MatButtonModule,
-  MatIconModule,
-  MatCardModule,
-  MatSlideToggleModule,
-  MatButtonToggleModule,
-  MatSnackBarModule,
-  MatExpansionModule,
-  MatTableModule,
-  MatChipsModule,
-  MatSelectModule,
-  MatRadioModule,
-  MatCheckboxModule,
-  MatDialogModule,
-  MatProgressSpinnerModule,
-  MatTooltipModule
-} from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
@@ -78,27 +76,31 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AlertListComponent,
-    ZoneListComponent,
-    ZoneDetailComponent,
-    ZoneDeleteDialogComponent,
 
+    AlertListComponent,
+    
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     NetworkComponent,
-
+    
     UserListComponent,
     UserDetailComponent,
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
-
+    
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
+
+    ZoneListComponent,
+    ZoneDetailComponent,
+    ZoneDeleteDialogComponent,
+
     SystemStateComponent,
     PageNotFoundComponent,
+
     DemoComponent,
     DemoHelpDialogComponent
   ],
@@ -110,6 +112,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     ReactiveFormsModule,
     HttpClientModule,
     routing,
+    MatAutocompleteModule,
     MatInputModule,
     MatToolbarModule,
     MatTooltipModule,
@@ -132,8 +135,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 
     CountdownModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    TimezonePickerModule
+    OwlNativeDateTimeModule
   ],
   entryComponents: [
     SensorDeleteDialogComponent,

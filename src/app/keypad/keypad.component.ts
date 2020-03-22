@@ -9,7 +9,6 @@ const scheduleMicrotask = Promise.resolve( null );
 
 
 @Component( {
-  moduleId: module.id,
   templateUrl: 'keypad.component.html',
   styleUrls: ['keypad.component.scss'],
   providers: []

@@ -13,7 +13,8 @@
     "translate-hu": "ng xi18n --output-path locales --i18n-locale en && xliffmerge --profile xliffmerge.json en hu",
     "build-default-language": "ng build --configuration=production-$npm_package_default_language",
     "build-translations": "ng build --configuration=production-hu",
-    "build-compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production-$lang/*.js || true && gzip dist-production-$lang/*.css || true; done"
+    "build-compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production-$lang/*.js || true && gzip dist-production-$lang/*.css || true; done",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
   "dependencies": {
@@ -35,8 +36,8 @@
     "humanize-duration": "^3.22.0",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
+    "moment-timezone": "^0.5.28",
     "ng-pick-datetime": "^7.0.0",
-    "ng2-timezone-selector": "^0.2.4",
     "ngx-countdown": "^8.0.3",
     "ngx-i18nsupport": "^0.17.1",
     "rxjs": "^6.5.4",
@@ -52,7 +53,7 @@
     "@types/humanize-duration": "^3.18.0",
     "@types/jasmine": "^3.5.2",
     "@types/jasminewd2": "^2.0.8",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.12.30",
     "@types/socket.io-client": "^1.4.32",
     "codelyzer": "^5.1.2",
     "core-js": "^2.5.7",

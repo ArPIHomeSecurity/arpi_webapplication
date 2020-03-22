@@ -39,13 +39,25 @@
             <owl-date-time #dt></owl-date-time>
           </mat-form-field>
       
-          <ng2-timezone-picker
-            class="half-width"
-            [(timezone)]="timeZone"
-            placeholder="Select timezone"
-            showOffset="true"
-            guess="true">
-          </ng2-timezone-picker>
+          <mat-form-field>
+            <input type="text"
+                   matInput
+                   placeholder="Timezone"
+                   formControlName="timezone"
+                   required
+                   [matAutocomplete]="autoGroup"
+                   [value]="timezone">
+            <mat-autocomplete #autoGroup="matAutocomplete">
+              <mat-optgroup *ngFor="let group of timezoneGroupOptions | async" [label]="group.groupName">
+                <mat-option *ngFor="let name of group.zoneNames" [value]="group.groupName+'/'+name">
+                  {{group.groupName}}/{{name}}
+                </mat-option>
+              </mat-optgroup>
+              <mat-option *ngFor="let name of timezoneUngrouppedOptions | async" [value]="name">
+                {{name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
     
         <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != MonitoringState.READY">Save</button>

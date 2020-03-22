@@ -43,7 +43,6 @@ class SensorInfo {
 
 
 @Component({
-  moduleId: module.id,
   templateUrl: './sensor-detail.component.html',
   styleUrls: ['sensor-detail.component.scss'],
   providers: []

@@ -67,7 +67,7 @@ export class MonitoringService {
       } ));
   }
 
-  changeClock(dateTime, timeZone) {
+  changeClock(dateTime: string, timeZone: string) {
     const parameters = { };
     if (timeZone != null) {
       parameters['timezone'] = timeZone;

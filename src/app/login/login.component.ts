@@ -8,7 +8,6 @@ import { UserDeviceUnregisterDialogComponent } from '../user';
 
 
 @Component({
-  moduleId: module.id,
   styleUrls: ['login.component.scss'],
   templateUrl: 'login.component.html'
 })

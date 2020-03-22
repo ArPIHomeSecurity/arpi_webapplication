@@ -134,7 +134,7 @@ export class MonitoringService {
       );
   }
 
-  changeClock(dateTime, timeZone) {
+  changeClock(dateTime: string, timeZone: string) {
     this.datetime = dateTime;
     this.timeZone = timeZone;
     setSessionValue('MonitoringService.datetime', this.datetime);

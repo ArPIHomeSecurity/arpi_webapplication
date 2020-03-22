@@ -19,7 +19,6 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  moduleId: module.id,
   templateUrl: './zone-detail.component.html',
   styleUrls: ['zone-detail.component.scss'],
   providers: []

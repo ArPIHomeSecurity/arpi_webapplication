@@ -28,7 +28,6 @@ const DEFAULT_SUBSCRIPTIONS = {
 };
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'notifications.component.html',
   styleUrls: ['notifications.component.scss'],
   providers: [ConfigurationService]
