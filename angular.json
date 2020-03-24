@@ -5,11 +5,12 @@
   "projects": {
     "argus": {
       "i18n": {
+        "sourceLocale":{
+          "code": "en",
+          "baseHref": "/"
+        },
         "locales": {
-          "hu": {
-            "translation": "src/locales/messages.hu.xlf",
-            "baseHref": "https://demo.arpi-security.info/hu/"
-          }
+          "hu": "src/locales/messages.hu.xlf"
         }
       },
       "root": "",
@@ -26,15 +27,13 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist",
+            "outputPath": "dist-development",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/404.html"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -42,154 +41,19 @@
             "scripts": []
           },
           "configurations": {
-            "development": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "outputPath": "dist-development"
-            },
-            "production-en": {
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputPath": "dist-production-en",
+              "outputPath": "dist-production",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ]
-            },
-            "production-hu": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "outputPath": "dist-production-hu",
-              "i18nFile": "src/locales/messages.hu.xlf",
-              "i18nLocale": "hu",
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ]
-            },
-            "demo-en": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/demo/environment.prepared01.ts"
-                },
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component.demo.html"
-                },
-                {
-                  "replace": "src/app/services",
-                  "with": "src/app/services.demo"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
-                }
-              ],
-              "outputPath": "dist-demo",
-              "baseHref": "https://demo.arpi-security.info/",
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ]
-            },
-            "demo-hu": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/demo/environment.prepared01.ts"
-                },
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component.demo.html"
-                },
-                {
-                  "replace": "src/app/services",
-                  "with": "src/app/services.demo"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
-                }
-              ],
-              "localize": [
-                "hu"
-              ],
-              "outputPath": "dist-demo",
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -206,16 +70,10 @@
               ]
             },
             "demo-dev": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/demo/environment.dev.prepared01.ts"
+                  "with": "src/environments/demo/environment.prepared01.ts"
                 },
                 {
                   "replace": "src/app/app.module.ts",
@@ -235,6 +93,54 @@
                 }
               ],
               "outputPath": "dist-demo-dev"
+            },
+            "demo": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/demo/environment.prepared01.ts"
+                },
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.demo.ts"
+                },
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component.demo.html"
+                },
+                {
+                  "replace": "src/app/services",
+                  "with": "src/app/services.demo"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.demo.html"
+                }
+              ],
+              "assets": [
+                "src/assets",
+                "src/404.html"
+              ],
+              "outputPath": "dist-demo",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
             }
           }
         },
@@ -245,13 +151,13 @@
           },
           "configurations": {
             "development": {
-              "browserTarget": "argus:build:development"
+              "browserTarget": "argus:build:development-en"
             },
             "production": {
               "browserTarget": "argus:build:production-en"
             },
-            "demo-dev": {
-              "browserTarget": "argus:build:demo-dev"
+            "demo": {
+              "browserTarget": "argus:build:demo-en"
             }
           }
         },
@@ -273,7 +179,6 @@
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
               "src/assets",
               "src/404.html"
             ]

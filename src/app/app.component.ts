@@ -109,18 +109,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log('Change locale: ', current_locale, '=>', event.value);
     localStorage.setItem('localeId', event.value);
 
-    if (environment.aotTranslations) {
-      const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
-      const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
-      if (languagePattern.test(location.pathname)) {
-        // change the language
-        location.pathname = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''));
-      } else {
-        // if the current language isn't the default, add the language
-        location.pathname = '/' + new_locale + location.pathname;
-      }
+    const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
+    const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
+    if (languagePattern.test(location.pathname)) {
+      // change the language
+      const new_path = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''));
+      location.pathname = new_path.replace(/\/$/, "");
     } else {
-      location.reload();
+      // if the current language isn't the default, add the language
+      location.pathname = ('/' + new_locale + location.pathname).replace(/\/$/, "");
     }
   }
 
