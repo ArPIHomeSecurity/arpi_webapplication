@@ -14,17 +14,17 @@ export enum AlertType {
 
 export class Alert {
   id: number;
-  alert_type: AlertType;
-  start_time: string;
-  end_time: string;
+  alertType: AlertType;
+  startTime: string;
+  endTime: string;
   sensors: AlertSensor[];
 }
 
 export class AlertSensor {
   id: number;
-  type_id: number;
+  typeId: number;
   channel: number;
-  description: String;
+  description: string;
 }
 
 export function String2ArmType( armType: string ): ArmType {

@@ -18,7 +18,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   registrationForm: FormGroup;
   modes: any[];
   units: any[];
-  registration_code: string;
+  registrationCode: string;
 
   constructor(
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
@@ -46,27 +46,23 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   getNewCode() {
     let expiry = null;
-    if (this.registrationForm.controls.mode.value == 'expiry') {
-      if (this.registrationForm.controls.unit.value =='days') {
+    if (this.registrationForm.controls.mode.value === 'expiry') {
+      if (this.registrationForm.controls.unit.value === 'days') {
         expiry = this.registrationForm.controls.counter.value * 24 * 60 * 60;
-      }
-      else if (this.registrationForm.controls.unit.value =='hours') {
+      } else if (this.registrationForm.controls.unit.value === 'hours') {
         expiry = this.registrationForm.controls.counter.value * 60 * 60;
+      } else {
+        console.error('Uknown time unit: ', this.registrationForm.controls.unit.value);
       }
-      else {
-        console.error("Uknown time unit: ", this.registrationForm.controls.unit.value)
-      }
-    }
-    else if (this.registrationForm.controls.mode.value == 'no_expiry') {
+    } else if (this.registrationForm.controls.mode.value === 'no_expiry') {
 
-    }
-    else {
-      console.error("Unknown expiry mode: ", this.registrationForm.controls.mode.value)
+    } else {
+      console.error('Unknown expiry mode: ', this.registrationForm.controls.mode.value);
     }
 
     this.userService.generateRegistrationCode(this.user.id, expiry)
       .subscribe(code => {
-        this.registration_code = code['code'].match(/.{1,3}/g).join("-");
+        this.registrationCode = code.code.match(/.{1,3}/g).join('-');
       });
   }
 
@@ -75,21 +71,20 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   }
 
   onModeChanged(event) {
-    if (event.value == 'expiry') {
+    if (event.value === 'expiry') {
       this.registrationForm.controls.counter.setValidators(Validators.required);
       this.registrationForm.controls.unit.setValidators(Validators.required);
       this.registrationForm.controls.counter.enable();
       this.registrationForm.controls.unit.enable();
-    }
-    else {
+    } else {
       this.registrationForm.controls.counter.clearValidators();
       this.registrationForm.controls.counter.disable();
       this.registrationForm.controls.unit.disable();
     }
   }
 
-  copyText(val: string){
-    let selBox = document.createElement('textarea');
+  copyText(val: string) {
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';

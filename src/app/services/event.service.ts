@@ -16,7 +16,7 @@ export class EventService {
   }
 
 
-  connect () {
+  connect() {
     const deviceToken = localStorage.getItem('deviceToken');
     if (this.socket) {
       this.socket.disconnect();

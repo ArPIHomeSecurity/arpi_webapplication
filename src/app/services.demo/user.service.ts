@@ -67,7 +67,7 @@ export class UserService {
     return of(true);
   }
 
-  generateRegistrationCode(userId: number, expiry: number): Observable<object> {
+  generateRegistrationCode(userId: number, expiry: number): Observable<any> {
     const tmpUser = this.users.find(u => u.id === userId);
     const index = this.users.indexOf(tmpUser);
     let code = Math.random().toString(26).substring(2, 16).toUpperCase();
@@ -76,14 +76,14 @@ export class UserService {
     }
 
     this.users[index].registration_code = code;
-    this.users[index].has_registration_code = true;
+    this.users[index].hasRegistrationCode = true;
     if (expiry) {
       let t = new Date();
       t.setSeconds(t.getSeconds() + expiry);
-      this.users[index].registration_expiry = t.toLocaleString();
+      this.users[index].registrationExpiry = t.toLocaleString();
     }
     else {
-      this.users[index].registration_expiry = '';
+      this.users[index].registrationExpiry = '';
     }
     setSessionValue('UserService.users', this.users);
     return of({code: code});
@@ -93,8 +93,8 @@ export class UserService {
     const tmpUser = this.users.find(u => u.id === userId);
     const index = this.users.indexOf(tmpUser);
     delete this.users[index].registration_code;
-    delete this.users[index].registration_expiry;
-    this.users[index].has_registration_code = false;
+    delete this.users[index].registrationExpiry;
+    this.users[index].hasRegistrationCode = false;
     setSessionValue('UserService.users', this.users);
     return of(true);
   }

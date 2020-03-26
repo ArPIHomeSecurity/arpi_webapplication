@@ -12,9 +12,9 @@
     "e2e": "ng e2e",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "translate-hu": "ng xi18n --output-path locales --i18n-locale en && xliffmerge --profile xliffmerge.json en hu",
-    "build-compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production-$lang/*.js || true && gzip dist-production-$lang/*.css || true; done",
+    "compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production/$lang/*.js || true && gzip dist-production/$lang/*.css || true; done",
     "serve": "docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/$DIST:/usr/share/nginx/html:ro nginx",
-    "postbuild": "mv $DIST/en/* $DIST"
+    "postbuild": "mv $DIST/en/* $DIST; rm -r $DIST/en"
   },
   "private": true,
   "dependencies": {

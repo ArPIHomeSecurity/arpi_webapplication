@@ -45,8 +45,7 @@
                    placeholder="Timezone"
                    formControlName="timezone"
                    required
-                   [matAutocomplete]="autoGroup"
-                   [value]="timezone">
+                   [matAutocomplete]="autoGroup">
             <mat-autocomplete #autoGroup="matAutocomplete">
               <mat-optgroup *ngFor="let group of timezoneGroupOptions | async" [label]="group.groupName">
                 <mat-option *ngFor="let name of group.zoneNames" [value]="group.groupName+'/'+name">

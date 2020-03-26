@@ -42,10 +42,10 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   }
 
   updateForm() {
-    if (this.keypad){
+    if (this.keypad) {
       this.keypadForm = this.fb.group( {
         keypad_enabled: this.keypad.enabled,
-        keypad_type: new FormControl(this.keypad.type_id, Validators.required),
+        keypad_type: new FormControl(this.keypad.typeId, Validators.required),
       });
     }
 
@@ -83,7 +83,7 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
     return {
       id: this.keypad.id,
       enabled: formModel.keypad_enabled,
-      type_id: formModel.keypad_type
+      typeId: formModel.keypad_type
     };
   }
 

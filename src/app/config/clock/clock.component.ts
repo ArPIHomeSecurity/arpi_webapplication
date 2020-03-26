@@ -17,12 +17,16 @@ export interface TimeZoneGroup {
   zoneNames: string[];
 }
 
-export const _filter = (opt: string[], value: string): string[] => {
+export interface Clock {
+  network: string;
+  system: string;
+}
+
+export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
 };
-
 
 @Component( {
   templateUrl: 'clock.component.html',
@@ -32,14 +36,14 @@ export const _filter = (opt: string[], value: string): string[] => {
 
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   clockForm: FormGroup;
-  clock: Object = null;
-  
+  clock: any;
+
   timezoneGroups: TimeZoneGroup[] = [];
   timezoneGroupOptions: Observable<TimeZoneGroup[]>;
-  
+
   timezoneUngroupped: string[] = [];
   timezoneUngrouppedOptions: Observable<string[]>;
-  
+
   timezoneNames: string[];
 
   constructor(
@@ -55,16 +59,14 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     this.timezoneNames = moment.tz.names();
 
     this.timezoneNames.forEach(timezoneName => {
-      const results = timezoneName.match(/(.*)\/(.*)/)
+      const results = timezoneName.match(/(.*)\/(.*)/);
       if (results == null) {
         this.timezoneUngroupped.push(timezoneName);
-      }
-      else {
-        let timezoneGroup = this.timezoneGroups.find(timezoneGroup => timezoneGroup.groupName === results[1]);
+      } else {
+        const timezoneGroup = this.timezoneGroups.find(tzGroup => tzGroup.groupName === results[1]);
         if (timezoneGroup == null) {
           this.timezoneGroups.push({groupName: results[1], zoneNames: [results[2]]});
-        }
-        else {
+        } else {
           timezoneGroup.zoneNames.push(results[2]);
         }
       }
@@ -73,21 +75,23 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
   ngOnInit() {
     super.initialize();
-    
+
     this.updateComponent();
     this.updateForm();
-    
-    this.timezoneGroupOptions = this.clockForm.get('timezone')!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterGroup(value))
-      );
 
-    this.timezoneUngrouppedOptions = this.clockForm.get('timezone')!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterUngroupped(value))
-      );
+    if (this.clockForm.get('timezone')) {
+      this.timezoneGroupOptions = this.clockForm.get('timezone').valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filterGroup(value))
+        );
+
+      this.timezoneUngrouppedOptions = this.clockForm.get('timezone').valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filterUngroupped(value))
+        );
+    }
   }
 
   ngOnDestroy() {
@@ -112,7 +116,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
       .subscribe(clock => {
         this.clock = clock;
         if (clock != null) {
-          this.clockForm.get('timezone').setValue(clock['timezone']);
+          this.clockForm.get('timezone').setValue(clock.timezone);
         }
 
         this.loader.display(false);
@@ -129,7 +133,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
   onSubmit() {
     const formModel = this.clockForm.value;
-    let newDate = formModel.dateTime;
+    const newDate = formModel.dateTime;
     this.monitoringService.changeClock(newDate.toISOString(), formModel.timezone)
       .subscribe(_ => this.updateComponent()
     );
@@ -138,7 +142,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   private _filterGroup(value: string): TimeZoneGroup[] {
     if (value) {
       return this.timezoneGroups
-        .map(group => ({groupName: group.groupName, zoneNames: _filter(group.zoneNames, value)}))
+        .map(group => ({groupName: group.groupName, zoneNames: filter(group.zoneNames, value)}))
         .filter(group => group.zoneNames.length > 0);
     }
 
@@ -147,7 +151,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
   private _filterUngroupped(value: string): string[] {
     if (value) {
-      return _filter(this.timezoneUngroupped, value);
+      return filter(this.timezoneUngroupped, value);
     }
 
     return this.timezoneUngroupped;

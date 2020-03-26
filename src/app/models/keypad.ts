@@ -1,6 +1,6 @@
 export class Keypad {
     id: number;
-    type_id: number;
+    typeId: number;
     enabled: boolean;
 }
 

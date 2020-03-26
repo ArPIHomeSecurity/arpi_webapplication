@@ -91,7 +91,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     });
   }
 
-  removeRegistrationCode(userId: number){
+  removeRegistrationCode(userId: number) {
     this.userService.deleteRegistrationCode(userId)
       .subscribe(_ => this.updateComponent());
   }

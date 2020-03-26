@@ -2,13 +2,13 @@
   <div *ngIf="sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
       <mat-card-header>
-        <div mat-card-avatar [ngSwitch]="sensor.type_id" 
+        <div mat-card-avatar [ngSwitch]="sensor.typeId" 
             [ngClass]="{'sensor-image': true, 'alerting': sensor.alert}">
           <img *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
           <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png"/>
           <img *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
           <img *ngSwitchCase="4" src="assets/images/sensor_break.png"/>
-          <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.type_id)}}"/>
+          <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"/>
         </div>
 
         <mat-card-title ngClass.xs="sensor-title-sm">
@@ -26,7 +26,7 @@
         </mat-card-subtitle>
 
         <mat-card-subtitle>
-          Zone: {{getZoneName(sensor.zone_id)}} <button mat-button [routerLink]="['/zone', sensor.zone_id]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
+          Zone: {{getZoneName(sensor.zoneId)}} <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
         </mat-card-subtitle>
       </mat-card-header>
 

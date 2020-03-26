@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
   templateUrl: 'zone-list.component.html',
   styleUrls: ['zone-list.component.scss'],
@@ -21,6 +20,9 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  CONFIG = 0;
+  SENSORS = 1;
+
   sensors: Sensor[] = [];
   zones: Zone[] = null;
   open: boolean[][] = [];
@@ -30,7 +32,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     public eventService: EventService,
     public loader: LoaderService,
     public monitoringService: MonitoringService,
-    
+
     private sensorService: SensorService,
     private zoneService: ZoneService,
     public dialog: MatDialog,
@@ -42,8 +44,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   ngOnInit() {
     super.initialize();
 
-    this.open['config'] = [];
-    this.open['sensors'] = [];
+    this.open[this.CONFIG] = [];
+    this.open[this.SENSORS] = [];
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
@@ -59,13 +61,13 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
-    forkJoin(
-      this.zoneService.getZones(),
-      this.sensorService.getSensors()
-    )
+    forkJoin({
+      zones: this.zoneService.getZones(),
+      sensors: this.sensorService.getSensors()
+    })
     .subscribe(results => {
-        this.zones = results[0];
-        this.sensors = results[1];
+        this.zones = results.zones;
+        this.sensors = results.sensors;
         this.loader.display(false);
       }
     );
@@ -74,7 +76,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   getSensors(zoneId: number): Sensor[] {
     const results: Sensor[] = [];
     this.sensors.forEach((sensor) => {
-      if (sensor.zone_id === zoneId) {
+      if (sensor.zoneId === zoneId) {
         results.push(sensor);
       }
     });

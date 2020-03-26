@@ -38,10 +38,10 @@ export function setLocalValue(name: string, value: any) {
   localStorage.setItem(name, JSON.stringify(value));
 }
 
-export function getValue(value: any, attribute: string, default_value: any = '') {
+export function getValue(value: any, attribute: string, defaultValue: any = '') {
   // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
   if (value) {
-    return value ? value[attribute] : default_value;
+    return value ? value[attribute] : defaultValue;
   }
-  return default_value;
+  return defaultValue;
 }

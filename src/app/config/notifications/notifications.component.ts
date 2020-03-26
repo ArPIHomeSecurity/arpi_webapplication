@@ -90,14 +90,15 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       this.loader.display(true);
     });
 
-    forkJoin(
-      this.configService.getOption('notifications', 'email'),
-      this.configService.getOption('notifications', 'gsm'),
-      this.configService.getOption('notifications', 'subscriptions'))
+    forkJoin({
+      email: this.configService.getOption('notifications', 'email'),
+      gsm: this.configService.getOption('notifications', 'gsm'),
+      subscriptions: this.configService.getOption('notifications', 'subscriptions')
+    })
     .subscribe(results => {
-        this.email = results[0] ? results[0] : DEFAULT_EMAIL;
-        this.gsm = results[1] ? results[1] : DEFAULT_GSM;
-        this.subscriptions = results[2] ? results[2] : DEFAULT_SUBSCRIPTIONS;
+        this.email = results.email ? results.email : DEFAULT_EMAIL;
+        this.gsm = results.gsm ? results.gsm : DEFAULT_GSM;
+        this.subscriptions = results.subscriptions ? results.subscriptions : DEFAULT_SUBSCRIPTIONS;
         this.email.value = JSON.parse(this.email.value);
         this.gsm.value = JSON.parse(this.gsm.value);
         this.subscriptions.value = JSON.parse(this.subscriptions.value);
@@ -109,13 +110,13 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
   prepareEmail(): any {
     const formModel = this.notificationsForm.value;
-    const email = {
-      'smtp_username': formModel.smtp_username,
-      'email_address': formModel.email_address,
+    const email: any = {
+      smtp_username: formModel.smtp_username,
+      email_address: formModel.email_address,
     };
 
     if (formModel.smtp_password) {
-      email['smtp_password'] = formModel.smtp_password;
+      email.smtp_password = formModel.smtp_password;
     }
 
     return email;
@@ -124,21 +125,21 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareGsm(): any {
     const formModel = this.notificationsForm.value;
     return {
-      'pin_code': formModel.pin_code,
-      'phone_number': formModel.phone_number
+      pin_code: formModel.pin_code,
+      phone_number: formModel.phone_number
     };
   }
 
   prepareSubscriptions(): any {
     const formModel = this.notificationsForm.value;
     return {
-      'email': {
-        'alert_started': formModel.alert_started_email,
-        'alert_stopped': formModel.alert_stopped_email,
+      email: {
+        alert_started: formModel.alert_started_email,
+        alert_stopped: formModel.alert_stopped_email,
       },
-      'sms': {
-        'alert_started': formModel.alert_started_sms,
-        'alert_stopped': formModel.alert_stopped_sms
+      sms: {
+        alert_started: formModel.alert_started_sms,
+        alert_stopped: formModel.alert_stopped_sms
       }
     };
   }
@@ -147,11 +148,11 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const email = this.prepareEmail();
     const gsm = this.prepareGsm();
     const subcriptions = this.prepareSubscriptions();
-    forkJoin(
-      this.configService.setOption('notifications', 'email', email),
-      this.configService.setOption('notifications', 'gsm', gsm),
-      this.configService.setOption('notifications', 'subscriptions', subcriptions)
-    )
+    forkJoin({
+      email: this.configService.setOption('notifications', 'email', email),
+      gsm: this.configService.setOption('notifications', 'gsm', gsm),
+      subscriptions: this.configService.setOption('notifications', 'subscriptions', subcriptions)
+    })
     .subscribe(_ => this.updateComponent());
   }
 }

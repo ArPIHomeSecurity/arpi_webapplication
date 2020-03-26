@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 
 import { Keypad, KeypadType } from '../models';
-import { AuthenticationService } from './authentication.service';
+
 
 @Injectable()
 export class KeypadService {
   constructor(
-    private http: HttpClient,
-    private authService: AuthenticationService
+    private http: HttpClient
   ) { }
 
   /** Not implemented yet */

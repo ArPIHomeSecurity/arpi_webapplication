@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private alertService: AlertService,
     private sensorService: SensorService,
   ) {
-    
+
   }
 
   ngOnInit() {

@@ -3,9 +3,9 @@ import {throwError as observableThrowError,  Observable } from 'rxjs';
 
 import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { ArmType, ArmType2String, KeypadType, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
+import { ArmType, ArmType2String, Clocks, KeypadType, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 
 
@@ -28,7 +28,7 @@ export class MonitoringService {
 
   getArmState(): Observable<ArmType> {
     return this.http.get<ArmType>('/api/monitoring/arm').pipe(
-      map(( response ) => String2ArmType( response['type'] ) ));
+      map(( response: any ) => String2ArmType( response.type ) ));
   }
 
   arm( armtype: ArmType ) {
@@ -48,15 +48,15 @@ export class MonitoringService {
 
   getMonitoringState(): Observable<MonitoringState> {
     return this.http.get('/api/monitoring/state').pipe(
-      map(( response ) => String2MonitoringState( response['state'] ) ));
+      map(( response: any ) => String2MonitoringState( response.state ) ));
   }
 
   getVersion(): Observable<string> {
     return this.http.get('/api/version', {responseType: 'text'});
   }
 
-  getClock(): Observable<Object> {
-    return this.http.get<Object>('/api/clock');
+  getClock(): Observable<Clocks> {
+    return this.http.get<Clocks>('/api/clock');
   }
 
   synchronizeClock() {
@@ -68,12 +68,12 @@ export class MonitoringService {
   }
 
   changeClock(dateTime: string, timeZone: string) {
-    const parameters = { };
+    const parameters: any = { };
     if (timeZone != null) {
-      parameters['timezone'] = timeZone;
+      parameters.timezone = timeZone;
     }
     if (dateTime != null) {
-      parameters['datetime'] = dateTime;
+      parameters.datetime = dateTime;
     }
     if (dateTime == null && timeZone == null) {
       return;

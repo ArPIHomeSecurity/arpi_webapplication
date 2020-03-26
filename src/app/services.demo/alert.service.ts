@@ -35,10 +35,10 @@ export class AlertService {
 
   getAlerts(): Observable<Alert[]> {
     const sortedAlerts = this.alerts.sort((a1, a2) => {
-      if (a1.start_time < a2.start_time) {
+      if (a1.startTime < a2.startTime) {
         return 1;
       }
-      if (a1.start_time > a2.start_time) {
+      if (a1.startTime > a2.startTime) {
         return -1;
       }
       return 0;
@@ -56,15 +56,15 @@ export class AlertService {
 
   getAlert(): Observable<Alert> {
     // get sensors from api
-    return of(this.alerts.find(a => a.end_time === null)).pipe(delay(environment.delay));
+    return of(this.alerts.find(a => a.endTime === null)).pipe(delay(environment.delay));
   }
 
   _createAlert(sensors: Sensor[], alertType: AlertType) {
     const alert: Alert = {
       id: this.alerts.length + 1,
-      start_time: new Date().toLocaleString(),
-      end_time: null,
-      alert_type: alertType,
+      startTime: new Date().toLocaleString(),
+      endTime: null,
+      alertType: alertType,
       sensors: sensors
     };
     this.alerts.push(alert);
@@ -85,9 +85,9 @@ export class AlertService {
   }
 
   _stopAlert() {
-    const alert = this.alerts.find(a => a.end_time == null);
+    const alert = this.alerts.find(a => a.endTime == null);
     if (alert != null) {
-      alert.end_time = new Date().toLocaleString();
+      alert.endTime = new Date().toLocaleString();
       this.syren = null;
       clearInterval(this.syrenId);
       setSessionValue('AlertService.alerts', this.alerts);

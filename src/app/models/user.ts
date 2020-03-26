@@ -3,8 +3,8 @@ export class User {
   name: string;
   email: string;
   role: string;
-  has_registration_code: boolean;
-  registration_expiry: string;
-  access_code: number;
+  hasRegistrationCode: boolean;
+  registrationExpiry: string;
+  accessCode: number;
   comment: string;
 }

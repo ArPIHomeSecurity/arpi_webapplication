@@ -1,5 +1,5 @@
 <div *ngIf="zone != null">
-  <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit(zoneForm.value)" novalidate
+  <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate
       ngClass.gt-xs="zone-form" ngClass.xs="zone-form-xs" fxLayout="column">
 
     <mat-form-field>

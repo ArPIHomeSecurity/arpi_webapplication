@@ -54,3 +54,9 @@ export function MonitoringState2String(systemState: MonitoringState): string {
       console.error('Unknown monitoring state!' + systemState);
   }
 }
+
+export class Clocks {
+  system: string;
+  network: string;
+  timezone: string;
+}

@@ -9,12 +9,12 @@ import { AlertType, Alert, Sensor } from '../models';
 import { AlertService, EventService, SensorService } from '../services';
 
 export class AlertHistory extends DataSource<any> {
-  constructor(private _alert_history: Observable<Alert[]>, private _paginator: MatPaginator) {
+  constructor(private alertHistory: Observable<Alert[]>, private paginator: MatPaginator) {
     super();
   }
 
   connect(): Observable<Alert[]> {
-    return this._alert_history;
+    return this.alertHistory;
   }
 
   disconnect() {}

@@ -17,9 +17,9 @@ export class AlertService {
     // get sensors from api
     // hack: converting arm_type field from string to ArmType
     return this.http.get<Alert[]>('/api/alerts').pipe(
-      map(( rawAlerts: Object[] ) => {
+      map(( rawAlerts: any[] ) => {
         for ( const rawAlert of rawAlerts ) {
-          rawAlert['alert_type'] = String2AlertType( rawAlert['alert_type'] );
+          rawAlert.alert_type = String2AlertType( rawAlert.alert_type );
         }
         return rawAlerts as Alert[];
       } ));

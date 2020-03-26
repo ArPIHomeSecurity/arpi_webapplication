@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Device registration</h1>
 <div mat-dialog-content>
-  <div *ngIf="user.has_registration_code">
+  <div *ngIf="user.hasRegistrationCode">
    
   </div>
   <form [formGroup]="registrationForm">
@@ -25,16 +25,16 @@
   </form>
 </div>
 
-<div *ngIf="registration_code" class="registration">
+<div *ngIf="registrationCode" class="registration">
   Device registration code
   <div class="code">
-    {{registration_code}}
-    <button mat-icon-button *ngIf="registration_code" (click)="copyText(registration_code)"><mat-icon>file_copy</mat-icon></button>
+    {{registrationCode}}
+    <button mat-icon-button *ngIf="registrationCode" (click)="copyText(registrationCode)"><mat-icon>file_copy</mat-icon></button>
   </div>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button [disabled]="!registrationForm.valid || registration_code" (click)="getNewCode()" tabindex="2" color="primary">Get new code</button>
+  <button mat-raised-button [disabled]="!registrationForm.valid || registrationCode" (click)="getNewCode()" tabindex="2" color="primary">Get new code</button>
   
   <button mat-button (click)="onClickClose()" tabindex="-1">Close</button>
 </div>

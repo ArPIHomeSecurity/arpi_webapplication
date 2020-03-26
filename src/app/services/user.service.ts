@@ -40,16 +40,16 @@ export class UserService {
     return this.http.delete<boolean>('/api/user/' + userId);
   }
 
-  generateRegistrationCode(userId: number, expiry: number): Observable<object> {
+  generateRegistrationCode(userId: number, expiry: number): Observable<any> {
     let params = new HttpParams();
     if (expiry) {
       params = params.set('expiry', expiry.toString());
     }
 
-    return this.http.get('/api/user/'+userId+'/registration_code', {params: params});
+    return this.http.get('/api/user/' + userId + '/registration_code', { params });
   }
 
   deleteRegistrationCode(userId: number): Observable<object> {
-    return this.http.delete('/api/user/'+userId+'/registration_code');
+    return this.http.delete('/api/user/' + userId + '/registration_code');
   }
 }

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   // display error message of the compoponents
   message: string;
   watcher: Subscription;
-  small_screen: boolean;
+  smallScreen: boolean;
   locales = [
     {name: 'Magyar', id: 'hu'},
     {name: 'English', id: 'en'}
@@ -34,25 +34,27 @@ export class AppComponent implements OnInit, AfterViewInit {
   versions: {
     server_version: string;
     webapplication_version: string;
-  }
+  };
   environment = environment;
   countdownConfig = {
     leftTime: environment.USER_TOKEN_EXPIRY,
     format: 'mm:ss',
-    notify: [environment.USER_TOKEN_EXPIRY/3]
+    notify: [environment.USER_TOKEN_EXPIRY / 3]
   };
   isSessionValid: boolean;
-  
+
   constructor(
     public mediaObserver: MediaObserver,
     private loader: LoaderService,
     public authService: AuthenticationService,
     private monitoring: MonitoringService,
-    private sidenav: ViewContainerRef,
+    public sidenav: ViewContainerRef,
     private snackBar: MatSnackBar
   ) {
-    this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
-      this.small_screen = (change.mqAlias === 'xs' || change.mqAlias === 'sm');
+    this.watcher = mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
+      changes.forEach(change =>
+        this.smallScreen = (change.mqAlias === 'xs' || change.mqAlias === 'sm')
+      );
     });
 
     this.currentLocale = localStorage.getItem('localeId');
@@ -66,13 +68,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.small_screen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
+    this.smallScreen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
     this.loader.status.subscribe(value => this.displayLoader = value);
     this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.versions.server_version = version);
   }
-  
-  ngAfterViewInit(){
+
+  ngAfterViewInit() {
     this.authService.isSessionValid()
       .subscribe(isSessionValid => {
         this.isSessionValid = isSessionValid;
@@ -105,28 +107,31 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   onLocaleSelected(event) {
-    const current_locale = localStorage.getItem('localeId');
-    console.log('Change locale: ', current_locale, '=>', event.value);
+    const currentLocale = localStorage.getItem('localeId');
+    console.log('Change locale: ', currentLocale, '=>', event.value);
     localStorage.setItem('localeId', event.value);
 
-    const new_locale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
+    const newLocale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
     const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
     if (languagePattern.test(location.pathname)) {
       // change the language
-      const new_path = location.pathname.replace('/' + current_locale, (new_locale ? '/' + new_locale : ''));
-      location.pathname = new_path.replace(/\/$/, "");
+      const newPath = location.pathname.replace('/' + currentLocale, (newLocale ? '/' + newLocale : ''));
+      location.pathname = newPath.replace(/\/$/, '');
     } else {
       // if the current language isn't the default, add the language
-      location.pathname = ('/' + new_locale + location.pathname).replace(/\/$/, "");
+      location.pathname = ('/' + newLocale + location.pathname).replace(/\/$/, '');
     }
   }
 
   handleCountdown($event) {
-    if ($event.action == 'notify') {
-      const current_locale = localStorage.getItem('localeId');
-      this.snackBar.open('You session will expirey in ' + humanizeDuration((environment.USER_TOKEN_EXPIRY/3)*1000, {language: current_locale})+'!', null, {duration: environment.SNACK_DURATION});
-    }
-    else if ($event.action == 'done') {
+    if ($event.action === 'notify') {
+      const currentLocale = localStorage.getItem('localeId');
+      this.snackBar.open(
+        'You session will expirey in ' + humanizeDuration((environment.USER_TOKEN_EXPIRY / 3) * 1000, { language: currentLocale }) + '!',
+        null,
+        {duration: environment.SNACK_DURATION}
+      );
+    } else if ($event.action === 'done') {
       this.snackBar.open('Session expired, logged out!', null, {duration: environment.SNACK_DURATION});
       this.logout();
     }

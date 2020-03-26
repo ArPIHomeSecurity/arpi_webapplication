@@ -75,12 +75,13 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       this.loader.display(true);
     });
 
-    forkJoin(
-      this.configService.getOption('network', 'dyndns'),
-      this.configService.getOption('network', 'access'))
+    forkJoin({
+      dyndns: this.configService.getOption('network', 'dyndns'),
+      access: this.configService.getOption('network', 'access')
+    })
     .subscribe(results => {
-        this.dyndns = results[0] ? results[0] : DEFAULT_DYNDNS;
-        this.access = results[1] ? results[1] : DEFAULT_ACCESS;
+        this.dyndns = results.dyndns ? results.dyndns : DEFAULT_DYNDNS;
+        this.access = results.access ? results.access : DEFAULT_ACCESS;
         this.dyndns.value = JSON.parse(this.dyndns.value);
         this.access.value = JSON.parse(this.access.value);
         this.updateForm(this.dyndns, this.access);
@@ -91,14 +92,14 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   prepareDyndns(): any {
     const formModel = this.networkForm.value;
-    const dyndns = {
-      'username': formModel.dyndns_username,
-      'hostname': formModel.dyndns_hostname,
-      'provider': formModel.dyndns_provider
+    const dyndns: any = {
+      username: formModel.dyndns_username,
+      hostname: formModel.dyndns_hostname,
+      provider: formModel.dyndns_provider
     };
 
     if (formModel.dyndns_password) {
-      dyndns['password'] = formModel.dyndns_password;
+      dyndns.password = formModel.dyndns_password;
     }
 
     return dyndns;
@@ -107,14 +108,15 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   prepareAccess(): any {
     const formModel = this.networkForm.value;
     return {
-      'ssh': formModel.access_ssh
+      ssh: formModel.access_ssh
     };
   }
 
   onSubmit() {
-    forkJoin(
-      this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
-      this.configService.setOption('network', 'access', this.prepareAccess()))
+    forkJoin({
+      dyndns: this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
+      access: this.configService.setOption('network', 'access', this.prepareAccess())
+    })
     .subscribe(_ => this.updateComponent()
     );
   }

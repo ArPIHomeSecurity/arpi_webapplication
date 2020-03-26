@@ -13,8 +13,8 @@ import { UserDeviceUnregisterDialogComponent } from '../user';
 })
 
 export class LoginComponent implements OnInit {
-  @ViewChild('rc_field') rc_field: ElementRef;
-  @ViewChild('ac_field') ac_field: ElementRef;
+  @ViewChild('rc_field') rcField: ElementRef;
+  @ViewChild('ac_field') acField: ElementRef;
 
   registerForm: FormGroup;
   registerCode: FormControl;
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   isRegistered = false;
   loading = false;
   error = '';
-  hide: boolean = true;
+  hide = true;
 
   constructor(
     private dialog: MatDialog,
@@ -39,18 +39,17 @@ export class LoginComponent implements OnInit {
         this.isRegistered = isRegistered;
         setTimeout (() => {
           if (isRegistered) {
-            this.ac_field.nativeElement.focus();
-          }
-          else {
-            this.rc_field.nativeElement.focus();
+            this.acField.nativeElement.focus();
+          } else {
+            this.rcField.nativeElement.focus();
           }
         }, 0.5);
       });
-    
+
     this.updateForms();
   }
 
-  updateForms(){
+  updateForms() {
     this.registerForm = new FormGroup({
       registerCode: this.registerCode = new FormControl('', Validators.required)
     });
@@ -64,14 +63,14 @@ export class LoginComponent implements OnInit {
     this.error = '';
 
     if (this.registerCode.value) {
-      let re  = /-/gi;
+      const re  = /-/gi;
       this.authenticationService.registerDevice(this.registerCode.value.replace(re, ''))
         .subscribe(result => {
           this.registerCode.setValue(null);
           if (result) {
             setTimeout (() => {
               this.loginForm.reset();
-              this.ac_field.nativeElement.focus();
+              this.acField.nativeElement.focus();
             }, 0.5);
           } else {
             this.error = 'Invalid registration code!';
@@ -79,17 +78,15 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          if (error.error['error'] == 'expired registration') {
+          if (error.error.error === 'expired registration') {
             this.error = 'Registration code expired!';
-          }
-          else {
+          } else {
             this.error = 'Failed to register device!';
           }
           this.loading = false;
         }
       );
-    }
-    else {
+    } else {
       this.loading = false;
       this.error = 'Fill required field(s)!';
     }
@@ -105,7 +102,7 @@ export class LoginComponent implements OnInit {
           this.accessCode.setValue(null);
           if (result) {
             // after login navigate to returnUrl or home
-            let returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
+            const returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
             this.router.navigate([returnUrl || '/']);
           } else {
             this.error = 'Incorrect access code!';
@@ -113,24 +110,22 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          if (error.error['error'] == 'invalid user id') {
+          if (error.error.error === 'invalid user id') {
             this.error = 'Registered user is unknown!';
-          }
-          else {
+          } else {
             this.error = 'Failed to authenticate!';
           }
 
           this.loading = false;
         }
       );
-    }
-    else {
+    } else {
       this.loading = false;
       this.error = 'Fill required field(s)!';
     }
   }
 
-  unregister(){
+  unregister() {
     const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
       width: '250px',
       data: null,
@@ -143,7 +138,7 @@ export class LoginComponent implements OnInit {
         this.accessCode.setValue(null);
         setTimeout (() => {
           this.registerForm.reset();
-          this.rc_field.nativeElement.focus();
+          this.rcField.nativeElement.focus();
         }, 0.5);
       }
     });

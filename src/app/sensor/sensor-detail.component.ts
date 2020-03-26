@@ -30,15 +30,15 @@ class Channel {
  */
 class SensorInfo {
   channel: number;
-  type_id: number;
-  zone_id: number;
+  typeId: number;
+  zoneId: number;
   enabled: boolean;
   description: string;
 
-  zone_name: string;
-  disarmed_delay: number;
-  away_delay: number;
-  stay_delay: number;
+  zoneName: string;
+  disarmedDelay: number;
+  awayDelay: number;
+  stayDelay: number;
 }
 
 
@@ -56,7 +56,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   sensorTypes: SensorType[];
   sensorForm: FormGroup;
   zoneForm: FormGroup;
-  new_zone = false;
+  newZone = false;
   MonitoringState = MonitoringState;
 
   constructor(
@@ -96,17 +96,18 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     );
 
     if (this.sensorId != null) {
-      forkJoin(
-        this.sensorService.getSensor(this.sensorId),
-        this.sensorService.getSensors(),
-        this.zoneService.getZones(),
-        this.sensorService.getSensorTypes())
+      forkJoin({
+        sensor: this.sensorService.getSensor(this.sensorId),
+        sensors: this.sensorService.getSensors(),
+        zones: this.zoneService.getZones(),
+        sensorTypes: this.sensorService.getSensorTypes()
+      })
       .subscribe(results => {
-          this.sensor = results[0];
+          this.sensor = results.sensor;
           const info = {
             channel: this.sensor.channel,
-            type_id: this.sensor.type_id,
-            zone_id: this.sensor.zone_id,
+            type_id: this.sensor.typeId,
+            zone_id: this.sensor.zoneId,
             enabled: this.sensor.enabled,
             description: this.sensor.description,
 
@@ -116,30 +117,31 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
             stay_delay: 0
           };
 
-          this.sensors = results[1];
-          this.zones = results[2];
-          this.sensorTypes = results[3].sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
+          this.sensors = results.sensors;
+          this.zones = results.zones;
+          this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
           this.channels = this.generateChannels(this.sensors);
 
           this.updateForm(this.sensor);
           this.loader.display(false);
         });
     } else {
-      forkJoin(
-        this.sensorService.getSensors(),
-        this.sensorService.getSensorTypes(),
-        this.zoneService.getZones())
+      forkJoin({
+        sensors: this.sensorService.getSensors(),
+        sensorTypes: this.sensorService.getSensorTypes(),
+        zones: this.zoneService.getZones()
+      })
       .subscribe(results => {
-          this.sensors = results[0];
-          this.sensorTypes = results[1];
-          this.zones = results[2];
+          this.sensors = results.sensors;
+          this.sensorTypes = results.sensorTypes;
+          this.zones = results.zones;
           this.channels = this.generateChannels(this.sensors);
 
-          this.sensor = new Sensor;
+          this.sensor = new Sensor();
           const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
           this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
-          this.sensor.zone_id = -1;
-          this.sensor.type_id = this.sensorTypes[0].id;
+          this.sensor.zoneId = -1;
+          this.sensor.typeId = this.sensorTypes[0].id;
 
           this.updateForm(this.sensor);
           this.loader.display(false);
@@ -154,20 +156,20 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zone_id)
     this.zoneForm =  this.fb.group({
-      zone_name: new FormControl('', this.sensor.zone_id === -1 ? Validators.required : null),
-      disarmed_alert: false,
-      disarmed_delay: new FormControl(0),
-      away_armed_alert: true,
-      away_delay: new FormControl(0, this.sensor.zone_id === -1 ? [Validators.required, positiveInteger()] : null),
-      stay_armed_alert: true,
-      stay_delay: new FormControl(0, this.sensor.zone_id === -1 ? [Validators.required, positiveInteger()] : null)
+      zoneName: new FormControl('', this.sensor.zoneId === -1 ? Validators.required : null),
+      disarmedAlert: false,
+      disarmedDelay: new FormControl(0),
+      awayArmedAlert: true,
+      awayDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      stayArmedAlert: true,
+      stayDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
     });
 
     // update the form if it doesn't exists
     this.sensorForm = this.fb.group({
       channel: new FormControl(sensor.channel),
-      zone_id: new FormControl(sensor.zone_id, Validators.required),
-      type_id: new FormControl(sensor.type_id, Validators.required),
+      zoneId: new FormControl(sensor.zoneId, Validators.required),
+      typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
       description: new FormControl(sensor.description, Validators.required),
       zoneForm: this.zoneForm
@@ -184,10 +186,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorService.updateSensor(this.channels[sensor.channel].sensor);
     }
 
-    if (this.sensor.zone_id === -1) {
+    if (this.sensor.zoneId === -1) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            sensor.zone_id = result.id;
+            sensor.zoneId = result.id;
             if (this.sensor.id !== undefined) {
               return this.sensorService.updateSensor(sensor)
                 .subscribe(_ => this.router.navigate(['/sensors']));
@@ -220,8 +222,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: this.sensor.id,
       channel: formModel.channel,
-      zone_id: formModel.zone_id,
-      type_id: formModel.type_id,
+      zoneId: formModel.zone_id,
+      typeId: formModel.type_id,
       alert: false,
       description: formModel.description,
       enabled: formModel.enabled
@@ -235,48 +237,48 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.zone_id,
       name: zoneModel.zone_name,
-      disarmed_delay: zoneModel.disarmed_alert ? parseInt(zoneModel.disarmed_delay, 10) : null,
-      away_delay: zoneModel.away_armed_alert ? parseInt(zoneModel.away_delay, 10) : null,
-      stay_delay: zoneModel.stay_armed_alert ? parseInt(zoneModel.stay_delay, 10) : null,
+      disarmedDelay: zoneModel.disarmed_alert ? parseInt(zoneModel.disarmed_delay, 10) : null,
+      awayDelay: zoneModel.away_armed_alert ? parseInt(zoneModel.away_delay, 10) : null,
+      stayDelay: zoneModel.stay_armed_alert ? parseInt(zoneModel.stay_delay, 10) : null,
       description: zoneModel.zone_name
     };
   }
 
   onZoneSelected(event) {
-    this.sensor.zone_id = event.value;
+    this.sensor.zoneId = event.value;
     const controls = this.zoneForm.controls;
 
     // if NEW zone selected
-    if (this.sensor.zone_id === -1) {
-      controls['disarmed_delay'].setValidators([Validators.required, positiveInteger()]);
-      controls['away_delay'].setValidators([Validators.required, positiveInteger()]);
-      controls['stay_delay'].setValidators([Validators.required, positiveInteger()]);
-      controls['zone_name'].setValidators(Validators.required);
+    if (this.sensor.zoneId === -1) {
+      controls.disarmed_delay.setValidators([Validators.required, positiveInteger()]);
+      controls.away_delay.setValidators([Validators.required, positiveInteger()]);
+      controls.stay_delay.setValidators([Validators.required, positiveInteger()]);
+      controls.zone_name.setValidators(Validators.required);
     } else {
-      controls['zone_name'].clearValidators();
-      controls['zone_name'].setErrors(null);
-      controls['disarmed_delay'].clearValidators();
-      controls['disarmed_delay'].setErrors(null);
-      controls['away_delay'].clearValidators();
-      controls['away_delay'].setErrors(null);
-      controls['stay_delay'].clearValidators();
-      controls['stay_delay'].setErrors(null);
+      controls.zone_name.clearValidators();
+      controls.zone_name.setErrors(null);
+      controls.disarmed_delay.clearValidators();
+      controls.disarmed_delay.setErrors(null);
+      controls.away_delay.clearValidators();
+      controls.away_delay.setErrors(null);
+      controls.stay_delay.clearValidators();
+      controls.stay_delay.setErrors(null);
     }
 
     this.zoneForm.updateValueAndValidity();
     this.sensorForm.updateValueAndValidity();
   }
 
-  alertWhenChanged(event, delay_name) {
+  alertWhenChanged(event, delayName) {
     const controls = this.zoneForm.controls;
     if (event.checked) {
-      controls[delay_name].setValidators([Validators.required, positiveInteger()]);
+      controls[delayName].setValidators([Validators.required, positiveInteger()]);
     } else {
-      controls[delay_name].clearValidators();
-      controls[delay_name].setErrors(null);
+      controls[delayName].clearValidators();
+      controls[delayName].setErrors(null);
     }
 
-    controls[delay_name].updateValueAndValidity();
+    controls[delayName].updateValueAndValidity();
   }
 
   openDeleteDialog(sensorId: number) {
@@ -306,11 +308,11 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   generateChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
     const channels: Channel[] = [];
-    for (let i = 0; i < environment.channel_count; i++) {
-      const sensor = sensors.find(s => s.channel === i);
+    for (let channel = 0; channel < environment.channel_count; channel++) {
+      const sensor = sensors.find(s => s.channel === channel);
       channels.push({
-        channel: i,
-        sensor: sensor
+        channel,
+        sensor
       });
     }
 

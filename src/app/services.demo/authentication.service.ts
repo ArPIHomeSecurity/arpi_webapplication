@@ -28,7 +28,7 @@ export class AuthenticationService {
   login(access_code: string): Observable<boolean> {
     const userId = getLocalValue('AuthenticationService.registeredForUser', null);
     const tmpUser = this.userService.users.find(user => user.id === userId);
-    if (tmpUser && String(tmpUser.access_code) === access_code) {
+    if (tmpUser && String(tmpUser.accessCode) === access_code) {
       this.loggedInAs = tmpUser;
       setSessionValue('AuthenticationService.loggedInAs', this.loggedInAs);
       this.updateUserToken('user.session');
@@ -87,8 +87,8 @@ export class AuthenticationService {
     const index = this.userService.users.indexOf(tmpUser);
     if (tmpUser) {
       tmpUser.registration_code = null;
-      tmpUser.registration_expiry = null;
-      tmpUser.has_registration_code = false;
+      tmpUser.registrationExpiry = null;
+      tmpUser.hasRegistrationCode = false;
       this.userService.updateUser(tmpUser);
 
       this.registeredUserId = tmpUser.id;

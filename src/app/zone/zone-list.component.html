@@ -6,11 +6,11 @@
         <mat-card-title>{{zone.name}}</mat-card-title>
         <mat-card-subtitle *ngIf="zone.name != zone.description">{{zone.description}}</mat-card-subtitle>
   
-        <mat-expansion-panel (opened)="open['config'][zone.id] = true" (closed)="open['config'][zone.id] = false">
+        <mat-expansion-panel (opened)="open[CONFIG][zone.id] = true" (closed)="open[CONFIG][zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!open['config'][zone.id]" fxShow.xs="false">Away:{{zone.away_delay!==null? zone.away_delay : "-"}} Stay:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} Disarmed:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!open['config'][zone.id]" fxShow.gt-xs="false">A:{{zone.away_delay!==null? zone.away_delay : "-"}} S:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} D:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.xs="false">Away:{{zone.away_delay!==null? zone.away_delay : "-"}} Stay:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} Disarmed:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.gt-xs="false">A:{{zone.away_delay!==null? zone.away_delay : "-"}} S:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} D:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
@@ -39,10 +39,10 @@
           </ng-template>
         </mat-expansion-panel>
   
-        <mat-expansion-panel (opened)="open['sensors'][zone.id] = true" (closed)="open['sensors'][zone.id] = false">
+        <mat-expansion-panel (opened)="open[SENSORS][zone.id] = true" (closed)="open[SENSORS][zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!open['sensors'][zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!open[SENSORS][zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
             <ul class="sensor-list">

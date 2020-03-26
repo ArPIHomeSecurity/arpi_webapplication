@@ -22,7 +22,7 @@ import { NetworkComponent } from './config/network';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
-import { 
+import {
   UserListComponent,
   UserDetailComponent,
   UserDeleteDialogComponent,
@@ -47,6 +47,7 @@ import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 // material components
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -73,24 +74,24 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    
+
     AlertListComponent,
-    
+
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     NetworkComponent,
-    
+
     UserListComponent,
     UserDetailComponent,
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
-    
+
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
-    
+
     ZoneListComponent,
     ZoneDetailComponent,
     ZoneDeleteDialogComponent,
@@ -106,6 +107,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ReactiveFormsModule,
     HttpClientModule,
     routing,
+    MatAutocompleteModule,
     MatInputModule,
     MatToolbarModule,
     MatTooltipModule,

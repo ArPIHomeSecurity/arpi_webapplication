@@ -7,7 +7,7 @@ import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { AlertType, ArmType, ArmType2String, Sensor, MonitoringState, MonitoringState2String } from '../models';
+import { AlertType, ArmType, ArmType2String, Clocks, Sensor, MonitoringState, MonitoringState2String } from '../models';
 
 import { environment } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
@@ -107,7 +107,7 @@ export class MonitoringService {
     return of('Version:DEMO-0.5');
   }
 
-  getClock(): Observable<Object> {
+  getClock(): Observable<Clocks> {
     return of({
         hw: this.datetime,
         network: this.datetime,
@@ -150,27 +150,27 @@ export class MonitoringService {
   }
 
   _onAlert(sensor: Sensor) {
-    const zone = this.zoneService._getZone(sensor.zone_id);
-    if (this.armState === ArmType.AWAY && zone.away_delay != null && sensor.enabled) {
+    const zone = this.zoneService._getZone(sensor.zoneId);
+    if (this.armState === ArmType.AWAY && zone.awayDelay != null && sensor.enabled) {
       setTimeout(() => {
         if (this.armState !== ArmType.DISARMED) {
           if (sensor.alert) {
             this.alertService._createAlert([sensor], AlertType.AWAY);
           }
         }
-      }, 1000 * zone.away_delay);
-    } else if (this.armState === ArmType.STAY && zone.stay_delay != null && sensor.enabled) {
+      }, 1000 * zone.awayDelay);
+    } else if (this.armState === ArmType.STAY && zone.stayDelay != null && sensor.enabled) {
       setTimeout(() => {
         if (this.armState !== ArmType.DISARMED) {
           if (sensor.alert) {
             this.alertService._createAlert([sensor], AlertType.STAY);
           }
         }
-      }, 1000 * zone.stay_delay);
-    } else if (this.armState === ArmType.DISARMED && zone.disarmed_delay != null && sensor.enabled) {
+      }, 1000 * zone.stayDelay);
+    } else if (this.armState === ArmType.DISARMED && zone.disarmedDelay != null && sensor.enabled) {
       setTimeout(() => {
         this.alertService._createAlert([sensor], AlertType.SABOTAGE);
-      }, 1000 * zone.disarmed_delay);
+      }, 1000 * zone.disarmedDelay);
     } else if (this.armState !== ArmType.DISARMED) {
       console.error('Can\'t alert system!!!');
     }

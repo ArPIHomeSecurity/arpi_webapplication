@@ -1,5 +1,5 @@
 <div *ngIf="user != null">
-  <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" novalidate
+  <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate
       ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
 
     <mat-form-field>

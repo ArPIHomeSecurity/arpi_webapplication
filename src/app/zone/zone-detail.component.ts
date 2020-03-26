@@ -62,21 +62,22 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         this.loader.display(true);
       });
 
-      forkJoin(
-        this.zoneService.getZone(this.zoneId),
-        this.sensorService.getSensors())
+      forkJoin({
+        zone: this.zoneService.getZone(this.zoneId),
+        sensors: this.sensorService.getSensors()
+      })
       .subscribe(results => {
-          this.zone = results[0];
+          this.zone = results.zone;
           this.updateForm(this.zone);
-          this.sensors = results[1];
+          this.sensors = results.sensors;
           this.loader.display(false);
         }
       );
     } else {
-      this.zone = new Zone;
-      this.zone.disarmed_delay = null;
-      this.zone.away_delay = 0;
-      this.zone.stay_delay = 0;
+      this.zone = new Zone();
+      this.zone.disarmedDelay = null;
+      this.zone.awayDelay = 0;
+      this.zone.stayDelay = 0;
       this.updateForm(this.zone);
     }
   }
@@ -88,12 +89,12 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   updateForm(zone: Zone) {
     this.zoneForm = this.fb.group({
       name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
-      disarmed_alert: zone.disarmed_delay !== null,
-      disarmed_delay: new FormControl(zone.disarmed_delay, zone.disarmed_delay != null ? [Validators.required, positiveInteger()] : null),
-      away_armed_alert: zone.away_delay !== null,
-      away_delay: new FormControl(zone.away_delay, zone.away_delay != null ? [Validators.required, positiveInteger()] : null),
-      stay_armed_alert: zone.stay_delay !== null,
-      stay_delay: new FormControl(zone.stay_delay, zone.stay_delay != null ? [Validators.required, positiveInteger()] : null),
+      disarmed_alert: zone.disarmedDelay !== null,
+      disarmed_delay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
+      away_armed_alert: zone.awayDelay !== null,
+      away_delay: new FormControl(zone.awayDelay, zone.awayDelay != null ? [Validators.required, positiveInteger()] : null),
+      stay_armed_alert: zone.stayDelay !== null,
+      stay_delay: new FormControl(zone.stayDelay, zone.stayDelay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
@@ -123,7 +124,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     const results: Sensor[] = [];
     if (this.zone) {
       this.sensors.forEach((sensor) => {
-        if (sensor.zone_id === this.zone.id) {
+        if (sensor.zoneId === this.zone.id) {
           results.push(sensor);
         }
       });
@@ -139,9 +140,9 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     zone.id = this.zoneId;
     zone.name = formModel.name;
     zone.description = formModel.description;
-    zone.disarmed_delay = formModel.disarmed_alert ? parseInt(formModel.disarmed_delay, 10) : null;
-    zone.away_delay = formModel.away_armed_alert ? parseInt(formModel.away_delay, 10) : null;
-    zone.stay_delay = formModel.stay_armed_alert ? parseInt(formModel.stay_delay, 10) : null;
+    zone.disarmedDelay = formModel.disarmed_alert ? parseInt(formModel.disarmed_delay, 10) : null;
+    zone.awayDelay = formModel.away_armed_alert ? parseInt(formModel.away_delay, 10) : null;
+    zone.stayDelay = formModel.stay_armed_alert ? parseInt(formModel.stay_delay, 10) : null;
 
     return zone;
   }
@@ -168,14 +169,14 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     });
   }
 
-  alertWhenChanged(event, delay_name) {
+  alertWhenChanged(event, delayName) {
     const controls = this.zoneForm.controls;
     if (event.checked) {
-      controls[delay_name].setValidators([Validators.required, positiveInteger()]);
+      controls[delayName].setValidators([Validators.required, positiveInteger()]);
     } else {
-      controls[delay_name].setValidators(null);
+      controls[delayName].setValidators(null);
     }
 
-    controls[delay_name].updateValueAndValidity();
+    controls[delayName].updateValueAndValidity();
   }
 }

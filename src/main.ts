@@ -16,7 +16,7 @@ if (location.pathname.startsWith('/' + locale)) {
   console.log('Correct locale, no need to redirect!');
 } else if (locale !== 'en') {
   console.log('Other locale is selected => redirect', locale);
-  location.href = ('/' + locale + location.pathname).replace(/\/$/, '');;
+  location.href = ('/' + locale + location.pathname).replace(/\/$/, '');
 }
 
 if (environment.production) {

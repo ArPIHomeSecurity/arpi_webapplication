@@ -78,22 +78,22 @@ export const USERS = [
     name: 'Administrator',
     email: 'admin@example.com',
     role: environment.ROLE_TYPES.ADMIN,
-    has_registration_code: true,
-    registration_code: 'ABCDEF000001',
-    access_code: 1234,
+    hasRegistrationCode: true,
+    registrationCode: 'ABCDEF000001',
+    accessCode: 1234,
     comment: '',
-    registration_expiry: ''
+    registrationExpiry: ''
   },
   {
     id: 1,
     name: 'User 1',
     email: 'user1@example.com',
     role: environment.ROLE_TYPES.USER,
-    registration_code: 'ABCDEF000002',
-    has_registration_code: true,
-    access_code: 1111,
+    hasRegistrationCode: true,
+    registrationCode: 'ABCDEF000002',
+    accessCode: 1111,
     comment: '',
-    registration_expiry: ''
+    registrationExpiry: ''
   }
 ];
 
@@ -101,8 +101,8 @@ export const SENSORS = [
   {
     id: 0,
     channel: 0,
-    zone_id: 0,
-    type_id: 1,
+    zoneId: 0,
+    typeId: 1,
     alert: false,
     description: 'Teszt',
     enabled: true
@@ -136,17 +136,17 @@ export const ZONES = [
   {
     id: 0,
     name: 'Hall',
-    disarmed_delay: null,
-    away_delay: 0,
-    stay_delay: 5,
+    disarmedDelay: null,
+    awayDelay: 0,
+    stayDelay: 5,
     description: 'Hall movement, alert with delay if stay armed'
   },
   {
     id: 1,
     name: 'Tamper',
     disarmed_delay: 0,
-    away_delay: 0,
-    stay_delay: 0,
+    awayDelay: 0,
+    stayDelay: 0,
     description: 'Sabotage'
   }
 ];
@@ -164,7 +164,7 @@ export const KEYPAD_TYPES = [
 export const KEYPADS = [
   {
     id: 1,
-    enabled: true,
-    type_id: 1
+    typeId: 1,
+    enabled: true
   }
 ];

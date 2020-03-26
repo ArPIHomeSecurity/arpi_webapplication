@@ -13,7 +13,7 @@ export class DemoHelpDialogComponent {
 
   }
 
-  onResetDemo(){
+  onResetDemo() {
     sessionStorage.clear();
     localStorage.clear();
     window.location.reload();

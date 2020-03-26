@@ -3,8 +3,6 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { EventService } from './event.service';
-import { MonitoringService } from './monitoring.service';
 import { environment, KEYPADS, KEYPAD_TYPES } from '../../environments/environment';
 import { Keypad, KeypadType } from '../models';
 
@@ -15,9 +13,7 @@ export class KeypadService {
   keypadTypes: KeypadType[] = KEYPAD_TYPES;
 
   constructor(
-    private authService: AuthenticationService,
-    private eventService: EventService,
-    private monitoringService: MonitoringService
+    private authService: AuthenticationService
   ) { }
 
   getKeypads(): Observable<Keypad[]> {

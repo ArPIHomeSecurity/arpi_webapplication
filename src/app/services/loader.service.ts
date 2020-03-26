@@ -6,7 +6,7 @@ export class LoaderService {
   public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor () {
+  constructor() {
 
   }
 

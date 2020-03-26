@@ -40,7 +40,7 @@ export class SystemStateComponent implements OnInit {
         }
       });
   }
-  
+
   updateComponent() {
     this.monitoringService.getArmState()
       .subscribe(armState => this.armState = armState);

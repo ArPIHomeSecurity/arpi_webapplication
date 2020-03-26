@@ -26,6 +26,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   user: User = null;
   userForm: FormGroup;
   roles: any = [];
+  hide = true;
 
   constructor(
     public loader: LoaderService,
@@ -52,7 +53,9 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     super.initialize();
 
     for (const role in environment.ROLE_TYPES) {
-      this.roles.push({'name': role, 'value': environment.ROLE_TYPES[role]});
+      if (environment.ROLE_TYPES.hasOwnProperty(role)) {
+        this.roles.push({name: role, value: environment.ROLE_TYPES[role]});
+      }
     }
 
     if (this.userId != null) {
@@ -69,10 +72,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         }
       );
     } else {
-      this.user = new User;
+      this.user = new User();
       this.user.name = null;
       this.user.role = 'user';
-      this.user.access_code = null;
+      this.user.accessCode = null;
       this.updateForm(this.user);
     }
   }
@@ -82,7 +85,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   updateForm(user: User) {
-    const accessCode = new FormControl(user.access_code, [Validators.pattern('^\\d{4,12}$')]);
+    const accessCode = new FormControl(user.accessCode, [Validators.pattern('^\\d{4,12}$')]);
 
     if (!user.id) {
       accessCode.setValidators([Validators.required, Validators.pattern('^\\d{4,12}$')]);
@@ -91,8 +94,8 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     this.userForm = this.fb.group({
       name: user.name,
       role: user.role,
-      has_registration_code: user.has_registration_code,
-      accessCode: accessCode,
+      hasRegistrationCode: user.hasRegistrationCode,
+      accessCode,
       comment: user.comment,
     });
   }
@@ -125,7 +128,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     user.id = this.userId;
     user.name = formModel.name;
     user.role = formModel.role;
-    user.access_code = formModel.accessCode;
+    user.accessCode = formModel.accessCode;
 
     return user;
   }

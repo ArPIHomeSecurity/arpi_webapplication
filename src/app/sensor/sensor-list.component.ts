@@ -66,14 +66,15 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       });
     }
 
-    forkJoin(
-      this.sensorService.getSensors(this.onlyAlerting),
-      this.sensorService.getSensorTypes(),
-      this.zoneService.getZones())
+    forkJoin({
+      sensors: this.sensorService.getSensors(this.onlyAlerting),
+      sensorTypes: this.sensorService.getSensorTypes(),
+      zones: this.zoneService.getZones()
+    })
     .subscribe(results => {
-        this.sensors = results[0];
-        this.sensorTypes = results[1];
-        this.zones = results[2];
+        this.sensors = results.sensors;
+        this.sensorTypes = results.sensorTypes;
+        this.zones = results.zones;
         this.loader.display(false);
       }
     );

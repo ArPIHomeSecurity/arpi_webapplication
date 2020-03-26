@@ -11,8 +11,8 @@ import { EventService } from '../services/event.service';
 
 @Injectable()
 export class AuthenticationService {
-  private _isDeviceRegistered = new Subject<boolean>();
-  private _isSessionValid = new Subject<boolean>();
+  private isDeviceRegisteredSubject = new Subject<boolean>();
+  private isSessionValidSubject = new Subject<boolean>();
 
   constructor(
       private http: HttpClient,
@@ -20,33 +20,39 @@ export class AuthenticationService {
       private router: Router
   ) { }
 
-  login(access_code: number): Observable<boolean> {
+  login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post('/api/authenticate', JSON.stringify({device_token: localStorage.getItem('deviceToken'), access_code: access_code}), {headers: headers}).pipe(
-      map((response) => {
-        // login successful if there's a jwt token in the response
-        if (response['device_token']) {
-          localStorage.setItem('deviceToken', response['device_token']);
-          this.eventService.connect();
-          this._isDeviceRegistered.next(true);
-        }
-        if (response['user_token']) {
-          // store user info with jwt token in local storage to keep user logged in between page refreshes
-          this.updateUserToken(response['user_token']);
+    return this.http.post(
+        '/api/authenticate',
+        JSON.stringify({device_token: localStorage.getItem('deviceToken'), access_code: accessCode}),
+        {headers}
+      )
+      .pipe(
+        map((response: any) => {
+          // login successful if there's a jwt token in the response
+          if (response.device_token) {
+            localStorage.setItem('deviceToken', response.device_token);
+            this.eventService.connect();
+            this.isDeviceRegisteredSubject.next(true);
+          }
+          if (response.user_token) {
+            // store user info with jwt token in local storage to keep user logged in between page refreshes
+            this.updateUserToken(response.user_token);
 
-          // return true to indicate successful login
-          return true;
-        } else {
-          // return false to indicate failed login
-          return false;
-        }
-      }));
+            // return true to indicate successful login
+            return true;
+          } else {
+            // return false to indicate failed login
+            return false;
+          }
+        })
+      );
   }
 
   logout(): void {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('userToken');
-    this._isSessionValid.next(false);
+    this.isSessionValidSubject.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -63,9 +69,8 @@ export class AuthenticationService {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
       try {
-        return JWT(userToken)['role'];
-      }
-      catch (error) {
+        return (JWT(userToken) as any).role;
+      } catch (error) {
 
       }
       return '';
@@ -76,9 +81,8 @@ export class AuthenticationService {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
       try {
-        return JWT(userToken)['name'];
-      }
-      catch (error) {
+        return (JWT(userToken) as any).name;
+      } catch (error) {
       }
       return '';
     }
@@ -87,8 +91,7 @@ export class AuthenticationService {
   getToken(): string {
     if (this.getUserToken()) {
       return this.getUserToken();
-    }
-    else if (this.getDeviceToken()) {
+    } else if (this.getDeviceToken()) {
       return this.getDeviceToken();
     }
   }
@@ -101,34 +104,32 @@ export class AuthenticationService {
     localStorage.setItem('userToken', token);
     try {
       JWT(localStorage.getItem('userToken'));
-      return this._isSessionValid.next(true);
-    }
-    catch (error) {}
-    return this._isSessionValid.next(false);
+      return this.isSessionValidSubject.next(true);
+    } catch (error) {}
+    return this.isSessionValidSubject.next(false);
   }
 
   isSessionValid(): Observable<boolean> {
     try {
       JWT(localStorage.getItem('userToken'));
-      return this._isSessionValid.pipe(startWith(true));
-    }
-    catch (error) {}
-    return this._isSessionValid.pipe(startWith(false));
+      return this.isSessionValidSubject.pipe(startWith(true));
+    } catch (error) {}
+    return this.isSessionValidSubject.pipe(startWith(false));
   }
 
   getDeviceToken() {
     return localStorage.getItem('deviceToken');
   }
 
-  registerDevice(registration_code: string): Observable<boolean> {
+  registerDevice(registrationCode: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post('/api/register_device', JSON.stringify({registration_code: registration_code}), {headers: headers}).pipe(
-      map((response) => {
+    return this.http.post('/api/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
+      map((response: any) => {
         // login successful if there's a jwt token in the response
-        if (response['device_token']) {
-          localStorage.setItem('deviceToken', response['device_token']);
+        if (response.device_token) {
+          localStorage.setItem('deviceToken', response.device_token);
           this.eventService.connect();
-          this._isDeviceRegistered.next(true);
+          this.isDeviceRegisteredSubject.next(true);
           return true;
         }
 
@@ -137,11 +138,11 @@ export class AuthenticationService {
   }
 
   unRegisterDevice() {
-    localStorage.removeItem("deviceToken");
+    localStorage.removeItem('deviceToken');
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this._isDeviceRegistered.pipe(
+    return this.isDeviceRegisteredSubject.pipe(
       startWith(!!localStorage.getItem('deviceToken'))
     );
   }
