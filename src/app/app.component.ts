@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSidenav } from '@angular/material/sidenav';
 import { CountdownComponent } from 'ngx-countdown';
 
 import * as humanizeDuration from 'humanize-duration';
@@ -19,6 +20,7 @@ import { VERSION } from './version';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
   displayLoader: boolean;
@@ -48,13 +50,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     private loader: LoaderService,
     public authService: AuthenticationService,
     private monitoring: MonitoringService,
-    public sidenav: ViewContainerRef,
     private snackBar: MatSnackBar
   ) {
     this.watcher = mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
-      changes.forEach(change =>
-        this.smallScreen = (change.mqAlias === 'xs' || change.mqAlias === 'sm')
-      );
+      this.smallScreen = false;
+      changes.forEach(change => this.smallScreen = this.smallScreen || (change.mqAlias === 'lt-sm'));
+
+      if (this.smallScreen) {
+        console.log("Closing");
+        this.sidenav.opened = false;
+        this.sidenav.mode = 'over';
+        this.sidenav.disableClose = false;
+      } else {
+        console.log("Opening");
+        this.sidenav.opened = true;
+        this.sidenav.mode = 'side';
+        this.sidenav.disableClose = true;
+      }
     });
 
     this.currentLocale = localStorage.getItem('localeId');
@@ -99,11 +111,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   isAdminUser() {
     return this.authService.getRole() === environment.ROLE_TYPES.ADMIN;
-  }
-
-  // helper method to access the sidenav even if it is in ngIf
-  @ViewChild('sidenav') set setSidenav(sidenav: ViewContainerRef) {
-      this.sidenav = sidenav;
   }
 
   onLocaleSelected(event) {

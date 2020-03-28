@@ -15,7 +15,7 @@
   </mat-toolbar>
 
   <mat-sidenav-container (backdropClick)="sidenav.close()">
-    <mat-sidenav #sidenav [opened]="!smallScreen" [mode]="smallScreen ? 'over': 'side'" disableClose>
+    <mat-sidenav #sidenav>
       <!-- sidenav content -->
       <div class="logo" fxHide.lt-md="true">
         <img src="assets/images/argus-eye-64.jpg">
@@ -30,7 +30,7 @@
           i18n="@@alert history menu link" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>history</mat-icon>Alert history
         </a>
-        <h3 mat-subheader i18n="Settings menu title">Settings</h3>
+        <h3 mat-subheader i18n="Settings menu title" [fxShow]="isLoggedIn()">Settings</h3>
         <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
            i18n="@@zone menu link" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>tab</mat-icon>Zones
@@ -59,7 +59,7 @@
           i18n="@@users menu link" [fxShow]="isAdminUser()">
            <mat-icon mat-list-icon>group</mat-icon>Users
         </a>
-        <mat-divider></mat-divider>
+        <mat-divider [fxShow]="isLoggedIn()"></mat-divider>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null"
           i18n="@@logout menu link" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})
