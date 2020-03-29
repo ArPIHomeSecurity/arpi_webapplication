@@ -104,19 +104,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       })
       .subscribe(results => {
           this.sensor = results.sensor;
-          const info = {
-            channel: this.sensor.channel,
-            type_id: this.sensor.typeId,
-            zone_id: this.sensor.zoneId,
-            enabled: this.sensor.enabled,
-            description: this.sensor.description,
-
-            zone_name: null,
-            disarmed_delay: null,
-            away_delay: 0,
-            stay_delay: 0
-          };
-
           this.sensors = results.sensors;
           this.zones = results.zones;
           this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
@@ -154,7 +141,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   updateForm(sensor: Sensor) {
-    // create zone form if new zone is selected (zone_id)
+    // create zone form if new zone is selected (zoneId)
     this.zoneForm =  this.fb.group({
       zoneName: new FormControl('', this.sensor.zoneId === -1 ? Validators.required : null),
       disarmedAlert: false,
@@ -222,8 +209,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: this.sensor.id,
       channel: formModel.channel,
-      zoneId: formModel.zone_id,
-      typeId: formModel.type_id,
+      zoneId: formModel.zoneId,
+      typeId: formModel.typeId,
       alert: false,
       description: formModel.description,
       enabled: formModel.enabled
@@ -235,8 +222,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const zoneModel = this.zoneForm.value;
 
     return {
-      id: sensorModel.zone_id,
-      name: zoneModel.zone_name,
+      id: sensorModel.zoneId,
+      name: zoneModel.zoneName,
       disarmedDelay: zoneModel.disarmed_alert ? parseInt(zoneModel.disarmed_delay, 10) : null,
       awayDelay: zoneModel.away_armed_alert ? parseInt(zoneModel.away_delay, 10) : null,
       stayDelay: zoneModel.stay_armed_alert ? parseInt(zoneModel.stay_delay, 10) : null,

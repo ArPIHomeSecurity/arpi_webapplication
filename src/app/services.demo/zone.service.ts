@@ -64,7 +64,7 @@ export class ZoneService {
     return of(true);
   }
 
-  _getZone(zone_id: number) {
-    return this.zones.find(z => z.id === zone_id);
+  _getZone(zoneId: number) {
+    return this.zones.find(z => z.id === zoneId);
   }
 }
