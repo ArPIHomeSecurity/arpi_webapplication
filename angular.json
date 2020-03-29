@@ -157,7 +157,8 @@
               "browserTarget": "argus:build:production"
             },
             "demo": {
-              "browserTarget": "argus:build:demo-dev"
+              "browserTarget": "argus:build:demo-dev",
+              "host": "0.0.0.0"
             }
           }
         },
