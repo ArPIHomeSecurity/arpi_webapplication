@@ -2,10 +2,10 @@
   <mat-table #table [dataSource]="alertHistory">
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-  <ng-container matColumnDef="alert_type">
+  <ng-container matColumnDef="alertType">
     <mat-header-cell *matHeaderCellDef>Alert type</mat-header-cell>
     <mat-cell *matCellDef="let alert">
-      <div [ngSwitch]="alert.alert_type">
+      <div [ngSwitch]="alert.alertType">
         <span *ngSwitchCase="AlertType.AWAY">AWAY</span>
         <span *ngSwitchCase="AlertType.STAY">STAY</span>
         <span *ngSwitchCase="AlertType.SABOTAGE">SABOTAGE</span>
@@ -13,14 +13,14 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="start_time">
+  <ng-container matColumnDef="startTime">
     <mat-header-cell *matHeaderCellDef>Start time</mat-header-cell>
-    <mat-cell *matCellDef="let alert"> {{alert.start_time}} </mat-cell>
+    <mat-cell *matCellDef="let alert"> {{alert.startTime}} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="end_time">
+  <ng-container matColumnDef="endTime">
     <mat-header-cell *matHeaderCellDef>End time</mat-header-cell>
-    <mat-cell *matCellDef="let alert"> {{alert.end_time}} </mat-cell>
+    <mat-cell *matCellDef="let alert"> {{alert.endTime}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="sensors">
@@ -44,6 +44,6 @@
     </mat-cell>
   </ng-container>
 
-  <mat-row *matRowDef="let alert; columns: displayedColumns;" [ngClass]="{'ongoing_alert': !alert.end_time}"></mat-row>
+  <mat-row *matRowDef="let alert; columns: displayedColumns;" [ngClass]="{'ongoing-alert': !alert.endTime}"></mat-row>
   </mat-table>
 </div>

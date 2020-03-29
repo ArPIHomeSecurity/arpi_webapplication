@@ -29,7 +29,7 @@ export class AlertHistory extends DataSource<any> {
 export class AlertListComponent implements OnInit {
   AlertType: any = AlertType;
   alertHistory: AlertHistory | null;
-  displayedColumns = ['alert_type', 'start_time', 'end_time', 'sensors'];
+  displayedColumns = ['alertType', 'startTime', 'endTime', 'sensors'];
   sensors: Sensor[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
