@@ -19,7 +19,7 @@ export class AlertService {
     return this.http.get<Alert[]>('/api/alerts').pipe(
       map(( rawAlerts: any[] ) => {
         for ( const rawAlert of rawAlerts ) {
-          rawAlert.alert_type = String2AlertType( rawAlert.alert_type );
+          rawAlert.alertType = String2AlertType( rawAlert.alertType );
         }
         return rawAlerts as Alert[];
       } ));
