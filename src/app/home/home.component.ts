@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
   }
 
-  arm_changed(event) {
+  armChanged(event) {
     if (event.value === 'AWAY') {
       this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
       this.monitoringService.arm(ArmType.AWAY);
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
       }
   }
 
-  arm_disabled() {
+  armDisabled() {
     return this.sensorAlert ||
       this.armState !== ArmType.DISARMED ||
       this.monitoringState !== MonitoringState.READY ||

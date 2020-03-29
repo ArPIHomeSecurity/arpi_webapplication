@@ -1,15 +1,15 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
   <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
     <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState">
-      <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
+      <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="armDisabled()" (change)="armChanged($event)"
         i18n="@@away button">
         AWAY
       </mat-button-toggle>
-      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == ArmType.DISARMED && !alert" (change)="arm_changed($event)"
+      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == ArmType.DISARMED && !alert" (change)="armChanged($event)"
         i18n="@@disarm button">
         OFF
       </mat-button-toggle>
-      <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == ArmType.STAY" [disabled]="arm_disabled()" (change)="arm_changed($event)"
+      <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == ArmType.STAY" [disabled]="armDisabled()" (change)="armChanged($event)"
         i18n="@@stay button">
         STAY
       </mat-button-toggle>
@@ -29,12 +29,12 @@
       
       <mat-card id="sensor-{{sensor.id}}" class="sensor-short-card" *ngFor="let sensor of alert.sensors">
         <mat-card-header>
-          <div mat-card-avatar [ngSwitch]="sensor.type_id" class="sensor-image">
+          <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image">
             <img *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
             <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png"/>
             <img *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
             <img *ngSwitchCase="4" src="assets/images/sensor_break.png"/>
-            <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.type_id)}}"/>
+            <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"/>
           </div>
           <mat-card-title>{{sensor.description}}</mat-card-title>
           <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
