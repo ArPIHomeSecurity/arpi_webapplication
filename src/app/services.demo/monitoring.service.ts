@@ -33,6 +33,12 @@ export class MonitoringService {
     this.datetime = getSessionValue('MonitoringService.datetime', new Date().toLocaleString());
     this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
+    if (this.monitoringState !== MonitoringState.READY &&
+        this.monitoringState !== MonitoringState.ARMED &&
+        this.monitoringState !== MonitoringState.SABOTAGE) {
+      this.monitoringState = MonitoringState.STARTUP;
+    }
+
     if (this.monitoringState === MonitoringState.STARTUP) {
       setTimeout(() => {
         this.monitoringState = MonitoringState.UPDATING_CONFIG;
