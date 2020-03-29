@@ -57,12 +57,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       changes.forEach(change => this.smallScreen = this.smallScreen || (change.mqAlias === 'lt-sm'));
 
       if (this.smallScreen) {
-        console.log("Closing");
         this.sidenav.opened = false;
         this.sidenav.mode = 'over';
         this.sidenav.disableClose = false;
       } else {
-        console.log("Opening");
         this.sidenav.opened = true;
         this.sidenav.mode = 'side';
         this.sidenav.disableClose = true;
