@@ -151,13 +151,13 @@
           },
           "configurations": {
             "development": {
-              "browserTarget": "argus:build:development-en"
+              "browserTarget": "argus:build:development"
             },
             "production": {
-              "browserTarget": "argus:build:production-en"
+              "browserTarget": "argus:build:production"
             },
             "demo": {
-              "browserTarget": "argus:build:demo-en"
+              "browserTarget": "argus:build:demo-dev"
             }
           }
         },
