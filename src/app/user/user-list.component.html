@@ -10,7 +10,7 @@
         <mat-card-subtitle>{{user.comment}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <div *ngIf="user.has_registration_code" class="registration">
+        <div *ngIf="user.hasRegistrationCode" class="registration">
           <mat-chip-list>
             <mat-chip *ngIf="user.registration_expiry" matTooltip="User has device registration code expiring on {{user.registration_expiry}">
               Registration: {{user.registration_expiry}}<mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
@@ -26,7 +26,7 @@
           i18n="@@edit button">Edit</button>
         <button mat-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
           i18n="@@remove button">Remove</button>
-        <button mat-button (click)="openDeviceRegistrationDialog(user.id)" color="warn" [disabled]="user.has_registration_code || monitoringState != MonitoringState.READY"
+        <button mat-button (click)="openDeviceRegistrationDialog(user.id)" color="warn" [disabled]="user.hasRegistrationCode || monitoringState != MonitoringState.READY"
           i18n="@@register_device button">Device registration</button>
       </mat-card-actions>
     </mat-card>

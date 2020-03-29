@@ -47,22 +47,22 @@ export const USERS = [
     name: 'Administrator',
     email: 'admin@example.com',
     role: environment.ROLE_TYPES.ADMIN,
-    registration_code: 'ABCDEF000001',
-    has_registration_code: true,
-    access_code: 1234,
+    registrationCode: 'ABCDEF000001',
+    hasRegistrationCode: true,
+    accessCode: 1234,
     comment: '',
-    registration_expiry: new Date().toLocaleString()
+    registrationExpiry: new Date().toLocaleString()
   },
   {
     id: 1,
     name: 'User 1',
     email: 'user1@example.com',
     role: environment.ROLE_TYPES.USER,
-    registration_code: 'ABCDEF000002',
-    has_registration_code: true,
-    access_code: 1111,
+    registrationCode: 'ABCDEF000002',
+    hasRegistrationCode: true,
+    accessCode: 1111,
     comment: '',
-    registration_expiry: new Date().toLocaleString()
+    registrationExpiry: new Date().toLocaleString()
   }
 ];
 
@@ -107,6 +107,6 @@ export const KEYPADS = [
   {
     id: 1,
     enabled: true,
-    type_id: 1
+    typeId: 1
   }
 ];

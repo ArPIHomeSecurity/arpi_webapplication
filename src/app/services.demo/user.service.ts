@@ -8,7 +8,7 @@ import { environment, USERS } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
 
 export class UserDemo extends User {
-  registration_code: string;
+  registrationCode: string;
 }
 
 
@@ -75,7 +75,7 @@ export class UserService {
       code = Math.random().toString(26).substring(2, 16).toUpperCase();
     }
 
-    this.users[index].registration_code = code;
+    this.users[index].registrationCode = code;
     this.users[index].hasRegistrationCode = true;
     if (expiry) {
       let t = new Date();
@@ -92,7 +92,7 @@ export class UserService {
   deleteRegistrationCode(userId: number): Observable<boolean> {
     const tmpUser = this.users.find(u => u.id === userId);
     const index = this.users.indexOf(tmpUser);
-    delete this.users[index].registration_code;
+    delete this.users[index].registrationCode;
     delete this.users[index].registrationExpiry;
     this.users[index].hasRegistrationCode = false;
     setSessionValue('UserService.users', this.users);

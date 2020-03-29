@@ -11,8 +11,8 @@ import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '
 @Injectable()
 export class AuthenticationService {
 
-  private _isDeviceRegisteredSubject = new Subject<boolean>();
-  private _sessionValidSubject = new Subject<boolean>();
+  private isDeviceRegisteredSubject = new Subject<boolean>();
+  private sessionValidSubject = new Subject<boolean>();
 
   loggedInAs: User;
   registeredUserId: number;
@@ -71,29 +71,29 @@ export class AuthenticationService {
   }
 
   updateUserToken(token: string) {
-    this._sessionValidSubject.next(!!this.loggedInAs);
+    this.sessionValidSubject.next(!!this.loggedInAs);
   }
 
   isSessionValid(): Observable<boolean> {
-    return this._sessionValidSubject.asObservable().pipe(startWith(false));
+    return this.sessionValidSubject.asObservable().pipe(startWith(false));
   }
 
   getDeviceToken() {
     return 'device.token';
   }
 
-  registerDevice(registration_code: string): Observable<boolean> {
-    const tmpUser = this.userService.users.find(user => String(user.registration_code) === registration_code);
+  registerDevice(registrationCode: string): Observable<boolean> {
+    const tmpUser = this.userService.users.find(user => String(user.registrationCode) === registrationCode);
     const index = this.userService.users.indexOf(tmpUser);
     if (tmpUser) {
-      tmpUser.registration_code = null;
+      tmpUser.registrationCode = null;
       tmpUser.registrationExpiry = null;
       tmpUser.hasRegistrationCode = false;
       this.userService.updateUser(tmpUser);
 
       this.registeredUserId = tmpUser.id;
       setLocalValue('AuthenticationService.registeredForUser', this.registeredUserId);
-      this._isDeviceRegisteredSubject.next(true);
+      this.isDeviceRegisteredSubject.next(true);
     }
 
     return of( !!tmpUser ).pipe(delay(environment.delay));
@@ -102,10 +102,10 @@ export class AuthenticationService {
   unRegisterDevice(){
     this.registeredUserId = -1;
     setLocalValue('AuthenticationService.registeredForUser', this.registeredUserId);
-    this._isDeviceRegisteredSubject.next(false);
+    this.isDeviceRegisteredSubject.next(false);
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this._isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >=0));
+    return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >=0));
   }
 }
