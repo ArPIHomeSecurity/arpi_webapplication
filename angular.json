@@ -5,7 +5,7 @@
   "projects": {
     "argus": {
       "i18n": {
-        "sourceLocale":{
+        "sourceLocale": {
           "code": "en",
           "baseHref": "/"
         },
@@ -32,7 +32,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-             "assets": [
+            "assets": [
               "src/assets"
             ],
             "styles": [
@@ -195,6 +195,21 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "xliffmerge": {
+          "builder": "@ngx-i18nsupport/tooling:xliffmerge",
+          "options": {
+            "xliffmergeOptions": {
+              "i18nFormat": "xlf",
+              "srcDir": "src/locales",
+              "genDir": "src/locales",
+              "defaultLanguage": "en",
+              "languages": [
+                "en",
+                "hu"
+              ]
+            }
           }
         }
       }
