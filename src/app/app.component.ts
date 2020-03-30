@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -19,7 +19,7 @@ import { VERSION } from './version';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
@@ -82,9 +82,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.loader.status.subscribe(value => this.displayLoader = value);
     this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.versions.server_version = version);
-  }
-
-  ngAfterViewInit() {
     this.authService.isSessionValid()
       .subscribe(isSessionValid => {
         this.isSessionValid = isSessionValid;
