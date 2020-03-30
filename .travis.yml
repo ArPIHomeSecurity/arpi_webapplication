@@ -14,8 +14,8 @@ before_script:
   - npm install -g @angular/cli
 
 script:
-  - ng build --configuration=demo-en
-  - ng build --configuration=demo-hu
+  - ng build --configuration=demo --localize
+  - DIST=dist-demo npm run postbuild
 
 deploy:
   provider: pages
