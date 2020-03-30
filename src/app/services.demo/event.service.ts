@@ -42,7 +42,7 @@ export class EventService {
     } else if (event === 'syren_state_change') {
       subject = this._syrenState;
     } else {
-      console.log('Unknown event: ', event);
+      console.warn('Unknown event: ', event);
     }
 
     return subject;

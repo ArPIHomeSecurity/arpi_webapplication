@@ -86,12 +86,12 @@
                 {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
                 }
               ],
+              "index": {
+                "input":"src/index.demo.html",
+                "output": "index.html"
+              },
               "outputPath": "dist-demo-dev"
             },
             "demo": {
@@ -111,12 +111,12 @@
                 {
                   "replace": "src/app/services",
                   "with": "src/app/services.demo"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/index.demo.html"
                 }
               ],
+              "index": {
+                "input":"src/index.demo.html",
+                "output": "index.html"
+              },
               "assets": [
                 "src/assets",
                 "src/404.html"

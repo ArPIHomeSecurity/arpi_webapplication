@@ -6,16 +6,16 @@ import { environment } from './environments/environment';
 
 
 let locale = localStorage.getItem('localeId');
-console.log('Selected language: ', locale);
+// console.log('Selected language: ', locale);
 if (locale === null) {
   locale = 'en';
 }
 
-console.log('Current location: ', location.pathname);
+// console.log('Current location: ', location.pathname);
 if (location.pathname.startsWith('/' + locale)) {
-  console.log('Correct locale, no need to redirect!');
+  // console.log('Correct locale, no need to redirect!');
 } else if (locale !== 'en') {
-  console.log('Other locale is selected => redirect', locale);
+  // console.log('Other locale is selected => redirect', locale);
   location.href = ('/' + locale + location.pathname).replace(/\/$/, '');
 }
 
