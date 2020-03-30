@@ -1,15 +1,33 @@
 <!doctype html>
-<html>
+<html lang="hu">
   <head>
     <meta charset="utf-8">
     <title>Argus</title>
-    <base href="https://demo.arpi-security.info/hu/">  
+    <base href="/hu/">  
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="assets/images/argus-eye-16.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="styles.bd196636bf153cec8a69.css"></head>
-
+    
+    <!-- Github Pages hack to allow SPA refresh without receiving 404. -->
+    <script>
+        (function () {
+          // Retrieve the URL the user was trying to access when receiving the 404.
+          var redirect = sessionStorage.redirect;
+          // Remove the URL from sessionStorage.
+          delete sessionStorage.redirect;
+          // Check if we actually need to redirect.
+          // console.log('Change location: ', location.href, redirect)
+          if (redirect && redirect != location.href) {
+            // We need to redirect to the URL the user was trying to access.
+            history.replaceState(null, null, redirect);
+          }
+        })();
+    </script>
+    <!-- /Github Pages hack. -->
+  <link rel="stylesheet" href="styles.4c0d6492d36c391922ac.css"></head>
+  
   <body mat-app-background>
     <app-root></app-root>
-  <script src="runtime.a8ef3a8272419c2e2c66.js" defer></script><script src="polyfills-es5.d4eb0a8b2503707cad99.js" nomodule defer></script><script src="polyfills.98fb32c5eae3f82fa814.js" defer></script><script src="main.017ef811b5b806d200df.js" defer></script></body>
+  <script src="runtime-es2015.ee8f49fde7e1291a5b9d.js" type="module"></script><script src="runtime-es5.ee8f49fde7e1291a5b9d.js" nomodule defer></script><script src="polyfills-es5.b01bf6fed0a19961b6e9.js" nomodule defer></script><script src="polyfills-es2015.3bc39fbc6874c336f569.js" type="module"></script><script src="main-es2015.f7f5e3d6fc2a256150eb.js" type="module"></script><script src="main-es5.f7f5e3d6fc2a256150eb.js" nomodule defer></script></body>
+  
 </html>
