@@ -2,7 +2,7 @@
   <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
     <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState">
       <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="armDisabled()" (change)="armChanged($event)"
-        i18n="@@away button">
+        i18n="@@arm away button">
         AWAY
       </mat-button-toggle>
       <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == ArmType.DISARMED && !alert" (change)="armChanged($event)"
@@ -10,7 +10,7 @@
         OFF
       </mat-button-toggle>
       <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == ArmType.STAY" [disabled]="armDisabled()" (change)="armChanged($event)"
-        i18n="@@stay button">
+        i18n="@@arm stay button">
         STAY
       </mat-button-toggle>
     </mat-button-toggle-group>

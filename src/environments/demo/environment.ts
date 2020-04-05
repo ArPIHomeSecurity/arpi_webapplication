@@ -8,7 +8,7 @@ export const environment = {
   demo: true,
   delay: 100,
 
-  channel_count: 3,
+  channelCount: 3,
   SNACK_DURATION: 2000,
 
   MONITORING_PORT: 8081,

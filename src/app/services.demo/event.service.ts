@@ -10,20 +10,20 @@ import { environment } from '../../environments/environment';
 export class EventService {
 
   alertDelayed: boolean;
-  private _alertStateSubject = new Subject<Alert>();
-  private _alertState = this._alertStateSubject.asObservable().pipe(delay(environment.delay));
+  private alertStateSubject = new Subject<Alert>();
+  private alertState = this.alertStateSubject.asObservable().pipe(delay(environment.delay));
 
-  private _armStateSubject = new Subject<string>();
-  private _armState = this._armStateSubject.asObservable().pipe(delay(environment.delay));
+  private armStateSubject = new Subject<string>();
+  private armState = this.armStateSubject.asObservable().pipe(delay(environment.delay));
 
-  private _monitoringStateSubject = new Subject<string>();
-  private _monitoringState = this._monitoringStateSubject.asObservable().pipe(delay(environment.delay));
+  private monitoringStateSubject = new Subject<string>();
+  private monitoringState = this.monitoringStateSubject.asObservable().pipe(delay(environment.delay));
 
-  private _sensorsStateSubject = new Subject<boolean>();
-  private _sensorsState = this._sensorsStateSubject.asObservable().pipe(delay(environment.delay));
+  private sensorsStateSubject = new Subject<boolean>();
+  private sensorsState = this.sensorsStateSubject.asObservable().pipe(delay(environment.delay));
 
-  private _syrenStateSubject = new Subject<boolean>();
-  private _syrenState = this._syrenStateSubject.asObservable().pipe(delay(environment.delay));
+  private syrenStateSubject = new Subject<boolean>();
+  private syrenState = this.syrenStateSubject.asObservable().pipe(delay(environment.delay));
 
   constructor() {
 
@@ -32,15 +32,15 @@ export class EventService {
   listen(event: string): Observable<any> {
     let subject: any;
     if (event === 'system_state_change') {
-      subject = this._monitoringState;
+      subject = this.monitoringState;
     } else if (event === 'arm_state_change') {
-      subject = this._armState;
+      subject = this.armState;
     } else if (event === 'alert_state_change') {
-      subject = this._alertState;
+      subject = this.alertState;
     } else if (event === 'sensors_state_change') {
-      subject = this._sensorsState;
+      subject = this.sensorsState;
     } else if (event === 'syren_state_change') {
-      subject = this._syrenState;
+      subject = this.syrenState;
     } else {
       console.warn('Unknown event: ', event);
     }
@@ -49,22 +49,22 @@ export class EventService {
   }
 
   _updateAlertState(alert: Alert) {
-    this._alertStateSubject.next(alert);
+    this.alertStateSubject.next(alert);
   }
 
   _updateArmState(state: string) {
-    this._armStateSubject.next(state);
+    this.armStateSubject.next(state);
   }
 
   _updateMonitoringState(state: string) {
-    this._monitoringStateSubject.next(state);
+    this.monitoringStateSubject.next(state);
   }
 
   _updateSensorsState(state: boolean) {
-    this._sensorsStateSubject.next(state);
+    this.sensorsStateSubject.next(state);
   }
 
   _updateSyrenState(state: boolean) {
-    this._syrenStateSubject.next(state);
+    this.syrenStateSubject.next(state);
   }
 }

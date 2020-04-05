@@ -24,7 +24,7 @@ export class SensorService {
     private monitoringService: MonitoringService
   ) {
     // channels are numbered 1..N
-    for (let i = 0; i < environment.channel_count; i++) {
+    for (let i = 0; i < environment.channelCount; i++) {
       this.channels.push(false);
     }
 
@@ -99,7 +99,7 @@ export class SensorService {
           );
       }
     } else {
-      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2))
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2, null))
         .pipe(
           delay(environment.delay),
           map(_ => {
@@ -135,7 +135,7 @@ export class SensorService {
     this.monitoringService._resetReferences();
   }
 
-  _alertChannel(channelId: number, value: boolean) {
+  alertChannel(channelId: number, value: boolean) {
     let sensor;
     if (channelId != null && this.sensors) {
       sensor = this.sensors.find(s => s.channel === channelId);

@@ -5,27 +5,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
-import { Option } from '../../models';
+import { Option, DEFAULT_EMAIL, DEFAULT_GSM, DEFAULT_SUBSCRIPTIONS } from '../../models';
 import { getValue } from '../../utils';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-// use string as constant instead of complex type to avoid changing it through a reference
-const DEFAULT_EMAIL = {
-  option: 'notifications',
-  section: 'email',
-  value: '{"smtp_username":"", "smtp_password":"", "email_address": ""}'
-};
-const DEFAULT_GSM = {
-  option: 'notifications',
-  section: 'gsm',
-  value: '{"pin_code":"", "phone_number":""}'
-};
-const DEFAULT_SUBSCRIPTIONS = {
-  option: 'notifications',
-  section: 'subscriptions',
-  value: '{"email": {"alert_started": false, "alert_stopped": false}, "sms": {"alert_started": false, "alert_stopped": false}}'
-};
 
 @Component({
   templateUrl: 'notifications.component.html',

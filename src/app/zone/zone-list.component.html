@@ -9,29 +9,29 @@
         <mat-expansion-panel (opened)="open[CONFIG][zone.id] = true" (closed)="open[CONFIG][zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.xs="false">Away:{{zone.away_delay!==null? zone.away_delay : "-"}} Stay:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} Disarmed:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.gt-xs="false">A:{{zone.away_delay!==null? zone.away_delay : "-"}} S:{{zone.stay_delay!==null ? zone.stay_delay : "-"}} D:{{zone.disarmed_delay!==null ? zone.disarmed_delay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.xs="false">Away:{{zone.awayDelay!==null? zone.awayDelay : "-"}} Stay:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.gt-xs="false">A:{{zone.awayDelay!==null? zone.awayDelay : "-"}} S:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
-                <div class="mat-header-cell">Mode</div>
-                <div class="mat-header-cell">Alert enabled</div>
-                <div class="mat-header-cell">Alert delay</div>
+                <div class="mat-header-cell" i18n="@@alert type">Alert type</div>
+                <div class="mat-header-cell" i18n="@@zone alert enabled">Alert enabled</div>
+                <div class="mat-header-cell" i18n="@@zone alert delay">Alert delay</div>
               </div>
               <div class="mat-row">
-                <div class="mat-cell">Away</div >
-                <div class="mat-cell" *ngIf="zone.away_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.away_delay!==null? zone.away_delay : "-"}}</div >
+                <div class="mat-cell" i18n="@@zone arm away">Away</div >
+                <div class="mat-cell" *ngIf="zone.awayDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.awayDelay!==null? zone.awayDelay : "-"}}</div >
               </div>
               <div class="mat-row">
-                <div class="mat-cell">Stay</div >
-                <div class="mat-cell" *ngIf="zone.stay_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.stay_delay!==null ? zone.stay_delay : "-"}}</div >
+                <div class="mat-cell" i18n="@@zone arm stay">Stay</div >
+                <div class="mat-cell" *ngIf="zone.stayDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.stayDelay!==null ? zone.stayDelay : "-"}}</div >
               </div>
               <div class="mat-row">
-                <div class="mat-cell">Disarmed</div >
-                <div class="mat-cell" *ngIf="zone.disarmed_delay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.disarmed_delay!==null ? zone.disarmed_delay : "-"}}</div >
+                <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div >
+                <div class="mat-cell" *ngIf="zone.disarmedDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.disarmedDelay!==null ? zone.disarmedDelay : "-"}}</div >
               </div>
           </div>
           <ng-template #disabled>
@@ -41,7 +41,7 @@
   
         <mat-expansion-panel (opened)="open[SENSORS][zone.id] = true" (closed)="open[SENSORS][zone.id] = false">
           <mat-expansion-panel-header>
-            <mat-panel-title>Sensors</mat-panel-title>
+            <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
             <mat-panel-description *ngIf="!open[SENSORS][zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
@@ -71,7 +71,7 @@
   
   <ng-template #no_zones>
     <div ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs">
-      <h1 align="center">No zones found</h1>
+      <h1 class="empty" i18n="@@zone none">No zones found</h1>
     </div>
   </ng-template>
 </div>

@@ -5,19 +5,19 @@
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
-          <mat-panel-title>Time sources</mat-panel-title>
+          <mat-panel-title i18n="@@clock sources">Time sources</mat-panel-title>
         </mat-expansion-panel-header>
         <mat-list>
           <mat-list-item class="clock">
-            Network time <span class="spacer"></span> {{clock.network === null ? " - - - " : clock.network}}
+            <span i18n="@@clock network time">Network time</span> <span class="spacer"></span> {{clock.network === null ? " - - - " : clock.network}}
           </mat-list-item>
             
           <mat-list-item class="clock">
-            System time <span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
+            <span i18n="@@clock system time">System time</span> <span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
           </mat-list-item>
       
           <mat-list-item class="clock">
-            Hardware time <span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
+            <span i18n="@@clock hardware time">Hardware time</span> <span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
           </mat-list-item>
         </mat-list>
 
@@ -26,12 +26,12 @@
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>Manual settings</mat-panel-title>
+          <mat-panel-title i18n="@@clock manual settings">Manual settings</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="full-width">
           <mat-form-field class="half-width">
             <input matInput 
-              placeholder="New date time"
+              i18n-placeholder="@@clock new date time"placeholder="New date time"
               formControlName="dateTime"
               [owlDateTimeTrigger]="dt"
               [owlDateTime]="dt"
@@ -42,7 +42,7 @@
           <mat-form-field>
             <input type="text"
                    matInput
-                   placeholder="Timezone"
+                   i18n-placeholder="@@clock timezone" placeholder="Timezone"
                    formControlName="timezone"
                    required
                    [matAutocomplete]="autoGroup">

@@ -5,15 +5,11 @@ import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
-import { Option } from '../../models';
+import { Option, DEFAULT_DYNDNS, DEFAULT_ACCESS } from '../../models';
 import { getValue } from '../../utils';
 
 
 const scheduleMicrotask = Promise.resolve(null);
-
-// use string as constant instead of complex type to avoid changing it through a reference
-const DEFAULT_DYNDNS = {option: 'network', section: 'dyndns', value: '{"username":"", "password":"", "hostname": "", "provider": ""}'};
-const DEFAULT_ACCESS = {option: 'network', section: 'access', value: '{"ssh":""}'};
 
 
 @Component({

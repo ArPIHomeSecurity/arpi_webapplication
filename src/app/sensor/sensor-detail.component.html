@@ -3,53 +3,56 @@
       ngClass.gt-xs="sensor-form" ngClass.xs="sensor-form-xs" fxLayout="column">
 
     <mat-form-field>
-      <mat-select formControlName="channel" placeholder="Channel">
+      <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
         <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
-          <span *ngIf="channel.channel === -1">Disconnected</span>
-          <span *ngIf="channel.channel !== -1">CH{{ channel.channel + 1 | number: '2.0-0' }} <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span></span>
+          <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
+          <span *ngIf="channel.channel !== -1">
+            <span>CH{{ channel.channel + 1 | number: '2.0-0' }}</span>
+            <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span>
+          </span>
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select formControlName="typeId" placeholder="Sensor type">
+      <mat-select formControlName="typeId" i18n-placeholder="@@sensor type" placeholder="Sensor type">
         <mat-option *ngFor="let type of sensorTypes" [value]="type.id">{{ type.name }}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+      <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description" required></textarea>
     </mat-form-field>
 
-    <mat-checkbox formControlName="enabled" color="primary">Enabled</mat-checkbox>
+    <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
 
     <mat-form-field>
-      <mat-select formControlName="zoneId" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
+      <mat-select formControlName="zoneId" i18n-placeholder="@@sensor zone" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
         <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
-        <mat-option [value]="-1">New</mat-option>
+        <mat-option [value]="-1" i18n="@@sensor new zone">New</mat-option>
       </mat-select>
     </mat-form-field>
 
     <div *ngIf="sensor.zoneId === -1" [formGroup]="zoneForm" fxLayout="column">
       <mat-form-field>
-        <input matInput placeholder="Zone name" formControlName="zoneName" required/>
+        <input matInput i18n-placeholder="@@zone name" placeholder="Zone name" formControlName="zoneName" required/>
       </mat-form-field>
 
-      <mat-checkbox formControlName="disarmedAlert" color="primary" (change)="alertWhenChanged($event, 'disarmedDelay')">Alert when disarmed</mat-checkbox>
+      <mat-checkbox formControlName="disarmedAlert" color="primary" (change)="alertWhenChanged($event, 'disarmedDelay')" i18n="@@sensor alert disarmed">Alert when disarmed</mat-checkbox>
       <mat-form-field [fxShow]="zoneForm.get('disarmedAlert').value">
-        <input matInput placeholder="Delay alert when not armed" formControlName="disarmedDelay">
+        <input matInput i18n-placeholder="@@zone disarmed delay" placeholder="Delay alert when not armed" formControlName="disarmedDelay">
         <mat-error *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayDelay')">Alert when away armed</mat-checkbox>
+      <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayDelay')" i18n="@@sensor alert away">Alert when away armed</mat-checkbox>
       <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
-        <input matInput placeholder="Delay alert when armed away" formControlName="awayDelay">
+        <input matInput i18n-placeholder="@@zone away delay" placeholder="Delay alert when armed away" formControlName="awayDelay">
         <mat-error *ngIf="zoneForm.get('awayDelay').invalid">{{zoneForm.get('awayDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayDelay')">Alert when stay armed</mat-checkbox>
+      <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayDelay')" i18n="@@sensor alert stay">Alert when stay armed</mat-checkbox>
       <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
-        <input matInput placeholder="Delay alert when armed stay" formControlName="stayDelay">
+        <input matInput i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay" formControlName="stayDelay">
         <mat-error *ngIf="zoneForm.get('stayDelay').invalid">{{zoneForm.get('stayDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
     </div>
@@ -65,6 +68,6 @@
 
   </form>
   <ng-template #not_found>
-    <h1>Sensor not found!</h1>
+    <h1 i18n="@@sensor not found">Sensor not found!</h1>
   </ng-template>
 </div>

@@ -21,7 +21,7 @@ export class DemoComponent implements OnInit {
   ) {
     const channels: boolean[] = [];
     // channels are numbered 1..N
-    for (let i = 0; i < environment.channel_count; i++) {
+    for (let i = 0; i < environment.channelCount; i++) {
       channels.push(false);
     }
 
@@ -39,6 +39,6 @@ export class DemoComponent implements OnInit {
   swap(index: number) {
     this.channels[index] = !this.channels[index];
     setSessionValue('DemoComponent.channels', this.channels);
-    this.sensorService._alertChannel(index, this.channels[index]);
+    this.sensorService.alertChannel(index, this.channels[index]);
   }
 }

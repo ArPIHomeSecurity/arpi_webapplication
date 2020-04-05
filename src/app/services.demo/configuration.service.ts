@@ -5,7 +5,7 @@ import { delay, map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { Option } from '../models';
 
-import { environment, CONFIGURATION } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
 
 
@@ -17,7 +17,7 @@ export class ConfigurationService {
   constructor(
     private authService: AuthenticationService
   ) {
-    this.configuration = getSessionValue('ConfigurationService.configuration', CONFIGURATION);
+    this.configuration = getSessionValue('ConfigurationService.configuration', []);
   }
 
 

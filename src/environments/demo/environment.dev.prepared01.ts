@@ -8,7 +8,7 @@ export const environment = {
   demo: true,
   delay: 100,
 
-  channel_count: 3,
+  channelCount: 3,
   SNACK_DURATION: 2000,
 
   MONITORING_PORT: 8081,
@@ -144,7 +144,7 @@ export const ZONES = [
   {
     id: 1,
     name: 'Tamper',
-    disarmed_delay: 0,
+    disarmedDelay: 0,
     awayDelay: 0,
     stayDelay: 0,
     description: 'Sabotage'

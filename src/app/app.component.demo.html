@@ -24,47 +24,37 @@
       </div>
 
       <mat-nav-list>
-        <a mat-list-item routerLink="/" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" 
-          i18n="@@home menu link" fxHide.lt-md="true" [fxShow]="isLoggedIn()">
-          <mat-icon mat-list-icon>home</mat-icon>Home
+        <a mat-list-item routerLink="/" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" fxHide.lt-md="true" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>home</mat-icon><span i18n="@@home menu link">Home</span>
         </a>
-        <a mat-list-item routerLink="/alerts" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@alert history menu link" [fxShow]="isLoggedIn()">
-          <mat-icon mat-list-icon>history</mat-icon>Alert history
+        <a mat-list-item routerLink="/alerts" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>history</mat-icon><span i18n="@@alert history menu link">Alert history</span>
         </a>
         <h3 mat-subheader i18n="Settings menu title" [fxShow]="isLoggedIn()">Settings</h3>
-        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-           i18n="@@zone menu link" [fxShow]="isAdminUser()">
-          <mat-icon mat-list-icon>tab</mat-icon>Zones
+        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
         </a>
-        <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@sensors menu link" [fxShow]="isLoggedIn()">
-          <mat-icon mat-list-icon>input</mat-icon>Sensors
+        <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>input</mat-icon><span i18n="@@sensors menu link">Sensors</span>
         </a>
-        <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@keypad menu link" [fxShow]="isAdminUser()">
-          <mat-icon mat-list-icon>grid_on</mat-icon>Keypad
+        <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
         </a>
-        <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@notifications menu link" [fxShow]="isAdminUser()">
-          <mat-icon mat-list-icon>send</mat-icon>Notifications
+        <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>send</mat-icon><span i18n="@@notifications menu link">Notifications</span>
         </a>
-        <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@network menu link" [fxShow]="isAdminUser()">
-          <mat-icon mat-list-icon>public</mat-icon>Network
+        <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>public</mat-icon><span i18n="@@network menu link">Network</span>
         </a>
-        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@clock menu link" [fxShow]="isAdminUser()">
-          <mat-icon mat-list-icon>access_time</mat-icon>Clock
+        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>access_time</mat-icon><span i18n="@@clock menu link">Clock</span>
         </a>
-        <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null"
-          i18n="@@users menu link" [fxShow]="isAdminUser()">
-           <mat-icon mat-list-icon>group</mat-icon>Users
+        <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+           <mat-icon mat-list-icon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </a>
         <mat-divider [fxShow]="isLoggedIn()"></mat-divider>
-        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null"
-          i18n="@@logout menu link" [fxShow]="isLoggedIn()">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>Logout ({{ getUserName() }})
+        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>exit_to_app</mat-icon><span i18n="@@logout menu link">Logout</span>&nbsp;({{ getUserName() }})
         </a>
         <mat-list-item>
           <mat-icon mat-list-icon>language</mat-icon>
@@ -93,7 +83,7 @@
         <mat-toolbar color="primary">
           <span class="spacer"></span>
           <a href="https://github.com/arpihomesecurity" target="project">
-            <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
+            <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPI Home Security</button>
           </a>
           <span class="spacer"></span>
           <div>
@@ -125,3 +115,8 @@
     </div>
   </ng-template>
 </div>
+
+<ng-template #snacbarTemplate>
+  <div *ngIf="isSessionValid" i18n="@@session expiry">Your session will expire in {{ getSessionDuration() }}!</div>
+  <div *ngIf="!isSessionValid" i18n="@@session expired">Your session expired, logged out!</div>
+</ng-template>

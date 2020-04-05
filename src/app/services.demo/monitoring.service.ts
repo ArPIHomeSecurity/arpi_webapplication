@@ -53,7 +53,7 @@ export class MonitoringService {
     }
   }
 
-  is_alert(): Observable<boolean> {
+  isAlert(): Observable<boolean> {
     return of(this.alert)
       .pipe(
         delay(environment.delay),

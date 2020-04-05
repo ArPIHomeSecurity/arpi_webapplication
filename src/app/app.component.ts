@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
-import { CountdownComponent } from 'ngx-countdown';
+import { Subscription } from 'rxjs';
 
+import { CountdownComponent } from 'ngx-countdown';
 import * as humanizeDuration from 'humanize-duration';
 
-import { Subscription } from 'rxjs';
 
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 
@@ -22,6 +22,7 @@ import { VERSION } from './version';
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   displayLoader: boolean;
   // display error message of the compoponents
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit {
   countdownConfig = {
     leftTime: environment.USER_TOKEN_EXPIRY,
     format: 'mm:ss',
-    notify: [environment.USER_TOKEN_EXPIRY / 3]
+    notify: [environment.USER_TOKEN_EXPIRY / 3],
   };
   isSessionValid: boolean;
 
@@ -127,15 +128,18 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      const currentLocale = localStorage.getItem('localeId');
-      this.snackBar.open(
-        'You session will expirey in ' + humanizeDuration((environment.USER_TOKEN_EXPIRY / 3) * 1000, { language: currentLocale }) + '!',
-        null,
-        {duration: environment.SNACK_DURATION}
-      );
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
     } else if ($event.action === 'done') {
-      this.snackBar.open('Session expired, logged out!', null, {duration: environment.SNACK_DURATION});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
       this.logout();
     }
+  }
+
+  getSessionDuration() {
+    let currentLocale = localStorage.getItem('localeId');
+    if (!currentLocale) {
+    currentLocale = 'en';
+    }
+    return humanizeDuration((environment.USER_TOKEN_EXPIRY/3)*1000, { language: currentLocale });
   }
 }

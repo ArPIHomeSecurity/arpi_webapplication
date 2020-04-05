@@ -17,7 +17,7 @@ export class MonitoringService {
     private authService: AuthenticationService
   ) { }
 
-  is_alert(): Observable<boolean> {
+  isAlert(): Observable<boolean> {
     return this.http.get('/api/monitoring/isAlert').pipe(
       map(( response: HttpResponse<boolean> ) => response.body
       ), catchError(( err: HttpResponse<boolean> ) => {

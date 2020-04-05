@@ -125,6 +125,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.channels = this.generateChannels(this.sensors);
 
           this.sensor = new Sensor();
+          this.sensor.enabled = true;
           const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
           this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
           this.sensor.zoneId = -1;
@@ -224,10 +225,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.zoneId,
       name: zoneModel.zoneName,
-      disarmedDelay: zoneModel.disarmed_alert ? parseInt(zoneModel.disarmed_delay, 10) : null,
-      awayDelay: zoneModel.away_armed_alert ? parseInt(zoneModel.away_delay, 10) : null,
-      stayDelay: zoneModel.stay_armed_alert ? parseInt(zoneModel.stay_delay, 10) : null,
-      description: zoneModel.zone_name
+      disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
+      awayDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayDelay, 10) : null,
+      stayDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayDelay, 10) : null,
+      description: zoneModel.zoneName
     };
   }
 
@@ -237,19 +238,19 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
-      controls.disarmed_delay.setValidators([Validators.required, positiveInteger()]);
-      controls.away_delay.setValidators([Validators.required, positiveInteger()]);
-      controls.stay_delay.setValidators([Validators.required, positiveInteger()]);
-      controls.zone_name.setValidators(Validators.required);
+      controls.disarmedDelay.setValidators([Validators.required, positiveInteger()]);
+      controls.awayDelay.setValidators([Validators.required, positiveInteger()]);
+      controls.stayDelay.setValidators([Validators.required, positiveInteger()]);
+      controls.zoneName.setValidators(Validators.required);
     } else {
-      controls.zone_name.clearValidators();
-      controls.zone_name.setErrors(null);
-      controls.disarmed_delay.clearValidators();
-      controls.disarmed_delay.setErrors(null);
-      controls.away_delay.clearValidators();
-      controls.away_delay.setErrors(null);
-      controls.stay_delay.clearValidators();
-      controls.stay_delay.setErrors(null);
+      controls.zoneName.clearValidators();
+      controls.zoneName.setErrors(null);
+      controls.disarmedDelay.clearValidators();
+      controls.disarmedDelay.setErrors(null);
+      controls.awayDelay.clearValidators();
+      controls.awayDelay.setErrors(null);
+      controls.stayDelay.clearValidators();
+      controls.stayDelay.setErrors(null);
     }
 
     this.zoneForm.updateValueAndValidity();
@@ -295,7 +296,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   generateChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
     const channels: Channel[] = [];
-    for (let channel = 0; channel < environment.channel_count; channel++) {
+    for (let channel = 0; channel < environment.channelCount; channel++) {
       const sensor = sensors.find(s => s.channel === channel);
       channels.push({
         channel,

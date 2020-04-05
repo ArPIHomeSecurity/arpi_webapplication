@@ -89,12 +89,12 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   updateForm(zone: Zone) {
     this.zoneForm = this.fb.group({
       name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
-      disarmed_alert: zone.disarmedDelay !== null,
-      disarmed_delay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
-      away_armed_alert: zone.awayDelay !== null,
-      away_delay: new FormControl(zone.awayDelay, zone.awayDelay != null ? [Validators.required, positiveInteger()] : null),
-      stay_armed_alert: zone.stayDelay !== null,
-      stay_delay: new FormControl(zone.stayDelay, zone.stayDelay != null ? [Validators.required, positiveInteger()] : null),
+      disarmedAlert: zone.disarmedDelay !== null,
+      disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayArmedAlert: zone.awayDelay !== null,
+      awayDelay: new FormControl(zone.awayDelay, zone.awayDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayArmedAlert: zone.stayDelay !== null,
+      stayDelay: new FormControl(zone.stayDelay, zone.stayDelay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
@@ -140,9 +140,9 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     zone.id = this.zoneId;
     zone.name = formModel.name;
     zone.description = formModel.description;
-    zone.disarmedDelay = formModel.disarmed_alert ? parseInt(formModel.disarmed_delay, 10) : null;
-    zone.awayDelay = formModel.away_armed_alert ? parseInt(formModel.away_delay, 10) : null;
-    zone.stayDelay = formModel.stay_armed_alert ? parseInt(formModel.stay_delay, 10) : null;
+    zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null;
+    zone.awayDelay = formModel.awayArmedAlert ? parseInt(formModel.awayDelay, 10) : null;
+    zone.stayDelay = formModel.stayArmedAlert ? parseInt(formModel.stayDelay, 10) : null;
 
     return zone;
   }

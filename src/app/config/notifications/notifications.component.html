@@ -6,52 +6,52 @@
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>Email</mat-panel-title>
-          <mat-panel-description>Email settings for sending notifications</mat-panel-description>
+          <mat-panel-title i18n="@@notifications email">Email</mat-panel-title>
+          <mat-panel-description i18n="@@notifications email settings">Email settings for sending notifications</mat-panel-description>
         </mat-expansion-panel-header>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="smtp_username" placeholder="SMTP user name">
+          <input matInput formControlName="smtp_username" i18n-placeholder="@@notifications smtp username" placeholder="SMTP username">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="smtp_password" placeholder="SMTP password">
+          <input type="password" matInput formControlName="smtp_password" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput formControlName="email_address" placeholder="email address">
+          <input matInput formControlName="email_address" i18n-placeholder="@@notifications smtp email" placeholder="Email address">
         </mat-form-field>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>GSM</mat-panel-title>
-          <mat-panel-description>Mobil settings for sending notifications</mat-panel-description>
+          <mat-panel-title i18n="@@notifications gsm">GSM</mat-panel-title>
+          <mat-panel-description i18n="@@notifications gsm settings">Mobil settings for sending notifications</mat-panel-description>
         </mat-expansion-panel-header>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="pin_code" placeholder="SIM card PIN code">
+          <input matInput formControlName="pin_code" i18n-placeholder="@@notifications sim card pin" placeholder="SIM card PIN code">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="phone_number" placeholder="Target phone number">
+          <input matInput formControlName="phone_number" i18n-placeholder="@@notifications target phone" placeholder="Target phone number">
         </mat-form-field>
       </mat-expansion-panel>
       
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>Subscriptions</mat-panel-title>
-          <mat-panel-description>Configure subscriptions</mat-panel-description>
+          <mat-panel-title i18n="@@notifications subscriptions">Subscriptions</mat-panel-title>
+          <mat-panel-description i18n="@@notifications subscriptions settings">Configure subscriptions</mat-panel-description>
         </mat-expansion-panel-header>
 
         <div class="mat-table">
           <div class="mat-header-row">
-            <div class="mat-header-cell">Event</div>
-            <div class="mat-header-cell">Send Email</div>
-            <div class="mat-header-cell">Send SMS</div>
+            <div class="mat-header-cell" i18n="@@notifications source">Event</div>
+            <div class="mat-header-cell" i18n="@@notifications send email">Send Email</div>
+            <div class="mat-header-cell" i18n="@@notifications send sms">Send SMS</div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Alert started</div>
+            <div class="mat-cell" i18n="@@notifications alert started">Alert started</div>
             <div class="mat-cell">
               <mat-checkbox formControlName="alert_started_email"></mat-checkbox>
             </div>
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="mat-row">
-            <div class="mat-cell">Alert stopped</div>
+            <div class="mat-cell" i18n="@@notifications alert stopped">Alert stopped</div>
             <div class="mat-cell">
               <mat-checkbox formControlName="alert_stopped_email"></mat-checkbox>
             </div>

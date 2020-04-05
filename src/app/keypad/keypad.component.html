@@ -5,13 +5,13 @@
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
-          <mat-panel-title>Keypad settings</mat-panel-title>
+          <mat-panel-title i18n="@@keypad settings">Keypad settings</mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-checkbox *ngIf="keypadTypes" class="half-width" formControlName="keypad_enabled" color="primary">Enabled</mat-checkbox>
+        <mat-checkbox *ngIf="keypadTypes" class="half-width" formControlName="keypad_enabled" color="primary" i18n="@@keypad enabled">Enabled</mat-checkbox>
 
         <mat-form-field class="half-width">
-          <mat-select formControlName="keypad_type" placeholder="Keypad type">
+          <mat-select formControlName="keypad_type" i18n-placeholder="@@keypad type" placeholder="Keypad type">
             <mat-option *ngFor="let type of keypadTypes" [value]="type.id">{{ type.name }}</mat-option>
           </mat-select>
         </mat-form-field>

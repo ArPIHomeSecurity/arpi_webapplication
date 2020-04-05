@@ -16,17 +16,23 @@
         </mat-card-title>
 
         <mat-card-subtitle>
-          <div *ngIf="sensor.channel === -1">Disconnected</div>
+          <div *ngIf="sensor.enabled && sensor.channel === -1">
+            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon><span i18n="@@sensor enabled and disconnected">Enabled and disconnected</span>
+          </div>
+          <div *ngIf="!sensor.enabled && sensor.channel === -1">
+            <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon><span i18n="@@sensor disabled and disconnected">Disabled and disconnected</span>
+          </div>
           <div *ngIf="sensor.enabled && sensor.channel !== -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon>Enabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}
+            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon><span i18n="@@sensor enabled on channel">Enabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
           </div>
           <div *ngIf="!sensor.enabled && sensor.channel !== -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon>Disabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}
+            <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon><span i18n="@@sensor disabled on channel">Disabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
           </div>
         </mat-card-subtitle>
 
         <mat-card-subtitle>
-          Zone: {{getZoneName(sensor.zoneId)}} <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
+          <span i18n="@@sensor zone">Zone</span>&nbsp;{{getZoneName(sensor.zoneId)}}
+          <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
         </mat-card-subtitle>
       </mat-card-header>
 
@@ -40,8 +46,8 @@
   </div>
 
   <ng-template #no_sensors>
-    <div  ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs">
-      <h1 align="center">No sensors found</h1>
+    <div ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs">
+      <h1 class="empty">No sensors found</h1>
     </div>
   </ng-template>
   
