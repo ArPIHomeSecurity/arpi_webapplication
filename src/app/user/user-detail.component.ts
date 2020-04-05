@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-import { User } from '../models';
+import { User, MonitoringState } from '../models';
 import { EventService, LoaderService, MonitoringService, UserService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -22,11 +22,14 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+
   userId: number;
   user: User = null;
   userForm: FormGroup;
   roles: any = [];
   hide = true;
+  action: string;
 
   constructor(
     public loader: LoaderService,
@@ -103,16 +106,18 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const user = this.prepareSaveUser();
     if (this.userId != null) {
+      this.action = 'update';
       this.userService.updateUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
         );
     } else {
+      this.action = 'create';
       this.userService.createUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
         );
     }
   }
@@ -143,11 +148,17 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(userId)
-          .subscribe(
-            _ => this.router.navigate(['/users']),
-            error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
-          );
+        if (this.monitoringState === MonitoringState.READY) {
+          this.action = 'delete';
+          this.userService.deleteUser(userId)
+            .subscribe(
+              _ => this.router.navigate(['/users']),
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+            );
+        } else {
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+        }
       }
     });
   }

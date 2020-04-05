@@ -71,3 +71,10 @@
     <h1 i18n="@@sensor not found">Sensor not found!</h1>
   </ng-template>
 </div>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>
+  <span *ngIf="action=='update'" i18n="@@failed update">Failed to update!</span>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>

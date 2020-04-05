@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -20,6 +20,9 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   CONFIG = 0;
   SENSORS = 1;
 
@@ -99,13 +102,15 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
+          this.action = 'delete';
           this.zoneService.deleteZone(zoneId)
             .subscribe(
               _ => this.updateComponent(),
-              error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
             );
         } else {
-          this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
         }
       }
     });

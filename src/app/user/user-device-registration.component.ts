@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -15,6 +15,8 @@ import { environment } from '../../environments/environment';
   styleUrls: ['user-device-registration.component.scss'],
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+
   registrationForm: FormGroup;
   modes: any[];
   units: any[];
@@ -96,6 +98,6 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    this.snackBar.open('Copied to clipboard!', null, {duration: environment.SNACK_DURATION});
+    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
   }
 }

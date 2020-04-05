@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +24,9 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   zoneId: number;
   zone: Zone = null;
   sensors: Sensor[];
@@ -102,16 +105,18 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const zone = this.prepareSaveZone();
     if (this.zoneId != null) {
+      this.action = 'update';
       this.zoneService.updateZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          error => this.snackBar.open('Failed to update!', null, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
         );
     } else {
+      this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          error => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
         );
     }
   }
@@ -158,12 +163,14 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
+          this.action = 'celete';
           this.zoneService.deleteZone(zoneId)
             .subscribe(_ => this.router.navigate(['/zones']),
-                _ => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
           );
         } else {
-          this.snackBar.open('Can\'t delete zone!', null, {duration: environment.SNACK_DURATION});
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
         }
       }
     });

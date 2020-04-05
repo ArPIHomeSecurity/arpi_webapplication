@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +10,7 @@ import { LoaderService, EventService, MonitoringService, UserService } from '../
 
 import { environment } from '../../environments/environment';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
+import { MonitoringState } from '../models';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -21,6 +22,9 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   users: User[] = null;
   environment = environment;
 
@@ -71,11 +75,17 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(userId)
-          .subscribe(
-            _ => this.updateComponent(),
-            error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
-          );
+        if (this.monitoringState === MonitoringState.READY) {
+          this.action = 'delete';
+          this.userService.deleteUser(userId)
+            .subscribe(
+              _ => this.updateComponent(),
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+            );
+        } else {
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+        }
       }
     });
   }

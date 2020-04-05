@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Device registration</h1>
+<h1 mat-dialog-title i18n="@@user device registration">Device registration</h1>
 <div mat-dialog-content>
   <div *ngIf="user.hasRegistrationCode">
    
   </div>
   <form [formGroup]="registrationForm">
     
-    <label>Select expiry</label>
+    <label i18n="@@user select expiry">Select expiry</label>
     <mat-radio-group formControlName="mode" (change)="onModeChanged($event)" class="expiry-mode">
       <mat-radio-button *ngFor="let mode of modes" [value]="mode.value">{{mode.name}}</mat-radio-button>
     </mat-radio-group>
@@ -26,7 +26,7 @@
 </div>
 
 <div *ngIf="registrationCode" class="registration">
-  Device registration code
+  <span i18n="@@user device registration code">Device registration code</span>
   <div class="code">
     {{registrationCode}}
     <button mat-icon-button *ngIf="registrationCode" (click)="copyText(registrationCode)"><mat-icon>file_copy</mat-icon></button>
@@ -34,7 +34,11 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button [disabled]="!registrationForm.valid || registrationCode" (click)="getNewCode()" tabindex="2" color="primary">Get new code</button>
+  <button mat-raised-button [disabled]="!registrationForm.valid || registrationCode" (click)="getNewCode()" tabindex="2" color="primary" i18n="@@user get new code">Get new code</button>
   
-  <button mat-button (click)="onClickClose()" tabindex="-1">Close</button>
+  <button mat-button (click)="onClickClose()" tabindex="-1" i18n="@@close button">Close</button>
 </div>
+
+<ng-template #snakcbarTemplate>
+  <span i18n="@@user code copied">Copied to clipboard!</span>
+</ng-template>

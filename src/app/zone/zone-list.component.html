@@ -54,7 +54,7 @@
             </ul>
           </div>
           <ng-template #no_sensors>
-            <h3>No sensors</h3>
+            <h3 i18n="@@zone no sensors">No sensors</h3>
           </ng-template>
         </mat-expansion-panel>
       </mat-card-content>
@@ -80,3 +80,8 @@
   <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
   <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>
+
+<ng-template #snacbarTemplate>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>

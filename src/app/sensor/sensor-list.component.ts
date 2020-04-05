@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 
 import { forkJoin } from 'rxjs';
 
@@ -21,6 +21,9 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   @Input() onlyAlerting = false;
   sensors: Sensor[] = null;
   zones: Zone[] = [];
@@ -110,12 +113,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.action = 'delete';
         if (this.monitoringState === MonitoringState.READY) {
           this.sensorService.deleteSensor(sensorId).subscribe( _ => this.updateComponent(),
-              error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
           );
         } else {
-          this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
         }
       }
     });

@@ -3,23 +3,23 @@
       ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
 
     <mat-form-field>
-      <input matInput placeholder="Name" formControlName="name" required>
+      <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="Select a role" formControlName="role" required>
+      <mat-select i18n-placeholder="@@user select role" placeholder="Select a role" formControlName="role" required>
         <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name }}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="New access code" formControlName="accessCode" [type]="hide ? 'password' : 'text'">
+      <input matInput i18n-placeholder="@@user new code" placeholder="New access code" formControlName="accessCode" [type]="hide ? 'password' : 'text'">
       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput placeholder="Comment" formControlName="comment" type="text"></textarea>
+      <textarea matInput i18n-placeholder="@@user comment" placeholder="Comment" formControlName="comment" type="text"></textarea>
     </mat-form-field>
 
     <div class="actions">
@@ -33,6 +33,13 @@
 
   </form>
   <ng-template #not_found>
-    <h1>User not found!</h1>
+    <h1 i18n="@@user not found">User not found!</h1>
   </ng-template>
 </div>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>
+  <span *ngIf="action=='update'" i18n="@@failed update">Failed to update!</span>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>

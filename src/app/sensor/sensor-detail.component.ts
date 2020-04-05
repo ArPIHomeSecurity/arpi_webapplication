@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -48,6 +48,9 @@ class SensorInfo {
   providers: []
 })
 export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   sensorId: number;
   sensor: Sensor = null;
   sensors: Sensor[];
@@ -189,12 +192,16 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         );
     } else {
         if (this.sensorId != null) {
+          this.action = 'update';
           this.sensorService.updateSensor(sensor)
-            .subscribe(_ => this.router.navigate(['/sensors']));
+            .subscribe(_ => this.router.navigate(['/sensors']),
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+            );
         } else {
+          this.action = 'create';
           this.sensorService.createSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']),
-              error => this.snackBar.open('Failed to create!', null, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
             );
         }
     }
@@ -280,14 +287,16 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MonitoringState.READY) {
+          this.action = 'delete';
           this.sensorService.deleteSensor(sensorId)
             .subscribe(_ => {
                 this.router.navigate(['/sensors']);
               },
-              error => this.snackBar.open('Failed to delete!', null, {duration: environment.SNACK_DURATION})
+              error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
           );
         } else {
-          this.snackBar.open('Can\'t delete sensor!', null, {duration: environment.SNACK_DURATION});
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
         }
       }
     });

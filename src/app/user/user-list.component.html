@@ -5,18 +5,20 @@
         <mat-icon mat-card-avatar *ngIf="user.role === environment.ROLE_TYPES.ADMIN" mat-list-icon mat-card-avatar class="avatar">person</mat-icon>
         <mat-icon *ngIf="user.role === environment.ROLE_TYPES.USER" mat-list-icon mat-card-avatar class="avatar">person_outline</mat-icon>
         <mat-card-title>{{user.name}}</mat-card-title>
-        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.ADMIN">Administrator</mat-card-subtitle>
-        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.USER">User</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.ADMIN" i18n="@@user type administrator">Administrator</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="user.role === environment.ROLE_TYPES.USER" i18n="@@user type user">User</mat-card-subtitle>
         <mat-card-subtitle>{{user.comment}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div *ngIf="user.hasRegistrationCode" class="registration">
           <mat-chip-list>
             <mat-chip *ngIf="user.registration_expiry" i18n-matTooltip matTooltip="User has device registration code expiring on {{user.registrationExpiry}">
-              Registration: {{user.registration_expiry}}<mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
+              <span i18n="@@user registration">Registration: </span>{{user.registration_expiry}}
+              <mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="!user.registration_expiry" i18n-matTooltip matTooltip="User has device registration code for unlimited time">
-              Registration: unlimited time<mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
+              <span i18n="@@user registration unlimited">Registration: unlimited time</span>
+              <mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
             </mat-chip>
           </mat-chip-list>
         </div>
@@ -34,7 +36,7 @@
 
   <ng-template #no_users>
     <div ngClass.gt-xs="user-list" ngClass.xs="user-list-xs">
-      <h1>No users found</h1>
+      <h1 i18n="@@user no users">No users found</h1>
     </div>
   </ng-template>
 </div>
@@ -43,3 +45,8 @@
   <button class="user-action" mat-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
   <button class="user-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>
+
+<ng-template #snacbarTemplate>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>
