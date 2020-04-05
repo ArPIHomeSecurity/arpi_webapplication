@@ -5,7 +5,7 @@ import { delay, map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { Option } from '../models';
 
-import { environment } from '../../environments/environment';
+import { environment, NOTIFICATION_CONFIGURATION } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
 
 
@@ -17,7 +17,7 @@ export class ConfigurationService {
   constructor(
     private authService: AuthenticationService
   ) {
-    this.configuration = getSessionValue('ConfigurationService.configuration', []);
+    this.configuration = getSessionValue('ConfigurationService.configuration', NOTIFICATION_CONFIGURATION);
   }
 
 
@@ -35,7 +35,6 @@ export class ConfigurationService {
 
   setOption( option: string, section: string, value: any ): Observable<boolean> {
     const tmpOption = this.configuration.find(o => o.option === option && o.section === section);
-    value = JSON.stringify(value);
     if (tmpOption != null) {
       tmpOption.value = value;
     } else {

@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
-import { Option, DEFAULT_DYNDNS, DEFAULT_ACCESS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS } from '../../models';
 import { getValue } from '../../utils';
 
 
@@ -45,7 +45,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     super.initialize();
 
     this.updateComponent();
-    this.updateForm(DEFAULT_DYNDNS, DEFAULT_ACCESS);
+    this.updateForm(DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS);
   }
 
   ngOnDestroy() {
@@ -76,10 +76,9 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       access: this.configService.getOption('network', 'access')
     })
     .subscribe(results => {
-        this.dyndns = results.dyndns ? results.dyndns : DEFAULT_DYNDNS;
-        this.access = results.access ? results.access : DEFAULT_ACCESS;
-        this.dyndns.value = JSON.parse(this.dyndns.value);
-        this.access.value = JSON.parse(this.access.value);
+        this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
+        this.access = getValue(results, 'access', DEFAULT_NOTIFICATION_ACCESS);
+
         this.updateForm(this.dyndns, this.access);
         this.loader.display(false);
       }

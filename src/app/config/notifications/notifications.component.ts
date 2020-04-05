@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
-import { Option, DEFAULT_EMAIL, DEFAULT_GSM, DEFAULT_SUBSCRIPTIONS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
 import { getValue } from '../../utils';
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -40,7 +40,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     super.initialize();
 
     this.updateComponent();
-    this.updateForm(DEFAULT_EMAIL, DEFAULT_GSM, DEFAULT_SUBSCRIPTIONS);
+    this.updateForm(DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
   }
 
   ngOnDestroy() {
@@ -80,12 +80,10 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       subscriptions: this.configService.getOption('notifications', 'subscriptions')
     })
     .subscribe(results => {
-        this.email = results.email ? results.email : DEFAULT_EMAIL;
-        this.gsm = results.gsm ? results.gsm : DEFAULT_GSM;
-        this.subscriptions = results.subscriptions ? results.subscriptions : DEFAULT_SUBSCRIPTIONS;
-        this.email.value = JSON.parse(this.email.value);
-        this.gsm.value = JSON.parse(this.gsm.value);
-        this.subscriptions.value = JSON.parse(this.subscriptions.value);
+        this.email = getValue(results, 'email', DEFAULT_NOTIFICATION_EMAIL);
+        this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);
+        this.subscriptions = getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
+        
         this.updateForm(this.email, this.gsm, this.subscriptions);
         this.loader.display(false);
       }
