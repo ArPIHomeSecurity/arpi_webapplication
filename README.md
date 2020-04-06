@@ -36,6 +36,7 @@ Build the webapplication and install it to the Raspberry PI Zero with the manage
 
 ```bash
 ng build --configuration=production --localize
+npm run compress
 npm run postbuild
 ```
 
