@@ -184,7 +184,25 @@
         <source>Input channel: </source>
         <target state="translated">Bemeneti csatorna: </target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="alert type" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="home armed away" datatype="html">
+        <source>System armed away</source><target state="translated">Rendszer élesítve távozóra</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit><trans-unit id="home armed stay" datatype="html">
+        <source>System armed stay</source><target state="translated">Rendszer élesítve maradóra</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit><trans-unit id="home disarmed" datatype="html">
+        <source>System disarmed</source><target state="translated">Rendszer hatástalanítva</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit><trans-unit id="alert type" datatype="html">
         <source>Alert type</source><target state="translated">Riasztás típusa</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit><trans-unit id="alert type away" datatype="html">

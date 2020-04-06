@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ArmType, String2ArmType, Alert, SensorType } from '../models';
@@ -16,6 +16,9 @@ import { environment } from '../../environments/environment';
 })
 
 export class HomeComponent implements OnInit {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  action: string;
+
   ArmType: any = ArmType;
   alert: Alert;
   armState: ArmType;
@@ -78,15 +81,18 @@ export class HomeComponent implements OnInit {
 
   armChanged(event) {
     if (event.value === 'AWAY') {
-      this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
+      this.action = 'armed away'
       this.monitoringService.arm(ArmType.AWAY);
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
     } else if (event.value === 'STAY') {
+      this.action = 'armed stay'
       this.monitoringService.arm(ArmType.STAY);
-      this.snackBar.open('Armed', null, {duration: environment.SNACK_DURATION});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
     } else if (event.value === 'DISARMED') {
-        this.snackBar.open('Disarmed', null, {duration: environment.SNACK_DURATION});
-        this.monitoringService.disarm();
-      }
+      this.action = 'disarmed'
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+      this.monitoringService.disarm();
+    }
   }
 
   armDisabled() {
