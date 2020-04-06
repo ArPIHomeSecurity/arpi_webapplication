@@ -5,7 +5,7 @@ import { map, delay } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
-import { AlertType, Alert, Sensor } from '../models';
+import { AlertType, Alert, Sensor, AlertSensor } from '../models';
 import { environment, ALERTS } from '../../environments/environment';
 import { getSessionValue, setSessionValue } from '../utils';
 
@@ -60,12 +60,22 @@ export class AlertService {
   }
 
   _createAlert(sensors: Sensor[], alertType: AlertType) {
+    let alertSensors: AlertSensor[] = [];
+    sensors.forEach(sensor => {
+      alertSensors.push({
+        sensorId: sensor.id,
+        typeId: sensor.typeId,
+        channel: sensor.channel,
+        description: sensor.description
+      });
+    });
+
     const alert: Alert = {
       id: this.alerts.length + 1,
       startTime: new Date().toLocaleString(),
       endTime: null,
       alertType: alertType,
-      sensors: sensors
+      sensors: alertSensors
     };
     this.alerts.push(alert);
     this.syren = true;

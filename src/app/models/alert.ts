@@ -21,7 +21,7 @@ export class Alert {
 }
 
 export class AlertSensor {
-  id: number;
+  sensorId: number;
   typeId: number;
   channel: number;
   description: string;
