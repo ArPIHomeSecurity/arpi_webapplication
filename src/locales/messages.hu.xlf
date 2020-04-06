@@ -104,6 +104,42 @@
           <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="description">Unregister button</note>
+      </trans-unit><trans-unit id="login missing device token" datatype="html">
+        <source>Missing device token!</source><target state="translated">Hiányzó eszköz token!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit><trans-unit id="login expired registration code" datatype="html">
+        <source>Expired device registration code!</source><target state="translated">Lejárt eszköz regisztrációs kód!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit><trans-unit id="login invalid user id" datatype="html">
+        <source>Invalid user id! Update your device registration!</source><target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációját!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit><trans-unit id="login invalid registration code" datatype="html">
+        <source>Invalid registration code!</source><target state="translated">Érvénytelen regisztrációs kód!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit><trans-unit id="login invalid access code" datatype="html">
+        <source>Invalid access code!</source><target state="translated">Érvénytelen hozzáférési kód!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit><trans-unit id="login error" datatype="html">
+        <source>Something went wrong!?</source><target state="translated">Valami félre ment!?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
       </trans-unit><trans-unit id="arm away button" datatype="html">
         <source>
         AWAY

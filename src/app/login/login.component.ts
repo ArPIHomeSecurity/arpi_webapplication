@@ -73,22 +73,18 @@ export class LoginComponent implements OnInit {
               this.acField.nativeElement.focus();
             }, 0.5);
           } else {
-            this.error = 'Invalid registration code!';
+            this.error = 'invalid registration code';
           }
           this.loading = false;
         },
         error => {
-          if (error.error.error === 'expired registration') {
-            this.error = 'Registration code expired!';
-          } else {
-            this.error = 'Failed to register device!';
-          }
+          this.error = error.error.error;
           this.loading = false;
         }
       );
     } else {
       this.loading = false;
-      this.error = 'Fill required field(s)!';
+      this.error = 'invalid form';
     }
   }
 
@@ -105,23 +101,18 @@ export class LoginComponent implements OnInit {
             const returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
             this.router.navigate([returnUrl || '/']);
           } else {
-            this.error = 'Incorrect access code!';
+            this.error = 'invalid access code';
             this.loading = false;
           }
         },
         error => {
-          if (error.error.error === 'invalid user id') {
-            this.error = 'Registered user is unknown!';
-          } else {
-            this.error = 'Failed to authenticate!';
-          }
-
+          this.error = error.error.error;
           this.loading = false;
         }
       );
     } else {
       this.loading = false;
-      this.error = 'Fill required field(s)!';
+      this.error = 'invalid form';
     }
   }
 

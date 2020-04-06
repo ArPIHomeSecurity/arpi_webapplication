@@ -52,7 +52,15 @@
         <button mat-raised-button (click)="unregister()" [disabled]="loading" color="accent" i18n="Unregister button">Unregister device</button>
         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
       </div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+      <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
+        <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token!</div>
+        <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
+        <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
+        <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration code!</div>
+        <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
+        <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
+      </div>
     </mat-card>
   </form>
 </div>
