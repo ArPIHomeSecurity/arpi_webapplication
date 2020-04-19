@@ -802,7 +802,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit><trans-unit id="5a769912b3a85acdeb3880e2145128bd06f26d27" datatype="html">
-        <source>User has device registration code for unlimited time</source><target state="translated">A felhasználó eszköz regisztrációs kódja </target>
+        <source>User has device registration code for unlimited time</source><target state="translated">A felhasználó eszköz regisztrációs kódja nem jár le</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">19</context></context-group></trans-unit>
       <trans-unit id="save button" datatype="html">
