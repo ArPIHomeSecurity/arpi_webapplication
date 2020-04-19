@@ -13,15 +13,17 @@
           </mat-list-item>
             
           <mat-list-item class="clock">
-            <span i18n="@@clock system time">System time</span> <span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
+            <span i18n="@@clock system time">System time</span>&nbsp;({{clock.timezone}})<span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
           </mat-list-item>
       
           <mat-list-item class="clock">
-            <span i18n="@@clock hardware time">Hardware time</span> <span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
+            <span i18n="@@clock hardware time">Hardware time</span>&nbsp;(UTC)<span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
           </mat-list-item>
         </mat-list>
 
+        <!-- disable clock sync
         <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()" [disabled]="monitoringState != MonitoringState.READY" i18n="@@synchronize button">Synchronize</button>
+        -->
       </mat-expansion-panel>
 
       <mat-expansion-panel>
