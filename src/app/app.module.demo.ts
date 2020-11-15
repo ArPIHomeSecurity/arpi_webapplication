@@ -137,15 +137,6 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  entryComponents: [
-    SensorDeleteDialogComponent,
-    UserDeleteDialogComponent,
-    UserDeviceRegistrationDialogComponent,
-    UserDeviceUnregisterDialogComponent,
-
-    ZoneDeleteDialogComponent,
-    DemoHelpDialogComponent
-  ],
   providers: [
     AlertService,
     AuthGuard,

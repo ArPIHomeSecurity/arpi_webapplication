@@ -132,13 +132,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],
-  entryComponents: [
-    SensorDeleteDialogComponent,
-    UserDeleteDialogComponent,
-    UserDeviceRegistrationDialogComponent,
-    UserDeviceUnregisterDialogComponent,
-    ZoneDeleteDialogComponent
-  ],
   providers: [
     AlertService,
     AuthGuard,
