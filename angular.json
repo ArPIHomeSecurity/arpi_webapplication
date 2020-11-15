@@ -52,7 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -114,7 +113,7 @@
                 }
               ],
               "index": {
-                "input":"src/index.demo.html",
+                "input": "src/index.demo.html",
                 "output": "index.html"
               },
               "assets": [
@@ -125,7 +124,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
