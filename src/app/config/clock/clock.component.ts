@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import moment from 'moment-timezone';
+
+import * as moment from 'moment-timezone';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { DateTimeAdapter } from 'ng-pick-datetime';
+import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { EventService, LoaderService, MonitoringService } from '../../services';
 
 const scheduleMicrotask = Promise.resolve( null );
