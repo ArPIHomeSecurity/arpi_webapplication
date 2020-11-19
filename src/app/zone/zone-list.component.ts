@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,11 +7,12 @@ import { forkJoin } from 'rxjs';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
 import { MonitoringState, Sensor, Zone } from '../models';
-import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { AuthenticationService, EventService, LoaderService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
+
 
 @Component({
   templateUrl: 'zone-list.component.html',
@@ -31,13 +32,13 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   open: boolean[][] = [];
 
   constructor(
-    public authService: AuthenticationService,
-    public eventService: EventService,
-    public loader: LoaderService,
-    public monitoringService: MonitoringService,
+    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('ZoneService') private zoneService: ZoneService,
 
-    private sensorService: SensorService,
-    private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {

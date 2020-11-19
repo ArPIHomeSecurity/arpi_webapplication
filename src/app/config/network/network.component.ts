@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { forkJoin } from 'rxjs';
 
-import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
+import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
 import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS } from '../../models';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
 
 
@@ -15,7 +15,6 @@ const scheduleMicrotask = Promise.resolve(null);
 @Component({
   templateUrl: 'network.component.html',
   styleUrls: ['network.component.scss'],
-  providers: [ConfigurationService]
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
@@ -31,12 +30,12 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   ];
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('ConfigurationService') private configService: ConfigurationService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
-    private configService: ConfigurationService,
   ) {
     super(eventService, loader, monitoringService);
   }

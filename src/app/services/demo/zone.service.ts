@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { Zone } from '../models';
-import { environment, ZONES } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+
+import { Zone } from 'src/app/models';
+import { ZONES } from 'src/app/demo/configuration';
+import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -14,7 +16,7 @@ export class ZoneService {
   zones: Zone[];
 
   constructor(
-    private authService: AuthenticationService
+    @Inject('AuthenticationService') private authService: AuthenticationService
   ) {
     this.zones = getSessionValue('ZoneService.zones', ZONES);
   }

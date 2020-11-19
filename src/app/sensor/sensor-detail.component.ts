@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
 import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
-import { positiveInteger } from '../utils';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { positiveInteger } from '../utils';
 
 import { environment } from '../../environments/environment';
 
@@ -63,18 +63,20 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   MonitoringState = MonitoringState;
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('ZoneService') private zoneService: ZoneService,
+    
     public router: Router,
 
-    private sensorService: SensorService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private zoneService: ZoneService,
     public dialog: MatDialog,
     private location: Location,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar
+    ) {
       super(eventService, loader, monitoringService);
 
       this.route.paramMap.subscribe(params => {

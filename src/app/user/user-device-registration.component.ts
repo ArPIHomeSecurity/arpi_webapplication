@@ -23,8 +23,8 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   registrationCode: string;
 
   constructor(
+    @Inject('UserService') public userService: UserService,
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
-    public userService: UserService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {

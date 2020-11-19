@@ -1,4 +1,3 @@
-import { environment } from '../../environments/environment';
 
 export enum MonitoringState {
   NOT_READY = 0,
@@ -11,22 +10,32 @@ export enum MonitoringState {
   ERROR = 7
 }
 
+// monitoring system states from the backend
+const MONITORING_STARTUP = 'monitoring_startup';
+const MONITORING_READY = 'monitoring_ready';
+const MONITORING_UPDATING_CONFIG = 'monitoring_updating_config';
+const MONITORING_INVALID_CONFIG = 'monitoring_invalid_config';
+const MONITORING_ARMED = 'monitoring_armed';
+const MONITORING_SABOTAGE = 'monitoring_sabotage';
+const MONITORING_ERROR = 'monitoring_error';
+
+
 
 export function String2MonitoringState(systemState: string): MonitoringState {
   switch ( systemState ) {
-    case environment.MONITORING_STARTUP:
+    case MONITORING_STARTUP:
       return MonitoringState.STARTUP;
-    case environment.MONITORING_READY:
+    case MONITORING_READY:
       return MonitoringState.READY;
-    case environment.MONITORING_UPDATING_CONFIG:
+    case MONITORING_UPDATING_CONFIG:
       return MonitoringState.UPDATING_CONFIG;
-    case environment.MONITORING_INVALID_CONFIG:
+    case MONITORING_INVALID_CONFIG:
       return MonitoringState.INVALID_CONFIG;
-    case environment.MONITORING_ARMED:
+    case MONITORING_ARMED:
       return MonitoringState.ARMED;
-    case environment.MONITORING_SABOTAGE:
+    case MONITORING_SABOTAGE:
       return MonitoringState.SABOTAGE;
-    case environment.MONITORING_ERROR:
+    case MONITORING_ERROR:
       return MonitoringState.ERROR;
     default:
       console.error('Unknown monitoring state!' + systemState);
@@ -37,19 +46,19 @@ export function String2MonitoringState(systemState: string): MonitoringState {
 export function MonitoringState2String(systemState: MonitoringState): string {
   switch ( systemState ) {
     case MonitoringState.STARTUP:
-      return environment.MONITORING_STARTUP;
+      return MONITORING_STARTUP;
     case MonitoringState.READY:
-      return environment.MONITORING_READY;
+      return MONITORING_READY;
     case MonitoringState.UPDATING_CONFIG:
-      return environment.MONITORING_UPDATING_CONFIG;
+      return MONITORING_UPDATING_CONFIG;
     case MonitoringState.INVALID_CONFIG:
-      return environment.MONITORING_INVALID_CONFIG;
+      return MONITORING_INVALID_CONFIG;
     case MonitoringState.ARMED:
-      return environment.MONITORING_ARMED;
+      return MONITORING_ARMED;
     case MonitoringState.SABOTAGE:
-      return environment.MONITORING_SABOTAGE;
+      return MONITORING_SABOTAGE;
     case MonitoringState.ERROR:
-      return environment.MONITORING_ERROR;
+      return MONITORING_ERROR;
     default:
       console.error('Unknown monitoring state!' + systemState);
   }

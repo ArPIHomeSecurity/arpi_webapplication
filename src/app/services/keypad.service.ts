@@ -1,49 +1,22 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Keypad, KeypadType } from '../models';
 
 
-@Injectable()
-export class KeypadService {
-  constructor(
-    private http: HttpClient
-  ) { }
+export interface KeypadService {
 
   /** Not implemented yet */
-  getKeypads(): Observable<Keypad[]> {
-    // get keypads from api
-    return this.http.get<Keypad[]>('/api/keypads/');
-  }
+  getKeypads(): Observable<Keypad[]>;
 
+  getKeypad( keypadId: number ): Observable<Keypad>;
 
-  getKeypad( keypadId: number ): Observable<Keypad> {
-    // get keypads from api
-    return this.http.get<Keypad>('/api/keypad/' + keypadId);
-  }
+  createKeypad( keypad: Keypad ): Observable<Keypad>;
 
+  updateKeypad( keypad: Keypad ): Observable<Keypad>;
 
-  createKeypad( keypad: Keypad ): Observable<Keypad> {
-    // set keypad from api
-    return this.http.post<Keypad>('/api/keypads/', keypad);
-  }
+  deleteKeypad( keypadId: number ): Observable<boolean>;
 
-
-  updateKeypad( keypad: Keypad ): Observable<Keypad> {
-    // set keypad from api
-    return this.http.put<Keypad>('/api/keypad/' + keypad.id, keypad);
-  }
-
-  deleteKeypad( keypadId: number ): Observable<boolean> {
-    // set keypad from api
-    return this.http.delete<boolean>('/api/keypad/' + keypadId);
-  }
-
-  getKeypadTypes(): Observable<KeypadType[]> {
-    // get keypad types from api
-    return this.http.get<KeypadType[]>('/api/keypadtypes');
-  }
+  getKeypadTypes(): Observable<KeypadType[]>;
 }
 
 

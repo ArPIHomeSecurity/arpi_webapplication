@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
-import { SensorService } from '../services';
+import { SensorService } from '../services/demo';
 import { getSessionValue, setSessionValue } from '../utils';
 
 import { environment } from '../../environments/environment';

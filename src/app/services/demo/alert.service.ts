@@ -1,13 +1,15 @@
-
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
-import { AlertType, Alert, Sensor, AlertSensor } from '../models';
-import { environment, ALERTS } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+
+import { AlertType, Alert, Sensor, AlertSensor } from 'src/app/models';
+import { ALERTS } from 'src/app/demo/configuration';
+import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable()
 export class AlertService {
@@ -19,8 +21,8 @@ export class AlertService {
   syrenId: number;
 
   constructor(
-    private authService: AuthenticationService,
-    private eventService: EventService
+    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
     this.syren = getSessionValue('AlertService.syren', null);

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { Option } from '../models';
 
-import { environment, NOTIFICATION_CONFIGURATION } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+import { Option } from 'src/app/models';
+import { NOTIFICATION_CONFIGURATION } from 'src/app/demo/configuration';
+import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -15,7 +16,7 @@ export class ConfigurationService {
   configuration: Option[];
 
   constructor(
-    private authService: AuthenticationService
+    @Inject('AuthenticationService') private authService: AuthenticationService
   ) {
     this.configuration = getSessionValue('ConfigurationService.configuration', NOTIFICATION_CONFIGURATION);
   }

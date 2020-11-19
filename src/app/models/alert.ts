@@ -1,4 +1,3 @@
-import { environment } from '../../environments/environment';
 
 export enum ArmType {
   DISARMED = 0,
@@ -11,6 +10,16 @@ export enum AlertType {
   AWAY = 1,
   STAY = 2
 }
+
+// monitoring arm types from the backend system
+const ARM_AWAY = 'arm_away';
+const ARM_STAY = 'arm_stay';
+const ARM_DISARM = 'disarm';
+
+// alert types from the backend system
+const ALERT_AWAY = 'alert_away';
+const ALERT_STAY = 'alert_stay';
+const ALERT_SABOTAGE = 'alert_sabotage';
 
 export class Alert {
   id: number;
@@ -29,11 +38,11 @@ export class AlertSensor {
 
 export function String2ArmType( armType: string ): ArmType {
   switch ( armType ) {
-    case environment.ARM_DISARM:
+    case ARM_DISARM:
       return ArmType.DISARMED;
-    case environment.ARM_AWAY:
+    case ARM_AWAY:
       return ArmType.AWAY;
-    case environment.ARM_STAY:
+    case ARM_STAY:
       return ArmType.STAY;
     default:
       console.error( 'Unknown arm type!', armType );
@@ -42,21 +51,21 @@ export function String2ArmType( armType: string ): ArmType {
 
 export function ArmType2String( armType: ArmType): string {
   if ( armType === ArmType.AWAY ) {
-    return environment.ARM_AWAY;
+    return ARM_AWAY;
   } else if ( armType === ArmType.STAY ) {
-    return environment.ARM_STAY;
+    return ARM_STAY;
   } else if ( armType === ArmType.DISARMED ) {
-    return environment.ARM_DISARM;
+    return ARM_DISARM;
   }
 }
 
 export function String2AlertType( alertType: string ): AlertType {
   switch ( alertType ) {
-    case environment.ALERT_SABOTAGE:
+    case ALERT_SABOTAGE:
       return AlertType.SABOTAGE;
-    case environment.ALERT_AWAY:
+    case ALERT_AWAY:
       return AlertType.AWAY;
-    case environment.ALERT_STAY:
+    case ALERT_STAY:
       return AlertType.STAY;
     default:
       console.error( 'Unknown alert type!' + alertType );
@@ -65,10 +74,10 @@ export function String2AlertType( alertType: string ): AlertType {
 
 export function AlertType2String( alertType: AlertType): string {
   if ( alertType === AlertType.AWAY ) {
-    return environment.ALERT_AWAY;
+    return ALERT_AWAY;
   } else if ( alertType === AlertType.STAY ) {
-    return environment.ALERT_STAY;
+    return ALERT_STAY;
   } else if ( alertType === AlertType.SABOTAGE ) {
-    return environment.ALERT_SABOTAGE;
+    return ALERT_SABOTAGE;
   }
 }

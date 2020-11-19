@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "preinstall": "npx npm-force-resolutions",
     "postinstall": "ngcc",
     "extract-i18n": "ng xi18n --output-path src/locales --format xliff && ng run argus:xliffmerge",
     "compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production/$lang/*.js || true && gzip dist-production/$lang/*.css || true; done",
@@ -55,7 +56,7 @@
     "@types/humanize-duration": "^3.18.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "^2.0.8",
-    "@types/node": "^12.19.4",
+    "@types/node": "^12.19.5",
     "@types/socket.io-client": "^1.4.34",
     "codelyzer": "^6.0.0",
     "core-js": "^2.6.11",
@@ -67,14 +68,14 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "minimist": "^1.2.5",
     "protractor": "~7.0.0",
     "ts-node": "~8.5.4",
     "tslint": "~6.1.0",
-    "typescript": "^4.0.5",
-    "webpack": "^4.44.2",
-    "webpack-dev-server": "^3.11.0"
+    "typescript": "^4.0.5"
   },
   "resolutions": {
-    "serialize-javascript": "^2.1.1"
+    "serialize-javascript": "^2.1.1",
+    "minimist": "^1.2.5"
   }
 }

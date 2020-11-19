@@ -3,9 +3,10 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 // import { AuthenticationService } from './authentication.service';
-import { User } from '../models';
-import { environment, USERS } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+import { User } from 'src/app/models';
+import { environment } from 'src/environments/environment';
+import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { USERS } from 'src/app/demo/configuration';
 
 export class UserDemo extends User {
   registrationCode: string;

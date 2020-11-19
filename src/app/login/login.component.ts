@@ -1,10 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../services';
 import { UserDeviceUnregisterDialogComponent } from '../user';
+import { AuthenticationService } from '../services';
 
 
 @Component({
@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   constructor(
+    @Inject('AuthenticationService') private authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private router: Router,
-    private authenticationService: AuthenticationService
+    private router: Router
     ) {
 
     }

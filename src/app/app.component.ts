@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -8,10 +8,10 @@ import { CountdownComponent } from 'ngx-countdown';
 import * as humanizeDuration from 'humanize-duration';
 
 
-import { AuthenticationService, LoaderService, MonitoringService } from './services';
-
-import { environment } from '../environments/environment';
 import { VERSION } from './version';
+import { ROLE_TYPES } from './models';
+import { environment } from '../environments/environment';
+import { AuthenticationService, LoaderService, MonitoringService } from './services';
 
 
 @Component({
@@ -47,13 +47,26 @@ export class AppComponent implements OnInit {
   isSessionValid: boolean;
 
   constructor(
+    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject('LoaderService') private loader: LoaderService,
+    @Inject('MonitoringService') private monitoring: MonitoringService,
     public mediaObserver: MediaObserver,
-    private loader: LoaderService,
-    public authService: AuthenticationService,
-    private monitoring: MonitoringService,
     private snackBar: MatSnackBar
   ) {
-    this.watcher = mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
+   
+
+    this.currentLocale = localStorage.getItem('localeId');
+
+    if (!this.currentLocale) {
+      this.currentLocale = 'en';
+    }
+
+    this.versions = {server_version: '', webapplication_version: VERSION};
+    this.isSessionValid = false;
+  }
+
+  ngOnInit() {
+    this.watcher = this.mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
       this.smallScreen = false;
       changes.forEach(change => this.smallScreen = this.smallScreen || (change.mqAlias === 'lt-sm'));
 
@@ -68,17 +81,6 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.currentLocale = localStorage.getItem('localeId');
-
-    if (!this.currentLocale) {
-      this.currentLocale = 'en';
-    }
-
-    this.versions = {server_version: '', webapplication_version: VERSION};
-    this.isSessionValid = false;
-  }
-
-  ngOnInit() {
     this.smallScreen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
     this.loader.status.subscribe(value => this.displayLoader = value);
     this.loader.message.subscribe(message => this.message = message);
@@ -106,7 +108,7 @@ export class AppComponent implements OnInit {
   }
 
   isAdminUser() {
-    return this.authService.getRole() === environment.ROLE_TYPES.ADMIN;
+    return this.authService.getRole() === ROLE_TYPES.ADMIN;
   }
 
   onLocaleSelected(event) {

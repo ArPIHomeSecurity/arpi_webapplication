@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,9 +9,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
+
 import { MonitoringState, Sensor, Zone } from '../models';
-import { positiveInteger } from '../utils';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { positiveInteger } from '../utils';
 
 import { environment } from '../../environments/environment';
 
@@ -33,17 +34,17 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   zoneForm: FormGroup;
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
-    public router: Router,
-
-    private fb: FormBuilder,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('ZoneService') private zoneService: ZoneService,
+    
     private route: ActivatedRoute,
-    private sensorService: SensorService,
-    private zoneService: ZoneService,
-    public dialog: MatDialog,
+    public router: Router,
+    private fb: FormBuilder,
     private location: Location,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable , Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { Alert } from '../models';
-import { environment } from '../../environments/environment';
+import { Alert } from '../../models';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()

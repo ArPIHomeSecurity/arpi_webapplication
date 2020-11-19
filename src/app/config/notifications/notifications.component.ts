@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
 import { Option, DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -13,8 +13,7 @@ const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
   templateUrl: 'notifications.component.html',
-  styleUrls: ['notifications.component.scss'],
-  providers: [ConfigurationService]
+  styleUrls: ['notifications.component.scss']
 })
 
 
@@ -26,12 +25,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   subscriptions: Option = null;
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('ConfigurationService') private configService: ConfigurationService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
-    private configService: ConfigurationService,
   ) {
     super(eventService, loader, monitoringService);
   }

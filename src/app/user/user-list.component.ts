@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-import { User } from '../models/user';
-import { LoaderService, EventService, MonitoringService, UserService } from '../services';
-
-import { environment } from '../../environments/environment';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
-import { MonitoringState } from '../models';
+
+import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
+import { MonitoringState, ROLE_TYPES, User } from 'src/app/models';
+import { EventService, LoaderService, MonitoringService } from 'src/app/services';
+import { environment } from 'src/environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -23,17 +22,17 @@ const scheduleMicrotask = Promise.resolve(null);
 
 export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  
   action: string;
-
   users: User[] = null;
-  environment = environment;
+  readonly ROLE_TYPES = ROLE_TYPES;
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    private userService: UserService,
+    @Inject('UserService') private userService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {

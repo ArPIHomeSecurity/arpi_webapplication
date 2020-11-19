@@ -1,3 +1,8 @@
+export const ROLE_TYPES = {
+  ADMIN: 'admin',
+  USER: 'user'
+};
+
 export class User {
   id: number;
   name: string;
@@ -7,4 +12,4 @@ export class User {
   registrationExpiry: string;
   accessCode: number;
   comment: string;
-}
+};

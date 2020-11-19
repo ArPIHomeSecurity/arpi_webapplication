@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -6,20 +6,20 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-import { User, MonitoringState } from '../models';
-import { EventService, LoaderService, MonitoringService, UserService } from '../services';
 
-import { environment } from '../../environments/environment';
+import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
+import { User, MonitoringState, ROLE_TYPES } from 'src/app/models';
+import { EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
+
+import { environment } from 'src/environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
   templateUrl: './user-detail.component.html',
-  styleUrls: ['user-detail.component.scss'],
-  providers: []
+  styleUrls: ['user-detail.component.scss']
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
@@ -32,13 +32,14 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   action: string;
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('UserService') private userService: UserService,
+
     public router: Router,
 
     private fb: FormBuilder,
-    private userService: UserService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -55,9 +56,9 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   ngOnInit() {
     super.initialize();
 
-    for (const role in environment.ROLE_TYPES) {
-      if (environment.ROLE_TYPES.hasOwnProperty(role)) {
-        this.roles.push({name: role, value: environment.ROLE_TYPES[role]});
+    for (const role in ROLE_TYPES) {
+      if (ROLE_TYPES.hasOwnProperty(role)) {
+        this.roles.push({name: role, value: ROLE_TYPES[role]});
       }
     }
 

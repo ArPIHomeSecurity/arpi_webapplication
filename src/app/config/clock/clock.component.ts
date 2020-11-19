@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
@@ -48,9 +48,9 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   timezoneNames: string[];
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
     dateTimeAdapter: DateTimeAdapter<any>,

@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AlertService, EventService, SensorService, AuthenticationService } from '../services';
-import { MonitoringService } from '../services';
-import { ArmType, String2ArmType } from '../models';
-import { MonitoringState, String2MonitoringState } from '../models';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { ArmType, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
+import { AlertService, AuthenticationService, EventService, MonitoringService, SensorService } from '../services';
 
 
 @Component({
@@ -24,12 +22,12 @@ export class SystemStateComponent implements OnInit {
   monitoringState: MonitoringState;
 
   constructor(
-    private authService: AuthenticationService,
-    private alertService: AlertService,
-    private eventService: EventService,
-    private router: Router,
-    private sensorService: SensorService,
-    private monitoringService: MonitoringService
+    @Inject('AlertService') private alertService: AlertService,
+    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService,
+    @Inject('MonitoringService') private monitoringService: MonitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
+    private router: Router
   ) { }
 
   ngOnInit() {

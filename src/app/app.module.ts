@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
@@ -30,21 +30,13 @@ import {
   UserDeviceUnregisterDialogComponent
 } from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
-import {
-  AlertService,
-  AuthenticationService,
-  ConfigurationService,
-  EventService,
-  KeypadService,
-  LoaderService,
-  MonitoringService,
-  SensorService,
-  UserService,
-  ZoneService
-} from './services';
+
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { DemoComponent } from './demo/demo.component';
+import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
+import { ServiceTypes } from 'src/environments/environment';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -67,6 +59,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 
 @NgModule({
@@ -97,7 +90,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ZoneDeleteDialogComponent,
 
     SystemStateComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+
+    DemoComponent,
+    DemoHelpDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -133,20 +129,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     OwlNativeDateTimeModule
   ],
   providers: [
-    AlertService,
     AuthGuard,
     AdminGuard,
 
-    AlertService,
-    AuthenticationService,
-    ConfigurationService,
-    EventService,
-    KeypadService,
-    LoaderService,
-    MonitoringService,
-    SensorService,
-    UserService,
-    ZoneService,
+    {provide: 'AlertService', useClass: ServiceTypes.alertService},
+    {provide: 'AuthenticationService', useClass: ServiceTypes.authenticationService},
+    {provide: 'ConfigurationService', useClass: ServiceTypes.configurationService},
+    {provide: 'EventService', useClass: ServiceTypes.eventService},
+    {provide: 'KeypadService', useClass: ServiceTypes.keypadService},
+    {provide: 'LoaderService', useClass: ServiceTypes.loaderService},
+    {provide: 'MonitoringService', useClass: ServiceTypes.monitoringService},
+    {provide: 'SensorService', useClass: ServiceTypes.sensorService},
+    {provide: 'UserService', useClass: ServiceTypes.userService},
+    {provide: 'ZoneService', useClass: ServiceTypes.zoneService},
 
     {
       provide: HTTP_INTERCEPTORS,

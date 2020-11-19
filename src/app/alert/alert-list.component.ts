@@ -1,5 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild, OnInit, Inject } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
@@ -7,6 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { AlertType, Alert, Sensor } from '../models';
 import { AlertService, EventService, SensorService } from '../services';
+
 
 export class AlertHistory extends DataSource<any> {
   constructor(private alertHistory: Observable<Alert[]>, private paginator: MatPaginator) {
@@ -35,9 +35,10 @@ export class AlertListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private alertService: AlertService,
-    private eventService: EventService,
-    private sensorService: SensorService) {}
+    @Inject('AlertService') private alertService: AlertService,
+    @Inject('EventService') private eventService: EventService,
+    @Inject('SensorService') private sensorService: SensorService
+    ) {}
 
   ngOnInit() {
     this.alertService.getAlerts()

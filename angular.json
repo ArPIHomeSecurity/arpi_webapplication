@@ -26,6 +26,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "humanize-duration",
+              "moment-timezone"
+            ],
             "aot": true,
             "outputPath": "dist-development",
             "index": "src/index.html",
@@ -72,19 +76,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/demo/environment.prepared01.ts"
-                },
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component.demo.html"
-                },
-                {
-                  "replace": "src/app/services",
-                  "with": "src/app/services.demo"
+                  "with": "src/environments/environment.demo.ts"
                 }
               ],
               "index": {
@@ -97,19 +89,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/demo/environment.prepared01.ts"
-                },
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.demo.ts"
-                },
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component.demo.html"
-                },
-                {
-                  "replace": "src/app/services",
-                  "with": "src/app/services.demo"
+                  "with": "src/environments/environment.demo.ts"
                 }
               ],
               "index": {
@@ -172,7 +152,7 @@
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "karmaConfig": "karma.conf.js",
             "styles": [
               "src/styles.scss"
             ],

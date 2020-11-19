@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
@@ -7,10 +7,10 @@ import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { AlertType, ArmType, ArmType2String, Clocks, Sensor, MonitoringState, MonitoringState2String } from '../models';
+import { AlertType, ArmType, ArmType2String, Clocks, Sensor, MonitoringState, MonitoringState2String } from '../../models';
 
-import { environment } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+import { environment } from '../../../environments/environment';
+import { getSessionValue, setSessionValue } from '../../utils';
 
 @Injectable()
 export class MonitoringService {
@@ -22,10 +22,10 @@ export class MonitoringService {
   timeZone: string;
 
   constructor(
-    private alertService: AlertService,
-    private authService: AuthenticationService,
-    private eventService: EventService,
-    private zoneService: ZoneService
+    @Inject('AlertService') private alertService: AlertService,
+    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService,
+    @Inject('ZoneService') private zoneService: ZoneService
   ) {
     this.monitoringState = getSessionValue('MonitoringService.monitoringState', MonitoringState.STARTUP)
     this.armState = getSessionValue('MonitoringService.armState', ArmType.DISARMED);

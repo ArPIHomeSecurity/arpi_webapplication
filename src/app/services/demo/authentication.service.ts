@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { delay, map, startWith } from 'rxjs/operators';
 
 import { UserService } from './user.service';
-import { User } from '../models';
-import { environment } from '../../environments/environment';
-import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '../utils';
+import { User } from '../../models';
+import { environment } from '../../../environments/environment';
+import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '../../utils';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,8 +18,8 @@ export class AuthenticationService {
   registeredUserId: number;
 
   constructor(
-      private router: Router,
-      private userService: UserService
+    @Inject('UserService') private userService: UserService,
+    private router: Router
   ) {
     this.loggedInAs = getSessionValue('AuthenticationService.loggedInAs', null);
     this.registeredUserId = getLocalValue('AuthenticationService.registeredForUser', -1);

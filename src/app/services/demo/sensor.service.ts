@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { MonitoringService } from './monitoring.service';
-import { Sensor, SensorType } from '../models';
-import { environment, SENSORS, SENSOR_TYPES } from '../../environments/environment';
-import { getSessionValue, setSessionValue } from '../utils';
+
+import { Sensor, SensorType } from 'src/app/models';
+import { SENSORS, SENSOR_TYPES } from 'src/app/demo/configuration';
+import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +21,9 @@ export class SensorService {
   channels: boolean[] = [];
 
   constructor(
-    private authService: AuthenticationService,
-    private eventService: EventService,
-    private monitoringService: MonitoringService
+    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService,
+    @Inject('MonitoringService') private monitoringService: MonitoringService
   ) {
     // channels are numbered 1..N
     for (let i = 0; i < environment.channelCount; i++) {

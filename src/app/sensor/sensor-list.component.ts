@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 
 import { forkJoin } from 'rxjs';
 
@@ -30,13 +30,13 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   sensorTypes: SensorType [] = [];
 
   constructor(
-    public authService: AuthenticationService,
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('ZoneService') private zoneService: ZoneService,
 
-    private sensorService: SensorService,
-    private zoneService: ZoneService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {

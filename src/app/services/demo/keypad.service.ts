@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { environment, KEYPADS, KEYPAD_TYPES } from '../../environments/environment';
-import { Keypad, KeypadType } from '../models';
+import { environment } from 'src/environments/environment';
+import { Keypad, KeypadType } from 'src/app/models';
+import { KEYPADS, KEYPAD_TYPES } from 'src/app/demo/configuration';
 
 @Injectable()
 export class KeypadService {
@@ -13,7 +14,7 @@ export class KeypadService {
   keypadTypes: KeypadType[] = KEYPAD_TYPES;
 
   constructor(
-    private authService: AuthenticationService
+    @Inject('AuthenticationService') private authService: AuthenticationService
   ) { }
 
   getKeypads(): Observable<Keypad[]> {

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
 import { Keypad, KeypadType } from '../models';
+import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
 
 const scheduleMicrotask = Promise.resolve( null );
 
@@ -21,12 +21,12 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   keypadTypes: KeypadType[];
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('KeypadService') private keypadService: KeypadService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
-    private keypadService: KeypadService,
   ) {
     super(eventService, loader, monitoringService);
   }

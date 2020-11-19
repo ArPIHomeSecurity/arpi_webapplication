@@ -1,10 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ArmType, String2ArmType, Alert, SensorType } from '../models';
-import { MonitoringState, String2MonitoringState } from '../models';
-import { AlertService, EventService, LoaderService, SensorService } from '../services';
-import { MonitoringService } from '../services';
+import { Alert, ArmType, MonitoringState, String2ArmType, String2MonitoringState, SensorType } from '../models';
+import { AlertService, EventService, LoaderService, MonitoringService, SensorService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -27,13 +25,13 @@ export class HomeComponent implements OnInit {
   sensorTypes: SensorType [] = [];
 
   constructor(
-    public loader: LoaderService,
-    public eventService: EventService,
-    public monitoringService: MonitoringService,
+    @Inject('AlertService') private alertService: AlertService,
+    @Inject('EventService') public eventService: EventService,
+    @Inject('LoaderService') public loader: LoaderService,
+    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('SensorService') private sensorService: SensorService,
 
     private snackBar: MatSnackBar,
-    private alertService: AlertService,
-    private sensorService: SensorService,
   ) {
 
   }
