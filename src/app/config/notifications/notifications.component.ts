@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
-import { forkJoin } from 'rxjs';
-
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { Option, DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
@@ -78,6 +79,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       gsm: this.configService.getOption('notifications', 'gsm'),
       subscriptions: this.configService.getOption('notifications', 'subscriptions')
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.email = getValue(results, 'email', DEFAULT_NOTIFICATION_EMAIL);
         this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Alert, ArmType, MonitoringState, String2ArmType, String2MonitoringState, SensorType } from '../models';
@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
   providers: []
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
@@ -75,6 +75,10 @@ export class HomeComponent implements OnInit {
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+  }
+
+  ngOnDestroy(){
+    this.loader.clearMessage();
   }
 
   armChanged(event) {

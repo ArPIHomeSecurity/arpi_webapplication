@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 
-import { forkJoin } from 'rxjs';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
@@ -74,6 +75,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       sensorTypes: this.sensorService.getSensorTypes(),
       zones: this.zoneService.getZones()
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.sensors = results.sensors;
         this.sensorTypes = results.sensorTypes;
@@ -115,7 +117,8 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       if (result) {
         this.action = 'delete';
         if (this.monitoringState === MonitoringState.READY) {
-          this.sensorService.deleteSensor(sensorId).subscribe( _ => this.updateComponent(),
+          this.sensorService.deleteSensor(sensorId)
+            .subscribe( _ => this.updateComponent(),
               _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
           );
         } else {

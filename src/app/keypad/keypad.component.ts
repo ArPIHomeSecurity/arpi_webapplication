@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { Keypad, KeypadType } from '../models';
 import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
@@ -61,17 +64,16 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
       this.loader.display( true );
     } );
 
-    this.keypadService.getKeypad(0)
-    .subscribe(keypad => {
-      this.keypad = keypad;
+    forkJoin({
+      keypad: this.keypadService.getKeypad(0),
+      keypadTypes: this.keypadService.getKeypadTypes()
+    })
+    .pipe(finalize(() => this.loader.display(false)))
+    .subscribe(results =>{
+      this.keypad = results.keypad;
+      this.keypadTypes = results.keypadTypes;
       this.updateForm();
-    });
-
-    this.keypadService.getKeypadTypes()
-    .subscribe(keypadTypes => {
-      this.keypadTypes = keypadTypes;
-      this.updateForm();
-    });
+    })
   }
 
   prepareKeypad(): Keypad {

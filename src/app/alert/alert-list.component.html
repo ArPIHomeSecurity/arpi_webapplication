@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="alertHistory != null">
   <mat-table #table [dataSource]="alertHistory">
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

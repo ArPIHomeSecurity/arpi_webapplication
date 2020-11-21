@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
@@ -69,6 +70,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
       zones: this.zoneService.getZones(),
       sensors: this.sensorService.getSensors()
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.zones = results.zones;
         this.sensors = results.sensors;
@@ -105,6 +107,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
         if (this.monitoringState === MonitoringState.READY) {
           this.action = 'delete';
           this.zoneService.deleteZone(zoneId)
+            .pipe(finalize(() => this.loader.display(false)))
             .subscribe(
               _ => this.updateComponent(),
               _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})

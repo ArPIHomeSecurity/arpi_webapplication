@@ -1,11 +1,15 @@
-import { Component, ViewChild, OnInit, Inject } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit, OnDestroy } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable, of } from 'rxjs';
+
+import { Observable, of, forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { AlertType, Alert, Sensor } from '../models';
-import { AlertService, EventService, SensorService } from '../services';
+import { AlertService, EventService, LoaderService, SensorService } from '../services';
+
+const scheduleMicrotask = Promise.resolve( null );
 
 
 export class AlertHistory extends DataSource<any> {
@@ -26,7 +30,7 @@ export class AlertHistory extends DataSource<any> {
   styleUrls: ['alert-list.component.scss'],
   providers: []
 })
-export class AlertListComponent implements OnInit {
+export class AlertListComponent implements OnInit, OnDestroy {
   AlertType: any = AlertType;
   alertHistory: AlertHistory | null;
   displayedColumns = ['alertType', 'startTime', 'endTime', 'sensors'];
@@ -37,16 +41,27 @@ export class AlertListComponent implements OnInit {
   constructor(
     @Inject('AlertService') private alertService: AlertService,
     @Inject('EventService') private eventService: EventService,
-    @Inject('SensorService') private sensorService: SensorService
-    ) {}
+    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('LoaderService') private loader: LoaderService
+  ) {}
 
   ngOnInit() {
-    this.alertService.getAlerts()
-      .subscribe(alerts => {
-        this.alertHistory = new AlertHistory(of(alerts), this.paginator);
-      }
-    );
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display( true );
+    } );
 
+    forkJoin({
+      alerts: this.alertService.getAlerts(),
+      sensors: this.sensorService.getSensors()
+    })
+    .pipe(finalize(() => this.loader.display(false)))
+    .subscribe(results => {
+      this.alertHistory = new AlertHistory(of(results.alerts), this.paginator);
+      this.sensors = results.sensors;
+    })
+    
     this.eventService.listen('syren_state_change')
       .subscribe(event => {
           this.alertService.getAlerts()
@@ -55,11 +70,10 @@ export class AlertListComponent implements OnInit {
         });
       }
     );
+  }
 
-    this.sensorService.getSensors()
-      .subscribe(sensors => {
-        this.sensors = sensors;
-    });
+  ngOnDestroy() {
+    this.loader.clearMessage();
   }
 
   sensorExists(id) {

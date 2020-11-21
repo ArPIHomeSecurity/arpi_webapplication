@@ -3,8 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
+import { finalize } from 'rxjs/operators';
+
 import { UserDeviceUnregisterDialogComponent } from '../user';
 import { AuthenticationService } from '../services';
+
 
 
 @Component({
@@ -65,6 +68,7 @@ export class LoginComponent implements OnInit {
     if (this.registerCode.value) {
       const re  = /-/gi;
       this.authenticationService.registerDevice(this.registerCode.value.replace(re, ''))
+        .pipe(finalize(() => this.loading = false))
         .subscribe(result => {
           this.registerCode.setValue(null);
           if (result) {
@@ -94,6 +98,7 @@ export class LoginComponent implements OnInit {
 
     if (this.accessCode.value) {
       this.authenticationService.login(this.accessCode.value)
+        .pipe(finalize(() => this.loading = false))
         .subscribe(result => {
           this.accessCode.setValue(null);
           if (result) {

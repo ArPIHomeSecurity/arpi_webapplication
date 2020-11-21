@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { finalize } from 'rxjs/operators';
+
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
-
-import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
 import { MonitoringState, ROLE_TYPES, User } from 'src/app/models';
 import { EventService, LoaderService, MonitoringService } from 'src/app/services';
+
 import { environment } from 'src/environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -57,6 +58,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     });
 
     this.userService.getUsers()
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(users => {
         this.users = users;
         this.loader.display(false);

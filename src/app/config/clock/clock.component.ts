@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, finalize } from 'rxjs/operators';
 
 import * as moment from 'moment-timezone';
 
@@ -114,6 +114,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     } );
 
     this.monitoringService.getClock()
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(clock => {
         this.clock = clock;
         if (clock != null) {
@@ -125,11 +126,11 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     );
   }
 
-  onSynchronize() {
-    this.monitoringService.synchronizeClock()
-      .subscribe(_ => this.updateComponent()
-    );
-  }
+  // onSynchronize() {
+  //   this.monitoringService.synchronizeClock()
+  //     .subscribe(_ => this.updateComponent()
+  //   );
+  // }
 
 
   onSubmit() {

@@ -1,4 +1,4 @@
-<div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
+<div *ngIf="armState != null" class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
   <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
     <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState">
       <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="armDisabled()" (change)="armChanged($event)"

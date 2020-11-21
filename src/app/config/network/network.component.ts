@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
 import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS } from '../../models';
@@ -74,6 +75,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndns: this.configService.getOption('network', 'dyndns'),
       access: this.configService.getOption('network', 'access')
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
         this.access = getValue(results, 'access', DEFAULT_NOTIFICATION_ACCESS);

@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@a
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
@@ -70,6 +72,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         zone: this.zoneService.getZone(this.zoneId),
         sensors: this.sensorService.getSensors()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.zone = results.zone;
           this.updateForm(this.zone);

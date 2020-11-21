@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
@@ -107,6 +109,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zones: this.zoneService.getZones(),
         sensorTypes: this.sensorService.getSensorTypes()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.sensor = results.sensor;
           this.sensors = results.sensors;
@@ -123,6 +126,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensorTypes: this.sensorService.getSensorTypes(),
         zones: this.zoneService.getZones()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.sensors = results.sensors;
           this.sensorTypes = results.sensorTypes;
@@ -182,16 +186,16 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     if (this.sensor.zoneId === -1) {
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            sensor.zoneId = result.id;
-            if (this.sensor.id !== undefined) {
-              return this.sensorService.updateSensor(sensor)
-                .subscribe(_ => this.router.navigate(['/sensors']));
-            }
-
-            return this.sensorService.createSensor(sensor)
-              .subscribe(_ => this.router.navigate(['/sensors']) );
+          sensor.zoneId = result.id;
+          if (this.sensor.id !== undefined) {
+            return this.sensorService.updateSensor(sensor)
+              .subscribe(_ => this.router.navigate(['/sensors']));
           }
-        );
+
+          return this.sensorService.createSensor(sensor)
+            .subscribe(_ => this.router.navigate(['/sensors']) );
+        }
+      );
     } else {
         if (this.sensorId != null) {
           this.action = 'update';

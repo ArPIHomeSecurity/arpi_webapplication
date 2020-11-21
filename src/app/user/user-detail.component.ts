@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { finalize } from 'rxjs/operators';
+
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-
-import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
 import { User, MonitoringState, ROLE_TYPES } from 'src/app/models';
 import { EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
 
@@ -69,6 +69,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         this.loader.display(true);
       });
       this.userService.getUser(this.userId)
+        .pipe(finalize(() => this.loader.display(false)))
         .subscribe(user => {
             this.user = user;
             this.updateForm(this.user);
