@@ -9,7 +9,7 @@ import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-import { User, MonitoringState, ROLE_TYPES } from 'src/app/models';
+import { User, MONITORING_STATE, ROLE_TYPES } from 'src/app/models';
 import { EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
 
 import { environment } from 'src/environments/environment';
@@ -112,14 +112,14 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       this.userService.updateUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     } else {
       this.action = 'create';
       this.userService.createUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     }
   }
@@ -150,16 +150,16 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.userService.deleteUser(userId)
             .subscribe(
               _ => this.router.navigate(['/users']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Alert, String2AlertType } from '../../models';
+import { Alert, string2AlertType } from '../../models';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AlertService implements AlertService {
     return this.http.get<Alert[]>('/api/alerts').pipe(
       map(( rawAlerts: any[] ) => {
         for ( const rawAlert of rawAlerts ) {
-          rawAlert.alertType = String2AlertType( rawAlert.alertType );
+          rawAlert.alertType = string2AlertType( rawAlert.alertType );
         }
         return rawAlerts as Alert[];
       } ));

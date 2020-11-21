@@ -1,5 +1,5 @@
 
-export enum MonitoringState {
+export enum MONITORING_STATE {
   NOT_READY = 0,
   STARTUP = 1,
   READY = 2,
@@ -20,49 +20,26 @@ const MONITORING_SABOTAGE = 'monitoring_sabotage';
 const MONITORING_ERROR = 'monitoring_error';
 
 
-
-export function String2MonitoringState(systemState: string): MonitoringState {
-  switch ( systemState ) {
-    case MONITORING_STARTUP:
-      return MonitoringState.STARTUP;
-    case MONITORING_READY:
-      return MonitoringState.READY;
-    case MONITORING_UPDATING_CONFIG:
-      return MonitoringState.UPDATING_CONFIG;
-    case MONITORING_INVALID_CONFIG:
-      return MonitoringState.INVALID_CONFIG;
-    case MONITORING_ARMED:
-      return MonitoringState.ARMED;
-    case MONITORING_SABOTAGE:
-      return MonitoringState.SABOTAGE;
-    case MONITORING_ERROR:
-      return MonitoringState.ERROR;
-    default:
-      console.error('Unknown monitoring state!' + systemState);
-  }
-}
+export const string2MonitoringState = (systemState: string): MONITORING_STATE => ({
+  MONITORING_STARTUP: MONITORING_STATE.STARTUP,
+  MONITORING_READY: MONITORING_STATE.READY,
+  MONITORING_UPDATING_CONFIG: MONITORING_STATE.UPDATING_CONFIG,
+  MONITORING_INVALID_CONFIG: MONITORING_STATE.INVALID_CONFIG,
+  MONITORING_ARMED: MONITORING_STATE.ARMED,
+  MONITORING_SABOTAGE: MONITORING_STATE.SABOTAGE,
+  MONITORING_ERROR: MONITORING_STATE.ERROR,
+})[systemState];
 
 
-export function MonitoringState2String(systemState: MonitoringState): string {
-  switch ( systemState ) {
-    case MonitoringState.STARTUP:
-      return MONITORING_STARTUP;
-    case MonitoringState.READY:
-      return MONITORING_READY;
-    case MonitoringState.UPDATING_CONFIG:
-      return MONITORING_UPDATING_CONFIG;
-    case MonitoringState.INVALID_CONFIG:
-      return MONITORING_INVALID_CONFIG;
-    case MonitoringState.ARMED:
-      return MONITORING_ARMED;
-    case MonitoringState.SABOTAGE:
-      return MONITORING_SABOTAGE;
-    case MonitoringState.ERROR:
-      return MONITORING_ERROR;
-    default:
-      console.error('Unknown monitoring state!' + systemState);
-  }
-}
+export const monitoringState2String = (systemState: MONITORING_STATE): string => ({
+  STARTUP: MONITORING_STARTUP,
+  READY: MONITORING_READY,
+  UPDATING_CONFIG: MONITORING_UPDATING_CONFIG,
+  INVALID_CONFIG: MONITORING_INVALID_CONFIG,
+  ARMED: MONITORING_ARMED,
+  SABOTAGE: MONITORING_SABOTAGE,
+  ERROR: MONITORING_ERROR
+})[systemState];
 
 export class Clocks {
   system: string;

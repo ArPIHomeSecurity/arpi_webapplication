@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArmType, MonitoringState, String2MonitoringState, String2ArmType } from '../models';
+import { ARM_TYPE, MONITORING_STATE, string2MonitoringState, string2ArmType } from '../models';
 import { AlertService, AuthenticationService, EventService, MonitoringService, SensorService } from '../services';
 
 
@@ -12,14 +12,14 @@ import { AlertService, AuthenticationService, EventService, MonitoringService, S
   providers: []
 })
 export class SystemStateComponent implements OnInit {
-  MonitoringState: any = MonitoringState;
-  ArmType: any = ArmType;
+  monitoringStates: any = MONITORING_STATE;
+  armTypes: any = ARM_TYPE;
+  armState: ARM_TYPE;
   sensorAlert: boolean;
 
   // true=syren / false=syren muted / null=no syren
   syrenAlert: boolean;
-  armState: ArmType;
-  monitoringState: MonitoringState;
+  monitoringState: MONITORING_STATE;
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -50,17 +50,17 @@ export class SystemStateComponent implements OnInit {
       .subscribe(monitoringState => this.monitoringState = monitoringState);
 
     this.eventService.listen('arm_state_change')
-      .subscribe(armState => this.armState = String2ArmType(armState));
+      .subscribe(armState => this.armState = string2ArmType(armState));
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => this.sensorAlert = alert);
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState));
     this.eventService.listen('syren_state_change')
       .subscribe(event => this.syrenAlert = event);
   }
 
   isSensorIndicatorVisible() {
-    return this.monitoringState === MonitoringState.ARMED ||
-      this.monitoringState === MonitoringState.READY;
+    return this.monitoringState === MONITORING_STATE.ARMED ||
+      this.monitoringState === MONITORING_STATE.READY;
   }
 }

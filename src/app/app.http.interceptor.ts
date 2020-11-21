@@ -39,7 +39,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                         if (err.status === 401) {
                             this.authService.logout();
                             return of(undefined);
-                        } else if (err.status == 0 && err.statusText == 'Unknown Error') {
+                        } else if (err.status === 0 && err.statusText === 'Unknown Error') {
                             this.loaderService.setMessage('no-connection');
                             return of(undefined);
                         }

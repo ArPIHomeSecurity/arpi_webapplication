@@ -7,7 +7,7 @@ import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { AlertType, ArmType, ArmType2String, Clocks, Sensor, MonitoringState, MonitoringState2String } from '../../models';
+import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String } from '../../models';
 
 import { environment } from '../../../environments/environment';
 import { getSessionValue, setSessionValue } from '../../utils';
@@ -15,8 +15,8 @@ import { getSessionValue, setSessionValue } from '../../utils';
 @Injectable()
 export class MonitoringService {
 
-  monitoringState: MonitoringState;
-  armState: ArmType;
+  monitoringState: MONITORING_STATE;
+  armState: ARM_TYPE;
   alert: boolean;
   datetime: string;
   timeZone: string;
@@ -27,27 +27,27 @@ export class MonitoringService {
     @Inject('EventService') private eventService: EventService,
     @Inject('ZoneService') private zoneService: ZoneService
   ) {
-    this.monitoringState = getSessionValue('MonitoringService.monitoringState', MonitoringState.STARTUP)
-    this.armState = getSessionValue('MonitoringService.armState', ArmType.DISARMED);
+    this.monitoringState = getSessionValue('MonitoringService.monitoringState', MONITORING_STATE.STARTUP);
+    this.armState = getSessionValue('MonitoringService.armState', ARM_TYPE.DISARMED);
     this.alert = getSessionValue('MonitoringService.alert', false);
     this.datetime = getSessionValue('MonitoringService.datetime', new Date().toLocaleString());
     this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-    if (this.monitoringState !== MonitoringState.READY &&
-        this.monitoringState !== MonitoringState.ARMED &&
-        this.monitoringState !== MonitoringState.SABOTAGE) {
-      this.monitoringState = MonitoringState.STARTUP;
+    if (this.monitoringState !== MONITORING_STATE.READY &&
+        this.monitoringState !== MONITORING_STATE.ARMED &&
+        this.monitoringState !== MONITORING_STATE.SABOTAGE) {
+      this.monitoringState = MONITORING_STATE.STARTUP;
     }
 
-    if (this.monitoringState === MonitoringState.STARTUP) {
+    if (this.monitoringState === MONITORING_STATE.STARTUP) {
       setTimeout(() => {
-        this.monitoringState = MonitoringState.UPDATING_CONFIG;
+        this.monitoringState = MONITORING_STATE.UPDATING_CONFIG;
         setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-        this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+        this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
         setTimeout(() => {
-          this.monitoringState = MonitoringState.READY;
+          this.monitoringState = MONITORING_STATE.READY;
           setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-          this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+          this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
         }, 3000);
       }, 2000);
     }
@@ -64,7 +64,7 @@ export class MonitoringService {
       );
   }
 
-  getArmState(): Observable<ArmType> {
+  getArmState(): Observable<ARM_TYPE> {
     return of(this.armState)
       .pipe(
         delay(environment.delay),
@@ -75,30 +75,30 @@ export class MonitoringService {
       );
   }
 
-  arm(armtype: ArmType) {
+  arm(armtype: ARM_TYPE) {
     this.armState = armtype;
-    this.monitoringState = MonitoringState.ARMED;
+    this.monitoringState = MONITORING_STATE.ARMED;
     setSessionValue('MonitoringService.armState', this.armState);
     setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-    this.eventService._updateArmState(ArmType2String(armtype));
-    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    this.eventService.updateArmState(armType2String(armtype));
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
     this.authService.updateUserToken('user.token');
     return;
   }
 
   disarm() {
-    this.armState = ArmType.DISARMED;
-    this.monitoringState = MonitoringState.READY;
+    this.armState = ARM_TYPE.DISARMED;
+    this.monitoringState = MONITORING_STATE.READY;
     setSessionValue('MonitoringService.armState', this.armState);
     setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-    this.alertService._stopAlert();
-    this.eventService._updateArmState(ArmType2String(this.armState));
-    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    this.alertService.stopAlert();
+    this.eventService.updateArmState(armType2String(this.armState));
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
     this.authService.updateUserToken('user.token');
     return;
   }
 
-  getMonitoringState(): Observable<MonitoringState> {
+  getMonitoringState(): Observable<MONITORING_STATE> {
     return of(this.monitoringState)
       .pipe(
         delay(environment.delay),
@@ -155,41 +155,41 @@ export class MonitoringService {
       );
   }
 
-  _onAlert(sensor: Sensor) {
-    const zone = this.zoneService._getZone(sensor.zoneId);
-    if (this.armState === ArmType.AWAY && zone.awayDelay != null && sensor.enabled) {
+  onAlert(sensor: Sensor) {
+    const zone = this.zoneService.getZoneDirectly(sensor.zoneId);
+    if (this.armState === ARM_TYPE.AWAY && zone.awayDelay != null && sensor.enabled) {
       setTimeout(() => {
-        if (this.armState !== ArmType.DISARMED) {
+        if (this.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
-            this.alertService._createAlert([sensor], AlertType.AWAY);
+            this.alertService.createAlert([sensor], ALERT_TYPE.AWAY);
           }
         }
       }, 1000 * zone.awayDelay);
-    } else if (this.armState === ArmType.STAY && zone.stayDelay != null && sensor.enabled) {
+    } else if (this.armState === ARM_TYPE.STAY && zone.stayDelay != null && sensor.enabled) {
       setTimeout(() => {
-        if (this.armState !== ArmType.DISARMED) {
+        if (this.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
-            this.alertService._createAlert([sensor], AlertType.STAY);
+            this.alertService.createAlert([sensor], ALERT_TYPE.STAY);
           }
         }
       }, 1000 * zone.stayDelay);
-    } else if (this.armState === ArmType.DISARMED && zone.disarmedDelay != null && sensor.enabled) {
+    } else if (this.armState === ARM_TYPE.DISARMED && zone.disarmedDelay != null && sensor.enabled) {
       setTimeout(() => {
-        this.alertService._createAlert([sensor], AlertType.SABOTAGE);
+        this.alertService.createAlert([sensor], ALERT_TYPE.SABOTAGE);
       }, 1000 * zone.disarmedDelay);
-    } else if (this.armState !== ArmType.DISARMED) {
+    } else if (this.armState !== ARM_TYPE.DISARMED) {
       console.error('Can\'t alert system!!!');
     }
   }
 
-  _resetReferences() {
-    this.monitoringState = MonitoringState.UPDATING_CONFIG;
+  resetReferences() {
+    this.monitoringState = MONITORING_STATE.UPDATING_CONFIG;
     setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-    this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
     setTimeout(() => {
-      this.monitoringState = MonitoringState.READY;
+      this.monitoringState = MONITORING_STATE.READY;
       setSessionValue('MonitoringService.monitoringState', this.monitoringState);
-      this.eventService._updateMonitoringState(MonitoringState2String(this.monitoringState));
+      this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
     }, 3000);
   }
 }

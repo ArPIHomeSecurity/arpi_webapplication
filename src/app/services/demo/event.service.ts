@@ -48,23 +48,23 @@ export class EventService {
     return subject;
   }
 
-  _updateAlertState(alert: Alert) {
+  updateAlertState(alert: Alert) {
     this.alertStateSubject.next(alert);
   }
 
-  _updateArmState(state: string) {
+  updateArmState(state: string) {
     this.armStateSubject.next(state);
   }
 
-  _updateMonitoringState(state: string) {
+  updateMonitoringState(state: string) {
     this.monitoringStateSubject.next(state);
   }
 
-  _updateSensorsState(state: boolean) {
+  updateSensorsState(state: boolean) {
     this.sensorsStateSubject.next(state);
   }
 
-  _updateSyrenState(state: boolean) {
+  updateSyrenState(state: boolean) {
     this.syrenStateSubject.next(state);
   }
 }

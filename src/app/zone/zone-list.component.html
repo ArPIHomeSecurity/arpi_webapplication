@@ -6,11 +6,11 @@
         <mat-card-title>{{zone.name}}</mat-card-title>
         <mat-card-subtitle *ngIf="zone.name != zone.description">{{zone.description}}</mat-card-subtitle>
   
-        <mat-expansion-panel (opened)="open[CONFIG][zone.id] = true" (closed)="open[CONFIG][zone.id] = false">
+        <mat-expansion-panel (opened)="sensorlistpened[zone.id] = true" (closed)="sensorlistpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.xs="false">Away:{{zone.awayDelay!==null? zone.awayDelay : "-"}} Stay:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!open[CONFIG][zone.id]" fxShow.gt-xs="false">A:{{zone.awayDelay!==null? zone.awayDelay : "-"}} S:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away:{{zone.awayDelay!==null? zone.awayDelay : "-"}} Stay:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A:{{zone.awayDelay!==null? zone.awayDelay : "-"}} S:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
@@ -39,10 +39,10 @@
           </ng-template>
         </mat-expansion-panel>
   
-        <mat-expansion-panel (opened)="open[SENSORS][zone.id] = true" (closed)="open[SENSORS][zone.id] = false">
+        <mat-expansion-panel (opened)="sensorlistOpened[zone.id] = true" (closed)="sensorlistOpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!open[SENSORS][zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistOpened[zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
             <ul class="sensor-list">
@@ -60,9 +60,9 @@
       </mat-card-content>
   
       <mat-card-actions [fxShow]="userCanEdit()">
-        <button mat-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != MonitoringState.READY"
+        <button mat-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
           i18n="@@edit button">Edit</button>
-        <button mat-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != MonitoringState.READY"
+        <button mat-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"
           i18n="@@remove button">Remove</button>
       </mat-card-actions>
   
@@ -77,8 +77,8 @@
 </div>
 
 <div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
-  <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>
 
 <ng-template #snacbarTemplate>

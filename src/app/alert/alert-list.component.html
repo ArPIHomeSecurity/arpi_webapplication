@@ -6,9 +6,9 @@
     <mat-header-cell *matHeaderCellDef i18n="@@alert type">Alert type</mat-header-cell>
     <mat-cell *matCellDef="let alert">
       <div [ngSwitch]="alert.alertType">
-        <span *ngSwitchCase="AlertType.AWAY" i18n="@@alert type away">AWAY</span>
-        <span *ngSwitchCase="AlertType.STAY" i18n="@@alert type stay">STAY</span>
-        <span *ngSwitchCase="AlertType.SABOTAGE" i18n="@@alert type sabotage">SABOTAGE</span>
+        <span *ngSwitchCase="alertType.AWAY" i18n="@@alert type away">AWAY</span>
+        <span *ngSwitchCase="alertType.STAY" i18n="@@alert type stay">STAY</span>
+        <span *ngSwitchCase="alertType.SABOTAGE" i18n="@@alert type sabotage">SABOTAGE</span>
       </div>
     </mat-cell>
   </ng-container>

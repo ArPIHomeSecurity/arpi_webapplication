@@ -8,7 +8,7 @@ import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { MonitoringState, Sensor, SensorType, Zone } from '../models';
+import { MONITORING_STATE, Sensor, SensorType, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -23,12 +23,12 @@ const scheduleMicrotask = Promise.resolve(null);
 
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
-
   @Input() onlyAlerting = false;
+
+  action: string;
   sensors: Sensor[] = null;
-  zones: Zone[] = [];
   sensorTypes: SensorType [] = [];
+  zones: Zone[] = [];
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -116,14 +116,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.action = 'delete';
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.sensorService.deleteSensor(sensorId)
             .subscribe( _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
           );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

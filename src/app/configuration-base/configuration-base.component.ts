@@ -1,13 +1,13 @@
 import { Subscription } from 'rxjs';
 
-import { MonitoringState, String2MonitoringState } from '../models';
+import { MONITORING_STATE, string2MonitoringState } from '../models';
 import { LoaderService, EventService, MonitoringService } from '../services';
 
 
 export class ConfigurationBaseComponent {
 
-  monitoringState: MonitoringState;
-  MonitoringState: any = MonitoringState;
+  monitoringState: MONITORING_STATE;
+  monitoringStates: any = MONITORING_STATE;
   baseSubscriptions: Subscription[];
 
   constructor(
@@ -28,7 +28,7 @@ export class ConfigurationBaseComponent {
     this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
         .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState);
+          this.monitoringState = string2MonitoringState(monitoringState);
           this.onStateChange();
         }
       )
@@ -45,9 +45,9 @@ export class ConfigurationBaseComponent {
   }
 
   onStateChange() {
-    if (this.monitoringState === MonitoringState.ERROR) {
+    if (this.monitoringState === MONITORING_STATE.ERROR) {
       this.loader.setMessage('system-error');
-    } else if (this.monitoringState !== MonitoringState.READY) {
+    } else if (this.monitoringState !== MONITORING_STATE.READY) {
       this.loader.setMessage('system-not-ready');
     } else {
       this.loader.clearMessage();

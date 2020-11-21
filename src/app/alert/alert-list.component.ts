@@ -6,7 +6,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable, of, forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { AlertType, Alert, Sensor } from '../models';
+import { ALERT_TYPE, Alert, Sensor } from '../models';
 import { AlertService, EventService, LoaderService, SensorService } from '../services';
 
 const scheduleMicrotask = Promise.resolve( null );
@@ -31,12 +31,13 @@ export class AlertHistory extends DataSource<any> {
   providers: []
 })
 export class AlertListComponent implements OnInit, OnDestroy {
-  AlertType: any = AlertType;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  readonly alertType: any = ALERT_TYPE;
   alertHistory: AlertHistory | null;
   displayedColumns = ['alertType', 'startTime', 'endTime', 'sensors'];
   sensors: Sensor[];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -60,8 +61,8 @@ export class AlertListComponent implements OnInit, OnDestroy {
     .subscribe(results => {
       this.alertHistory = new AlertHistory(of(results.alerts), this.paginator);
       this.sensors = results.sensors;
-    })
-    
+    });
+
     this.eventService.listen('syren_state_change')
       .subscribe(event => {
           this.alertService.getAlerts()

@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
+import { MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '../models';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 import { positiveInteger } from '../utils';
 
@@ -62,7 +62,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   sensorForm: FormGroup;
   zoneForm: FormGroup;
   newZone = false;
-  MonitoringState = MonitoringState;
+  monitoringStates = MONITORING_STATE;
 
   constructor(
     @Inject('EventService') public eventService: EventService,
@@ -70,7 +70,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
-    
+
     public router: Router,
 
     private fb: FormBuilder,
@@ -99,7 +99,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState))
+        .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState))
     );
 
     if (this.sensorId != null) {
@@ -201,13 +201,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.action = 'update';
           this.sensorService.updateSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         } else {
           this.action = 'create';
           this.sensorService.createSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         }
     }
@@ -292,17 +292,17 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.sensorService.deleteSensor(sensorId)
             .subscribe(_ => {
                 this.router.navigate(['/sensors']);
               },
-              error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
           );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

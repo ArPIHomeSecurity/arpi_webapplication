@@ -1,11 +1,11 @@
 
-export enum ArmType {
+export enum ARM_TYPE {
   DISARMED = 0,
   AWAY = 1,
   STAY = 2
 }
 
-export enum AlertType {
+export enum ALERT_TYPE {
   SABOTAGE = 0,
   AWAY = 1,
   STAY = 2
@@ -23,7 +23,7 @@ const ALERT_SABOTAGE = 'alert_sabotage';
 
 export class Alert {
   id: number;
-  alertType: AlertType;
+  alertType: ALERT_TYPE;
   startTime: string;
   endTime: string;
   sensors: AlertSensor[];
@@ -36,48 +36,26 @@ export class AlertSensor {
   description: string;
 }
 
-export function String2ArmType( armType: string ): ArmType {
-  switch ( armType ) {
-    case ARM_DISARM:
-      return ArmType.DISARMED;
-    case ARM_AWAY:
-      return ArmType.AWAY;
-    case ARM_STAY:
-      return ArmType.STAY;
-    default:
-      console.error( 'Unknown arm type!', armType );
-  }
-}
+export const string2ArmType = (armType: string): ARM_TYPE => ({
+    ARM_DISARM: ARM_TYPE.DISARMED,
+    ARM_AWAY: ARM_TYPE.AWAY,
+    ARM_STAY: ARM_TYPE.STAY
+})[armType];
 
-export function ArmType2String( armType: ArmType): string {
-  if ( armType === ArmType.AWAY ) {
-    return ARM_AWAY;
-  } else if ( armType === ArmType.STAY ) {
-    return ARM_STAY;
-  } else if ( armType === ArmType.DISARMED ) {
-    return ARM_DISARM;
-  }
-}
+export const armType2String = (armType: ARM_TYPE): string => ({
+  AWAY: ARM_AWAY,
+  STAY: ARM_STAY,
+  DISARMED: ARM_DISARM
+})[armType];
 
-export function String2AlertType( alertType: string ): AlertType {
-  switch ( alertType ) {
-    case ALERT_SABOTAGE:
-      return AlertType.SABOTAGE;
-    case ALERT_AWAY:
-      return AlertType.AWAY;
-    case ALERT_STAY:
-      return AlertType.STAY;
-    default:
-      console.error( 'Unknown alert type!' + alertType );
-  }
-}
+export const string2AlertType = (alertType: string): ALERT_TYPE => ({
+    ALERT_SABOTAGE: ALERT_TYPE.SABOTAGE,
+    ALERT_AWAY: ALERT_TYPE.AWAY,
+    ALERT_STAY: ALERT_TYPE.STAY,
+})[alertType];
 
-export function AlertType2String( alertType: AlertType): string {
-  if ( alertType === AlertType.AWAY ) {
-    return ALERT_AWAY;
-  } else if ( alertType === AlertType.STAY ) {
-    return ALERT_STAY;
-  } else if ( alertType === AlertType.SABOTAGE ) {
-    return ALERT_SABOTAGE;
-  }
-}
+export const alertType2String = (alertType: ALERT_TYPE): string => ({
+  AWAY: ALERT_AWAY,
+  STAY: ALERT_STAY,
+  SABOTAGE:  ALERT_SABOTAGE
+})[alertType];

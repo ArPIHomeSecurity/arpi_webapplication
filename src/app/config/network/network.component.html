@@ -20,7 +20,7 @@
 
         <mat-form-field class="half-width">
           <mat-select formControlName="dyndns_provider" i18n-placeholder="@@network prodvider" placeholder="Provider">
-            <mat-option *ngFor="let provider of PROVIDERS" [value]="provider.value">
+            <mat-option *ngFor="let provider of providers" [value]="provider.value">
               {{ provider.label }}
             </mat-option>
           </mat-select>
@@ -43,6 +43,6 @@
 
     </mat-accordion>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != MonitoringState.READY" i18n="@@save button">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
   </form>
 </div>

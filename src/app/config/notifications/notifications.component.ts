@@ -53,17 +53,17 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 //    console.log('Subscriptions', this.subscriptions);
 
     this.notificationsForm = this.fb.group({
-      smtp_username: getValue(email.value, 'smtp_username'),
-      smtp_password: getValue(email.value, 'smtp_password'),
-      email_address: getValue(email.value, 'email_address'),
+      smtpUsername: getValue(email.value, 'smtp_username'),
+      smtpPassword: getValue(email.value, 'smtp_password'),
+      emailAddress: getValue(email.value, 'email_address'),
 
-      pin_code: getValue(gsm.value, 'pin_code'),
-      phone_number: getValue(gsm.value, 'phone_number'),
+      pinCode: getValue(gsm.value, 'pin_code'),
+      phoneNumber: getValue(gsm.value, 'phone_number'),
 
-      alert_started_email: getValue(getValue(subscriptions.value, 'email'), 'alert_started'),
-      alert_stopped_email: getValue(getValue(subscriptions.value, 'email'), 'alert_stopped'),
-      alert_started_sms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
-      alert_stopped_sms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
+      alertStartedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_started'),
+      alertStoppedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_stopped'),
+      alertStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
+      alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
     });
   }
 
@@ -84,7 +84,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
         this.email = getValue(results, 'email', DEFAULT_NOTIFICATION_EMAIL);
         this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);
         this.subscriptions = getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
-        
+
         this.updateForm(this.email, this.gsm, this.subscriptions);
         this.loader.display(false);
       }
@@ -94,8 +94,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareEmail(): any {
     const formModel = this.notificationsForm.value;
     const email: any = {
-      smtp_username: formModel.smtp_username,
-      email_address: formModel.email_address,
+      smtpUsername: formModel.smtp_username,
+      emailAddress: formModel.email_address,
     };
 
     if (formModel.smtp_password) {
@@ -108,8 +108,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareGsm(): any {
     const formModel = this.notificationsForm.value;
     return {
-      pin_code: formModel.pin_code,
-      phone_number: formModel.phone_number
+      pinCode: formModel.pin_code,
+      phoneNumber: formModel.phone_number
     };
   }
 
@@ -117,12 +117,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const formModel = this.notificationsForm.value;
     return {
       email: {
-        alert_started: formModel.alert_started_email,
-        alert_stopped: formModel.alert_stopped_email,
+        alertStarted: formModel.alert_started_email,
+        alertStopped: formModel.alert_stopped_email,
       },
       sms: {
-        alert_started: formModel.alert_started_sms,
-        alert_stopped: formModel.alert_stopped_sms
+        alertStarted: formModel.alert_started_sms,
+        alertStopped: formModel.alert_stopped_sms
       }
     };
   }

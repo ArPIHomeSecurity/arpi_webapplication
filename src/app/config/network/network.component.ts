@@ -24,7 +24,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   access: Option = null;
 
   // values from the noipy python module
-  PROVIDERS = [
+  providers = [
       {value: 'noip', label: 'www.noip.com'},
       {value: 'dyn', label: 'www.dyndns.org'},
       {value: 'duck', label: 'www.duckdns.org'},
@@ -55,12 +55,12 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   updateForm(dyndns: Option, access: Option) {
 
     this.networkForm = this.fb.group({
-      dyndns_username: getValue(dyndns.value, 'username'),
-      dyndns_password: getValue(dyndns.value, 'password'),
-      dyndns_hostname: getValue(dyndns.value, 'hostname'),
-      dyndns_provider: getValue(dyndns.value, 'provider'),
+      dyndnsUsername: getValue(dyndns.value, 'username'),
+      dyndnsPassword: getValue(dyndns.value, 'password'),
+      dyndnsHostname: getValue(dyndns.value, 'hostname'),
+      dyndnsProvider: getValue(dyndns.value, 'provider'),
 
-      access_ssh: getValue(access.value, 'ssh'),
+      accessSSH: getValue(access.value, 'ssh'),
     });
   }
 

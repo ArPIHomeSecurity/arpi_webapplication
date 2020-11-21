@@ -39,7 +39,7 @@ export class ConfigurationService {
     if (tmpOption != null) {
       tmpOption.value = value;
     } else {
-      this.configuration.push({option: option, section: section, value: value});
+      this.configuration.push({option, section, value});
     }
 
     setSessionValue('ConfigurationService.configuration', this.configuration);

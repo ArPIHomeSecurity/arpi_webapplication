@@ -98,6 +98,6 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
   }
 }

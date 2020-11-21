@@ -12,7 +12,7 @@ import { finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
 
-import { MonitoringState, Sensor, Zone } from '../models';
+import { MONITORING_STATE, Sensor, Zone } from '../models';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 import { positiveInteger } from '../utils';
 
@@ -41,7 +41,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
-    
+
     private route: ActivatedRoute,
     public router: Router,
     private fb: FormBuilder,
@@ -113,14 +113,14 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       this.zoneService.updateZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     } else {
       this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     }
   }
@@ -166,15 +166,15 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'celete';
           this.zoneService.deleteZone(zoneId)
             .subscribe(_ => this.router.navigate(['/zones']),
-                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
           );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

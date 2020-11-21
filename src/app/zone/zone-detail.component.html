@@ -29,9 +29,9 @@
     </mat-form-field>
 
     <div class="actions">
-      <button mat-raised-button color="primary" [disabled]="zoneForm.invalid || monitoringState != MonitoringState.READY"
+      <button mat-raised-button color="primary" [disabled]="zoneForm.invalid || monitoringState != monitoringStates.READY"
         i18n="@@save button">Save</button>
-      <button *ngIf="zoneId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(zone.id)" [disabled]="getSensors().length > 0 || monitoringState != MonitoringState.READY"
+      <button *ngIf="zoneId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(zone.id)" [disabled]="getSensors().length > 0 || monitoringState != monitoringStates.READY"
         i18n="@@remove button">Remove</button>
       <button mat-raised-button color="accent" type="button" (click)="onCancel()"
         i18n="@@cancel button">Cancel</button>

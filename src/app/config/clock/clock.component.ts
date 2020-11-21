@@ -84,13 +84,13 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
       this.timezoneGroupOptions = this.clockForm.get('timezone').valueChanges
         .pipe(
           startWith(''),
-          map(value => this._filterGroup(value))
+          map(value => this.filterGroup(value))
         );
 
       this.timezoneUngrouppedOptions = this.clockForm.get('timezone').valueChanges
         .pipe(
           startWith(''),
-          map(value => this._filterUngroupped(value))
+          map(value => this.filterUngroupped(value))
         );
     }
   }
@@ -141,7 +141,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     );
   }
 
-  private _filterGroup(value: string): TimeZoneGroup[] {
+  private filterGroup(value: string): TimeZoneGroup[] {
     if (value) {
       return this.timezoneGroups
         .map(group => ({groupName: group.groupName, zoneNames: filter(group.zoneNames, value)}))
@@ -151,7 +151,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     return this.timezoneGroups;
   }
 
-  private _filterUngroupped(value: string): string[] {
+  private filterUngroupped(value: string): string[] {
     if (value) {
       return filter(this.timezoneUngroupped, value);
     }

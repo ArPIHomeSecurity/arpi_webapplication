@@ -37,9 +37,9 @@
       </mat-card-header>
 
       <mat-card-actions [fxShow]="userCanEdit()">
-        <button mat-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != MonitoringState.READY"
+        <button mat-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
           i18n="@@edit button">Edit</button>
-        <button mat-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != MonitoringState.READY"
+        <button mat-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"
           i18n="@@remove button">Remove</button>
       </mat-card-actions>
     </mat-card>
@@ -54,10 +54,10 @@
 </div>
 
 <div ngClass.gt-xs="sensor-actions" ngClass.xs="sensor-actions-xs" [fxShow]="userCanEdit()">
-  <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-  <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != MonitoringState.READY" (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-  <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != MonitoringState.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != monitoringStates.READY" (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+  <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != monitoringStates.READY" (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
+  <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
 </div>
 
 <ng-template #snacbarTemplate>

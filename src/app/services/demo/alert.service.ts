@@ -5,7 +5,7 @@ import { map, delay } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 
-import { AlertType, Alert, Sensor, AlertSensor } from 'src/app/models';
+import { ALERT_TYPE, Alert, Sensor, AlertSensor } from 'src/app/models';
 import { ALERTS } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
@@ -31,7 +31,7 @@ export class AlertService {
     clearInterval(this.syrenId);
 
     if (this.syren != null) {
-      this._startSyren();
+      this.startSyren();
     }
   }
 
@@ -61,8 +61,8 @@ export class AlertService {
     return of(this.alerts.find(a => a.endTime === null)).pipe(delay(environment.delay));
   }
 
-  _createAlert(sensors: Sensor[], alertType: AlertType) {
-    let alertSensors: AlertSensor[] = [];
+  createAlert(sensors: Sensor[], alertType: ALERT_TYPE) {
+    const alertSensors: AlertSensor[] = [];
     sensors.forEach(sensor => {
       alertSensors.push({
         sensorId: sensor.id,
@@ -76,27 +76,27 @@ export class AlertService {
       id: this.alerts.length + 1,
       startTime: new Date().toLocaleString(),
       endTime: null,
-      alertType: alertType,
+      alertType,
       sensors: alertSensors
     };
     this.alerts.push(alert);
     this.syren = true;
     setSessionValue('AlertService.alerts', this.alerts);
     setSessionValue('AlertService.syren', this.syren);
-    this.eventService._updateAlertState(alert);
-    this.eventService._updateSyrenState(this.syren);
-    this._startSyren();
+    this.eventService.updateAlertState(alert);
+    this.eventService.updateSyrenState(this.syren);
+    this.startSyren();
   }
 
-  _startSyren() {
+  startSyren() {
     this.syrenId = window.setInterval(() => {
       this.syren = !this.syren;
-      this.eventService._updateSyrenState(this.syren);
+      this.eventService.updateSyrenState(this.syren);
     }, 5000);
     setSessionValue('AlertService.syrenId', this.syrenId);
   }
 
-  _stopAlert() {
+  stopAlert() {
     const alert = this.alerts.find(a => a.endTime == null);
     if (alert != null) {
       alert.endTime = new Date().toLocaleString();
@@ -104,8 +104,8 @@ export class AlertService {
       clearInterval(this.syrenId);
       setSessionValue('AlertService.alerts', this.alerts);
       setSessionValue('AlertService.syren', this.syren);
-      this.eventService._updateAlertState(null);
-      this.eventService._updateSyrenState(this.syren);
+      this.eventService.updateAlertState(null);
+      this.eventService.updateSyrenState(this.syren);
     }
   }
 }
