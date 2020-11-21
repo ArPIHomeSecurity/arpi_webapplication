@@ -43,6 +43,13 @@
             "accessibility": "explicit"
           }
         ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "enumMember",
+            "format": ["UPPER_CASE"]
+          }
+        ],
         "arrow-parens": [
           "off",
           "always"
