@@ -46,9 +46,9 @@ export class ConfigurationBaseComponent {
 
   onStateChange() {
     if (this.monitoringState === MonitoringState.ERROR) {
-      this.loader.setMessage('The system is not working correctly, you can\'t make changes in the configuration!');
+      this.loader.setMessage('system-error');
     } else if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+      this.loader.setMessage('system-not-ready');
     } else {
       this.loader.clearMessage();
     }

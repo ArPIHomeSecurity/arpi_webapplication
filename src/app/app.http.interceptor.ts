@@ -40,7 +40,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                             this.authService.logout();
                             return of(undefined);
                         } else if (err.status == 0 && err.statusText == 'Unknown Error') {
-                            this.loaderService.setMessage('No connection to the security system!');
+                            this.loaderService.setMessage('no-connection');
                             return of(undefined);
                         }
                     }
