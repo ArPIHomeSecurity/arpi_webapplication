@@ -257,14 +257,14 @@
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="1b3c711f8c855807403db26245936a4cfc02c9db" datatype="html">
-        <source>User has device registration code expiring on {{user.registrationExpiry}</source><target state="final">User has device registration code expiring on {{user.registrationExpiry}</target>
+      </trans-unit><trans-unit id="c236fdb5cf6d5aa13f50945efe9c8a408ed86cb2" datatype="html">
+        <source>User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></source><target state="final">User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
-      </trans-unit><trans-unit id="user registration unlimited" datatype="html">
+      </trans-unit>
+      <trans-unit id="user registration unlimited" datatype="html">
         <source>Registration: unlimited time</source><target state="final">Registration: unlimited time</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>

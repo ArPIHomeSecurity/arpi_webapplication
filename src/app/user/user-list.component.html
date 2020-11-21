@@ -12,11 +12,11 @@
       <mat-card-content>
         <div *ngIf="user.hasRegistrationCode" class="registration">
           <mat-chip-list>
-            <mat-chip *ngIf="user.registration_expiry" i18n-matTooltip matTooltip="User has device registration code expiring on {{user.registrationExpiry}">
-              <span i18n="@@user registration">Registration: </span>{{user.registration_expiry}}
+            <mat-chip *ngIf="user.registrationExpiry" i18n-matTooltip matTooltip="User has device registration code expiring on {{user.registrationExpiry}}">
+              <span i18n="@@user registration">Registration: </span>{{user.registrationExpiry}}
               <mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
             </mat-chip>
-            <mat-chip *ngIf="!user.registration_expiry" i18n-matTooltip matTooltip="User has device registration code for unlimited time">
+            <mat-chip *ngIf="!user.registrationExpiry" i18n-matTooltip matTooltip="User has device registration code for unlimited time">
               <span i18n="@@user registration unlimited">Registration: unlimited time</span>
               <mat-icon matChipRemove (click)="removeRegistrationCode(user.id)">cancel</mat-icon>
             </mat-chip>
