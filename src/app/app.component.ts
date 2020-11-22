@@ -5,8 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
-import * as humanizeDuration from 'humanize-duration';
-
+import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
@@ -45,6 +44,9 @@ export class AppComponent implements OnInit {
     notify: [environment.userTokenExpiry / 3],
   };
   isSessionValid: boolean;
+
+  langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
+  humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -141,6 +143,6 @@ export class AppComponent implements OnInit {
     if (!currentLocale) {
     currentLocale = 'en';
     }
-    return humanizeDuration((environment.userTokenExpiry/3)*1000, { language: currentLocale });
+    return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
   }
 }
