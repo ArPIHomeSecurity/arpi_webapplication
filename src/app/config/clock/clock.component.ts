@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { Observable } from 'rxjs';
 import { startWith, map, finalize } from 'rxjs/operators';
 
-import * as moment from 'moment-timezone';
-
+import { TIME_ZONES } from './timezones';
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { EventService, LoaderService, MonitoringService } from '../../services';
 
 const scheduleMicrotask = Promise.resolve( null );
@@ -45,8 +44,6 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   timezoneUngroupped: string[] = [];
   timezoneUngrouppedOptions: Observable<string[]>;
 
-  timezoneNames: string[];
-
   constructor(
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
@@ -56,10 +53,9 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     dateTimeAdapter: DateTimeAdapter<any>,
   ) {
     super(eventService, loader, monitoringService);
-    dateTimeAdapter.setLocale(localStorage.getItem('localeId'));
-    this.timezoneNames = moment.tz.names();
+    dateTimeAdapter.setLocale('iso-8601');
 
-    this.timezoneNames.forEach(timezoneName => {
+    TIME_ZONES.forEach(timezoneName => {
       const results = timezoneName.match(/(.*)\/(.*)/);
       if (results == null) {
         this.timezoneUngroupped.push(timezoneName);

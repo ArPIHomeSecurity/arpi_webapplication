@@ -26,9 +26,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "moment-timezone"
-            ],
             "aot": true,
             "outputPath": "dist-development",
             "index": "src/index.html",
