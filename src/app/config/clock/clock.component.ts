@@ -56,7 +56,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     dateTimeAdapter: DateTimeAdapter<any>,
   ) {
     super(eventService, loader, monitoringService);
-    dateTimeAdapter.setLocale('iso-8601');
+    dateTimeAdapter.setLocale(localStorage.getItem('localeId'));
     this.timezoneNames = moment.tz.names();
 
     this.timezoneNames.forEach(timezoneName => {
