@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -8,6 +9,7 @@ import { ConfigurationBaseComponent } from 'src/app/configuration-base/configura
 import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS } from '../../models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
+import { environment } from 'src/environments/environment';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -18,6 +20,7 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['network.component.scss'],
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
   networkForm: FormGroup;
   dyndns: Option = null;
@@ -37,6 +40,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -45,7 +49,6 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     super.initialize();
 
     this.updateComponent();
-    this.updateForm(DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS);
   }
 
   ngOnDestroy() {
@@ -60,7 +63,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndnsHostname: getValue(dyndns.value, 'hostname'),
       dyndnsProvider: getValue(dyndns.value, 'provider'),
 
-      accessSSH: getValue(access.value, 'ssh'),
+      accessSsh: getValue(access.value, 'ssh')
     });
   }
 
@@ -89,13 +92,13 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   prepareDyndns(): any {
     const formModel = this.networkForm.value;
     const dyndns: any = {
-      username: formModel.dyndns_username,
-      hostname: formModel.dyndns_hostname,
-      provider: formModel.dyndns_provider
+      username: formModel.dyndnsUsername,
+      hostname: formModel.dyndnsHostname,
+      provider: formModel.dyndnsProvider
     };
 
-    if (formModel.dyndns_password) {
-      dyndns.password = formModel.dyndns_password;
+    if (formModel.dyndnsPassword) {
+      dyndns.password = formModel.dyndnsPassword;
     }
 
     return dyndns;
@@ -104,7 +107,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   prepareAccess(): any {
     const formModel = this.networkForm.value;
     return {
-      ssh: formModel.access_ssh
+      ssh: formModel.accessSsh
     };
   }
 
@@ -113,7 +116,9 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndns: this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
       access: this.configService.setOption('network', 'access', this.prepareAccess())
     })
-    .subscribe(_ => this.updateComponent()
+    .subscribe(
+      _ => this.updateComponent(),
+      error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
     );
   }
 }

@@ -94,12 +94,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareEmail(): any {
     const formModel = this.notificationsForm.value;
     const email: any = {
-      smtpUsername: formModel.smtp_username,
-      emailAddress: formModel.email_address,
+      smtp_username: formModel.smtpUsername,
+      email_address: formModel.emailAddress,
     };
 
     if (formModel.smtp_password) {
-      email.smtp_password = formModel.smtp_password;
+      email.smtp_password = formModel.smtpPassword;
     }
 
     return email;
@@ -108,8 +108,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareGsm(): any {
     const formModel = this.notificationsForm.value;
     return {
-      pinCode: formModel.pin_code,
-      phoneNumber: formModel.phone_number
+      pin_code: formModel.pinCode,
+      phone_number: formModel.phoneNumber
     };
   }
 
@@ -117,12 +117,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const formModel = this.notificationsForm.value;
     return {
       email: {
-        alertStarted: formModel.alert_started_email,
-        alertStopped: formModel.alert_stopped_email,
+        alert_started: formModel.alertStartedEmail,
+        alert_stopped: formModel.alertStoppedEmail,
       },
       sms: {
-        alertStarted: formModel.alert_started_sms,
-        alertStopped: formModel.alert_stopped_sms
+        alert_started: formModel.alertStartedSms,
+        alert_stopped: formModel.alertStoppedSms
       }
     };
   }
