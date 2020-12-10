@@ -123,7 +123,7 @@
   </ng-template>
 </div>
 
-<ng-template #snacbarTemplate>
+<ng-template #snackbarTemplate>
   <div *ngIf="isSessionValid" i18n="@@session expiry">Your session will expire in {{ getSessionDuration() }}!</div>
   <div *ngIf="!isSessionValid" i18n="@@session expired">Your session expired, logged out!</div>
 </ng-template>

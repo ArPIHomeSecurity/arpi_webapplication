@@ -50,7 +50,7 @@ class SensorInfo {
   providers: []
 })
 export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   sensorId: number;
@@ -184,6 +184,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     if (this.sensor.zoneId === -1) {
+      this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe(result => {
           sensor.zoneId = result.id;
@@ -194,7 +195,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
           return this.sensorService.createSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']) );
-        }
+        },
+        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
       );
     } else {
         if (this.sensorId != null) {

@@ -20,7 +20,7 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['network.component.scss'],
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
   networkForm: FormGroup;
   dyndns: Option = null;

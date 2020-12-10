@@ -19,7 +19,7 @@ import { AuthenticationService, LoaderService, MonitoringService } from './servi
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 

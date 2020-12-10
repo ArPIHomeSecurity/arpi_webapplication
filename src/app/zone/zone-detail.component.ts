@@ -27,7 +27,7 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   zoneId: number;

@@ -22,7 +22,7 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss']
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   userId: number;
   user: User = null;

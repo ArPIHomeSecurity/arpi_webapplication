@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['user-device-registration.component.scss'],
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   registrationForm: FormGroup;
   modes: any[];

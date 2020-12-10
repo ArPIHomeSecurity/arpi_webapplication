@@ -22,7 +22,7 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
 
   action: string;

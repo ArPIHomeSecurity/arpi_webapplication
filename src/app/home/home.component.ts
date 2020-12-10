@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   armTypes: any = ARM_TYPE;
