@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { Observable } from 'rxjs';
@@ -8,6 +9,7 @@ import { startWith, map, finalize } from 'rxjs/operators';
 import { TIME_ZONES } from './timezones';
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { EventService, LoaderService, MonitoringService } from '../../services';
+import { environment } from 'src/environments/environment';
 
 const scheduleMicrotask = Promise.resolve( null );
 
@@ -35,6 +37,7 @@ export const filter = (opt: string[], value: string): string[] => {
 } )
 
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   clockForm: FormGroup;
   clock: any;
 
@@ -50,7 +53,8 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: FormBuilder,
-    dateTimeAdapter: DateTimeAdapter<any>,
+    private snackBar: MatSnackBar,
+    dateTimeAdapter: DateTimeAdapter<any>
   ) {
     super(eventService, loader, monitoringService);
     dateTimeAdapter.setLocale(localStorage.getItem('localeId'));
@@ -97,8 +101,8 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     this.clockForm = this.fb.group( {
-      dateTime: '',
-      timezone: ''
+      dateTime: new FormControl('', Validators.required),
+      timezone: new FormControl('', Validators.required)
     });
   }
 
@@ -133,7 +137,9 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     const formModel = this.clockForm.value;
     const newDate = formModel.dateTime;
     this.monitoringService.changeClock(newDate.toISOString(), formModel.timezone)
-      .subscribe(_ => this.updateComponent()
+      .subscribe(
+        _ => this.updateComponent(),
+        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
     );
   }
 

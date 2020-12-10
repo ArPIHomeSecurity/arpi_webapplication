@@ -118,7 +118,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     })
     .subscribe(
       _ => this.updateComponent(),
-      error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+      _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
     );
   }
 }
