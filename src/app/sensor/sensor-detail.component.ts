@@ -153,7 +153,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zoneId)
     this.zoneForm =  this.fb.group({
-      zoneName: new FormControl('', this.sensor.zoneId === -1 ? Validators.required : null),
+      zoneName: new FormControl('', this.sensor.zoneId === -1 ? [Validators.required, Validators.maxLength(32)] : null),
       disarmedAlert: false,
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
