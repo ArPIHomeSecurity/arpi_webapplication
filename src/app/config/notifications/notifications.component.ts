@@ -98,7 +98,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       email_address: formModel.emailAddress,
     };
 
-    if (formModel.smtp_password) {
+    if (formModel.smtpPassword) {
       email.smtp_password = formModel.smtpPassword;
     }
 
