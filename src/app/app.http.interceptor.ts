@@ -34,17 +34,19 @@ export class AppHttpInterceptor implements HttpInterceptor {
                     }
                     return event;
                 }),
-                catchError(err => {
-                    if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
+                catchError(error => {
+                    if (error instanceof HttpErrorResponse) {
+                        if (error.status === 401) {
                             this.authService.logout();
                             return of(undefined);
-                        } else if (err.status === 0 && err.statusText === 'Unknown Error') {
+                        } else if (error.status === 0 && error.statusText === 'Unknown Error') {
                             this.loaderService.setMessage('no-connection');
                             return of(undefined);
                         }
                     }
-                    return throwError(err);
+
+                    console.error('Error when calling backend service:', error);
+                    return throwError('Something wrong happened!');
             })) as any;
     }
 }

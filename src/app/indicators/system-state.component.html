@@ -19,6 +19,8 @@
   <mat-chip *ngIf="syrenAlert === false" class="mute">
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
+
+  <mat-chip *ngIf="(armState == null) || (monitoringState == null)" class="error" i18n="@@error state">ERROR</mat-chip>
 </mat-chip-list>
 
 <mat-chip-list fxHide fxShow.xs>
@@ -41,5 +43,9 @@
   </mat-chip>
   <mat-chip *ngIf="syrenAlert === false" class="mute">
     <mat-icon mat-list-icon>volume_mute</mat-icon>
+  </mat-chip>
+
+  <mat-chip *ngIf="armState == null || monitoringState == null" class="error" i18n="@@error state">
+    <mat-icon mat-list-icon>error</mat-icon>
   </mat-chip>
 </mat-chip-list>

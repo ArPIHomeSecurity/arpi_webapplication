@@ -57,6 +57,12 @@ export class SystemStateComponent implements OnInit {
       .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState));
     this.eventService.listen('syren_state_change')
       .subscribe(event => this.syrenAlert = event);
+
+    this.eventService.listen('disconnect')
+      .subscribe(event => {
+        this.armState = null;
+        this.monitoringState = null;
+      });
   }
 
   isSensorIndicatorVisible() {

@@ -75,6 +75,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(monitoringState => this.monitoringState = monitoringState);
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState));
+
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
+          this.loader.clearMessage();
+        }
+        else {
+          this.loader.setMessage('Lost connection to the backend service!');
+          this.armState = null;
+          this.monitoringState = null;
+        }
+      });
   }
 
   ngOnDestroy(){

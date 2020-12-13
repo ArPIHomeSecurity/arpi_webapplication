@@ -24,15 +24,24 @@ export class ConfigurationBaseComponent {
       }
     );
 
-    this.baseSubscriptions = [];
-    this.baseSubscriptions.push(
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
+          this.loader.clearMessage();
+        }
+        else {
+          this.loader.setMessage('Lost connection to the backend service!');
+          this.monitoringState = null;
+        }
+      });
+
+    this.baseSubscriptions = [
       this.eventService.listen('system_state_change')
         .subscribe(monitoringState => {
           this.monitoringState = string2MonitoringState(monitoringState);
           this.onStateChange();
-        }
-      )
-    );
+        })
+    ];
   }
 
   destroy() {
