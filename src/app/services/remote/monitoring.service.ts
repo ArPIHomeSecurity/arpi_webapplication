@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { throwError as observableThrowError,  Observable } from 'rxjs';
+import { throwError as observableThrowError,  Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { ARM_TYPE, armType2String, Clocks, KeypadType, MONITORING_STATE, string2MonitoringState, string2ArmType } from '../../models';
@@ -16,17 +16,17 @@ export class MonitoringService {
   ) { }
 
   isAlert(): Observable<boolean> {
-    return this.http.get('/api/monitoring/isAlert').pipe(
-      map(( response: HttpResponse<boolean> ) => response.body
-      ), catchError(( err: HttpResponse<boolean> ) => {
-        console.error( err );
-        return observableThrowError( { description: 'Error Value Emitted' } );
-      } ), );
+    return this.http.get('/api/monitoring/isAlert')
+    .pipe(
+      map(( response: HttpResponse<boolean> ) => response.body)
+    );
   }
 
   getArmState(): Observable<ARM_TYPE> {
-    return this.http.get<ARM_TYPE>('/api/monitoring/arm').pipe(
-      map(( response: any ) => string2ArmType( response.type ) ));
+    return this.http.get<ARM_TYPE>('/api/monitoring/arm')
+    .pipe(
+      map(( response: any ) => string2ArmType( response.type ))
+    );
   }
 
   arm( armtype: ARM_TYPE ) {
@@ -36,17 +36,14 @@ export class MonitoringService {
   }
 
   disarm() {
-    return this.http.put('/api/monitoring/disarm', null).pipe(
-      catchError(( err ) => {
-        console.error( err );
-        return observableThrowError( { description: 'Error Value Emitted' } );
-      } ))
-      .subscribe();
+    return this.http.put('/api/monitoring/disarm', null).subscribe();
   }
 
   getMonitoringState(): Observable<MONITORING_STATE> {
-    return this.http.get('/api/monitoring/state').pipe(
-      map(( response: any ) => string2MonitoringState( response.state ) ));
+    return this.http.get('/api/monitoring/state')
+    .pipe(
+      map(( response: any ) => string2MonitoringState( response.state ))
+    );
   }
 
   getVersion(): Observable<string> {
@@ -58,11 +55,7 @@ export class MonitoringService {
   }
 
   synchronizeClock() {
-    return this.http.put('/api/clock/sync', null).pipe(
-      catchError(( err ) => {
-        console.error( err );
-        return observableThrowError( { description: 'Error Value Emitted' } );
-      } ));
+    return this.http.put('/api/clock/sync', null);
   }
 
   changeClock(dateTime: string, timeZone: string) {
@@ -77,15 +70,6 @@ export class MonitoringService {
       return;
     }
 
-    return this.http.put('/api/clock', parameters).pipe(
-      catchError(( err ) => {
-        console.error( err );
-        return observableThrowError( { description: 'Error Value Emitted' } );
-      } ));
-  }
-
-  getKeypadTypes(): Observable<KeypadType[]> {
-    // get sensor types from api
-    return this.http.get<KeypadType[]>('/api/keypadtypes');
+    return this.http.put('/api/clock', parameters);
   }
 }
