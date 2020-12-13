@@ -74,8 +74,8 @@
       <mat-card *ngIf="message && !displayLoader" class="message">
         <span [ngSwitch]="message">
           <span *ngSwitchCase="'no-connection'" i18n="@@message no connection">No connection to the security system!</span>
-          <span *ngSwitchCase="'system-error'" i18n="@@message system error">The system is not working correctly, you can\'t make changes in the configuration!</span>
-          <span *ngSwitchCase="'system-not-ready'" i18n="@@message system not ready">The system is not ready, you can\'t make changes in the configuration!</span>
+          <span *ngSwitchCase="'system-error'" i18n="@@message system error">The system is not working correctly, you can't make changes in the configuration!</span>
+          <span *ngSwitchCase="'system-not-ready'" i18n="@@message system not ready">The system is not ready, you can't make changes in the configuration!</span>
           <span *ngSwitchDefault>{{ message }}</span>
         </span>
       </mat-card>

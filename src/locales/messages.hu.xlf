@@ -59,10 +59,10 @@
         <source>No connection to the security system!</source><target state="translated">Nincs kapcsolat a biztonsági rendszerrel!</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">76</context></context-group></trans-unit><trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can\'t make changes in the configuration!</source><target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
+        <source>The system is not working correctly, you can't make changes in the configuration!</source><target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">77</context></context-group></trans-unit><trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can\'t make changes in the configuration!</source><target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
+        <source>The system is not ready, you can't make changes in the configuration!</source><target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">78</context></context-group></trans-unit>
       <trans-unit id="session expiry" datatype="html">
