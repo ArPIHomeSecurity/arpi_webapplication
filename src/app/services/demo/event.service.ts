@@ -25,8 +25,15 @@ export class EventService {
   private syrenStateSubject = new Subject<boolean>();
   private syrenState = this.syrenStateSubject.asObservable().pipe(delay(environment.delay));
 
-  constructor() {
+  private connectionStateSubject = new Subject<boolean>();
+  private connectionState = this.connectionStateSubject.asObservable();
 
+  constructor() {
+    this.connectionStateSubject.next(true);
+  }
+
+  isConnected(): Observable<boolean> {
+    return this.connectionState;
   }
 
   listen(event: string): Observable<any> {
@@ -41,6 +48,8 @@ export class EventService {
       subject = this.sensorsState;
     } else if (event === 'syren_state_change') {
       subject = this.syrenState;
+    } else if (['connect', 'disconnect'].includes(event)) {
+      subject = this.connectionState;
     } else {
       console.warn('Unknown event: ', event);
     }
