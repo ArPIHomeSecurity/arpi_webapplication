@@ -14,12 +14,12 @@ import { AlertService, AuthenticationService, EventService, MonitoringService, S
 export class SystemStateComponent implements OnInit {
   monitoringStates: any = MONITORING_STATE;
   armTypes: any = ARM_TYPE;
-  armState: ARM_TYPE;
+  armState: ARM_TYPE = ARM_TYPE.DISARMED;
   sensorAlert: boolean;
 
   // true=syren / false=syren muted / null=no syren
   syrenAlert: boolean;
-  monitoringState: MONITORING_STATE;
+  monitoringState: MONITORING_STATE = MONITORING_STATE.READY;
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
