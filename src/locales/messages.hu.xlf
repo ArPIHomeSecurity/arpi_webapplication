@@ -450,11 +450,8 @@
         </context-group>
       </trans-unit><trans-unit id="failed save" datatype="html">
         <source>Failed to save!</source><target state="translated">Nem sikerült elmenteni!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor delete" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">51</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source><target state="translated">Érzékelő törlés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
@@ -890,43 +887,47 @@
         <target state="translated">Szenzorok</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit><trans-unit id="error state" datatype="html">
+        <source>ERROR</source><target state="translated">HIBA</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source>
         <target state="translated">SZ</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source>
         <target state="translated">U</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source>
         <target state="translated">H</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source>
         <target state="translated">T</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="away state short" datatype="html">
         <source>A</source>
         <target state="translated">T</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="stay state short" datatype="html">
         <source>S</source>
         <target state="translated">M</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
       <trans-unit id="sensors state short" datatype="html">
         <source>S</source>
         <target state="translated">SZ</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">36</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">38</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit>
     </body>
   </file>
 </xliff>

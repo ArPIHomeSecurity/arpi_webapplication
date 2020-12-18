@@ -88,14 +88,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can\&apos;t make changes in the configuration!</source>
+        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can\&apos;t make changes in the configuration!</source>
+        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">78</context>
@@ -168,57 +168,64 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="error state" datatype="html">
+        <source>ERROR</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="away state short" datatype="html">
         <source>A</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="stay state short" datatype="html">
         <source>S</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="sensors state short" datatype="html">
         <source>S</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
@@ -935,6 +942,17 @@
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="failed save" datatype="html">
+        <source>Failed to save!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="user unregister device" datatype="html">
         <source>Unregister device</source>
         <context-group purpose="location">
@@ -1164,13 +1182,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="failed save" datatype="html">
-        <source>Failed to save!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="user delete" datatype="html">
