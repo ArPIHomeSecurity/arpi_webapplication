@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  BehaviorSubject } from 'rxjs';
+import { Observable ,  Subject } from 'rxjs';
 
 import * as io from 'socket.io-client';
 
@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class EventService {
 
   socket: any;
-  socketConnected$ = new BehaviorSubject<boolean>(false);
+  socketConnected$ = new Subject<boolean>();
 
   constructor() {
     this.connect();
@@ -27,6 +27,9 @@ export class EventService {
     this.socket = io.connect(
       window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: 'token=' + deviceToken }
     );
+
+    this.socketConnected$.next(this.socket.connected);
+
     this.socket.on('connect', () => this.socketConnected$.next(true));
     this.socket.on('disconnect', () => this.socketConnected$.next(false));
 

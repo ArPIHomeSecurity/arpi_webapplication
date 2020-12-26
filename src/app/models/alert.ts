@@ -1,14 +1,16 @@
 
 export enum ARM_TYPE {
-  DISARMED = 0,
-  AWAY = 1,
-  STAY = 2
+  UNDEFINED = 0,
+  DISARMED = 1,
+  AWAY = 2,
+  STAY = 3
 }
 
 export enum ALERT_TYPE {
-  SABOTAGE = 0,
-  AWAY = 1,
-  STAY = 2
+  UNDEFINED = 0,
+  SABOTAGE = 1,
+  AWAY = 2,
+  STAY = 3
 }
 
 // monitoring arm types from the backend system

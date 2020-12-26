@@ -30,8 +30,8 @@ export class ConfigurationBaseComponent {
           this.loader.clearMessage();
         }
         else {
-          this.loader.setMessage('Lost connection to the backend service!');
-          this.monitoringState = null;
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChange();
         }
       });
 
@@ -55,9 +55,11 @@ export class ConfigurationBaseComponent {
 
   onStateChange() {
     if (this.monitoringState === MONITORING_STATE.ERROR) {
-      this.loader.setMessage('system-error');
+      this.loader.setMessage($localize`:@@message system error:The system is not working correctly, you can't make changes in the configuration!`);
+    } else if (this.monitoringState === MONITORING_STATE.NOT_READY) {
+      this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
     } else if (this.monitoringState !== MONITORING_STATE.READY) {
-      this.loader.setMessage('system-not-ready');
+      this.loader.setMessage($localize`:@@message system not ready:The system is not ready, you can't make changes in the configuration!`);
     } else {
       this.loader.clearMessage();
     }

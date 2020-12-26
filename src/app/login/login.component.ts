@@ -82,7 +82,12 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          this.error = error.error.error;
+          if (error && 'error' in error && 'error' in error.error) {
+            this.error = error.error.error;
+          }
+          else {
+            this.error = 'no connection';
+          }
           this.loading = false;
         }
       );
@@ -111,7 +116,12 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          this.error = error.error.error;
+          if (error && 'error' in error && 'error' in error.error) {
+            this.error = error.error.error;
+          }
+          else {
+            this.error = 'no connection';
+          }
           this.loading = false;
         }
       );

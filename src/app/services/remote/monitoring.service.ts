@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { throwError as observableThrowError,  Observable, throwError } from 'rxjs';
+import { throwError as observableThrowError,  Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { ARM_TYPE, armType2String, Clocks, KeypadType, MONITORING_STATE, string2MonitoringState, string2ArmType } from '../../models';
@@ -25,24 +25,26 @@ export class MonitoringService {
   getArmState(): Observable<ARM_TYPE> {
     return this.http.get<ARM_TYPE>('/api/monitoring/arm')
     .pipe(
-      map(( response: any ) => string2ArmType( response.type ))
+      map(( response: any ) => string2ArmType( response.type )),
+      catchError(() => of(ARM_TYPE.UNDEFINED))
     );
   }
 
   arm( armtype: ARM_TYPE ) {
     const params = new HttpParams().set('type', armType2String(armtype));
 
-    this.http.put('/api/monitoring/arm', null, { params } ).subscribe();
+    return this.http.put('/api/monitoring/arm', null, { params } );
   }
 
   disarm() {
-    return this.http.put('/api/monitoring/disarm', null).subscribe();
+    return this.http.put('/api/monitoring/disarm', null);
   }
 
   getMonitoringState(): Observable<MONITORING_STATE> {
     return this.http.get('/api/monitoring/state')
     .pipe(
-      map(( response: any ) => string2MonitoringState( response.state ))
+      map(( response: any ) => string2MonitoringState( response.state )),
+      catchError(() => of(MONITORING_STATE.NOT_READY))
     );
   }
 

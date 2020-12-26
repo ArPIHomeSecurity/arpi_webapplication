@@ -20,7 +20,7 @@
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
 
-  <mat-chip *ngIf="(armState == null) || (monitoringState == null)" class="error" i18n="@@error state">ERROR</mat-chip>
+  <mat-chip *ngIf="(armState == armTypes.UNDEFINED) || (monitoringState == monitoringStates.NOT_READY)" class="error" i18n="@@error state">ERROR</mat-chip>
 </mat-chip-list>
 
 <mat-chip-list fxHide fxShow.xs>
@@ -45,7 +45,7 @@
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
 
-  <mat-chip *ngIf="armState == null || monitoringState == null" class="error">
+  <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error">
     <mat-icon mat-list-icon>error</mat-icon>
   </mat-chip>
 </mat-chip-list>

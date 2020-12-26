@@ -36,17 +36,28 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 }),
                 catchError(error => {
                     if (error instanceof HttpErrorResponse) {
-                        if (error.status === 401) {
+                        if (error.status === 400) {
+                            // Bad request
+                            return throwError(error);
+                        } else if (error.status === 401) {
+                            // Unauthorized => session expired
                             this.authService.logout();
                             return of(undefined);
                         } else if (error.status === 0 && error.statusText === 'Unknown Error') {
-                            this.loaderService.setMessage('no-connection');
-                            return of(undefined);
+                            // No connection to the REST API
+                            console.error('No connection to the security system');
+                            return throwError(error);
+                        } else if (error.status === 503) {
+                            // Connection lost to the monitoring service
+                            // this.loaderService.setMessage($localize`:@@message no connection:No connection to the security system!`);
+                            // rethrow the error to be able to catch it and return a default value
+                            console.warn('Backend service request failed!', error);
+                            return throwError(error);
                         }
                     }
 
                     console.error('Error when calling backend service:', error);
-                    return throwError('Something wrong happened!');
+                    return of(undefined);
             })) as any;
     }
 }

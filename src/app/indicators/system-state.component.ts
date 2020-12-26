@@ -60,8 +60,8 @@ export class SystemStateComponent implements OnInit {
 
     this.eventService.listen('disconnect')
       .subscribe(event => {
-        this.armState = null;
-        this.monitoringState = null;
+        this.armState = ARM_TYPE.UNDEFINED;
+        this.monitoringState = MONITORING_STATE.NOT_READY;
       });
   }
 

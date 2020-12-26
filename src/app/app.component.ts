@@ -23,9 +23,10 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
-  displayLoader: boolean;
   // display error message of the compoponents
-  message: string;
+  displayLoader = false;
+  message: string = null;
+
   watcher: Subscription;
   smallScreen: boolean;
   locales = [

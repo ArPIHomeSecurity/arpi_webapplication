@@ -51,9 +51,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
+      .subscribe(armState => {
+        this.armState = armState;
+        this.onStateChanged();
+      });
     this.eventService.listen('arm_state_change')
-      .subscribe(armState => this.armState = string2ArmType(armState));
+      .subscribe(armState => {
+        this.armState = string2ArmType(armState);
+        this.onStateChanged();
+      });
 
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
@@ -72,9 +78,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
+      .subscribe(monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChanged();
+      });
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState));
+      .subscribe(monitoringState => {
+          this.monitoringState = string2MonitoringState(monitoringState);
+          this.onStateChanged();
+      });
 
     this.eventService.isConnected()
       .subscribe(connected => {
@@ -82,9 +94,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.loader.clearMessage();
         }
         else {
-          this.loader.setMessage('Lost connection to the backend service!');
-          this.armState = null;
-          this.monitoringState = null;
+          this.armState = ARM_TYPE.UNDEFINED;
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChanged();
         }
       });
   }
@@ -93,19 +105,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loader.clearMessage();
   }
 
+  onStateChanged() {
+    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY) {
+      this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
+    }
+    else {
+      this.loader.clearMessage();
+    }
+  }
+
   armChanged(event) {
     if (event.value === 'AWAY') {
       this.action = 'armed away';
-      this.monitoringService.arm(ARM_TYPE.AWAY);
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+      this.monitoringService.arm(ARM_TYPE.AWAY)
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     } else if (event.value === 'STAY') {
       this.action = 'armed stay';
-      this.monitoringService.arm(ARM_TYPE.STAY);
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+      this.monitoringService.arm(ARM_TYPE.STAY)
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     } else if (event.value === 'DISARMED') {
       this.action = 'disarmed';
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
-      this.monitoringService.disarm();
+      this.monitoringService.disarm()
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     }
   }
 

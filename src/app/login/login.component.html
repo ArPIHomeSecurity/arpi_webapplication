@@ -55,10 +55,12 @@
 
       <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
         <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token!</div>
+        <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
         <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
         <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
         <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration code!</div>
         <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
+        <div *ngSwitchCase="'no connection'" i18n="@@login no connedtion">No connection to the security system!</div>
         <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
       </div>
     </mat-card>
