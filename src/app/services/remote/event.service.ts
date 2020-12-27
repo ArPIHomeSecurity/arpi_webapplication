@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable ,  Subject } from 'rxjs';
 
-import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { environment } from '../../../environments/environment';
 
@@ -24,9 +24,9 @@ export class EventService {
     if (this.socket) {
       this.socket.disconnect();
     }
-    this.socket = io.connect(
-      window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: 'token=' + deviceToken }
-    );
+
+    this.socket = io(window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: 'token=' + deviceToken });
+    this.socket.connect();
 
     this.socketConnected$.next(this.socket.connected);
 
