@@ -64,16 +64,21 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
       this.loader.display( true );
     } );
 
-    forkJoin({
-      keypad: this.keypadService.getKeypad(0),
-      keypadTypes: this.keypadService.getKeypadTypes()
-    })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results =>{
-      this.keypad = results.keypad;
-      this.keypadTypes = results.keypadTypes;
-      this.updateForm();
-    });
+    this.keypadService.getKeypads().subscribe(
+      keypads => {
+        forkJoin({
+          keypad: this.keypadService.getKeypad(keypads[0].id),
+          keypadTypes: this.keypadService.getKeypadTypes()
+        })
+        .pipe(finalize(() => this.loader.display(false)))
+        .subscribe(results =>{
+          this.keypad = results.keypad;
+          this.keypadTypes = results.keypadTypes;
+          this.updateForm();
+        });
+      }
+    );
+
   }
 
   prepareKeypad(): Keypad {
@@ -84,8 +89,8 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
 
     return {
       id: this.keypad.id,
-      enabled: formModel.keypad_enabled,
-      typeId: formModel.keypad_type
+      enabled: formModel.keypadEnabled,
+      typeId: formModel.keypadType
     };
   }
 
