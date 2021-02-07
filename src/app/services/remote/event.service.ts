@@ -11,8 +11,14 @@ export class EventService {
   socket: any;
   socketConnected$ = new Subject<boolean>();
 
+  unloading = false;
+
   constructor() {
     this.connect();
+
+    window.onbeforeunload= () => {
+      this.unloading = true;
+    };
   }
 
   isConnected() {
@@ -31,7 +37,11 @@ export class EventService {
     this.socketConnected$.next(this.socket.connected);
 
     this.socket.on('connect', () => this.socketConnected$.next(true));
-    this.socket.on('disconnect', () => this.socketConnected$.next(false));
+    this.socket.on('disconnect', () => {
+      if (!this.unloading) {
+        this.socketConnected$.next(false);
+      }
+    });
 
     this.socketConnected$.asObservable().subscribe(
       connected => {
@@ -45,7 +55,9 @@ export class EventService {
       this.socket.on(event, data => {
         // console.log("Event:", event);
         // console.log("Data:", data);
-        observer.next(data);
+        if (!this.unloading) {
+          observer.next(data);
+        }
       });
 
       // observable is disposed
