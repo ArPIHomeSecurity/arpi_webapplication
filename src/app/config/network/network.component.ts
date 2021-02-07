@@ -62,6 +62,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndnsPassword: getValue(dyndns.value, 'password'),
       dyndnsHostname: getValue(dyndns.value, 'hostname'),
       dyndnsProvider: getValue(dyndns.value, 'provider'),
+      dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host'),
 
       accessSsh: getValue(access.value, 'ssh')
     });
@@ -94,7 +95,8 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     const dyndns: any = {
       username: formModel.dyndnsUsername,
       hostname: formModel.dyndnsHostname,
-      provider: formModel.dyndnsProvider
+      provider: formModel.dyndnsProvider,
+      restrict_host: formModel.dyndnsRestrictHost
     };
 
     if (formModel.dyndnsPassword) {
