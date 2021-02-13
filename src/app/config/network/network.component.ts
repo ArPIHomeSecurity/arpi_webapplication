@@ -28,6 +28,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   // values from the noipy python module
   providers = [
+      {value: null, label: ''},
       {value: 'noip', label: 'www.noip.com'},
       {value: 'dyn', label: 'www.dyndns.org'},
       {value: 'duck', label: 'www.duckdns.org'},
