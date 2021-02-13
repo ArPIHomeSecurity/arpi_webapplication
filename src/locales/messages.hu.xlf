@@ -399,7 +399,7 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-      </trans-unit><trans-unit id="network prodvider" datatype="html">
+      </trans-unit><trans-unit id="network provider" datatype="html">
         <source>Provider</source><target state="translated">Szolgáltató</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
@@ -411,28 +411,25 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
+      </trans-unit><trans-unit id="network restrict host" datatype="html">
+        <source>Restrict access to host</source><target state="translated">Hozzáférés korlátozása hoszthoz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
       </trans-unit><trans-unit id="network access locally" datatype="html">
         <source>Access locally</source><target state="translated">Helyi hozzáférés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit><trans-unit id="network local settings" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="network local settings" datatype="html">
         <source>Local access settings</source><target state="translated">Helyi hozzáférés beállítása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit><trans-unit id="network enable ssh" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source><target state="translated">SSH kapcsolat engedélyezett</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit><trans-unit id="failed save" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="failed save" datatype="html">
         <source>Failed to save!</source><target state="translated">Nem sikerült elmenteni!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">51</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source><target state="translated">Érzékelő törlés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
@@ -773,7 +770,7 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
         <target state="translated">Valóban töröli ezt az érzékelőt?</target>

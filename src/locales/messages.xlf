@@ -483,7 +483,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
@@ -870,7 +870,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="c236fdb5cf6d5aa13f50945efe9c8a408ed86cb2" datatype="html">
-        <source>User has device registration code expiring on <x id="INTERPOLATION" equiv-text="expiring on {{user.registra"/></source>
+        <source>User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">15</context>
@@ -954,7 +954,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="user unregister device" datatype="html">
@@ -1153,7 +1153,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="network prodvider" datatype="html">
+      <trans-unit id="network provider" datatype="html">
         <source>Provider</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
@@ -1167,25 +1167,32 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="network restrict host" datatype="html">
+        <source>Restrict access to host</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="network access locally" datatype="html">
         <source>Access locally</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="network local settings" datatype="html">
         <source>Local access settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="user delete" datatype="html">
