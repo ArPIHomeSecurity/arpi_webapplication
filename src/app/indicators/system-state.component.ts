@@ -58,6 +58,14 @@ export class SystemStateComponent implements OnInit {
     this.eventService.listen('syren_state_change')
       .subscribe(event => this.syrenAlert = event);
 
+    this.eventService.listen('connect')
+      .subscribe(event => {
+        this.monitoringService.getArmState()
+          .subscribe(armState => this.armState = armState);
+        this.monitoringService.getMonitoringState()
+          .subscribe(monitoringState => this.monitoringState = monitoringState);
+      });
+
     this.eventService.listen('disconnect')
       .subscribe(event => {
         this.armState = ARM_TYPE.UNDEFINED;
