@@ -7,7 +7,7 @@ import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String } from '../../models';
+import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String, POWER_STATE } from '../../models';
 
 import { environment } from '../../../environments/environment';
 import { getSessionValue, setSessionValue } from '../../utils';
@@ -152,6 +152,13 @@ export class MonitoringService {
           this.authService.updateUserToken('user.session');
           return _;
         })
+      );
+  }
+
+  getPowerState(): Observable<POWER_STATE> {
+    return of(POWER_STATE.NETWORK)
+      .pipe(
+        delay(environment.delay)
       );
   }
 

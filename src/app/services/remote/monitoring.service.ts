@@ -2,10 +2,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
-import { throwError as observableThrowError,  Observable, throwError, of } from 'rxjs';
+import { Observable, throwError as of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { ARM_TYPE, armType2String, Clocks, KeypadType, MONITORING_STATE, string2MonitoringState, string2ArmType } from '../../models';
+import { ARM_TYPE, armType2String, Clocks, MONITORING_STATE, string2MonitoringState, string2ArmType, POWER_STATE, string2PowerState } from '../../models';
 
 
 @Injectable()
@@ -73,5 +73,13 @@ export class MonitoringService {
     }
 
     return this.http.put('/api/clock', parameters);
+  }
+
+  getPowerState(): Observable<POWER_STATE> {
+    return this.http.get('/api/power')
+    .pipe(
+      map(( response: any ) => string2PowerState( response.state )),
+      catchError(() => of(POWER_STATE.UNDEFINED))
+    );
   }
 }

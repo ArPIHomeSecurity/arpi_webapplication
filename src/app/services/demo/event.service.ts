@@ -25,6 +25,9 @@ export class EventService {
   private syrenStateSubject = new Subject<boolean>();
   private syrenState = this.syrenStateSubject.asObservable().pipe(delay(environment.delay));
 
+  private powerStateSubject = new Subject<boolean>();
+  private powerState = this.powerStateSubject.asObservable().pipe(delay(environment.delay));
+
   private connectionStateSubject = new Subject<boolean>();
   private connectionState = this.connectionStateSubject.asObservable();
 
@@ -48,6 +51,8 @@ export class EventService {
       subject = this.sensorsState;
     } else if (event === 'syren_state_change') {
       subject = this.syrenState;
+    } else if (event === 'power_state_change') {
+      subject = this.powerState;
     } else if (['connect', 'disconnect'].includes(event)) {
       subject = this.connectionState;
     } else {

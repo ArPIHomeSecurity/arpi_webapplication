@@ -20,6 +20,15 @@
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
 
+  <div [ngSwitch]="powerState">
+    <mat-chip *ngSwitchCase="powerStates.NETWORK" class="normal">
+      <mat-icon mat-list-icon>power</mat-icon>
+    </mat-chip>
+    <mat-chip *ngSwitchCase="powerStates.BATTERY" class="error">
+      <mat-icon mat-list-icon>battery_alert</mat-icon>
+    </mat-chip>
+  </div>
+
   <mat-chip *ngIf="(armState == armTypes.UNDEFINED) || (monitoringState == monitoringStates.NOT_READY)" class="error" i18n="@@error state">ERROR</mat-chip>
 </mat-chip-list>
 

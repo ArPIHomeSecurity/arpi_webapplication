@@ -51,4 +51,9 @@
   .mute.mat-chip.mat-primary {
     background-color: #ffb600;
   }
+
+  /* power */
+  .normal.mat-chip.mat-primary, .ready.mat-list-icon.mat-icon.material-icons{
+    background-color: map-get($ok, 600),
+  }
 }

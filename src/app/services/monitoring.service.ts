@@ -1,7 +1,7 @@
 
 import { Observable } from 'rxjs';
 
-import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE } from '../models';
+import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '../models';
 
 
 export interface MonitoringService {
@@ -25,4 +25,6 @@ export interface MonitoringService {
   changeClock(dateTime: string, timeZone: string);
 
   getKeypadTypes(): Observable<KeypadType[]>;
+
+  getPowerState(): Observable<POWER_STATE>;
 }
