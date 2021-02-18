@@ -18,10 +18,15 @@ export class ConfigurationBaseComponent {
 
   initialize() {
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChange();
-      }
+      .subscribe(
+        monitoringState => {
+          this.monitoringState = monitoringState;
+          this.onStateChange();
+        },
+        _ => {
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChange();
+        }
     );
 
     this.eventService.isConnected()

@@ -43,13 +43,17 @@ export class SystemStateComponent implements OnInit {
 
   updateComponent() {
     this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
+      .subscribe(
+        armState => this.armState = armState,
+        _ => this.armState = ARM_TYPE.UNDEFINED);
     this.sensorService.getAlert()
       .subscribe(alert =>  this.sensorAlert = alert);
     this.alertService.getAlert()
       .subscribe(alert => this.syrenAlert = (alert != null) ? true : null);
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
+      .subscribe(
+        monitoringState => this.monitoringState = monitoringState,
+        _ => this.monitoringState = MONITORING_STATE.NOT_READY);
     this.monitoringService.getPowerState()
       .subscribe(powerState => this.powerState = powerState);
 

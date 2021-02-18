@@ -51,10 +51,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(armState => {
-        this.armState = armState;
-        this.onStateChanged();
-      });
+      .subscribe(
+        armState => {
+          this.armState = armState;
+          this.onStateChanged();
+        },
+        _ => {
+          this.armState = ARM_TYPE.UNDEFINED;
+          this.onStateChanged();
+        }
+      );
     this.eventService.listen('arm_state_change')
       .subscribe(armState => {
         this.armState = string2ArmType(armState);
@@ -78,10 +84,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChanged();
-      });
+      .subscribe(
+        monitoringState => {
+          this.monitoringState = monitoringState;
+          this.onStateChanged();
+        },
+        _ => {
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChanged();
+        }
+      );
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => {
           this.monitoringState = string2MonitoringState(monitoringState);
