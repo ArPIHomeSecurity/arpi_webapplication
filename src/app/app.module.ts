@@ -19,6 +19,7 @@ import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
+import { SyrenComponent } from './config/syren';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
@@ -74,6 +75,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ClockComponent,
     NotificationsComponent,
     NetworkComponent,
+    SyrenComponent,
 
     UserListComponent,
     UserDetailComponent,

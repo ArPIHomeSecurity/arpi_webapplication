@@ -1,6 +1,6 @@
 import { ROLE_TYPES } from 'src/app/models';
 
-export const NOTIFICATION_CONFIGURATION = [
+export const DEMO_CONFIGURATION = [
     {
         option: 'notifications',
         section: 'email',
@@ -47,6 +47,14 @@ export const NOTIFICATION_CONFIGURATION = [
         section: 'access',
         value: {
             ssh: true
+        }
+    },
+    {
+        option: 'alert',
+        section: 'syren',
+        value: {
+            alertTime: '360000',
+            suspendTime: '180000',
         }
     }
 ];
