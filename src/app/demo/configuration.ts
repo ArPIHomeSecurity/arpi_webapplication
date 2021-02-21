@@ -53,8 +53,8 @@ export const DEMO_CONFIGURATION = [
         option: 'alert',
         section: 'syren',
         value: {
-            alertTime: '360000',
-            suspendTime: '180000',
+            alert_time: 120,
+            suspend_time: 60,
         }
     }
 ];

@@ -48,8 +48,8 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     this.syrenForm = this.fb.group({
-      alertTime: new FormControl(getValue(this.syren.value, 'alert_time', 36000) / 3600 ,  Validators.required),
-      suspendTime: new FormControl(getValue(this.syren.value, 'suspend_time', 18000) / 3600 , Validators.required),
+      alertTime: new FormControl(getValue(this.syren.value, 'alert_time', 36000) / 60 ,  Validators.required),
+      suspendTime: new FormControl(getValue(this.syren.value, 'suspend_time', 18000) / 60 , Validators.required),
     });
   }
 
@@ -73,8 +73,8 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   prepareSyren(): any {
     const formModel = this.syrenForm.value;
     return {
-      alert_time: formModel.alertTime * 3600, // convert to seconds
-      suspend_time: formModel.suspendTime * 3600, // convert to seconds
+      alert_time: formModel.alertTime * 60, // convert to seconds
+      suspend_time: formModel.suspendTime * 60, // convert to seconds
     };
   }
 

@@ -5,10 +5,11 @@ import { map, delay } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 
-import { ALERT_TYPE, Alert, Sensor, AlertSensor } from 'src/app/models';
+import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from 'src/app/models';
 import { ALERTS } from 'src/app/demo/configuration';
-import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { getSessionValue, getValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { ConfigurationService } from '../configuration.service';
 
 
 @Injectable()
@@ -17,22 +18,26 @@ export class AlertService {
   alerts: Alert[];
 
   // true=syren / false=syren muted / null=no syren
-  syren: boolean;
-  syrenId: number;
+  syrenConfig: Option;
+  alertIsRunning: boolean;
+  syrenIsOn: boolean;
 
   constructor(
     @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('ConfigurationService') private configurationService: ConfigurationService,
     @Inject('EventService') private eventService: EventService
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
-    this.syren = getSessionValue('AlertService.syren', null);
-    this.syrenId = getSessionValue('AlertService.syrenId', null);
+    this.alertIsRunning = getSessionValue('AlertService.alertIsRunning', false);
+    this.syrenIsOn = getSessionValue('AlertService.syrenIsOn', false);
 
-    clearInterval(this.syrenId);
-
-    if (this.syren != null) {
-      this.startSyren();
-    }
+    this.configurationService.getOption('alert', 'syren')
+      .subscribe(config => {
+        this.syrenConfig = config;
+        if (this.alertIsRunning) {
+          this.startSyren();
+        }
+      });
   }
 
   getAlerts(): Observable<Alert[]> {
@@ -80,32 +85,57 @@ export class AlertService {
       sensors: alertSensors
     };
     this.alerts.push(alert);
-    this.syren = true;
+    this.syrenIsOn = true;
     setSessionValue('AlertService.alerts', this.alerts);
-    setSessionValue('AlertService.syren', this.syren);
+    setSessionValue('AlertService.syren', this.syrenIsOn);
     this.eventService.updateAlertState(alert);
-    this.eventService.updateSyrenState(this.syren);
+    this.eventService.updateSyrenState(this.syrenIsOn);
+
+    this.alertIsRunning = true;
+    setSessionValue('AlertService.alertIsRunning', this.alertIsRunning);
     this.startSyren();
   }
 
   startSyren() {
-    this.syrenId = window.setInterval(() => {
-      this.syren = !this.syren;
-      this.eventService.updateSyrenState(this.syren);
-    }, 5000);
-    setSessionValue('AlertService.syrenId', this.syrenId);
+    // start syren
+    this.syrenIsOn = true;
+    setSessionValue('AlertService.syrenIsOn', this.syrenIsOn);
+    this.eventService.updateSyrenState(this.syrenIsOn);
+
+    // suspend syren
+    setTimeout(() => {
+        // restart the loop if alert is running
+        if (this.alertIsRunning) {
+          this.syrenIsOn = false;
+          this.eventService.updateSyrenState(this.syrenIsOn);
+          setSessionValue('AlertService.syrenId', this.syrenIsOn);
+
+          // restart syren loop
+          setTimeout(() => {
+              // restart the loop if alert is running
+              if (this.alertIsRunning) {
+                this.startSyren();
+              }
+            },
+            getValue(this.syrenConfig.value, 'suspend_time', 300000) * 1000 // s => ms
+          );
+        }
+      },
+      getValue(this.syrenConfig.value, 'alert_time', 600000) * 1000 // s => ms
+    );
   }
 
   stopAlert() {
     const alert = this.alerts.find(a => a.endTime == null);
     if (alert != null) {
       alert.endTime = new Date().toLocaleString();
-      this.syren = null;
-      clearInterval(this.syrenId);
+      this.alertIsRunning = false;
+      this.syrenIsOn = null;
       setSessionValue('AlertService.alerts', this.alerts);
-      setSessionValue('AlertService.syren', this.syren);
+      setSessionValue('AlertService.syren', this.syrenIsOn);
+      setSessionValue('AlertService.alertIsRunning', this.alertIsRunning);
       this.eventService.updateAlertState(null);
-      this.eventService.updateSyrenState(this.syren);
+      this.eventService.updateSyrenState(this.syrenIsOn);
     }
   }
 }
