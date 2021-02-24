@@ -19,11 +19,6 @@ export interface TimeZoneGroup {
   zoneNames: string[];
 }
 
-export interface Clock {
-  network: string;
-  system: string;
-}
-
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
 
