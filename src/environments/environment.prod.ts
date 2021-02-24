@@ -3,7 +3,7 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-import { 
+import {
   AlertService,
   AuthenticationService,
   ConfigurationService,
@@ -22,18 +22,17 @@ export const environment = {
   delay: 0,
 
   channelCount: 15,
-  SNACK_DURATION: 2000,
+  snackDuration: 2000,
 
-  MONITORING_PORT: 443,
+  monitoringPort: 443,
 
-  DEFAULT_LANGUAGE: 'en',
-  LANGUAGES: 'hu',
+  defaultLanguage: 'en',
+  languages: 'hu',
 
   // authentication toket valid for 15 mins
-  USER_TOKEN_EXPIRY: 60*15
-};
+  userTokenExpiry: 60*15,
 
-export const ServiceTypes = {
+  // Service types
   alertService: AlertService,
   authenticationService: AuthenticationService,
   configurationService: ConfigurationService,

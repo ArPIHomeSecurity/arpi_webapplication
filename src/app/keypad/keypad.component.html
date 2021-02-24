@@ -8,10 +8,10 @@
           <mat-panel-title i18n="@@keypad settings">Keypad settings</mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-checkbox *ngIf="keypadTypes" class="half-width" formControlName="keypad_enabled" color="primary" i18n="@@keypad enabled">Enabled</mat-checkbox>
+        <mat-checkbox *ngIf="keypadTypes" class="half-width" formControlName="keypadEnabled" color="primary" i18n="@@keypad enabled">Enabled</mat-checkbox>
 
         <mat-form-field class="half-width">
-          <mat-select formControlName="keypad_type" i18n-placeholder="@@keypad type" placeholder="Keypad type">
+          <mat-select formControlName="keypadType" i18n-placeholder="@@keypad type" placeholder="Keypad type">
             <mat-option *ngFor="let type of keypadTypes" [value]="type.id">{{ type.name }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -20,6 +20,6 @@
       
     </mat-accordion>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="keypadForm.invalid || monitoringState != MonitoringState.READY" i18n="@@save button">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="keypadForm.invalid || monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
   </form>
 </div>

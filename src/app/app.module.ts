@@ -19,6 +19,7 @@ import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
+import { SyrenComponent } from './config/syren';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
@@ -36,7 +37,7 @@ import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
-import { ServiceTypes } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -74,6 +75,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ClockComponent,
     NotificationsComponent,
     NetworkComponent,
+    SyrenComponent,
 
     UserListComponent,
     UserDetailComponent,
@@ -132,16 +134,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AuthGuard,
     AdminGuard,
 
-    {provide: 'AlertService', useClass: ServiceTypes.alertService},
-    {provide: 'AuthenticationService', useClass: ServiceTypes.authenticationService},
-    {provide: 'ConfigurationService', useClass: ServiceTypes.configurationService},
-    {provide: 'EventService', useClass: ServiceTypes.eventService},
-    {provide: 'KeypadService', useClass: ServiceTypes.keypadService},
-    {provide: 'LoaderService', useClass: ServiceTypes.loaderService},
-    {provide: 'MonitoringService', useClass: ServiceTypes.monitoringService},
-    {provide: 'SensorService', useClass: ServiceTypes.sensorService},
-    {provide: 'UserService', useClass: ServiceTypes.userService},
-    {provide: 'ZoneService', useClass: ServiceTypes.zoneService},
+    {provide: 'AlertService', useClass: environment.alertService},
+    {provide: 'AuthenticationService', useClass: environment.authenticationService},
+    {provide: 'ConfigurationService', useClass: environment.configurationService},
+    {provide: 'EventService', useClass: environment.eventService},
+    {provide: 'KeypadService', useClass: environment.keypadService},
+    {provide: 'LoaderService', useClass: environment.loaderService},
+    {provide: 'MonitoringService', useClass: environment.monitoringService},
+    {provide: 'SensorService', useClass: environment.sensorService},
+    {provide: 'UserService', useClass: environment.userService},
+    {provide: 'ZoneService', useClass: environment.zoneService},
 
     {
       provide: HTTP_INTERCEPTORS,

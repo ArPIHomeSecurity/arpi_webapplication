@@ -5,8 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
-import * as humanizeDuration from 'humanize-duration';
-
+import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
@@ -20,13 +19,14 @@ import { AuthenticationService, LoaderService, MonitoringService } from './servi
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
 
-  displayLoader: boolean;
   // display error message of the compoponents
-  message: string;
+  displayLoader = false;
+  message: string = null;
+
   watcher: Subscription;
   smallScreen: boolean;
   locales = [
@@ -35,16 +35,19 @@ export class AppComponent implements OnInit {
   ];
   currentLocale: string;
   versions: {
-    server_version: string;
-    webapplication_version: string;
+    serverVersion: string;
+    webapplicationVersion: string;
   };
   environment = environment;
   countdownConfig = {
-    leftTime: environment.USER_TOKEN_EXPIRY,
+    leftTime: environment.userTokenExpiry,
     format: 'mm:ss',
-    notify: [environment.USER_TOKEN_EXPIRY / 3],
+    notify: [environment.userTokenExpiry / 3],
   };
   isSessionValid: boolean;
+
+  langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
+  humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -53,7 +56,6 @@ export class AppComponent implements OnInit {
     public mediaObserver: MediaObserver,
     private snackBar: MatSnackBar
   ) {
-   
 
     this.currentLocale = localStorage.getItem('localeId');
 
@@ -61,7 +63,7 @@ export class AppComponent implements OnInit {
       this.currentLocale = 'en';
     }
 
-    this.versions = {server_version: '', webapplication_version: VERSION};
+    this.versions = {serverVersion: '', webapplicationVersion: VERSION};
     this.isSessionValid = false;
   }
 
@@ -84,7 +86,7 @@ export class AppComponent implements OnInit {
     this.smallScreen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
     this.loader.status.subscribe(value => this.displayLoader = value);
     this.loader.message.subscribe(message => this.message = message);
-    this.monitoring.getVersion().subscribe(version => this.versions.server_version = version);
+    this.monitoring.getVersion().subscribe(version => this.versions.serverVersion = version);
     this.authService.isSessionValid()
       .subscribe(isSessionValid => {
         this.isSessionValid = isSessionValid;
@@ -116,8 +118,8 @@ export class AppComponent implements OnInit {
     console.log('Change locale: ', currentLocale, '=>', event.value);
     localStorage.setItem('localeId', event.value);
 
-    const newLocale = event.value === environment.DEFAULT_LANGUAGE ? '' : event.value;
-    const languagePattern = new RegExp('^/(' + environment.LANGUAGES.split(' ').join('|') + ')/');
+    const newLocale = event.value === environment.defaultLanguage ? '' : event.value;
+    const languagePattern = new RegExp('^/(' + environment.languages.split(' ').join('|') + ')/');
     if (languagePattern.test(location.pathname)) {
       // change the language
       const newPath = location.pathname.replace('/' + currentLocale, (newLocale ? '/' + newLocale : ''));
@@ -130,9 +132,9 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
     } else if ($event.action === 'done') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
       this.logout();
     }
   }
@@ -142,6 +144,6 @@ export class AppComponent implements OnInit {
     if (!currentLocale) {
     currentLocale = 'en';
     }
-    return humanizeDuration((environment.USER_TOKEN_EXPIRY/3)*1000, { language: currentLocale });
+    return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
   }
 }

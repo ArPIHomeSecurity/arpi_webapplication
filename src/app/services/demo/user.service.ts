@@ -48,8 +48,7 @@ export class UserService {
 
   createUser(user: User): Observable<User> {
     user.id = Math.max.apply(Math.max, this.users.map(u => u.id).concat([0])) + 1;
-    let newUser = Object.assign(new UserDemo, user);
-    this.users.push(newUser);
+    this.users.push(Object.assign(new UserDemo(), user));
     setSessionValue('UserService.users', this.users);
     return of(user);
   }
@@ -57,7 +56,7 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     const tmpUser = this.users.find(u => u.id === user.id);
     const index = this.users.indexOf(tmpUser);
-    this.users[index] = Object.assign(new UserDemo, user);
+    this.users[index] = Object.assign(new UserDemo(), user);
     setSessionValue('UserService.users', this.users);
     return of(user);
   }
@@ -72,14 +71,14 @@ export class UserService {
     const tmpUser = this.users.find(u => u.id === userId);
     const index = this.users.indexOf(tmpUser);
     let code = Math.random().toString(26).substring(2, 16).toUpperCase();
-    while (code.length != 12) {
+    while (code.length !== 12) {
       code = Math.random().toString(26).substring(2, 16).toUpperCase();
     }
 
     this.users[index].registrationCode = code;
     this.users[index].hasRegistrationCode = true;
     if (expiry) {
-      let t = new Date();
+      const t = new Date();
       t.setSeconds(t.getSeconds() + expiry);
       this.users[index].registrationExpiry = t.toLocaleString();
     }
@@ -87,7 +86,7 @@ export class UserService {
       this.users[index].registrationExpiry = '';
     }
     setSessionValue('UserService.users', this.users);
-    return of({code: code});
+    return of({code});
   }
 
   deleteRegistrationCode(userId: number): Observable<boolean> {

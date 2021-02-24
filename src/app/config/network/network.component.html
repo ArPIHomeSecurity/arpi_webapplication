@@ -11,24 +11,27 @@
         </mat-expansion-panel-header>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="dyndns_username" i18n-placeholder="@@network username" placeholder="Username">
+          <input matInput formControlName="dyndnsUsername" i18n-placeholder="@@network username" placeholder="Username">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="dyndns_password" i18n-placeholder="@@network password" placeholder="Password">
+          <input type="password" matInput formControlName="dyndnsPassword" i18n-placeholder="@@network password" placeholder="Password">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <mat-select formControlName="dyndns_provider" i18n-placeholder="@@network prodvider" placeholder="Provider">
-            <mat-option *ngFor="let provider of PROVIDERS" [value]="provider.value">
+          <mat-label i18n="@@network provider">Provider</mat-label>
+          <mat-select formControlName="dyndnsProvider" i18n-placeholder="@@network provider" placeholder="Provider">
+            <mat-option *ngFor="let provider of providers" [value]="provider.value">
               {{ provider.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
                 
         <mat-form-field class="half-width">
-          <input matInput formControlName="dyndns_hostname" i18n-placeholder="@@network hostname" placeholder="Hostname">
+          <input matInput formControlName="dyndnsHostname" i18n-placeholder="@@network hostname" placeholder="Hostname">
         </mat-form-field>
+
+        <mat-checkbox formControlName="dyndnsRestrictHost" i18n="@@network restrict host">Restrict access to host</mat-checkbox>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -37,12 +40,16 @@
           <mat-panel-description i18n="@@network local settings">Local access settings</mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-checkbox formControlName="access_ssh" i18n="@@network enable ssh">Enable SSH connection</mat-checkbox>
+        <mat-checkbox formControlName="accessSsh" i18n="@@network enable ssh">Enable SSH connection</mat-checkbox>
 
       </mat-expansion-panel>
 
     </mat-accordion>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != MonitoringState.READY" i18n="@@save button">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
   </form>
 </div>
+
+<ng-template #snackbarTemplate>
+  <span i18n="@@failed save">Failed to save!</span>
+</ng-template>

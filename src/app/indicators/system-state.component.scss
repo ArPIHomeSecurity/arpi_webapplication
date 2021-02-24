@@ -8,18 +8,22 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  /* monitoring state */
-  .invalid.mat-chip.mat-primary {
+  .error.mat-chip.mat-primary {
     background-color: mat-color($warn);
   }
 
+  /* monitoring state */
+  .invalid.mat-chip.mat-primary {
+    background-color: mat-color($warn);
+  }  
+
   .updating.mat-chip.mat-primary {
     background-color: #ffb600;
-  }
+  }  
 
   .mute.mat-chip.mat-primary {
     background-color: #ffb600;
-  }
+  }  
 
   /* arm state */
   .away.mat-chip.mat-primary {
@@ -46,5 +50,10 @@
 
   .mute.mat-chip.mat-primary {
     background-color: #ffb600;
+  }
+
+  /* power */
+  .normal.mat-chip.mat-primary, .ready.mat-list-icon.mat-icon.material-icons{
+    background-color: map-get($ok, 600),
   }
 }

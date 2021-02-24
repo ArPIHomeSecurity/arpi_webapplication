@@ -11,11 +11,11 @@ import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '
 @Injectable()
 export class AuthenticationService {
 
-  private isDeviceRegisteredSubject = new Subject<boolean>();
-  private sessionValidSubject = new Subject<boolean>();
-
   loggedInAs: User;
   registeredUserId: number;
+
+  private isDeviceRegisteredSubject = new Subject<boolean>();
+  private sessionValidSubject = new Subject<boolean>();
 
   constructor(
     @Inject('UserService') private userService: UserService,

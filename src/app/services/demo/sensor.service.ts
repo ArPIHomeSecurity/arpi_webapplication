@@ -60,7 +60,7 @@ export class SensorService {
     setSessionValue('SensorService.sensors', this.sensors);
 
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
-    this.eventService._updateSensorsState(alertState);
+    this.eventService.updateSensorsState(alertState);
     return of(sensor);
   }
 
@@ -73,7 +73,7 @@ export class SensorService {
     setSessionValue('SensorService.sensors', this.sensors);
 
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
-    this.eventService._updateSensorsState(alertState);
+    this.eventService.updateSensorsState(alertState);
     return of(sensor);
   }
 
@@ -82,14 +82,14 @@ export class SensorService {
     setSessionValue('SensorService.sensors', this.sensors);
 
     const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2, false);
-    this.eventService._updateSensorsState(alertState);
+    this.eventService.updateSensorsState(alertState);
     return of(true);
   }
 
 
   getAlert( sensorId: number = null ): Observable<boolean> {
     if (sensorId != null) {
-      const sensor = this.sensors.find(sensor => sensor.id === sensorId);
+      const sensor = this.sensors.find(s => s.id === sensorId);
       if (sensor) {
         return of(sensor.alert)
           .pipe(
@@ -134,7 +134,7 @@ export class SensorService {
   }
 
   resetReferences() {
-    this.monitoringService._resetReferences();
+    this.monitoringService.resetReferences();
   }
 
   alertChannel(channelId: number, value: boolean) {
@@ -149,10 +149,10 @@ export class SensorService {
       setSessionValue('SensorService.sensors', this.sensors);
 
       const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2);
-      this.eventService._updateSensorsState(alertState);
+      this.eventService.updateSensorsState(alertState);
 
       if (value && sensor.enabled) {
-        this.monitoringService._onAlert(sensor);
+        this.monitoringService.onAlert(sensor);
       }
     }
   }

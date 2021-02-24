@@ -5,7 +5,7 @@ import { delay, map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 
 import { Option } from 'src/app/models';
-import { NOTIFICATION_CONFIGURATION } from 'src/app/demo/configuration';
+import { DEMO_CONFIGURATION } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
 
@@ -18,7 +18,7 @@ export class ConfigurationService {
   constructor(
     @Inject('AuthenticationService') private authService: AuthenticationService
   ) {
-    this.configuration = getSessionValue('ConfigurationService.configuration', NOTIFICATION_CONFIGURATION);
+    this.configuration = getSessionValue('ConfigurationService.configuration', DEMO_CONFIGURATION);
   }
 
 
@@ -39,7 +39,7 @@ export class ConfigurationService {
     if (tmpOption != null) {
       tmpOption.value = value;
     } else {
-      this.configuration.push({option: option, section: section, value: value});
+      this.configuration.push({option, section, value});
     }
 
     setSessionValue('ConfigurationService.configuration', this.configuration);

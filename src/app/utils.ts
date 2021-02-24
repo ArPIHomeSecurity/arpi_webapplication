@@ -41,7 +41,8 @@ export function setLocalValue(name: string, value: any) {
 export function getValue(value: any, attribute: string, defaultValue: any = '') {
   // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
   if (value) {
-    return value ? value[attribute] : defaultValue;
+    return (value[attribute] !== null) ? value[attribute] : defaultValue;
   }
+
   return defaultValue;
 }

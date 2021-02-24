@@ -11,6 +11,7 @@ import { KeypadComponent } from './keypad';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
 import { ClockComponent } from './config/clock';
+import { SyrenComponent } from './config/syren';
 import { UserListComponent, UserDetailComponent } from './user';
 
 const appRoutes: Routes = [
@@ -92,6 +93,11 @@ const appRoutes: Routes = [
   {
     path: 'config/clock',
     component: ClockComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'config/syren',
+    component: SyrenComponent,
     canActivate: [AdminGuard]
   },
   // otherwise redirect to home

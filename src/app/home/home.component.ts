@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Alert, ArmType, MonitoringState, String2ArmType, String2MonitoringState, SensorType } from '../models';
+import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType } from '../models';
 import { AlertService, EventService, LoaderService, MonitoringService, SensorService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -13,14 +13,14 @@ import { environment } from '../../environments/environment';
   providers: []
 })
 
-export class HomeComponent implements OnInit {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+export class HomeComponent implements OnInit, OnDestroy {
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
-  ArmType: any = ArmType;
+  armTypes: any = ARM_TYPE;
   alert: Alert;
-  armState: ArmType;
-  monitoringState: MonitoringState;
+  armState: ARM_TYPE;
+  monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
   sensorTypes: SensorType [] = [];
 
@@ -51,9 +51,21 @@ export class HomeComponent implements OnInit {
 
     // ARM STATE: read and subscribe for changes
     this.monitoringService.getArmState()
-      .subscribe(armState => this.armState = armState);
+      .subscribe(
+        armState => {
+          this.armState = armState;
+          this.onStateChanged();
+        },
+        _ => {
+          this.armState = ARM_TYPE.UNDEFINED;
+          this.onStateChanged();
+        }
+      );
     this.eventService.listen('arm_state_change')
-      .subscribe(armState => this.armState = String2ArmType(armState));
+      .subscribe(armState => {
+        this.armState = string2ArmType(armState);
+        this.onStateChanged();
+      });
 
     // SENSORS ALERT STATE: read and subscribe for changes
     this.sensorService.getAlert()
@@ -72,32 +84,69 @@ export class HomeComponent implements OnInit {
     );
 
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => this.monitoringState = monitoringState);
+      .subscribe(
+        monitoringState => {
+          this.monitoringState = monitoringState;
+          this.onStateChanged();
+        },
+        _ => {
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChanged();
+        }
+      );
     this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState));
+      .subscribe(monitoringState => {
+          this.monitoringState = string2MonitoringState(monitoringState);
+          this.onStateChanged();
+      });
+
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
+          this.loader.clearMessage();
+        }
+        else {
+          this.armState = ARM_TYPE.UNDEFINED;
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChanged();
+        }
+      });
+  }
+
+  ngOnDestroy(){
+    this.loader.clearMessage();
+  }
+
+  onStateChanged() {
+    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY) {
+      this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
+    }
+    else {
+      this.loader.clearMessage();
+    }
   }
 
   armChanged(event) {
     if (event.value === 'AWAY') {
-      this.action = 'armed away'
-      this.monitoringService.arm(ArmType.AWAY);
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+      this.action = 'armed away';
+      this.monitoringService.arm(ARM_TYPE.AWAY)
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     } else if (event.value === 'STAY') {
-      this.action = 'armed stay'
-      this.monitoringService.arm(ArmType.STAY);
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+      this.action = 'armed stay';
+      this.monitoringService.arm(ARM_TYPE.STAY)
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     } else if (event.value === 'DISARMED') {
-      this.action = 'disarmed'
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
-      this.monitoringService.disarm();
+      this.action = 'disarmed';
+      this.monitoringService.disarm()
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     }
   }
 
   armDisabled() {
     return this.sensorAlert ||
-      this.armState !== ArmType.DISARMED ||
-      this.monitoringState !== MonitoringState.READY ||
-      this.monitoringState === MonitoringState.READY && this.alert;
+      this.armState !== ARM_TYPE.DISARMED ||
+      this.monitoringState !== MONITORING_STATE.READY ||
+      this.monitoringState === MONITORING_STATE.READY && this.alert;
   }
 
   getSensorTypeName(sensorTypeId: number) {

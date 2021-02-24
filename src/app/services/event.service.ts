@@ -5,5 +5,7 @@ export interface EventService {
 
   connect();
 
+  isConnected(): Observable<boolean>;
+
   listen(event: string): Observable<any>;
 }

@@ -5,13 +5,14 @@ import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from './services';
+import { AuthenticationService, LoaderService } from './services';
 
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
     constructor(
         @Inject('AuthenticationService') public authService: AuthenticationService,
+        @Inject('LoaderService') public loaderService: LoaderService,
         private router: Router
         ) { }
 
@@ -33,14 +34,30 @@ export class AppHttpInterceptor implements HttpInterceptor {
                     }
                     return event;
                 }),
-                catchError(err => {
-                    if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
+                catchError(error => {
+                    if (error instanceof HttpErrorResponse) {
+                        if (error.status === 400) {
+                            // Bad request
+                            return throwError(error);
+                        } else if (error.status === 401) {
+                            // Unauthorized => session expired
                             this.authService.logout();
                             return of(undefined);
+                        } else if (error.status === 0 && error.statusText === 'Unknown Error') {
+                            // No connection to the REST API
+                            console.error('No connection to the security system');
+                            return throwError(error);
+                        } else if (error.status === 503) {
+                            // Connection lost to the monitoring service
+                            // this.loaderService.setMessage($localize`:@@message no connection:No connection to the security system!`);
+                            // rethrow the error to be able to catch it and return a default value
+                            console.warn('Backend service request failed!', error);
+                            return throwError(error);
                         }
                     }
-                    return throwError(err);
+
+                    console.error('Error when calling backend service:', error);
+                    return of(undefined);
             })) as any;
     }
 }

@@ -1,20 +1,20 @@
 
 import { Observable } from 'rxjs';
 
-import { ArmType, Clocks, KeypadType, MonitoringState } from '../models';
+import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '../models';
 
 
 export interface MonitoringService {
 
   isAlert(): Observable<boolean>;
 
-  getArmState(): Observable<ArmType>;
+  getArmState(): Observable<ARM_TYPE>;
 
-  arm( armtype: ArmType );
+  arm( armtype: ARM_TYPE );
 
   disarm();
 
-  getMonitoringState(): Observable<MonitoringState>;
+  getMonitoringState(): Observable<MONITORING_STATE>;
 
   getVersion(): Observable<string>;
 
@@ -25,4 +25,6 @@ export interface MonitoringService {
   changeClock(dateTime: string, timeZone: string);
 
   getKeypadTypes(): Observable<KeypadType[]>;
+
+  getPowerState(): Observable<POWER_STATE>;
 }

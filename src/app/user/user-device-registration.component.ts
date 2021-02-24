@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['user-device-registration.component.scss'],
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   registrationForm: FormGroup;
   modes: any[];
@@ -98,6 +98,6 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
   }
 }

@@ -4,92 +4,62 @@
     <body>
       <trans-unit id="home menu link" datatype="html">
         <source>Home</source><target state="final">Home</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
       <trans-unit id="alert history menu link" datatype="html">
         <source>Alert history</source><target state="final">Alert history</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
         <source>Settings</source><target state="final">Settings</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
+        
         <note priority="1" from="description">Settings menu title</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
       <trans-unit id="zones menu link" datatype="html">
         <source>Zones</source><target state="final">Zones</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
       <trans-unit id="sensors menu link" datatype="html">
         <source>Sensors</source><target state="final">Sensors</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit>
       <trans-unit id="keypad menu link" datatype="html">
         <source>Keypad</source><target state="final">Keypad</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit>
       <trans-unit id="notifications menu link" datatype="html">
         <source>Notifications</source><target state="final">Notifications</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source><target state="final">Network</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
       <trans-unit id="clock menu link" datatype="html">
         <source>Clock</source><target state="final">Clock</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source><target state="final">Users</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source><target state="final">Logout</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">56</context></context-group></trans-unit>
-      <trans-unit id="projectLink" datatype="html">
-        <source>ArPI Home Security</source><target state="final">ArPI Home Security</target>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="message system error" datatype="html">
+        <source>The system is not working correctly, you can't make changes in the configuration!</source><target state="final">The system is not working correctly, you can't make changes in the configuration!</target>
         
+      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="message system not ready" datatype="html">
+        <source>The system is not ready, you can't make changes in the configuration!</source><target state="final">The system is not ready, you can't make changes in the configuration!</target>
         
-        <note priority="1" from="description">Link to the projects page</note>
-        <note priority="1" from="meaning">project link</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">86</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">107</context></context-group></trans-unit><trans-unit id="session expiry" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">62</context></context-group></trans-unit>
+      <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source><target state="final">Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">120</context></context-group></trans-unit><trans-unit id="session expired" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">122</context></context-group></trans-unit><trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source><target state="final">Your session expired, logged out!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">121</context></context-group></trans-unit><trans-unit id="user delete" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">123</context></context-group></trans-unit><trans-unit id="user delete" datatype="html">
         <source>Delete user</source><target state="final">Delete user</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
@@ -164,7 +134,7 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">62</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
       <trans-unit id="remove button" datatype="html">
         <source>Remove</source><target state="final">Remove</target>
         
@@ -257,14 +227,14 @@
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="1b3c711f8c855807403db26245936a4cfc02c9db" datatype="html">
-        <source>User has device registration code expiring on {{user.registrationExpiry}</source><target state="final">User has device registration code expiring on {{user.registrationExpiry}</target>
+      </trans-unit><trans-unit id="c236fdb5cf6d5aa13f50945efe9c8a408ed86cb2" datatype="html">
+        <source>User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></source><target state="final">User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
-      </trans-unit><trans-unit id="user registration unlimited" datatype="html">
+      </trans-unit>
+      <trans-unit id="user registration unlimited" datatype="html">
         <source>Registration: unlimited time</source><target state="final">Registration: unlimited time</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
@@ -348,76 +318,61 @@
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
-      </trans-unit><trans-unit id="login expired registration code" datatype="html">
-        <source>Expired device registration code!</source><target state="final">Expired device registration code!</target>
+      </trans-unit><trans-unit id="login invalid device token" datatype="html">
+        <source>Invalid device token! Update your device registration!</source><target state="final">Invalid device token! Update your device registration!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
-      </trans-unit><trans-unit id="login invalid user id" datatype="html">
+      </trans-unit><trans-unit id="login expired registration code" datatype="html">
+        <source>Expired device registration code!</source><target state="final">Expired device registration code!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="login invalid user id" datatype="html">
         <source>Invalid user id! Update your device registration!</source><target state="final">Invalid user id! Update your device registration!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-      </trans-unit><trans-unit id="login invalid registration code" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="login invalid registration code" datatype="html">
         <source>Invalid registration code!</source><target state="final">Invalid registration code!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-      </trans-unit><trans-unit id="login invalid access code" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">61</context></context-group></trans-unit><trans-unit id="login invalid access code" datatype="html">
         <source>Invalid access code!</source><target state="final">Invalid access code!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="login no connedtion" datatype="html">
+        <source>No connection to the security system!</source><target state="final">No connection to the security system!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit><trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source><target state="final">Something went wrong!?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source>
         AWAY
       </source><target state="final">
         AWAY
       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
       <trans-unit id="disarm button" datatype="html">
         <source>
         OFF
       </source><target state="final">
         OFF
       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source>
         STAY
       </source><target state="final">
         STAY
       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
       <trans-unit id="alert started" datatype="html">
-        <source>
-          Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/>
-        </source><target state="final">
-          Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/>
-        </target>
+        <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
+        <target state="final">Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/home.component.html</context>
           <context context-type="linenumber">25</context>
@@ -425,29 +380,17 @@
       </trans-unit>
       <trans-unit id="input channel" datatype="html">
         <source>Input channel: </source><target state="final">Input channel: </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit><trans-unit id="home armed away" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="home armed away" datatype="html">
         <source>System armed away</source><target state="final">System armed away</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit><trans-unit id="home armed stay" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="home armed stay" datatype="html">
         <source>System armed stay</source><target state="final">System armed stay</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit><trans-unit id="home disarmed" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit><trans-unit id="home disarmed" datatype="html">
         <source>System disarmed</source><target state="final">System disarmed</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
       <trans-unit id="alert type" datatype="html">
         <source>Alert type</source><target state="final">Alert type</target>
         
@@ -507,11 +450,8 @@
           </source><target state="final">
             Sensor not found!
           </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit><trans-unit id="keypad settings" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="keypad settings" datatype="html">
         <source>Keypad settings</source><target state="final">Keypad settings</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
@@ -554,31 +494,16 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="synchronize button" datatype="html">
-        <source>Synchronize</source><target state="final">Synchronize</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock manual settings" datatype="html">
+      <trans-unit id="clock manual settings" datatype="html">
         <source>Manual settings</source><target state="final">Manual settings</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock new date time" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="clock new date time" datatype="html">
         <source>New date time</source><target state="final">New date time</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock timezone" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="clock timezone" datatype="html">
         <source>Timezone</source><target state="final">Timezone</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications email" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="notifications email" datatype="html">
         <source>Email</source><target state="final">Email</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
@@ -698,7 +623,7 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-      </trans-unit><trans-unit id="network prodvider" datatype="html">
+      </trans-unit><trans-unit id="network provider" datatype="html">
         <source>Provider</source><target state="final">Provider</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
@@ -710,25 +635,25 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
+      </trans-unit><trans-unit id="network restrict host" datatype="html">
+        <source>Restrict access to host</source><target state="final">Restrict access to host</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
       </trans-unit><trans-unit id="network access locally" datatype="html">
         <source>Access locally</source><target state="final">Access locally</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit><trans-unit id="network local settings" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="network local settings" datatype="html">
         <source>Local access settings</source><target state="final">Local access settings</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit><trans-unit id="network enable ssh" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source><target state="final">Enable SSH connection</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor delete" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="failed save" datatype="html">
+        <source>Failed to save!</source><target state="final">Failed to save!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source><target state="final">Delete sensor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
@@ -905,7 +830,10 @@
           <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
           <context context-type="linenumber">71</context>
         </context-group>
-      </trans-unit><trans-unit id="description" datatype="html">
+      </trans-unit><trans-unit id="message lost connection" datatype="html">
+        <source>Lost connection to the security system!</source><target state="final">Lost connection to the security system!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.ts</context><context context-type="linenumber">110</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="description" datatype="html">
         <source>Description</source><target state="final">Description</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit><trans-unit id="sensor enabled" datatype="html">
@@ -991,60 +919,40 @@
           <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
-      </trans-unit>
+      </trans-unit><trans-unit id="error state" datatype="html">
+        <source>ERROR</source><target state="final">ERROR</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source><target state="final">S</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source><target state="final">U</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source><target state="final">I</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source><target state="final">T</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="away state short" datatype="html">
         <source>A</source><target state="final">A</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="stay state short" datatype="html">
         <source>S</source><target state="final">S</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
       <trans-unit id="sensors state short" datatype="html">
         <source>S</source><target state="final">S</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">38</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit>
     </body>
   </file>
 </xliff>

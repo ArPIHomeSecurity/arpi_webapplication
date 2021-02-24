@@ -2,15 +2,17 @@ import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@a
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
 
-import { MonitoringState, Sensor, Zone } from '../models';
+import { MONITORING_STATE, Sensor, Zone } from '../models';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 import { positiveInteger } from '../utils';
 
@@ -25,7 +27,7 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   zoneId: number;
@@ -39,7 +41,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
-    
+
     private route: ActivatedRoute,
     public router: Router,
     private fb: FormBuilder,
@@ -70,6 +72,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         zone: this.zoneService.getZone(this.zoneId),
         sensors: this.sensorService.getSensors()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.zone = results.zone;
           this.updateForm(this.zone);
@@ -110,14 +113,14 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       this.zoneService.updateZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     } else {
       this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe(
           _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     }
   }
@@ -163,15 +166,15 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'celete';
           this.zoneService.deleteZone(zoneId)
             .subscribe(_ => this.router.navigate(['/zones']),
-                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
           );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

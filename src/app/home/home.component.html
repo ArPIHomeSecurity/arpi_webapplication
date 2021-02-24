@@ -1,15 +1,15 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
   <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
-    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState">
-      <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == ArmType.AWAY" [disabled]="armDisabled()" (change)="armChanged($event)"
+    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState" [disabled]="armState == armTypes.UNDEFINED">
+      <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == armTypes.AWAY" [disabled]="armDisabled()" (change)="armChanged($event)"
         i18n="@@arm away button">
         AWAY
       </mat-button-toggle>
-      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == ArmType.DISARMED && !alert" (change)="armChanged($event)"
+      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert" (change)="armChanged($event)"
         i18n="@@disarm button">
         OFF
       </mat-button-toggle>
-      <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == ArmType.STAY" [disabled]="armDisabled()" (change)="armChanged($event)"
+      <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == armTypes.STAY" [disabled]="armDisabled()" (change)="armChanged($event)"
         i18n="@@arm stay button">
         STAY
       </mat-button-toggle>
@@ -22,9 +22,7 @@
         <mat-panel-title>
           <img src="assets/images/alarm_lamp_white.png"/>
         </mat-panel-title>
-        <mat-panel-description i18n="@@alert started">
-          Alert started on: {{alert.startTime}}
-        </mat-panel-description>
+        <mat-panel-description i18n="@@alert started">Alert started on: {{alert.startTime}}</mat-panel-description>
       </mat-expansion-panel-header>
       
       <mat-card id="sensor-{{sensor.id}}" class="sensor-short-card" *ngFor="let sensor of alert.sensors">
@@ -46,7 +44,7 @@
   </div>
 </div>
 
-<ng-template #snacbarTemplate>
+<ng-template #snackbarTemplate>
   <span *ngIf="action=='armed away'" i18n="@@home armed away">System armed away</span>
   <span *ngIf="action=='armed stay'" i18n="@@home armed stay">System armed stay</span>
   <span *ngIf="action=='disarmed'" i18n="@@home disarmed">System disarmed</span>

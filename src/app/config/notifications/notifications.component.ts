@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
-import { forkJoin } from 'rxjs';
-
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { Option, DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
@@ -52,17 +53,17 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 //    console.log('Subscriptions', this.subscriptions);
 
     this.notificationsForm = this.fb.group({
-      smtp_username: getValue(email.value, 'smtp_username'),
-      smtp_password: getValue(email.value, 'smtp_password'),
-      email_address: getValue(email.value, 'email_address'),
+      smtpUsername: getValue(email.value, 'smtp_username'),
+      smtpPassword: getValue(email.value, 'smtp_password'),
+      emailAddress: getValue(email.value, 'email_address'),
 
-      pin_code: getValue(gsm.value, 'pin_code'),
-      phone_number: getValue(gsm.value, 'phone_number'),
+      pinCode: getValue(gsm.value, 'pin_code'),
+      phoneNumber: getValue(gsm.value, 'phone_number'),
 
-      alert_started_email: getValue(getValue(subscriptions.value, 'email'), 'alert_started'),
-      alert_stopped_email: getValue(getValue(subscriptions.value, 'email'), 'alert_stopped'),
-      alert_started_sms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
-      alert_stopped_sms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
+      alertStartedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_started'),
+      alertStoppedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_stopped'),
+      alertStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
+      alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
     });
   }
 
@@ -78,11 +79,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       gsm: this.configService.getOption('notifications', 'gsm'),
       subscriptions: this.configService.getOption('notifications', 'subscriptions')
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.email = getValue(results, 'email', DEFAULT_NOTIFICATION_EMAIL);
         this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);
         this.subscriptions = getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
-        
+
         this.updateForm(this.email, this.gsm, this.subscriptions);
         this.loader.display(false);
       }
@@ -92,12 +94,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareEmail(): any {
     const formModel = this.notificationsForm.value;
     const email: any = {
-      smtp_username: formModel.smtp_username,
-      email_address: formModel.email_address,
+      smtp_username: formModel.smtpUsername,
+      email_address: formModel.emailAddress,
     };
 
-    if (formModel.smtp_password) {
-      email.smtp_password = formModel.smtp_password;
+    if (formModel.smtpPassword) {
+      email.smtp_password = formModel.smtpPassword;
     }
 
     return email;
@@ -106,8 +108,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareGsm(): any {
     const formModel = this.notificationsForm.value;
     return {
-      pin_code: formModel.pin_code,
-      phone_number: formModel.phone_number
+      pin_code: formModel.pinCode,
+      phone_number: formModel.phoneNumber
     };
   }
 
@@ -115,12 +117,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const formModel = this.notificationsForm.value;
     return {
       email: {
-        alert_started: formModel.alert_started_email,
-        alert_stopped: formModel.alert_stopped_email,
+        alert_started: formModel.alertStartedEmail,
+        alert_stopped: formModel.alertStoppedEmail,
       },
       sms: {
-        alert_started: formModel.alert_started_sms,
-        alert_stopped: formModel.alert_stopped_sms
+        alert_started: formModel.alertStartedSms,
+        alert_stopped: formModel.alertStoppedSms
       }
     };
   }

@@ -13,15 +13,17 @@
           </mat-list-item>
             
           <mat-list-item class="clock">
-            <span i18n="@@clock system time">System time</span> <span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
+            <span i18n="@@clock system time">System time</span>&nbsp;({{clock.timezone}})<span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
           </mat-list-item>
       
           <mat-list-item class="clock">
-            <span i18n="@@clock hardware time">Hardware time</span> <span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
+            <span i18n="@@clock hardware time">Hardware time</span>&nbsp;(UTC)<span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
           </mat-list-item>
         </mat-list>
 
-        <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()" [disabled]="monitoringState != MonitoringState.READY" i18n="@@synchronize button">Synchronize</button>
+        <!-- disable clock sync
+        <button mat-raised-button type="button" color="accent" class="full-width" (click)="onSynchronize()" [disabled]="monitoringState != monitoringStates.READY" i18n="@@synchronize button">Synchronize</button>
+        -->
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -36,6 +38,7 @@
               [owlDateTimeTrigger]="dt"
               [owlDateTime]="dt"
               firstDayOfWeek="2">
+              <mat-icon matSuffix>calendar_today</mat-icon>
             <owl-date-time #dt></owl-date-time>
           </mat-form-field>
       
@@ -59,8 +62,12 @@
           </mat-form-field>
         </div>
     
-        <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != MonitoringState.READY" i18n="@@save button">Save</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="clockForm.invalid || monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
       </mat-expansion-panel>
     </mat-accordion>
   </form>
 </div>
+
+<ng-template #snackbarTemplate>
+  <span i18n="@@failed save">Failed to save!</span>
+</ng-template>

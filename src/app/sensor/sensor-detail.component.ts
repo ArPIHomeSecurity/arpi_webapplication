@@ -1,15 +1,17 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { MonitoringState, Sensor, SensorType, Zone, String2MonitoringState } from '../models';
+import { MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '../models';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 import { positiveInteger } from '../utils';
 
@@ -48,7 +50,7 @@ class SensorInfo {
   providers: []
 })
 export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   sensorId: number;
@@ -60,7 +62,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   sensorForm: FormGroup;
   zoneForm: FormGroup;
   newZone = false;
-  MonitoringState = MonitoringState;
+  monitoringStates = MONITORING_STATE;
 
   constructor(
     @Inject('EventService') public eventService: EventService,
@@ -68,7 +70,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
-    
+
     public router: Router,
 
     private fb: FormBuilder,
@@ -97,7 +99,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.baseSubscriptions.push(
       this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => this.monitoringState = String2MonitoringState(monitoringState))
+        .subscribe(monitoringState => this.monitoringState = string2MonitoringState(monitoringState))
     );
 
     if (this.sensorId != null) {
@@ -107,6 +109,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zones: this.zoneService.getZones(),
         sensorTypes: this.sensorService.getSensorTypes()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.sensor = results.sensor;
           this.sensors = results.sensors;
@@ -123,6 +126,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensorTypes: this.sensorService.getSensorTypes(),
         zones: this.zoneService.getZones()
       })
+      .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.sensors = results.sensors;
           this.sensorTypes = results.sensorTypes;
@@ -149,7 +153,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zoneId)
     this.zoneForm =  this.fb.group({
-      zoneName: new FormControl('', this.sensor.zoneId === -1 ? Validators.required : null),
+      zoneName: new FormControl('', this.sensor.zoneId === -1 ? [Validators.required, Validators.maxLength(32)] : null),
       disarmedAlert: false,
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
@@ -180,30 +184,32 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     if (this.sensor.zoneId === -1) {
+      this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe(result => {
-            sensor.zoneId = result.id;
-            if (this.sensor.id !== undefined) {
-              return this.sensorService.updateSensor(sensor)
-                .subscribe(_ => this.router.navigate(['/sensors']));
-            }
-
-            return this.sensorService.createSensor(sensor)
-              .subscribe(_ => this.router.navigate(['/sensors']) );
+          sensor.zoneId = result.id;
+          if (this.sensor.id !== undefined) {
+            return this.sensorService.updateSensor(sensor)
+              .subscribe(_ => this.router.navigate(['/sensors']));
           }
-        );
+
+          return this.sensorService.createSensor(sensor)
+            .subscribe(_ => this.router.navigate(['/sensors']) );
+        },
+        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+      );
     } else {
         if (this.sensorId != null) {
           this.action = 'update';
           this.sensorService.updateSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         } else {
           this.action = 'create';
           this.sensorService.createSensor(sensor)
             .subscribe(_ => this.router.navigate(['/sensors']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         }
     }
@@ -288,17 +294,17 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.sensorService.deleteSensor(sensorId)
             .subscribe(_ => {
                 this.router.navigate(['/sensors']);
               },
-              error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
           );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

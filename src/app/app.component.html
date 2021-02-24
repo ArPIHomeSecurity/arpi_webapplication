@@ -37,6 +37,9 @@
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>input</mat-icon><span i18n="@@sensors menu link">Sensors</span>
         </a>
+        <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
+        </a>
         <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
           <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
         </a>
@@ -72,7 +75,7 @@
       <mat-progress-spinner class="ajax-loader" color="primary" mode="indeterminate" [fxShow]="displayLoader"></mat-progress-spinner>
 
       <mat-card *ngIf="message && !displayLoader" class="message">
-        {{ message }}
+        <span>{{ message }}</span>
       </mat-card>
 
       <!-- main app container -->
@@ -85,12 +88,12 @@
         <mat-toolbar color="primary">
           <span class="spacer"></span>
           <a href="https://github.com/arpihomesecurity" target="project">
-            <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPI Home Security</button>
+            <button mat-button color="accent">ArPI Home Security</button>
           </a>
           <span class="spacer"></span>
           <div>
-            <div class="version">WebApp {{versions.webapplication_version}}</div>
-            <div class="version">Server {{versions.server_version}}</div>
+            <div class="version">WebApp {{versions.webapplicationVersion}}</div>
+            <div class="version">Server {{versions.serverVersion}}</div>
           </div>
         </mat-toolbar>
       </div>
@@ -106,19 +109,19 @@
       <mat-toolbar color="primary">
         <span class="spacer"></span>
         <a href="https://github.com/arpihomesecurity" target="project">
-          <button mat-button color="accent" i18n="project link|Link to the projects page@@projectLink">ArPi Home Security</button>
+          <button mat-button color="accent">ArPI Home Security</button>
         </a>
         <span class="spacer"></span>
         <div>
-          <div class="version">WebApp {{versions.webapplication_version}}</div>
-          <div class="version">Server {{versions.server_version}}</div>
+          <div class="version">WebApp {{versions.webapplicationVersion}}</div>
+          <div class="version">Server {{versions.serverVersion}}</div>
         </div>
       </mat-toolbar>
     </div>
   </ng-template>
 </div>
 
-<ng-template #snacbarTemplate>
+<ng-template #snackbarTemplate>
   <div *ngIf="isSessionValid" i18n="@@session expiry">Your session will expire in {{ getSessionDuration() }}!</div>
   <div *ngIf="!isSessionValid" i18n="@@session expired">Your session expired, logged out!</div>
 </ng-template>

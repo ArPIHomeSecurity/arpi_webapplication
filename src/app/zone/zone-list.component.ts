@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
-import { MonitoringState, Sensor, Zone } from '../models';
+import { MONITORING_STATE, Sensor, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -21,7 +22,7 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
   CONFIG = 0;
@@ -29,7 +30,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   sensors: Sensor[] = [];
   zones: Zone[] = null;
-  open: boolean[][] = [];
+  sensorlistpened: boolean[] = [];
+  sensorlistOpened: boolean[] = [];
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -47,9 +49,6 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   ngOnInit() {
     super.initialize();
-
-    this.open[this.CONFIG] = [];
-    this.open[this.SENSORS] = [];
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
@@ -69,6 +68,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
       zones: this.zoneService.getZones(),
       sensors: this.sensorService.getSensors()
     })
+    .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.zones = results.zones;
         this.sensors = results.sensors;
@@ -102,16 +102,17 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.zoneService.deleteZone(zoneId)
+            .pipe(finalize(() => this.loader.display(false)))
             .subscribe(
               _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

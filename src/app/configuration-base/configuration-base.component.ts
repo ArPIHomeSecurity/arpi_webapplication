@@ -1,13 +1,13 @@
 import { Subscription } from 'rxjs';
 
-import { MonitoringState, String2MonitoringState } from '../models';
+import { MONITORING_STATE, string2MonitoringState } from '../models';
 import { LoaderService, EventService, MonitoringService } from '../services';
 
 
 export class ConfigurationBaseComponent {
 
-  monitoringState: MonitoringState;
-  MonitoringState: any = MonitoringState;
+  monitoringState: MONITORING_STATE;
+  monitoringStates: any = MONITORING_STATE;
   baseSubscriptions: Subscription[];
 
   constructor(
@@ -18,21 +18,35 @@ export class ConfigurationBaseComponent {
 
   initialize() {
     this.monitoringService.getMonitoringState()
-      .subscribe(monitoringState => {
-        this.monitoringState = monitoringState;
-        this.onStateChange();
-      }
-    );
-
-    this.baseSubscriptions = [];
-    this.baseSubscriptions.push(
-      this.eventService.listen('system_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = String2MonitoringState(monitoringState);
+      .subscribe(
+        monitoringState => {
+          this.monitoringState = monitoringState;
+          this.onStateChange();
+        },
+        _ => {
+          this.monitoringState = MONITORING_STATE.NOT_READY;
           this.onStateChange();
         }
-      )
     );
+
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
+          this.loader.clearMessage();
+        }
+        else {
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChange();
+        }
+      });
+
+    this.baseSubscriptions = [
+      this.eventService.listen('system_state_change')
+        .subscribe(monitoringState => {
+          this.monitoringState = string2MonitoringState(monitoringState);
+          this.onStateChange();
+        })
+    ];
   }
 
   destroy() {
@@ -45,10 +59,12 @@ export class ConfigurationBaseComponent {
   }
 
   onStateChange() {
-    if (this.monitoringState === MonitoringState.ERROR) {
-      this.loader.setMessage('The system is not working correctly, you can\'t make changes in the configuration!');
-    } else if (this.monitoringState !== MonitoringState.READY) {
-      this.loader.setMessage('The system is not ready, you can\'t make changes in the configuration!');
+    if (this.monitoringState === MONITORING_STATE.ERROR) {
+      this.loader.setMessage($localize`:@@message system error:The system is not working correctly, you can't make changes in the configuration!`);
+    } else if (this.monitoringState === MONITORING_STATE.NOT_READY) {
+      this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
+    } else if (this.monitoringState !== MONITORING_STATE.READY) {
+      this.loader.setMessage($localize`:@@message system not ready:The system is not ready, you can't make changes in the configuration!`);
     } else {
       this.loader.clearMessage();
     }

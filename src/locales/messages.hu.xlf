@@ -6,73 +6,69 @@
         <source>Home</source>
         <target state="translated">Home</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
       <trans-unit id="alert history menu link" datatype="html">
         <source>Alert history</source>
         <target state="translated">Riasztási események</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
         <source>Settings</source>
         <target state="translated">Beállítások</target>
         
         <note priority="1" from="description">Settings menu title</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="zones menu link" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit><trans-unit id="zones menu link" datatype="html">
         <source>Zones</source><target state="translated">Zónák</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
       
       <trans-unit id="sensors menu link" datatype="html">
         <source>Sensors</source>
         <target state="translated">Érzékelők</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="keypad menu link" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="keypad menu link" datatype="html">
         <source>Keypad</source><target state="translated">Billentyűzet</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit>
       
       <trans-unit id="notifications menu link" datatype="html">
         <source>Notifications</source>
         <target state="translated">Értesítések</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source>
         <target state="translated">Hálózat</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
       <trans-unit id="clock menu link" datatype="html">
         <source>Clock</source>
         <target state="translated">Óra</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source>
         <target state="translated">Felhasználók</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">51</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source>
         <target state="translated">Kijelentkezés</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">56</context></context-group></trans-unit>
-      <trans-unit id="projectLink" datatype="html">
-        <source>ArPI Home Security</source>
-        <target state="translated">ArPI Home Security</target>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="message system error" datatype="html">
+        <source>The system is not working correctly, you can't make changes in the configuration!</source><target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
         
+      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="message system not ready" datatype="html">
+        <source>The system is not ready, you can't make changes in the configuration!</source><target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
         
-        <note priority="1" from="description">Link to the projects page</note>
-        <note priority="1" from="meaning">project link</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">86</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">107</context></context-group></trans-unit><trans-unit id="session expiry" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">62</context></context-group></trans-unit>
+      <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source><target state="translated">A munkamenet lejár <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">120</context></context-group></trans-unit><trans-unit id="session expired" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">122</context></context-group></trans-unit><trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source><target state="translated">A munkamenet lejárt, kijelentkezett!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">121</context></context-group></trans-unit><trans-unit id="user delete" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">123</context></context-group></trans-unit><trans-unit id="user delete" datatype="html">
         <source>Delete user</source><target state="translated">Felhasználó törlés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
@@ -110,47 +106,41 @@
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
-      </trans-unit><trans-unit id="login expired registration code" datatype="html">
-        <source>Expired device registration code!</source><target state="translated">Lejárt eszköz regisztrációs kód!</target>
+      </trans-unit><trans-unit id="login invalid device token" datatype="html">
+        <source>Invalid device token! Update your device registration!</source><target state="translated">Érvénytelen eszköz token!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
-      </trans-unit><trans-unit id="login invalid user id" datatype="html">
-        <source>Invalid user id! Update your device registration!</source><target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációját!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-      </trans-unit><trans-unit id="login invalid registration code" datatype="html">
+      </trans-unit><trans-unit id="login expired registration code" datatype="html">
+        <source>Expired device registration code!</source><target state="translated">Lejárt eszköz regisztrációs kód!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="login invalid user id" datatype="html">
+        <source>Invalid user id! Update your device registration!</source><target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációt!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="login invalid registration code" datatype="html">
         <source>Invalid registration code!</source><target state="translated">Érvénytelen regisztrációs kód!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-      </trans-unit><trans-unit id="login invalid access code" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">61</context></context-group></trans-unit><trans-unit id="login invalid access code" datatype="html">
         <source>Invalid access code!</source><target state="translated">Érvénytelen hozzáférési kód!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="login no connedtion" datatype="html">
+        <source>No connection to the security system!</source><target state="translated">Nincs kapcsolat a biztonsági rendszerrel!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit><trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source><target state="translated">Valami félre ment!?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit><trans-unit id="arm away button" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit><trans-unit id="arm away button" datatype="html">
         <source>
         AWAY
       </source><target state="translated">
          TÁVOZÓ
       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
       
       <trans-unit id="disarm button" datatype="html">
         <source>
@@ -160,49 +150,33 @@
            KI
         </target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit><trans-unit id="arm stay button" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit><trans-unit id="arm stay button" datatype="html">
         <source>
         STAY
       </source><target state="translated">
        MARADÓ
         </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
       
       <trans-unit id="alert started" datatype="html">
-        <source>
-          Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/>
-        </source>
-        <target state="translated">
-        Riasztás kezdete: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
-        
+        <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
+        <target state="translated">Riasztás kezdete: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
       <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit>
       <trans-unit id="input channel" datatype="html">
         <source>Input channel: </source>
         <target state="translated">Bemeneti csatorna: </target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="home armed away" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="home armed away" datatype="html">
         <source>System armed away</source><target state="translated">Rendszer élesítve távozóra</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit><trans-unit id="home armed stay" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="home armed stay" datatype="html">
         <source>System armed stay</source><target state="translated">Rendszer élesítve maradóra</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit><trans-unit id="home disarmed" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit><trans-unit id="home disarmed" datatype="html">
         <source>System disarmed</source><target state="translated">Rendszer hatástalanítva</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert type" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="alert type" datatype="html">
         <source>Alert type</source><target state="translated">Riasztás típusa</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">6</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit><trans-unit id="alert type away" datatype="html">
@@ -253,11 +227,8 @@
           </source><target state="translated">
             Nem találtam az érzékelőt!
           </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit><trans-unit id="keypad settings" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="keypad settings" datatype="html">
         <source>Keypad settings</source><target state="translated">Billentyűzet beállítások</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
@@ -299,31 +270,16 @@
           <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-      </trans-unit><trans-unit id="synchronize button" datatype="html">
-        <source>Synchronize</source><target state="translated">Szinkronizálás</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
       </trans-unit><trans-unit id="clock manual settings" datatype="html">
         <source>Manual settings</source><target state="translated">Kézi beállítás</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock new date time" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="clock new date time" datatype="html">
         <source>New date time</source><target state="translated">Új dátum és idő</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock timezone" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="clock timezone" datatype="html">
         <source>Timezone</source><target state="translated">Időzóna</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications email" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="notifications email" datatype="html">
         <source>Email</source><target state="translated">Email</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
@@ -443,7 +399,7 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-      </trans-unit><trans-unit id="network prodvider" datatype="html">
+      </trans-unit><trans-unit id="network provider" datatype="html">
         <source>Provider</source><target state="translated">Szolgáltató</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
@@ -455,25 +411,25 @@
           <context context-type="sourcefile">src/app/config/network/network.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
+      </trans-unit><trans-unit id="network restrict host" datatype="html">
+        <source>Restrict access to host</source><target state="translated">Hozzáférés korlátozása hoszthoz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
       </trans-unit><trans-unit id="network access locally" datatype="html">
         <source>Access locally</source><target state="translated">Helyi hozzáférés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit><trans-unit id="network local settings" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="network local settings" datatype="html">
         <source>Local access settings</source><target state="translated">Helyi hozzáférés beállítása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit><trans-unit id="network enable ssh" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source><target state="translated">SSH kapcsolat engedélyezett</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor delete" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="failed save" datatype="html">
+        <source>Failed to save!</source><target state="translated">Nem sikerült elmenteni!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source><target state="translated">Érzékelő törlés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
@@ -584,7 +540,10 @@
           <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
           <context context-type="linenumber">71</context>
         </context-group>
-      </trans-unit><trans-unit id="description" datatype="html">
+      </trans-unit><trans-unit id="message lost connection" datatype="html">
+        <source>Lost connection to the security system!</source><target state="translated">Nincs kapcsolat a háttérszolgáltatással!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.ts</context><context context-type="linenumber">110</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="description" datatype="html">
         <source>Description</source><target state="translated">Leírás</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit><trans-unit id="sensor enabled" datatype="html">
@@ -736,7 +695,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit><trans-unit id="user device registration code" datatype="html">
-        <source>Device registration code</source><target state="translated">Eszkoz regisztrációs kód</target>
+        <source>Device registration code</source><target state="translated">Eszköz regisztrációs kód</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
           <context context-type="linenumber">29</context>
@@ -789,8 +748,8 @@
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
-      </trans-unit><trans-unit id="1b3c711f8c855807403db26245936a4cfc02c9db" datatype="html">
-        <source>User has device registration code expiring on {{user.registrationExpiry}</source><target state="translated">A felhasználó eszköz regisztrációs kódjának lejárata {{user.registrationExpiry}</target>
+      </trans-unit><trans-unit id="c236fdb5cf6d5aa13f50945efe9c8a408ed86cb2" datatype="html">
+        <source>User has device registration code expiring on <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/></source><target state="translated">A felhasználó eszköz regisztrációs kódja érvényes <x id="INTERPOLATION" equiv-text="{{user.registrationExpiry}}"/>-ig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-list.component.html</context>
           <context context-type="linenumber">15</context>
@@ -802,7 +761,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit><trans-unit id="5a769912b3a85acdeb3880e2145128bd06f26d27" datatype="html">
-        <source>User has device registration code for unlimited time</source><target state="translated">A felhasználó eszköz regisztrációs kódja lejárat nélküli</target>
+        <source>User has device registration code for unlimited time</source><target state="translated">A felhasználó eszköz regisztrációs kódja nem jár le</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">19</context></context-group></trans-unit>
       <trans-unit id="save button" datatype="html">
@@ -811,7 +770,7 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">62</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
         <target state="translated">Valóban töröli ezt az érzékelőt?</target>
@@ -909,43 +868,47 @@
         <target state="translated">Szenzorok</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit><trans-unit id="error state" datatype="html">
+        <source>ERROR</source><target state="translated">HIBA</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source>
         <target state="translated">SZ</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source>
         <target state="translated">U</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source>
         <target state="translated">H</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source>
         <target state="translated">T</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="away state short" datatype="html">
         <source>A</source>
         <target state="translated">T</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="stay state short" datatype="html">
         <source>S</source>
         <target state="translated">M</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
       <trans-unit id="sensors state short" datatype="html">
         <source>S</source>
         <target state="translated">SZ</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">36</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">38</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit>
     </body>
   </file>
 </xliff>

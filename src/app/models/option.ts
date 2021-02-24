@@ -44,7 +44,8 @@ export const DEFAULT_NOTIFICATION_DYNDNS = {
     username: '',
     password: '',
     hostname: '',
-    provider: ''
+    provider: '',
+    restrict_host: ''
   }
 };
 

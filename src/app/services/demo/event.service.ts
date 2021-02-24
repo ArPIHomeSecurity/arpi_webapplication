@@ -25,8 +25,18 @@ export class EventService {
   private syrenStateSubject = new Subject<boolean>();
   private syrenState = this.syrenStateSubject.asObservable().pipe(delay(environment.delay));
 
-  constructor() {
+  private powerStateSubject = new Subject<boolean>();
+  private powerState = this.powerStateSubject.asObservable().pipe(delay(environment.delay));
 
+  private connectionStateSubject = new Subject<boolean>();
+  private connectionState = this.connectionStateSubject.asObservable();
+
+  constructor() {
+    this.connectionStateSubject.next(true);
+  }
+
+  isConnected(): Observable<boolean> {
+    return this.connectionState;
   }
 
   listen(event: string): Observable<any> {
@@ -41,6 +51,10 @@ export class EventService {
       subject = this.sensorsState;
     } else if (event === 'syren_state_change') {
       subject = this.syrenState;
+    } else if (event === 'power_state_change') {
+      subject = this.powerState;
+    } else if (['connect', 'disconnect'].includes(event)) {
+      subject = this.connectionState;
     } else {
       console.warn('Unknown event: ', event);
     }
@@ -48,23 +62,23 @@ export class EventService {
     return subject;
   }
 
-  _updateAlertState(alert: Alert) {
+  updateAlertState(alert: Alert) {
     this.alertStateSubject.next(alert);
   }
 
-  _updateArmState(state: string) {
+  updateArmState(state: string) {
     this.armStateSubject.next(state);
   }
 
-  _updateMonitoringState(state: string) {
+  updateMonitoringState(state: string) {
     this.monitoringStateSubject.next(state);
   }
 
-  _updateSensorsState(state: boolean) {
+  updateSensorsState(state: boolean) {
     this.sensorsStateSubject.next(state);
   }
 
-  _updateSyrenState(state: boolean) {
+  updateSyrenState(state: boolean) {
     this.syrenStateSubject.next(state);
   }
 }

@@ -1,21 +1,21 @@
 import { ROLE_TYPES } from 'src/app/models';
 
-export const NOTIFICATION_CONFIGURATION = [
+export const DEMO_CONFIGURATION = [
     {
         option: 'notifications',
         section: 'email',
         value: {
-            smtp_username: "test_user",
-            email_address: "target_user@domain.com",
-            smtp_password: "password"
+            smtpUsername: 'test_user',
+            emailAddress: 'target_user@domain.com',
+            smtpPassword: 'password'
         }
     },
     {
         option: 'notifications',
         section: 'gsm',
         value: {
-            pin_code: "1234",
-            phone_number: "0036123456789"
+            pinCode: '1234',
+            phoneNumber: '0036123456789'
         }
     },
     {
@@ -23,12 +23,12 @@ export const NOTIFICATION_CONFIGURATION = [
         section: 'subscriptions',
         value: {
             email: {
-                alert_started: true,
-                alert_stopped: true
+                alertStarted: true,
+                alertStopped: true
             },
             sms: {
-                alert_started: true,
-                alert_stopped: true
+                alertStarted: true,
+                alertStopped: true
             }
         }
     },
@@ -36,10 +36,10 @@ export const NOTIFICATION_CONFIGURATION = [
         option: 'network',
         section: 'dyndns',
         value: {
-            username: "user",
-            hostname: "my-example-host.com",
-            provider: "noip",
-            password: "password"
+            username: 'user',
+            hostname: 'my-example-host.com',
+            provider: 'noip',
+            password: 'password'
         }
     },
     {
@@ -47,6 +47,14 @@ export const NOTIFICATION_CONFIGURATION = [
         section: 'access',
         value: {
             ssh: true
+        }
+    },
+    {
+        option: 'alert',
+        section: 'syren',
+        value: {
+            alert_time: 120,
+            suspend_time: 60,
         }
     }
 ];
@@ -61,7 +69,7 @@ export const USERS = [
         registrationCode: 'ABCDEF000001',
         accessCode: 1234,
         comment: '',
-        registration_expiry: new Date().toLocaleString()
+        registrationExpiry: new Date().toLocaleString()
     },
     {
         id: 1,
@@ -72,7 +80,7 @@ export const USERS = [
         registrationCode: 'ABCDEF000002',
         accessCode: 1111,
         comment: '',
-        registration_expiry: new Date().toLocaleString()
+        registrationExpiry: new Date().toLocaleString()
     }
 ];
 export const SENSORS = [

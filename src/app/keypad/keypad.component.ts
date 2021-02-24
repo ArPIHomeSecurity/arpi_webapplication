@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { Keypad, KeypadType } from '../models';
 import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
@@ -44,8 +47,8 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   updateForm() {
     if (this.keypad) {
       this.keypadForm = this.fb.group( {
-        keypad_enabled: this.keypad.enabled,
-        keypad_type: new FormControl(this.keypad.typeId, Validators.required),
+        keypadEnabled: this.keypad.enabled,
+        keypadType: new FormControl(this.keypad.typeId, Validators.required),
       });
     }
 
@@ -61,17 +64,21 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
       this.loader.display( true );
     } );
 
-    this.keypadService.getKeypad(0)
-    .subscribe(keypad => {
-      this.keypad = keypad;
-      this.updateForm();
-    });
+    this.keypadService.getKeypads().subscribe(
+      keypads => {
+        forkJoin({
+          keypad: this.keypadService.getKeypad(keypads[0].id),
+          keypadTypes: this.keypadService.getKeypadTypes()
+        })
+        .pipe(finalize(() => this.loader.display(false)))
+        .subscribe(results =>{
+          this.keypad = results.keypad;
+          this.keypadTypes = results.keypadTypes;
+          this.updateForm();
+        });
+      }
+    );
 
-    this.keypadService.getKeypadTypes()
-    .subscribe(keypadTypes => {
-      this.keypadTypes = keypadTypes;
-      this.updateForm();
-    });
   }
 
   prepareKeypad(): Keypad {
@@ -82,8 +89,8 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
 
     return {
       id: this.keypad.id,
-      enabled: formModel.keypad_enabled,
-      typeId: formModel.keypad_type
+      enabled: formModel.keypadEnabled,
+      typeId: formModel.keypadType
     };
   }
 

@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { finalize } from 'rxjs/operators';
+
+import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
-
-import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
-import { User, MonitoringState, ROLE_TYPES } from 'src/app/models';
+import { User, MONITORING_STATE, ROLE_TYPES } from 'src/app/models';
 import { EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
 
 import { environment } from 'src/environments/environment';
@@ -22,7 +22,7 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss']
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snacbarTemplate') snackbarTemplate: TemplateRef<any>;
+  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   userId: number;
   user: User = null;
@@ -69,6 +69,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         this.loader.display(true);
       });
       this.userService.getUser(this.userId)
+        .pipe(finalize(() => this.loader.display(false)))
         .subscribe(user => {
             this.user = user;
             this.updateForm(this.user);
@@ -111,14 +112,14 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       this.userService.updateUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     } else {
       this.action = 'create';
       this.userService.createUser(user)
         .subscribe(
           _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
         );
     }
   }
@@ -149,16 +150,16 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.monitoringState === MonitoringState.READY) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.userService.deleteUser(userId)
             .subscribe(
               _ => this.router.navigate(['/users']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION})
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
             );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.SNACK_DURATION});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
       }
     });

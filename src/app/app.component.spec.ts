@@ -11,9 +11,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
-import { ServiceTypes } from 'src/environments/environment.demo';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SystemStateComponent } from './indicators/system-state.component';
+import { environment } from 'src/environments/environment.demo';
 
 
 describe('AppComponent', () => {
@@ -32,21 +32,21 @@ describe('AppComponent', () => {
         MatToolbarModule
       ],
       providers: [
-        {provide: 'AlertService', useClass: ServiceTypes.alertService},
-        {provide: 'AuthenticationService', useClass: ServiceTypes.authenticationService},
-        {provide: 'ConfigurationService', useClass: ServiceTypes.configurationService},
-        {provide: 'EventService', useClass: ServiceTypes.eventService},
-        {provide: 'KeypadService', useClass: ServiceTypes.keypadService},
-        {provide: 'LoaderService', useClass: ServiceTypes.loaderService},
-        {provide: 'MonitoringService', useClass: ServiceTypes.monitoringService},
-        {provide: 'SensorService', useClass: ServiceTypes.sensorService},
-        {provide: 'UserService', useClass: ServiceTypes.userService},
-        {provide: 'ZoneService', useClass: ServiceTypes.zoneService},
+        {provide: 'AlertService', useClass: environment.alertService},
+        {provide: 'AuthenticationService', useClass: environment.authenticationService},
+        {provide: 'ConfigurationService', useClass: environment.configurationService},
+        {provide: 'EventService', useClass: environment.eventService},
+        {provide: 'KeypadService', useClass: environment.keypadService},
+        {provide: 'LoaderService', useClass: environment.loaderService},
+        {provide: 'MonitoringService', useClass: environment.monitoringService},
+        {provide: 'SensorService', useClass: environment.sensorService},
+        {provide: 'UserService', useClass: environment.userService},
+        {provide: 'ZoneService', useClass: environment.zoneService},
       ],
       declarations: [
         AppComponent,
         SystemStateComponent,
-        
+
         MatSidenav
       ],
     }).compileComponents();
