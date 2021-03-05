@@ -85,11 +85,17 @@
         </div>
   
         <!-- footer -->
-        <mat-toolbar color="primary">
+        <mat-toolbar color="primary" class="footer">
           <span class="spacer"></span>
-          <a href="https://github.com/arpihomesecurity" target="project">
-            <button mat-button color="accent">ArPI Home Security</button>
-          </a>
+          <div>
+            <a href="https://www.arpi-security.info/" target="project">
+              <button mat-button color="accent">ArPI Home Security</button>
+            </a>
+            |
+            <a href="https://docs.arpi-security.info" target="">
+              <button mat-button color="accent">DOCS</button>
+            </a>
+          </div>
           <span class="spacer"></span>
           <div>
             <div class="version">WebApp {{versions.webapplicationVersion}}</div>
@@ -99,26 +105,6 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
-  <ng-template #not_loggedin>
-    <div class="page-wrapper">
-      <div class="page">
-        <router-outlet></router-outlet>
-      </div>
-
-      <mat-toolbar color="primary">
-        <span class="spacer"></span>
-        <a href="https://github.com/arpihomesecurity" target="project">
-          <button mat-button color="accent">ArPI Home Security</button>
-        </a>
-        <span class="spacer"></span>
-        <div>
-          <div class="version">WebApp {{versions.webapplicationVersion}}</div>
-          <div class="version">Server {{versions.serverVersion}}</div>
-        </div>
-      </mat-toolbar>
-    </div>
-  </ng-template>
 </div>
 
 <ng-template #snackbarTemplate>

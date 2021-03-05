@@ -1,3 +1,10 @@
+/*
+ * @Author: Gábor Kovács
+ * @Date:   2021-02-26 09:06:54
+ * @Last Modified by:   Gábor Kovács
+ * @Last Modified time: 2021-02-26 09:06:56
+ */
+
 import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -1,3 +1,9 @@
+/*
+ * @Author: Gábor Kovács
+ * @Date:   2021-02-26 11:22:27
+ * @Last Modified by:   Gábor Kovács
+ * @Last Modified time: 2021-02-27 12:11:09
+ */
 .app-viewport {
   position: fixed;
   top: 0;
@@ -71,12 +77,4 @@
   $warn: map-get($theme, warn);
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
-
-  .footer {
-    background-color: mat-color($primary);
-  }
-
-  .footer-item {
-    text-align: center;
-  }
 }

@@ -1,3 +1,9 @@
+/*
+ * @Author: Gábor Kovács
+ * @Date:   2021-02-27 11:57:01
+ * @Last Modified by:   Gábor Kovács
+ * @Last Modified time: 2021-02-27 11:57:02
+ */
 import { Inject, Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
@@ -110,7 +116,7 @@ export class MonitoringService {
   }
 
   getVersion(): Observable<string> {
-    return of('Version:DEMO-0.5');
+    return of('DEMO-0.6');
   }
 
   getClock(): Observable<Clocks> {
