@@ -1,0 +1,6 @@
+{
+    "fileheader.author": "Gábor Kovács"
+    "fileheader.ignore": [
+        "*.html"
+    ]
+}
