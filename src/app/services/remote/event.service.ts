@@ -31,7 +31,7 @@ export class EventService {
       this.socket.disconnect();
     }
 
-    this.socket = io(window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: 'token=' + deviceToken });
+    this.socket = io(window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: {token: deviceToken }});
     this.socket.connect();
 
     this.socketConnected$.next(this.socket.connected);

@@ -47,7 +47,9 @@
           "error",
           {
             "selector": "enumMember",
-            "format": ["UPPER_CASE"]
+            "format": [
+              "UPPER_CASE"
+            ]
           }
         ],
         "arrow-parens": [
