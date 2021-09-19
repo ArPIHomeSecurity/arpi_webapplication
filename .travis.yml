@@ -1,4 +1,3 @@
-sudo: required
 addons:
   chrome: stable
 
@@ -6,9 +5,16 @@ language: node_js
 node_js:
   - "14"
 
+cache:
+  directories:
+  - "$HOME/.npm"
+
 branches:
   only:
     - demo
+
+install:
+  - travis_wait 30 npm ci
 
 before_script:
   - npm install -g @angular/cli
@@ -18,11 +24,12 @@ script:
   - DIST=dist-demo npm run postbuild
 
 deploy:
+  strategy: git
   provider: pages
-  local-dir: dist-demo
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
+  skip_cleanup: true
+  local_dir: dist-demo
+  github_token: $GITHUB_TOKEN
+  keep_history: true
   on:
     branch: demo
   repo: ArPIHomeSecurity/arpi_webapplication
