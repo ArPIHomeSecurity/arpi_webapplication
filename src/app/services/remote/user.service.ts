@@ -51,4 +51,8 @@ export class UserService {
   deleteRegistrationCode(userId: number): Observable<object> {
     return this.http.delete('/api/user/' + userId + '/registration_code');
   }
+
+  registerCard(userId: number): Observable<any> {
+    return this.http.put('/api/user/' + userId + '/register_card', {});
+  }
 }

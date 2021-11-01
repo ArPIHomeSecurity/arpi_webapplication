@@ -1,10 +1,14 @@
 @charset "UTF-8";
 
+.mat-card-header {
+  margin-bottom: 15px;
+}
+
 .user-list {
   padding: 15px;
   margin-right: auto;
   margin-left: auto;
-  width: 400px;
+  width: 500px;
 }
 
 .user-list-xs {
@@ -41,6 +45,15 @@
   font-size: 60px;
 }
 
-.registration {
-  margin: 10px 0px;
+.card-enabled {
+  color: green;
+}
+
+.card-disabled {
+  color: grey;
+}
+
+.header{
+  padding-top: 10px;
+  font-weight: bold;
 }

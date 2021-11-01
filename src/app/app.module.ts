@@ -28,7 +28,8 @@ import {
   UserDetailComponent,
   UserDeleteDialogComponent,
   UserDeviceRegistrationDialogComponent,
-  UserDeviceUnregisterDialogComponent
+  UserDeviceUnregisterDialogComponent,
+  UserCardDeleteDialogComponent,
 } from './user';
 import { SystemStateComponent } from './indicators/system-state.component';
 
@@ -51,6 +52,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -77,6 +79,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NetworkComponent,
     SyrenComponent,
 
+    UserCardDeleteDialogComponent,
     UserListComponent,
     UserDetailComponent,
     UserDeleteDialogComponent,
@@ -125,6 +128,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatCheckboxModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatMenuModule,
 
     CountdownModule,
     OwlDateTimeModule,
@@ -136,6 +140,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
     {provide: 'AlertService', useClass: environment.alertService},
     {provide: 'AuthenticationService', useClass: environment.authenticationService},
+    {provide: 'CardService', useClass: environment.cardService},
     {provide: 'ConfigurationService', useClass: environment.configurationService},
     {provide: 'EventService', useClass: environment.eventService},
     {provide: 'KeypadService', useClass: environment.keypadService},

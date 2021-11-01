@@ -14,5 +14,4 @@ export class ZoneDeleteDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

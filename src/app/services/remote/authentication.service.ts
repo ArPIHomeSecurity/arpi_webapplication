@@ -24,7 +24,7 @@ export class AuthenticationService implements AuthenticationService {
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post(
-        '/api/authenticate',
+        '/api/user/authenticate',
         JSON.stringify({device_token: localStorage.getItem('deviceToken'), access_code: accessCode}),
         {headers}
       )
@@ -124,7 +124,7 @@ export class AuthenticationService implements AuthenticationService {
 
   registerDevice(registrationCode: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post('/api/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
+    return this.http.post('/api/user/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
         if (response.device_token) {

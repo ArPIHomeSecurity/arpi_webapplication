@@ -16,4 +16,8 @@ export interface UserService {
   deleteUser(userId: number): Observable<boolean>;
 
   generateRegistrationCode(userId: number, expiry: number): Observable<any>;
+
+  deleteRegistrationCode(userId: number): Observable<object>;
+
+  registerCard(userId: number): Observable<any>;
 }

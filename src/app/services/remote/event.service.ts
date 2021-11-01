@@ -51,6 +51,7 @@ export class EventService {
   }
 
   listen(event: string): Observable<any> {
+    // console.log("Listen:", event)
     return new Observable(observer => {
       this.socket.on(event, data => {
         // console.log("Event:", event);

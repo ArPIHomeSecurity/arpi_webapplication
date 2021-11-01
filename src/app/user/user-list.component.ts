@@ -3,14 +3,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { finalize } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
-import { MONITORING_STATE, ROLE_TYPES, User } from 'src/app/models';
-import { EventService, LoaderService, MonitoringService } from 'src/app/services';
+import { Card, MONITORING_STATE, ROLE_TYPES, User } from '../models';
+import { CardService, EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
 
 import { environment } from 'src/environments/environment';
+import { UserCardDeleteDialogComponent } from '.';
+
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -27,13 +30,15 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   readonly roleTypes = ROLE_TYPES;
   action: string;
   users: User[] = null;
+  cards: Card[] = [];
 
   constructor(
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('EventService') public eventService: EventService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    @Inject('UserService') private userService,
+    @Inject('UserService') private userService: UserService,
+    @Inject('CardService') private cardService: CardService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -44,6 +49,11 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     super.initialize();
 
     this.updateComponent();
+
+    this.baseSubscriptions.push(
+      this.eventService.listen('card_registered')
+        .subscribe(_ => this.updateComponent())
+    );
   }
 
   ngOnDestroy() {
@@ -57,16 +67,25 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
       this.loader.display(true);
     });
 
-    this.userService.getUsers()
-      .pipe(finalize(() => this.loader.display(false)))
-      .subscribe(users => {
-        this.users = users;
+    forkJoin({
+      users: this.userService.getUsers(),
+      cards: this.cardService.getCards()
+    })
+    .pipe(finalize(() => this.loader.display(false)))
+    .subscribe(results => {
+        this.users = results.users;
+        if (results.cards) {
+          this.cards = results.cards;
+        }
+        else {
+          this.cards = []
+        }
         this.loader.display(false);
       }
     );
   }
 
-  openDeleteDialog(userId: number) {
+  openDeleteUserDialog(userId: number) {
     const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
       data: {
@@ -89,6 +108,64 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
         }
       }
     });
+  }
+
+  openDeleteCardDialog(cardId: number) {
+    const dialogRef = this.dialog.open(UserCardDeleteDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.monitoringState === MONITORING_STATE.READY) {
+          this.action = 'delete';
+          this.cardService.deleteCard(cardId)
+            .subscribe(
+              _ => this.updateComponent(),
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+            );
+        } else {
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+        }
+      }
+    });
+  }
+
+  getCards(userId: number): Card[] {
+    const results: Card[] = [];
+    this.cards.forEach((card) => {
+      if (card.userId === userId) {
+        results.push(card);
+      }
+    });
+
+    return results;
+  }
+
+  toggleCard(cardId: number) {
+    this.cards.forEach((card) => {
+      if (card.id === cardId) {
+        card.enabled = !card.enabled;
+        this.cardService.updateCard(card)
+        .subscribe(
+          _ => this.updateComponent(),
+          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        );
+      }
+    });
+  }
+
+  deleteCard(cardId: number) {
+    this.cardService.deleteCard(cardId)
+    .subscribe(
+      _ => this.updateComponent(),
+      error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+    );
+  }
+
+  onClickRegisterCard(userId: number){
+    this.userService.registerCard(userId).subscribe();
   }
 
   openDeviceRegistrationDialog(userId: number) {

@@ -9,15 +9,7 @@
           <mat-panel-title i18n="@@network dns">Dynamic DNS</mat-panel-title>
           <mat-panel-description i18n="@@network remote access">Remote access by hostname</mat-panel-description>
         </mat-expansion-panel-header>
-
-        <mat-form-field class="half-width">
-          <input matInput formControlName="dyndnsUsername" i18n-placeholder="@@network username" placeholder="Username">
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="dyndnsPassword" i18n-placeholder="@@network password" placeholder="Password">
-        </mat-form-field>
-
+        
         <mat-form-field class="half-width">
           <mat-label i18n="@@network provider">Provider</mat-label>
           <mat-select formControlName="dyndnsProvider" i18n-placeholder="@@network provider" placeholder="Provider">
@@ -26,9 +18,17 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-                
+        
         <mat-form-field class="half-width">
           <input matInput formControlName="dyndnsHostname" i18n-placeholder="@@network hostname" placeholder="Hostname">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="dyndnsUsername" i18n-placeholder="@@network username" placeholder="Username">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input type="password" matInput formControlName="dyndnsPassword" i18n-placeholder="@@network password" placeholder="Password">
         </mat-form-field>
 
         <mat-checkbox formControlName="dyndnsRestrictHost" i18n="@@network restrict host">Restrict access to host</mat-checkbox>

@@ -28,8 +28,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   CONFIG = 0;
   SENSORS = 1;
 
-  sensors: Sensor[] = [];
   zones: Zone[] = null;
+  sensors: Sensor[] = [];
   sensorlistpened: boolean[] = [];
   sensorlistOpened: boolean[] = [];
 

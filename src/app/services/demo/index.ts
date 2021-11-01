@@ -1,5 +1,6 @@
 export * from './alert.service';
 export * from './authentication.service';
+export * from './card.service';
 export * from './configuration.service';
 export * from './event.service';
 export * from './keypad.service';
