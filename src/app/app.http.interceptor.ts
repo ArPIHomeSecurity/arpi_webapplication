@@ -36,8 +36,8 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 }),
                 catchError(error => {
                     if (error instanceof HttpErrorResponse) {
-                        if (error.status === 400) {
-                            // Bad request
+                        if (error.status === 400 || error.status === 403 || error.status === 500) {
+                            // Bad request/unauthorized access/internal server error
                             return throwError(error);
                         } else if (error.status === 401) {
                             // Unauthorized => session expired

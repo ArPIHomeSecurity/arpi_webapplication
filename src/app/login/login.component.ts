@@ -16,8 +16,8 @@ import { AuthenticationService } from '../services';
 })
 
 export class LoginComponent implements OnInit {
-  @ViewChild('rc_field') rcField: ElementRef;
-  @ViewChild('ac_field') acField: ElementRef;
+  @ViewChild('registration_code_field') registrationCodeField: ElementRef;
+  @ViewChild('access_code_field') accessCodeField: ElementRef;
 
   registerForm: FormGroup;
   registerCode: FormControl;
@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
         this.isRegistered = isRegistered;
         setTimeout (() => {
           if (isRegistered) {
-            this.acField.nativeElement.focus();
+            this.accessCodeField.nativeElement.focus();
           } else {
-            this.rcField.nativeElement.focus();
+            this.registrationCodeField.nativeElement.focus();
           }
         }, 0.5);
       });
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           if (result) {
             setTimeout (() => {
               this.loginForm.reset();
-              this.acField.nativeElement.focus();
+              this.accessCodeField.nativeElement.focus();
             }, 0.5);
           } else {
             this.error = 'invalid registration code';
@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit {
         this.accessCode.setValue(null);
         setTimeout (() => {
           this.registerForm.reset();
-          this.rcField.nativeElement.focus();
+          this.registrationCodeField.nativeElement.focus();
         }, 0.5);
       }
     });

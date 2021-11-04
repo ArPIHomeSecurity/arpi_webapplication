@@ -8,7 +8,7 @@
  
       <mat-form-field>
         <input matInput
-          #rc_field
+          #registration_code_field
           [type]="hide ? 'password' : 'text'"
           [formControl]="registerCode"
           placeholder="Registration code"
@@ -34,7 +34,7 @@
 
         <mat-form-field>
         <input matInput
-          #ac_field
+          #access_code_field
           [type]="hide ? 'password' : 'text'"
           [formControl]="accessCode"
           placeholder="Access code"
@@ -54,7 +54,8 @@
       </div>
 
       <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
-        <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token!</div>
+        <div *ngSwitchCase="'invalid origin'" i18n="@@login host not allowed">Host not allowed!</div>
+        <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token! Register your device!</div>
         <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
         <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
         <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>

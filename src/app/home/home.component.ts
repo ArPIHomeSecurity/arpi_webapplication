@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   armTypes: any = ARM_TYPE;
   alert: Alert;
-  armState: ARM_TYPE;
+  armState: ARM_TYPE = ARM_TYPE.UNDEFINED;
   monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
   sensorTypes: SensorType [] = [];
@@ -37,19 +37,64 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // ALERT STATE: read and subscribe for changes
-    this.alertService.getAlert()
-      .subscribe(alert => {
-        this.alert = alert;
-      }
-    );
+    this.loadStates();
+
+    // ALERT STATE
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
       }
     );
 
-    // ARM STATE: read and subscribe for changes
+    // ARM STATE
+    this.eventService.listen('arm_state_change')
+      .subscribe(armState => {
+        this.armState = string2ArmType(armState);
+        this.onStateChanged();
+      });
+
+    // SENSORS ALERT STATE
+    this.eventService.listen('sensors_state_change')
+      .subscribe(alert => {
+        this.sensorAlert = alert;
+      }
+    );
+
+    // SENSOR TYPES: we need only once
+    this.sensorService.getSensorTypes()
+      .subscribe(st => {
+        this.sensorTypes = st
+      });
+
+
+    // MONITORING STATE
+    this.eventService.listen('system_state_change')
+      .subscribe(monitoringState => {
+          this.monitoringState = string2MonitoringState(monitoringState);
+          this.onStateChanged();
+      });
+
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
+          this.loadStates();
+        }
+        else {
+          this.armState = ARM_TYPE.UNDEFINED;
+          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.onStateChanged();
+        }
+      });
+  }
+
+  loadStates() {
+    // ALERT STATE
+    this.alertService.getAlert()
+      .subscribe(alert => {
+        this.alert = alert;
+      });
+
+    // ARM STATE
     this.monitoringService.getArmState()
       .subscribe(
         armState => {
@@ -61,28 +106,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onStateChanged();
         }
       );
-    this.eventService.listen('arm_state_change')
-      .subscribe(armState => {
-        this.armState = string2ArmType(armState);
-        this.onStateChanged();
-      });
-
-    // SENSORS ALERT STATE: read and subscribe for changes
+    
+    // SENSORS ALERT STATE
     this.sensorService.getAlert()
       .subscribe(alert => {
         this.sensorAlert = alert;
-      }
-    );
+      });
 
-    this.sensorService.getSensorTypes()
-      .subscribe(st => this.sensorTypes = st);
-
-    this.eventService.listen('sensors_state_change')
-      .subscribe(alert => {
-        this.sensorAlert = alert;
-      }
-    );
-
+    // MONITORING STATE
     this.monitoringService.getMonitoringState()
       .subscribe(
         monitoringState => {
@@ -94,23 +125,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onStateChanged();
         }
       );
-    this.eventService.listen('system_state_change')
-      .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState);
-          this.onStateChanged();
-      });
-
-    this.eventService.isConnected()
-      .subscribe(connected => {
-        if (connected) {
-          this.loader.clearMessage();
-        }
-        else {
-          this.armState = ARM_TYPE.UNDEFINED;
-          this.monitoringState = MONITORING_STATE.NOT_READY;
-          this.onStateChanged();
-        }
-      });
   }
 
   ngOnDestroy(){
