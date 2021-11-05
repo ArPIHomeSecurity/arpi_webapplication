@@ -17,9 +17,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
-  armTypes: any = ARM_TYPE;
   alert: Alert;
+  armTypes: any = ARM_TYPE;
   armState: ARM_TYPE = ARM_TYPE.UNDEFINED;
+  monitoringStates: any = MONITORING_STATE;
   monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
   sensorTypes: SensorType [] = [];
@@ -154,13 +155,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.monitoringService.disarm()
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     }
-  }
-
-  armDisabled() {
-    return this.sensorAlert ||
-      this.armState !== ARM_TYPE.DISARMED ||
-      this.monitoringState !== MONITORING_STATE.READY ||
-      this.monitoringState === MONITORING_STATE.READY && this.alert;
   }
 
   getSensorTypeName(sensorTypeId: number) {

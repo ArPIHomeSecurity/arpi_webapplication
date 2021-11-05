@@ -45,11 +45,6 @@ export class ConfigurationBaseComponent {
         .subscribe(monitoringState => {
           this.monitoringState = string2MonitoringState(monitoringState);
           this.onStateChange();
-        }),
-      this.eventService.listen('monitoring_state_change')
-        .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState);
-          this.onStateChange();
         })
     ];
   }
