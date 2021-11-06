@@ -100,8 +100,10 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
       awayArmedAlert: zone.awayAlertDelay !== null,
       awayAlertDelay: new FormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayArmDelay: new FormControl(zone.awayArmDelay, zone.awayArmDelay != null ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: zone.stayAlertDelay !== null,
       stayAlertDelay: new FormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayArmDelay: new FormControl(zone.stayArmDelay, zone.stayArmDelay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
@@ -126,7 +128,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   onCancel() {
-    this.location.back();
+    this.router.navigate(['/zones']);
   }
 
   getSensors(): Sensor[] {
@@ -151,7 +153,9 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     zone.description = formModel.description;
     zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null;
     zone.awayAlertDelay = formModel.awayArmedAlert ? parseInt(formModel.awayAlertDelay, 10) : null;
+    zone.awayArmDelay = formModel.awayArmedAlert ? parseInt(formModel.awayArmDelay, 10) : null;
     zone.stayAlertDelay = formModel.stayArmedAlert ? parseInt(formModel.stayAlertDelay, 10) : null;
+    zone.stayArmDelay = formModel.stayArmedAlert ? parseInt(formModel.stayArmDelay, 10) : null;
 
     return zone;
   }

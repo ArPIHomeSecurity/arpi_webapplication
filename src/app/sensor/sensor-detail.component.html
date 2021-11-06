@@ -1,76 +1,91 @@
-<div *ngIf="sensor != null">
-  <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate
-      ngClass.gt-xs="sensor-form" ngClass.xs="sensor-form-xs" fxLayout="column">
-
-    <mat-form-field>
-      <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
-        <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
-          <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
-          <span *ngIf="channel.channel !== -1">
-            <span>CH{{ channel.channel + 1 | number: '2.0-0' }}</span>
-            <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span>
-          </span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-select formControlName="typeId" i18n-placeholder="@@sensor type" placeholder="Sensor type">
-        <mat-option *ngFor="let type of sensorTypes" [value]="type.id">{{ type.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description" required></textarea>
-    </mat-form-field>
-
-    <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
-
-    <mat-form-field>
-      <mat-select formControlName="zoneId" i18n-placeholder="@@sensor zone" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
-        <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
-        <mat-option [value]="-1" i18n="@@sensor new zone">New</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div *ngIf="sensor.zoneId === -1" [formGroup]="zoneForm" fxLayout="column">
+<mat-card *ngIf="sensor != null" ngClass.gt-xs="sensor-form" ngClass.xs="sensor-form-xs" fxLayout="column">
+  <mat-card-content>
+    <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate>
       <mat-form-field>
-        <input matInput i18n-placeholder="@@zone name" placeholder="Zone name" formControlName="zoneName" required/>
+        <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
+          <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
+            <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
+            <span *ngIf="channel.channel !== -1">
+              <span>CH{{ channel.channel + 1 | number: '2.0-0' }}</span>
+              <span *ngIf="channel.sensor != null"> - {{channel.sensor.description}}</span>
+            </span>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
-      <mat-checkbox formControlName="disarmedAlert" color="primary" (change)="alertWhenChanged($event, 'disarmedDelay')" i18n="@@sensor alert disarmed">Alert when disarmed</mat-checkbox>
-      <mat-form-field [fxShow]="zoneForm.get('disarmedAlert').value">
-        <input matInput i18n-placeholder="@@zone disarmed delay" placeholder="Delay alert when not armed" formControlName="disarmedDelay">
-        <mat-error *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
+      <mat-form-field>
+        <mat-select formControlName="typeId" i18n-placeholder="@@sensor type" placeholder="Sensor type">
+          <mat-option *ngFor="let type of sensorTypes" [value]="type.id">{{ type.name }}</mat-option>
+        </mat-select>
       </mat-form-field>
 
-      <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@sensor alert away">Alert when away armed</mat-checkbox>
-      <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
-        <input matInput i18n-placeholder="@@zone away delay" placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
-        <mat-error *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
+      <mat-form-field>
+        <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description" required></textarea>
       </mat-form-field>
 
-      <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@sensor alert stay">Alert when stay armed</mat-checkbox>
-      <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
-        <input matInput i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay" formControlName="stayAlertDelay">
-        <mat-error *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
+      <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
+
+      <mat-divider></mat-divider>
+      <mat-form-field id="zoneId">
+        <mat-select formControlName="zoneId" i18n-placeholder="@@sensor zone" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
+          <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
+          <mat-option [value]="-1" i18n="@@sensor new zone">New</mat-option>
+        </mat-select>
       </mat-form-field>
-    </div>
 
-    <div class="actions">
-      <button mat-raised-button color="primary" [disabled]="sensorForm.invalid || monitoringState != monitoringStates.READY"
-        i18n="@@save button">Save</button>
-      <button *ngIf="sensorId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="monitoringState != monitoringStates.READY"
-        i18n="@@remove button">Remove</button>
-      <button mat-raised-button color="accent" type="button" (click)="onCancel()"
-        i18n="@@cancel button">Cancel</button>
-    </div>
+      <div *ngIf="sensor.zoneId === -1" fxLayout="column">
+        <form [formGroup]="zoneForm">
+          <mat-form-field>
+            <input matInput i18n-placeholder="@@zone name" placeholder="Zone name" formControlName="zoneName" required/>
+          </mat-form-field>
 
-  </form>
+          <mat-divider></mat-divider>
+          <div mat-subheader>Disarmed</div>
+          <mat-checkbox formControlName="disarmedAlert" color="primary" (change)="alertWhenChanged($event, 'disarmedDelay')" i18n="@@sensor alert disarmed">Alert when disarmed</mat-checkbox>
+          <mat-form-field [fxShow]="zoneForm.get('disarmedAlert').value">
+            <input matInput i18n-placeholder="@@zone disarmed delay" placeholder="Delay alert when not armed" formControlName="disarmedDelay">
+            <mat-error *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+
+          <mat-divider></mat-divider>
+          <div mat-subheader>Away armed</div>
+          <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@sensor alert away">Alert when away armed</mat-checkbox>
+          <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
+            <input matInput i18n-placeholder="@@zone away alert delay" placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
+            <mat-error *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+          <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
+            <input matInput i18n-placeholder="@@zone away arm delay" placeholder="Delay arm when arming away" formControlName="awayArmDelay">
+            <mat-error *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayArmDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+
+          <mat-divider></mat-divider>
+          <div mat-subheader>Stay armed</div>
+          <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@sensor alert stay">Alert when stay armed</mat-checkbox>
+          <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
+            <input matInput i18n-placeholder="@@zone stay alert delay" placeholder="Delay alert when armed stay" formControlName="stayAlertDelay">
+            <mat-error *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>  
+          <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
+            <input matInput i18n-placeholder="@@zone stay arm delay" placeholder="Delay arm when arming stay" formControlName="stayArmDelay">
+            <mat-error *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayArmDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+    </form>
+
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions align="end">
+      <button mat-icon-button color="primary" [disabled]="sensorForm.invalid || monitoringState != monitoringStates.READY" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
+      <button *ngIf="sensorId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+    </mat-card-actions>
+
   <ng-template #not_found>
     <h1 i18n="@@sensor not found">Sensor not found!</h1>
   </ng-template>
-</div>
+</mat-card>
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>

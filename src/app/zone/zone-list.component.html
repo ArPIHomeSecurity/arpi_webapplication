@@ -16,21 +16,25 @@
               <div class="mat-header-row">
                 <div class="mat-header-cell" i18n="@@alert type">Alert type</div>
                 <div class="mat-header-cell" i18n="@@zone alert enabled">Alert enabled</div>
+                <div class="mat-header-cell" i18n="@@zone arm delay">Arm delay</div>
                 <div class="mat-header-cell" i18n="@@zone alert delay">Alert delay</div>
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm away">Away</div >
                 <div class="mat-cell" *ngIf="zone.awayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                  <div class="mat-cell">{{zone.awayArmDelay!==null? zone.awayArmDelay : "-"}}</div >
                 <div class="mat-cell">{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm stay">Stay</div >
                 <div class="mat-cell" *ngIf="zone.stayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                  <div class="mat-cell">{{zone.stayArmDelay!==null ? zone.stayArmDelay : "-"}}</div >
                 <div class="mat-cell">{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div >
                 <div class="mat-cell" *ngIf="zone.disarmedDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.disarmedDelay!==null ? "0" : "-"}}</div >
                 <div class="mat-cell">{{zone.disarmedDelay!==null ? zone.disarmedDelay : "-"}}</div >
               </div>
           </div>

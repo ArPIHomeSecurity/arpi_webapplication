@@ -3,6 +3,8 @@ export class Zone {
   name: string;
   disarmedDelay: number;
   awayAlertDelay: number;
+  awayArmDelay: number;
   stayAlertDelay: number;
+  stayArmDelay: number;
   description: string;
 }

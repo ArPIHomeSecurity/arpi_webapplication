@@ -158,8 +158,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
       awayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      awayArmDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: true,
-      stayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
+      stayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      stayArmDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
     });
 
     // update the form if it doesn't exists
@@ -216,7 +218,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   onCancel() {
-    this.location.back();
+    this.router.navigate(['/sensors']);
   }
 
   prepareSensor(): Sensor {
@@ -242,7 +244,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       name: zoneModel.zoneName,
       disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
       awayAlertDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayAlertDelay, 10) : null,
+      awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
       stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
+      stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
       description: zoneModel.zoneName
     };
   }

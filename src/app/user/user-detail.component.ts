@@ -125,7 +125,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   onCancel() {
-    this.location.back();
+    this.router.navigate(['/users']);
   }
 
   prepareSaveUser(): User {
