@@ -83,8 +83,8 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     } else {
       this.zone = new Zone();
       this.zone.disarmedDelay = null;
-      this.zone.awayDelay = 0;
-      this.zone.stayDelay = 0;
+      this.zone.awayAlertDelay = 0;
+      this.zone.stayAlertDelay = 0;
       this.updateForm(this.zone);
     }
   }
@@ -98,10 +98,10 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
       disarmedAlert: zone.disarmedDelay !== null,
       disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
-      awayArmedAlert: zone.awayDelay !== null,
-      awayDelay: new FormControl(zone.awayDelay, zone.awayDelay != null ? [Validators.required, positiveInteger()] : null),
-      stayArmedAlert: zone.stayDelay !== null,
-      stayDelay: new FormControl(zone.stayDelay, zone.stayDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayArmedAlert: zone.awayAlertDelay !== null,
+      awayAlertDelay: new FormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayArmedAlert: zone.stayAlertDelay !== null,
+      stayAlertDelay: new FormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
@@ -150,8 +150,8 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     zone.name = formModel.name;
     zone.description = formModel.description;
     zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null;
-    zone.awayDelay = formModel.awayArmedAlert ? parseInt(formModel.awayDelay, 10) : null;
-    zone.stayDelay = formModel.stayArmedAlert ? parseInt(formModel.stayDelay, 10) : null;
+    zone.awayAlertDelay = formModel.awayArmedAlert ? parseInt(formModel.awayAlertDelay, 10) : null;
+    zone.stayAlertDelay = formModel.stayArmedAlert ? parseInt(formModel.stayAlertDelay, 10) : null;
 
     return zone;
   }

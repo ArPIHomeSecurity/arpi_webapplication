@@ -123,16 +123,16 @@ export const ZONES = [
         id: 0,
         name: 'Hall',
         disarmeddelay: null,
-        awayDelay: 0,
-        stayDelay: 5,
+        awayAlertDelay: 0,
+        stayAlertDelay: 5,
         description: 'Hall movement, alert with delay if stay armed'
     },
     {
         id: 1,
         name: 'Tamper',
         disarmedDelay: 0,
-        awayDelay: 0,
-        stayDelay: 0,
+        awayAlertDelay: 0,
+        stayAlertDelay: 0,
         description: 'Sabotage'
     }
 ];

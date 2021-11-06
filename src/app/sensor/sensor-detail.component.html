@@ -44,16 +44,16 @@
         <mat-error *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayDelay')" i18n="@@sensor alert away">Alert when away armed</mat-checkbox>
+      <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@sensor alert away">Alert when away armed</mat-checkbox>
       <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
-        <input matInput i18n-placeholder="@@zone away delay" placeholder="Delay alert when armed away" formControlName="awayDelay">
-        <mat-error *ngIf="zoneForm.get('awayDelay').invalid">{{zoneForm.get('awayDelay').getError('invalid')}}</mat-error>
+        <input matInput i18n-placeholder="@@zone away delay" placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
+        <mat-error *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayDelay')" i18n="@@sensor alert stay">Alert when stay armed</mat-checkbox>
+      <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@sensor alert stay">Alert when stay armed</mat-checkbox>
       <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
-        <input matInput i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay" formControlName="stayDelay">
-        <mat-error *ngIf="zoneForm.get('stayDelay').invalid">{{zoneForm.get('stayDelay').getError('invalid')}}</mat-error>
+        <input matInput i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay" formControlName="stayAlertDelay">
+        <mat-error *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
       </mat-form-field>
     </div>
 

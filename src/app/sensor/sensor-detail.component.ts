@@ -39,8 +39,8 @@ class SensorInfo {
 
   zoneName: string;
   disarmedDelay: number;
-  awayDelay: number;
-  stayDelay: number;
+  awayAlertDelay: number;
+  stayAlertDelay: number;
 }
 
 
@@ -157,9 +157,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       disarmedAlert: false,
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
-      awayDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      awayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: true,
-      stayDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
+      stayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
     });
 
     // update the form if it doesn't exists
@@ -241,8 +241,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       id: sensorModel.zoneId,
       name: zoneModel.zoneName,
       disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
-      awayDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayDelay, 10) : null,
-      stayDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayDelay, 10) : null,
+      awayAlertDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayAlertDelay, 10) : null,
+      stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
       description: zoneModel.zoneName
     };
   }
@@ -254,18 +254,18 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
       controls.disarmedDelay.setValidators([Validators.required, positiveInteger()]);
-      controls.awayDelay.setValidators([Validators.required, positiveInteger()]);
-      controls.stayDelay.setValidators([Validators.required, positiveInteger()]);
+      controls.awayAlertDelay.setValidators([Validators.required, positiveInteger()]);
+      controls.stayAlertDelay.setValidators([Validators.required, positiveInteger()]);
       controls.zoneName.setValidators(Validators.required);
     } else {
       controls.zoneName.clearValidators();
       controls.zoneName.setErrors(null);
       controls.disarmedDelay.clearValidators();
       controls.disarmedDelay.setErrors(null);
-      controls.awayDelay.clearValidators();
-      controls.awayDelay.setErrors(null);
-      controls.stayDelay.clearValidators();
-      controls.stayDelay.setErrors(null);
+      controls.awayAlertDelay.clearValidators();
+      controls.awayAlertDelay.setErrors(null);
+      controls.stayAlertDelay.clearValidators();
+      controls.stayAlertDelay.setErrors(null);
     }
 
     this.zoneForm.updateValueAndValidity();

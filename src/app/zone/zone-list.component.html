@@ -9,8 +9,8 @@
         <mat-expansion-panel (opened)="sensorlistpened[zone.id] = true" (closed)="sensorlistpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away:{{zone.awayDelay!==null? zone.awayDelay : "-"}} Stay:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A:{{zone.awayDelay!==null? zone.awayDelay : "-"}} S:{{zone.stayDelay!==null ? zone.stayDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away:{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}} Stay:{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A:{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}} S:{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
@@ -20,13 +20,13 @@
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm away">Away</div >
-                <div class="mat-cell" *ngIf="zone.awayDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.awayDelay!==null? zone.awayDelay : "-"}}</div >
+                <div class="mat-cell" *ngIf="zone.awayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm stay">Stay</div >
-                <div class="mat-cell" *ngIf="zone.stayDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
-                <div class="mat-cell">{{zone.stayDelay!==null ? zone.stayDelay : "-"}}</div >
+                <div class="mat-cell" *ngIf="zone.stayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell">{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div >

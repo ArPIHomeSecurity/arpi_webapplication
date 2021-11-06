@@ -170,22 +170,22 @@ export class MonitoringService {
 
   onAlert(sensor: Sensor) {
     const zone = this.zoneService.getZoneDirectly(sensor.zoneId);
-    if (this.armState === ARM_TYPE.AWAY && zone.awayDelay != null && sensor.enabled) {
+    if (this.armState === ARM_TYPE.AWAY && zone.awayAlertDelay != null && sensor.enabled) {
       setTimeout(() => {
         if (this.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
             this.alertService.createAlert([sensor], ALERT_TYPE.AWAY);
           }
         }
-      }, 1000 * zone.awayDelay);
-    } else if (this.armState === ARM_TYPE.STAY && zone.stayDelay != null && sensor.enabled) {
+      }, 1000 * zone.awayAlertDelay);
+    } else if (this.armState === ARM_TYPE.STAY && zone.stayAlertDelay != null && sensor.enabled) {
       setTimeout(() => {
         if (this.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
             this.alertService.createAlert([sensor], ALERT_TYPE.STAY);
           }
         }
-      }, 1000 * zone.stayDelay);
+      }, 1000 * zone.stayAlertDelay);
     } else if (this.armState === ARM_TYPE.DISARMED && zone.disarmedDelay != null && sensor.enabled) {
       setTimeout(() => {
         this.alertService.createAlert([sensor], ALERT_TYPE.SABOTAGE);
