@@ -48,11 +48,19 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
 
     this.baseSubscriptions.push(
       this.eventService.listen('card_registered')
-        .subscribe(_ => this.updateComponent())
+        .subscribe(_ => {
+          this.loader.disable(true);
+          this.updateComponent();
+        })
     );
   }
 
@@ -61,12 +69,6 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
-
     forkJoin({
       users: this.userService.getUsers(),
       cards: this.cardService.getCards()
@@ -81,6 +83,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
           this.cards = []
         }
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -97,10 +100,14 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
+          this.loader.disable(true);
           this.userService.deleteUser(userId)
             .subscribe(
               _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+              _ => {
+                this.loader.disable(false);
+                this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+              }
             );
         } else {
           this.action = 'cant delete';
@@ -119,10 +126,14 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
+          this.loader.disable(true);
           this.cardService.deleteCard(cardId)
             .subscribe(
               _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+              _ => {
+                this.loader.disable(false);
+                this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+              }
             );
         } else {
           this.action = 'cant delete';
@@ -147,21 +158,17 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     this.cards.forEach((card) => {
       if (card.id === cardId) {
         card.enabled = !card.enabled;
+        this.loader.disable(true);
         this.cardService.updateCard(card)
         .subscribe(
           _ => this.updateComponent(),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          _ => {
+            this.loader.disable(false);
+            this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          }
         );
       }
     });
-  }
-
-  deleteCard(cardId: number) {
-    this.cardService.deleteCard(cardId)
-    .subscribe(
-      _ => this.updateComponent(),
-      error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-    );
   }
 
   onClickRegisterCard(userId: number){
@@ -175,11 +182,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.loader.disable(true);
       this.updateComponent();
     });
   }
 
   removeRegistrationCode(userId: number) {
+    this.loader.disable(true);
     this.userService.deleteRegistrationCode(userId)
       .subscribe(_ => this.updateComponent());
   }

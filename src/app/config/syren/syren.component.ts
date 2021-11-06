@@ -39,6 +39,11 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
   }
 
@@ -54,18 +59,13 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display( true );
-    } );
-
     this.configurationService.getOption('alert', 'syren')
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(syren => {
         this.syren = syren;
         this.updateForm();
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -79,6 +79,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   onSubmit() {
+    this.loader.disable(true);
     this.configurationService.setOption('alert', 'syren', this.prepareSyren())
       .subscribe(
         _ => this.updateComponent(),

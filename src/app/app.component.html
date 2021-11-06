@@ -73,6 +73,7 @@
     <mat-sidenav-content>
       <!-- AJAX loading spinner trigerred by the loader service -->
       <mat-progress-spinner class="ajax-loader" color="primary" mode="indeterminate" [fxShow]="displayLoader"></mat-progress-spinner>
+      <div id="overlay" [fxShow]="disablePage"></div>
 
       <mat-card *ngIf="message && !displayLoader" class="message">
         <span>{{ message }}</span>

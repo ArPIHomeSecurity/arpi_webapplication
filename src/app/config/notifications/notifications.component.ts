@@ -39,6 +39,11 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
     this.updateForm(DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
   }
@@ -68,12 +73,6 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
-
     forkJoin({
       email: this.configService.getOption('notifications', 'email'),
       gsm: this.configService.getOption('notifications', 'gsm'),
@@ -87,6 +86,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
         this.updateForm(this.email, this.gsm, this.subscriptions);
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -131,6 +131,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const email = this.prepareEmail();
     const gsm = this.prepareGsm();
     const subcriptions = this.prepareSubscriptions();
+    this.loader.disable(true);
     forkJoin({
       email: this.configService.setOption('notifications', 'email', email),
       gsm: this.configService.setOption('notifications', 'gsm', gsm),

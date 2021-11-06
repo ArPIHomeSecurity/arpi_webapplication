@@ -72,7 +72,13 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
+    
     this.updateForm();
 
     if (this.clockForm.get('timezone')) {
@@ -102,12 +108,6 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display( true );
-    } );
-
     this.monitoringService.getClock()
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(clock => {
@@ -117,6 +117,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
         }
 
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -129,12 +130,16 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
 
   onSubmit() {
+    this.loader.disable(true);
     const formModel = this.clockForm.value;
     const newDate = formModel.dateTime;
     this.monitoringService.changeClock(newDate.toISOString(), formModel.timezone)
       .subscribe(
         _ => this.updateComponent(),
-        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        _ => {
+          this.loader.disable(false);
+          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+        }
     );
   }
 

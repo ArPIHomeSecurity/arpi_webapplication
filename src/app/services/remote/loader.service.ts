@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class LoaderService {
-  public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public displayed: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public disabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor() {
@@ -11,7 +12,12 @@ export class LoaderService {
   }
 
   display(value: boolean) {
-    this.status.next(value);
+    this.displayed.next(value);
+  }
+
+  disable(value: boolean) {
+    // add some static delay to avoid flickering on fast responses
+    setTimeout(() => this.disabled.next(value), value ? 0 : 500);
   }
 
   setMessage(message: string) {

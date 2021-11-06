@@ -73,6 +73,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
         this.zones = results.zones;
         this.sensors = results.sensors;
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -104,8 +105,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
+          this.loader.disable(true);
           this.zoneService.deleteZone(zoneId)
-            .pipe(finalize(() => this.loader.display(false)))
             .subscribe(
               _ => this.updateComponent(),
               _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})

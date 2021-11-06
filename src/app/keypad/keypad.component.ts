@@ -37,6 +37,11 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
   }
 
@@ -51,19 +56,9 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
         keypadType: new FormControl(this.keypad.typeId, Validators.required),
       });
     }
-
-    if (this.keypad && this.keypadTypes) {
-      this.loader.display(false);
-    }
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display( true );
-    } );
-
     this.keypadService.getKeypads().subscribe(
       keypads => {
         forkJoin({
@@ -75,6 +70,8 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
           this.keypad = results.keypad;
           this.keypadTypes = results.keypadTypes;
           this.updateForm();
+          this.loader.display(false);
+          this.loader.disable(false);
         });
       }
     );
@@ -95,6 +92,7 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
   }
 
   onSubmit() {
+    this.loader.disable(true);
     this.keypadService.updateKeypad(this.prepareKeypad())
       .subscribe(_ => this.updateComponent());
   }

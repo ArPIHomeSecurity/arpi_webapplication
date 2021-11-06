@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
 
   // display error message of the compoponents
   displayLoader = false;
+  disablePage = false;
   message: string = null;
 
   watcher: Subscription;
@@ -91,7 +92,8 @@ export class AppComponent implements OnInit {
     });
 
     this.smallScreen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
-    this.loader.status.subscribe(value => this.displayLoader = value);
+    this.loader.displayed.subscribe(value => this.displayLoader = value);
+    this.loader.disabled.subscribe(value => this.disablePage = value);
     this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.versions.serverVersion = version);
     this.authService.isSessionValid()

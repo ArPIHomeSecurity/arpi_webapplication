@@ -49,6 +49,11 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
   }
 
@@ -70,12 +75,6 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   }
 
   updateComponent() {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
-
     forkJoin({
       dyndns: this.configService.getOption('network', 'dyndns'),
       access: this.configService.getOption('network', 'access')
@@ -87,6 +86,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
         this.updateForm(this.dyndns, this.access);
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -115,6 +115,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   }
 
   onSubmit() {
+    this.loader.disable(true);
     forkJoin({
       dyndns: this.configService.setOption('network', 'dyndns', this.prepareDyndns()),
       access: this.configService.setOption('network', 'access', this.prepareAccess())

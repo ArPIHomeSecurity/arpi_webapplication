@@ -47,12 +47,17 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
     this.updateComponent();
 
     // TODO: update only one sensor instead of the whole page
     this.baseSubscriptions.push(
       this.eventService.listen('sensors_state_change')
-        .subscribe(_ => this.updateComponent(false))
+        .subscribe(_ => this.updateComponent())
     );
   }
 
@@ -60,16 +65,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     super.destroy();
   }
 
-  updateComponent(displayLoader = true) {
-    // avoid ExpressionChangedAfterItHasBeenCheckedError
-    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-    if (displayLoader) {
-      // no need to display loader if it's a reload
-      scheduleMicrotask.then(() => {
-        this.loader.display(true);
-      });
-    }
-
+  updateComponent() {
     forkJoin({
       sensors: this.sensorService.getSensors(this.onlyAlerting),
       sensorTypes: this.sensorService.getSensorTypes(),
@@ -81,6 +77,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.sensorTypes = results.sensorTypes;
         this.zones = results.zones;
         this.loader.display(false);
+        this.loader.disable(false);
       }
     );
   }
@@ -117,6 +114,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       if (result) {
         this.action = 'delete';
         if (this.monitoringState === MONITORING_STATE.READY) {
+          this.loader.disable(true);
           this.sensorService.deleteSensor(sensorId)
             .subscribe( _ => this.updateComponent(),
               _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
