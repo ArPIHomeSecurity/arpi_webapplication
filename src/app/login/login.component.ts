@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit() {
+    if (this.authenticationService.isLoggedIn()) {
+      this.router.navigate(["/"]);
+    }
+
     this.authenticationService.isDeviceRegistered()
       .subscribe(isRegistered => {
         this.isRegistered = isRegistered;

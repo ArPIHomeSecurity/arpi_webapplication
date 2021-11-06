@@ -45,7 +45,7 @@ export class AuthenticationService {
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     const res = this.loggedInAs != null;
     return res;
   }

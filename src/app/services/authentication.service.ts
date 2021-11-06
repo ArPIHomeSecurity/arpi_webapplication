@@ -7,7 +7,7 @@ export interface AuthenticationService {
 
   logout(): void;
 
-  isLoggedIn();
+  isLoggedIn(): boolean;
 
   getRole(): string;
 

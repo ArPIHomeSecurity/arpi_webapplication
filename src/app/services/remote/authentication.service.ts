@@ -57,7 +57,7 @@ export class AuthenticationService implements AuthenticationService {
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     try {
       return JWT(localStorage.getItem('userToken'));
     } catch (error) {
