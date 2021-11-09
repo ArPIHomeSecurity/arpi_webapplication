@@ -84,7 +84,9 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       this.zone = new Zone();
       this.zone.disarmedDelay = null;
       this.zone.awayAlertDelay = 0;
+      this.zone.awayArmDelay = 0;
       this.zone.stayAlertDelay = 0;
+      this.zone.stayArmDelay = 0;
       this.updateForm(this.zone);
     }
   }
@@ -100,10 +102,10 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
       disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
       awayArmedAlert: zone.awayAlertDelay !== null,
       awayAlertDelay: new FormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      awayArmDelay: new FormControl(zone.awayArmDelay, zone.awayArmDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayArmDelay: new FormControl(zone.awayArmDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: zone.stayAlertDelay !== null,
       stayAlertDelay: new FormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      stayArmDelay: new FormControl(zone.stayArmDelay, zone.stayArmDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayArmDelay: new FormControl(zone.stayArmDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }

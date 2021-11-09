@@ -9,8 +9,8 @@
         <mat-expansion-panel (opened)="sensorlistpened[zone.id] = true" (closed)="sensorlistpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away:{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}} Stay:{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}} Disarmed:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A:{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}} S:{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}} D:{{zone.disarmedDelay!==null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away: {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}} Stay: {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}} Disarmed:{{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A: {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}} S:{{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}} D:{{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}</mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
