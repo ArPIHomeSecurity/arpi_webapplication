@@ -10,6 +10,8 @@ import * as JWT from 'jwt-decode';
 
 import { EventService } from './event.service';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable()
 export class AuthenticationService implements AuthenticationService {
   private isDeviceRegisteredSubject = new Subject<boolean>();
@@ -59,7 +61,13 @@ export class AuthenticationService implements AuthenticationService {
 
   isLoggedIn(): boolean {
     try {
-      return JWT(localStorage.getItem('userToken'));
+      const userToken = localStorage.getItem('userToken');
+      if (userToken) {
+        try {
+          return Date.now()/1000 - parseInt((JWT(userToken) as any).timestamp) < environment.userTokenExpiry;
+        } catch (error) {
+        }
+      }
     } catch (error) {
         // console.error('Invalid token');
     }
@@ -111,11 +119,7 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   isSessionValid(): Observable<boolean> {
-    try {
-      JWT(localStorage.getItem('userToken'));
-      return this.isSessionValidSubject.pipe(startWith(true));
-    } catch (error) {}
-    return this.isSessionValidSubject.pipe(startWith(false));
+    return this.isSessionValidSubject.pipe(startWith(this.isLoggedIn()));
   }
 
   getDeviceToken() {

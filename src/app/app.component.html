@@ -31,7 +31,7 @@
           <mat-icon mat-list-icon>history</mat-icon><span i18n="@@alert history menu link">Alert history</span>
         </a>
         <h3 mat-subheader i18n="Settings menu title" [fxShow]="isLoggedIn()">Settings</h3>
-        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
         </a>
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
@@ -40,19 +40,19 @@
         <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
         </a>
-        <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
         </a>
-        <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>send</mat-icon><span i18n="@@notifications menu link">Notifications</span>
         </a>
-        <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>public</mat-icon><span i18n="@@network menu link">Network</span>
         </a>
-        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>access_time</mat-icon><span i18n="@@clock menu link">Clock</span>
         </a>
-        <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+        <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
            <mat-icon mat-list-icon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </a>
         <mat-divider [fxShow]="isLoggedIn()"></mat-divider>
