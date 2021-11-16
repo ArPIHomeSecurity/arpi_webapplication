@@ -40,6 +40,7 @@ export class MonitoringService {
     this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
     if (this.monitoringState !== MONITORING_STATE.READY &&
+        this.monitoringState !== MONITORING_STATE.ARM_DELAY &&
         this.monitoringState !== MONITORING_STATE.ARMED &&
         this.monitoringState !== MONITORING_STATE.SABOTAGE) {
       this.monitoringState = MONITORING_STATE.STARTUP;

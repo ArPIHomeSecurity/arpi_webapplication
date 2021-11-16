@@ -85,6 +85,7 @@ export class SystemStateComponent implements OnInit {
 
   isSensorIndicatorVisible() {
     return this.monitoringState === MONITORING_STATE.ARMED ||
-      this.monitoringState === MONITORING_STATE.READY;
+      this.monitoringState === MONITORING_STATE.READY ||
+      this.monitoringState === MONITORING_STATE.ARM_DELAY;
   }
 }

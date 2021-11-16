@@ -26,12 +26,20 @@
   }  
 
   /* arm state */
+  .away_delay.mat-chip.mat-primary {
+    background-color: #ffb600;
+  }
+
+  .stay_delay.mat-chip.mat-primary {
+    background-color: #ffb600;
+  }
+
   .away.mat-chip.mat-primary {
     background-color: mat-color($warn);
   }
 
   .stay.mat-chip.mat-primary {
-    background-color: #ffb600;
+    background-color: mat-color($warn);
   }
 
   /* sensors */

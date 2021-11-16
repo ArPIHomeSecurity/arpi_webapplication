@@ -5,7 +5,11 @@
     <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state">Invalid configuration</mat-chip>
     <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state">Sabotage</mat-chip>
   </div>
-  <div [ngSwitch]="armState">
+  <div *ngIf="monitoringState == monitoringStates.ARM_DELAY" [ngSwitch]="armState">
+    <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay" i18n="@@away state">AWAY</mat-chip>
+    <mat-chip *ngSwitchCase="armTypes.STAY" class="stay_delay" i18n="@@stay state">STAY</mat-chip>
+  </div>
+  <div *ngIf="monitoringState == monitoringStates.ARMED" [ngSwitch]="armState">
     <mat-chip *ngSwitchCase="armTypes.AWAY" class="away" i18n="@@away state">AWAY</mat-chip>
     <mat-chip *ngSwitchCase="armTypes.STAY" class="stay" i18n="@@stay state">STAY</mat-chip>
   </div>
