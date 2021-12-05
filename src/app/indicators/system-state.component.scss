@@ -47,6 +47,10 @@
     background-color: map-get($ok, 600),
   }
 
+  .alert-delay.mat-chip.mat-primary, .alert.mat-list-icon.mat-icon.material-icons{
+    background-color: #ffb600;
+  }
+
   .alert.mat-chip.mat-primary, .alert.mat-list-icon.mat-icon.material-icons{
     background-color: mat-color($warn);
   }

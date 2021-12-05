@@ -1,4 +1,5 @@
 <mat-chip-list  fxShow fxHide.xs>
+  <!-- MONITORING STATES -->
   <div [ngSwitch]="monitoringState">
     <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="updating" i18n="@@starting state">Starting up</mat-chip>
     <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="updating" i18n="@@updating state">Updating configuration</mat-chip>
@@ -9,14 +10,24 @@
     <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay" i18n="@@away state">AWAY</mat-chip>
     <mat-chip *ngSwitchCase="armTypes.STAY" class="stay_delay" i18n="@@stay state">STAY</mat-chip>
   </div>
-  <div *ngIf="monitoringState == monitoringStates.ARMED" [ngSwitch]="armState">
+  <div *ngIf="monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY" [ngSwitch]="armState">
     <mat-chip *ngSwitchCase="armTypes.AWAY" class="away" i18n="@@away state">AWAY</mat-chip>
     <mat-chip *ngSwitchCase="armTypes.STAY" class="stay" i18n="@@stay state">STAY</mat-chip>
   </div>
-  <div *ngIf="isSensorIndicatorVisible()" [ngSwitch]="sensorAlert">
+
+  <!-- SENSOR STATES -->
+  <div *ngIf="monitoringState === monitoringStates.ARMED || monitoringState === monitoringStates.READY || monitoringState === monitoringStates.ARM_DELAY || monitoringState === monitoringStates.ALERT"
+    [ngSwitch]="sensorAlert">
     <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state">Sensors</mat-chip>
     <mat-chip *ngSwitchCase="true" class="alert" i18n="@@sensors state">Sensors</mat-chip>
   </div>
+  <div *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
+    [ngSwitch]="sensorAlert">
+    <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state">Sensors</mat-chip>
+    <mat-chip *ngSwitchCase="true" class="alert-delay" i18n="@@sensors state">Sensors</mat-chip>
+  </div>
+
+  <!-- SYREN -->
   <mat-chip *ngIf="syrenAlert === true" class="alert">
     <mat-icon mat-list-icon>volume_up</mat-icon>
   </mat-chip>
@@ -24,6 +35,7 @@
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
 
+  <!-- POWER -->
   <div *ngIf="(armState != armTypes.UNDEFINED) && (monitoringState != monitoringStates.NOT_READY)" [ngSwitch]="powerState">
     <mat-chip *ngSwitchCase="powerStates.NETWORK" class="normal">
       <mat-icon mat-list-icon>power</mat-icon>
@@ -36,21 +48,37 @@
   <mat-chip *ngIf="(armState == armTypes.UNDEFINED) || (monitoringState == monitoringStates.NOT_READY)" class="error" i18n="@@error state">ERROR</mat-chip>
 </mat-chip-list>
 
+<!-- MOBILE VERSION -->
 <mat-chip-list fxHide fxShow.xs>
+  <!-- MONITORING STATES -->
   <div [ngSwitch]="monitoringState">
     <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="updating" i18n="@@starting state short">S</mat-chip>
     <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="updating" i18n="@@updating state short">U</mat-chip>
     <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state short">I</mat-chip>
     <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state short">T</mat-chip>
   </div>
-  <div [ngSwitch]="armState">
+  <div *ngIf="monitoringState == monitoringStates.ARM_DELAY" [ngSwitch]="armState">
+    <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay" i18n="@@away state short">A</mat-chip>
+    <mat-chip *ngSwitchCase="armTypes.STAY" class="stay_delay" i18n="@@stay state short">S</mat-chip>
+  </div>
+  <div *ngIf="monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY" [ngSwitch]="armState">
     <mat-chip *ngSwitchCase="armTypes.AWAY" class="away" i18n="@@away state short">A</mat-chip>
     <mat-chip *ngSwitchCase="armTypes.STAY" class="stay" i18n="@@stay state short">S</mat-chip>
   </div>
-  <div [ngSwitch]="sensorAlert">
+
+  <!-- SENSOR STATES -->
+  <div *ngIf="monitoringState === monitoringStates.ARMED || monitoringState === monitoringStates.READY || monitoringState === monitoringStates.ARM_DELAY || monitoringState === monitoringStates.ALERT"
+    [ngSwitch]="sensorAlert">
     <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state short">S</mat-chip>
     <mat-chip *ngSwitchCase="true" class="alert" i18n="@@sensors state short">S</mat-chip>
   </div>
+  <div *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
+    [ngSwitch]="sensorAlert">
+    <mat-chip *ngSwitchCase="false" class="ready" i18n="@@sensors state short">S</mat-chip>
+    <mat-chip *ngSwitchCase="true" class="alert-delay" i18n="@@sensors state short">S</mat-chip>
+  </div>
+
+  <!-- SYREN -->
   <mat-chip *ngIf="syrenAlert === true" class="syren">
     <mat-icon mat-list-icon>volume_up</mat-icon>
   </mat-chip>
@@ -58,6 +86,7 @@
     <mat-icon mat-list-icon>volume_mute</mat-icon>
   </mat-chip>
 
+  <!-- POWER -->
   <div *ngIf="(armState != armTypes.UNDEFINED) && (monitoringState != monitoringStates.NOT_READY)" [ngSwitch]="powerState">
     <mat-chip *ngSwitchCase="powerStates.NETWORK" class="normal">
       <mat-icon mat-list-icon>power</mat-icon>
