@@ -10,9 +10,9 @@ export interface MonitoringService {
 
   getArmState(): Observable<ARM_TYPE>;
 
-  arm( armtype: ARM_TYPE );
+  arm(armtype: ARM_TYPE) : Observable<Object>;
 
-  disarm();
+  disarm() : Observable<Object>;
 
   getMonitoringState(): Observable<MONITORING_STATE>;
 

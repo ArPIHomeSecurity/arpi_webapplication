@@ -9,6 +9,7 @@ export class User {
   email: string;
   role: string;
   hasRegistrationCode: boolean;
+  hasCard: boolean;
   registrationExpiry: string;
   accessCode: number;
   comment: string;

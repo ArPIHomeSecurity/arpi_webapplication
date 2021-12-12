@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
-import { SensorService } from '../services/demo';
+import { SensorService, CardService } from '../services/demo';
 import { getSessionValue, setSessionValue } from '../utils';
 
 import { environment } from '../../environments/environment';
@@ -17,7 +17,8 @@ export class DemoComponent implements OnInit {
   channels: boolean[] = [];
   constructor(
     public dialog: MatDialog,
-    private sensorService: SensorService
+    @Inject('SensorService')private sensorService: SensorService,
+    @Inject('CardService') private cardService: CardService
   ) {
     const channels: boolean[] = [];
     // channels are numbered 1..N
@@ -36,7 +37,11 @@ export class DemoComponent implements OnInit {
     this.dialog.open(DemoHelpDialogComponent, {});
   }
 
-  swap(index: number) {
+  putCard(cardId: number) {
+    this.cardService.onCard(cardId);
+  }
+
+  toogleChannel(index: number) {
     this.channels[index] = !this.channels[index];
     setSessionValue('DemoComponent.channels', this.channels);
     this.sensorService.alertChannel(index, this.channels[index]);

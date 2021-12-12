@@ -61,7 +61,7 @@ export const DEMO_CONFIGURATION = [
 
 export const USERS = [
     {
-        id: 0,
+        id: 1,
         name: 'Administrator',
         email: 'admin@example.com',
         role: ROLE_TYPES.ADMIN,
@@ -72,7 +72,7 @@ export const USERS = [
         registrationExpiry: new Date().toLocaleString()
     },
     {
-        id: 1,
+        id: 2,
         name: 'User 1',
         email: 'user1@example.com',
         role: ROLE_TYPES.USER,
@@ -122,7 +122,9 @@ export const ZONES = [
     {
         id: 0,
         name: 'Hall',
-        disarmeddelay: null,
+        disarmedDelay: null,
+        awayArmDelay: 0,
+        stayArmDelay: 5,
         awayAlertDelay: 0,
         stayAlertDelay: 5,
         description: 'Hall movement, alert with delay if stay armed'
@@ -131,6 +133,8 @@ export const ZONES = [
         id: 1,
         name: 'Tamper',
         disarmedDelay: 0,
+        awayArmDelay: 0,
+        stayArmDelay: 0,
         awayAlertDelay: 0,
         stayAlertDelay: 0,
         description: 'Sabotage'
@@ -144,6 +148,11 @@ export const KEYPAD_TYPES = [
         id: 1,
         name: 'DSC',
         description: 'DSC keybus (DSC PC-1555RKZ)'
+    },
+    {
+        id: 2,
+        name: 'Wiegand',
+        description: 'Keypad with Wiegand protocol'
     }
 ];
 
@@ -154,3 +163,13 @@ export const KEYPADS = [
         typeId: 1
     }
 ];
+
+export const CARDS = [
+    {
+        id: 1,
+        userId: null,
+        enabled: true,
+        description: "Card 01"
+    }
+];
+

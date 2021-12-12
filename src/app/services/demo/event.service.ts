@@ -31,6 +31,9 @@ export class EventService {
   private connectionStateSubject = new Subject<boolean>();
   private connectionState = this.connectionStateSubject.asObservable();
 
+  private cardRegisteredStateSubject = new Subject<boolean>();
+  private cardRegisteredState = this.cardRegisteredStateSubject.asObservable();
+
   constructor() {
     this.connectionStateSubject.next(true);
   }
@@ -53,6 +56,8 @@ export class EventService {
       subject = this.syrenState;
     } else if (event === 'power_state_change') {
       subject = this.powerState;
+    } else if (event === 'card_registered') {
+      subject = this.cardRegisteredState;
     } else if (['connect', 'disconnect'].includes(event)) {
       subject = this.connectionState;
     } else {
@@ -80,5 +85,9 @@ export class EventService {
 
   updateSyrenState(state: boolean) {
     this.syrenStateSubject.next(state);
+  }
+
+  updateCardState(state: boolean = true) {
+    this.cardRegisteredStateSubject.next(state);
   }
 }

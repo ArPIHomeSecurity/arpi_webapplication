@@ -46,11 +46,17 @@
 }
 
 .card-enabled {
+  vertical-align: bottom;
   color: green;
 }
 
 .card-disabled {
+  vertical-align: bottom;
   color: grey;
+}
+
+.card-description-disabled {
+  text-decoration: line-through;
 }
 
 .header{

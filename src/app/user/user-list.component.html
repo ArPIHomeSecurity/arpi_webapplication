@@ -15,9 +15,10 @@
           <mat-divider inset></mat-divider>
           <div class="header">Cards</div>
           <mat-list role="list" *ngFor="let card of getCards(user.id)">
-            <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled"></mat-checkbox>
-            <button mat-icon-button disabled><mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon></button>
-            {{card.description}}
+            <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled">
+              <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon>
+              <span [className]="!card.enabled ? 'card-description-disabled' : ''">{{card.description}}</span>
+            </mat-checkbox>
             <button mat-icon-button (click)="openDeleteCardDialog(card.id)" color="warn"><mat-icon>remove_circle_outline</mat-icon></button>
           </mat-list>
         </div>

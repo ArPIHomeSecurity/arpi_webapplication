@@ -26,7 +26,8 @@
   <span i18n="@@user device registration code">Device registration code</span>
   <div class="code">
     {{registrationCode}}
-    <button mat-icon-button *ngIf="registrationCode" (click)="copyText(registrationCode)"><mat-icon>file_copy</mat-icon></button>
+    <!-- https://stackoverflow.com/a/58115714 -->
+    <button mat-icon-button *ngIf="registrationCode" onclick="this.blur()" (click)="copyText(registrationCode)"><mat-icon>file_copy</mat-icon></button>
   </div>
 </div>
 

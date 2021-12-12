@@ -157,9 +157,12 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   toggleCard(cardId: number) {
     this.cards.forEach((card) => {
       if (card.id === cardId) {
-        card.enabled = !card.enabled;
+        // clone the card, change the state and update
+        let tmpCard = Object.assign({}, card)
+        tmpCard.enabled = !card.enabled;
+
         this.loader.disable(true);
-        this.cardService.updateCard(card)
+        this.cardService.updateCard(tmpCard)
         .subscribe(
           _ => this.updateComponent(),
           _ => {

@@ -63,6 +63,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 
 
 @NgModule({
@@ -129,6 +131,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatMenuModule,
+    ClipboardModule,
 
     CountdownModule,
     OwlDateTimeModule,

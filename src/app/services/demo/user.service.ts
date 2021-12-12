@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-// import { AuthenticationService } from './authentication.service';
 import { User } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
@@ -10,6 +9,7 @@ import { USERS } from 'src/app/demo/configuration';
 
 export class UserDemo extends User {
   registrationCode: string;
+  registeringCards: boolean;
 }
 
 
@@ -19,7 +19,6 @@ export class UserService {
   public users: UserDemo[];
 
   constructor(
-    // private authService: AuthenticationService
   ) {
     this.users = getSessionValue('UserService.users', USERS);
   }
@@ -95,6 +94,12 @@ export class UserService {
     delete this.users[index].registrationCode;
     delete this.users[index].registrationExpiry;
     this.users[index].hasRegistrationCode = false;
+    setSessionValue('UserService.users', this.users);
+    return of(true);
+  }
+
+  registerCard(userId: number): Observable<any> {
+    this.users[this.users.findIndex(u => u.id === userId)].registeringCards = true;
     setSessionValue('UserService.users', this.users);
     return of(true);
   }

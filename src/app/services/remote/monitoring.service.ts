@@ -30,13 +30,13 @@ export class MonitoringService {
     );
   }
 
-  arm( armtype: ARM_TYPE ) {
+  arm( armtype: ARM_TYPE ): Observable<Object> {
     const params = new HttpParams().set('type', armType2String(armtype));
 
     return this.http.put('/api/monitoring/arm', null, { params } );
   }
 
-  disarm() {
+  disarm(): Observable<Object> {
     return this.http.put('/api/monitoring/disarm', null);
   }
 

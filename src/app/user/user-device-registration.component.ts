@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { User } from '../models';
 import { UserService } from '../services';
@@ -26,7 +27,8 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
     @Inject('UserService') public userService: UserService,
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private clipboard: Clipboard
   ) {
     this.modes = [
       {name: 'Unlimited time', value: 'no_expiry'},
@@ -86,17 +88,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   }
 
   copyText(val: string) {
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+    this.clipboard.copy(val);
 
     this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
   }

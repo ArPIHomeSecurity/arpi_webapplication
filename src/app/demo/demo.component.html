@@ -1,15 +1,19 @@
-<mat-toolbar color="secondary">
-  <span fxHide fxShow.gt-xs="true" >ArPI - Simulator</span>
-  <span fxHide fxShow.xs="true" >Simulator</span>
-
-  <button mat-button (click)="help()" class="help">
+<mat-toolbar color="accent">
+  <button mat-raised-button color="primary" (click)="help()" class="help">
+    <span fxHide fxShow.gt-xs="true" >ArPI - Simulator&nbsp;&nbsp;</span>
     <mat-icon>help</mat-icon>
   </button>
 
   <span class="spacer"></span>
-  <button mat-raised-button *ngFor="let channel of channels; let i = index" type="button" (click)="swap(i)" color="primary">
+  
+  <button mat-raised-button (click)="putCard(1)" color="primary">
+    <mat-icon >credit_card</mat-icon>
+  </button>
+
+  <button mat-raised-button *ngFor="let channel of channels; let i = index" type="button" (click)="toogleChannel(i)" color="primary">
     <span fxHide.xs="true">CH{{ i+1 | number: '2.0-0'}}</span>
     <mat-icon *ngIf="channel">my_location</mat-icon>
     <mat-icon *ngIf="!channel">trip_origin</mat-icon>
   </button>
+
 </mat-toolbar>
