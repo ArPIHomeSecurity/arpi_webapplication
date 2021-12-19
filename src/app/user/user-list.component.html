@@ -36,9 +36,9 @@
       <mat-divider inset></mat-divider>
       <mat-card-actions align="end">
         <button mat-icon-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@edit button"><mat-icon>mode_edit</mat-icon></button>
+          i18n="@@edit button icon"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteUserDialog(user.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@remove button"><mat-icon>delete</mat-icon></button>
+          i18n="@@remove button icon"><mat-icon>delete</mat-icon></button>
         
         <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
           <mat-menu #menu="matMenu">
