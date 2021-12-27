@@ -31,12 +31,12 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
     private clipboard: Clipboard
   ) {
     this.modes = [
-      {name: 'Unlimited time', value: 'no_expiry'},
-      {name: 'With expiry', value: 'expiry'}
+      {name: $localize`:@@device code no expiry:Unlimited time`, value: 'no_expiry'},
+      {name: $localize`:@@device code with expiry:With expiry`, value: 'expiry'}
     ];
     this.units = [
-      {value: 'hours', viewValue: 'Hours'},
-      {value: 'days', viewValue: 'Days'},
+      {value: 'hours', viewValue: $localize`:@@expiry hours:Hours`},
+      {value: 'days', viewValue: $localize`:@@expiry days:Days`},
     ];
   }
 

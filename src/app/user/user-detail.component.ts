@@ -135,6 +135,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     user.id = this.userId;
     user.name = formModel.name;
     user.role = formModel.role;
+    user.comment = formModel.comment;
     user.accessCode = formModel.accessCode;
 
     return user;

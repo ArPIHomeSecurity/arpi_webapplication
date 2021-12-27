@@ -1,41 +1,38 @@
-<div *ngIf="user != null">
-  <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate
-      ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
+<mat-card *ngIf="user != null" ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
+  <mat-card-content>
+    <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+      <mat-form-field>
+        <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-select i18n-placeholder="@@user select role" placeholder="Select a role" formControlName="role" required>
+          <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-select i18n-placeholder="@@user select role" placeholder="Select a role" formControlName="role" required>
-        <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput i18n-placeholder="@@user new code" placeholder="New access code" formControlName="accessCode" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput i18n-placeholder="@@user new code" placeholder="New access code" formControlName="accessCode" [type]="hide ? 'password' : 'text'">
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      <mat-error *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput i18n-placeholder="@@user comment" placeholder="Comment" formControlName="comment" type="text"></textarea>
-    </mat-form-field>
-
-    <div class="actions">
-      <button mat-raised-button color="primary" [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
-        i18n="@@save button">Save</button>
-      <button *ngIf="userId > 0" mat-raised-button color="warn" type="button" (click)="openDeleteDialog(user.id)" [disabled]="monitoringState != monitoringStates.READY"
-        i18n="@@remove button">Remove</button>
-      <button mat-raised-button color="accent" type="button" (click)="onCancel()"
-        i18n="@@cancel button">Cancel</button>
-    </div>
-
-  </form>
+      <mat-form-field>
+        <textarea matInput i18n-placeholder="@@user comment" placeholder="Comment" formControlName="comment" type="text"></textarea>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions align="end">
+    <button mat-icon-button color="primary" [disabled]="userForm.invalid || monitoringState != monitoringStates.READY" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
+    <button *ngIf="userId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(user.id)" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+  </mat-card-actions>
+  
   <ng-template #not_found>
     <h1 i18n="@@user not found">User not found!</h1>
   </ng-template>
-</div>
+</mat-card>
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>

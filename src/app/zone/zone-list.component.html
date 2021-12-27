@@ -8,13 +8,27 @@
   
         <mat-expansion-panel (opened)="sensorlistpened[zone.id] = true" (closed)="sensorlistpened[zone.id] = false">
           <mat-expansion-panel-header>
-            <mat-panel-title>Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">Away: {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}} Stay: {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}} Disarmed:{{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}</mat-panel-description>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">A: {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}} S:{{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}} D:{{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}</mat-panel-description>
+            <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">
+              <span i18n="@@zone away_l">Away:</span>
+              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
+              <span i18n="@@zone stay_l">Stay:</span>
+              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}
+              <span i18n="@@zone disarme_l">Disarmed:</span>
+              {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
+            </mat-panel-description>
+            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">
+              <span i18n="@@zone away_s">A:</span>
+              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
+              <span i18n="@@zone stay_s">S:</span>
+              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}
+              <span i18n="@@zone disarme_s">D:</span>
+              {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
               <div class="mat-header-row">
-                <div class="mat-header-cell" i18n="@@alert type">Alert type</div>
+                <div class="mat-header-cell" i18n="@@zone alert type">Alert type</div>
                 <div class="mat-header-cell" i18n="@@zone alert enabled">Alert enabled</div>
                 <div class="mat-header-cell" i18n="@@zone arm delay">Arm delay</div>
                 <div class="mat-header-cell" i18n="@@zone alert delay">Alert delay</div>
@@ -63,11 +77,9 @@
         </mat-expansion-panel>
       </mat-card-content>
   
-      <mat-card-actions [fxShow]="userCanEdit()">
-        <button mat-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@edit button">Edit</button>
-        <button mat-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"
-          i18n="@@remove button">Remove</button>
+      <mat-card-actions [fxShow]="userCanEdit()" align="end">
+        <button mat-icon-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
   
     </mat-card>

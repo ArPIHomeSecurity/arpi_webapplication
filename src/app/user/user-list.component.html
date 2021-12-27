@@ -13,7 +13,7 @@
       <mat-card-content>
         <div *ngIf="user.hasCard">
           <mat-divider inset></mat-divider>
-          <div class="header">Cards</div>
+          <div class="header" i18n="@@user cards">Cards</div>
           <mat-list role="list" *ngFor="let card of getCards(user.id)">
             <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled">
               <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon>
@@ -24,28 +24,26 @@
         </div>
         <div *ngIf="user.hasRegistrationCode">
           <mat-divider inset></mat-divider>
-          <div class="header">Device registration code</div>
+          <div class="header" i18n="@@user device registration code">Device registration code</div>
           <div class="registration">
             <span i18n="@@user registration">Expires on: </span>
             <span *ngIf="user.registrationExpiry">{{user.registrationExpiry}}</span>
-            <span *ngIf="!user.registrationExpiry">never</span>
+            <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
             <button mat-icon-button (click)="removeRegistrationCode(user.id)" color="warn"><mat-icon>remove_circle_outline</mat-icon></button>
           </div>
         </div>
       </mat-card-content>
       <mat-divider inset></mat-divider>
       <mat-card-actions align="end">
-        <button mat-icon-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@edit button icon"><mat-icon>mode_edit</mat-icon></button>
-        <button mat-icon-button (click)="openDeleteUserDialog(user.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@remove button icon"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
         
         <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="openDeviceRegistrationDialog(user.id)" color="primary" [disabled]="user.hasRegistrationCode || monitoringState != monitoringStates.READY"
-              i18n="@@register_device button">Device registration</button>
+              i18n="@@user register device button">Device registration</button>
             <button mat-menu-item (click)="onClickRegisterCard(user.id)" color="primary" [disabled]="monitoringState != monitoringStates.READY"
-              i18n="@@cards button">Register card</button>
+              i18n="@@user register card button">Register card</button>
           </mat-menu>
       </mat-card-actions>
     </mat-card>

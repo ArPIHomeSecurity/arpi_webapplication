@@ -36,11 +36,9 @@
         </mat-card-subtitle>
       </mat-card-header>
 
-      <mat-card-actions [fxShow]="userCanEdit()">
-        <button mat-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@edit button">Edit</button>
-        <button mat-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"
-          i18n="@@remove button">Remove</button>
+      <mat-card-actions [fxShow]="userCanEdit()" align="end">
+        <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>

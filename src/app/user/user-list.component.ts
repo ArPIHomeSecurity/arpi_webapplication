@@ -88,7 +88,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     );
   }
 
-  openDeleteUserDialog(userId: number) {
+  openDeleteDialog(userId: number) {
     const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
       data: {
