@@ -73,7 +73,8 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
           this.loader.display(false);
           this.loader.disable(false);
         });
-      }
+      },
+      _ => this.loader.display(false)
     );
 
   }
