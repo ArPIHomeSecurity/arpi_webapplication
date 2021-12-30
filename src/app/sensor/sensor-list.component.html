@@ -32,13 +32,13 @@
 
         <mat-card-subtitle>
           <span i18n="@@sensor zone">Zone</span>&nbsp;{{getZoneName(sensor.zoneId)}}
-          <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit()"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
+          <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit() && monitoringState === monitoringStates.READY"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
         </mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-actions [fxShow]="userCanEdit()" align="end">
-        <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
-        <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>

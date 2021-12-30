@@ -3,7 +3,7 @@
     <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate>
       <mat-form-field>
         <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
-          <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel">
+          <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel" [disabled]="channel.sensor != null">
             <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
             <span *ngIf="channel.channel !== -1">
               <span>CH{{ channel.channel + 1 | number: '2.0-0' }}</span>
@@ -77,8 +77,8 @@
     </mat-card-content>
     <mat-divider inset></mat-divider>
     <mat-card-actions align="end">
-      <button mat-icon-button color="primary" [disabled]="sensorForm.invalid || monitoringState != monitoringStates.READY" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
-      <button *ngIf="sensorId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button color="primary" [disabled]="sensorForm.invalid || ! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
+      <button *ngIf="sensorId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
       <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
 

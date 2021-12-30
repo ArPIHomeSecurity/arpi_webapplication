@@ -90,6 +90,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   ngOnInit() {
     super.initialize();
+    this.editableStates.push(MONITORING_STATE.INVALID_CONFIG);
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
