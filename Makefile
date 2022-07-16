@@ -1,13 +1,21 @@
 
-
 build-demo:
 	ng build --configuration=demo-en
 	ng build --configuration=demo-hu
+	DIST=dist-development npm run postbuild
+
+build-demo-dev:
+	ng build --configuration=demo-dev --localize
+	DIST=dist-demo-dev npm run postbuild
+	DIST=dist-demo-dev npm run serve
+
+start-demo-dev:
+	DIST=dist-demo-dev npm run serve
 
 build-development:
-	ng build --configuration=development
+	ng build --localize
 
 build-production:
-	npm run build-default-language
-	npm run build-translations
-	npm run build-compress
+	ng build --configuration=production --localize
+	npm run compress
+	DIST=dist-production npm run postbuild
