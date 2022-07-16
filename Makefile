@@ -17,5 +17,4 @@ build-development:
 
 build-production:
 	ng build --configuration=production --localize
-	npm run compress
 	DIST=dist-production npm run postbuild

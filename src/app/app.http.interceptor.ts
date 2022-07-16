@@ -47,7 +47,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
                             // No connection to the REST API
                             console.error('No connection to the security system');
                             return throwError(error);
-                        } else if (error.status === 503) {
+                        } else if ((error.status === 502) || (error.status === 503)) {
+                            // 502 - Bad Gateway
+                            // 503 - Service unavailable
                             // Connection lost to the monitoring service
                             // this.loaderService.setMessage($localize`:@@message no connection:No connection to the security system!`);
                             // rethrow the error to be able to catch it and return a default value
