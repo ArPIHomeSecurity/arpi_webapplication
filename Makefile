@@ -14,6 +14,10 @@ start-demo-dev:
 
 build-development:
 	ng build --localize
+	DIST=dist-development npm run postbuild
+
+start-development:
+	DIST=dist-development npm run serve
 
 build-production:
 	ng build --configuration=production --localize

@@ -25,6 +25,7 @@ export const environment = {
   channelCount: 15,
   snackDuration: 2000,
 
+  apiPort: 443,
   monitoringPort: 443,
 
   defaultLanguage: 'en',

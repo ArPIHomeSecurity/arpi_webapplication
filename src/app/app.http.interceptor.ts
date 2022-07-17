@@ -6,7 +6,10 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthenticationService, LoaderService } from './services';
+import { environment } from 'src/environments/environment';
 
+
+const BASE_URL = window.location.protocol + '//' + window.location.hostname + ':' + environment.apiPort;
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
@@ -17,11 +20,12 @@ export class AppHttpInterceptor implements HttpInterceptor {
         ) { }
 
     intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any> > {
-        let newRequest = originalRequest.clone();
+        let newRequest = originalRequest.clone({url: BASE_URL + originalRequest.url});
         if (this.authService.getToken()) {
-            newRequest = originalRequest.clone(
-                {headers: originalRequest.headers.set('Authorization', 'Bearer ' + this.authService.getToken()) }
-            );
+            newRequest = originalRequest.clone({
+                headers: originalRequest.headers.set('Authorization', 'Bearer ' + this.authService.getToken()),
+                url: BASE_URL + originalRequest.url
+            });
         }
         return next.handle(newRequest)
             .pipe(
