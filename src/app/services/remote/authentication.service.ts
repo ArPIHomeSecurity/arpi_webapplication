@@ -55,6 +55,8 @@ export class AuthenticationService implements AuthenticationService {
   logout(): void {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('userToken');
+    // clear returnUrl to start from home
+    localStorage.removeItem('returnUrl');
     this.isSessionValidSubject.next(false);
     this.router.navigate(['/login']);
   }
