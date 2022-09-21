@@ -1,9 +1,13 @@
 <div *ngIf="sensors != null">
   <div *ngIf="sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
     <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
-      <mat-card-header>
-        <div mat-card-avatar [ngSwitch]="sensor.typeId" 
-            [ngClass]="{'sensor-image': true, 'alerting': sensor.alert}">
+        
+      <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center">
+        <div
+          [ngSwitch]="sensor.typeId"
+          [ngClass.xs]="{'sensor-image-small': true, 'alerting': sensor.alert}"
+          [ngClass.gt-xs]="{'sensor-image': true, 'alerting': sensor.alert}"
+        >
           <img *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
           <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png"/>
           <img *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
@@ -11,32 +15,71 @@
           <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"/>
         </div>
 
-        <mat-card-title ngClass.xs="sensor-title-sm">
+        <div fxLayout="column" fxLayoutAlign="space-between start">
+          <mat-card-title>
             {{sensor.description}}
-        </mat-card-title>
+          </mat-card-title>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-list class="narrow-list first-column">
+              <mat-list-item>
+                <mat-icon mat-list-icon [ngSwitch]="sensor.typeId">
+                  <img ngClass="sensor-icon" *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
+                  <img ngClass="sensor-icon" *ngSwitchCase="2" src="assets/images/sensor_tamper.png"/>
+                  <img ngClass="sensor-icon" *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
+                  <img ngClass="sensor-icon" *ngSwitchCase="4" src="assets/images/sensor_break.png"/>
+                  <img ngClass="sensor-icon" *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"/>
+                </mat-icon>
+                <div [ngSwitch]="sensor.typeId">
+                  <span *ngSwitchCase="1" i18n="@@sensor motion">Motion</span>
+                  <span *ngSwitchCase="2" i18n="@@sensor tamper">Tamper</span>
+                  <span *ngSwitchCase="3" i18n="@@sensor open">Open</span>
+                  <span *ngSwitchCase="4" i18n="@@sensor break">Break</span>
+                  <span *ngSwitchDefault i18n="@@sensor unknown">Unknown</span>
+                </div>
+              </mat-list-item>
+    
+              <mat-list-item>
+                <mat-icon mat-list-icon *ngIf="sensor.enabled" class="sensor-status-icon-enabled material-icons-outlined">check_circle</mat-icon>
+                <mat-icon mat-list-icon *ngIf="!sensor.enabled" class="sensor-status-icon-disabled material-icons-outlined">circle</mat-icon>
+                <div *ngIf="sensor.enabled">
+                  <span i18n="@@sensor enabled">Enabled</span>
+                </div>
+                <div *ngIf="!sensor.enabled">
+                  <span i18n="@@sensor disable">Disabled</span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+            
+            <mat-list class="narrow-list second-column">
+              <mat-list-item>
+                <mat-icon mat-list-icon *ngIf="sensor.channel !== -1" class="material-icons-outlined">power</mat-icon>
+                <mat-icon mat-list-icon *ngIf="sensor.channel === -1" class="material-icons-outlined">power_off</mat-icon>
+                <div *ngIf="sensor.channel !== -1">
+                  <span>CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
+                </div>
+                <div *ngIf="sensor.channel === -1">
+                  <span>-</span>
+                </div>
+              </mat-list-item>
+      
+              <mat-list-item>
+                <mat-icon mat-list-icon class="material-icons-outlined">rectangle</mat-icon>
+                <div *ngIf="sensor.channel !== -1">
+                  {{getZoneName(sensor.zoneId)}}
+                </div>
+                <div *ngIf="sensor.channel === -1">
+                  -
+                </div>
+              </mat-list-item>
+      
+            </mat-list>
+          </div>
+        </div>
+      </mat-card-content>
 
-        <mat-card-subtitle>
-          <div *ngIf="sensor.enabled && sensor.channel === -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon><span i18n="@@sensor enabled and disconnected">Enabled and disconnected</span>
-          </div>
-          <div *ngIf="!sensor.enabled && sensor.channel === -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon><span i18n="@@sensor disabled and disconnected">Disabled and disconnected</span>
-          </div>
-          <div *ngIf="sensor.enabled && sensor.channel !== -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">done</mat-icon><span i18n="@@sensor enabled on channel">Enabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
-          </div>
-          <div *ngIf="!sensor.enabled && sensor.channel !== -1">
-            <mat-icon mat-list-icon class="sensor-status-icon">clear</mat-icon><span i18n="@@sensor disabled on channel">Disabled on input channel CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
-          </div>
-        </mat-card-subtitle>
+      <mat-divider></mat-divider>
 
-        <mat-card-subtitle>
-          <span i18n="@@sensor zone">Zone</span>&nbsp;{{getZoneName(sensor.zoneId)}}
-          <button mat-button [routerLink]="['/zone', sensor.zoneId]" routerLinkActive="active" color="accent" [fxShow]="userCanEdit() && monitoringState === monitoringStates.READY"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-actions [fxShow]="userCanEdit()" align="end">
+      <mat-card-actions [fxShow]="userCanEdit()">
         <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
