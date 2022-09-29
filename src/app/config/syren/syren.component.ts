@@ -59,7 +59,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateComponent() {
-    this.configurationService.getOption('alert', 'syren')
+    this.configurationService.getOption('syren', 'timing')
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(syren => {
         this.syren = syren;
@@ -80,7 +80,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   onSubmit() {
     this.loader.disable(true);
-    this.configurationService.setOption('alert', 'syren', this.prepareSyren())
+    this.configurationService.setOption('syren', 'timing', this.prepareSyren())
       .subscribe(
         _ => this.updateComponent(),
         _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})

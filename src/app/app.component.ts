@@ -135,7 +135,7 @@ export class AppComponent implements OnInit {
       location.pathname = newPath.replace(/\/$/, '');
     } else {
       // if the current language isn't the default, add the language
-      location.pathname = ('/' + newLocale + location.pathname).replace(/\/$/, '');
+      location.pathname = ('/' + newLocale + location.pathname)
     }
   }
 
@@ -151,7 +151,7 @@ export class AppComponent implements OnInit {
   getSessionDuration() {
     let currentLocale = localStorage.getItem('localeId');
     if (!currentLocale) {
-    currentLocale = 'en';
+      currentLocale = 'en';
     }
     return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
   }

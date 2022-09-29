@@ -2,8 +2,6 @@
   "name": "argus",
   "version": "0.1.0",
   "license": "Argus 2018",
-  "default_language": "en",
-  "languages": "hu",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,9 +10,7 @@
     "e2e": "ng e2e",
     "postinstall": "ngcc",
     "extract-i18n": "ng extract-i18n --output-path src/locales --format xliff && ng run argus:xliffmerge",
-    "compress": "for lang in $npm_package_default_language $npm_package_languages; do gzip dist-production/$lang/*.js || true && gzip dist-production/$lang/*.css || true; done",
-    "serve": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/$DIST:/usr/share/nginx/html:ro nginx",
-    "postbuild": "mv $DIST/en/* $DIST; rm -r $DIST/en"
+    "serve": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/$DIST:/usr/share/nginx/html:ro nginx"
   },
   "private": true,
   "dependencies": {

@@ -30,8 +30,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   zones: Zone[] = null;
   sensors: Sensor[] = [];
-  sensorlistpened: boolean[] = [];
-  sensorlistOpened: boolean[] = [];
+  sensorListClosed: boolean[] = [];
+  sensorListOpened: boolean[] = [];
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,

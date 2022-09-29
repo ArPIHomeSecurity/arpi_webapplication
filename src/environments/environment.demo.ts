@@ -25,6 +25,7 @@ export const environment = {
   channelCount: 3,
   snackDuration: 2000,
 
+  apiPort: 8080,
   monitoringPort: 8081,
 
   defaultLanguage: 'en',

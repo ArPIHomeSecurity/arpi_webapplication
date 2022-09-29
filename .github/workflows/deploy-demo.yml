@@ -32,7 +32,8 @@ jobs:
       - name: Build application demo version 💪
         run: |
           ng build --configuration=demo --localize
-          DIST=dist-demo npm run postbuild
+          # moving the 'en' locale to the root
+          mv dist-demo/en/* dist-demo; rm -r dist-demo/en
 
       - name: Deploy demo application 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7

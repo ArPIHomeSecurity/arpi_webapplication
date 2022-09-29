@@ -6,22 +6,22 @@
         <mat-card-title>{{zone.name}}</mat-card-title>
         <mat-card-subtitle *ngIf="zone.name != zone.description">{{zone.description}}</mat-card-subtitle>
   
-        <mat-expansion-panel (opened)="sensorlistpened[zone.id] = true" (closed)="sensorlistpened[zone.id] = false">
+        <mat-expansion-panel (opened)="sensorListClosed[zone.id] = true" (closed)="sensorListClosed[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.xs="false">
+            <mat-panel-description *ngIf="!sensorListClosed[zone.id]" fxShow.xs="false">
               <span i18n="@@zone away_l">Away:</span>
-              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
+              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}&nbsp;|&nbsp;
               <span i18n="@@zone stay_l">Stay:</span>
-              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}
+              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}&nbsp;|&nbsp;
               <span i18n="@@zone disarme_l">Disarmed:</span>
               {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
             </mat-panel-description>
-            <mat-panel-description *ngIf="!sensorlistpened[zone.id]" fxShow.gt-xs="false">
+            <mat-panel-description *ngIf="!sensorListClosed[zone.id]" fxShow.gt-xs="false">
               <span i18n="@@zone away_s">A:</span>
-              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
+              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}&nbsp;|&nbsp;
               <span i18n="@@zone stay_s">S:</span>
-              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}
+              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}&nbsp;|&nbsp;
               <span i18n="@@zone disarme_s">D:</span>
               {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
             </mat-panel-description>
@@ -57,10 +57,10 @@
           </ng-template>
         </mat-expansion-panel>
   
-        <mat-expansion-panel (opened)="sensorlistOpened[zone.id] = true" (closed)="sensorlistOpened[zone.id] = false">
+        <mat-expansion-panel (opened)="sensorListOpened[zone.id] = true" (closed)="sensorListOpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorlistOpened[zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorListOpened[zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
             <ul class="sensor-list">

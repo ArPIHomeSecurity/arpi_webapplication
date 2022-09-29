@@ -9,6 +9,7 @@ export class ConfigurationBaseComponent {
   monitoringState: MONITORING_STATE;
   monitoringStates: any = MONITORING_STATE;
   baseSubscriptions: Subscription[];
+  editableStates: MONITORING_STATE[] = [MONITORING_STATE.READY]
 
   constructor(
     public eventService: EventService,
@@ -63,7 +64,7 @@ export class ConfigurationBaseComponent {
       this.loader.setMessage($localize`:@@message system error:The system is not working correctly, you can't make changes in the configuration!`);
     } else if (this.monitoringState === MONITORING_STATE.NOT_READY) {
       this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
-    } else if (this.monitoringState !== MONITORING_STATE.READY) {
+    } else if (!this.editableStates.includes(this.monitoringState)) {
       this.loader.setMessage($localize`:@@message system not ready:The system is not ready, you can't make changes in the configuration!`);
     } else {
       this.loader.clearMessage();
