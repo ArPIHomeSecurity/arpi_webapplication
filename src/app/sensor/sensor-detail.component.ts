@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -59,8 +59,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   channels: Channel[];
   zones: Zone[];
   sensorTypes: SensorType[];
-  sensorForm: FormGroup;
-  zoneForm: FormGroup;
+  sensorForm: UntypedFormGroup;
+  zoneForm: UntypedFormGroup;
   newZone = false;
   monitoringStates = MONITORING_STATE;
 
@@ -73,7 +73,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     public router: Router,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private location: Location,
@@ -154,24 +154,24 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zoneId)
     this.zoneForm =  this.fb.group({
-      zoneName: new FormControl('', this.sensor.zoneId === -1 ? [Validators.required, Validators.maxLength(32)] : null),
+      zoneName: new UntypedFormControl('', this.sensor.zoneId === -1 ? [Validators.required, Validators.maxLength(32)] : null),
       disarmedAlert: false,
-      disarmedDelay: new FormControl(0),
+      disarmedDelay: new UntypedFormControl(0),
       awayArmedAlert: true,
-      awayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
-      awayArmDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      awayAlertDelay: new UntypedFormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      awayArmDelay: new UntypedFormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: true,
-      stayAlertDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
-      stayArmDelay: new FormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
+      stayAlertDelay: new UntypedFormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null),
+      stayArmDelay: new UntypedFormControl(0, this.sensor.zoneId === -1 ? [Validators.required, positiveInteger()] : null)
     });
 
     // update the form if it doesn't exists
     this.sensorForm = this.fb.group({
-      channel: new FormControl(sensor.channel),
-      zoneId: new FormControl(sensor.zoneId, Validators.required),
-      typeId: new FormControl(sensor.typeId, Validators.required),
+      channel: new UntypedFormControl(sensor.channel),
+      zoneId: new UntypedFormControl(sensor.zoneId, Validators.required),
+      typeId: new UntypedFormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
-      description: new FormControl(sensor.description, Validators.required),
+      description: new UntypedFormControl(sensor.description, Validators.required),
       zoneForm: this.zoneForm
     });
   }

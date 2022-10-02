@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -19,7 +19,7 @@ const scheduleMicrotask = Promise.resolve( null );
 
 
 export class KeypadComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  keypadForm: FormGroup;
+  keypadForm: UntypedFormGroup;
   keypad: Keypad = null;
   keypadTypes: KeypadType[];
 
@@ -29,7 +29,7 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
     @Inject('KeypadService') private keypadService: KeypadService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -53,7 +53,7 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
     if (this.keypad) {
       this.keypadForm = this.fb.group( {
         keypadEnabled: this.keypad.enabled,
-        keypadType: new FormControl(this.keypad.typeId, Validators.required),
+        keypadType: new UntypedFormControl(this.keypad.typeId, Validators.required),
       });
     }
   }

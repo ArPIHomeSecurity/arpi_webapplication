@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -33,7 +33,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   zoneId: number;
   zone: Zone = null;
   sensors: Sensor[];
-  zoneForm: FormGroup;
+  zoneForm: UntypedFormGroup;
 
   constructor(
     @Inject('LoaderService') public loader: LoaderService,
@@ -44,7 +44,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
     private route: ActivatedRoute,
     public router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private location: Location,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -97,16 +97,16 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
   updateForm(zone: Zone) {
     this.zoneForm = this.fb.group({
-      name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
+      name: new UntypedFormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
       disarmedAlert: zone.disarmedDelay !== null,
-      disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
+      disarmedDelay: new UntypedFormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
       awayArmedAlert: zone.awayAlertDelay !== null,
-      awayAlertDelay: new FormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      awayArmDelay: new FormControl(zone.awayArmDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayAlertDelay: new UntypedFormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayArmDelay: new UntypedFormControl(zone.awayArmDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
       stayArmedAlert: zone.stayAlertDelay !== null,
-      stayAlertDelay: new FormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      stayArmDelay: new FormControl(zone.stayArmDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
+      stayAlertDelay: new UntypedFormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayArmDelay: new UntypedFormControl(zone.stayArmDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      description: new UntypedFormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
 

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -18,7 +18,7 @@ import { environment } from '../../environments/environment';
 export class UserDeviceRegistrationDialogComponent implements OnInit {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
-  registrationForm: FormGroup;
+  registrationForm: UntypedFormGroup;
   modes: any[];
   units: any[];
   registrationCode: string;
@@ -26,7 +26,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
   constructor(
     @Inject('UserService') public userService: UserService,
     public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private clipboard: Clipboard
   ) {
@@ -42,9 +42,9 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   ngOnInit() {
     this.registrationForm = this.fb.group({
-      mode: new FormControl('expiry'),
-      counter: new FormControl(24, Validators.required),
-      unit: new FormControl('hours', Validators.required)
+      mode: new UntypedFormControl('expiry'),
+      counter: new UntypedFormControl(24, Validators.required),
+      unit: new UntypedFormControl('hours', Validators.required)
     });
   }
 

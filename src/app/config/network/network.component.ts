@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
@@ -22,7 +22,7 @@ const scheduleMicrotask = Promise.resolve(null);
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
-  networkForm: FormGroup;
+  networkForm: UntypedFormGroup;
   dyndns: Option = null;
   access: Option = null;
 
@@ -40,7 +40,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);
