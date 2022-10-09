@@ -30,6 +30,7 @@
     "@angular/router": "^14.2.4",
     "@danielmoncada/angular-datetime-picker": "^14.2.0",
     "@types/jwt-decode": "^2.2.1",
+    "@uiowa/digit-only": "^3.2.1",
     "humanize-duration-ts": "^2.1.1",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",

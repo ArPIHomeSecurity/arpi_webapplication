@@ -39,6 +39,8 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -63,7 +65,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 
@@ -105,11 +106,18 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    ClipboardModule,
+    CountdownModule,
+    DigitOnlyModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    
     routing,
+
     MatAutocompleteModule,
     MatInputModule,
     MatToolbarModule,
@@ -131,11 +139,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    ClipboardModule,
-
-    CountdownModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule
   ],
   providers: [
     AuthGuard,
