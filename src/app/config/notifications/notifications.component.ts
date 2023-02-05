@@ -60,13 +60,18 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     this.notificationsForm = this.fb.group({
       smtpUsername: getValue(email.value, 'smtp_username'),
       smtpPassword: getValue(email.value, 'smtp_password'),
-      emailAddress: getValue(email.value, 'email_address'),
+      smtpHostname: getValue(email.value, 'smtp_hostname'),
+      smtpPort: getValue(email.value, 'smtp_port'),
+      email1Address: getValue(email.value, 'email1_address'),
+      email2Address: getValue(email.value, 'email2_address'),
 
       pinCode: getValue(gsm.value, 'pin_code'),
       phoneNumber: getValue(gsm.value, 'phone_number'),
 
-      alertStartedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_started'),
-      alertStoppedEmail: getValue(getValue(subscriptions.value, 'email'), 'alert_stopped'),
+      alertStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_started'),
+      alertStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_stopped'),
+      alertStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_started'),
+      alertStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_stopped'),
       alertStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
       alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
     });
@@ -95,7 +100,10 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     const formModel = this.notificationsForm.value;
     const email: any = {
       smtp_username: formModel.smtpUsername,
-      email_address: formModel.emailAddress,
+      smtp_hostname: formModel.smtpHostname,
+      smtp_port: formModel.smtpPort,
+      email1_address: formModel.email1Address,
+      email2_address: formModel.email2Address
     };
 
     if (formModel.smtpPassword) {
@@ -116,9 +124,13 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   prepareSubscriptions(): any {
     const formModel = this.notificationsForm.value;
     return {
-      email: {
-        alert_started: formModel.alertStartedEmail,
-        alert_stopped: formModel.alertStoppedEmail,
+      email1: {
+        alert_started: formModel.alertStartedEmail1,
+        alert_stopped: formModel.alertStoppedEmail1,
+      },
+      email2: {
+        alert_started: formModel.alertStartedEmail2,
+        alert_stopped: formModel.alertStoppedEmail2,
       },
       sms: {
         alert_started: formModel.alertStartedSms,

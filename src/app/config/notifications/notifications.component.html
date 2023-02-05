@@ -18,8 +18,20 @@
           <input type="password" matInput formControlName="smtpPassword" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
         </mat-form-field>
 
+        <mat-form-field class="half-width">
+          <input matInput formControlName="smtpHostname" i18n-placeholder="@@notifications smtp username" placeholder="SMTP hostname">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="smtpPort" i18n-placeholder="@@notifications smtp username" placeholder="SMTP port">
+        </mat-form-field>
+
         <mat-form-field class="full-width">
-          <input matInput formControlName="emailAddress" i18n-placeholder="@@notifications smtp email" placeholder="Email address">
+          <input matInput formControlName="email1Address" i18n-placeholder="@@notifications smtp email" placeholder="Email address 1">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput formControlName="email2Address" i18n-placeholder="@@notifications smtp email" placeholder="Email address 2">
         </mat-form-field>
       </mat-expansion-panel>
 
@@ -47,13 +59,17 @@
         <div class="mat-table">
           <div class="mat-header-row">
             <div class="mat-header-cell" i18n="@@notifications source">Event</div>
-            <div class="mat-header-cell" i18n="@@notifications send email">Send Email</div>
+            <div class="mat-header-cell" i18n="@@notifications send email1">Send Email 1</div>
+            <div class="mat-header-cell" i18n="@@notifications send email2">Send Email 2</div>
             <div class="mat-header-cell" i18n="@@notifications send sms">Send SMS</div>
           </div>
           <div class="mat-row">
             <div class="mat-cell" i18n="@@notifications alert started">Alert started</div>
             <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedEmail"></mat-checkbox>
+              <mat-checkbox formControlName="alertStartedEmail1"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alertStartedEmail2"></mat-checkbox>
             </div>
             <div class="mat-cell">
               <mat-checkbox formControlName="alertStartedSms"></mat-checkbox>
@@ -62,7 +78,10 @@
           <div class="mat-row">
             <div class="mat-cell" i18n="@@notifications alert stopped">Alert stopped</div>
             <div class="mat-cell">
-              <mat-checkbox formControlName="alertStoppedEmail"></mat-checkbox>
+              <mat-checkbox formControlName="alertStoppedEmail1"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="alertStoppedEmail2"></mat-checkbox>
             </div>
             <div class="mat-cell">
               <mat-checkbox formControlName="alertStoppedSms"></mat-checkbox>
