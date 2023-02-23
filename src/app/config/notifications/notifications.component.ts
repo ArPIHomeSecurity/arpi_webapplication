@@ -70,10 +70,16 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
       alertStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_started'),
       alertStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_stopped'),
+      powerOutageStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'power_outage_started'),
+      powerOutageStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'power_outage_stopped'),
       alertStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_started'),
       alertStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_stopped'),
+      powerOutageStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_started'),
+      powerOutageStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_stopped'),
       alertStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
-      alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped')
+      alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped'),
+      powerOutageStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'power_outage_started'),
+      powerOutageStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'power_outage_stopped')
     });
   }
 
@@ -127,14 +133,20 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       email1: {
         alert_started: formModel.alertStartedEmail1,
         alert_stopped: formModel.alertStoppedEmail1,
+        power_outage_started: formModel.powerOutageStartedEmail1,
+        power_outage_stopped: formModel.powerOutageStoppedEmail1
       },
       email2: {
         alert_started: formModel.alertStartedEmail2,
         alert_stopped: formModel.alertStoppedEmail2,
+        power_outage_started: formModel.powerOutageStartedEmail2,
+        power_outage_stopped: formModel.powerOutageStoppedEmail2
       },
       sms: {
         alert_started: formModel.alertStartedSms,
-        alert_stopped: formModel.alertStoppedSms
+        alert_stopped: formModel.alertStoppedSms,
+        power_outage_started: formModel.powerOutageStartedSms,
+        power_outage_stopped: formModel.powerOutageStoppedSms
       }
     };
   }

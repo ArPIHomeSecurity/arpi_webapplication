@@ -19,19 +19,19 @@
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="smtpHostname" i18n-placeholder="@@notifications smtp username" placeholder="SMTP hostname">
+          <input matInput formControlName="smtpHostname" i18n-placeholder="@@notifications smtp hostname" placeholder="SMTP hostname">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="smtpPort" i18n-placeholder="@@notifications smtp username" placeholder="SMTP port">
+          <input matInput formControlName="smtpPort" i18n-placeholder="@@notifications smtp port" placeholder="SMTP port">
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput formControlName="email1Address" i18n-placeholder="@@notifications smtp email" placeholder="Email address 1">
+          <input matInput formControlName="email1Address" i18n-placeholder="@@notifications smtp email1" placeholder="Email address 1">
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput formControlName="email2Address" i18n-placeholder="@@notifications smtp email" placeholder="Email address 2">
+          <input matInput formControlName="email2Address" i18n-placeholder="@@notifications smtp email2" placeholder="Email address 2">
         </mat-form-field>
       </mat-expansion-panel>
 
@@ -85,6 +85,30 @@
             </div>
             <div class="mat-cell">
               <mat-checkbox formControlName="alertStoppedSms"></mat-checkbox>
+            </div>
+          </div>
+          <div class="mat-row">
+            <div class="mat-cell" i18n="@@notifications power outage started">Power outage started</div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStartedEmail1"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStartedEmail2"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStartedSms"></mat-checkbox>
+            </div>
+          </div>
+          <div class="mat-row">
+            <div class="mat-cell" i18n="@@notifications power outage stopped">Power outage stopped</div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStoppedEmail1"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStoppedEmail2"></mat-checkbox>
+            </div>
+            <div class="mat-cell">
+              <mat-checkbox formControlName="powerOutageStoppedSms"></mat-checkbox>
             </div>
           </div>
         </div>

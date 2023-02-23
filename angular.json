@@ -143,9 +143,14 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "argus:build"
+            "browserTarget": "argus:build",
+            "format": "xlf",
+            "outputPath": "src/locales",
+            "targetFiles": [
+              "messages.hu.xlf"
+            ]
           }
         },
         "test": {
