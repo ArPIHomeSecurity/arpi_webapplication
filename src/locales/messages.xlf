@@ -129,11 +129,8 @@
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
       </trans-unit>
-      <trans-unit id="notifications email" datatype="html">
-        <source>Email</source>
-      </trans-unit>
-      <trans-unit id="notifications email settings" datatype="html">
-        <source>Email settings for sending notifications</source>
+      <trans-unit id="notifications smtp settings" datatype="html">
+        <source>SMTP settings for sending notifications</source>
       </trans-unit>
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
@@ -586,6 +583,51 @@
       </trans-unit>
       <trans-unit id="zone none" datatype="html">
         <source>No zones found</source>
+      </trans-unit>
+      <trans-unit id="email1 failed" datatype="html">
+        <source>Failed to send to email address 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications disable gsm" datatype="html">
+        <source>Disable GSM</source>
+      </trans-unit>
+      <trans-unit id="notifications disable smtp" datatype="html">
+        <source>Disable SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications email1 success" datatype="html">
+        <source>Email sent successfully to email address 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications email2 failed" datatype="html">
+        <source>Failed to send to email address 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications email2 success" datatype="html">
+        <source>Email sent successfully to email address 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications enable gsm" datatype="html">
+        <source>Enable GSM</source>
+      </trans-unit>
+      <trans-unit id="notifications enable smtp" datatype="html">
+        <source>Enable SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications phone1 failed" datatype="html">
+        <source>Failed to send SMS!</source>
+      </trans-unit>
+      <trans-unit id="notifications phone1 success" datatype="html">
+        <source>SMS sent successfully to phone!</source>
+      </trans-unit>
+      <trans-unit id="notifications send test email" datatype="html">
+        <source>Send test email</source>
+      </trans-unit>
+      <trans-unit id="notifications send test sms" datatype="html">
+        <source>Send test SMS</source>
+      </trans-unit>
+      <trans-unit id="notifications sms connection failed" datatype="html">
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp" datatype="html">
+        <source>SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp connection failed" datatype="html">
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
       </trans-unit>
     </body>
   </file>

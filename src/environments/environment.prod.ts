@@ -23,7 +23,7 @@ export const environment = {
   delay: 0,
 
   channelCount: 15,
-  snackDuration: 2000,
+  snackDuration: 5000,
 
   apiPort: 443,
   monitoringPort: 443,

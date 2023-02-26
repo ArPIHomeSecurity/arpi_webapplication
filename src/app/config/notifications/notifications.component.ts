@@ -1,13 +1,15 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Inject, ViewChild, TemplateRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
+import { environment } from 'src/environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -19,11 +21,18 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 export class NotificationsComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  @ViewChild('snackbarTemplateEmail') snackbarTemplateEmail: TemplateRef<any>;
+  @ViewChild('snackbarTemplateSms') snackbarTemplateSms: TemplateRef<any>;
   @Input() onlyAlerting = false;
   notificationsForm: UntypedFormGroup;
-  email: Option = null;
+  smtpEnabled: boolean = null;
+  gsmEnabled: boolean = null;
+  smtp: Option = null;
   gsm: Option = null;
   subscriptions: Option = null;
+
+  testEmailResult: any = {}
+  testSmsResult: any = {}
 
   constructor(
     @Inject('ConfigurationService') private configService: ConfigurationService,
@@ -31,6 +40,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
+    private snackBar: MatSnackBar,
     private fb: UntypedFormBuilder,
   ) {
     super(eventService, loader, monitoringService);
@@ -45,25 +55,27 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       this.loader.display(true);
     });
     this.updateComponent();
-    this.updateForm(DEFAULT_NOTIFICATION_EMAIL, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
+    this.updateForm(DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
   }
 
   ngOnDestroy() {
     super.destroy();
   }
 
-  updateForm(email: Option, gsm: Option, subscriptions: Option) {
+  updateForm(smtp: Option, gsm: Option, subscriptions: Option) {
 //    console.log('Email', this.email);
 //    console.log('GSM', this.gsm);
 //    console.log('Subscriptions', this.subscriptions);
+    this.smtpEnabled = getValue(smtp.value, 'enabled')
+    this.gsmEnabled = getValue(gsm.value, 'enabled')
 
     this.notificationsForm = this.fb.group({
-      smtpUsername: getValue(email.value, 'smtp_username'),
-      smtpPassword: getValue(email.value, 'smtp_password'),
-      smtpHostname: getValue(email.value, 'smtp_hostname'),
-      smtpPort: getValue(email.value, 'smtp_port'),
-      email1Address: getValue(email.value, 'email1_address'),
-      email2Address: getValue(email.value, 'email2_address'),
+      smtpUsername: getValue(smtp.value, 'smtp_username'),
+      smtpPassword: getValue(smtp.value, 'smtp_password'),
+      smtpHostname: getValue(smtp.value, 'smtp_hostname'),
+      smtpPort: getValue(smtp.value, 'smtp_port'),
+      email1Address: getValue(smtp.value, 'email1_address'),
+      email2Address: getValue(smtp.value, 'email2_address'),
 
       pinCode: getValue(gsm.value, 'pin_code'),
       phoneNumber: getValue(gsm.value, 'phone_number'),
@@ -85,26 +97,27 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
   updateComponent() {
     forkJoin({
-      email: this.configService.getOption('notifications', 'email'),
+      smtp: this.configService.getOption('notifications', 'smtp'),
       gsm: this.configService.getOption('notifications', 'gsm'),
       subscriptions: this.configService.getOption('notifications', 'subscriptions')
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.email = getValue(results, 'email', DEFAULT_NOTIFICATION_EMAIL);
+        this.smtp = getValue(results, 'smtp', DEFAULT_NOTIFICATION_SMTP);
         this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);
         this.subscriptions = getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
 
-        this.updateForm(this.email, this.gsm, this.subscriptions);
+        this.updateForm(this.smtp, this.gsm, this.subscriptions);
         this.loader.display(false);
         this.loader.disable(false);
       }
     );
   }
 
-  prepareEmail(): any {
+  prepareSmtp(): any {
     const formModel = this.notificationsForm.value;
-    const email: any = {
+    const smtp: any = {
+      enabled: this.smtpEnabled,
       smtp_username: formModel.smtpUsername,
       smtp_hostname: formModel.smtpHostname,
       smtp_port: formModel.smtpPort,
@@ -113,15 +126,16 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     };
 
     if (formModel.smtpPassword) {
-      email.smtp_password = formModel.smtpPassword;
+      smtp.smtp_password = formModel.smtpPassword;
     }
 
-    return email;
+    return smtp;
   }
 
   prepareGsm(): any {
     const formModel = this.notificationsForm.value;
     return {
+      enabled: this.gsmEnabled,
       pin_code: formModel.pinCode,
       phone_number: formModel.phoneNumber
     };
@@ -151,15 +165,59 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     };
   }
 
+  onEnableSmtp() {
+    this.smtpEnabled = true;
+  }
+
+  onDisableSmtp() {
+    this.smtpEnabled = false;
+  }
+
+  onSendTestEmail(){
+    this.testEmailResult = {};
+    this.testSmsResult = {};
+    this.configService.sendTestEmail()
+      .subscribe(response => {
+        this.testEmailResult = response;
+        this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+      },
+      error => {
+        this.testEmailResult = error.error;
+        this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+      })
+  }
+
+  onEnableGsm() {
+    this.gsmEnabled = true;
+  }
+
+  onDisableGsm() {
+    this.gsmEnabled = false;
+  }
+
+  onSendTestSMS(){
+    this.testEmailResult = {};
+    this.testSmsResult = {};
+    this.configService.sendTestSMS()
+      .subscribe(response => {
+        this.testSmsResult = response;
+        this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+      },
+      error => {
+        this.testSmsResult = error.error;
+        this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+      })
+  }
+
   onSubmit() {
-    const email = this.prepareEmail();
+    const smtp = this.prepareSmtp();
     const gsm = this.prepareGsm();
-    const subcriptions = this.prepareSubscriptions();
+    const subscriptions = this.prepareSubscriptions();
     this.loader.disable(true);
     forkJoin({
-      email: this.configService.setOption('notifications', 'email', email),
+      smtp: this.configService.setOption('notifications', 'smtp', smtp),
       gsm: this.configService.setOption('notifications', 'gsm', gsm),
-      subscriptions: this.configService.setOption('notifications', 'subscriptions', subcriptions)
+      subscriptions: this.configService.setOption('notifications', 'subscriptions', subscriptions)
     })
     .subscribe(_ => this.updateComponent());
   }

@@ -254,13 +254,9 @@
         <source>Timezone</source>
         <target state="translated">Időzóna</target>
       </trans-unit>
-      <trans-unit id="notifications email" datatype="html">
-        <source>Email</source>
-        <target state="translated">Email</target>
-      </trans-unit>
-      <trans-unit id="notifications email settings" datatype="html">
-        <source>Email settings for sending notifications</source>
-        <target state="translated">Email beállítások üzenetküldéshez</target>
+      <trans-unit id="notifications smtp settings" datatype="html">
+        <source>SMTP settings for sending notifications</source>
+        <target state="translated">SMTP beállítások üzenetküldéshez</target>
       </trans-unit>
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
@@ -778,6 +774,66 @@
       <trans-unit id="notifications power outage stopped" datatype="html">
         <source>Power outage stopped</source>
         <target state="translated">Áramszünet vége</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp" datatype="html">
+        <source>SMTP</source>
+        <target state="translated">SMTP</target>
+      </trans-unit>
+      <trans-unit id="notifications enable smtp" datatype="html">
+        <source>Enable SMTP</source>
+        <target state="translated">SMTP engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="notifications disable smtp" datatype="html">
+        <source>Disable SMTP</source>
+        <target state="translated">SMTP letiltás</target>
+      </trans-unit>
+      <trans-unit id="notifications send test email" datatype="html">
+        <source>Send test email</source>
+        <target state="translated">Teszt email küldés</target>
+      </trans-unit>
+      <trans-unit id="notifications enable gsm" datatype="html">
+        <source>Enable GSM</source>
+        <target state="translated">GSM engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="notifications disable gsm" datatype="html">
+        <source>Disable GSM</source>
+        <target state="translated">GSM letiltás</target>
+      </trans-unit>
+      <trans-unit id="notifications send test sms" datatype="html">
+        <source>Send test SMS</source>
+        <target state="translated">Teszt SMS küldés</target>
+      </trans-unit>
+      <trans-unit id="notifications email1 success" datatype="html">
+        <source>Email sent successfully to email address 1!</source>
+        <target state="translated">Sikeres email küldés  az email 1 címre!</target>
+      </trans-unit>
+      <trans-unit id="email1 failed" datatype="html">
+        <source>Failed to send to email address 1!</source>
+        <target state="translated">Sikertelen email küldés  az email 1 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications email2 success" datatype="html">
+        <source>Email sent successfully to email address 2!</source>
+        <target state="translated">Sikeres email küldés  az email 2 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications email2 failed" datatype="html">
+        <source>Failed to send to email address 2!</source>
+        <target state="translated">Sikertelen email küldés  az email 2 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp connection failed" datatype="html">
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+      </trans-unit>
+      <trans-unit id="notifications phone1 success" datatype="html">
+        <source>SMS sent successfully to phone!</source>
+        <target state="translated">Sikeres SMS küldés a telefonra!</target>
+      </trans-unit>
+      <trans-unit id="notifications phone1 failed" datatype="html">
+        <source>Failed to send SMS!</source>
+        <target state="translated">Sikertelen SMS küldés!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms connection failed" datatype="html">
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
     </body>
   </file>

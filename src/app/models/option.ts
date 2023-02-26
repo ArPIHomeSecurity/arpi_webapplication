@@ -5,10 +5,10 @@ export class Option {
 }
 
 // use string as constant instead of complex type to avoid changing it through a reference
-export const DEFAULT_NOTIFICATION_EMAIL = {
+export const DEFAULT_NOTIFICATION_SMTP = {
   option: 'notifications',
-  section: 'email',
-  value: '{"smtp_username":"", "smtp_password":"", "email_address": ""}'
+  section: 'smtp',
+  value: '{"enabled": false, "smtp_username":"", "smtp_password":"", "email1_address": "", "email2_address": ""}'
 };
 
 export const DEFAULT_NOTIFICATION_GSM = {
@@ -24,13 +24,23 @@ export const DEFAULT_NOTIFICATION_SUBSCRIPTIONS = {
   option: 'notifications',
   section: 'subscriptions',
   value: {
-    email: {
+    email1: {
       alert_started: false,
-      alert_stopped: false
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false
+    },
+    email2: {
+      alert_started: false,
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false
     },
     sms: {
       alert_started: false,
-      alert_stopped: false
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false
     }
   }
 };

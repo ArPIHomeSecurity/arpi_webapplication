@@ -22,4 +22,12 @@ export class ConfigurationService implements ConfigurationService {
     // get configuration option from api
     return this.http.put('/api/config/' + option + '/' + section, value);
   }
+
+  sendTestEmail() {
+    return this.http.get('/api/config/test_email');
+  }
+
+  sendTestSMS() {
+    return this.http.get('/api/config/test_sms');
+  }
 }
