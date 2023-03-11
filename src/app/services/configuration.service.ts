@@ -11,4 +11,6 @@ export interface ConfigurationService {
   sendTestEmail(): Observable<any>;
   
   sendTestSMS(): Observable<any>;
+
+  testSyren(duration?: number): Observable<any>;
 }

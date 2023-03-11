@@ -629,6 +629,9 @@
       <trans-unit id="notifications smtp connection failed" datatype="html">
         <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
       </trans-unit>
+      <trans-unit id="syren test" datatype="html">
+        <source>Test</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -78,6 +78,10 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     };
   }
 
+  onTestSyren() {
+    this.configurationService.testSyren(5).subscribe();
+  }
+
   onSubmit() {
     this.loader.disable(true);
     this.configurationService.setOption('syren', 'timing', this.prepareSyren())
@@ -87,4 +91,3 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     );
   }
 }
-

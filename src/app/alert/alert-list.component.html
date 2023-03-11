@@ -34,7 +34,7 @@
         </mat-expansion-panel-header>
         <div *ngFor="let sensor of alert.sensors">
           <div *ngIf="sensors && sensorExists(sensor.sensorId); else sensor_doesnt_exists">
-            <a [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}">{{sensor.description}}</a> (Channel: {{sensor.channel}})
+            <a [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}">{{sensor.description}}</a> (Channel: {{sensor.channel + 1}})
           </div>
           <ng-template #sensor_doesnt_exists i18n="@@@alert history no sensor">
             Sensor not found!

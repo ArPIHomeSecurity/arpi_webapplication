@@ -60,4 +60,8 @@ export class ConfigurationService {
   sendTestSMS() {
 
   }
+
+  testSyren(duration?: number) {
+    
+  }
 }
