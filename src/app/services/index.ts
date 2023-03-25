@@ -1,4 +1,5 @@
 export * from './alert.service';
+export * from './arm.service';
 export * from './authentication.service';
 export * from './card.service';
 export * from './configuration.service';

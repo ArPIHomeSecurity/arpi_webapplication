@@ -73,7 +73,10 @@ export class AlertService {
         sensorId: sensor.id,
         typeId: sensor.typeId,
         channel: sensor.channel,
-        description: sensor.description
+        description: sensor.description,
+        startTime: "TODO: date",
+        endTime: "TODO: date",
+        delay: 0
       });
     });
 

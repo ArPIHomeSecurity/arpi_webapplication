@@ -2,38 +2,8 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="alert type" datatype="html">
-        <source>Alert type</source>
-      </trans-unit>
-      <trans-unit id="alert type away" datatype="html">
-        <source>AWAY</source>
-      </trans-unit>
-      <trans-unit id="alert type stay" datatype="html">
-        <source>STAY</source>
-      </trans-unit>
-      <trans-unit id="alert type sabotage" datatype="html">
-        <source>SABOTAGE</source>
-      </trans-unit>
-      <trans-unit id="alert start time" datatype="html">
-        <source>Start time</source>
-      </trans-unit>
-      <trans-unit id="alert end time" datatype="html">
-        <source>End time</source>
-      </trans-unit>
-      <trans-unit id="alert history sensors" datatype="html">
-        <source>Sensors</source>
-      </trans-unit>
-      <trans-unit id="@alert history sensors" datatype="html">
-        <source>Sensor(s)</source>
-      </trans-unit>
-      <trans-unit id="@alert history no sensor" datatype="html">
-        <source> Sensor not found! </source>
-      </trans-unit>
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
-      </trans-unit>
-      <trans-unit id="alert history menu link" datatype="html">
-        <source>Alert history</source>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
         <source>Settings</source>
@@ -551,7 +521,7 @@
       <trans-unit id="zone stay_s" datatype="html">
         <source>S:</source>
       </trans-unit>
-      <trans-unit id="zone disarme_s" datatype="html">
+      <trans-unit id="zone disarmed_s" datatype="html">
         <source>D:</source>
       </trans-unit>
       <trans-unit id="zone alert type" datatype="html">
@@ -631,6 +601,117 @@
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
+      </trans-unit>
+      <trans-unit id="events start" datatype="html">
+        <source>Start <x id="PH" equiv-text="sensor.description"/></source>
+      </trans-unit>
+      <trans-unit id="events menu link" datatype="html">
+        <source>Events</source>
+      </trans-unit>
+      <trans-unit id="events alert started" datatype="html">
+        <source>Alert started</source>
+      </trans-unit>
+      <trans-unit id="events away" datatype="html">
+        <source>AWAY</source>
+      </trans-unit>
+      <trans-unit id="events alert finished" datatype="html">
+        <source>Alert finished</source>
+      </trans-unit>
+      <trans-unit id="events end" datatype="html">
+        <source>End <x id="PH" equiv-text="sensor.description"/></source>
+      </trans-unit>
+      <trans-unit id="events alert" datatype="html">
+        <source>Alert event</source>
+      </trans-unit>
+      <trans-unit id="events alert no" datatype="html">
+        <source>No</source>
+      </trans-unit>
+      <trans-unit id="events alert undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events alert yes" datatype="html">
+        <source>Yes</source>
+      </trans-unit>
+      <trans-unit id="events arm" datatype="html">
+        <source>Arm event</source>
+      </trans-unit>
+      <trans-unit id="events arm away" datatype="html">
+        <source>AWAY</source>
+      </trans-unit>
+      <trans-unit id="events arm disarmed" datatype="html">
+        <source>DISARMED</source>
+      </trans-unit>
+      <trans-unit id="events arm stay" datatype="html">
+        <source>STAY</source>
+      </trans-unit>
+      <trans-unit id="events arm undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events armed" datatype="html">
+        <source>Armed</source>
+      </trans-unit>
+      <trans-unit id="events filter armed by" datatype="html">
+        <source>Armed by</source>
+      </trans-unit>
+      <trans-unit id="events armed keypad" datatype="html">
+        <source>Armed with keypad</source>
+      </trans-unit>
+      <trans-unit id="events undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events clear filters" datatype="html">
+        <source>Clear filters </source>
+      </trans-unit>
+      <trans-unit id="events filter date" datatype="html">
+        <source>Enter a date range</source>
+      </trans-unit>
+      <trans-unit id="events delay" datatype="html">
+        <source> delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+      </trans-unit>
+      <trans-unit id="events disarmed" datatype="html">
+        <source>Disarmed</source>
+      </trans-unit>
+      <trans-unit id="events disarmed keypad" datatype="html">
+        <source>Disarmed with keypad</source>
+      </trans-unit>
+      <trans-unit id="events disarmed system" datatype="html">
+        <source> Disarmed by system </source>
+      </trans-unit>
+      <trans-unit id="events empty" datatype="html">
+        <source>No arms/alerts found</source>
+      </trans-unit>
+      <trans-unit id="events sabotage" datatype="html">
+        <source>Sabotage event</source>
+      </trans-unit>
+      <trans-unit id="events sensors" datatype="html">
+        <source>Alerting sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="events timeline" datatype="html">
+        <source>Timeline</source>
+      </trans-unit>
+      <trans-unit id="events keypad" datatype="html">
+        <source>Keypad</source>
+      </trans-unit>
+      <trans-unit id="events filter alert" datatype="html">
+        <source>Alert happened</source>
+      </trans-unit>
+      <trans-unit id="events filter arm" datatype="html">
+        <source>Arm type</source>
+      </trans-unit>
+      <trans-unit id="events filter" datatype="html">
+        <source>Filter</source>
+      </trans-unit>
+      <trans-unit id="events stay" datatype="html">
+        <source>STAY</source>
+      </trans-unit>
+      <trans-unit id="events disarmed by" datatype="html">
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></source>
+      </trans-unit>
+      <trans-unit id="events properties" datatype="html">
+        <source>Properties</source>
+      </trans-unit>
+      <trans-unit id="events armed by" datatype="html">
+        <source>Armed by</source>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,147 @@
+<div ngClass.gt-md="event-list" ngClass.lt-lg="event-list-xs" fxLayout="column">
+
+  <mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span i18n="@@events filter">Filter</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="filters" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+
+      <mat-form-field appearance="fill">
+        <mat-label i18n="@@events filter arm">Arm type</mat-label>
+        <mat-select [(ngModel)]="armType" (ngModelChange)="filterArms()">
+          <mat-option [value]="armTypes.UNDEFINED" i18n="@@events arm undefined">Undefined</mat-option>
+          <mat-option [value]="armTypes.AWAY" i18n="@@events arm away">AWAY</mat-option>
+          <mat-option [value]="armTypes.STAY" i18n="@@events arm stay">STAY</mat-option>
+          <mat-option [value]="armTypes.DISARMED"i18n="@@events arm disarmed">DISARMED</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label i18n="@@events filter armed by">Armed by</mat-label>
+        <mat-select [(ngModel)]="armedBy" (ngModelChange)="filterArms()">
+          <mat-option [value]="0" i18n="@@events undefined">Undefined</mat-option>
+          <mat-option [value]="-1" i18n="@@events keypad">Keypad</mat-option>
+          <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label i18n="@@events filter date">Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" [(ngModel)]="startDate" (ngModelChange)="filterArms()">
+          <input matEndDate placeholder="End date" [(ngModel)]="endDate" (ngModelChange)="filterArms()">
+        </mat-date-range-input>
+        <mat-hint>YYYY-MM-DD – YYYY-MM-DD</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label i18n="@@events filter alert">Alert happened</mat-label>
+        <mat-select [(ngModel)]="hasAlert" (ngModelChange)="filterArms()">
+          <mat-option [value]="0" i18n="@@events alert undefined">Undefined</mat-option>
+          <mat-option [value]="1" i18n="@@events alert no">No</mat-option>
+          <mat-option [value]="2" i18n="@@events alert yes">Yes</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" (click)="clearFilters()" [disabled]="isClearDisabled()"
+        (click)="filterArms()" i18n="@@events clear filters">Clear filters
+      </button>
+    
+      </div>
+  </mat-expansion-panel>
+
+
+  <mat-paginator #paginator [length]="armsCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons="true" (page)="paginate()">
+  </mat-paginator>
+
+  <div *ngIf="events; else loading" fxLayout="column" fxLayoutGap="3px">
+    <div *ngIf="events && events.length > 0; else no_arms" fxLayout="column" fxLayoutGap="3px">
+
+      <mat-accordion *ngFor="let event of events">
+        <mat-expansion-panel [ngClass]="{'warn': event.alert && !event.alert.endTime}">
+          <mat-expansion-panel-header>
+            <mat-panel-title fxLayout="row" fxLayoutGap="30px" [ngClass]="{'warn': event.disarm?.time == null}">
+              <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" mat-list-icon>directions_walk</mat-icon>
+              <mat-icon *ngIf="event.arm?.type == armTypes.STAY" mat-list-icon>hotel</mat-icon>
+              <mat-icon *ngIf="!event.arm?.type" mat-list-icon>verified_user</mat-icon>
+              <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
+              <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
+              <span *ngIf="!event.arm && !event.disarm">{{ event.alert?.startTime | date: 'longDate' }}</span>
+              <mat-icon *ngIf="event.alert" [ngStyle]="{'color': event.disarm?.time != null ? 'red' : ''}">warning</mat-icon>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxFill>
+
+            <div class="panel" fxFlex="48">
+              <span class="title" i18n="@@events properties">Properties</span>
+              <mat-divider></mat-divider>
+              <div class="content">
+                <ul>
+                  <li *ngIf="!event.arm && event.disarm" i18n="@@events sabotage">Sabotage event</li>
+                  <li *ngIf="event.arm && event.disarm && !event.alert" i18n="@@events arm">Arm event</li>
+                  <li *ngIf="event.arm && event.disarm && event.alert" i18n="@@events alert">Alert event</li>
+
+                  <li *ngIf="event.arm?.userId">
+                    <span i18n="@@events armed by">Armed by</span>
+                    {{ getUsername(event.arm?.userId) }}
+                    <span *ngIf="event.arm?.type == armTypes.AWAY" i18n="@@events away">AWAY</span>
+                    <span *ngIf="event.arm?.type == armTypes.STAY" i18n="@@events stay">STAY</span>
+                  </li>
+                  <li *ngIf="event.arm?.keypadId" i18n="@@events armed keypad">Armed with keypad</li>
+
+                  <li *ngIf="event.alert?.sensors" i18n="@@events sensors">Alerting sensor(s)</li>
+                  <ul>
+                    <li *ngFor="let sensor of event.alert?.sensors">
+                      {{ sensor.description }} <span>(CH{{ sensor.channel + 1 | number: '2.0-0' }})</span>
+                      <span i18n="@@events delay"> delay: {{sensor.delay}}</span>
+                    </li>
+                  </ul>
+
+                  <li *ngIf="event.disarm?.userId" i18n="@@events disarmed by">Disarmed by {{ getUsername(event.disarm.userId) }}</li>
+                  <li *ngIf="event.disarm?.keypadId" i18n="@@events disarmed keypad">Disarmed with keypad</li>
+                  <li *ngIf="!event.disarm?.userId && !event.disarm?.keypadId && event.disarm?.time == '2000-01-01 01:00:00'"
+                    [ngClass]="{'warn': event.disarm?.time == null}" i18n="@@events disarmed system">
+                    Disarmed by system
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="panel" fxFlex="48">
+              <span class="title" i18n="@@events timeline">Timeline</span>
+              <mat-divider></mat-divider>
+              <div class="content">
+                <p *ngFor="let step of getTimeline(event)"
+                  [ngClass]="{warn: !environment.production && step.isDefaultDate, hidden: environment.production && step.isDefaultDate}"
+                >
+                  {{step.time}}: {{step.description}}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+
+<ng-template #no_arms>
+  <div ngClass.gt-xs="event-list" ngClass.xs="event-list-xs">
+    <h1 class="empty" i18n="@@events empty">No arms/alerts found</h1>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <div class="loader">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

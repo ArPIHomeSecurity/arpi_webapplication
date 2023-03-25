@@ -5,6 +5,7 @@
 
 import {
   AlertService,
+  ArmService,
   AuthenticationService,
   CardService,
   ConfigurationService,
@@ -36,6 +37,7 @@ export const environment = {
 
   // Service types
   alertService: AlertService,
+  armService: ArmService,
   authenticationService: AuthenticationService,
   cardService: CardService,
   configurationService: ConfigurationService,

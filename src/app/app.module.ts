@@ -15,7 +15,6 @@ import { CountdownModule } from 'ngx-countdown';
 import { AuthGuard, AdminGuard } from './guards';
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
-import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
@@ -49,6 +48,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +64,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EventsComponent } from './events/events.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -73,8 +76,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppComponent,
     LoginComponent,
     HomeComponent,
-
-    AlertListComponent,
 
     KeypadComponent,
     ClockComponent,
@@ -101,7 +102,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PageNotFoundComponent,
 
     DemoComponent,
-    DemoHelpDialogComponent
+    DemoHelpDialogComponent,
+    EventsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -137,14 +139,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatRadioModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressSpinnerModule,
     MatMenuModule,
+    MatPaginatorModule
   ],
   providers: [
     AuthGuard,
     AdminGuard,
 
     {provide: 'AlertService', useClass: environment.alertService},
+    {provide: 'ArmService', useClass: environment.armService},
     {provide: 'AuthenticationService', useClass: environment.authenticationService},
     {provide: 'CardService', useClass: environment.cardService},
     {provide: 'ConfigurationService', useClass: environment.configurationService},

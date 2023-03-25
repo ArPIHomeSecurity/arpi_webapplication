@@ -27,8 +27,8 @@
         <a mat-list-item routerLink="/" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" fxHide.lt-md="true" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>home</mat-icon><span i18n="@@home menu link">Control</span>
         </a>
-        <a mat-list-item routerLink="/alerts" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
-          <mat-icon mat-list-icon>history</mat-icon><span i18n="@@alert history menu link">Alert history</span>
+        <a mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>history</mat-icon><span i18n="@@events menu link">Events</span>
         </a>
         <h3 mat-subheader i18n="Settings menu title" [fxShow]="isLoggedIn()">Settings</h3>
         <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">

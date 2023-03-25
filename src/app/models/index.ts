@@ -1,5 +1,7 @@
 export * from './alert';
+export * from './arm';
 export * from './card';
+export * from './event';
 export * from './keypad';
 export * from './option';
 export * from './power';

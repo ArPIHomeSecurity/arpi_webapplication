@@ -1,3 +1,11 @@
+@mixin application-theme($theme) {
+  $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+}
+
+
 .app-viewport {
   position: fixed;
   top: 0;
@@ -68,13 +76,6 @@
 
 .count-down {
   margin: 0 15px;
-}
-
-@mixin application-theme($theme) {
-  $primary: map-get($theme, primary);
-  $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
 }
 
 #overlay {
