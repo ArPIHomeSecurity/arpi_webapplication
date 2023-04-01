@@ -1,53 +1,47 @@
-<div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap="0">
-  <div class="" fxFlex="35%" fxLayoutAlign="space-around center">
-    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState" [disabled]="armState == armTypes.UNDEFINED">
-      <mat-button-toggle id="arm-away" value="AWAY"
-        [checked]="armState == armTypes.AWAY"
-        [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
-        (change)="armChanged($event)"
-        i18n="@@arm away button">
-        AWAY
-      </mat-button-toggle>
-      <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert" (change)="armChanged($event)"
-        i18n="@@disarm button">
-        OFF
-      </mat-button-toggle>
-      <mat-button-toggle id="arm-stay" value="STAY"
-        [checked]="armState == armTypes.STAY"
-        [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
-        (change)="armChanged($event)"
-        i18n="@@arm stay button">
-        STAY
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+<div class="container">
+
+  <div ngClass.gt-sm="home" ngClass.lt-md="home-small" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
+
+    <div class="controller" fxFlex="column" fxFlexAlign="center">
+      <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState"
+        [disabled]="armState == armTypes.UNDEFINED">
+        <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == armTypes.AWAY"
+          [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+          (change)="armChanged($event)" i18n="@@arm away button">
+          AWAY
+        </mat-button-toggle>
+        <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert"
+          (change)="armChanged($event)" i18n="@@disarm button">
+          OFF
+        </mat-button-toggle>
+        <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == armTypes.STAY"
+          [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+          (change)="armChanged($event)" i18n="@@arm stay button">
+          STAY
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <div *ngIf="alert" fxFill>
+      <mat-expansion-panel class="alert" color="warn">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <img src="assets/images/alarm_lamp_white.png" />
+          </mat-panel-title>
+          <mat-panel-description i18n="@@alert started">Alert started on: {{alert.startTime}}</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"></sensor>
+
+      </mat-expansion-panel>
+    </div>
+
+    <div fxFlex="column" fxFlexAlign="center" fxFill>
+      <sensor *ngFor="let sensor of sensors" [sensor]="sensor"></sensor>
+    </div>
+
   </div>
 
-  <div *ngIf="alert" fxFlex="35%" fxLayoutAlign="center">
-    <mat-expansion-panel class="alert" color="warn">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <img src="assets/images/alarm_lamp_white.png"/>
-        </mat-panel-title>
-        <mat-panel-description i18n="@@alert started">Alert started on: {{alert.startTime}}</mat-panel-description>
-      </mat-expansion-panel-header>
-      
-      <mat-card id="sensor-{{sensor.id}}" class="sensor-short-card" *ngFor="let sensor of alert.sensors">
-        <mat-card-header>
-          <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image">
-            <img *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
-            <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png"/>
-            <img *ngSwitchCase="3" src="assets/images/sensor_open.png"/>
-            <img *ngSwitchCase="4" src="assets/images/sensor_break.png"/>
-            <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"/>
-          </div>
-          <mat-card-title>{{sensor.description}}</mat-card-title>
-          <mat-card-subtitle><label i18n="@@input channel">Input channel: </label>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content layout="row">
-        </mat-card-content>
-      </mat-card>
-    </mat-expansion-panel>
-  </div>
 </div>
 
 <ng-template #snackbarTemplate>

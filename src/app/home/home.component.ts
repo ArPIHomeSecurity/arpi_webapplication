@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType } from '../models';
+import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor } from '../models';
 import { AlertService, EventService, LoaderService, MonitoringService, SensorService } from '../services';
 
 import { environment } from '../../environments/environment';
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   monitoringStates: any = MONITORING_STATE;
   monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
+  sensors: Sensor[];
   sensorTypes: SensorType [] = [];
 
   constructor(
@@ -39,6 +40,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadStates();
+
+    // SENSORS
+    this.sensorService.getSensors()
+      .subscribe(sensors => {
+        this.sensors = sensors
+      }
+    );
 
     // ALERT STATE
     this.eventService.listen('alert_state_change')
@@ -74,6 +82,17 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.monitoringState = string2MonitoringState(monitoringState);
           this.onStateChanged();
       });
+
+    this.eventService.listen('sensors_state_change')
+      .subscribe(_ => {
+        this.sensorService.getSensors()
+          .subscribe(sensors => {
+            this.sensors = sensors
+          }
+        );
+      }
+    );
+
 
     this.eventService.isConnected()
       .subscribe(connected => {

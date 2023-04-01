@@ -40,6 +40,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
+import { SensorComponent } from './components/sensor/sensor';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -90,6 +91,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
 
+    SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
