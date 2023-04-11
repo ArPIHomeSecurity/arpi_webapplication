@@ -10,6 +10,7 @@ import { Sensor, SensorType } from 'src/app/models';
 })
 export class SensorComponent {
   @Input() sensor:Sensor;
+  @Input() delay:number = null;
   @Input("data") sensorTypes:SensorType[];
 
   getSensorTypeName(sensorTypeId: number) {

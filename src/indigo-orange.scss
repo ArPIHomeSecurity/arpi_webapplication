@@ -2,6 +2,7 @@
 
 @import 'app/app.component.scss';
 @import 'app/indicators/system-state.component.scss';
+@import 'app/components/sensor/sensor.scss';
 @import 'app/home/home.component.scss';
 
 @include mat-core();
@@ -24,4 +25,5 @@ $argus-theme: mat-light-theme($argus-primary, $argus-accent, $argus-warn);
 
 @include application-theme($argus-theme);
 @include system-state-indicator-theme($argus-theme, $argus-ok);
+@include sensor-theme($argus-theme, $argus-ok);
 @include home-theme($argus-theme, $argus-ok);

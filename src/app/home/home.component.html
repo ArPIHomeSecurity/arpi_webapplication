@@ -37,7 +37,7 @@
     </div>
 
     <div fxFlex="column" fxFlexAlign="center" fxFill>
-      <sensor *ngFor="let sensor of sensors" [sensor]="sensor"></sensor>
+      <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.zoneId)"></sensor>
     </div>
 
   </div>

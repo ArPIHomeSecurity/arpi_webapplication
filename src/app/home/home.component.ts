@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor } from '../models';
-import { AlertService, EventService, LoaderService, MonitoringService, SensorService } from '../services';
+import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone } from '../models';
+import { AlertService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sensorAlert: boolean;
   sensors: Sensor[];
   sensorTypes: SensorType [] = [];
+  zones: Zone[] = [];
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
+    @Inject('ZoneService') private zoneService: ZoneService,
 
     private snackBar: MatSnackBar,
   ) {
@@ -44,7 +46,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     // SENSORS
     this.sensorService.getSensors()
       .subscribe(sensors => {
-        this.sensors = sensors
+        this.sensors = sensors.filter(s => s.enabled)
+      }
+    );
+
+    // ZONES
+    this.zoneService.getZones()
+      .subscribe(zones => {
+        this.zones = zones;
       }
     );
 
@@ -182,5 +191,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     return '';
+  }
+
+  getSensorDelay(zoneId: number) : number {
+    if (this.armState === ARM_TYPE.AWAY) {
+      return this.zones.find(z => z.id === zoneId).awayAlertDelay;
+    }
+    if (this.armState === ARM_TYPE.STAY) {
+      return this.zones.find(z => z.id === zoneId).stayAlertDelay;
+    }
+    if (this.armState === ARM_TYPE.DISARMED) {
+      return this.zones.find(z => z.id === zoneId).disarmedDelay;
+    }
+    
+    return null;
   }
 }
