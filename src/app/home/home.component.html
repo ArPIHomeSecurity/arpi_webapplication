@@ -2,20 +2,23 @@
 
   <div ngClass.gt-sm="home" ngClass.lt-md="home-small" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
 
-    <div class="controller" fxFlex="column" fxFlexAlign="center">
-      <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState"
-        [disabled]="armState == armTypes.UNDEFINED">
-        <mat-button-toggle id="arm-away" value="AWAY" [checked]="armState == armTypes.AWAY"
-          [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+    <div class="controller">
+      <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup"
+        [name]="armState"
+        [disabled]="armState == armTypes.UNDEFINED"
+        multiple
+      >
+        <mat-button-toggle class="arm-away" value="AWAY" [checked]="[armTypes.AWAY, armTypes.MIXED].includes(armState)"
+          [disabled]="isAwayDisabled()"
           (change)="armChanged($event)" i18n="@@arm away button">
           AWAY
         </mat-button-toggle>
-        <mat-button-toggle id="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert"
+        <mat-button-toggle class="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert"
           (change)="armChanged($event)" i18n="@@disarm button">
           OFF
         </mat-button-toggle>
-        <mat-button-toggle id="arm-stay" value="STAY" [checked]="armState == armTypes.STAY"
-          [disabled]="sensorAlert || armState !== armTypes.DISARMED || monitoringState !== monitoringStates.READY || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+        <mat-button-toggle class="arm-stay" value="STAY" [checked]="[armTypes.STAY, armTypes.MIXED].includes(armState)"
+          [disabled]="isStayDisabled()"
           (change)="armChanged($event)" i18n="@@arm stay button">
           STAY
         </mat-button-toggle>
@@ -36,8 +39,22 @@
       </mat-expansion-panel>
     </div>
 
-    <div fxFlex="column" fxFlexAlign="center" fxFill>
-      <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.zoneId)"></sensor>
+    <div *ngIf="areas.length == 1">
+      <div fxFlex="column" fxFlexAlign="center" fxFill>
+        <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"></sensor>
+      </div>
+    </div>
+    <div *ngIf="areas.length > 1">
+      <div fxFlex="column" fxFlexAlign="center" fxFill>
+        <app-area *ngFor="let area of areas"
+          [area]="area"
+          [sensors]="getSensors(area.id)"
+          [delays]="getSensorDelays(area.id)"
+          [sensorAlert]="sensorAlert"
+          [monitoringState]="monitoringState"
+          >
+        </app-area>
+      </div>
     </div>
 
   </div>

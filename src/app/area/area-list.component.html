@@ -1,0 +1,51 @@
+<div *ngIf="areas != null && sensors != null">
+  <div *ngIf="areas.length > 0; else no_areas" ngClass.gt-xs="area-list" ngClass.xs="area-list-xs" fxLayout="column" fxLayoutGap="20px">
+    <mat-card *ngFor="let area of areas">
+      <mat-card-content layout="row">
+  
+        <mat-card-title>{{area.name}}</mat-card-title>
+        <mat-card-subtitle *ngIf="area.name != area.description">{{area.description}}</mat-card-subtitle>
+  
+        <mat-expansion-panel (opened)="sensorListOpened[area.id] = true" (closed)="sensorListOpened[area.id] = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
+            <mat-panel-description *ngIf="!sensorListOpened[area.id]">{{getSensors(area.id).length}} sensor(s)</mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngIf="getSensors(area.id).length > 0; else no_sensors">
+            <ul class="sensor-list">
+              <li *ngFor="let sensor of getSensors(area.id)">
+                {{sensor.description}}
+                <button mat-button [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent" [fxShow]="authService.getRole() == 'admin'"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
+              </li>
+            </ul>
+          </div>
+          <ng-template #no_sensors>
+            <h3 i18n="@@area no sensors">No sensors</h3>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-card-content>
+  
+      <mat-card-actions [fxShow]="userCanEdit()" align="end">
+        <button mat-icon-button [routerLink]="['/area', area.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(area.id)" color="warn" [disabled]="getSensors(area.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+      </mat-card-actions>
+  
+    </mat-card>
+  </div>
+  
+  <ng-template #no_areas>
+    <div ngClass.gt-xs="area-list" ngClass.xs="area-list-xs">
+      <h1 class="empty" i18n="@@area none">No areas found</h1>
+    </div>
+  </ng-template>
+</div>
+
+<div ngClass.gt-xs="area-actions" ngClass.xs="area-actions-xs" [fxShow]="userCanEdit()">
+  <button class="area-action" mat-fab color="accent" routerLink="/area/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+  <button class="area-action" mat-mini-fab color="accent" routerLink="/area/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+</div>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>

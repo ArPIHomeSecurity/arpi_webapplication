@@ -29,15 +29,15 @@
   }
 
 
-  #arm-away.mat-button-toggle-checked {
+  .arm-away.mat-button-toggle-checked {
     background-color: #ed1010;
   }
 
-  #disarm.mat-button-toggle-checked {
+  .disarm.mat-button-toggle-checked {
     background-color: map-get($ok, 600);
   }
 
-  #arm-stay.mat-button-toggle-checked {
+  .arm-stay.mat-button-toggle-checked {
     background-color: #ffb600;
   }
 

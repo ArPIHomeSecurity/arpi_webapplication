@@ -13,6 +13,7 @@ import { ClockComponent } from './config/clock';
 import { SyrenComponent } from './config/syren';
 import { UserListComponent, UserDetailComponent } from './user';
 import { EventsComponent } from './events/events.component';
+import { AreaDetailComponent, AreaListComponent } from './area';
 
 const appRoutes: Routes = [
   {
@@ -73,6 +74,21 @@ const appRoutes: Routes = [
   {
     path: 'zone/:id',
     component: ZoneDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'areas',
+    component: AreaListComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'area/add',
+    component: AreaDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'area/:id',
+    component: AreaDetailComponent,
     canActivate: [AdminGuard]
   },
   {

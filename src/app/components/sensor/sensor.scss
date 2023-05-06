@@ -36,6 +36,18 @@
             text-align: center;
             background-color: mat-color($ok);
         }
+
+        .disabled {
+            -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            border-radius: 22px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: rgb(160, 160, 160);
+        }
     }
 
     .sensor-image {

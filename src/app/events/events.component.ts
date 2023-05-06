@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { forkJoin, merge, Observable, of } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
-import { ALERT_TYPE, ArmEvent, ARM_TYPE, Sensor, User } from '../models';
+import { ALERT_TYPE, ArmEvent, ArmSensor, ARM_TYPE, Sensor, User } from '../models';
 import { ArmService } from '../services';
 import { SensorService, LoaderService, UserService } from '../services';
 import { finalize } from 'rxjs/operators';
@@ -133,6 +133,11 @@ export class EventsComponent implements OnInit {
       timeline.push({ time: event.arm.time, description: $localize`:@@events armed:Armed`, isDefaultDate: event.arm.time == "2000-01-01 01:00:00"})
     }
 
+    if (event.armSensors && event.armSensors.length > 1) {
+      event.armSensors.map(armSensor =>
+        timeline.push({ time: armSensor.timestamp, description: $localize`:@@events arm changed:Arm changed`, isDefaultDate: armSensor.timestamp == "2000-01-01 01:00:00"}))
+    }
+
     if (event.alert) {
       event.alert.sensors.forEach((sensor) => {
         timeline.push({time: sensor.startTime, description: $localize`:@@events start:Start ${sensor.description}`, isDefaultDate: sensor.startTime == "2000-01-01 01:00:00"})
@@ -154,5 +159,17 @@ export class EventsComponent implements OnInit {
     timeline.sort((a, b) => a.time > b.time ? 1 : -1);
 
     return timeline;
+  }
+
+  getEventTimestamps(event: ArmEvent) {
+    return event.armSensors.map(a => a.timestamp)
+  }
+
+  getEventSensorRange(event: ArmEvent): number[] {
+    return Array(event.armSensors[0].sensors.length).fill(0).map((x,i)=>i);
+  }
+
+  getEventSensorstates(event: ArmEvent, sensorIndex: number): ArmSensor[] {
+    return event.armSensors.map(a => a.sensors[sensorIndex]);
   }
 }

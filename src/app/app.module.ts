@@ -22,6 +22,7 @@ import { SyrenComponent } from './config/syren';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
+import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './area';
 import {
   UserListComponent,
   UserDetailComponent,
@@ -40,7 +41,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { SensorComponent } from './components/sensor/sensor';
+import { AreaComponent, SensorComponent } from './components';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -91,10 +92,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
 
+    AreaComponent,
+
     SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
+
+    AreaListComponent,
+    AreaDetailComponent,
+    AreaDeleteDialogComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
@@ -163,6 +170,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     {provide: 'SensorService', useClass: environment.sensorService},
     {provide: 'UserService', useClass: environment.userService},
     {provide: 'ZoneService', useClass: environment.zoneService},
+    {provide: 'AreaService', useClass: environment.areaService},
 
     {
       provide: HTTP_INTERCEPTORS,

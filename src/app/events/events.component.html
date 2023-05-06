@@ -16,6 +16,7 @@
           <mat-option [value]="armTypes.UNDEFINED" i18n="@@events arm undefined">Undefined</mat-option>
           <mat-option [value]="armTypes.AWAY" i18n="@@events arm away">AWAY</mat-option>
           <mat-option [value]="armTypes.STAY" i18n="@@events arm stay">STAY</mat-option>
+          <mat-option [value]="armTypes.MIXED" i18n="@@events arm mixed">MIXED</mat-option>
           <mat-option [value]="armTypes.DISARMED"i18n="@@events arm disarmed">DISARMED</mat-option>
         </mat-select>
       </mat-form-field>
@@ -70,6 +71,8 @@
             <mat-panel-title fxLayout="row" fxLayoutGap="30px" [ngClass]="{'warn': event.disarm?.time == null}">
               <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" mat-list-icon>directions_walk</mat-icon>
               <mat-icon *ngIf="event.arm?.type == armTypes.STAY" mat-list-icon>hotel</mat-icon>
+              <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>directions_walk</mat-icon>
+              <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>hotel</mat-icon>
               <mat-icon *ngIf="!event.arm?.type" mat-list-icon>verified_user</mat-icon>
               <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
@@ -80,7 +83,7 @@
 
           <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxFill>
 
-            <div class="panel" fxFlex="48">
+            <div class="panel" fxFlex.lt-md="100" fxFlex="48">
               <span class="title" i18n="@@events properties">Properties</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -115,7 +118,7 @@
               </div>
             </div>
 
-            <div class="panel" fxFlex="48">
+            <div class="panel" fxFlex.lt-md="100" fxFlex="48">
               <span class="title" i18n="@@events timeline">Timeline</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -124,6 +127,40 @@
                 >
                   {{step.time}}: {{step.description}}
                 </p>
+              </div>
+            </div>
+
+            <!--div class="panel" fxFlex="100" *ngIf="event['armSensors'] && event.armSensors.length > 0">
+              <span class="title" i18n="@@events sensor states">Sensor states</span>
+              <mat-divider></mat-divider>
+              <div class="content">
+                <div class="mat-table">
+                  <div class="mat-header-row">
+                    <div class="mat-header-cell" i18n="@@events timestamp">Timestamp</div>
+                    <div *ngFor="let sensor of event.armSensors[0].sensors" class="mat-header-cell">{{sensor.description}}</div>
+                  </div>
+                  <div class="mat-row" *ngFor="let armSensor of event.armSensors">
+                    <div class="mat-cell">{{armSensor.timestamp}}</div>
+                    <div class="mat-cell" *ngFor="let sensor of armSensor.sensors">{{sensor.delay !== null ? sensor.delay : '-'}}</div>
+                  </div>
+                </div>
+              </div>
+            </div-->
+
+            <div class="panel" fxFlex="100" *ngIf="event['armSensors'] && event.armSensors.length > 0">
+              <span class="title" i18n="@@events sensor states">Sensor states</span>
+              <mat-divider></mat-divider>
+              <div class="content">
+                <div class="mat-table">
+                  <div class="mat-header-row">
+                    <div class="mat-header-cell"></div>
+                    <div *ngFor="let timestamp of getEventTimestamps(event)" class="mat-header-cell" [matTooltip]="timestamp">{{timestamp}}</div>
+                  </div>
+                  <div class="mat-row" *ngFor="let index of getEventSensorRange(event)">
+                    <div class="mat-cell sensor-name">{{event.armSensors[0].sensors[index].description}}<br>CH{{ event.armSensors[0].sensors[index].channel + 1 | number: '2.0-0' }}</div>
+                    <div class="mat-cell" *ngFor="let sensor of getEventSensorstates(event, index)">{{sensor.enabled && sensor.delay !== null ? sensor.delay : '-'}}</div>
+                  </div>
+                </div>
               </div>
             </div>
 

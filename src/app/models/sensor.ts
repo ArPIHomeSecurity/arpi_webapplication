@@ -2,6 +2,7 @@ export class Sensor {
   id: number;
   channel: number;
   typeId: number;
+  areaId: number;
   zoneId: number;
   alert: boolean;
   enabled: boolean;

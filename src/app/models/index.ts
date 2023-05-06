@@ -1,4 +1,5 @@
 export * from './alert';
+export * from './area';
 export * from './arm';
 export * from './card';
 export * from './event';

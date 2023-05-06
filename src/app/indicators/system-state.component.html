@@ -8,24 +8,8 @@
       <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state">Invalid configuration</mat-chip>
       <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state">Sabotage</mat-chip>
     </div>
-    <div *ngIf="monitoringState == monitoringStates.ARM_DELAY" [ngSwitch]="armState">
-      <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.STAY" class="stay_delay">
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-    </div>
-    <div *ngIf="monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY" [ngSwitch]="armState">
-      <mat-chip *ngSwitchCase="armTypes.AWAY" class="away">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.STAY" class="stay">
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-    </div>
 
-    <mat-chip *ngIf="(armState == armTypes.UNDEFINED) || (monitoringState == monitoringStates.NOT_READY)" class="error" i18n="@@error state">ERROR</mat-chip>
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error" i18n="@@error state">ERROR</mat-chip>
   </span>
   
   <!-- MOBILE VERSION -->
@@ -37,7 +21,18 @@
       <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state short">I</mat-chip>
       <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state short">T</mat-chip>
     </div>
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error">
+      <mat-icon mat-list-icon>error</mat-icon>
+    </mat-chip>
+  </span>
+
+  <!-- ALL SIZE-->
+  <mat-chip-list>
     <div *ngIf="monitoringState == monitoringStates.ARM_DELAY" [ngSwitch]="armState">
+      <mat-chip *ngSwitchCase="armTypes.MIXED" class="away_delay">
+        <mat-icon mat-list-icon>directions_walk</mat-icon>
+        <mat-icon mat-list-icon>hotel</mat-icon>
+      </mat-chip>
       <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay">
         <mat-icon mat-list-icon>directions_walk</mat-icon>
       </mat-chip>
@@ -46,6 +41,10 @@
       </mat-chip>
     </div>
     <div *ngIf="monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY" [ngSwitch]="armState">
+      <mat-chip *ngSwitchCase="armTypes.MIXED" class="away">
+        <mat-icon mat-list-icon>directions_walk</mat-icon>
+        <mat-icon mat-list-icon>hotel</mat-icon>
+      </mat-chip>
       <mat-chip *ngSwitchCase="armTypes.AWAY" class="away">
         <mat-icon mat-list-icon>directions_walk</mat-icon>
       </mat-chip>
@@ -53,10 +52,6 @@
         <mat-icon mat-list-icon>hotel</mat-icon>
       </mat-chip>
     </div>
-  </span>
-
-  <!-- ALL SIZE-->
-  <mat-chip-list>
     <!-- SENSOR STATES -->
     <div *ngIf="monitoringState === monitoringStates.ARMED || monitoringState === monitoringStates.READY || monitoringState === monitoringStates.ARM_DELAY || monitoringState === monitoringStates.ALERT"
       [ngSwitch]="sensorAlert">
@@ -86,7 +81,7 @@
     </mat-chip>
 
     <!-- POWER -->
-    <div *ngIf="(armState != armTypes.UNDEFINED) && (monitoringState != monitoringStates.NOT_READY)" [ngSwitch]="powerState">
+    <div *ngIf="armState != armTypes.UNDEFINED && monitoringState != monitoringStates.NOT_READY" [ngSwitch]="powerState">
       <mat-chip *ngSwitchCase="powerStates.NETWORK" class="normal">
         <mat-icon mat-list-icon>power</mat-icon>
       </mat-chip>
@@ -94,8 +89,4 @@
         <mat-icon mat-list-icon>battery_alert</mat-icon>
       </mat-chip>
     </div>
-
-    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error">
-      <mat-icon mat-list-icon>error</mat-icon>
-    </mat-chip>
 </mat-chip-list>
