@@ -124,6 +124,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.channels = this.generateChannels(this.sensors);
 
           this.updateForm(this.sensor);
+          this.onZoneSelected(this.sensor.zoneId);
+          this.onAreaSelected(this.sensor.areaId);
           this.loader.display(false);
         });
     } else {
@@ -288,8 +290,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     };
   }
 
-  onZoneSelected(event) {
-    this.sensor.zoneId = event.value;
+  onZoneSelected(zoneId: number) {
+    this.sensor.zoneId = zoneId;
     const controls = this.zoneForm.controls;
 
     // if NEW zone selected
@@ -313,8 +315,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     this.sensorForm.updateValueAndValidity();
   }
 
-  onAreaSelected(event) {
-    this.sensor.areaId = event.value;
+  onAreaSelected(areaId: number) {
+    this.sensor.areaId = areaId;
     const {controls} = this.areaForm;
 
     // if NEW area selected

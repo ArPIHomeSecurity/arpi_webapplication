@@ -27,7 +27,7 @@
 
       <div fxLayout="row" fxLayoutGap="10">
         <mat-form-field id="areaId">
-          <mat-select formControlName="areaId" i18n-placeholder="@@sensor area" placeholder="Area" (selectionChange)="onAreaSelected($event)">
+          <mat-select formControlName="areaId" i18n-placeholder="@@sensor area" placeholder="Area" (selectionChange)="onAreaSelected($event.value)">
             <mat-option *ngFor="let area of areas" [value]="area.id">{{area.name}}</mat-option>
             <mat-option [value]="-1" i18n="@@sensor new area">New</mat-option>
           </mat-select>
@@ -43,7 +43,7 @@
       </div>
 
       <mat-form-field id="zoneId">
-        <mat-select formControlName="zoneId" i18n-placeholder="@@sensor zone" placeholder="Zone" (selectionChange)="onZoneSelected($event)">
+        <mat-select formControlName="zoneId" i18n-placeholder="@@sensor zone" placeholder="Zone" (selectionChange)="onZoneSelected($event.value)">
           <mat-option *ngFor="let zone of zones" [value]="zone.id">{{zone.name}}</mat-option>
           <mat-option [value]="-1" i18n="@@sensor new zone">New</mat-option>
         </mat-select>
