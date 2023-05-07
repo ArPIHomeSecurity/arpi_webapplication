@@ -6,7 +6,7 @@ export class ArmEvent {
     arm: Arm
     disarm: Disarm
     alert: Alert
-    armSensors: ArmSensors[]
+    sensorChanges: SensorChanges[]
 }
 
 export class AlertEvent {
@@ -14,7 +14,7 @@ export class AlertEvent {
     alert: Alert
 }
 
-export class ArmSensor {
+export class SensorState {
     sensor_id: number
     channel: number
     type_id: number
@@ -24,7 +24,7 @@ export class ArmSensor {
     enabled: boolean
 }
 
-export class ArmSensors {
+export class SensorChanges {
     timestamp: string
-    sensors: ArmSensor[]
+    sensors: SensorState[]
 }

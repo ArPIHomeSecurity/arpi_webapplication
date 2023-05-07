@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { forkJoin } from 'rxjs';
 
-import { ALERT_TYPE, ArmEvent, ArmSensor, ARM_TYPE, Sensor, User } from '../models';
+import { ALERT_TYPE, ArmEvent, SensorState, SensorChanges, ARM_TYPE, Sensor, User } from '../models';
 import { ArmService } from '../services';
 import { SensorService, LoaderService, UserService } from '../services';
 import { finalize } from 'rxjs/operators';
@@ -117,7 +117,6 @@ export class EventsComponent implements OnInit {
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
-        //this.armHistory = new ArmHistory(of(results.arms), this.paginator);
         this.events = results.arms;
         this.armsCount = results.arms_count;
       });
@@ -133,8 +132,8 @@ export class EventsComponent implements OnInit {
       timeline.push({ time: event.arm.time, description: $localize`:@@events armed:Armed`, isDefaultDate: event.arm.time == "2000-01-01 01:00:00"})
     }
 
-    if (event.armSensors && event.armSensors.length > 1) {
-      event.armSensors.map(armSensor =>
+    if (event.sensorChanges && event.sensorChanges.length > 1) {
+      event.sensorChanges.map(armSensor =>
         timeline.push({ time: armSensor.timestamp, description: $localize`:@@events arm changed:Arm changed`, isDefaultDate: armSensor.timestamp == "2000-01-01 01:00:00"}))
     }
 
@@ -162,14 +161,14 @@ export class EventsComponent implements OnInit {
   }
 
   getEventTimestamps(event: ArmEvent) {
-    return event.armSensors.map(a => a.timestamp)
+    return event.sensorChanges.map(a => a.timestamp)
   }
 
   getEventSensorRange(event: ArmEvent): number[] {
-    return Array(event.armSensors[0].sensors.length).fill(0).map((x,i)=>i);
+    return Array(event.sensorChanges[0].sensors.length).fill(0).map((x,i)=>i);
   }
 
-  getEventSensorstates(event: ArmEvent, sensorIndex: number): ArmSensor[] {
-    return event.armSensors.map(a => a.sensors[sensorIndex]);
+  getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] {
+    return event.sensorChanges.map(a => a.sensors[sensorIndex]);
   }
 }
