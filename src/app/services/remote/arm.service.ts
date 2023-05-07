@@ -46,7 +46,7 @@ export class ArmService implements ArmService {
       params = params.append('end', formatDate(endDate));
     }
 
-    return this.http.get<ArmEvent[]>('/api/events', { params }).pipe(
+    return this.http.get<ArmEvent[]>('/api/arms', { params }).pipe(
       map(( rawArmEvents: any[] ) => {
         for ( const rawArmEvent of rawArmEvents ) {
           if (rawArmEvent.arm) {
@@ -83,7 +83,7 @@ export class ArmService implements ArmService {
       params = params.append('end', formatDate(endDate));
     }
 
-    return this.http.get<number>('/api/events/count', { params });
+    return this.http.get<number>('/api/arms/count', { params });
   }
 
   getArm(): Observable<Arm> {
