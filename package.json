@@ -10,8 +10,8 @@
     "e2e": "ng e2e",
     "postinstall": "ngcc",
     "extract-i18n": "ng extract-i18n --output-path src/locales --format xliff && ng run argus:xliffmerge",
-    "serve": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/$DIST:/usr/share/nginx/html:ro nginx",
-    "create-package": "tar -cvzf arpi-webapplication.tar.gz -C dist-production ."
+    "create-package": "tar -cvzf arpi-webapplication.tar.gz -C dist-production .",
+    "serve-dev": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/dist-development:/usr/share/nginx/html:ro nginx"
   },
   "private": true,
   "dependencies": {
