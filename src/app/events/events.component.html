@@ -54,7 +54,7 @@
         (click)="filterArms()" i18n="@@events clear filters">Clear filters
       </button>
     
-      </div>
+    </div>
   </mat-expansion-panel>
 
 
@@ -69,11 +69,13 @@
         <mat-expansion-panel [ngClass]="{'warn': event.alert && !event.alert.endTime}">
           <mat-expansion-panel-header>
             <mat-panel-title fxLayout="row" fxLayoutGap="30px" [ngClass]="{'warn': event.disarm?.time == null}">
-              <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" mat-list-icon>directions_walk</mat-icon>
-              <mat-icon *ngIf="event.arm?.type == armTypes.STAY" mat-list-icon>hotel</mat-icon>
-              <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>directions_walk</mat-icon>
-              <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>hotel</mat-icon>
-              <mat-icon *ngIf="!event.arm?.type" mat-list-icon>verified_user</mat-icon>
+              <div class="arm-icon">
+                <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" mat-list-icon>directions_walk</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.STAY" mat-list-icon>hotel</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>directions_walk</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>hotel</mat-icon>
+                <mat-icon *ngIf="!event.arm?.type" mat-list-icon>verified_user</mat-icon>
+              </div>
               <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm && !event.disarm">{{ event.alert?.startTime | date: 'longDate' }}</span>

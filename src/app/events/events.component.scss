@@ -23,6 +23,11 @@
   margin-left: auto;
   width: 1000px;
 
+  .arm-icon {
+    width: 48px;
+    text-align: center;
+  }
+
   .panel {
     margin: 5px;
 
@@ -60,6 +65,11 @@
 .event-list-xs {
   padding: 5px;
   width: 100%;
+
+  .arm-icon {
+    width: 48px;
+    text-align: center;
+  }
 
   .panel {
     margin: 5px;
