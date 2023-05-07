@@ -55,6 +55,7 @@ export class EventsComponent implements OnInit {
       .subscribe(results => {
         //this.armHistory = new ArmHistory(of(results.arms), this.paginator);
         this.events = results.arms;
+        this.sortArms();
         this.armsCount = results.arms_count;
         this.sensors = results.sensors;
         this.users = results.users;
@@ -96,6 +97,16 @@ export class EventsComponent implements OnInit {
     return this.paginate()
   }
 
+  sortArms() {
+    this.events = this.events.map((event: ArmEvent) => {
+      event.sensorChanges = event.sensorChanges.map((sensorChange: SensorChanges) => {
+        sensorChange.sensors.sort((s1, s2) => s1.channel < s2.channel ? -1 : 1)
+        return sensorChange
+      })
+      return event
+    });
+  }
+
   paginate() {
     forkJoin({
       arms: this.armService.getArms(
@@ -118,6 +129,7 @@ export class EventsComponent implements OnInit {
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
         this.events = results.arms;
+        this.sortArms();
         this.armsCount = results.arms_count;
       });
   }
