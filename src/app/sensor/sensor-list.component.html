@@ -48,6 +48,11 @@
                   <span i18n="@@sensor disable">Disabled</span>
                 </div>
               </mat-list-item>
+
+              <mat-list-item>
+                <mat-icon mat-list-icon class="material-icons-outlined">crop</mat-icon>
+                <span>{{getAreaName(sensor.areaId)}}</span>
+              </mat-list-item>
             </mat-list>
             
             <mat-list class="narrow-list second-column">
