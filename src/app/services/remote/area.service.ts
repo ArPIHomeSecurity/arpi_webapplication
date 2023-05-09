@@ -30,8 +30,10 @@ export class AreaService {
   }
 
   createArea(area: Area): Observable<Area> {
-    // set sensor from api
-    return this.http.post<Area>('/api/areas/', area);
+    // convert arm state to string
+    const data: Object = area;
+    data["armState"] = armType2String(area.armState);
+    return this.http.post<Area>('/api/areas/', data);
   }
 
   updateArea(area: Area): Observable<Area> {

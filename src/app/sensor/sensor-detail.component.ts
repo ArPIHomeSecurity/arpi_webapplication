@@ -6,12 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { Area, MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '../models';
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '../models';
 import { AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 import { positiveInteger } from '../utils';
 
@@ -205,8 +205,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     if (this.sensor.zoneId === -1 || this.sensor.areaId === -1) {
       this.action = 'create';
       forkJoin({
-        resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : null,
-        resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : null
+        resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : of(null),
+        resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : of(null)
       })
         .subscribe(results => {
           if (results.resultZone) {
@@ -285,8 +285,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     return {
       id: sensorModel.areaId,
-      name: areaModel.name,
-      armState: null
+      name: areaModel.areaName,
+      armState: ARM_TYPE.DISARMED
     };
   }
 
