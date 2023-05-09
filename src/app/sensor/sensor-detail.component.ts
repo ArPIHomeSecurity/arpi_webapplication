@@ -148,7 +148,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           const firstFreeChannel = this.channels.find(ch => (ch.sensor == null) && (ch.channel >= 0));
           this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
           this.sensor.zoneId = -1;
-          this.sensor.areaId = -1;
+          this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1;;
           this.sensor.typeId = this.sensorTypes[0].id;
 
           this.updateForm(this.sensor);
