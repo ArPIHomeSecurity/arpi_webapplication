@@ -53,7 +53,6 @@ export class EventsComponent implements OnInit {
       users: this.userService.getUsers()
     })
       .subscribe(results => {
-        //this.armHistory = new ArmHistory(of(results.arms), this.paginator);
         this.events = results.arms;
         this.sortArms();
         this.armsCount = results.arms_count;
@@ -99,10 +98,12 @@ export class EventsComponent implements OnInit {
 
   sortArms() {
     this.events = this.events.map((event: ArmEvent) => {
-      event.sensorChanges = event.sensorChanges.map((sensorChange: SensorChanges) => {
-        sensorChange.sensors.sort((s1, s2) => s1.channel < s2.channel ? -1 : 1)
-        return sensorChange
-      })
+      if (event.sensorChanges) {
+        event.sensorChanges = event.sensorChanges.map((sensorChange: SensorChanges) => {
+          sensorChange.sensors.sort((s1, s2) => s1.channel < s2.channel ? -1 : 1)
+          return sensorChange
+        })
+      }
       return event
     });
   }
@@ -135,7 +136,14 @@ export class EventsComponent implements OnInit {
   }
 
   getUsername(user_id: number) {
-    return this.users.find(u => u.id == user_id).name;
+    if (this.users) {
+      const user = this.users.find(u => u.id == user_id);
+      if (user) {
+        return user.name;
+      }
+    }
+
+    return "-";
   }
 
   getTimeline(event: ArmEvent) {

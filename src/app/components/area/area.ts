@@ -34,7 +34,7 @@ export class AreaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("This:", this);
+
   }
 
   armChanged(event) {
