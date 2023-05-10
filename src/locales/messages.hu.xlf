@@ -158,10 +158,6 @@
         <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
         <target state="translated">Riasztás kezdete: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
       </trans-unit>
-      <trans-unit id="input channel" datatype="html">
-        <source>Input channel: </source>
-        <target state="translated">Bemeneti csatorna: </target>
-      </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
         <target state="translated">Rendszer élesítve távozóra</target>
@@ -857,7 +853,7 @@
       </trans-unit>
       <trans-unit id="events clear filters" datatype="html">
         <source>Clear filters </source>
-        <target state="translated">Szűrők törlése</target>
+        <target state="translated">Szűrők törlése </target>
       </trans-unit>
       <trans-unit id="events sabotage" datatype="html">
         <source>Sabotage event</source>
@@ -869,7 +865,7 @@
       </trans-unit>
       <trans-unit id="events armed" datatype="html">
         <source>Armed</source>
-        <target state="translated">Élesítve </target>
+        <target state="translated">Élesítve</target>
       </trans-unit>
       <trans-unit id="events sensors" datatype="html">
         <source>Alerting sensor(s)</source>
@@ -945,7 +941,72 @@
       </trans-unit>
       <trans-unit id="events armed by" datatype="html">
         <source>Armed by</source>
-        <target state="translated">Élesítve </target>
+        <target state="translated">Élesítve</target>
+      </trans-unit>
+      <trans-unit id="areas menu link" datatype="html">
+        <source>Areas</source>
+        <target state="translated">Területek</target>
+      </trans-unit>
+      <trans-unit id="area delete" datatype="html">
+        <source>Delete area</source>
+        <target state="translated">Terület törlése</target>
+      </trans-unit>
+      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+        <source>Do you want to delete the area?</source>
+        <target state="translated">Törölni akarod ezt a területet?</target>
+        <note priority="1" from="description">Area delete question</note>
+      </trans-unit>
+      <trans-unit id="area not found" datatype="html">
+        <source>Zone not found!</source>
+        <target state="translated">Zóna nem található!</target>
+      </trans-unit>
+      <trans-unit id="area sensors" datatype="html">
+        <source>Sensors</source>
+        <target state="translated">Érzékelők</target>
+      </trans-unit>
+      <trans-unit id="area no sensors" datatype="html">
+        <source>No sensors</source>
+        <target state="translated">Nincsenek érzékelők</target>
+      </trans-unit>
+      <trans-unit id="area none" datatype="html">
+        <source>No areas found</source>
+        <target state="translated">Nem találhatóak területek</target>
+      </trans-unit>
+      <trans-unit id="area armed away" datatype="html">
+        <source>Area armed away</source>
+        <target state="translated">Terület távozó élesítése</target>
+      </trans-unit>
+      <trans-unit id="area armed stay" datatype="html">
+        <source>Area armed stay</source>
+        <target state="translated">Terület maradó élesítése</target>
+      </trans-unit>
+      <trans-unit id="area disarmed" datatype="html">
+        <source>Area disarmed</source>
+        <target state="translated">Terület hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="events arm mixed" datatype="html">
+        <source>MIXED</source>
+        <target state="translated">VEGYES</target>
+      </trans-unit>
+      <trans-unit id="events sensor states" datatype="html">
+        <source>Sensor states</source>
+        <target state="translated">Érzékelő állapotok</target>
+      </trans-unit>
+      <trans-unit id="events arm changed" datatype="html">
+        <source>Arm changed</source>
+        <target state="translated">Élesítés megváltozott</target>
+      </trans-unit>
+      <trans-unit id="sensor area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="sensor new area" datatype="html">
+        <source>New</source>
+        <target state="translated">Új</target>
+      </trans-unit>
+      <trans-unit id="area name" datatype="html">
+        <source>Area name</source>
+        <target state="translated">Terület neve</target>
       </trans-unit>
     </body>
   </file>

@@ -201,9 +201,6 @@
       <trans-unit id="alert started" datatype="html">
         <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
       </trans-unit>
-      <trans-unit id="input channel" datatype="html">
-        <source>Input channel: </source>
-      </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
       </trans-unit>
@@ -712,6 +709,55 @@
       </trans-unit>
       <trans-unit id="events armed by" datatype="html">
         <source>Armed by</source>
+      </trans-unit>
+      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+        <source>Do you want to delete the area?</source>
+        <note priority="1" from="description">Area delete question</note>
+      </trans-unit>
+      <trans-unit id="area armed away" datatype="html">
+        <source>Area armed away</source>
+      </trans-unit>
+      <trans-unit id="area armed stay" datatype="html">
+        <source>Area armed stay</source>
+      </trans-unit>
+      <trans-unit id="area delete" datatype="html">
+        <source>Delete area</source>
+      </trans-unit>
+      <trans-unit id="area disarmed" datatype="html">
+        <source>Area disarmed</source>
+      </trans-unit>
+      <trans-unit id="area name" datatype="html">
+        <source>Area name</source>
+      </trans-unit>
+      <trans-unit id="area no sensors" datatype="html">
+        <source>No sensors</source>
+      </trans-unit>
+      <trans-unit id="area none" datatype="html">
+        <source>No areas found</source>
+      </trans-unit>
+      <trans-unit id="area not found" datatype="html">
+        <source>Zone not found!</source>
+      </trans-unit>
+      <trans-unit id="area sensors" datatype="html">
+        <source>Sensors</source>
+      </trans-unit>
+      <trans-unit id="areas menu link" datatype="html">
+        <source>Areas</source>
+      </trans-unit>
+      <trans-unit id="events arm changed" datatype="html">
+        <source>Arm changed</source>
+      </trans-unit>
+      <trans-unit id="events arm mixed" datatype="html">
+        <source>MIXED</source>
+      </trans-unit>
+      <trans-unit id="events sensor states" datatype="html">
+        <source>Sensor states</source>
+      </trans-unit>
+      <trans-unit id="sensor area" datatype="html">
+        <source>Area</source>
+      </trans-unit>
+      <trans-unit id="sensor new area" datatype="html">
+        <source>New</source>
       </trans-unit>
     </body>
   </file>
