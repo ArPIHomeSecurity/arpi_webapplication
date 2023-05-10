@@ -702,7 +702,7 @@
         <source>STAY</source>
       </trans-unit>
       <trans-unit id="events disarmed by" datatype="html">
-        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></source>
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
       </trans-unit>
       <trans-unit id="events properties" datatype="html">
         <source>Properties</source>
@@ -758,6 +758,15 @@
       </trans-unit>
       <trans-unit id="sensor new area" datatype="html">
         <source>New</source>
+      </trans-unit>
+      <trans-unit id="area no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="sensor none" datatype="html">
+        <source>No sensors found</source>
+      </trans-unit>
+      <trans-unit id="zone no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
       </trans-unit>
     </body>
   </file>

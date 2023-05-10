@@ -60,7 +60,7 @@
         <mat-expansion-panel (opened)="sensorListOpened[zone.id] = true" (closed)="sensorListOpened[zone.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorListOpened[zone.id]">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorListOpened[zone.id]" i18n="@@zone no sensor">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
             <ul class="sensor-list">

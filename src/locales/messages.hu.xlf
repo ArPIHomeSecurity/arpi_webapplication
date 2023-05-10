@@ -885,7 +885,7 @@
       </trans-unit>
       <trans-unit id="events disarmed system" datatype="html">
         <source> Disarmed by system </source>
-        <target state="translated">Rendszer hatástalanítás</target>
+        <target state="translated"> Rendszer hatástalanítás </target>
       </trans-unit>
       <trans-unit id="events timeline" datatype="html">
         <source>Timeline</source>
@@ -932,7 +932,7 @@
         <target state="translated">MARADÓ</target>
       </trans-unit>
       <trans-unit id="events disarmed by" datatype="html">
-        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></source>
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
         <target state="translated">Hatástalanította <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></target>
       </trans-unit>
       <trans-unit id="events properties" datatype="html">
@@ -941,7 +941,7 @@
       </trans-unit>
       <trans-unit id="events armed by" datatype="html">
         <source>Armed by</source>
-        <target state="translated">Élesítve</target>
+        <target state="translated">Élesítette</target>
       </trans-unit>
       <trans-unit id="areas menu link" datatype="html">
         <source>Areas</source>
@@ -1007,6 +1007,18 @@
       <trans-unit id="area name" datatype="html">
         <source>Area name</source>
         <target state="translated">Terület neve</target>
+      </trans-unit>
+      <trans-unit id="area no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="sensor none" datatype="html">
+        <source>No sensors found</source>
+        <target state="translated">Nincsenek érzékelők</target>
+      </trans-unit>
+      <trans-unit id="zone no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> érzékelő(k)</target>
       </trans-unit>
     </body>
   </file>
