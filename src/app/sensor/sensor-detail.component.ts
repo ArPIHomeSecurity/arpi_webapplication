@@ -152,6 +152,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.sensor.typeId = this.sensorTypes[0].id;
 
           this.updateForm(this.sensor);
+          this.onZoneSelected(this.sensor.zoneId);
+          this.onAreaSelected(this.sensor.areaId);
           this.loader.display(false);
         });
     }
