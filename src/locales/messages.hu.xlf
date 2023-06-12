@@ -75,21 +75,9 @@
         <source>Syren</source>
         <target state="translated">Sziréna</target>
       </trans-unit>
-      <trans-unit id="syren alert time" datatype="html">
-        <source>Alert time</source>
-        <target state="translated">Riasztás ideje</target>
-      </trans-unit>
-      <trans-unit id="syren alert unit" datatype="html">
-        <source>Time of syren alerts in minute(s)</source>
-        <target state="translated">Az idő percben amíg a sziréna szól</target>
-      </trans-unit>
-      <trans-unit id="syren suspend time" datatype="html">
-        <source>Suspend time</source>
-        <target state="translated">Hallgatás ideje</target>
-      </trans-unit>
-      <trans-unit id="syren suspend unit" datatype="html">
-        <source>Time of syren suspends in minute(s)</source>
-        <target state="translated">Az idő percben amíg a sziréna hallgat</target>
+      <trans-unit id="syren stop" datatype="html">
+        <source>Stop time</source>
+        <target state="translated">Kikapcsolási idő</target>
       </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
@@ -1019,6 +1007,26 @@
       <trans-unit id="zone no sensor" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
         <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="syren silent hint" datatype="html">
+        <source>Do not use the syren in case of an alarm</source>
+        <target state="translated">Ne használja a szirénát riasztás esetén</target>
+      </trans-unit>
+      <trans-unit id="syren delay" datatype="html">
+        <source>Delay</source>
+        <target state="translated">Késleltetés</target>
+      </trans-unit>
+      <trans-unit id="syren delay hint" datatype="html">
+        <source>Delay the syren in seconds</source>
+        <target state="translated">Sziréna késleltetése másodperceben</target>
+      </trans-unit>
+      <trans-unit id="syren stop hint" datatype="html">
+        <source>Stop the syren in seconds</source>
+        <target state="translated">Sziréna kikapcsolása másodpercben</target>
+      </trans-unit>
+      <trans-unit id="events silent" datatype="html">
+        <source>Silent alarm</source>
+        <target state="translated">Csendes riasztás</target>
       </trans-unit>
     </body>
   </file>
