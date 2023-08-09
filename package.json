@@ -11,7 +11,9 @@
     "postinstall": "ngcc",
     "extract-i18n": "ng extract-i18n --output-path src/locales --format xliff && ng run argus:xliffmerge",
     "create-package": "tar -cvzf arpi-webapplication.tar.gz -C dist-production .",
-    "serve-dev": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/dist-development:/usr/share/nginx/html:ro nginx"
+    "serve-dev": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/dist-development:/usr/share/nginx/html:ro nginx",
+    "serve-demo-dev": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/dist-demo-dev:/usr/share/nginx/html:ro nginx",
+    "serve-demo": "docker rm -fv arpi || true && docker run -d --name arpi -p 4200:8080 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/dist-demo:/usr/share/nginx/html:ro nginx"
   },
   "private": true,
   "dependencies": {
