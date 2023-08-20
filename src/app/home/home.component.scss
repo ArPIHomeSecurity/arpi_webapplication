@@ -5,22 +5,39 @@
   $foreground: map-get($theme, foreground);
 
   .container {
-    padding: 30px 0px;
+    margin-top: 20px;
+    padding: 5px;
+    
+    .home {
+      width: 400px;
+      margin: auto;
+    }
+    
+    .home-small {
+      width: 100%;
+    }
+    
+    .controller {
+      width: 100%;
+      mat-button-toggle-group {
+        width: 100%;
+        .mat-button-toggle {
+          width: 33%;
+        }
+      }
+    }
   }
 
-  .example-fill-remaining-space {
-    flex: 1 1 auto;
-  }
 
-  #arm-away.mat-button-toggle-checked {
+  .arm-away.mat-button-toggle-checked {
     background-color: #ed1010;
   }
 
-  #disarm.mat-button-toggle-checked {
+  .disarm.mat-button-toggle-checked {
     background-color: map-get($ok, 600);
   }
 
-  #arm-stay.mat-button-toggle-checked {
+  .arm-stay.mat-button-toggle-checked {
     background-color: #ffb600;
   }
 
@@ -31,12 +48,7 @@
   }
 
   mat-expansion-panel.alert {
-    margin-top: 20px;
     background-color: #ed1010;
-  }
-
-  .mat-expansion-panel-header-title {
-    margin: auto 16px auto 0px;
   }
 
   mat-expansion-panel mat-panel-title img {
@@ -56,20 +68,25 @@
     0% {
       visibility: hidden;
     }
+
     30% {
       visibility: hidden;
     }
+
     100% {
       visibility: visible;
     }
   }
+
   @keyframes condemed_blink_effect {
     0% {
       visibility: hidden;
     }
+
     30% {
       visibility: hidden;
     }
+
     100% {
       visibility: visible;
     }

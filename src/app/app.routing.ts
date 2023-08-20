@@ -4,7 +4,6 @@ import { AuthGuard, AdminGuard } from './guards';
 
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
-import { AlertListComponent } from './alert';
 import { ZoneListComponent, ZoneDetailComponent } from './zone';
 import { SensorListComponent, SensorDetailComponent } from './sensor';
 import { KeypadComponent } from './keypad';
@@ -13,6 +12,8 @@ import { NetworkComponent } from './config/network';
 import { ClockComponent } from './config/clock';
 import { SyrenComponent } from './config/syren';
 import { UserListComponent, UserDetailComponent } from './user';
+import { EventsComponent } from './events/events.component';
+import { AreaDetailComponent, AreaListComponent } from './area';
 
 const appRoutes: Routes = [
   {
@@ -26,8 +27,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'alerts',
-    component: AlertListComponent,
+    path: 'events',
+    component: EventsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -73,6 +74,21 @@ const appRoutes: Routes = [
   {
     path: 'zone/:id',
     component: ZoneDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'areas',
+    component: AreaListComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'area/add',
+    component: AreaDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'area/:id',
+    component: AreaDetailComponent,
     canActivate: [AdminGuard]
   },
   {

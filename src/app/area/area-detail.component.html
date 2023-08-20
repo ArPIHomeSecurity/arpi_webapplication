@@ -1,0 +1,26 @@
+<mat-card *ngIf="area != null" ngClass.gt-xs="area-form" ngClass.xs="area-form-xs" fxLayout="column">
+  <mat-card-content>
+    <form *ngIf="area; else not_found" [formGroup]="areaForm" (ngSubmit)="onSubmit()" novalidate>
+        <mat-form-field>
+          <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions align="end">
+    <button mat-icon-button color="primary" [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
+    <button *ngIf="areaId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(area.id)" [disabled]="getSensors().length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+  </mat-card-actions>
+
+  <ng-template #not_found>
+    <h1 i18n="@@area not found">Zone not found!</h1>
+  </ng-template>
+</mat-card>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>
+  <span *ngIf="action=='update'" i18n="@@failed update">Failed to update!</span>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>

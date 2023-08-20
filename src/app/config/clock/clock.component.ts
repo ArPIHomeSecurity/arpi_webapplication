@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
@@ -33,7 +33,7 @@ export const filter = (opt: string[], value: string): string[] => {
 
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  clockForm: FormGroup;
+  clockForm: UntypedFormGroup;
   clock: any;
 
   timezoneGroups: TimeZoneGroup[] = [];
@@ -47,7 +47,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     dateTimeAdapter: DateTimeAdapter<any>
   ) {
@@ -102,8 +102,8 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     this.clockForm = this.fb.group( {
-      dateTime: new FormControl('', Validators.required),
-      timezone: new FormControl('', Validators.required)
+      dateTime: new UntypedFormControl('', Validators.required),
+      timezone: new UntypedFormControl('', Validators.required)
     });
   }
 

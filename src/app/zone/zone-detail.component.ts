@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +34,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   zone: Zone = null;
   sensors: Sensor[];
   zoneForm: FormGroup;
+  areaForm: FormGroup;
 
   constructor(
     @Inject('LoaderService') public loader: LoaderService,
@@ -44,7 +45,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
     private route: ActivatedRoute,
     public router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private location: Location,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -148,6 +149,22 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
 
   prepareSaveZone(): Zone {
     const formModel = this.zoneForm.value;
+
+    const zone: Zone = new Zone();
+    zone.id = this.zoneId;
+    zone.name = formModel.name;
+    zone.description = formModel.description;
+    zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null;
+    zone.awayAlertDelay = formModel.awayArmedAlert ? parseInt(formModel.awayAlertDelay, 10) : null;
+    zone.awayArmDelay = formModel.awayArmedAlert ? parseInt(formModel.awayArmDelay, 10) : null;
+    zone.stayAlertDelay = formModel.stayArmedAlert ? parseInt(formModel.stayAlertDelay, 10) : null;
+    zone.stayArmDelay = formModel.stayArmedAlert ? parseInt(formModel.stayArmDelay, 10) : null;
+
+    return zone;
+  }
+
+  prepareSaveArea(): Zone {
+    const formModel = this.areaForm.value;
 
     const zone: Zone = new Zone();
     zone.id = this.zoneId;

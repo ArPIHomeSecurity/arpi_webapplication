@@ -1,0 +1,56 @@
+
+@mixin sensor-theme($theme, $ok) {
+    $primary: map-get($theme, primary);
+    $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .alerting {
+        -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+        -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+        box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+        background-color: mat-color($warn);
+        border-radius: 22px;
+    }
+
+    mat-card {
+        margin: 5px 0px;
+        padding: 5px;
+
+        mat-card-header {
+            height: 50px;
+        }
+
+        .mat-card-title-group {
+            width: 100%;
+        }
+
+        .enabled {
+            -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            border-radius: 22px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: mat-color($ok);
+        }
+
+        .disabled {
+            -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+            border-radius: 22px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: rgb(160, 160, 160);
+        }
+    }
+
+    .sensor-image {
+        margin: 5px;
+    }
+}

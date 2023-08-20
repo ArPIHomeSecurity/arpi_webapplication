@@ -1,0 +1,12 @@
+<h1 mat-dialog-title i18n="@@area delete">Delete area</h1>
+<div mat-dialog-content>
+  <p i18n="Area delete question">Do you want to delete the area?</p>
+  <ul>
+    <li>{{data.name}}</li>
+  </ul>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="true" tabindex="2" color="warn" i18n="@@yes button">Yes</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1" i18n="@@cancel button">Cancel</button>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -19,10 +19,10 @@ export class LoginComponent implements OnInit {
   @ViewChild('registration_code_field') registrationCodeField: ElementRef;
   @ViewChild('access_code_field') accessCodeField: ElementRef;
 
-  registerForm: FormGroup;
-  registerCode: FormControl;
-  loginForm: FormGroup;
-  accessCode: FormControl;
+  registerForm: UntypedFormGroup;
+  registerCode: UntypedFormControl;
+  loginForm: UntypedFormGroup;
+  accessCode: UntypedFormControl;
   isRegistered = false;
   loading = false;
   error = '';
@@ -57,11 +57,11 @@ export class LoginComponent implements OnInit {
   }
 
   updateForms() {
-    this.registerForm = new FormGroup({
-      registerCode: this.registerCode = new FormControl('', Validators.required)
+    this.registerForm = new UntypedFormGroup({
+      registerCode: this.registerCode = new UntypedFormControl('', Validators.required)
     });
-    this.loginForm = new FormGroup({
-      accessCode: this.accessCode = new FormControl('', Validators.required)
+    this.loginForm = new UntypedFormGroup({
+      accessCode: this.accessCode = new UntypedFormControl('', Validators.required)
     });
   }
 

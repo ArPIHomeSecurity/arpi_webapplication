@@ -1,6 +1,6 @@
 # ArPI webapplication
 
-The webappication to control the system (argus_server).
+The webapplication to control the system (argus_server).
 
 * Project page: https://www.arpi-security.info/
 * Demo: https://demo.arpi-security.info/

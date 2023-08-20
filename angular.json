@@ -143,9 +143,14 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "argus:build"
+            "browserTarget": "argus:build",
+            "format": "xlf",
+            "outputPath": "src/locales",
+            "targetFiles": [
+              "messages.hu.xlf"
+            ]
           }
         },
         "test": {
@@ -220,7 +225,6 @@
       }
     }
   },
-  "defaultProject": "argus",
   "cli": {
     "analytics": "0de31eea-8e59-49c3-94dc-9475fa533ca5"
   }

@@ -13,6 +13,7 @@
           [formControl]="registerCode"
           placeholder="Registration code"
           i18n-placeholder="Regstration code"
+          autocomplete="off"
           required
           autofocus
         >
@@ -36,12 +37,15 @@
         <mat-form-field class="full-width">
         <input matInput
           #access_code_field
-          [type]="hide ? 'password' : 'text'"
+          type="text"
           [formControl]="accessCode"
+          [ngClass]="{'hidden': hide}"
           placeholder="Access code"
           i18n-placeholder="Access code"
           inputmode="numeric"
           pattern="[0-9]*"
+          maxlength="10"
+          autocomplete="off"
           digitOnly
           required
           autofocus

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { finalize } from 'rxjs/operators';
@@ -21,7 +21,7 @@ const scheduleMicrotask = Promise.resolve( null );
 
 export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  syrenForm: FormGroup;
+  syrenForm: UntypedFormGroup;
   syren: Option;
 
   constructor(
@@ -30,7 +30,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('ConfigurationService') public configurationService: ConfigurationService,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
   ) {
     super(eventService, loader, monitoringService);
@@ -53,8 +53,9 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     this.syrenForm = this.fb.group({
-      alertTime: new FormControl(getValue(this.syren.value, 'alert_time', 36000) / 60 ,  Validators.required),
-      suspendTime: new FormControl(getValue(this.syren.value, 'suspend_time', 18000) / 60 , Validators.required),
+      silent: new UntypedFormControl(getValue(this.syren.value, 'silent', false),  Validators.required),
+      delay: new UntypedFormControl(getValue(this.syren.value, 'delay', 18000), [Validators.required, Validators.min(0)]),
+      stopTime: new UntypedFormControl(getValue(this.syren.value, 'stop_time', 18000), [Validators.required, Validators.min(0)]),
     });
   }
 
@@ -73,9 +74,14 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   prepareSyren(): any {
     const formModel = this.syrenForm.value;
     return {
-      alert_time: formModel.alertTime * 60, // convert to seconds
-      suspend_time: formModel.suspendTime * 60, // convert to seconds
+      silent: formModel.silent,
+      delay: formModel.delay,
+      stop_time: formModel.stopTime
     };
+  }
+
+  onTestSyren() {
+    this.configurationService.testSyren(5).subscribe();
   }
 
   onSubmit() {
@@ -87,4 +93,3 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     );
   }
 }
-

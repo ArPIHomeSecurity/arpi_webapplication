@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-header class="area-header">
+    <mat-card-title-group>
+      <mat-card-title>
+        {{ area.name }}
+      </mat-card-title>
+
+      <div class="area-controller">
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          [disabled]="area.armState == armTypes.UNDEFINED"
+        >
+          <mat-button-toggle 
+            value="AWAY"
+            class="arm-away"
+            [checked]="area.armState == armTypes.AWAY"
+            [disabled]="sensorAlert || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+            (change)="armChanged($event)" i18n="@@arm away button">
+            AWAY
+          </mat-button-toggle>
+          <mat-button-toggle 
+            value="DISARMED"
+            class="disarm"
+            [checked]="area.armState == armTypes.DISARMED && !alert"
+            (change)="armChanged($event)" i18n="@@disarm button">
+            OFF
+          </mat-button-toggle>
+          <mat-button-toggle 
+            value="STAY"
+            class="arm-stay"
+            [checked]="area.armState == armTypes.STAY"
+            [disabled]="sensorAlert || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+            (change)="armChanged($event)" i18n="@@arm stay button">
+            STAY
+          </mat-button-toggle>
+      </mat-button-toggle-group>
+      </div>
+    </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div fxFlex="column" fxFlexAlign="center" fxFill>
+      <sensor *ngFor="let sensor of sensors; let i = index" [sensor]="sensor" [delay]="delays[i]"></sensor>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='armed away'" i18n="@@area armed away">Area armed away</span>
+  <span *ngIf="action=='armed stay'" i18n="@@area armed stay">Area armed stay</span>
+  <span *ngIf="action=='disarmed'" i18n="@@area disarmed">Area disarmed</span>
+</ng-template>

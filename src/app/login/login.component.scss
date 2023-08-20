@@ -23,3 +23,17 @@ mat-card {
 .full-width {
   width: 100%;
 }
+
+
+// Hide input field
+@font-face{
+  font-family: text-security-disc;
+  src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
+}
+
+.hidden {
+  font-family: text-security-disc;
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
+}

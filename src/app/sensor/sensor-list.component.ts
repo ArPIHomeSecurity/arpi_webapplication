@@ -8,8 +8,8 @@ import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { MONITORING_STATE, Sensor, SensorType, Zone } from '../models';
-import { AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '../models';
+import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
@@ -29,8 +29,10 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   sensors: Sensor[] = null;
   sensorTypes: SensorType [] = [];
   zones: Zone[] = [];
+  areas: Area[] = [];
 
   constructor(
+    @Inject('AreaService') public areaService:AreaService,
     @Inject('AuthenticationService') public authService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
@@ -70,13 +72,15 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     forkJoin({
       sensors: this.sensorService.getSensors(this.onlyAlerting),
       sensorTypes: this.sensorService.getSensorTypes(),
-      zones: this.zoneService.getZones()
+      zones: this.zoneService.getZones(),
+      areas: this.areaService.getAreas()
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.sensors = results.sensors;
         this.sensorTypes = results.sensorTypes;
         this.zones = results.zones;
+        this.areas = results.areas;
         this.loader.display(false);
         this.loader.disable(false);
       }
@@ -86,6 +90,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   getZoneName(zoneId: number) {
     if (this.zones.length && zoneId != null) {
         return this.zones.find(x => x.id === zoneId).name;
+    }
+
+    return '';
+  }
+
+  getAreaName(areaId: number) {
+    if (this.areas.length && areaId != null) {
+        return this.areas.find(x => x.id === areaId).name;
     }
 
     return '';

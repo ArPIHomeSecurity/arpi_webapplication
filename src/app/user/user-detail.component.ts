@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +26,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
   userId: number;
   user: User = null;
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
   roles: any = [];
   hide = true;
   action: string;
@@ -39,7 +39,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     public router: Router,
 
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -90,7 +90,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   updateForm(user: User) {
-    const accessCode = new FormControl(user.accessCode, [Validators.pattern('^\\d{4,12}$')]);
+    const accessCode = new UntypedFormControl(user.accessCode, [Validators.pattern('^\\d{4,12}$')]);
 
     if (!user.id) {
       accessCode.setValidators([Validators.required, Validators.pattern('^\\d{4,12}$')]);

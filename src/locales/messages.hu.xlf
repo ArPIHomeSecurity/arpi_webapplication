@@ -5,911 +5,1029 @@
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
         <target state="translated">Vezérlő</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
-      <trans-unit id="alert history menu link" datatype="html">
-        <source>Alert history</source>
-        <target state="translated">Riasztási események</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
         <source>Settings</source>
         <target state="translated">Beállítások</target>
-        
         <note priority="1" from="description">Settings menu title</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit><trans-unit id="zones menu link" datatype="html">
-        <source>Zones</source><target state="translated">Zónák</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
-      
+      </trans-unit>
+      <trans-unit id="zones menu link" datatype="html">
+        <source>Zones</source>
+        <target state="translated">Zónák</target>
+      </trans-unit>
       <trans-unit id="sensors menu link" datatype="html">
         <source>Sensors</source>
         <target state="translated">Érzékelők</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit><trans-unit id="syren menu link" datatype="html">
-        <source>Syren</source><target state="translated">Sziréna</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit><trans-unit id="keypad menu link" datatype="html">
-        <source>Keypad</source><target state="translated">Billentyűzet</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit>
-      
+      </trans-unit>
+      <trans-unit id="syren menu link" datatype="html">
+        <source>Syren</source>
+        <target state="translated">Sziréna</target>
+      </trans-unit>
+      <trans-unit id="keypad menu link" datatype="html">
+        <source>Keypad</source>
+        <target state="translated">Billentyűzet</target>
+      </trans-unit>
       <trans-unit id="notifications menu link" datatype="html">
         <source>Notifications</source>
         <target state="translated">Értesítések</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source>
         <target state="translated">Hálózat</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="clock menu link" datatype="html">
         <source>Clock</source>
         <target state="translated">Óra</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source>
         <target state="translated">Felhasználók</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">56</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source>
         <target state="translated">Kijelentkezés</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">61</context></context-group></trans-unit><trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can't make changes in the configuration!</source><target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">64</context></context-group></trans-unit><trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can't make changes in the configuration!</source><target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">68</context></context-group></trans-unit>
+      </trans-unit>
+      <trans-unit id="message system error" datatype="html">
+        <source>The system is not working correctly, you can't make changes in the configuration!</source>
+        <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
+      </trans-unit>
+      <trans-unit id="message system not ready" datatype="html">
+        <source>The system is not ready, you can't make changes in the configuration!</source>
+        <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
+      </trans-unit>
       <trans-unit id="session expiry" datatype="html">
-        <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source><target state="translated">A munkamenet lejár <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">112</context></context-group></trans-unit><trans-unit id="session expired" datatype="html">
-        <source>Your session expired, logged out!</source><target state="translated">A munkamenet lejárt, kijelentkezett!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/app.component.html</context><context context-type="linenumber">113</context></context-group></trans-unit><trans-unit id="user delete" datatype="html">
-        <source>Delete user</source><target state="translated">Felhasználó törlés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="user delete question" datatype="html">
-        <source>Do you want to delete the user?</source><target state="translated">Valóban törölni akarod a felhasználót?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit><trans-unit id="syren sources" datatype="html">
-        <source>Syren</source><target state="translated">Sziréna</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="syren alert time" datatype="html">
-        <source>Alert time</source><target state="translated">Riasztás ideje</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit><trans-unit id="syren alert unit" datatype="html">
-        <source>Time of syren alerts in minute(s)</source><target state="translated">Az idő percben amíg a sziréna szól</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit><trans-unit id="syren suspend time" datatype="html">
-        <source>Suspend time</source><target state="translated">Hallgatás ideje</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit><trans-unit id="syren suspend unit" datatype="html">
-        <source>Time of syren suspends in minute(s)</source><target state="translated">Az idő percben amíg a sziréna hallgat</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
+        <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source>
+        <target state="translated">A munkamenet lejár <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
+      </trans-unit>
+      <trans-unit id="session expired" datatype="html">
+        <source>Your session expired, logged out!</source>
+        <target state="translated">A munkamenet lejárt, kijelentkezett!</target>
+      </trans-unit>
+      <trans-unit id="user delete" datatype="html">
+        <source>Delete user</source>
+        <target state="translated">Felhasználó törlés</target>
+      </trans-unit>
+      <trans-unit id="user delete question" datatype="html">
+        <source>Do you want to delete the user?</source>
+        <target state="translated">Valóban törölni akarod a felhasználót?</target>
+      </trans-unit>
+      <trans-unit id="syren sources" datatype="html">
+        <source>Syren</source>
+        <target state="translated">Sziréna</target>
+      </trans-unit>
+      <trans-unit id="syren stop" datatype="html">
+        <source>Stop time</source>
+        <target state="translated">Kikapcsolási idő</target>
       </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
         <target state="translated">Bejelentkezés</target>
-        
-        
         <note priority="1" from="description">Login title</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="385a7ecc73f455fde7746d8c9859c3b711c401fc" datatype="html">
         <source>Access code</source>
         <target state="translated">Hozzáférési kód</target>
-        
         <note priority="1" from="description">Access code</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit><trans-unit id="645356695f9f7a8323f123efbf684a094f29f06d" datatype="html">
-        <source>Unregister device</source><target state="translated">Regisztráció megszüntetése</target>
-        
+      </trans-unit>
+      <trans-unit id="645356695f9f7a8323f123efbf684a094f29f06d" datatype="html">
+        <source>Unregister device</source>
+        <target state="translated">Regisztráció megszüntetése</target>
         <note priority="1" from="description">Unregister button</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="login host not allowed" datatype="html">
-        <source>Host not allowed!</source><target state="translated">A hoszt nem engedélyezett!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="login missing device token" datatype="html">
-        <source>Missing device token! Register your device!</source><target state="translated">Hiányzó eszköz token!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="login invalid device token" datatype="html">
-        <source>Invalid device token! Update your device registration!</source><target state="translated">Érvénytelen eszköz token!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">61</context></context-group></trans-unit><trans-unit id="login expired registration code" datatype="html">
-        <source>Expired device registration code!</source><target state="translated">Lejárt eszköz regisztrációs kód!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="login invalid user id" datatype="html">
-        <source>Invalid user id! Update your device registration!</source><target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációt!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">63</context></context-group></trans-unit><trans-unit id="login invalid registration code" datatype="html">
-        <source>Invalid registration code!</source><target state="translated">Érvénytelen regisztrációs kód!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit><trans-unit id="login invalid access code" datatype="html">
-        <source>Invalid access code!</source><target state="translated">Érvénytelen hozzáférési kód!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">65</context></context-group></trans-unit><trans-unit id="login no connedtion" datatype="html">
-        <source>No connection to the security system!</source><target state="translated">Nincs kapcsolat a biztonsági rendszerrel!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">66</context></context-group></trans-unit><trans-unit id="login error" datatype="html">
-        <source>Something went wrong!?</source><target state="translated">Valami félre ment!?</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">67</context></context-group></trans-unit><trans-unit id="arm away button" datatype="html">
-        <source>
-        AWAY
-      </source><target state="translated">
-         TÁVOZÓ
-      </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit>
-      
+      </trans-unit>
+      <trans-unit id="login host not allowed" datatype="html">
+        <source>Host not allowed!</source>
+        <target state="translated">A hoszt nem engedélyezett!</target>
+      </trans-unit>
+      <trans-unit id="login missing device token" datatype="html">
+        <source>Missing device token! Register your device!</source>
+        <target state="translated">Hiányzó eszköz token!</target>
+      </trans-unit>
+      <trans-unit id="login invalid device token" datatype="html">
+        <source>Invalid device token! Update your device registration!</source>
+        <target state="translated">Érvénytelen eszköz token!</target>
+      </trans-unit>
+      <trans-unit id="login expired registration code" datatype="html">
+        <source>Expired device registration code!</source>
+        <target state="translated">Lejárt eszköz regisztrációs kód!</target>
+      </trans-unit>
+      <trans-unit id="login invalid user id" datatype="html">
+        <source>Invalid user id! Update your device registration!</source>
+        <target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációt!</target>
+      </trans-unit>
+      <trans-unit id="login invalid registration code" datatype="html">
+        <source>Invalid registration code!</source>
+        <target state="translated">Érvénytelen regisztrációs kód!</target>
+      </trans-unit>
+      <trans-unit id="login invalid access code" datatype="html">
+        <source>Invalid access code!</source>
+        <target state="translated">Érvénytelen hozzáférési kód!</target>
+      </trans-unit>
+      <trans-unit id="login no connedtion" datatype="html">
+        <source>No connection to the security system!</source>
+        <target state="translated">Nincs kapcsolat a biztonsági rendszerrel!</target>
+      </trans-unit>
+      <trans-unit id="login error" datatype="html">
+        <source>Something went wrong!?</source>
+        <target state="translated">Valami félre ment!?</target>
+      </trans-unit>
+      <trans-unit id="arm away button" datatype="html">
+        <source> AWAY </source>
+        <target state="translated"> TÁVOZÓ </target>
+      </trans-unit>
       <trans-unit id="disarm button" datatype="html">
-        <source>
-        OFF
-      </source>
-        <target state="translated">
-           KI
-        </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit><trans-unit id="arm stay button" datatype="html">
-        <source>
-        STAY
-      </source><target state="translated">
-       MARADÓ
-        </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
-      
+        <source> OFF </source>
+        <target state="translated"> KI </target>
+      </trans-unit>
+      <trans-unit id="arm stay button" datatype="html">
+        <source> STAY </source>
+        <target state="translated"> MARADÓ </target>
+      </trans-unit>
       <trans-unit id="alert started" datatype="html">
         <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
         <target state="translated">Riasztás kezdete: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
-      <trans-unit id="input channel" datatype="html">
-        <source>Input channel: </source>
-        <target state="translated">Bemeneti csatorna: </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit><trans-unit id="home armed away" datatype="html">
-        <source>System armed away</source><target state="translated">Rendszer élesítve távozóra</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="home armed stay" datatype="html">
-        <source>System armed stay</source><target state="translated">Rendszer élesítve maradóra</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">55</context></context-group></trans-unit><trans-unit id="home disarmed" datatype="html">
-        <source>System disarmed</source><target state="translated">Rendszer hatástalanítva</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">56</context></context-group></trans-unit><trans-unit id="alert type" datatype="html">
-        <source>Alert type</source><target state="translated">Riasztás típusa</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="alert type away" datatype="html">
-        <source>AWAY</source><target state="translated">Távozó</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert type stay" datatype="html">
-        <source>STAY</source><target state="translated">Maradó</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert type sabotage" datatype="html">
-        <source>SABOTAGE</source><target state="translated">SZABOTÁZS</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert start time" datatype="html">
-        <source>Start time</source><target state="translated">Kezdete</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert end time" datatype="html">
-        <source>End time</source><target state="translated">Vége</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit><trans-unit id="alert history sensors" datatype="html">
-        <source>Sensors</source><target state="translated">Érzékelők</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit><trans-unit id="@alert history sensors" datatype="html">
-        <source>Sensor(s)</source><target state="translated">Érzékelő(k)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit><trans-unit id="@alert history no sensor" datatype="html">
-        <source>
-            Sensor not found!
-          </source><target state="translated">
-            Nem találtam az érzékelőt!
-          </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/alert/alert-list.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="keypad settings" datatype="html">
-        <source>Keypad settings</source><target state="translated">Billentyűzet beállítások</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="keypad enabled" datatype="html">
-        <source>Enabled</source><target state="translated">Engedélyezett</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit><trans-unit id="keypad type" datatype="html">
-        <source>Keypad type</source><target state="translated">Billentyűzet típusa</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock sources" datatype="html">
-        <source>Time sources</source><target state="translated">Idő források</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock network time" datatype="html">
-        <source>Network time</source><target state="translated">Hálózati idő</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock system time" datatype="html">
-        <source>System time</source><target state="translated">Rendszer idő</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock hardware time" datatype="html">
-        <source>Hardware time</source><target state="translated">Hardver idő</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit><trans-unit id="clock manual settings" datatype="html">
-        <source>Manual settings</source><target state="translated">Kézi beállítás</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="clock new date time" datatype="html">
-        <source>New date time</source><target state="translated">Új dátum és idő</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="clock timezone" datatype="html">
-        <source>Timezone</source><target state="translated">Időzóna</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="notifications email" datatype="html">
-        <source>Email</source><target state="translated">Email</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications email settings" datatype="html">
-        <source>Email settings for sending notifications</source><target state="translated">Email beállítások üzenetküldéshez</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications smtp username" datatype="html">
-        <source>SMTP username</source><target state="translated">SMTP felhasználónév</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications stmp password" datatype="html">
-        <source>SMTP password</source><target state="translated">SMTP jelszó</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications smtp email" datatype="html">
-        <source>Email address</source><target state="translated">Email cím</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications gsm" datatype="html">
-        <source>GSM</source><target state="translated">GSM</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications gsm settings" datatype="html">
-        <source>Mobil settings for sending notifications</source><target state="translated">GSM beállítások üzenetküldéshez</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications sim card pin" datatype="html">
-        <source>SIM card PIN code</source><target state="translated">SIM kártya PIN kód</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications target phone" datatype="html">
-        <source>Target phone number</source><target state="translated">Telefon szám</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications subscriptions" datatype="html">
-        <source>Subscriptions</source><target state="translated">Feliratkozások</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications subscriptions settings" datatype="html">
-        <source>Configure subscriptions</source><target state="translated">Feliratkozások beállítása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications source" datatype="html">
-        <source>Event</source><target state="translated">Esemény</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications send email" datatype="html">
-        <source>Send Email</source><target state="translated">Email küldése</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications send sms" datatype="html">
-        <source>Send SMS</source><target state="translated">SMS küldése</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications alert started" datatype="html">
-        <source>Alert started</source><target state="translated">Riasztás kezdete</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit><trans-unit id="notifications alert stopped" datatype="html">
-        <source>Alert stopped</source><target state="translated">Riasztás vége</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-      </trans-unit><trans-unit id="network dns" datatype="html">
-        <source>Dynamic DNS</source><target state="translated">Dinamikus DNS</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="network remote access" datatype="html">
-        <source>Remote access by hostname</source><target state="translated">Távoli hozzáférés a számítógép neve alapján</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit><trans-unit id="network username" datatype="html">
-        <source>Username</source><target state="translated">Felhasználónév</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit><trans-unit id="network password" datatype="html">
-        <source>Password</source><target state="translated">Jelszó</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="network provider" datatype="html">
-        <source>Provider</source><target state="translated">Szolgáltató</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">14</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="network hostname" datatype="html">
-        <source>Hostname</source><target state="translated">Számítógép neve</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit><trans-unit id="network restrict host" datatype="html">
-        <source>Restrict access to host</source><target state="translated">Hozzáférés korlátozása hoszthoz</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="network access locally" datatype="html">
-        <source>Access locally</source><target state="translated">Helyi hozzáférés</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="network local settings" datatype="html">
-        <source>Local access settings</source><target state="translated">Helyi hozzáférés beállítása</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit><trans-unit id="network enable ssh" datatype="html">
-        <source>Enable SSH connection</source><target state="translated">SSH kapcsolat engedélyezett</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="failed save" datatype="html">
-        <source>Failed to save!</source><target state="translated">Nem sikerült elmenteni!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">72</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">54</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/syren/syren.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit><trans-unit id="sensor delete" datatype="html">
-        <source>Delete sensor</source><target state="translated">Érzékelő törlés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="home armed away" datatype="html">
+        <source>System armed away</source>
+        <target state="translated">Rendszer élesítve távozóra</target>
+      </trans-unit>
+      <trans-unit id="home armed stay" datatype="html">
+        <source>System armed stay</source>
+        <target state="translated">Rendszer élesítve maradóra</target>
+      </trans-unit>
+      <trans-unit id="home disarmed" datatype="html">
+        <source>System disarmed</source>
+        <target state="translated">Rendszer hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="keypad settings" datatype="html">
+        <source>Keypad settings</source>
+        <target state="translated">Billentyűzet beállítások</target>
+      </trans-unit>
+      <trans-unit id="keypad enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="keypad type" datatype="html">
+        <source>Keypad type</source>
+        <target state="translated">Billentyűzet típusa</target>
+      </trans-unit>
+      <trans-unit id="clock sources" datatype="html">
+        <source>Time sources</source>
+        <target state="translated">Idő források</target>
+      </trans-unit>
+      <trans-unit id="clock network time" datatype="html">
+        <source>Network time</source>
+        <target state="translated">Hálózati idő</target>
+      </trans-unit>
+      <trans-unit id="clock system time" datatype="html">
+        <source>System time</source>
+        <target state="translated">Rendszer idő</target>
+      </trans-unit>
+      <trans-unit id="clock hardware time" datatype="html">
+        <source>Hardware time</source>
+        <target state="translated">Hardver idő</target>
+      </trans-unit>
+      <trans-unit id="clock manual settings" datatype="html">
+        <source>Manual settings</source>
+        <target state="translated">Kézi beállítás</target>
+      </trans-unit>
+      <trans-unit id="clock new date time" datatype="html">
+        <source>New date time</source>
+        <target state="translated">Új dátum és idő</target>
+      </trans-unit>
+      <trans-unit id="clock timezone" datatype="html">
+        <source>Timezone</source>
+        <target state="translated">Időzóna</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp settings" datatype="html">
+        <source>SMTP settings for sending notifications</source>
+        <target state="translated">SMTP beállítások üzenetküldéshez</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp username" datatype="html">
+        <source>SMTP username</source>
+        <target state="translated">SMTP felhasználónév</target>
+      </trans-unit>
+      <trans-unit id="notifications stmp password" datatype="html">
+        <source>SMTP password</source>
+        <target state="translated">SMTP jelszó</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp email1" datatype="html">
+        <source>Email address 1</source>
+        <target state="translated">Email cím 1</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm" datatype="html">
+        <source>GSM</source>
+        <target state="translated">GSM</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm settings" datatype="html">
+        <source>Mobil settings for sending notifications</source>
+        <target state="translated">GSM beállítások üzenetküldéshez</target>
+      </trans-unit>
+      <trans-unit id="notifications sim card pin" datatype="html">
+        <source>SIM card PIN code</source>
+        <target state="translated">SIM kártya PIN kód</target>
+      </trans-unit>
+      <trans-unit id="notifications target phone" datatype="html">
+        <source>Target phone number</source>
+        <target state="translated">Telefon szám</target>
+      </trans-unit>
+      <trans-unit id="notifications subscriptions" datatype="html">
+        <source>Subscriptions</source>
+        <target state="translated">Feliratkozások</target>
+      </trans-unit>
+      <trans-unit id="notifications subscriptions settings" datatype="html">
+        <source>Configure subscriptions</source>
+        <target state="translated">Feliratkozások beállítása</target>
+      </trans-unit>
+      <trans-unit id="notifications source" datatype="html">
+        <source>Event</source>
+        <target state="translated">Esemény</target>
+      </trans-unit>
+      <trans-unit id="notifications send email1" datatype="html">
+        <source>Send Email 1</source>
+        <target state="translated">Email küldése 1</target>
+      </trans-unit>
+      <trans-unit id="notifications send sms" datatype="html">
+        <source>Send SMS</source>
+        <target state="translated">SMS küldése</target>
+      </trans-unit>
+      <trans-unit id="notifications alert started" datatype="html">
+        <source>Alert started</source>
+        <target state="translated">Riasztás kezdete</target>
+      </trans-unit>
+      <trans-unit id="notifications alert stopped" datatype="html">
+        <source>Alert stopped</source>
+        <target state="translated">Riasztás vége</target>
+      </trans-unit>
+      <trans-unit id="network dns" datatype="html">
+        <source>Dynamic DNS</source>
+        <target state="translated">Dinamikus DNS</target>
+      </trans-unit>
+      <trans-unit id="network remote access" datatype="html">
+        <source>Remote access by hostname</source>
+        <target state="translated">Távoli hozzáférés a számítógép neve alapján</target>
+      </trans-unit>
+      <trans-unit id="network username" datatype="html">
+        <source>Username</source>
+        <target state="translated">Felhasználónév</target>
+      </trans-unit>
+      <trans-unit id="network password" datatype="html">
+        <source>Password</source>
+        <target state="translated">Jelszó</target>
+      </trans-unit>
+      <trans-unit id="network provider" datatype="html">
+        <source>Provider</source>
+        <target state="translated">Szolgáltató</target>
+      </trans-unit>
+      <trans-unit id="network hostname" datatype="html">
+        <source>Hostname</source>
+        <target state="translated">Számítógép neve</target>
+      </trans-unit>
+      <trans-unit id="network restrict host" datatype="html">
+        <source>Restrict access to host</source>
+        <target state="translated">Hozzáférés korlátozása hoszthoz</target>
+      </trans-unit>
+      <trans-unit id="network access locally" datatype="html">
+        <source>Access locally</source>
+        <target state="translated">Helyi hozzáférés</target>
+      </trans-unit>
+      <trans-unit id="network local settings" datatype="html">
+        <source>Local access settings</source>
+        <target state="translated">Helyi hozzáférés beállítása</target>
+      </trans-unit>
+      <trans-unit id="network enable ssh" datatype="html">
+        <source>Enable SSH connection</source>
+        <target state="translated">SSH kapcsolat engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="failed save" datatype="html">
+        <source>Failed to save!</source>
+        <target state="translated">Nem sikerült elmenteni!</target>
+      </trans-unit>
+      <trans-unit id="sensor delete" datatype="html">
+        <source>Delete sensor</source>
+        <target state="translated">Érzékelő törlés</target>
       </trans-unit>
       <trans-unit id="f6e336ca8f297b4c0254fb8ee592eac55b0f98f7" datatype="html">
         <source>Do you want to delete the zone?</source>
         <target state="translated">Valóban törli ezt a zónát?</target>
-        
         <note priority="1" from="description">Zone delete question</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-delete.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit><trans-unit id="zone alert enabled" datatype="html">
-        <source>Alert enabled</source><target state="translated">Riasztás engedélyezett</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit><trans-unit id="zone arm delay" datatype="html">
-        <source>Arm delay</source><target state="translated">Élesítési késleltetés</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit><trans-unit id="zone alert delay" datatype="html">
-        <source>Alert delay</source><target state="translated">Riasztás késleltetés</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="zone arm away" datatype="html">
-        <source>Away</source><target state="translated">Távozó</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="zone arm stay" datatype="html">
-        <source>Stay</source><target state="translated">Maradó</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="zone disarmed" datatype="html">
-        <source>Disarmed</source><target state="translated">Hatástalanítva</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit><trans-unit id="zone sensors" datatype="html">
-        <source>Sensors</source><target state="translated">Érzékelők</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="zone no sensors" datatype="html">
-        <source>No sensors</source><target state="translated">Nincsenek érzékelők</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">75</context></context-group></trans-unit><trans-unit id="zone none" datatype="html">
-        <source>No zones found</source><target state="translated">Nincsenek zónák</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">90</context></context-group></trans-unit><trans-unit id="name" datatype="html">
-        <source>Name</source><target state="translated">Név</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="zone alert when disarmed" datatype="html">
-        <source>Alert when disarmed</source><target state="translated">Riaszt hatástalanított állapotban</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit><trans-unit id="zone disarmed delay" datatype="html">
-        <source>Delay alert when not armed</source><target state="translated">Riasztás késleltetés hatástalanított állapotban</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="sensor alert away" datatype="html">
-        <source>Alert when away armed</source><target state="translated">Riaszt távozó élesítés esetén</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">52</context></context-group></trans-unit><trans-unit id="zone away alert delay" datatype="html">
-        <source>Delay alert when armed away</source><target state="translated">Riasztás késleltetése távozó élesítés esetén</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone away arm delay" datatype="html">
-        <source>Delay arm when arming away</source><target state="translated">Élesítés késleltetése távozás esetén</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone alert when away" datatype="html">
-        <source>Alert when away armed</source><target state="translated">Riaszt távozó élesítés esetén</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">22</context></context-group></trans-unit><trans-unit id="sensor alert stay" datatype="html">
-        <source>Alert when stay armed</source><target state="translated">Riaszt maradó élesítés esetén</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit><trans-unit id="zone stay alert delay" datatype="html">
-        <source>Delay alert when armed stay</source><target state="translated">Riasztás késleltetése maradó élesítés esetén</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone stay arm delay" datatype="html">
-        <source>Delay arm when arming stay</source><target state="translated">Élesítés késleltetése maradás esetén</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone alert when stay" datatype="html">
-        <source>Alert when stay armed</source><target state="translated">Riaszt maradó élesítés esetén</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="zone stay delay" datatype="html">
-        <source>Delay alert when armed stay</source><target state="translated">Riasztás késleltetés maradó élesítés esetén</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source><target state="translated">Érzékelő nem található!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">86</context></context-group></trans-unit><trans-unit id="message lost connection" datatype="html">
-        <source>Lost connection to the security system!</source><target state="translated">Nincs kapcsolat a háttérszolgáltatással!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context><context context-type="linenumber">66</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.ts</context><context context-type="linenumber">137</context></context-group></trans-unit><trans-unit id="description" datatype="html">
-        <source>Description</source><target state="translated">Leírás</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">23</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit><trans-unit id="sensor enabled" datatype="html">
-        <source>Enabled</source><target state="translated">Engedélyezett</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">26</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="sensor new zone" datatype="html">
-        <source>New</source><target state="translated">Új</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone name" datatype="html">
-        <source>Zone name</source><target state="translated">Zóna neve</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="sensor alert disarmed" datatype="html">
-        <source>Alert when disarmed</source><target state="translated">Riaszt nem élesített állapotban</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit><trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source><target state="translated">Zóna nem található!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="zone configuration" datatype="html">
-        <source>Configuration</source><target state="translated">Konfiguráció</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone away_l" datatype="html">
-        <source>Away:</source><target state="translated">Távozó:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone stay_l" datatype="html">
-        <source>Stay:</source><target state="translated">Maradó:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone disarme_l" datatype="html">
-        <source>Disarmed:</source><target state="translated">Hatástalanított:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone away_s" datatype="html">
-        <source>A:</source><target state="translated">T:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone stay_s" datatype="html">
-        <source>S:</source><target state="translated">M:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone disarme_s" datatype="html">
-        <source>D:</source><target state="translated">H:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit><trans-unit id="zone alert type" datatype="html">
-        <source>Alert type</source><target state="translated">Riasztás típusa</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="zone alert enabled" datatype="html">
+        <source>Alert enabled</source>
+        <target state="translated">Riasztás engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="zone arm delay" datatype="html">
+        <source>Arm delay</source>
+        <target state="translated">Élesítési késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone alert delay" datatype="html">
+        <source>Alert delay</source>
+        <target state="translated">Riasztás késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone arm away" datatype="html">
+        <source>Away</source>
+        <target state="translated">Távozó</target>
+      </trans-unit>
+      <trans-unit id="zone arm stay" datatype="html">
+        <source>Stay</source>
+        <target state="translated">Maradó</target>
+      </trans-unit>
+      <trans-unit id="zone disarmed" datatype="html">
+        <source>Disarmed</source>
+        <target state="translated">Hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="zone sensors" datatype="html">
+        <source>Sensors</source>
+        <target state="translated">Érzékelők</target>
+      </trans-unit>
+      <trans-unit id="zone no sensors" datatype="html">
+        <source>No sensors</source>
+        <target state="translated">Nincsenek érzékelők</target>
+      </trans-unit>
+      <trans-unit id="zone none" datatype="html">
+        <source>No zones found</source>
+        <target state="translated">Nincsenek zónák</target>
+      </trans-unit>
+      <trans-unit id="name" datatype="html">
+        <source>Name</source>
+        <target state="translated">Név</target>
+      </trans-unit>
+      <trans-unit id="zone alert when disarmed" datatype="html">
+        <source>Alert when disarmed</source>
+        <target state="translated">Riaszt hatástalanított állapotban</target>
+      </trans-unit>
+      <trans-unit id="zone disarmed delay" datatype="html">
+        <source>Delay alert when not armed</source>
+        <target state="translated">Riasztás késleltetés hatástalanított állapotban</target>
+      </trans-unit>
+      <trans-unit id="sensor alert away" datatype="html">
+        <source>Alert when away armed</source>
+        <target state="translated">Riaszt távozó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="zone away alert delay" datatype="html">
+        <source>Delay alert when armed away</source>
+        <target state="translated">Riasztás késleltetése távozó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="zone away arm delay" datatype="html">
+        <source>Delay arm when arming away</source>
+        <target state="translated">Élesítés késleltetése távozás esetén</target>
+      </trans-unit>
+      <trans-unit id="zone alert when away" datatype="html">
+        <source>Alert when away armed</source>
+        <target state="translated">Riaszt távozó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="sensor alert stay" datatype="html">
+        <source>Alert when stay armed</source>
+        <target state="translated">Riaszt maradó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="zone stay alert delay" datatype="html">
+        <source>Delay alert when armed stay</source>
+        <target state="translated">Riasztás késleltetése maradó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="zone stay arm delay" datatype="html">
+        <source>Delay arm when arming stay</source>
+        <target state="translated">Élesítés késleltetése maradás esetén</target>
+      </trans-unit>
+      <trans-unit id="zone alert when stay" datatype="html">
+        <source>Alert when stay armed</source>
+        <target state="translated">Riaszt maradó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="zone stay delay" datatype="html">
+        <source>Delay alert when armed stay</source>
+        <target state="translated">Riasztás késleltetés maradó élesítés esetén</target>
+      </trans-unit>
+      <trans-unit id="sensor not found" datatype="html">
+        <source>Sensor not found!</source>
+        <target state="translated">Érzékelő nem található!</target>
+      </trans-unit>
+      <trans-unit id="message lost connection" datatype="html">
+        <source>Lost connection to the security system!</source>
+        <target state="translated">Nincs kapcsolat a háttérszolgáltatással!</target>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>Description</source>
+        <target state="translated">Leírás</target>
+      </trans-unit>
+      <trans-unit id="sensor enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="sensor new zone" datatype="html">
+        <source>New</source>
+        <target state="translated">Új</target>
+      </trans-unit>
+      <trans-unit id="zone name" datatype="html">
+        <source>Zone name</source>
+        <target state="translated">Zóna neve</target>
+      </trans-unit>
+      <trans-unit id="sensor alert disarmed" datatype="html">
+        <source>Alert when disarmed</source>
+        <target state="translated">Riaszt nem élesített állapotban</target>
+      </trans-unit>
+      <trans-unit id="zone not found" datatype="html">
+        <source>Zone not found!</source>
+        <target state="translated">Zóna nem található!</target>
+      </trans-unit>
+      <trans-unit id="zone configuration" datatype="html">
+        <source>Configuration</source>
+        <target state="translated">Konfiguráció</target>
+      </trans-unit>
+      <trans-unit id="zone away_l" datatype="html">
+        <source>Away:</source>
+        <target state="translated">Távozó:</target>
+      </trans-unit>
+      <trans-unit id="zone stay_l" datatype="html">
+        <source>Stay:</source>
+        <target state="translated">Maradó:</target>
+      </trans-unit>
+      <trans-unit id="zone disarme_l" datatype="html">
+        <source>Disarmed:</source>
+        <target state="translated">Hatástalanított:</target>
+      </trans-unit>
+      <trans-unit id="zone away_s" datatype="html">
+        <source>A:</source>
+        <target state="translated">T:</target>
+      </trans-unit>
+      <trans-unit id="zone stay_s" datatype="html">
+        <source>S:</source>
+        <target state="translated">M:</target>
+      </trans-unit>
+      <trans-unit id="zone disarmed_s" datatype="html">
+        <source>D:</source>
+        <target state="translated">H:</target>
+      </trans-unit>
+      <trans-unit id="zone alert type" datatype="html">
+        <source>Alert type</source>
+        <target state="translated">Riasztás típusa</target>
       </trans-unit>
       <trans-unit id="yes button" datatype="html">
         <source>Yes</source>
         <target state="translated">Igen</target>
-        
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-card-delete.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-delete.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-delete.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="cancel button" datatype="html">
         <source>Cancel</source>
         <target state="translated">Mégsem</target>
-        
-        
-        
-        
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-card-delete.component.html</context><context context-type="linenumber">8</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-delete.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context><context context-type="linenumber">8</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-delete.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="user name" datatype="html">
-        <source>Name</source><target state="translated">Név</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="user select role" datatype="html">
-        <source>Select a role</source><target state="translated">Szerep kiválasztása</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit><trans-unit id="user new code" datatype="html">
-        <source>New access code</source><target state="translated">Új hozzáférési kód</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="user comment" datatype="html">
-        <source>Comment</source><target state="translated">Komment</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit>
+      </trans-unit>
+      <trans-unit id="user name" datatype="html">
+        <source>Name</source>
+        <target state="translated">Név</target>
+      </trans-unit>
+      <trans-unit id="user select role" datatype="html">
+        <source>Select a role</source>
+        <target state="translated">Szerep kiválasztása</target>
+      </trans-unit>
+      <trans-unit id="user new code" datatype="html">
+        <source>New access code</source>
+        <target state="translated">Új hozzáférési kód</target>
+      </trans-unit>
+      <trans-unit id="user comment" datatype="html">
+        <source>Comment</source>
+        <target state="translated">Komment</target>
+      </trans-unit>
       <trans-unit id="user no users" datatype="html">
-        <source>No users found</source><target state="translated">Nincsenek felhasználók</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
-        <source>Register device</source><target state="translated">Eszköz regisztrálása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
+        <source>No users found</source>
+        <target state="translated">Nincsenek felhasználók</target>
+      </trans-unit>
+      <trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
+        <source>Register device</source>
+        <target state="translated">Eszköz regisztrálása</target>
         <note priority="1" from="description">Register device</note>
-      </trans-unit><trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
-        <source>Registration code</source><target state="translated">Regisztrációs kód</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
+        <source>Registration code</source>
+        <target state="translated">Regisztrációs kód</target>
         <note priority="1" from="description">Regstration code</note>
-      </trans-unit><trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
-        <source>Register</source><target state="translated">Regisztrálás</target>
-        
+      </trans-unit>
+      <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
+        <source>Register</source>
+        <target state="translated">Regisztrálás</target>
         <note priority="1" from="description">Register button</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/login/login.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="user card delete" datatype="html">
-        <source>Delete card</source><target state="translated">Kártya törlése</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="user card delete question" datatype="html">
-        <source>Are you sure to delete this card?</source><target state="translated">Biztos, hogy törölni akarod ezt a kártyát ?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit><trans-unit id="user not found" datatype="html">
-        <source>User not found!</source><target state="translated">Felhasználó nem található!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit><trans-unit id="failed create" datatype="html">
-        <source>Failed to create!</source><target state="translated">Nem sikerült létrehozni!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">91</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">38</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="failed update" datatype="html">
-        <source>Failed to update!</source><target state="translated">Nem sikerült megváltoztatni!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">92</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">39</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit><trans-unit id="failed delete" datatype="html">
-        <source>Failed to delete!</source><target state="translated">Nem sikerült törölni!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">93</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context><context context-type="linenumber">105</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">40</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">60</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">101</context></context-group></trans-unit><trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source><target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">94</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context><context context-type="linenumber">106</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-detail.component.html</context><context context-type="linenumber">41</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">66</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-detail.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/zone/zone-list.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit><trans-unit id="sensor motion" datatype="html">
-        <source>Motion</source><target state="translated">Mozgás</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor tamper" datatype="html">
-        <source>Tamper</source><target state="translated">Tamper</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor open" datatype="html">
-        <source>Open</source><target state="translated">Nyitás</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor break" datatype="html">
-        <source>Break</source><target state="translated">Törés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor unknown" datatype="html">
-        <source>Unknown</source><target state="translated">Ismeretlen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit><trans-unit id="sensor disable" datatype="html">
-        <source>Disabled</source><target state="translated">Letiltott</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-      </trans-unit><trans-unit id="user device registration" datatype="html">
-        <source>Device registration</source><target state="translated">Eszköz regisztrálás</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="user select expiry" datatype="html">
-        <source>Select expiry</source><target state="translated">Lejárat kiválasztása</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-registration.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="user device registration code" datatype="html">
-        <source>Device registration code</source><target state="translated">Eszköz regisztrációs kód</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-registration.component.html</context><context context-type="linenumber">26</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit><trans-unit id="user get new code" datatype="html">
-        <source>Get new code</source><target state="translated">Új kód igénylése</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-registration.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit><trans-unit id="close button" datatype="html">
-        <source>Close</source><target state="translated">Bezár</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-registration.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="device code no expiry" datatype="html">
-        <source>Unlimited time</source><target state="translated">Korlátlan</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit><trans-unit id="device code with expiry" datatype="html">
-        <source>With expiry</source><target state="translated">Lejárattal</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit><trans-unit id="expiry hours" datatype="html">
-        <source>Hours</source><target state="translated">Óra</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-      </trans-unit><trans-unit id="expiry days" datatype="html">
-        <source>Days</source><target state="translated">Nap</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit><trans-unit id="user code copied" datatype="html">
-        <source>Copied to clipboard!</source><target state="translated">Vágólapra került!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/demo/demo.help.dialog.component.html</context><context context-type="linenumber">45</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/user/user-device-registration.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit><trans-unit id="user unregister device" datatype="html">
-        <source>Unregister device</source><target state="translated">Regisztráció megszüntetése</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="user unregister question" datatype="html">
-        <source>Are you sure to unregister this device?</source><target state="translated">Valóban meg akarod szüntetni az eszköz regisztrációját?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit><trans-unit id="user type administrator" datatype="html">
-        <source>Administrator</source><target state="translated">Adminisztrátor</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="user type user" datatype="html">
-        <source>User</source><target state="translated">Felhasználó</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="user cards" datatype="html">
-        <source>Cards</source><target state="translated">Kártyák</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit><trans-unit id="user registration" datatype="html">
-        <source>Expires on: </source><target state="translated">Lejárat: </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/user/user-list.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit><trans-unit id="user expiry never" datatype="html">
-        <source>never</source><target state="translated">soha</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit><trans-unit id="user register device button" datatype="html">
-        <source>Device registration</source><target state="translated">Eszköz regisztrálása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit><trans-unit id="user register card button" datatype="html">
-        <source>Register card</source><target state="translated">Kártya regisztrálása</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
+        <source>Delete card</source>
+        <target state="translated">Kártya törlése</target>
+      </trans-unit>
+      <trans-unit id="user card delete question" datatype="html">
+        <source>Are you sure to delete this card?</source>
+        <target state="translated">Biztos, hogy törölni akarod ezt a kártyát ?</target>
+      </trans-unit>
+      <trans-unit id="user not found" datatype="html">
+        <source>User not found!</source>
+        <target state="translated">Felhasználó nem található!</target>
+      </trans-unit>
+      <trans-unit id="failed create" datatype="html">
+        <source>Failed to create!</source>
+        <target state="translated">Nem sikerült létrehozni!</target>
+      </trans-unit>
+      <trans-unit id="failed update" datatype="html">
+        <source>Failed to update!</source>
+        <target state="translated">Nem sikerült megváltoztatni!</target>
+      </trans-unit>
+      <trans-unit id="failed delete" datatype="html">
+        <source>Failed to delete!</source>
+        <target state="translated">Nem sikerült törölni!</target>
+      </trans-unit>
+      <trans-unit id="cant delete" datatype="html">
+        <source>Can't delete, system is not ready!</source>
+        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
+      </trans-unit>
+      <trans-unit id="sensor motion" datatype="html">
+        <source>Motion</source>
+        <target state="translated">Mozgás</target>
+      </trans-unit>
+      <trans-unit id="sensor tamper" datatype="html">
+        <source>Tamper</source>
+        <target state="translated">Tamper</target>
+      </trans-unit>
+      <trans-unit id="sensor open" datatype="html">
+        <source>Open</source>
+        <target state="translated">Nyitás</target>
+      </trans-unit>
+      <trans-unit id="sensor break" datatype="html">
+        <source>Break</source>
+        <target state="translated">Törés</target>
+      </trans-unit>
+      <trans-unit id="sensor unknown" datatype="html">
+        <source>Unknown</source>
+        <target state="translated">Ismeretlen</target>
+      </trans-unit>
+      <trans-unit id="sensor disable" datatype="html">
+        <source>Disabled</source>
+        <target state="translated">Letiltott</target>
+      </trans-unit>
+      <trans-unit id="user device registration" datatype="html">
+        <source>Device registration</source>
+        <target state="translated">Eszköz regisztrálás</target>
+      </trans-unit>
+      <trans-unit id="user select expiry" datatype="html">
+        <source>Select expiry</source>
+        <target state="translated">Lejárat kiválasztása</target>
+      </trans-unit>
+      <trans-unit id="user device registration code" datatype="html">
+        <source>Device registration code</source>
+        <target state="translated">Eszköz regisztrációs kód</target>
+      </trans-unit>
+      <trans-unit id="user get new code" datatype="html">
+        <source>Get new code</source>
+        <target state="translated">Új kód igénylése</target>
+      </trans-unit>
+      <trans-unit id="close button" datatype="html">
+        <source>Close</source>
+        <target state="translated">Bezár</target>
+      </trans-unit>
+      <trans-unit id="device code no expiry" datatype="html">
+        <source>Unlimited time</source>
+        <target state="translated">Korlátlan</target>
+      </trans-unit>
+      <trans-unit id="device code with expiry" datatype="html">
+        <source>With expiry</source>
+        <target state="translated">Lejárattal</target>
+      </trans-unit>
+      <trans-unit id="expiry hours" datatype="html">
+        <source>Hours</source>
+        <target state="translated">Óra</target>
+      </trans-unit>
+      <trans-unit id="expiry days" datatype="html">
+        <source>Days</source>
+        <target state="translated">Nap</target>
+      </trans-unit>
+      <trans-unit id="user code copied" datatype="html">
+        <source>Copied to clipboard!</source>
+        <target state="translated">Vágólapra került!</target>
+      </trans-unit>
+      <trans-unit id="user unregister device" datatype="html">
+        <source>Unregister device</source>
+        <target state="translated">Regisztráció megszüntetése</target>
+      </trans-unit>
+      <trans-unit id="user unregister question" datatype="html">
+        <source>Are you sure to unregister this device?</source>
+        <target state="translated">Valóban meg akarod szüntetni az eszköz regisztrációját?</target>
+      </trans-unit>
+      <trans-unit id="user type administrator" datatype="html">
+        <source>Administrator</source>
+        <target state="translated">Adminisztrátor</target>
+      </trans-unit>
+      <trans-unit id="user type user" datatype="html">
+        <source>User</source>
+        <target state="translated">Felhasználó</target>
+      </trans-unit>
+      <trans-unit id="user cards" datatype="html">
+        <source>Cards</source>
+        <target state="translated">Kártyák</target>
+      </trans-unit>
+      <trans-unit id="user registration" datatype="html">
+        <source>Expires on: </source>
+        <target state="translated">Lejárat: </target>
+      </trans-unit>
+      <trans-unit id="user expiry never" datatype="html">
+        <source>never</source>
+        <target state="translated">soha</target>
+      </trans-unit>
+      <trans-unit id="user register device button" datatype="html">
+        <source>Device registration</source>
+        <target state="translated">Eszköz regisztrálása</target>
+      </trans-unit>
+      <trans-unit id="user register card button" datatype="html">
+        <source>Register card</source>
+        <target state="translated">Kártya regisztrálása</target>
       </trans-unit>
       <trans-unit id="save button" datatype="html">
         <source>Save</source>
         <target state="translated">Mentés</target>
-        
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/config/clock/clock.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/network/network.component.html</context><context context-type="linenumber">49</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/config/syren/syren.component.html</context><context context-type="linenumber">26</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/keypad/keypad.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
         <target state="translated">Valóban töröli ezt az érzékelőt?</target>
-        
         <note priority="1" from="description">Sensor delete question</note>
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit><trans-unit id="sensor zone" datatype="html">
-        <source>Zone</source><target state="translated">Zóna</target>
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="sensor disconnected" datatype="html">
-        <source>Disconnected</source><target state="translated">Lecsatlakoztatott</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit><trans-unit id="sensor channel" datatype="html">
-        <source>Channel</source><target state="translated">Csatorna</target>
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="sensor type" datatype="html">
-        <source>Sensor type</source><target state="translated">Érzékelő típusa</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit><trans-unit id="zone delete" datatype="html">
-        <source>Delete zone</source><target state="translated">Zóna törlés</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="sensor zone" datatype="html">
+        <source>Zone</source>
+        <target state="translated">Zóna</target>
+      </trans-unit>
+      <trans-unit id="sensor disconnected" datatype="html">
+        <source>Disconnected</source>
+        <target state="translated">Lecsatlakoztatott</target>
+      </trans-unit>
+      <trans-unit id="sensor channel" datatype="html">
+        <source>Channel</source>
+        <target state="translated">Csatorna</target>
+      </trans-unit>
+      <trans-unit id="sensor type" datatype="html">
+        <source>Sensor type</source>
+        <target state="translated">Érzékelő típusa</target>
+      </trans-unit>
+      <trans-unit id="zone delete" datatype="html">
+        <source>Delete zone</source>
+        <target state="translated">Zóna törlés</target>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
         <source>Starting up</source>
         <target state="translated">Indulás</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
         <target state="translated">Konfiguráció frissítés</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">7</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
         <target state="translated">Hibás konfiguráció</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">8</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="sabotage state" datatype="html">
         <source>Sabotage</source>
         <target state="translated">Szabotázs</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit>
-      
-      
+      </trans-unit>
       <trans-unit id="error state" datatype="html">
-        <source>ERROR</source><target state="translated">HIBA</target>
-        
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+        <source>ERROR</source>
+        <target state="translated">HIBA</target>
+      </trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source>
         <target state="translated">SZ</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source>
         <target state="translated">U</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source>
         <target state="translated">H</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit>
+      </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source>
         <target state="translated">T</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/indicators/system-state.component.html</context><context context-type="linenumber">38</context></context-group></trans-unit>
-      
-      
-      
+      </trans-unit>
+      <trans-unit id="notifications smtp hostname" datatype="html">
+        <source>SMTP hostname</source>
+        <target state="translated">SMTP hoszt</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp port" datatype="html">
+        <source>SMTP port</source>
+        <target state="translated">SMTP port</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp email2" datatype="html">
+        <source>Email address 2</source>
+        <target state="translated">Email cím 2</target>
+      </trans-unit>
+      <trans-unit id="notifications send email2" datatype="html">
+        <source>Send Email 2</source>
+        <target state="translated">Email küldése 2</target>
+      </trans-unit>
+      <trans-unit id="notifications power outage started" datatype="html">
+        <source>Power outage started</source>
+        <target state="translated">Áramszünet kezdete</target>
+      </trans-unit>
+      <trans-unit id="notifications power outage stopped" datatype="html">
+        <source>Power outage stopped</source>
+        <target state="translated">Áramszünet vége</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp" datatype="html">
+        <source>SMTP</source>
+        <target state="translated">SMTP</target>
+      </trans-unit>
+      <trans-unit id="notifications enable smtp" datatype="html">
+        <source>Enable SMTP</source>
+        <target state="translated">SMTP engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="notifications disable smtp" datatype="html">
+        <source>Disable SMTP</source>
+        <target state="translated">SMTP letiltás</target>
+      </trans-unit>
+      <trans-unit id="notifications send test email" datatype="html">
+        <source>Send test email</source>
+        <target state="translated">Teszt email küldés</target>
+      </trans-unit>
+      <trans-unit id="notifications enable gsm" datatype="html">
+        <source>Enable GSM</source>
+        <target state="translated">GSM engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="notifications disable gsm" datatype="html">
+        <source>Disable GSM</source>
+        <target state="translated">GSM letiltás</target>
+      </trans-unit>
+      <trans-unit id="notifications send test sms" datatype="html">
+        <source>Send test SMS</source>
+        <target state="translated">Teszt SMS küldés</target>
+      </trans-unit>
+      <trans-unit id="notifications email1 success" datatype="html">
+        <source>Email sent successfully to email address 1!</source>
+        <target state="translated">Sikeres email küldés az email 1 címre!</target>
+      </trans-unit>
+      <trans-unit id="email1 failed" datatype="html">
+        <source>Failed to send to email address 1!</source>
+        <target state="translated">Sikertelen email küldés az email 1 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications email2 success" datatype="html">
+        <source>Email sent successfully to email address 2!</source>
+        <target state="translated">Sikeres email küldés az email 2 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications email2 failed" datatype="html">
+        <source>Failed to send to email address 2!</source>
+        <target state="translated">Sikertelen email küldés az email 2 címre!</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp connection failed" datatype="html">
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+      </trans-unit>
+      <trans-unit id="notifications phone1 success" datatype="html">
+        <source>SMS sent successfully to phone!</source>
+        <target state="translated">Sikeres SMS küldés a telefonra!</target>
+      </trans-unit>
+      <trans-unit id="notifications phone1 failed" datatype="html">
+        <source>Failed to send SMS!</source>
+        <target state="translated">Sikertelen SMS küldés!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms connection failed" datatype="html">
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+      </trans-unit>
+      <trans-unit id="syren test" datatype="html">
+        <source>Test</source>
+        <target state="translated">Teszt</target>
+      </trans-unit>
+      <trans-unit id="events menu link" datatype="html">
+        <source>Events</source>
+        <target state="translated">Események</target>
+      </trans-unit>
+      <trans-unit id="events start" datatype="html">
+        <source>Start <x id="PH" equiv-text="sensor.description"/></source>
+        <target state="translated">Kezdés <x id="PH" equiv-text="sensor.description"/></target>
+      </trans-unit>
+      <trans-unit id="events arm undefined" datatype="html">
+        <source>Undefined</source>
+        <target state="translated">Nem definiált</target>
+      </trans-unit>
+      <trans-unit id="events arm away" datatype="html">
+        <source>AWAY</source>
+        <target state="translated">TÁVOZÓ</target>
+      </trans-unit>
+      <trans-unit id="events arm stay" datatype="html">
+        <source>STAY</source>
+        <target state="translated">MARADÓ</target>
+      </trans-unit>
+      <trans-unit id="events arm disarmed" datatype="html">
+        <source>DISARMED</source>
+        <target state="translated">HATÁSTALANÍTVA</target>
+      </trans-unit>
+      <trans-unit id="events filter armed by" datatype="html">
+        <source>Armed by</source>
+        <target state="translated">Élesítette</target>
+      </trans-unit>
+      <trans-unit id="events undefined" datatype="html">
+        <source>Undefined</source>
+        <target state="translated">Nem definiált</target>
+      </trans-unit>
+      <trans-unit id="events armed keypad" datatype="html">
+        <source>Armed with keypad</source>
+        <target state="translated">Billentyűzetről élesítve</target>
+      </trans-unit>
+      <trans-unit id="events filter date" datatype="html">
+        <source>Enter a date range</source>
+        <target state="translated">Dátumok megadása</target>
+      </trans-unit>
+      <trans-unit id="events alert" datatype="html">
+        <source>Alert event</source>
+        <target state="translated">Riasztás</target>
+      </trans-unit>
+      <trans-unit id="events alert undefined" datatype="html">
+        <source>Undefined</source>
+        <target state="translated">Nem definiált</target>
+      </trans-unit>
+      <trans-unit id="events alert no" datatype="html">
+        <source>No</source>
+        <target state="translated">Nem</target>
+      </trans-unit>
+      <trans-unit id="events alert yes" datatype="html">
+        <source>Yes</source>
+        <target state="translated">Igen</target>
+      </trans-unit>
+      <trans-unit id="events clear filters" datatype="html">
+        <source>Clear filters </source>
+        <target state="translated">Szűrők törlése </target>
+      </trans-unit>
+      <trans-unit id="events sabotage" datatype="html">
+        <source>Sabotage event</source>
+        <target state="translated">Szabotázs</target>
+      </trans-unit>
+      <trans-unit id="events arm" datatype="html">
+        <source>Arm event</source>
+        <target state="translated">Élesítés</target>
+      </trans-unit>
+      <trans-unit id="events armed" datatype="html">
+        <source>Armed</source>
+        <target state="translated">Élesítve</target>
+      </trans-unit>
+      <trans-unit id="events sensors" datatype="html">
+        <source>Alerting sensor(s)</source>
+        <target state="translated">Aktív érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="events delay" datatype="html">
+        <source> delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+        <target state="translated"> késleltetés: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></target>
+      </trans-unit>
+      <trans-unit id="events disarmed" datatype="html">
+        <source>Disarmed</source>
+        <target state="translated">Hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="events disarmed keypad" datatype="html">
+        <source>Disarmed with keypad</source>
+        <target state="translated">Billentyűzetről hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="events disarmed system" datatype="html">
+        <source> Disarmed by system </source>
+        <target state="translated"> Rendszer hatástalanítás </target>
+      </trans-unit>
+      <trans-unit id="events timeline" datatype="html">
+        <source>Timeline</source>
+        <target state="translated">Időrend</target>
+      </trans-unit>
+      <trans-unit id="events empty" datatype="html">
+        <source>No arms/alerts found</source>
+        <target state="translated">Nincs riasztási esemény</target>
+      </trans-unit>
+      <trans-unit id="events away" datatype="html">
+        <source>AWAY</source>
+        <target state="translated">TÁVOZÓ</target>
+      </trans-unit>
+      <trans-unit id="events end" datatype="html">
+        <source>End <x id="PH" equiv-text="sensor.description"/></source>
+        <target state="translated">Vége <x id="PH" equiv-text="sensor.description"/></target>
+      </trans-unit>
+      <trans-unit id="events alert started" datatype="html">
+        <source>Alert started</source>
+        <target state="translated">Riasztás kezdete</target>
+      </trans-unit>
+      <trans-unit id="events alert finished" datatype="html">
+        <source>Alert finished</source>
+        <target state="translated">Riasztás vége</target>
+      </trans-unit>
+      <trans-unit id="events keypad" datatype="html">
+        <source>Keypad</source>
+        <target state="translated">Billentyűzet</target>
+      </trans-unit>
+      <trans-unit id="events filter arm" datatype="html">
+        <source>Arm type</source>
+        <target state="translated">Élesítés módja</target>
+      </trans-unit>
+      <trans-unit id="events filter alert" datatype="html">
+        <source>Alert happened</source>
+        <target state="translated">Riasztás történt</target>
+      </trans-unit>
+      <trans-unit id="events filter" datatype="html">
+        <source>Filter</source>
+        <target state="translated">Szűrés</target>
+      </trans-unit>
+      <trans-unit id="events stay" datatype="html">
+        <source>STAY</source>
+        <target state="translated">MARADÓ</target>
+      </trans-unit>
+      <trans-unit id="events disarmed by" datatype="html">
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
+        <target state="translated">Hatástalanította <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></target>
+      </trans-unit>
+      <trans-unit id="events properties" datatype="html">
+        <source>Properties</source>
+        <target state="translated">Tulajdonságok</target>
+      </trans-unit>
+      <trans-unit id="events armed by" datatype="html">
+        <source>Armed by</source>
+        <target state="translated">Élesítette</target>
+      </trans-unit>
+      <trans-unit id="areas menu link" datatype="html">
+        <source>Areas</source>
+        <target state="translated">Területek</target>
+      </trans-unit>
+      <trans-unit id="area delete" datatype="html">
+        <source>Delete area</source>
+        <target state="translated">Terület törlése</target>
+      </trans-unit>
+      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+        <source>Do you want to delete the area?</source>
+        <target state="translated">Törölni akarod ezt a területet?</target>
+        <note priority="1" from="description">Area delete question</note>
+      </trans-unit>
+      <trans-unit id="area not found" datatype="html">
+        <source>Zone not found!</source>
+        <target state="translated">Zóna nem található!</target>
+      </trans-unit>
+      <trans-unit id="area sensors" datatype="html">
+        <source>Sensors</source>
+        <target state="translated">Érzékelők</target>
+      </trans-unit>
+      <trans-unit id="area no sensors" datatype="html">
+        <source>No sensors</source>
+        <target state="translated">Nincsenek érzékelők</target>
+      </trans-unit>
+      <trans-unit id="area none" datatype="html">
+        <source>No areas found</source>
+        <target state="translated">Nem találhatóak területek</target>
+      </trans-unit>
+      <trans-unit id="area armed away" datatype="html">
+        <source>Area armed away</source>
+        <target state="translated">Terület távozó élesítése</target>
+      </trans-unit>
+      <trans-unit id="area armed stay" datatype="html">
+        <source>Area armed stay</source>
+        <target state="translated">Terület maradó élesítése</target>
+      </trans-unit>
+      <trans-unit id="area disarmed" datatype="html">
+        <source>Area disarmed</source>
+        <target state="translated">Terület hatástalanítva</target>
+      </trans-unit>
+      <trans-unit id="events arm mixed" datatype="html">
+        <source>MIXED</source>
+        <target state="translated">VEGYES</target>
+      </trans-unit>
+      <trans-unit id="events sensor states" datatype="html">
+        <source>Sensor states</source>
+        <target state="translated">Érzékelő állapotok</target>
+      </trans-unit>
+      <trans-unit id="events arm changed" datatype="html">
+        <source>Arm changed</source>
+        <target state="translated">Élesítés megváltozott</target>
+      </trans-unit>
+      <trans-unit id="sensor area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="sensor new area" datatype="html">
+        <source>New</source>
+        <target state="translated">Új</target>
+      </trans-unit>
+      <trans-unit id="area name" datatype="html">
+        <source>Area name</source>
+        <target state="translated">Terület neve</target>
+      </trans-unit>
+      <trans-unit id="area no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="sensor none" datatype="html">
+        <source>No sensors found</source>
+        <target state="translated">Nincsenek érzékelők</target>
+      </trans-unit>
+      <trans-unit id="zone no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="syren silent hint" datatype="html">
+        <source>Do not use the syren in case of an alarm</source>
+        <target state="translated">Ne használja a szirénát riasztás esetén</target>
+      </trans-unit>
+      <trans-unit id="syren delay" datatype="html">
+        <source>Delay</source>
+        <target state="translated">Késleltetés</target>
+      </trans-unit>
+      <trans-unit id="syren delay hint" datatype="html">
+        <source>Delay the syren in seconds</source>
+        <target state="translated">Sziréna késleltetése másodperceben</target>
+      </trans-unit>
+      <trans-unit id="syren stop hint" datatype="html">
+        <source>Stop the syren in seconds</source>
+        <target state="translated">Sziréna kikapcsolása másodpercben</target>
+      </trans-unit>
+      <trans-unit id="events silent" datatype="html">
+        <source>Silent alarm</source>
+        <target state="translated">Csendes riasztás</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

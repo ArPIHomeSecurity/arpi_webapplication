@@ -2,1472 +2,777 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="alert type" datatype="html">
-        <source>Alert type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert type away" datatype="html">
-        <source>AWAY</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert type stay" datatype="html">
-        <source>STAY</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert type sabotage" datatype="html">
-        <source>SABOTAGE</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert start time" datatype="html">
-        <source>Start time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert end time" datatype="html">
-        <source>End time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert history sensors" datatype="html">
-        <source>Sensors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="@alert history sensors" datatype="html">
-        <source>Sensor(s)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="@alert history no sensor" datatype="html">
-        <source> Sensor not found! </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/alert/alert-list.component.html</context>
-          <context context-type="linenumber">40,41</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="alert history menu link" datatype="html">
-        <source>Alert history</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
         <source>Settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
         <note priority="1" from="description">Settings menu title</note>
       </trans-unit>
       <trans-unit id="zones menu link" datatype="html">
         <source>Zones</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensors menu link" datatype="html">
         <source>Sensors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="syren menu link" datatype="html">
         <source>Syren</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="keypad menu link" datatype="html">
         <source>Keypad</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications menu link" datatype="html">
         <source>Notifications</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock menu link" datatype="html">
         <source>Clock</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock sources" datatype="html">
         <source>Time sources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock network time" datatype="html">
         <source>Network time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock system time" datatype="html">
         <source>System time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock hardware time" datatype="html">
         <source>Hardware time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock manual settings" datatype="html">
         <source>Manual settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock new date time" datatype="html">
         <source>New date time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="clock timezone" datatype="html">
         <source>Timezone</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="save button" datatype="html">
         <source>Save</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="failed save" datatype="html">
         <source>Failed to save!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/clock/clock.component.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network dns" datatype="html">
         <source>Dynamic DNS</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network remote access" datatype="html">
         <source>Remote access by hostname</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network provider" datatype="html">
         <source>Provider</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network hostname" datatype="html">
         <source>Hostname</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network username" datatype="html">
         <source>Username</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network password" datatype="html">
         <source>Password</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network restrict host" datatype="html">
         <source>Restrict access to host</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network access locally" datatype="html">
         <source>Access locally</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network local settings" datatype="html">
         <source>Local access settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/network/network.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="notifications email" datatype="html">
-        <source>Email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="notifications email settings" datatype="html">
-        <source>Email settings for sending notifications</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
+      <trans-unit id="notifications smtp settings" datatype="html">
+        <source>SMTP settings for sending notifications</source>
       </trans-unit>
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications stmp password" datatype="html">
         <source>SMTP password</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="notifications smtp email" datatype="html">
-        <source>Email address</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
+      <trans-unit id="notifications smtp hostname" datatype="html">
+        <source>SMTP hostname</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp port" datatype="html">
+        <source>SMTP port</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp email1" datatype="html">
+        <source>Email address 1</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp email2" datatype="html">
+        <source>Email address 2</source>
       </trans-unit>
       <trans-unit id="notifications gsm" datatype="html">
         <source>GSM</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications gsm settings" datatype="html">
         <source>Mobil settings for sending notifications</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications sim card pin" datatype="html">
         <source>SIM card PIN code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications target phone" datatype="html">
         <source>Target phone number</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications subscriptions" datatype="html">
         <source>Subscriptions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications subscriptions settings" datatype="html">
         <source>Configure subscriptions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications source" datatype="html">
         <source>Event</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="notifications send email" datatype="html">
-        <source>Send Email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
+      <trans-unit id="notifications send email1" datatype="html">
+        <source>Send Email 1</source>
+      </trans-unit>
+      <trans-unit id="notifications send email2" datatype="html">
+        <source>Send Email 2</source>
       </trans-unit>
       <trans-unit id="notifications send sms" datatype="html">
         <source>Send SMS</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications alert started" datatype="html">
         <source>Alert started</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notifications alert stopped" datatype="html">
         <source>Alert stopped</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="notifications power outage started" datatype="html">
+        <source>Power outage started</source>
+      </trans-unit>
+      <trans-unit id="notifications power outage stopped" datatype="html">
+        <source>Power outage stopped</source>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="syren alert time" datatype="html">
-        <source>Alert time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="syren alert unit" datatype="html">
-        <source>Time of syren alerts in minute(s)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="syren suspend time" datatype="html">
-        <source>Suspend time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="syren suspend unit" datatype="html">
-        <source>Time of syren suspends in minute(s)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/config/syren/syren.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
+      <trans-unit id="syren stop" datatype="html">
+        <source>Stop time</source>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
         <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="message lost connection" datatype="html">
         <source>Lost connection to the security system!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.ts</context>
-          <context context-type="linenumber">137</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
         <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/configuration-base/configuration-base.component.ts</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user code copied" datatype="html">
         <source>Copied to clipboard!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/demo/demo.help.dialog.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source> AWAY </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">9,10</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="disarm button" datatype="html">
         <source> OFF </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">13,14</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">20,21</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="alert started" datatype="html">
         <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="input channel" datatype="html">
-        <source>Input channel: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="home armed stay" datatype="html">
         <source>System armed stay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="home disarmed" datatype="html">
         <source>System disarmed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/home/home.component.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
         <source>Starting up</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sabotage state" datatype="html">
         <source>Sabotage</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="error state" datatype="html">
         <source>ERROR</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="starting state short" datatype="html">
         <source>S</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="updating state short" datatype="html">
         <source>U</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
         <source>I</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
         <source>T</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/indicators/system-state.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="keypad settings" datatype="html">
         <source>Keypad settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="keypad enabled" datatype="html">
         <source>Enabled</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="keypad type" datatype="html">
         <source>Keypad type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/keypad/keypad.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
         <source>Register device</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
       <trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
         <source>Registration code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
         <note priority="1" from="description">Regstration code</note>
       </trans-unit>
       <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
         <source>Register</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
         <note priority="1" from="description">Register button</note>
       </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
         <note priority="1" from="description">Login title</note>
       </trans-unit>
       <trans-unit id="385a7ecc73f455fde7746d8c9859c3b711c401fc" datatype="html">
         <source>Access code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
         <note priority="1" from="description">Access code</note>
       </trans-unit>
       <trans-unit id="645356695f9f7a8323f123efbf684a094f29f06d" datatype="html">
         <source>Unregister device</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
         <note priority="1" from="description">Unregister button</note>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
         <source>Host not allowed!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login missing device token" datatype="html">
         <source>Missing device token! Register your device!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login invalid device token" datatype="html">
         <source>Invalid device token! Update your device registration!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login expired registration code" datatype="html">
         <source>Expired device registration code!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login invalid user id" datatype="html">
         <source>Invalid user id! Update your device registration!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login invalid registration code" datatype="html">
         <source>Invalid registration code!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login invalid access code" datatype="html">
         <source>Invalid access code!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login no connedtion" datatype="html">
         <source>No connection to the security system!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
         <note priority="1" from="description">Sensor delete question</note>
       </trans-unit>
       <trans-unit id="yes button" datatype="html">
         <source>Yes</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-delete.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="cancel button" datatype="html">
         <source>Cancel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-delete.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-delete.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor channel" datatype="html">
         <source>Channel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor disconnected" datatype="html">
         <source>Disconnected</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor type" datatype="html">
         <source>Sensor type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="description" datatype="html">
         <source>Description</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
         <source>Zone</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor new zone" datatype="html">
         <source>New</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone name" datatype="html">
         <source>Zone name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor alert disarmed" datatype="html">
         <source>Alert when disarmed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone disarmed delay" datatype="html">
         <source>Delay alert when not armed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor alert away" datatype="html">
         <source>Alert when away armed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone away alert delay" datatype="html">
         <source>Delay alert when armed away</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone away arm delay" datatype="html">
         <source>Delay arm when arming away</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor alert stay" datatype="html">
         <source>Alert when stay armed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone stay alert delay" datatype="html">
         <source>Delay alert when armed stay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone stay arm delay" datatype="html">
         <source>Delay arm when arming stay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
         <source>Sensor not found!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">91</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="failed update" datatype="html">
         <source>Failed to update!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="failed delete" datatype="html">
         <source>Failed to delete!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">101</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
         <source>Can&apos;t delete, system is not ready!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-detail.component.html</context>
-          <context context-type="linenumber">94</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor tamper" datatype="html">
         <source>Tamper</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor open" datatype="html">
         <source>Open</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor break" datatype="html">
         <source>Break</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor unknown" datatype="html">
         <source>Unknown</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="sensor disable" datatype="html">
         <source>Disabled</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/sensor/sensor-list.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user card delete" datatype="html">
         <source>Delete card</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user card delete question" datatype="html">
         <source>Are you sure to delete this card?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-card-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user delete" datatype="html">
         <source>Delete user</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user delete question" datatype="html">
         <source>Do you want to delete the user?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user name" datatype="html">
         <source>Name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user select role" datatype="html">
         <source>Select a role</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user new code" datatype="html">
         <source>New access code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user comment" datatype="html">
         <source>Comment</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
         <source>User not found!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-detail.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user select expiry" datatype="html">
         <source>Select expiry</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user device registration code" datatype="html">
         <source>Device registration code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user get new code" datatype="html">
         <source>Get new code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
         <source>Close</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="device code no expiry" datatype="html">
         <source>Unlimited time</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="device code with expiry" datatype="html">
         <source>With expiry</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="expiry hours" datatype="html">
         <source>Hours</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="expiry days" datatype="html">
         <source>Days</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-registration.component.ts</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user unregister device" datatype="html">
         <source>Unregister device</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user unregister question" datatype="html">
         <source>Are you sure to unregister this device?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-device-unregister.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
         <source>Administrator</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user type user" datatype="html">
         <source>User</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user cards" datatype="html">
         <source>Cards</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user registration" datatype="html">
         <source>Expires on: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user expiry never" datatype="html">
         <source>never</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user register device button" datatype="html">
         <source>Device registration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user register card button" datatype="html">
         <source>Register card</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="user no users" datatype="html">
         <source>No users found</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-list.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone delete" datatype="html">
         <source>Delete zone</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-delete.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="f6e336ca8f297b4c0254fb8ee592eac55b0f98f7" datatype="html">
         <source>Do you want to delete the zone?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-delete.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
         <note priority="1" from="description">Zone delete question</note>
       </trans-unit>
       <trans-unit id="name" datatype="html">
         <source>Name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert when disarmed" datatype="html">
         <source>Alert when disarmed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert when away" datatype="html">
         <source>Alert when away armed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert when stay" datatype="html">
         <source>Alert when stay armed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone stay delay" datatype="html">
         <source>Delay alert when armed stay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
         <source>Zone not found!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-detail.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone away_l" datatype="html">
         <source>Away:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone stay_l" datatype="html">
         <source>Stay:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone disarme_l" datatype="html">
         <source>Disarmed:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone away_s" datatype="html">
         <source>A:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone stay_s" datatype="html">
         <source>S:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="zone disarme_s" datatype="html">
+      <trans-unit id="zone disarmed_s" datatype="html">
         <source>D:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert type" datatype="html">
         <source>Alert type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert enabled" datatype="html">
         <source>Alert enabled</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone arm delay" datatype="html">
         <source>Arm delay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone arm away" datatype="html">
         <source>Away</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone arm stay" datatype="html">
         <source>Stay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone disarmed" datatype="html">
         <source>Disarmed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone sensors" datatype="html">
         <source>Sensors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone no sensors" datatype="html">
         <source>No sensors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="zone none" datatype="html">
         <source>No zones found</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/zone/zone-list.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
+      </trans-unit>
+      <trans-unit id="email1 failed" datatype="html">
+        <source>Failed to send to email address 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications disable gsm" datatype="html">
+        <source>Disable GSM</source>
+      </trans-unit>
+      <trans-unit id="notifications disable smtp" datatype="html">
+        <source>Disable SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications email1 success" datatype="html">
+        <source>Email sent successfully to email address 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications email2 failed" datatype="html">
+        <source>Failed to send to email address 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications email2 success" datatype="html">
+        <source>Email sent successfully to email address 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications enable gsm" datatype="html">
+        <source>Enable GSM</source>
+      </trans-unit>
+      <trans-unit id="notifications enable smtp" datatype="html">
+        <source>Enable SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications phone1 failed" datatype="html">
+        <source>Failed to send SMS!</source>
+      </trans-unit>
+      <trans-unit id="notifications phone1 success" datatype="html">
+        <source>SMS sent successfully to phone!</source>
+      </trans-unit>
+      <trans-unit id="notifications send test email" datatype="html">
+        <source>Send test email</source>
+      </trans-unit>
+      <trans-unit id="notifications send test sms" datatype="html">
+        <source>Send test SMS</source>
+      </trans-unit>
+      <trans-unit id="notifications sms connection failed" datatype="html">
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp" datatype="html">
+        <source>SMTP</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp connection failed" datatype="html">
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+      </trans-unit>
+      <trans-unit id="syren test" datatype="html">
+        <source>Test</source>
+      </trans-unit>
+      <trans-unit id="events start" datatype="html">
+        <source>Start <x id="PH" equiv-text="sensor.description"/></source>
+      </trans-unit>
+      <trans-unit id="events menu link" datatype="html">
+        <source>Events</source>
+      </trans-unit>
+      <trans-unit id="events alert started" datatype="html">
+        <source>Alert started</source>
+      </trans-unit>
+      <trans-unit id="events away" datatype="html">
+        <source>AWAY</source>
+      </trans-unit>
+      <trans-unit id="events alert finished" datatype="html">
+        <source>Alert finished</source>
+      </trans-unit>
+      <trans-unit id="events end" datatype="html">
+        <source>End <x id="PH" equiv-text="sensor.description"/></source>
+      </trans-unit>
+      <trans-unit id="events alert" datatype="html">
+        <source>Alert event</source>
+      </trans-unit>
+      <trans-unit id="events alert no" datatype="html">
+        <source>No</source>
+      </trans-unit>
+      <trans-unit id="events alert undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events alert yes" datatype="html">
+        <source>Yes</source>
+      </trans-unit>
+      <trans-unit id="events arm" datatype="html">
+        <source>Arm event</source>
+      </trans-unit>
+      <trans-unit id="events arm away" datatype="html">
+        <source>AWAY</source>
+      </trans-unit>
+      <trans-unit id="events arm disarmed" datatype="html">
+        <source>DISARMED</source>
+      </trans-unit>
+      <trans-unit id="events arm stay" datatype="html">
+        <source>STAY</source>
+      </trans-unit>
+      <trans-unit id="events arm undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events armed" datatype="html">
+        <source>Armed</source>
+      </trans-unit>
+      <trans-unit id="events filter armed by" datatype="html">
+        <source>Armed by</source>
+      </trans-unit>
+      <trans-unit id="events armed keypad" datatype="html">
+        <source>Armed with keypad</source>
+      </trans-unit>
+      <trans-unit id="events undefined" datatype="html">
+        <source>Undefined</source>
+      </trans-unit>
+      <trans-unit id="events clear filters" datatype="html">
+        <source>Clear filters </source>
+      </trans-unit>
+      <trans-unit id="events filter date" datatype="html">
+        <source>Enter a date range</source>
+      </trans-unit>
+      <trans-unit id="events delay" datatype="html">
+        <source> delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+      </trans-unit>
+      <trans-unit id="events disarmed" datatype="html">
+        <source>Disarmed</source>
+      </trans-unit>
+      <trans-unit id="events disarmed keypad" datatype="html">
+        <source>Disarmed with keypad</source>
+      </trans-unit>
+      <trans-unit id="events disarmed system" datatype="html">
+        <source> Disarmed by system </source>
+      </trans-unit>
+      <trans-unit id="events empty" datatype="html">
+        <source>No arms/alerts found</source>
+      </trans-unit>
+      <trans-unit id="events sabotage" datatype="html">
+        <source>Sabotage event</source>
+      </trans-unit>
+      <trans-unit id="events sensors" datatype="html">
+        <source>Alerting sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="events timeline" datatype="html">
+        <source>Timeline</source>
+      </trans-unit>
+      <trans-unit id="events keypad" datatype="html">
+        <source>Keypad</source>
+      </trans-unit>
+      <trans-unit id="events filter alert" datatype="html">
+        <source>Alert happened</source>
+      </trans-unit>
+      <trans-unit id="events filter arm" datatype="html">
+        <source>Arm type</source>
+      </trans-unit>
+      <trans-unit id="events filter" datatype="html">
+        <source>Filter</source>
+      </trans-unit>
+      <trans-unit id="events stay" datatype="html">
+        <source>STAY</source>
+      </trans-unit>
+      <trans-unit id="events disarmed by" datatype="html">
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
+      </trans-unit>
+      <trans-unit id="events properties" datatype="html">
+        <source>Properties</source>
+      </trans-unit>
+      <trans-unit id="events armed by" datatype="html">
+        <source>Armed by</source>
+      </trans-unit>
+      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+        <source>Do you want to delete the area?</source>
+        <note priority="1" from="description">Area delete question</note>
+      </trans-unit>
+      <trans-unit id="area armed away" datatype="html">
+        <source>Area armed away</source>
+      </trans-unit>
+      <trans-unit id="area armed stay" datatype="html">
+        <source>Area armed stay</source>
+      </trans-unit>
+      <trans-unit id="area delete" datatype="html">
+        <source>Delete area</source>
+      </trans-unit>
+      <trans-unit id="area disarmed" datatype="html">
+        <source>Area disarmed</source>
+      </trans-unit>
+      <trans-unit id="area name" datatype="html">
+        <source>Area name</source>
+      </trans-unit>
+      <trans-unit id="area no sensors" datatype="html">
+        <source>No sensors</source>
+      </trans-unit>
+      <trans-unit id="area none" datatype="html">
+        <source>No areas found</source>
+      </trans-unit>
+      <trans-unit id="area not found" datatype="html">
+        <source>Zone not found!</source>
+      </trans-unit>
+      <trans-unit id="area sensors" datatype="html">
+        <source>Sensors</source>
+      </trans-unit>
+      <trans-unit id="areas menu link" datatype="html">
+        <source>Areas</source>
+      </trans-unit>
+      <trans-unit id="events arm changed" datatype="html">
+        <source>Arm changed</source>
+      </trans-unit>
+      <trans-unit id="events arm mixed" datatype="html">
+        <source>MIXED</source>
+      </trans-unit>
+      <trans-unit id="events sensor states" datatype="html">
+        <source>Sensor states</source>
+      </trans-unit>
+      <trans-unit id="sensor area" datatype="html">
+        <source>Area</source>
+      </trans-unit>
+      <trans-unit id="sensor new area" datatype="html">
+        <source>New</source>
+      </trans-unit>
+      <trans-unit id="area no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="sensor none" datatype="html">
+        <source>No sensors found</source>
+      </trans-unit>
+      <trans-unit id="zone no sensor" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="events silent" datatype="html">
+        <source>Silent alarm</source>
+      </trans-unit>
+      <trans-unit id="syren delay" datatype="html">
+        <source>Delay</source>
+      </trans-unit>
+      <trans-unit id="syren delay hint" datatype="html">
+        <source>Delay the syren in seconds</source>
+      </trans-unit>
+      <trans-unit id="syren silent hint" datatype="html">
+        <source>Do not use the syren in case of an alarm</source>
+      </trans-unit>
+      <trans-unit id="syren stop hint" datatype="html">
+        <source>Stop the syren in seconds</source>
       </trans-unit>
     </body>
   </file>

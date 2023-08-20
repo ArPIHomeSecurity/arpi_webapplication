@@ -15,7 +15,6 @@ import { CountdownModule } from 'ngx-countdown';
 import { AuthGuard, AdminGuard } from './guards';
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
-import { AlertListComponent } from './alert';
 import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
@@ -23,6 +22,7 @@ import { SyrenComponent } from './config/syren';
 import { KeypadComponent } from './keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
+import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './area';
 import {
   UserListComponent,
   UserDetailComponent,
@@ -39,6 +39,9 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DigitOnlyModule } from '@uiowa/digit-only';
+import { AreaComponent, SensorComponent } from './components';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -47,6 +50,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -62,8 +66,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EventsComponent } from './events/events.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
-import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 
@@ -72,8 +78,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     AppComponent,
     LoginComponent,
     HomeComponent,
-
-    AlertListComponent,
 
     KeypadComponent,
     ClockComponent,
@@ -88,9 +92,16 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
 
+    AreaComponent,
+
+    SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
+
+    AreaListComponent,
+    AreaDetailComponent,
+    AreaDeleteDialogComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
@@ -100,16 +111,24 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     PageNotFoundComponent,
 
     DemoComponent,
-    DemoHelpDialogComponent
+    DemoHelpDialogComponent,
+    EventsComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    ClipboardModule,
+    CountdownModule,
+    DigitOnlyModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    
     routing,
+
     MatAutocompleteModule,
     MatInputModule,
     MatToolbarModule,
@@ -129,19 +148,18 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatRadioModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    ClipboardModule,
-
-    CountdownModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    MatPaginatorModule
   ],
   providers: [
     AuthGuard,
     AdminGuard,
 
     {provide: 'AlertService', useClass: environment.alertService},
+    {provide: 'ArmService', useClass: environment.armService},
     {provide: 'AuthenticationService', useClass: environment.authenticationService},
     {provide: 'CardService', useClass: environment.cardService},
     {provide: 'ConfigurationService', useClass: environment.configurationService},
@@ -152,6 +170,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     {provide: 'SensorService', useClass: environment.sensorService},
     {provide: 'UserService', useClass: environment.userService},
     {provide: 'ZoneService', useClass: environment.zoneService},
+    {provide: 'AreaService', useClass: environment.areaService},
 
     {
       provide: HTTP_INTERCEPTORS,

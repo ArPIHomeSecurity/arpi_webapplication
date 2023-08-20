@@ -38,10 +38,14 @@
 
   &.first-column {
     width: 150px;
+    margin-top: 0px;
+    margin-bottom: auto;
   }
 
   &.second-column {
     width: 170px;
+    margin-top: 0px;
+    margin-bottom: auto;
   }
 }
 

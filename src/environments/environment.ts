@@ -5,6 +5,7 @@
 
 import {
   AlertService,
+  ArmService,
   AuthenticationService,
   CardService,
   ConfigurationService,
@@ -14,7 +15,8 @@ import {
   MonitoringService,
   SensorService,
   UserService,
-  ZoneService
+  ZoneService,
+  AreaService
 } from 'src/app/services/remote';
 
 export const environment = {
@@ -23,7 +25,7 @@ export const environment = {
   delay: 0,
 
   channelCount: 15,
-  snackDuration: 2000,
+  snackDuration: 5000,
 
   apiPort: 8080,
   monitoringPort: 8081,
@@ -36,6 +38,7 @@ export const environment = {
 
   // Service types
   alertService: AlertService,
+  armService: ArmService,
   authenticationService: AuthenticationService,
   cardService: CardService,
   configurationService: ConfigurationService,
@@ -45,5 +48,6 @@ export const environment = {
   monitoringService: MonitoringService,
   sensorService: SensorService,
   userService: UserService,
-  zoneService: ZoneService
+  zoneService: ZoneService,
+  areaService: AreaService,
 };
