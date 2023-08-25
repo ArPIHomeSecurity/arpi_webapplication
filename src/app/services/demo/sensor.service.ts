@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
@@ -23,7 +23,9 @@ export class SensorService {
   constructor(
     @Inject('AuthenticationService') private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
-    @Inject('MonitoringService') private monitoringService: MonitoringService
+
+    // resolving circular dependency with AreaService
+    private injector: Injector
   ) {
     // channels are numbered 1..N
     for (let i = 0; i < environment.channelCount; i++) {
@@ -134,7 +136,8 @@ export class SensorService {
   }
 
   resetReferences() {
-    this.monitoringService.resetReferences();
+    const monitoringService = this.injector.get(MonitoringService);
+    monitoringService.resetReferences();
   }
 
   alertChannel(channelId: number, value: boolean) {
@@ -143,16 +146,21 @@ export class SensorService {
       sensor = this.sensors.find(s => s.channel === channelId);
       this.channels[channelId] = value;
     }
-
+    
     if (sensor != null) {
       sensor.alert = value;
       setSessionValue('SensorService.sensors', this.sensors);
-
+      
       const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2);
       this.eventService.updateSensorsState(alertState);
-
+      
       if (value && sensor.enabled) {
-        this.monitoringService.onAlert(sensor);
+        const monitoringService = this.injector.get(MonitoringService);
+        monitoringService.startAlert(sensor);
+      }
+      else if (!value && sensor.enabled) {
+        const monitoringService = this.injector.get(MonitoringService);
+        monitoringService.stopAlert(sensor);
       }
     }
   }

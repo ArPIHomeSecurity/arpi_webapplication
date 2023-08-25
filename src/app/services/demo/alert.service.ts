@@ -1,15 +1,16 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
+import { ArmService } from './arm.service';
+import { ConfigurationService } from '../configuration.service';
 import { EventService } from './event.service';
 
 import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from 'src/app/models';
 import { ALERTS } from 'src/app/demo/configuration';
 import { getSessionValue, getValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
-import { ConfigurationService } from '../configuration.service';
 
 
 @Injectable()
@@ -25,7 +26,10 @@ export class AlertService {
   constructor(
     @Inject('AuthenticationService') private authService: AuthenticationService,
     @Inject('ConfigurationService') private configurationService: ConfigurationService,
-    @Inject('EventService') private eventService: EventService
+    @Inject('EventService') private eventService: EventService,
+
+    // resolving circular dependency with AreaService, ArmService
+    private injector: Injector
   ) {
     this.alerts = getSessionValue('AlertService.alerts', ALERTS);
     this.alertIsRunning = getSessionValue('AlertService.alertIsRunning', false);
@@ -68,30 +72,40 @@ export class AlertService {
 
   createAlert(sensors: Sensor[], alertType: ALERT_TYPE) {
     const alertSensors: AlertSensor[] = [];
+    
+    let currentAlert: Alert = this.alerts.find(a => a.endTime == null);
+    if (!currentAlert) {
+      currentAlert = {
+        id: this.alerts.length + 1,
+        startTime: new Date().toISOString().split(".")[0].replace("T", " "),
+        endTime: null,
+        alertType,
+        sensors: alertSensors
+      };
+    }
+    
     sensors.forEach(sensor => {
-      alertSensors.push({
-        sensorId: sensor.id,
-        typeId: sensor.typeId,
-        channel: sensor.channel,
-        description: sensor.description,
-        startTime: "TODO: date",
-        endTime: "TODO: date",
-        delay: 0
-      });
+      if (currentAlert.sensors.find(s => s.sensorId === sensor.id) == null) {
+        currentAlert.sensors.push({
+          sensorId: sensor.id,
+          typeId: sensor.typeId,
+          channel: sensor.channel,
+          description: sensor.description,
+          startTime: new Date().toISOString().split(".")[0].replace("T", " "),
+          endTime: null,
+          delay: 0
+        });
+      }
     });
 
-    const alert: Alert = {
-      id: this.alerts.length + 1,
-      startTime: new Date().toLocaleString(),
-      endTime: null,
-      alertType,
-      sensors: alertSensors
-    };
-    this.alerts.push(alert);
+    const armService = this.injector.get(ArmService);
+    armService.startAlert(currentAlert);
+
+    this.alerts.push(currentAlert);
     this.syrenIsOn = true;
     setSessionValue('AlertService.alerts', this.alerts);
     setSessionValue('AlertService.syren', this.syrenIsOn);
-    this.eventService.updateAlertState(alert);
+    this.eventService.updateAlertState(currentAlert);
     this.eventService.updateSyrenState(this.syrenIsOn);
 
     this.alertIsRunning = true;
@@ -131,7 +145,7 @@ export class AlertService {
   stopAlert() {
     const alert = this.alerts.find(a => a.endTime == null);
     if (alert != null) {
-      alert.endTime = new Date().toLocaleString();
+      alert.endTime = new Date().toISOString().split(".")[0].replace("T", " ");
       this.alertIsRunning = false;
       this.syrenIsOn = null;
       setSessionValue('AlertService.alerts', this.alerts);

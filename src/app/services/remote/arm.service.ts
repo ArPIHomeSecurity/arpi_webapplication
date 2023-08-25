@@ -85,9 +85,4 @@ export class ArmService implements ArmService {
 
     return this.http.get<number>('/api/arms/count', { params });
   }
-
-  getArm(): Observable<Arm> {
-    // get sensors from api
-    return this.http.get<Arm>('/api/arm');
-  }
 }

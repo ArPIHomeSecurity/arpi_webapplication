@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable , Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { Alert } from '../../models';
+import { Alert, Area } from '../../models';
 import { environment } from '../../../environments/environment';
 
 
@@ -15,6 +15,9 @@ export class EventService {
 
   private armStateSubject = new Subject<string>();
   private armState = this.armStateSubject.asObservable().pipe(delay(environment.delay));
+
+  private areaStateSubject = new Subject<Area>();
+  private areaState = this.areaStateSubject.asObservable().pipe(delay(environment.delay));
 
   private monitoringStateSubject = new Subject<string>();
   private monitoringState = this.monitoringStateSubject.asObservable().pipe(delay(environment.delay));
@@ -48,6 +51,8 @@ export class EventService {
       subject = this.monitoringState;
     } else if (event === 'arm_state_change') {
       subject = this.armState;
+    } else if (event === 'area_state_change') {
+      subject = this.areaState;
     } else if (event === 'alert_state_change') {
       subject = this.alertState;
     } else if (event === 'sensors_state_change') {
@@ -73,6 +78,10 @@ export class EventService {
 
   updateArmState(state: string) {
     this.armStateSubject.next(state);
+  }
+
+  updateAreaState(area: Area) {
+    this.areaStateSubject.next(area);
   }
 
   updateMonitoringState(state: string) {

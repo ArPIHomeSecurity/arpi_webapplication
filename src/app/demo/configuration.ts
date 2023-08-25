@@ -1,13 +1,15 @@
-import { ROLE_TYPES } from 'src/app/models';
+import { ARM_TYPE, Alert, Arm, ArmEvent, Disarm, ROLE_TYPES } from 'src/app/models';
 
 export const DEMO_CONFIGURATION = [
     {
         option: 'notifications',
-        section: 'email',
+        section: 'smtp',
         value: {
-            smtpUsername: 'test_user',
-            emailAddress: 'target_user@domain.com',
-            smtpPassword: 'password'
+            smtp_username: 'test_user',
+            smtp_password: 'password',
+            smtp_hostname: 'smtp.domain.com',
+            smtp_port: 587,
+            email1_address: 'target_user1@domain.com',
         }
     },
     {
@@ -50,11 +52,12 @@ export const DEMO_CONFIGURATION = [
         }
     },
     {
-        option: 'alert',
-        section: 'syren',
+        option: 'syren',
+        section: 'timing',
         value: {
-            alert_time: 120,
-            suspend_time: 60,
+            sylent: false,
+            delay: 0,
+            stop_time: null
         }
     }
 ];
@@ -69,7 +72,7 @@ export const USERS = [
         registrationCode: 'ABCDEF000001',
         accessCode: 1234,
         comment: '',
-        registrationExpiry: new Date().toLocaleString()
+        registrationExpiry: new Date().toISOString().split(".")[0].replace("T", " ")
     },
     {
         id: 2,
@@ -80,7 +83,7 @@ export const USERS = [
         registrationCode: 'ABCDEF000002',
         accessCode: 1111,
         comment: '',
-        registrationExpiry: new Date().toLocaleString()
+        registrationExpiry: new Date().toISOString().split(".")[0].replace("T", " ")
     }
 ];
 export const SENSORS = [
@@ -88,9 +91,30 @@ export const SENSORS = [
         id: 0,
         channel: 0,
         zoneId: 0,
+        areaId: 0,
         typeId: 1,
         alert: false,
-        description: 'Teszt',
+        description: 'Test 1',
+        enabled: true
+    },
+    {
+        id: 1,
+        channel: 1,
+        zoneId: 1,
+        areaId: 0,
+        typeId: 2,
+        alert: false,
+        description: 'Tamper',
+        enabled: true
+    },
+    {
+        id: 2,
+        channel: 2,
+        zoneId: 0,
+        areaId: 1,
+        typeId: 1,
+        alert: false,
+        description: 'Test 2',
         enabled: true
     }
 ];
@@ -121,13 +145,13 @@ export const SENSOR_TYPES = [
 export const ZONES = [
     {
         id: 0,
-        name: 'Hall',
+        name: 'Stay delayed',
         disarmedDelay: null,
         awayArmDelay: 0,
         stayArmDelay: 5,
         awayAlertDelay: 0,
         stayAlertDelay: 5,
-        description: 'Hall movement, alert with delay if stay armed'
+        description: 'Arm and alert with delay if stay armed'
     },
     {
         id: 1,
@@ -141,7 +165,26 @@ export const ZONES = [
     }
 ];
 
-export const ALERTS = [];
+export const AREAS = [
+    {
+        id: 0,
+        name: "Ground floor",
+        armState: ARM_TYPE.DISARMED
+    },
+    {
+        id: 1,
+        name: "Attic",
+        armState: ARM_TYPE.DISARMED
+    }
+]
+
+export const ALERTS: Alert[] = [];
+
+export const ARMS: Arm[] = [];
+
+export const DISARMS: Disarm[] = [];
+
+export const EVENTS: ArmEvent[] = [];
 
 export const KEYPAD_TYPES = [
     {

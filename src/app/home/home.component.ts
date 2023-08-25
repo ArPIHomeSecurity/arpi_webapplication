@@ -31,12 +31,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
+    @Inject('AreaService') private areaService: AreaService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
-    @Inject('AreaService') private areaService: AreaService,
 
     private snackBar: MatSnackBar,
   ) {

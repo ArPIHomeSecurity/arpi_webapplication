@@ -3,22 +3,28 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
+import { EventService } from './event.service';
+import { MonitoringService } from './monitoring.service';
 
-import { Area } from 'src/app/models';
-import { ZONES } from 'src/app/demo/configuration';
+import { ARM_TYPE, Area, MONITORING_STATE } from 'src/app/models';
+import { AREAS } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AreaService {
 
   areas: Area[];
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService
+    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService,
+    @Inject('MonitoringService') private monitoringService: MonitoringService
   ) {
-    this.areas = getSessionValue('AreaService.areas', ZONES);
+    this.areas = getSessionValue('AreaService.areas', AREAS);
   }
 
   getAreas(): Observable<Area[]> {
@@ -67,6 +73,82 @@ export class AreaService {
   }
 
   getAreaDirectly(areaId: number) {
-    return this.areas.find(z => z.id === areaId);
+    const areas = getSessionValue('AreaService.areas', AREAS);
+    return areas.find(z => z.id === areaId);
   }
+
+  arm(areaId: number, armType: ARM_TYPE): Observable<Object> {
+    const area = this.areas.find(area => area.id === areaId);
+    if (area) {
+      area.armState = armType;
+      this.eventService.updateAreaState(area);
+      setSessionValue('AreaService.areas', this.areas);
+
+      const armState = this.getArmState();
+      this.monitoringService.setArm(armState, MONITORING_STATE.ARMED, false);
+
+      return of(area);
+    }
+
+    this.monitoringService.setArm(armType, MONITORING_STATE.ARMED, false)
+  
+    this.areas.forEach(area => {
+      if (area.id == areaId) {
+        area.armState = armType;
+        this.eventService.updateAreaState(area);
+        return of(area);
+      }
+    })
+  
+    return of(null)
+  }
+
+  disarm(areaId: number): Observable<Object> {
+    const area = this.areas.find(area => area.id === areaId);
+    if (area) {
+      area.armState = ARM_TYPE.DISARMED;
+      this.eventService.updateAreaState(area);
+      setSessionValue('AreaService.areas', this.areas);
+
+      const armState = this.getArmState()
+      if (armState === ARM_TYPE.DISARMED) {
+        this.monitoringService.disarm(false);
+      }
+      else {
+        this.monitoringService.setArm(armState, MONITORING_STATE.ARMED, false);
+      }
+
+      return of(area);
+    }
+
+    return of(null);
+  }
+
+  updateAreaStates(armType: ARM_TYPE) {
+    this.areas.forEach(area => {
+      area.armState = armType;
+      this.eventService.updateAreaState(area);
+    });
+    setSessionValue('AreaService.areas', this.areas);
+  }
+
+  getArmState(): ARM_TYPE {
+    const armStates: ARM_TYPE[] = this.areas.map(area => area.armState)
+    const armState = armStates.reduce((armState1, armState2) => {
+      if (armState1 === ARM_TYPE.DISARMED) {
+        return armState2;
+      }
+      if (armState2 === ARM_TYPE.DISARMED) {
+        return armState1;
+      }
+      if (armState1 === armState2) {
+        return armState1;
+      }
+      return ARM_TYPE.MIXED;
+    });
+
+    return armState;
+  }
+
+
 }
