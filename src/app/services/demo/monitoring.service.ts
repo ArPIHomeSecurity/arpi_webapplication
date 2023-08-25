@@ -167,7 +167,7 @@ export class MonitoringService {
   }
 
   getVersion(): Observable<string> {
-    return of('DEMO-0.8');
+    return of('DEMO-0.9');
   }
 
   getClock(): Observable<Clocks> {
