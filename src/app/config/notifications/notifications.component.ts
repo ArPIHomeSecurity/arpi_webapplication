@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS, DEFAULT_PASSWORD_VALUE } from '../../models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
 import { environment } from 'src/environments/environment';
@@ -125,7 +125,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       email2_address: formModel.email2Address
     };
 
-    if (formModel.smtpPassword) {
+    if (formModel.smtpPassword != DEFAULT_PASSWORD_VALUE) {
       smtp.smtp_password = formModel.smtpPassword;
     }
 
@@ -193,6 +193,25 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
   onDisableGsm() {
     this.gsmEnabled = false;
+  }
+
+  onPasswordFocus() {
+    const passwordControl = this.notificationsForm.get('smtpPassword');
+
+    if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
+      passwordControl.markAsTouched();
+      passwordControl.setValue("");
+    }
+  }
+  
+  onPasswordBlur() {
+    const passwordControl = this.notificationsForm.get('smtpPassword');
+  
+    // Check if the user has changed the password field's value.
+    if (!passwordControl.dirty) {
+      // If the user didn't change it, restore the initial value.
+      passwordControl.setValue(DEFAULT_PASSWORD_VALUE);
+    }
   }
 
   onSendTestSMS(){

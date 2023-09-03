@@ -4,6 +4,8 @@ export class Option {
   value: any;
 }
 
+export const DEFAULT_PASSWORD_VALUE = "******";
+
 // use string as constant instead of complex type to avoid changing it through a reference
 export const DEFAULT_NOTIFICATION_SMTP = {
   option: 'notifications',

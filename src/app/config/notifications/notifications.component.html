@@ -15,7 +15,7 @@
         </mat-form-field>
         
         <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="smtpPassword" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
+          <input type="password" matInput formControlName="smtpPassword" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
         </mat-form-field>
         
         <mat-form-field class="half-width">
