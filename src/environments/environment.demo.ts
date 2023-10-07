@@ -38,6 +38,7 @@ export const environment = {
 
   // Service types
   alertService: AlertService,
+  areaService: AreaService,
   armService: ArmService,
   authenticationService: AuthenticationService,
   cardService: CardService,
@@ -49,5 +50,4 @@ export const environment = {
   sensorService: SensorService,
   userService: UserService,
   zoneService: ZoneService,
-  areaService: AreaService
 };

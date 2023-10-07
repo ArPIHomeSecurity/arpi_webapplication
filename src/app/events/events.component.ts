@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { forkJoin } from 'rxjs';
 
-import { ALERT_TYPE, ArmEvent, SensorState, SensorChanges, ARM_TYPE, Sensor, User } from '../models';
+import { ALERT_TYPE, ArmEvent, SensorState, SensorsChange, ARM_TYPE, Sensor, User } from '../models';
 import { ArmService } from '../services';
 import { SensorService, LoaderService, UserService } from '../services';
 import { finalize } from 'rxjs/operators';
@@ -99,7 +99,7 @@ export class EventsComponent implements OnInit {
   sortArms() {
     this.events = this.events.map((event: ArmEvent) => {
       if (event.sensorChanges) {
-        event.sensorChanges = event.sensorChanges.map((sensorChange: SensorChanges) => {
+        event.sensorChanges = event.sensorChanges.map((sensorChange: SensorsChange) => {
           sensorChange.sensors.sort((s1, s2) => s1.channel < s2.channel ? -1 : 1)
           return sensorChange
         })

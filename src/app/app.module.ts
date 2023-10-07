@@ -158,6 +158,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AuthGuard,
     AdminGuard,
 
+    {provide: 'AreaService', useClass: environment.areaService},
     {provide: 'AlertService', useClass: environment.alertService},
     {provide: 'ArmService', useClass: environment.armService},
     {provide: 'AuthenticationService', useClass: environment.authenticationService},
@@ -170,7 +171,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     {provide: 'SensorService', useClass: environment.sensorService},
     {provide: 'UserService', useClass: environment.userService},
     {provide: 'ZoneService', useClass: environment.zoneService},
-    {provide: 'AreaService', useClass: environment.areaService},
 
     {
       provide: HTTP_INTERCEPTORS,

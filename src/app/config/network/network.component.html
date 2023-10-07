@@ -28,7 +28,7 @@
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="dyndnsPassword" i18n-placeholder="@@network password" placeholder="Password">
+          <input type="password" matInput formControlName="dyndnsPassword" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" i18n-placeholder="@@network password" placeholder="Password">
         </mat-form-field>
 
         <mat-checkbox formControlName="dyndnsRestrictHost" i18n="@@network restrict host">Restrict access to host</mat-checkbox>
