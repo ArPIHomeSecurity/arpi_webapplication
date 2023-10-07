@@ -129,8 +129,8 @@
       <trans-unit id="notifications sim card pin" datatype="html">
         <source>SIM card PIN code</source>
       </trans-unit>
-      <trans-unit id="notifications target phone" datatype="html">
-        <source>Target phone number</source>
+      <trans-unit id="notifications target phone1" datatype="html">
+        <source>Target phone number 1</source>
       </trans-unit>
       <trans-unit id="notifications subscriptions" datatype="html">
         <source>Subscriptions</source>
@@ -147,8 +147,8 @@
       <trans-unit id="notifications send email2" datatype="html">
         <source>Send Email 2</source>
       </trans-unit>
-      <trans-unit id="notifications send sms" datatype="html">
-        <source>Send SMS</source>
+      <trans-unit id="notifications send sms1" datatype="html">
+        <source>Send SMS 1</source>
       </trans-unit>
       <trans-unit id="notifications alert started" datatype="html">
         <source>Alert started</source>
@@ -773,6 +773,12 @@
       </trans-unit>
       <trans-unit id="syren stop hint" datatype="html">
         <source>Stop the syren in seconds</source>
+      </trans-unit>
+      <trans-unit id="notifications send sms2" datatype="html">
+        <source>Send SMS 2</source>
+      </trans-unit>
+      <trans-unit id="notifications target phone2" datatype="html">
+        <source>Target phone number 2</source>
       </trans-unit>
     </body>
   </file>

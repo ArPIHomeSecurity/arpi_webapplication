@@ -38,7 +38,13 @@ export const DEFAULT_NOTIFICATION_SUBSCRIPTIONS = {
       power_outage_started: false,
       power_outage_stopped: false
     },
-    sms: {
+    sms1: {
+      alert_started: false,
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false
+    },
+    sms2: {
       alert_started: false,
       alert_stopped: false,
       power_outage_started: false,

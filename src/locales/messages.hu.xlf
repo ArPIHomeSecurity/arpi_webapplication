@@ -226,9 +226,9 @@
         <source>SIM card PIN code</source>
         <target state="translated">SIM kártya PIN kód</target>
       </trans-unit>
-      <trans-unit id="notifications target phone" datatype="html">
-        <source>Target phone number</source>
-        <target state="translated">Telefon szám</target>
+      <trans-unit id="notifications target phone1" datatype="html">
+        <source>Target phone number 1</source>
+        <target state="translated">Telefon szám 1</target>
       </trans-unit>
       <trans-unit id="notifications subscriptions" datatype="html">
         <source>Subscriptions</source>
@@ -246,9 +246,9 @@
         <source>Send Email 1</source>
         <target state="translated">Email küldése 1</target>
       </trans-unit>
-      <trans-unit id="notifications send sms" datatype="html">
-        <source>Send SMS</source>
-        <target state="translated">SMS küldése</target>
+      <trans-unit id="notifications send sms1" datatype="html">
+        <source>Send SMS 1</source>
+        <target state="translated">SMS küldése 1</target>
       </trans-unit>
       <trans-unit id="notifications alert started" datatype="html">
         <source>Alert started</source>
@@ -1027,6 +1027,14 @@
       <trans-unit id="events silent" datatype="html">
         <source>Silent alarm</source>
         <target state="translated">Csendes riasztás</target>
+      </trans-unit>
+      <trans-unit id="notifications target phone2" datatype="html">
+        <source>Target phone number 2</source>
+        <target state="translated">Telefon szám 2</target>
+      </trans-unit>
+      <trans-unit id="notifications send sms2" datatype="html">
+        <source>Send SMS 2</source>
+        <target state="translated">SMS küldése 2</target>
       </trans-unit>
     </body>
   </file>

@@ -11,8 +11,13 @@
   width: 100%;
 }
 
-.half-width{
-  width: 48%;
+.pin-code {
+  width: 18%;
+  margin: auto 1%;
+}
+
+.phone-number {
+  width: 38%;
   margin: auto 1%;
 }
 
@@ -39,4 +44,9 @@
   flex: 1;
   overflow: hidden;
   word-wrap: break-word;
+  text-align: center;
+
+  mat-checkbox {
+    margin: 10px auto;
+  }
 }
