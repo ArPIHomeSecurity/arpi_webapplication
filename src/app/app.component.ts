@@ -7,6 +7,7 @@
 
 import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
@@ -18,6 +19,7 @@ import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
 import { environment } from '../environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
+import { UserDeviceUnregisterDialogComponent } from './user';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
-  // display error message of the compoponents
+  // display error message of the components
   displayLoader = false;
   disablePage = false;
   message: string = null;
@@ -53,15 +55,17 @@ export class AppComponent implements OnInit {
     notify: [environment.userTokenExpiry / 3],
   };
   isSessionValid: boolean;
+  isDeviceRegistered = false;
 
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
   constructor(
-    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject('AuthenticationService') public authenticationService: AuthenticationService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
     public mediaObserver: MediaObserver,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
 
@@ -96,30 +100,35 @@ export class AppComponent implements OnInit {
     this.loader.disabled.subscribe(value => this.disablePage = value);
     this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.versions.serverVersion = version);
-    this.authService.isSessionValid()
+    this.authenticationService.isSessionValid()
       .subscribe(isSessionValid => {
         this.isSessionValid = isSessionValid;
         if (this.isSessionValid && this.countdown) {
           this.countdown.restart();
         }
       });
+
+    this.authenticationService.isDeviceRegistered()
+      .subscribe(isRegistered => {
+        this.isDeviceRegistered = isRegistered;
+      });
   }
 
   isLoggedIn() {
-    return this.authService.isLoggedIn();
+    return this.authenticationService.isLoggedIn();
   }
 
   logout() {
     this.countdown.stop();
-    this.authService.logout();
+    this.authenticationService.logout();
   }
 
   getUserName() {
-    return this.authService.getUsername();
+    return this.authenticationService.getUsername();
   }
 
   isAdminUser() {
-    return this.authService.getRole() === ROLE_TYPES.ADMIN;
+    return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
   }
 
   onLocaleSelected(event) {
@@ -154,5 +163,18 @@ export class AppComponent implements OnInit {
       currentLocale = 'en';
     }
     return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
+  }
+
+  unregister() {
+    const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
+      width: '250px',
+      data: null,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authenticationService.unRegisterDevice();
+      }
+    });
   }
 }

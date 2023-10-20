@@ -147,6 +147,7 @@ export class AuthenticationService implements AuthenticationService {
   unRegisterDevice() {
     localStorage.removeItem('deviceToken');
     localStorage.removeItem('userToken');
+    this.isDeviceRegisteredSubject.next(false);
   }
 
   isDeviceRegistered(): Observable<boolean> {

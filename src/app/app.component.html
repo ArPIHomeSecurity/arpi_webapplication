@@ -70,6 +70,10 @@
             <mat-option *ngFor="let locale of locales" [value]="locale.id">{{ locale.name }}</mat-option>
           </mat-select>
         </mat-list-item>
+        <mat-list-item [fxShow]="!isLoggedIn() && isDeviceRegistered" i18n="@@unregister menu link" (click)="unregister()">
+          <mat-icon mat-list-icon>disabled_by_default</mat-icon>
+          Unregister device
+        </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
 

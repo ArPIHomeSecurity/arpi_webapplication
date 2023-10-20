@@ -257,10 +257,6 @@
         <source>Access code</source>
         <note priority="1" from="description">Access code</note>
       </trans-unit>
-      <trans-unit id="645356695f9f7a8323f123efbf684a094f29f06d" datatype="html">
-        <source>Unregister device</source>
-        <note priority="1" from="description">Unregister button</note>
-      </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
         <source>Host not allowed!</source>
       </trans-unit>
@@ -779,6 +775,9 @@
       </trans-unit>
       <trans-unit id="notifications target phone2" datatype="html">
         <source>Target phone number 2</source>
+      </trans-unit>
+      <trans-unit id="unregister menu link" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
       </trans-unit>
     </body>
   </file>
