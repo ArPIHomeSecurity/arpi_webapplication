@@ -1,10 +1,3 @@
-/*
- * @Author: Gábor Kovács
- * @Date:   2021-02-26 09:06:54
- * @Last Modified by:   Gábor Kovács
- * @Last Modified time: 2021-02-26 09:06:56
- */
-
 import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatDialog } from '@angular/material/dialog';
@@ -176,5 +169,55 @@ export class AppComponent implements OnInit {
         this.authenticationService.unRegisterDevice();
       }
     });
+  }
+
+  openHelp() {
+    // get current path
+    const currentPath = window.location.pathname;
+    
+    // remove language from path
+    var currentLocale = localStorage.getItem('localeId');
+    if (currentLocale == environment.defaultLanguage) {
+      currentLocale = '/';
+    }
+    else {
+      currentLocale = '/' + currentLocale + '/';
+    }
+
+    var pathWithoutLanguage = currentPath.replace(currentLocale, '');
+
+    // mapping of local urls to documentation urls
+    const urlMap = {
+      '': 'en/latest/end_users/',
+      'login': 'en/latest/end_users/login/',
+      'events': 'en/latest/end_users/events/',
+      'areas': 'en/latest/end_users/areas/',
+      'sensors': 'en/latest/end_users/sensors/',
+      'zones': 'en/latest/end_users/zones/',
+      'syren': 'en/latest/end_users/syren/',
+      'keypad': 'en/latest/end_users/keypad/',
+      'notifications/': 'en/latest/end_users/notifications/',
+      'network': 'en/latest/end_users/network/',
+      'clock': 'en/latest/end_users/clock/',
+      'users': 'en/latest/end_users/users/'
+    }
+
+    // check if documentation path exists
+    const http = new XMLHttpRequest();
+    const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status === 404) {
+      // fallback to main page
+      pathWithoutLanguage = '';
+    }
+
+    // TODO:
+    // * select documentation language
+    // * select documentation version
+
+    // open the documentation in a new window
+    const documentationUrl = 'https://docs.arpi-security.info/'
+    window.open(documentationUrl + urlMap[pathWithoutLanguage], 'arpi-docs');
   }
 }
