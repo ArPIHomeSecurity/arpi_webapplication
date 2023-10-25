@@ -72,15 +72,15 @@
       monitoringState === monitoringStates.ALERT"
     [ngSwitch]="sensorAlert">
 
-    <mat-icon *ngSwitchCase="false" class="normal">sensors</mat-icon>
-    <mat-icon *ngSwitchCase="true" class="danger">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="danger" style="margin: 0px 3px;">sensors</mat-icon>
   </span>
   <span
     *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
     [ngSwitch]="sensorAlert">
 
-    <mat-icon *ngSwitchCase="false" class="normal">sensors</mat-icon>
-    <mat-icon *ngSwitchCase="true" class="warning">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="warning" style="margin: 0px 3px;">sensors</mat-icon>
   </span>
 
   <!-- SYREN -->
