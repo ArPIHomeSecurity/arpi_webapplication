@@ -1,18 +1,10 @@
-::ng-deep .area-header {
-  .mat-card-header-text {
-    margin: 0px !important;
-  }
-
-  .mat-card-title {
-    line-height: 32px;
-    margin-left: 10px;
-  }
+.mat-expansion-panel-header {
+  padding: 5px 24px;
 }
 
-::ng-deep .area-controller {
-  height: 32px;
-
-  .mat-button-toggle-label-content {
-    line-height: 32px;
-  }
+.empty {
+  text-align: center;
+  margin: 20px;
+  font-weight: bold;
+  font-size: large;
 }

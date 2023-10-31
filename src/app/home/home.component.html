@@ -39,23 +39,22 @@
       </mat-expansion-panel>
     </div>
 
-    <div *ngIf="areas.length == 1">
-      <div fxFlex="column" fxFlexAlign="center" fxFill>
-        <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"></sensor>
-      </div>
+    <div *ngIf="areas.length == 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"></sensor>
     </div>
-    <div *ngIf="areas.length > 1">
-      <div fxFlex="column" fxFlexAlign="center" fxFill>
-        <app-area *ngFor="let area of areas"
-          [area]="area"
-          [sensors]="getSensors(area.id)"
-          [delays]="getSensorDelays(area.id)"
-          [sensorAlert]="sensorAlert"
-          [monitoringState]="monitoringState"
-          >
-        </app-area>
-      </div>
+
+    <div *ngIf="areas.length > 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <app-area *ngFor="let area of areas"
+        [area]="area"
+        [sensors]="getSensors(area.id)"
+        [delays]="getSensorDelays(area.id)"
+        [sensorAlert]="sensorAlert"
+        [monitoringState]="monitoringState"
+        [expanded]="areaExpansionStates.get(area.id)"
+        (onToggled)="onAreaToggled(area.id, $event)">
+      </app-area>
     </div>
+
 
   </div>
 
