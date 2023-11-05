@@ -44,7 +44,7 @@
     </div>
 
     <div *ngIf="areas.length > 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <app-area *ngFor="let area of areas"
+      <app-area *ngFor="let area of areas; trackBy: areaIdentify"
         [area]="area"
         [sensors]="getSensors(area.id)"
         [delays]="getSensorDelays(area.id)"
@@ -54,7 +54,6 @@
         (onToggled)="onAreaToggled(area.id, $event)">
       </app-area>
     </div>
-
 
   </div>
 

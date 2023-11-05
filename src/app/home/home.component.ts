@@ -77,9 +77,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.areaService.getAreas()
           .subscribe(areas => {
             this.areas = areas
+            this.onStateChanged();
           }
         );
-        this.onStateChanged();
       });
 
     // AREA STATE
@@ -256,5 +256,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     let sensors = this.getSensors(areaId);
 
     return sensors.map(sensor => this.getSensorDelay(sensor.areaId, sensor.zoneId))
+  }
+
+  areaIdentify(index: number, area: Area) {
+    return area.id;
   }
 }
