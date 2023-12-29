@@ -22,6 +22,7 @@
 
         .mat-card-title-group {
             width: 100%;
+            margin: 5px 5px 5px 10px;
         }
 
         .enabled {
@@ -32,6 +33,7 @@
             width: 40px;
             height: 40px;
             line-height: 40px;
+            margin: auto 0px;
             text-align: center;
             background-color: mat-color($ok);
         }
@@ -43,6 +45,7 @@
             border-radius: 22px;
             width: 40px;
             height: 40px;
+            margin: auto 0px;
             line-height: 40px;
             text-align: center;
             background-color: rgb(160, 160, 160);
