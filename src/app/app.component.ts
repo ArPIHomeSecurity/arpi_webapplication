@@ -184,7 +184,10 @@ export class AppComponent implements OnInit {
       currentLocale = '/' + currentLocale + '/';
     }
 
+    // remove language prefix
     var pathWithoutLanguage = currentPath.replace(currentLocale, '');
+    // remove leading slash
+    pathWithoutLanguage.replace(/^\/+/g, "");
 
     // mapping of local urls to documentation urls
     const urlMap = {
@@ -194,14 +197,15 @@ export class AppComponent implements OnInit {
       'areas': 'en/latest/end_users/areas/',
       'sensors': 'en/latest/end_users/sensors/',
       'zones': 'en/latest/end_users/zones/',
-      'syren': 'en/latest/end_users/syren/',
-      'keypad': 'en/latest/end_users/keypad/',
-      'notifications/': 'en/latest/end_users/notifications/',
-      'network': 'en/latest/end_users/network/',
-      'clock': 'en/latest/end_users/clock/',
-      'users': 'en/latest/end_users/users/'
+      'config/syren': 'en/latest/end_users/syren/',
+      'config/keypad': 'en/latest/end_users/keypad/',
+      'config/notifications/': 'en/latest/end_users/notifications/',
+      'config/network': 'en/latest/end_users/network/',
+      'config/clock': 'en/latest/end_users/clock/',
+      'config/users': 'en/latest/end_users/users/'
     }
 
+    console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])
     // check if documentation path exists
     const http = new XMLHttpRequest();
     const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
