@@ -57,7 +57,7 @@
         <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
         </a>
-        <a mat-list-item routerLink="/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
+        <a mat-list-item routerLink="/config/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
         </a>
         <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">

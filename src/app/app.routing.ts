@@ -92,7 +92,7 @@ const appRoutes: Routes = [
     canActivate: [AdminGuard]
   },
   {
-    path: 'keypad',
+    path: 'config/keypad',
     component: KeypadComponent,
     canActivate: [AdminGuard]
   },

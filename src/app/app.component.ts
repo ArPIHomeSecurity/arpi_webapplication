@@ -202,7 +202,7 @@ export class AppComponent implements OnInit {
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/',
-      'config/users': 'en/latest/end_users/users/'
+      'users': 'en/latest/end_users/users/'
     }
 
     console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])
