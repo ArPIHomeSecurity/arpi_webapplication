@@ -1,11 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 import { finalize } from 'rxjs/operators';
 
-import { UserDeviceUnregisterDialogComponent } from '../user';
 import { AuthenticationService } from '../services';
 
 
@@ -30,7 +28,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     @Inject('AuthenticationService') private authenticationService: AuthenticationService,
-    private dialog: MatDialog,
     private router: Router
     ) {
 
@@ -133,24 +130,5 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       this.error = 'invalid form';
     }
-  }
-
-  unregister() {
-    const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
-      width: '250px',
-      data: null,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.authenticationService.unRegisterDevice();
-        this.isRegistered = false;
-        this.accessCode.setValue(null);
-        setTimeout (() => {
-          this.registerForm.reset();
-          this.registrationCodeField.nativeElement.focus();
-        }, 0.5);
-      }
-    });
   }
 }

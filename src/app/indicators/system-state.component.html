@@ -1,92 +1,98 @@
-<mat-chip-list>
-  <!-- DESKTOP VERSION-->
-  <span fxShow fxHide.xs>
-  <!-- MONITORING STATES -->
-    <div [ngSwitch]="monitoringState">
-      <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="updating" i18n="@@starting state">Starting up</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="updating" i18n="@@updating state">Updating configuration</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state">Invalid configuration</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state">Sabotage</mat-chip>
-    </div>
-
-    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error" i18n="@@error state">ERROR</mat-chip>
-  </span>
-  
-  <!-- MOBILE VERSION -->
-  <span  fxHide fxShow.xs>
+<!-- DESKTOP VERSION-->
+<span fxShow fxHide.xs>
+  <mat-chip-list
+    *ngIf="monitoringState == monitoringStates.STARTUP ||
+           monitoringState == monitoringStates.UPDATING_CONFIG ||
+           monitoringState == monitoringStates.INVALID_CONFIG ||
+           monitoringState == monitoringStates.SABOTAGE ||
+           monitoringState == monitoringStates.NOT_READY">
     <!-- MONITORING STATES -->
-    <div [ngSwitch]="monitoringState">
-      <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="updating" i18n="@@starting state short">S</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="updating" i18n="@@updating state short">U</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="invalid" i18n="@@invalid state short">I</mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="invalid" i18n="@@sabotage state short">T</mat-chip>
-    </div>
-    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="error">
+    <span [ngSwitch]="monitoringState">
+      <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state">Starting up</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="warning" i18n="@@updating state">Updating configuration</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="danger" i18n="@@invalid state">Invalid configuration</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state">Sabotage</mat-chip>
+    </span>
+    
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger" i18n="@@error state">ERROR</mat-chip>
+  </mat-chip-list>
+</span>
+
+<!-- MOBILE VERSION -->
+<span  fxHide fxShow.xs>
+  <mat-chip-list
+    *ngIf="monitoringState == monitoringStates.STARTUP ||
+           monitoringState == monitoringStates.UPDATING_CONFIG ||
+           monitoringState == monitoringStates.INVALID_CONFIG ||
+           monitoringState == monitoringStates.SABOTAGE ||
+           monitoringState == monitoringStates.NOT_READY">
+    <!-- MONITORING STATES -->
+    <span [ngSwitch]="monitoringState">
+      <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state short">S</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.UPDATING_CONFIG" class="warning" i18n="@@updating state short">U</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="danger" i18n="@@invalid state short">I</mat-chip>
+      <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state short">T</mat-chip>
+    </span>
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger">
       <mat-icon mat-list-icon>error</mat-icon>
     </mat-chip>
+  </mat-chip-list>
+</span>
+
+<!-- ALL SIZE-->
+
+<!-- ARM STATES -->
+<div 
+  class="states"
+  *ngIf="monitoringState != monitoringStates.STARTUP &&
+         monitoringState != monitoringStates.UPDATING_CONFIG &&
+         monitoringState != monitoringStates.INVALID_CONFIG &&
+         monitoringState != monitoringStates.SABOTAGE &&
+         monitoringState != monitoringStates.NOT_READY">
+  <span
+    [ngClass]="{
+      'warning': monitoringState == monitoringStates.ARM_DELAY,
+      'danger': monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY}"
+    [ngSwitch]="armState">
+
+    <mat-icon *ngSwitchCase="armTypes.MIXED">directions_walk</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.MIXED">hotel</mat-icon>
+    
+    <mat-icon *ngSwitchCase="armTypes.AWAY">directions_walk</mat-icon>
+    
+    <mat-icon *ngSwitchCase="armTypes.STAY">hotel</mat-icon>
+  </span>
+  
+  <!-- SENSOR STATES -->
+  <span 
+    *ngIf="
+      monitoringState === monitoringStates.ARMED ||
+      monitoringState === monitoringStates.READY ||
+      monitoringState === monitoringStates.ARM_DELAY ||
+      monitoringState === monitoringStates.ALERT"
+    [ngSwitch]="sensorAlert">
+
+    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="danger" style="margin: 0px 3px;">sensors</mat-icon>
+  </span>
+  <span
+    *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
+    [ngSwitch]="sensorAlert">
+
+    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="warning" style="margin: 0px 3px;">sensors</mat-icon>
   </span>
 
-  <!-- ALL SIZE-->
-  <mat-chip-list>
-    <div *ngIf="monitoringState == monitoringStates.ARM_DELAY" [ngSwitch]="armState">
-      <mat-chip *ngSwitchCase="armTypes.MIXED" class="away_delay">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.AWAY" class="away_delay">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.STAY" class="stay_delay">
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-    </div>
-    <div *ngIf="monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY" [ngSwitch]="armState">
-      <mat-chip *ngSwitchCase="armTypes.MIXED" class="away">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.AWAY" class="away">
-        <mat-icon mat-list-icon>directions_walk</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="armTypes.STAY" class="stay">
-        <mat-icon mat-list-icon>hotel</mat-icon>
-      </mat-chip>
-    </div>
-    <!-- SENSOR STATES -->
-    <div *ngIf="monitoringState === monitoringStates.ARMED || monitoringState === monitoringStates.READY || monitoringState === monitoringStates.ARM_DELAY || monitoringState === monitoringStates.ALERT"
-      [ngSwitch]="sensorAlert">
-      <mat-chip *ngSwitchCase="false" class="ready">
-        <mat-icon mat-list-icon>sensors</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="true" class="alert">
-        <mat-icon mat-list-icon>sensors</mat-icon>
-      </mat-chip>
-    </div>
-    <div *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
-      [ngSwitch]="sensorAlert">
-      <mat-chip *ngSwitchCase="false" class="ready">
-        <mat-icon mat-list-icon>sensors</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="true" class="alert-delay">
-        <mat-icon mat-list-icon>sensors</mat-icon>
-      </mat-chip>
-    </div>
+  <!-- SYREN -->
+  <mat-icon *ngIf="syrenAlert === true" class="danger">volume_up</mat-icon>
+  <mat-icon *ngIf="syrenAlert === false" class="warning">volume_mute</mat-icon>
 
-    <!-- SYREN -->
-    <mat-chip *ngIf="syrenAlert === true" class="syren">
-      <mat-icon mat-list-icon>volume_up</mat-icon>
-    </mat-chip>
-    <mat-chip *ngIf="syrenAlert === false" class="mute">
-      <mat-icon mat-list-icon>volume_mute</mat-icon>
-    </mat-chip>
+  <!-- POWER -->
+  <span
+    *ngIf="armState != armTypes.UNDEFINED && monitoringState != monitoringStates.NOT_READY"
+    [ngSwitch]="powerState">
 
-    <!-- POWER -->
-    <div *ngIf="armState != armTypes.UNDEFINED && monitoringState != monitoringStates.NOT_READY" [ngSwitch]="powerState">
-      <mat-chip *ngSwitchCase="powerStates.NETWORK" class="normal">
-        <mat-icon mat-list-icon>power</mat-icon>
-      </mat-chip>
-      <mat-chip *ngSwitchCase="powerStates.BATTERY" class="error">
-        <mat-icon mat-list-icon>battery_alert</mat-icon>
-      </mat-chip>
-    </div>
-</mat-chip-list>
+    <mat-icon *ngSwitchCase="powerStates.NETWORK" class="normal">power</mat-icon>
+    <mat-icon *ngSwitchCase="powerStates.BATTERY" class="danger">battery_alert</mat-icon>
+  </span>
+</div>

@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from 'src/app/configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS, DEFAULT_PASSWORD_VALUE } from '../../models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
 import { environment } from 'src/environments/environment';
@@ -28,7 +28,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   // values from the noipy python module
   providers = [
-      {value: null, label: ''},
+      {value: '', label: '--'},
       {value: 'noip', label: 'www.noip.com'},
       {value: 'dyn', label: 'www.dyndns.org'},
       {value: 'duck', label: 'www.duckdns.org'},
@@ -100,7 +100,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       restrict_host: formModel.dyndnsRestrictHost
     };
 
-    if (formModel.dyndnsPassword) {
+    if (formModel.dyndnsPassword != DEFAULT_PASSWORD_VALUE) {
       dyndns.password = formModel.dyndnsPassword;
     }
 
@@ -112,6 +112,25 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     return {
       ssh: formModel.accessSsh
     };
+  }
+
+  onPasswordFocus() {
+    const passwordControl = this.networkForm.get('dyndnsPassword');
+
+    if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
+      passwordControl.markAsTouched();
+      passwordControl.setValue("");
+    }
+  }
+  
+  onPasswordBlur() {
+    const passwordControl = this.networkForm.get('dyndnsPassword');
+  
+    // Check if the user has changed the password field's value.
+    if (!passwordControl.dirty) {
+      // If the user didn't change it, restore the initial value.
+      passwordControl.setValue(DEFAULT_PASSWORD_VALUE);
+    }
   }
 
   onSubmit() {

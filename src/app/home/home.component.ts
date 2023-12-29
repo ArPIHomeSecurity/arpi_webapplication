@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sensorTypes: SensorType [] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
+  areaExpansionStates: Map<number, boolean>;
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private snackBar: MatSnackBar,
   ) {
+    this.areaExpansionStates = new Map<number, boolean>();
 
   }
 
@@ -57,6 +59,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
       this.zones = results.zones;
       this.areas = results.areas;
+      // all areas are closed by default
+      this.areaExpansionStates = new Map<number, boolean>(this.areas.map(area => [area.id, false]));
     })
 
     // ALERT STATE
@@ -73,9 +77,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.areaService.getAreas()
           .subscribe(areas => {
             this.areas = areas
+            this.onStateChanged();
           }
         );
-        this.onStateChanged();
       });
 
     // AREA STATE
@@ -187,6 +191,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  onAreaToggled(areaId: number, expanded: boolean) {
+    this.areaExpansionStates.set(areaId, expanded);
+  }
+
   armChanged(event) {
     if (event.value === 'AWAY') {
       this.action = 'armed away';
@@ -248,5 +256,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     let sensors = this.getSensors(areaId);
 
     return sensors.map(sensor => this.getSensorDelay(sensor.areaId, sensor.zoneId))
+  }
+
+  areaIdentify(index: number, area: Area) {
+    return area.id;
   }
 }

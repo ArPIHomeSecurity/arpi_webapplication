@@ -1,12 +1,6 @@
-/*
- * @Author: Gábor Kovács
- * @Date:   2021-02-26 09:06:54
- * @Last Modified by:   Gábor Kovács
- * @Last Modified time: 2021-02-26 09:06:56
- */
-
 import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
@@ -18,6 +12,7 @@ import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
 import { environment } from '../environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
+import { UserDeviceUnregisterDialogComponent } from './user';
 
 
 @Component({
@@ -30,7 +25,7 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
-  // display error message of the compoponents
+  // display error message of the components
   displayLoader = false;
   disablePage = false;
   message: string = null;
@@ -53,15 +48,17 @@ export class AppComponent implements OnInit {
     notify: [environment.userTokenExpiry / 3],
   };
   isSessionValid: boolean;
+  isDeviceRegistered = false;
 
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
   constructor(
-    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject('AuthenticationService') public authenticationService: AuthenticationService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
     public mediaObserver: MediaObserver,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
 
@@ -96,30 +93,35 @@ export class AppComponent implements OnInit {
     this.loader.disabled.subscribe(value => this.disablePage = value);
     this.loader.message.subscribe(message => this.message = message);
     this.monitoring.getVersion().subscribe(version => this.versions.serverVersion = version);
-    this.authService.isSessionValid()
+    this.authenticationService.isSessionValid()
       .subscribe(isSessionValid => {
         this.isSessionValid = isSessionValid;
         if (this.isSessionValid && this.countdown) {
           this.countdown.restart();
         }
       });
+
+    this.authenticationService.isDeviceRegistered()
+      .subscribe(isRegistered => {
+        this.isDeviceRegistered = isRegistered;
+      });
   }
 
   isLoggedIn() {
-    return this.authService.isLoggedIn();
+    return this.authenticationService.isLoggedIn();
   }
 
   logout() {
     this.countdown.stop();
-    this.authService.logout();
+    this.authenticationService.logout();
   }
 
   getUserName() {
-    return this.authService.getUsername();
+    return this.authenticationService.getUsername();
   }
 
   isAdminUser() {
-    return this.authService.getRole() === ROLE_TYPES.ADMIN;
+    return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
   }
 
   onLocaleSelected(event) {
@@ -154,5 +156,68 @@ export class AppComponent implements OnInit {
       currentLocale = 'en';
     }
     return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
+  }
+
+  unregister() {
+    const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
+      width: '250px',
+      data: null,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authenticationService.unRegisterDevice();
+      }
+    });
+  }
+
+  openHelp() {
+    // get current path
+    const currentPath = window.location.pathname;
+    
+    // remove language from path
+    var currentLocale = localStorage.getItem('localeId');
+    if (currentLocale == environment.defaultLanguage) {
+      currentLocale = '/';
+    }
+    else {
+      currentLocale = '/' + currentLocale + '/';
+    }
+
+    var pathWithoutLanguage = currentPath.replace(currentLocale, '');
+
+    // mapping of local urls to documentation urls
+    const urlMap = {
+      '': 'en/latest/end_users/',
+      'login': 'en/latest/end_users/login/',
+      'events': 'en/latest/end_users/events/',
+      'areas': 'en/latest/end_users/areas/',
+      'sensors': 'en/latest/end_users/sensors/',
+      'zones': 'en/latest/end_users/zones/',
+      'syren': 'en/latest/end_users/syren/',
+      'keypad': 'en/latest/end_users/keypad/',
+      'notifications/': 'en/latest/end_users/notifications/',
+      'network': 'en/latest/end_users/network/',
+      'clock': 'en/latest/end_users/clock/',
+      'users': 'en/latest/end_users/users/'
+    }
+
+    // check if documentation path exists
+    const http = new XMLHttpRequest();
+    const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status === 404) {
+      // fallback to main page
+      pathWithoutLanguage = '';
+    }
+
+    // TODO:
+    // * select documentation language
+    // * select documentation version
+
+    // open the documentation in a new window
+    const documentationUrl = 'https://docs.arpi-security.info/'
+    window.open(documentationUrl + urlMap[pathWithoutLanguage], 'arpi-docs');
   }
 }

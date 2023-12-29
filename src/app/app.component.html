@@ -9,12 +9,26 @@
     <button mat-button *ngIf="isLoggedIn()" routerLink="/" fxHide.gt-sm="true" (click)="sidenav.close()">
       <img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span>
     </button>
+
     <span class="spacer"></span>
     <div matTooltip="Session expiry countdown">
       <countdown #counter *ngIf="isSessionValid" [config]="countdownConfig" (event)="handleCountdown($event)"></countdown>
     </div>
+    <span class="spacer"></span>
+
     <app-system-state></app-system-state>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </mat-toolbar>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openHelp()">
+      <mat-icon>help</mat-icon>
+      <span>Help</span>
+    </button>
+  </mat-menu>
+
 
   <mat-sidenav-container (backdropClick)="sidenav.close()">
     <mat-sidenav #sidenav>
@@ -69,6 +83,10 @@
           <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
             <mat-option *ngFor="let locale of locales" [value]="locale.id">{{ locale.name }}</mat-option>
           </mat-select>
+        </mat-list-item>
+        <mat-list-item [fxShow]="!isLoggedIn() && isDeviceRegistered" i18n="@@unregister menu link" (click)="unregister()">
+          <mat-icon mat-list-icon>disabled_by_default</mat-icon>
+          Unregister device
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>

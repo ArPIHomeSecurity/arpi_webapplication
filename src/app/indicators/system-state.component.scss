@@ -1,5 +1,12 @@
-.mat-chip{
-  vertical-align: middle;
+.states {
+  // rounded border with opaque background
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2px;
+}
+
+.mat-icon {
+  vertical-align: text-bottom;
 }
 
 @mixin system-state-indicator-theme($theme, $ok) {
@@ -8,64 +15,28 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
-  .error.mat-chip.mat-primary {
-    background-color: mat-color($warn);
+  /* states */
+  .normal {
+    color: map-get($ok, 600),
   }
 
-  /* monitoring state */
-  .invalid.mat-chip.mat-primary {
-    background-color: mat-color($warn);
-  }  
-
-  .updating.mat-chip.mat-primary {
-    background-color: #ffb600;
-  }  
-
-  .mute.mat-chip.mat-primary {
-    background-color: #ffb600;
-  }  
-
-  /* arm state */
-  .away_delay.mat-chip.mat-primary {
-    background-color: #ffb600;
+  .warning {
+    color: #ffb600;
   }
 
-  .stay_delay.mat-chip.mat-primary {
-    background-color: #ffb600;
+  .danger {
+    color: mat-color($warn);
   }
 
-  .away.mat-chip.mat-primary {
-    background-color: mat-color($warn);
-  }
-
-  .stay.mat-chip.mat-primary {
-    background-color: mat-color($warn);
-  }
-
-  /* sensors */
-  .ready.mat-chip.mat-primary, .ready.mat-list-icon.mat-icon.material-icons{
+  .mat-chip.normal {
     background-color: map-get($ok, 600),
   }
 
-  .alert-delay.mat-chip.mat-primary, .alert.mat-list-icon.mat-icon.material-icons{
+  .mat-chip.warning {
     background-color: #ffb600;
   }
 
-  .alert.mat-chip.mat-primary, .alert.mat-list-icon.mat-icon.material-icons{
+  .mat-chip.danger {
     background-color: mat-color($warn);
-  }
-
-  /* syren */
-  .syren.mat-chip.mat-primary {
-    background-color: mat-color($warn);
-  }
-
-  .mute.mat-chip.mat-primary {
-    background-color: #ffb600;
-  }
-
-  /* power */
-  .normal.mat-chip.mat-primary, .ready.mat-list-icon.mat-icon.material-icons{
-    background-color: map-get($ok, 600),
   }
 }

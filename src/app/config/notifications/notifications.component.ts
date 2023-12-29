@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS } from '../../models';
+import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS, DEFAULT_PASSWORD_VALUE } from '../../models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from 'src/app/services';
 import { getValue } from '../../utils';
 import { environment } from 'src/environments/environment';
@@ -74,11 +74,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       smtpPassword: getValue(smtp.value, 'smtp_password'),
       smtpHostname: getValue(smtp.value, 'smtp_hostname'),
       smtpPort: getValue(smtp.value, 'smtp_port'),
-      email1Address: getValue(smtp.value, 'email1_address'),
-      email2Address: getValue(smtp.value, 'email2_address'),
+      emailAddress1: getValue(smtp.value, 'email_address_1'),
+      emailAddress2: getValue(smtp.value, 'email_address_2'),
 
       pinCode: getValue(gsm.value, 'pin_code'),
-      phoneNumber: getValue(gsm.value, 'phone_number'),
+      phoneNumber1: getValue(gsm.value, 'phone_number_1'),
+      phoneNumber2: getValue(gsm.value, 'phone_number_2'),
 
       alertStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_started'),
       alertStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_stopped'),
@@ -88,10 +89,14 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       alertStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_stopped'),
       powerOutageStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_started'),
       powerOutageStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_stopped'),
-      alertStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_started'),
-      alertStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'alert_stopped'),
-      powerOutageStartedSms: getValue(getValue(subscriptions.value, 'sms'), 'power_outage_started'),
-      powerOutageStoppedSms: getValue(getValue(subscriptions.value, 'sms'), 'power_outage_stopped')
+      alertStartedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'alert_started'),
+      alertStoppedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'alert_stopped'),
+      powerOutageStartedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'power_outage_started'),
+      powerOutageStoppedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'power_outage_stopped'),
+      alertStartedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'alert_started'),
+      alertStoppedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'alert_stopped'),
+      powerOutageStartedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'power_outage_started'),
+      powerOutageStoppedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'power_outage_stopped')
     });
   }
 
@@ -121,11 +126,11 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       smtp_username: formModel.smtpUsername,
       smtp_hostname: formModel.smtpHostname,
       smtp_port: formModel.smtpPort,
-      email1_address: formModel.email1Address,
-      email2_address: formModel.email2Address
+      email_address_1: formModel.emailAddress1,
+      email_address_2: formModel.emailAddress2
     };
 
-    if (formModel.smtpPassword) {
+    if (formModel.smtpPassword != DEFAULT_PASSWORD_VALUE) {
       smtp.smtp_password = formModel.smtpPassword;
     }
 
@@ -137,7 +142,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     return {
       enabled: this.gsmEnabled,
       pin_code: formModel.pinCode,
-      phone_number: formModel.phoneNumber
+      phone_number_1: formModel.phoneNumber1,
+      phone_number_2: formModel.phoneNumber2
     };
   }
 
@@ -156,11 +162,17 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
         power_outage_started: formModel.powerOutageStartedEmail2,
         power_outage_stopped: formModel.powerOutageStoppedEmail2
       },
-      sms: {
-        alert_started: formModel.alertStartedSms,
-        alert_stopped: formModel.alertStoppedSms,
-        power_outage_started: formModel.powerOutageStartedSms,
-        power_outage_stopped: formModel.powerOutageStoppedSms
+      sms1: {
+        alert_started: formModel.alertStartedSms1,
+        alert_stopped: formModel.alertStoppedSms1,
+        power_outage_started: formModel.powerOutageStartedSms1,
+        power_outage_stopped: formModel.powerOutageStoppedSms1
+      },
+      sms2: {
+        alert_started: formModel.alertStartedSms2,
+        alert_stopped: formModel.alertStoppedSms2,
+        power_outage_started: formModel.powerOutageStartedSms2,
+        power_outage_stopped: formModel.powerOutageStoppedSms2
       }
     };
   }
@@ -193,6 +205,25 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
   onDisableGsm() {
     this.gsmEnabled = false;
+  }
+
+  onPasswordFocus() {
+    const passwordControl = this.notificationsForm.get('smtpPassword');
+
+    if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
+      passwordControl.markAsTouched();
+      passwordControl.setValue("");
+    }
+  }
+  
+  onPasswordBlur() {
+    const passwordControl = this.notificationsForm.get('smtpPassword');
+  
+    // Check if the user has changed the password field's value.
+    if (!passwordControl.dirty) {
+      // If the user didn't change it, restore the initial value.
+      passwordControl.setValue(DEFAULT_PASSWORD_VALUE);
+    }
   }
 
   onSendTestSMS(){

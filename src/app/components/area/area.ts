@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ARM_TYPE, Alert, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
@@ -17,6 +17,9 @@ export class AreaComponent implements OnInit {
   @Input("data") sensorTypes:SensorType[];
   @Input() sensorAlert: boolean;
   @Input() monitoringState: MONITORING_STATE;
+  @Input() expanded: boolean;
+
+  @Output() onToggled = new EventEmitter<boolean>();
 
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
@@ -51,5 +54,10 @@ export class AreaComponent implements OnInit {
       this.areaService.disarm(this.area.id)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
     }
+  }
+
+  onToggle(expanded: boolean) {
+    this.expanded = expanded;
+    this.onToggled.emit(this.expanded);
   }
 }
