@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       areas: this.areaService.getAreas()
     })
     .subscribe(results => {
-      this.sensors = results.sensors;
+      this.sensors = results.sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
       this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
       this.zones = results.zones;
       this.areas = results.areas;

@@ -69,8 +69,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EventsComponent } from './events/events.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -152,7 +151,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+
+    DragDropModule
   ],
   providers: [
     AuthGuard,

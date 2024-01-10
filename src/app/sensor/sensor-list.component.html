@@ -1,6 +1,17 @@
 <div *ngIf="sensors != null">
-  <div *ngIf="sensors.length > 0; else no_sensors" ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs" fxLayout="column" fxLayoutGap="20px">
-    <mat-card id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors" [ngClass]="{'disabled': !sensor.enabled}">
+  <div cdkDropList 
+    *ngIf="sensors.length > 0; else no_sensors"
+    class="sensor-list"
+    fxLayout="column"
+    fxLayoutGap="20px"
+    (cdkDropListDropped)="onDrop($event)">
+
+    <mat-card cdkDrag
+      (cdkDragStarted)="onDragStarted($event)"
+      id="sensor-{{sensor.id}}"
+      *ngFor="let sensor of sensors"
+      [ngClass.gt-xs]="{'disabled': !sensor.enabled, 'sensor-card': true, 'sensor-card-large': true}"
+      [ngClass.xs]="{'disabled': !sensor.enabled, 'sensor-card': true, 'sensor-card-xs': true}">
         
       <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center">
         <div
@@ -20,7 +31,7 @@
             {{sensor.description}}
           </mat-card-title>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-list class="narrow-list first-column">
+            <mat-list class="attribute-list first-column">
               <mat-list-item>
                 <mat-icon mat-list-icon [ngSwitch]="sensor.typeId">
                   <img ngClass="sensor-icon" *ngSwitchCase="1" src="assets/images/sensor_motion.png"/>
@@ -55,7 +66,7 @@
               </mat-list-item>
             </mat-list>
             
-            <mat-list class="narrow-list second-column">
+            <mat-list class="attribute-list second-column">
               <mat-list-item>
                 <mat-icon mat-list-icon *ngIf="sensor.channel !== -1" class="material-icons-outlined">power</mat-icon>
                 <mat-icon mat-list-icon *ngIf="sensor.channel === -1" class="material-icons-outlined">power_off</mat-icon>
@@ -85,6 +96,8 @@
       <mat-divider></mat-divider>
 
       <mat-card-actions [fxShow]="userCanEdit()">
+        <!-- drag and drop icon button-->
+        <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>

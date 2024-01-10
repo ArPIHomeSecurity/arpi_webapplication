@@ -261,7 +261,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       typeId: formModel.typeId,
       alert: false,
       description: formModel.description,
-      enabled: formModel.enabled
+      enabled: formModel.enabled,
+      uiOrder: null
     };
   }
 
