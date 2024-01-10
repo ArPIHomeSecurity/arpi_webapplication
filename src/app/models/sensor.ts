@@ -8,7 +8,9 @@ export class Sensor {
   alert: boolean;
   enabled: boolean;
   description: string;
+
   uiOrder: number = null;
+  uiHide: boolean = null;
 }
 
 export class SensorType {

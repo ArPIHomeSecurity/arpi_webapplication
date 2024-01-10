@@ -52,7 +52,9 @@
 
     
     <div fxLayout="column" fxFlexAlign="center" fxLayoutGap="5px">
-      <sensor *ngFor="let sensor of sensors; let i = index" [sensor]="sensor" [delay]="delays[i]"></sensor>
+      <span *ngFor="let sensor of sensors; let i = index">
+        <sensor *ngIf="!sensor.uiHide" [sensor]="sensor" [delay]="delays[i]"></sensor>
+      </span>
     </div>
 
   </mat-expansion-panel>

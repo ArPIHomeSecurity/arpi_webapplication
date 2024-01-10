@@ -87,6 +87,17 @@
                   -
                 </div>
               </mat-list-item>
+
+              <mat-list-item>
+                <mat-icon mat-list-icon *ngIf="!sensor.uiHide" class="sensor-status-icon-show material-icons-outlined">visibility</mat-icon>
+                <mat-icon mat-list-icon *ngIf="sensor.uiHide" class="sensor-status-icon-hide material-icons-outlined">visibility_off</mat-icon>
+                <div *ngIf="sensor.uiHide">
+                  <span i18n="@@sensor hide">Hide</span>
+                </div>
+                <div *ngIf="!sensor.uiHide">
+                  <span i18n="@@sensor show">Show</span>
+                </div>
+              </mat-list-item>
       
             </mat-list>
           </div>

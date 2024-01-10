@@ -150,6 +150,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.sensor.zoneId = -1;
           this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1;;
           this.sensor.typeId = this.sensorTypes[0].id;
+          this.sensor.uiHide = false;
 
           this.updateForm(this.sensor);
           this.onZoneSelected(this.sensor.zoneId);
@@ -189,7 +190,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       enabled: sensor.enabled,
       description: new FormControl(sensor.description, Validators.required),
       zoneForm: this.zoneForm,
-      areaForm: this.areaForm
+      areaForm: this.areaForm,
+      hide: sensor.uiHide
     });
   }
 
@@ -262,7 +264,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       alert: false,
       description: formModel.description,
       enabled: formModel.enabled,
-      uiOrder: null
+      uiOrder: null,
+      uiHide: formModel.hide
     };
   }
 
