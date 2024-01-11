@@ -53,7 +53,7 @@
     
     <div fxLayout="column" fxFlexAlign="center" fxLayoutGap="5px">
       <span *ngFor="let sensor of sensors; let i = index">
-        <sensor *ngIf="!sensor.uiHide" [sensor]="sensor" [delay]="delays[i]"></sensor>
+        <sensor *ngIf="!sensor.uiHidden" [sensor]="sensor" [delay]="delays[i]"></sensor>
       </span>
     </div>
 

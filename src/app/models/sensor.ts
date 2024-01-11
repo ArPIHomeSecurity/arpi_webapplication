@@ -10,7 +10,7 @@ export class Sensor {
   description: string;
 
   uiOrder: number = null;
-  uiHide: boolean = null;
+  uiHidden: boolean = null;
 }
 
 export class SensorType {
