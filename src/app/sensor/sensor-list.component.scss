@@ -94,6 +94,12 @@
   list of attributes in the sensor card
 */
 .mat-list.attribute-list {
+  .long-field {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   & .mat-list-item {
     height: 30px !important;
 
@@ -103,13 +109,13 @@
   }
 
   &.first-column {
-    width: 150px;
+    width: 130px;
     margin-top: 0px;
     margin-bottom: auto;
   }
 
   &.second-column {
-    width: 170px;
+    width: 190px;
     margin-top: 0px;
     margin-bottom: auto;
   }
