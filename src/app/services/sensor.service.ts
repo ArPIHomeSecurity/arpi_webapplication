@@ -21,5 +21,7 @@ export interface SensorService {
 
   resetReferences();
 
+  resetReference(sensorId);
+
   reorder(sensors: Sensor[]);
 }

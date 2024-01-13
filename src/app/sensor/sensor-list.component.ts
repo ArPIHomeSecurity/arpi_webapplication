@@ -145,8 +145,13 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     });
   }
 
-  onResetReferences() {
-    this.sensorService.resetReferences();
+  onResetReferences(sensorId: number=null) {
+    if (sensorId) {
+      this.sensorService.resetReference(sensorId);
+    }
+    else {
+      this.sensorService.resetReferences();
+    }
   }
 
   onDragStarted(event: CdkDragStart<string[]>) {

@@ -102,6 +102,7 @@
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/sensor', sensor.id]" color="primary" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="onResetReferences(sensor.id)" color="accent" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>refresh</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(sensor.id)" color="warn" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
     </mat-card>
