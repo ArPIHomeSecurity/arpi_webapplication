@@ -77,7 +77,7 @@
         </mat-expansion-panel>
       </mat-card-content>
   
-      <mat-card-actions [fxShow]="userCanEdit()" align="end">
+      <mat-card-actions [fxShow]="userCanEdit()">
         <button mat-icon-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
