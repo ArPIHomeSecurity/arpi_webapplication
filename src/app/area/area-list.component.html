@@ -1,6 +1,13 @@
 <div *ngIf="areas != null && sensors != null">
-  <div *ngIf="areas.length > 0; else no_areas" ngClass.gt-xs="area-list" ngClass.xs="area-list-xs" fxLayout="column" fxLayoutGap="20px">
-    <mat-card *ngFor="let area of areas">
+  <div cdkDropList
+    *ngIf="areas.length > 0; else no_areas"
+    ngClass.gt-xs="area-list"
+    ngClass.xs="area-list-xs"
+    fxLayout="column"
+    fxLayoutGap="20px"
+    (cdkDropListDropped)="onDrop($event)">
+
+    <mat-card cdkDrag *ngFor="let area of areas">
       <mat-card-content layout="row">
   
         <mat-card-title>{{area.name}}</mat-card-title>
@@ -26,6 +33,8 @@
       </mat-card-content>
   
       <mat-card-actions [fxShow]="userCanEdit()">
+        <!-- drag and drop icon button-->
+        <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/area', area.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(area.id)" color="warn" [disabled]="getSensors(area.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>

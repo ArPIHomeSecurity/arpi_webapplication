@@ -60,4 +60,9 @@ export class AreaService {
 
     return this.http.put('/api/area/disarm', null, { params });
   }
+
+  reorder(areas: Area[]) {
+    // set sensor from api
+    return this.http.put<Area[]>('/api/areas/reorder', areas).subscribe();
+  }
 }

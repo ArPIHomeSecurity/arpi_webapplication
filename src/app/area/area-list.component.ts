@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -32,6 +33,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   sensors: Sensor[] = [];
   sensorListClosed: boolean[] = [];
   sensorListOpened: boolean[] = [];
+  isDragging = false;
 
   constructor(
     @Inject('AreaService') private areaService: AreaService,
@@ -64,13 +66,16 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
+    if (this.isDragging)
+      return;
+
     forkJoin({
       areas: this.areaService.getAreas(),
       sensors: this.sensorService.getSensors()
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.areas = results.areas;
+        this.areas = results.areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);
@@ -117,5 +122,21 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
         }
       }
     });
+  }
+
+  onDragStarted(event: CdkDragStart<string[]>) {
+    this.isDragging = true;
+  }
+
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.areas, event.previousIndex, event.currentIndex);
+    this.areas.forEach((area, index) => {
+      area.uiOrder = index;
+    });
+
+    this.areaService.reorder(this.areas);
+    this.isDragging = false;
+    // delayed update
+    setTimeout(() => this.updateComponent(), 500);
   }
 }

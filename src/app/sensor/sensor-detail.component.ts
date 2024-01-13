@@ -292,7 +292,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.areaId,
       name: areaModel.areaName,
-      armState: ARM_TYPE.DISARMED
+      armState: ARM_TYPE.DISARMED,
+      uiOrder: null
     };
   }
 
