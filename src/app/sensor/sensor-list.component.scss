@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.sensor-list {
+  padding: 15px;
+}
+
 .sensor-card {
   .mat-card-title {
     margin-left: 16px;
@@ -14,12 +18,12 @@
   margin-right: auto;
   margin-left: auto;
   width: 458px !important;
-  height: 180px !important;
+  height: unset !important;
 }
 
 .sensor-card-xs {
   min-width: 390px !important;
-  height: 180px !important;
+  height: unset !important;
 }
 
 .disabled {
@@ -31,9 +35,6 @@
   border-radius: 10px;
 }
 
-.sensor-list {
-  padding: 15px;
-}
 
 .empty {
   text-align: center;

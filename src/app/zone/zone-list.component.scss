@@ -2,18 +2,30 @@
 
 .zone-list {
   padding: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  width: 600px;
+}
 
-  .empty {
-    text-align: center;
+.zone-card {
+  .mat-card-title {
+    margin-left: 16px;
+  }
+  
+  .mat-card-content {
+    margin-bottom: 0px;
   }
 }
 
-.zone-list-xs {
-  padding: 5px;
-  width: 100%;
+.zone-card-large {
+  margin-right: auto;
+  margin-left: auto;
+  width: 458px !important;
+}
+
+.zone-card-xs {
+  min-width: 390px !important;
+}
+
+.cdk-drag {
+  height: unset !important;
 }
 
 h3 {

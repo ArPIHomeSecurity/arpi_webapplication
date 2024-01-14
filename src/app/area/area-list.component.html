@@ -1,13 +1,15 @@
 <div *ngIf="areas != null && sensors != null">
   <div cdkDropList
     *ngIf="areas.length > 0; else no_areas"
-    ngClass.gt-xs="area-list"
-    ngClass.xs="area-list-xs"
+    class="area-list"
     fxLayout="column"
     fxLayoutGap="20px"
     (cdkDropListDropped)="onDrop($event)">
 
-    <mat-card cdkDrag *ngFor="let area of areas">
+    <mat-card cdkDrag
+      *ngFor="let area of areas"
+      ngClass.gt-xs="area-card area-card-large"
+      ngClass.xs="area-card area-card-xs">
       <mat-card-content layout="row">
   
         <mat-card-title>{{area.name}}</mat-card-title>
