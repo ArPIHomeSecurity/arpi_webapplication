@@ -1,6 +1,16 @@
 <div *ngIf="zones != null && sensors != null">
-  <div *ngIf="zones.length > 0; else no_zones" ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs" fxLayout="column" fxLayoutGap="20px">
-    <mat-card *ngFor="let zone of zones">
+  <div cdkDropList
+    *ngIf="zones.length > 0; else no_zones"
+    ngClass.gt-xs="zone-list"
+    ngClass.xs="zone-list-xs"
+    fxLayout="column"
+    fxLayoutGap="20px"
+    (cdkDropListDropped)="onDrop($event)">
+
+    <mat-card
+      cdkDrag
+      *ngFor="let zone of zones">
+
       <mat-card-content layout="row">
   
         <mat-card-title>{{zone.name}}</mat-card-title>
@@ -78,6 +88,8 @@
       </mat-card-content>
   
       <mat-card-actions [fxShow]="userCanEdit()">
+        <!-- drag and drop icon button-->
+        <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(zone.id)" color="warn" [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>

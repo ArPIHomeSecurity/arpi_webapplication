@@ -75,7 +75,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.areas = results.areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder);
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);

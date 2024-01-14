@@ -11,6 +11,7 @@ import { MONITORING_STATE, Sensor, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -32,6 +33,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   sensors: Sensor[] = [];
   sensorListClosed: boolean[] = [];
   sensorListOpened: boolean[] = [];
+
+  isDragging = false;
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -64,13 +67,16 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
+    if (this.isDragging)
+      return;
+
     forkJoin({
       zones: this.zoneService.getZones(),
       sensors: this.sensorService.getSensors()
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.zones = results.zones;
+        this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);
@@ -117,5 +123,21 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
         }
       }
     });
+  }
+
+  onDragStarted(event: CdkDragStart<string[]>) {
+    this.isDragging = true;
+  }
+
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.zones, event.previousIndex, event.currentIndex);
+    this.zones.forEach((zone, index) => {
+      zone.uiOrder = index;
+    });
+
+    this.zoneService.reorder(this.zones);
+    this.isDragging = false;
+    // delayed update
+    setTimeout(() => this.updateComponent(), 500);
   }
 }

@@ -7,4 +7,5 @@ export class Zone {
   stayAlertDelay: number;
   stayArmDelay: number;
   description: string;
+  uiOrder: number;
 }

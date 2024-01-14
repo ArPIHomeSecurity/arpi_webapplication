@@ -281,7 +281,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
       stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
       stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
-      description: zoneModel.zoneName
+      description: zoneModel.zoneName,
+      uiOrder: null
     };
   }
 

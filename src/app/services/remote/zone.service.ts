@@ -23,17 +23,18 @@ export class ZoneService {
   }
 
   createZone( zone: Zone ): Observable<Zone> {
-    // set sensor from api
     return this.http.post<Zone>('/api/zones/', zone);
   }
 
   updateZone( zone: Zone ): Observable<Zone> {
-    // set sensor from api
     return this.http.put<Zone>('/api/zone/' + zone.id, zone);
   }
 
   deleteZone( zoneId: number ): Observable<boolean> {
-    // set sensor from api
     return this.http.delete<boolean>('/api/zone/' + zoneId);
+  }
+
+  reorder(zones: Zone[]) {
+    return this.http.put<Zone[]>('/api/zones/reorder', zones).subscribe();
   }
 }

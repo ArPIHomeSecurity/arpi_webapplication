@@ -19,5 +19,5 @@ export interface AreaService {
 
   disarm(areaId: number): Observable<Object>;
 
-  reorder(sensors: Area[]);
+  reorder(areas: Area[]);
 }

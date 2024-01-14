@@ -14,4 +14,6 @@ export interface ZoneService {
   updateZone( zone: Zone ): Observable<Zone>;
 
   deleteZone( zoneId: number ): Observable<boolean>;
+
+  reorder(zones: Zone[]);
 }
