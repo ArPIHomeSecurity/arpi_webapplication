@@ -8,3 +8,11 @@
   font-weight: bold;
   font-size: large;
 }
+
+.alert {
+  mat-panel-title {
+    color: #ffffff !important;
+  }
+
+  background-color: #ed1010 !important;
+}

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ARM_TYPE, Alert, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
 import { AreaService } from 'src/app/services';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +21,6 @@ export class AreaComponent implements OnInit {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   action: string;
-  alert: Alert;
   armTypes: any = ARM_TYPE;
   monitoringStates: any = MONITORING_STATE;
   expanded: boolean;
@@ -57,5 +56,9 @@ export class AreaComponent implements OnInit {
   onToggle(expanded: boolean) {
     this.expanded = expanded;
     localStorage.setItem('expanded_'+this.area.id, this.expanded.toString());
+  }
+
+  hasAlertingSensor(): boolean {
+    return this.sensors.some(sensor => sensor.alert);
   }
 }
