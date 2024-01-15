@@ -17,9 +17,6 @@ export class AreaComponent implements OnInit {
   @Input("data") sensorTypes:SensorType[];
   @Input() sensorAlert: boolean;
   @Input() monitoringState: MONITORING_STATE;
-  @Input() expanded: boolean;
-
-  @Output() onToggled = new EventEmitter<boolean>();
 
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
@@ -27,6 +24,7 @@ export class AreaComponent implements OnInit {
   alert: Alert;
   armTypes: any = ARM_TYPE;
   monitoringStates: any = MONITORING_STATE;
+  expanded: boolean;
 
   constructor(
     @Inject('AreaService') private areaService: AreaService,
@@ -37,7 +35,7 @@ export class AreaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.expanded = localStorage.getItem('expanded_'+this.area.id) === 'true';
   }
 
   armChanged(event) {
@@ -58,6 +56,6 @@ export class AreaComponent implements OnInit {
 
   onToggle(expanded: boolean) {
     this.expanded = expanded;
-    this.onToggled.emit(this.expanded);
+    localStorage.setItem('expanded_'+this.area.id, this.expanded.toString());
   }
 }

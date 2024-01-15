@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   sensorTypes: SensorType [] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
-  areaExpansionStates: Map<number, boolean>;
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private snackBar: MatSnackBar,
   ) {
-    this.areaExpansionStates = new Map<number, boolean>();
 
   }
 
@@ -59,8 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
       this.zones = results.zones;
       this.areas = results.areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-      // all areas are closed by default
-      this.areaExpansionStates = new Map<number, boolean>(this.areas.map(area => [area.id, false]));
     })
 
     // ALERT STATE
@@ -189,10 +185,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     else {
       this.loader.clearMessage();
     }
-  }
-
-  onAreaToggled(areaId: number, expanded: boolean) {
-    this.areaExpansionStates.set(areaId, expanded);
   }
 
   armChanged(event) {

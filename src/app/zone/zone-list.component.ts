@@ -31,8 +31,8 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   zones: Zone[] = null;
   sensors: Sensor[] = [];
-  sensorListClosed: boolean[] = [];
-  sensorListOpened: boolean[] = [];
+  configOpened: boolean[] = [];
+  sensorOpened: boolean[] = [];
 
   isDragging = false;
 
@@ -76,12 +76,16 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
-        this.sensors = results.sensors;
-        this.loader.display(false);
-        this.loader.disable(false);
-      }
-    );
+      this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
+      this.sensors = results.sensors;
+      this.loader.display(false);
+      this.loader.disable(false);
+
+      this.zones.forEach((zone, i) => {
+        this.configOpened[zone.id] = JSON.parse(localStorage.getItem('configOpened_'+zone.id));
+        this.sensorOpened[zone.id] = JSON.parse(localStorage.getItem('sensorOpened_'+zone.id));
+      });
+    });
   }
 
   getSensors(zoneId: number): Sensor[] {
@@ -139,5 +143,25 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     this.isDragging = false;
     // delayed update
     setTimeout(() => this.updateComponent(), 500);
+  }
+
+  onOpenConfig(zoneId: number) {
+    this.configOpened[zoneId] = true;
+    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+  }
+
+  onCloseConfig(zoneId: number) {
+    this.configOpened[zoneId] = false;
+    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+  }
+
+  onOpenSensor(zoneId: number) {
+    this.sensorOpened[zoneId] = true;
+    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
+  }
+
+  onCloseSensor(zoneId: number) {
+    this.sensorOpened[zoneId] = false;
+    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
   }
 }
