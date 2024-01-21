@@ -11,6 +11,7 @@ import { MONITORING_STATE, Sensor, Zone } from '../models';
 import { AuthenticationService, EventService, LoaderService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -30,8 +31,10 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   zones: Zone[] = null;
   sensors: Sensor[] = [];
-  sensorListClosed: boolean[] = [];
-  sensorListOpened: boolean[] = [];
+  configOpened: boolean[] = [];
+  sensorOpened: boolean[] = [];
+
+  isDragging = false;
 
   constructor(
     @Inject('AuthenticationService') public authService: AuthenticationService,
@@ -64,18 +67,25 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
+    if (this.isDragging)
+      return;
+
     forkJoin({
       zones: this.zoneService.getZones(),
       sensors: this.sensorService.getSensors()
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.zones = results.zones;
-        this.sensors = results.sensors;
-        this.loader.display(false);
-        this.loader.disable(false);
-      }
-    );
+      this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
+      this.sensors = results.sensors;
+      this.loader.display(false);
+      this.loader.disable(false);
+
+      this.zones.forEach((zone, i) => {
+        this.configOpened[zone.id] = JSON.parse(localStorage.getItem('configOpened_'+zone.id));
+        this.sensorOpened[zone.id] = JSON.parse(localStorage.getItem('sensorOpened_'+zone.id));
+      });
+    });
   }
 
   getSensors(zoneId: number): Sensor[] {
@@ -117,5 +127,41 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
         }
       }
     });
+  }
+
+  onDragStarted(event: CdkDragStart<string[]>) {
+    this.isDragging = true;
+  }
+
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.zones, event.previousIndex, event.currentIndex);
+    this.zones.forEach((zone, index) => {
+      zone.uiOrder = index;
+    });
+
+    this.zoneService.reorder(this.zones);
+    this.isDragging = false;
+    // delayed update
+    setTimeout(() => this.updateComponent(), 500);
+  }
+
+  onOpenConfig(zoneId: number) {
+    this.configOpened[zoneId] = true;
+    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+  }
+
+  onCloseConfig(zoneId: number) {
+    this.configOpened[zoneId] = false;
+    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+  }
+
+  onOpenSensor(zoneId: number) {
+    this.sensorOpened[zoneId] = true;
+    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
+  }
+
+  onCloseSensor(zoneId: number) {
+    this.sensorOpened[zoneId] = false;
+    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
   }
 }

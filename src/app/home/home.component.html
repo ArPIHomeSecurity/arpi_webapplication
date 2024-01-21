@@ -49,9 +49,7 @@
         [sensors]="getSensors(area.id)"
         [delays]="getSensorDelays(area.id)"
         [sensorAlert]="sensorAlert"
-        [monitoringState]="monitoringState"
-        [expanded]="areaExpansionStates.get(area.id)"
-        (onToggled)="onAreaToggled(area.id, $event)">
+        [monitoringState]="monitoringState">
       </app-area>
     </div>
 

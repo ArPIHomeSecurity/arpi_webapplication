@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ARM_TYPE, Alert, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
 import { AreaService } from 'src/app/services';
 import { environment } from 'src/environments/environment';
 
@@ -17,16 +17,13 @@ export class AreaComponent implements OnInit {
   @Input("data") sensorTypes:SensorType[];
   @Input() sensorAlert: boolean;
   @Input() monitoringState: MONITORING_STATE;
-  @Input() expanded: boolean;
-
-  @Output() onToggled = new EventEmitter<boolean>();
 
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   action: string;
-  alert: Alert;
   armTypes: any = ARM_TYPE;
   monitoringStates: any = MONITORING_STATE;
+  expanded: boolean;
 
   constructor(
     @Inject('AreaService') private areaService: AreaService,
@@ -37,7 +34,7 @@ export class AreaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.expanded = localStorage.getItem('expanded_'+this.area.id) === 'true';
   }
 
   armChanged(event) {
@@ -58,6 +55,10 @@ export class AreaComponent implements OnInit {
 
   onToggle(expanded: boolean) {
     this.expanded = expanded;
-    this.onToggled.emit(this.expanded);
+    localStorage.setItem('expanded_'+this.area.id, this.expanded.toString());
+  }
+
+  hasAlertingSensor(): boolean {
+    return this.sensors.some(sensor => sensor.alert);
   }
 }

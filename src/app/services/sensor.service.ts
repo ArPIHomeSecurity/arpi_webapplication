@@ -20,4 +20,8 @@ export interface SensorService {
   getSensorTypes(): Observable<SensorType[]>;
 
   resetReferences();
+
+  resetReference(sensorId);
+
+  reorder(sensors: Sensor[]);
 }

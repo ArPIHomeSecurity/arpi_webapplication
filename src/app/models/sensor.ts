@@ -1,3 +1,4 @@
+
 export class Sensor {
   id: number;
   channel: number;
@@ -7,6 +8,9 @@ export class Sensor {
   alert: boolean;
   enabled: boolean;
   description: string;
+
+  uiOrder: number = null;
+  uiHidden: boolean = null;
 }
 
 export class SensorType {

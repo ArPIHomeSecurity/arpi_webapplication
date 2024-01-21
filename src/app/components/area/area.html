@@ -4,7 +4,7 @@
     (closed)="onToggle(false)"
     [expanded]="expanded"
     [disabled]="sensors.length == 0">
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [ngClass]="{'alert': hasAlertingSensor() && !expanded}">
       <mat-panel-title>
         {{ area.name }}
       </mat-panel-title>
@@ -20,7 +20,7 @@
             value="AWAY"
             class="arm-away"
             [checked]="area.armState == armTypes.AWAY"
-            [disabled]="sensorAlert || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+            [disabled]="sensorAlert || monitoringState === monitoringStates.READY"
             (change)="armChanged($event)"
             i18n="@@arm away button"
             (click)="$event.stopPropagation()"
@@ -30,7 +30,7 @@
           <mat-button-toggle 
             value="DISARMED"
             class="disarm"
-            [checked]="area.armState == armTypes.DISARMED && !alert"
+            [checked]="area.armState == armTypes.DISARMED"
             (change)="armChanged($event)" i18n="@@disarm button"
             (click)="$event.stopPropagation()"
             >
@@ -40,7 +40,7 @@
             value="STAY"
             class="arm-stay"
             [checked]="area.armState == armTypes.STAY"
-            [disabled]="sensorAlert || monitoringState === monitoringStates.READY && alert !== null && alert !== undefined"
+            [disabled]="sensorAlert || monitoringState === monitoringStates.READY"
             (change)="armChanged($event)" i18n="@@arm stay button"
             (click)="$event.stopPropagation()"
           >
@@ -52,7 +52,9 @@
 
     
     <div fxLayout="column" fxFlexAlign="center" fxLayoutGap="5px">
-      <sensor *ngFor="let sensor of sensors; let i = index" [sensor]="sensor" [delay]="delays[i]"></sensor>
+      <span *ngFor="let sensor of sensors; let i = index">
+        <sensor *ngIf="!sensor.uiHidden || sensor.alert" [sensor]="sensor" [delay]="delays[i]"></sensor>
+      </span>
     </div>
 
   </mat-expansion-panel>

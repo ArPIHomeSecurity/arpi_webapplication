@@ -18,4 +18,6 @@ export interface AreaService {
   arm(areaId: number, armtype: ARM_TYPE): Observable<Object>;
 
   disarm(areaId: number): Observable<Object>;
+
+  reorder(areas: Area[]);
 }

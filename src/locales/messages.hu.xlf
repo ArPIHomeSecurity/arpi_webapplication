@@ -1033,7 +1033,15 @@
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Unregister device </source>
-        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Eszköz eltávolítása</target>
+        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Eszköz eltávolítása </target>
+      </trans-unit>
+      <trans-unit id="sensor hidden" datatype="html">
+        <source>Hidden</source>
+        <target state="translated">Rejtett</target>
+      </trans-unit>
+      <trans-unit id="sensor visible" datatype="html">
+        <source>Visible</source>
+        <target state="translated">Látható</target>
       </trans-unit>
     </body>
   </file>

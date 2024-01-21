@@ -150,6 +150,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.sensor.zoneId = -1;
           this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1;;
           this.sensor.typeId = this.sensorTypes[0].id;
+          this.sensor.uiHidden = false;
 
           this.updateForm(this.sensor);
           this.onZoneSelected(this.sensor.zoneId);
@@ -189,7 +190,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       enabled: sensor.enabled,
       description: new FormControl(sensor.description, Validators.required),
       zoneForm: this.zoneForm,
-      areaForm: this.areaForm
+      areaForm: this.areaForm,
+      hidden: sensor.uiHidden
     });
   }
 
@@ -261,7 +263,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       typeId: formModel.typeId,
       alert: false,
       description: formModel.description,
-      enabled: formModel.enabled
+      enabled: formModel.enabled,
+      uiOrder: null,
+      uiHidden: formModel.hidden
     };
   }
 
@@ -277,7 +281,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
       stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
       stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
-      description: zoneModel.zoneName
+      description: zoneModel.zoneName,
+      uiOrder: null
     };
   }
 
@@ -288,7 +293,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.areaId,
       name: areaModel.areaName,
-      armState: ARM_TYPE.DISARMED
+      armState: ARM_TYPE.DISARMED,
+      uiOrder: null
     };
   }
 
