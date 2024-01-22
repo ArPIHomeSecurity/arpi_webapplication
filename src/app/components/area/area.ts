@@ -15,7 +15,6 @@ export class AreaComponent implements OnInit {
   @Input() delays:number[];
   @Input() sensors:Sensor[];
   @Input("data") sensorTypes:SensorType[];
-  @Input() sensorAlert: boolean;
   @Input() monitoringState: MONITORING_STATE;
 
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
