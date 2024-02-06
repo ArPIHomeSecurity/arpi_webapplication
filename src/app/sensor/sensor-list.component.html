@@ -50,8 +50,7 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon *ngIf="sensor.channel !== -1" class="material-icons-outlined">power</mat-icon>
-                <mat-icon mat-list-icon *ngIf="sensor.channel === -1" class="material-icons-outlined">power_off</mat-icon>
+                <mat-icon mat-list-icon class="material-icons-outlined">label</mat-icon>
                 <div *ngIf="sensor.channel !== -1">
                   <span>CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
                 </div>

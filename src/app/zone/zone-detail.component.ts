@@ -190,7 +190,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'celete';
+          this.action = 'delete';
           this.zoneService.deleteZone(zoneId)
             .subscribe(_ => this.router.navigate(['/zones']),
                 _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})

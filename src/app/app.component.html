@@ -54,6 +54,9 @@
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>input</mat-icon><span i18n="@@sensors menu link">Sensors</span>
         </a>
+        <a mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser()">
+          <mat-icon mat-list-icon>output</mat-icon><span i18n="@@outputs menu link">Outputs</span>
+        </a>
         <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
           <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
         </a>

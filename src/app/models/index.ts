@@ -5,6 +5,7 @@ export * from './card';
 export * from './event';
 export * from './keypad';
 export * from './option';
+export * from './output';
 export * from './power';
 export * from './sensor';
 export * from './state';

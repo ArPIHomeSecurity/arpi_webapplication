@@ -1,0 +1,104 @@
+<div *ngIf="outputs != null">
+  <div cdkDropList *ngIf="outputs.length > 0; else no_outputs" class="output-list" fxLayout="column" fxLayoutGap="20px"
+    (cdkDropListDropped)="onDrop($event)">
+
+    <mat-card cdkDrag (cdkDragStarted)="onDragStarted($event)" id="output-{{output.id}}" *ngFor="let output of outputs"
+      [ngClass.gt-xs]="{'disabled': !output.enabled, 'output-card': true, 'output-card-large': true}"
+      [ngClass.xs]="{'disabled': !output.enabled, 'output-card': true, 'output-card-xs': true}">
+
+      <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center">
+        <div [ngSwitch]="getOutputType(output.channel)"
+          [ngClass.xs]="{'output-image-small': true, 'alerting': output.alert}"
+          [ngClass.gt-xs]="{'output-image': true, 'alerting': output.alert}">
+          <img *ngSwitchCase="outputTypes.OUTPUT" src="assets/images/open-collector.png" />
+          <img *ngSwitchCase="outputTypes.RELAY" src="assets/images/relay.png" />
+          <img *ngSwitchCase="null" src="assets/images/disconnected.png" />
+          <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getOutputLabel(output.channel)}}" />
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="space-between start">
+          <mat-card-title>
+            {{output.name}}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{output.description}}
+          </mat-card-subtitle>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+
+            <mat-list class="attribute-list first-column">
+              <mat-list-item>
+                <mat-icon mat-list-icon class="material-icons-outlined">label</mat-icon>
+                <span *ngIf="output.channel !== null">{{getOutputLabel(output.channel)}}</span>
+                <span *ngIf="output.channel === null" i18n="@@output disconnected">Disconnected</span>
+              </mat-list-item>
+              <mat-list-item [ngSwitch]="output.triggerType">
+                <mat-icon mat-list-icon class="material-icons-outlined">start</mat-icon>
+                <mat-icon *ngSwitchCase="outputTriggerTypes.AREA" mat-list-icon
+                  class="material-icons-outlined">crop</mat-icon>
+                <mat-icon *ngSwitchCase="outputTriggerTypes.SYSTEM" mat-list-icon
+                  class="material-icons-outlined">home</mat-icon>
+                <mat-icon *ngSwitchCase="outputTriggerTypes.BUTTON" mat-list-icon
+                  class="material-icons-outlined">touch_app</mat-icon>
+              </mat-list-item>
+              <mat-list-item *ngIf="output.triggerType==outputTriggerTypes.AREA">
+                <mat-icon mat-list-icon class="material-icons-outlined">crop</mat-icon>
+                <span *ngIf="output.areaId">{{getAreaName(output.areaId)}}</span>
+              </mat-list-item>
+            </mat-list>
+
+            <mat-list class="attribute-list second-column">
+              <mat-list-item>
+                <mat-icon mat-list-icon>swap_vert</mat-icon>
+                <mat-icon *ngIf="!output.defaultState" class="material-icons-outlined">radio_button_unchecked</mat-icon>
+                <mat-icon *ngIf="output.defaultState" class="material-icons-outlined">radio_button_checked</mat-icon>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon mat-list-icon class="material-icons-outlined">timer</mat-icon>
+                <span>{{output.delay}}s</span>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon mat-list-icon class="material-icons-outlined">timelapse</mat-icon>
+                <span>{{output.duration !== null ? output.duration + 's' : '&nbsp;-&nbsp;' }}</span>
+              </mat-list-item>
+
+            </mat-list>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions [fxShow]="userCanEdit()">
+        <!-- drag and drop icon button-->
+        <button mat-icon-button cdkDragHandle class="drag-handle"
+          [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/output', output.id]" color="primary"
+          [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>mode_edit</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(output.id)" color="warn"
+          [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #no_outputs>
+    <div ngClass.gt-xs="output-list" ngClass.xs="output-list-xs">
+      <h1 class="empty" i18n="@@output none">No outputs found</h1>
+    </div>
+  </ng-template>
+
+</div>
+
+<div ngClass.gt-xs="output-actions" ngClass.xs="output-actions-xs" [fxShow]="userCanEdit()">
+  <button class="output-action" mat-fab color="accent" routerLink="/output/add"
+    [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon
+      mat-list-icon>add</mat-icon></button>
+  <button class="output-action" mat-mini-fab color="accent" routerLink="/output/add"
+    [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon
+      mat-list-icon>add</mat-icon></button>
+</div>
+
+<ng-template #snackbarTemplate>
+  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+</ng-template>
