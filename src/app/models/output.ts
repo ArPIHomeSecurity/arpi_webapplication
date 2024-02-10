@@ -4,19 +4,14 @@ export enum OutputTriggerType {
     BUTTON = "button"
 }
 
-export enum ButtonType {
-    SWITCH = "switch",
-    IMPULSE = "impulse"
-}
-
 export class Output {
     id: number;
     name: string | null;
     description: string | null;
     channel: number;
+    state: boolean;
     triggerType: OutputTriggerType;
     areaId: number | null;
-    buttonType: ButtonType | null;
     delay: number;
     duration: number;
     defaultState: boolean;
@@ -29,7 +24,7 @@ export enum OutputType {
     RELAY = "relay"
 }
 
-// define a list of output labels and names
+// define a list of output labels and names based on channel number
 export const OutputDefinitions = new Map<number, { label: string, name: string, type: OutputType }>([
     [0, { label: 'GO-/+', name: 'Syren', type: OutputType.RELAY }],
     [1, { label: 'R1', name: 'Relay 1', type: OutputType.RELAY }],

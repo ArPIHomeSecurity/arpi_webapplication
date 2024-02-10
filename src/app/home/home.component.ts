@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area } from '../models';
-import { AlertService, AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area, Output, OutputTriggerType } from '../models';
+import { AlertService, AreaService, EventService, LoaderService, MonitoringService, OutputService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 import { forkJoin } from 'rxjs';
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sensorTypes: SensorType [] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
+  outputs: Output[] = [];
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
 
@@ -50,13 +52,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       sensors: this.sensorService.getSensors(),
       sensorTypes: this.sensorService.getSensorTypes(),
       zones: this.zoneService.getZones(),
-      areas: this.areaService.getAreas()
+      areas: this.areaService.getAreas(),
+      outputs: this.outputService.getOutputs()
     })
     .subscribe(results => {
-      this.sensors = results.sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+      this.sensors = results.sensors.sort((s1, s2) => s1.uiOrder > s2.uiOrder ? 1 : s1.uiOrder < s2.uiOrder ? -1 : 0);
       this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
       this.zones = results.zones;
-      this.areas = results.areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+      this.areas = results.areas.sort((a1, a2) => a1.uiOrder > a2.uiOrder ? 1 : a1.uiOrder < a2.uiOrder ? -1 : 0);
+      this.outputs = results.outputs
+        .filter(o => o.triggerType === OutputTriggerType.BUTTON)
+        .sort((o1, o2) => o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0);
     })
 
     // ALERT STATE
@@ -217,6 +223,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
   }
 
+  isOutputDisabled() {
+    return this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY;
+  }
+
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length && sensorTypeId != null) {
       return this.sensorTypes.find(x => x.id === sensorTypeId).name;
@@ -252,5 +262,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   areaIdentify(index: number, area: Area) {
     return area.id;
+  }
+
+  toggleButton(output: Output) {
+    if (output.state) {
+      output.state = false;
+      this.outputService.deactivateOutput(output.id);
+    }
+    else {
+      output.state = true;
+      this.outputService.activateOutput(output.id);
+    }
+  }
+
+  pressButton(output: Output) {
+    this.outputService.activateOutput(output.id);
   }
 }

@@ -41,6 +41,14 @@ export class OutputService {
     return this.http.delete<boolean>('/api/output/' + outputId);
   }
 
+  activateOutput(outputId: number) {
+    return this.http.put('/api/output/' + outputId + '/activate', null).subscribe();
+  }
+
+  deactivateOutput(outputId: number) {
+    return this.http.put('/api/output/' + outputId + '/deactivate', null).subscribe();
+  }
+
   reorder(outputs: Output[]) {
     return this.http.put('/api/output/reorder', outputs).subscribe();
   }

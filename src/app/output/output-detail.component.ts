@@ -175,9 +175,11 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
 
     const controls = this.outputForm.controls;
     if (value === OutputTriggerType.BUTTON) {
+      controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
     }
     else if (value === OutputTriggerType.SYSTEM) {
+      controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
     }
     else if (value === OutputTriggerType.AREA) {
@@ -199,6 +201,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     output.name = formModel.name;
     output.description = formModel.description;
     output.channel = formModel.channel === -1 ? null : formModel.channel;
+    output.state = false;
     output.triggerType = formModel.triggerType;
     output.areaId = formModel.areaId;
     output.delay = formModel.delay;

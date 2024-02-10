@@ -15,5 +15,9 @@ export interface OutputService {
 
   deleteOutput(outputId: number): Observable<boolean>;
 
+  activateOutput(outputId: number);
+
+  deactivateOutput(outputId: number);
+
   reorder(outputs: Output[]);
 }
