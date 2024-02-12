@@ -10,8 +10,8 @@
         <div [ngSwitch]="getOutputType(output.channel)"
           [ngClass.xs]="{'output-image-small': true, 'alerting': output.alert}"
           [ngClass.gt-xs]="{'output-image': true, 'alerting': output.alert}">
-          <img *ngSwitchCase="outputTypes.OUTPUT" src="assets/images/open-collector.png" />
-          <img *ngSwitchCase="outputTypes.RELAY" src="assets/images/relay.png" />
+          <img *ngSwitchCase="outputTypes.OUTPUT" src="assets/images/output_oc.png" />
+          <img *ngSwitchCase="outputTypes.RELAY" src="assets/images/output_relay.png" />
           <img *ngSwitchCase="null" src="assets/images/disconnected.png" />
           <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getOutputLabel(output.channel)}}" />
         </div>
