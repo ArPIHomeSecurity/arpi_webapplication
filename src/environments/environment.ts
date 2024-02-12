@@ -34,7 +34,7 @@ export const environment = {
   defaultLanguage: 'en',
   languages: 'hu',
 
-  // authentication toket valid for 15 mins
+  // authentication token valid for 15 mins
   userTokenExpiry: 60 * 15,
 
   // Service types
