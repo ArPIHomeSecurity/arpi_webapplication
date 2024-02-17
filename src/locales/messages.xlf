@@ -785,6 +785,55 @@
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
       </trans-unit>
+      <trans-unit id="2b792fe0548414a36424590188c0802220aa0f9b" datatype="html">
+        <source>Do you want to delete the output?</source>
+        <note priority="1" from="description">Output delete question</note>
+      </trans-unit>
+      <trans-unit id="output area" datatype="html">
+        <source>Area</source>
+      </trans-unit>
+      <trans-unit id="output button" datatype="html">
+        <source>Button</source>
+      </trans-unit>
+      <trans-unit id="output channel" datatype="html">
+        <source>Channel</source>
+      </trans-unit>
+      <trans-unit id="output default state" datatype="html">
+        <source>Default state</source>
+      </trans-unit>
+      <trans-unit id="output delay" datatype="html">
+        <source>Delay [s]</source>
+      </trans-unit>
+      <trans-unit id="output delete" datatype="html">
+        <source>Delete output</source>
+      </trans-unit>
+      <trans-unit id="output disconnected" datatype="html">
+        <source>Disconnected</source>
+      </trans-unit>
+      <trans-unit id="output duration" datatype="html">
+        <source>Duration [s]</source>
+      </trans-unit>
+      <trans-unit id="output enabled" datatype="html">
+        <source>Enabled</source>
+      </trans-unit>
+      <trans-unit id="output invalid duration" datatype="html">
+        <source>Must be equal or greater than -1</source>
+      </trans-unit>
+      <trans-unit id="output none" datatype="html">
+        <source>No outputs found</source>
+      </trans-unit>
+      <trans-unit id="output not found" datatype="html">
+        <source>Output not found!</source>
+      </trans-unit>
+      <trans-unit id="output system" datatype="html">
+        <source>System</source>
+      </trans-unit>
+      <trans-unit id="output trigger" datatype="html">
+        <source>Trigger</source>
+      </trans-unit>
+      <trans-unit id="outputs menu link" datatype="html">
+        <source>Outputs</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -69,7 +69,7 @@
       </trans-unit>
       <trans-unit id="user delete question" datatype="html">
         <source>Do you want to delete the user?</source>
-        <target state="translated">Valóban törölni akarod a felhasználót?</target>
+        <target state="translated">Valóban törli a felhasználót?</target>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
@@ -631,7 +631,7 @@
       </trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
-        <target state="translated">Valóban töröli ezt az érzékelőt?</target>
+        <target state="translated">Valóban törli ezt az érzékelőt?</target>
         <note priority="1" from="description">Sensor delete question</note>
       </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
@@ -936,7 +936,7 @@
       </trans-unit>
       <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
         <source>Do you want to delete the area?</source>
-        <target state="translated">Törölni akarod ezt a területet?</target>
+        <target state="translated">Valóban törli ezt a területet?</target>
         <note priority="1" from="description">Area delete question</note>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
@@ -1042,6 +1042,71 @@
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
         <target state="translated">Látható</target>
+      </trans-unit>
+      <trans-unit id="outputs menu link" datatype="html">
+        <source>Outputs</source>
+        <target state="translated">Kimenetek</target>
+      </trans-unit>
+      <trans-unit id="output delete" datatype="html">
+        <source>Delete output</source>
+        <target state="translated">Kimenet törlése</target>
+      </trans-unit>
+      <trans-unit id="2b792fe0548414a36424590188c0802220aa0f9b" datatype="html">
+        <source>Do you want to delete the output?</source>
+        <target state="translated">Valóban töröli a kimenetet?</target>
+        <note priority="1" from="description">Output delete question</note>
+      </trans-unit>
+      <trans-unit id="output channel" datatype="html">
+        <source>Channel</source>
+        <target state="translated">Csatorna</target>
+      </trans-unit>
+      <trans-unit id="output disconnected" datatype="html">
+        <source>Disconnected</source>
+        <target state="translated">Lecsatlakoztatott</target>
+      </trans-unit>
+      <trans-unit id="output trigger" datatype="html">
+        <source>Trigger</source>
+        <target state="translated">Kioldó</target>
+      </trans-unit>
+      <trans-unit id="output area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="output system" datatype="html">
+        <source>System</source>
+        <target state="translated">Rendszer</target>
+      </trans-unit>
+      <trans-unit id="output button" datatype="html">
+        <source>Button</source>
+        <target state="translated">Gomb</target>
+      </trans-unit>
+      <trans-unit id="output delay" datatype="html">
+        <source>Delay [s]</source>
+        <target state="translated">Késleltetés [s]</target>
+      </trans-unit>
+      <trans-unit id="output duration" datatype="html">
+        <source>Duration [s]</source>
+        <target state="translated">Időtartam [s]</target>
+      </trans-unit>
+      <trans-unit id="output enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="output default state" datatype="html">
+        <source>Default state</source>
+        <target state="translated">Alap állapot</target>
+      </trans-unit>
+      <trans-unit id="output not found" datatype="html">
+        <source>Output not found!</source>
+        <target state="translated">Kimenet nem található!</target>
+      </trans-unit>
+      <trans-unit id="output invalid duration" datatype="html">
+        <source>Must be equal or greater than -1</source>
+        <target state="translated">Egyenlőnek vagy nagyobbnak kell lennie, mint -1</target>
+      </trans-unit>
+      <trans-unit id="output none" datatype="html">
+        <source>No outputs found</source>
+        <target state="translated">Nincsenek kimenetek</target>
       </trans-unit>
     </body>
   </file>
