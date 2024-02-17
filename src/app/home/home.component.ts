@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
   sensors: Sensor[];
-  sensorTypes: SensorType [] = [];
+  sensorTypes: SensorType[] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
   outputs: Output[] = [];
@@ -55,22 +55,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       areas: this.areaService.getAreas(),
       outputs: this.outputService.getOutputs()
     })
-    .subscribe(results => {
-      this.sensors = results.sensors.sort((s1, s2) => s1.uiOrder > s2.uiOrder ? 1 : s1.uiOrder < s2.uiOrder ? -1 : 0);
-      this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
-      this.zones = results.zones;
-      this.areas = results.areas.sort((a1, a2) => a1.uiOrder > a2.uiOrder ? 1 : a1.uiOrder < a2.uiOrder ? -1 : 0);
-      this.outputs = results.outputs
-        .filter(o => o.triggerType === OutputTriggerType.BUTTON)
-        .sort((o1, o2) => o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0);
-    })
+      .subscribe(results => {
+        this.sensors = results.sensors.sort((s1, s2) => s1.uiOrder > s2.uiOrder ? 1 : s1.uiOrder < s2.uiOrder ? -1 : 0);
+        this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
+        this.zones = results.zones;
+        this.areas = results.areas.sort((a1, a2) => a1.uiOrder > a2.uiOrder ? 1 : a1.uiOrder < a2.uiOrder ? -1 : 0);
+        this.outputs = results.outputs
+          .filter(o => o.triggerType === OutputTriggerType.BUTTON)
+          .sort((o1, o2) => o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0);
+      });
 
     // ALERT STATE
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
-      }
-    );
+      });
 
     // ARM STATE
     this.eventService.listen('arm_state_change')
@@ -80,8 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           .subscribe(areas => {
             this.areas = areas
             this.onStateChanged();
-          }
-        );
+          });
       });
 
     // AREA STATE
@@ -99,8 +97,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensorAlert = alert;
-      }
-    );
+      });
 
     // SENSOR TYPES: we need only once
     this.sensorService.getSensorTypes()
@@ -112,8 +109,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     // MONITORING STATE
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState);
-          this.onStateChanged();
+        this.monitoringState = string2MonitoringState(monitoringState);
+        this.onStateChanged();
       });
 
     this.eventService.listen('sensors_state_change')
@@ -121,10 +118,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.sensorService.getSensors()
           .subscribe(sensors => {
             this.sensors = sensors
-          }
-        );
-      }
-    );
+          });
+      });
 
 
     this.eventService.isConnected()
@@ -159,7 +154,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onStateChanged();
         }
       );
-    
+
     // SENSORS ALERT STATE
     this.sensorService.getAlert()
       .subscribe(alert => {
@@ -180,7 +175,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.loader.clearMessage();
   }
 
@@ -197,20 +192,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (event.value === 'AWAY') {
       this.action = 'armed away';
       this.monitoringService.arm(ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     } else if (event.value === 'STAY') {
       this.action = 'armed stay';
       this.monitoringService.arm(ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     } else if (event.value === 'DISARMED') {
       this.action = 'disarmed';
       this.monitoringService.disarm()
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     }
   }
 
   isAwayDisabled() {
-    return this.sensorAlert || 
+    return this.sensorAlert ||
       this.armState !== ARM_TYPE.DISARMED ||
       this.monitoringState !== MONITORING_STATE.READY ||
       this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
@@ -224,7 +219,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   isOutputDisabled() {
-    return this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY;
+    const disabledStates = [
+      MONITORING_STATE.NOT_READY,
+      MONITORING_STATE.STARTUP,
+      MONITORING_STATE.UPDATING_CONFIG,
+      MONITORING_STATE.INVALID_CONFIG,
+      MONITORING_STATE.ERROR,
+    ];
+    return this.armState === ARM_TYPE.UNDEFINED || disabledStates.includes(this.monitoringState);
   }
 
   getSensorTypeName(sensorTypeId: number) {
@@ -235,7 +237,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  getSensorDelay(areaId: number, zoneId: number) : number {
+  getSensorDelay(areaId: number, zoneId: number): number {
     const armState = this.areas.find(a => a.id == areaId).armState
     if (armState === ARM_TYPE.AWAY) {
       return this.zones.find(z => z.id === zoneId).awayAlertDelay;
@@ -246,15 +248,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (armState === ARM_TYPE.DISARMED) {
       return this.zones.find(z => z.id === zoneId).disarmedDelay;
     }
-    
+
     return null;
   }
 
-  getSensors(areaId: number) : Sensor[] {
+  getSensors(areaId: number): Sensor[] {
     return this.sensors.filter(sensor => sensor.areaId === areaId)
   }
-  
-  getSensorDelays(areaId: number) : number[] {
+
+  getSensorDelays(areaId: number): number[] {
     let sensors = this.getSensors(areaId);
 
     return sensors.map(sensor => this.getSensorDelay(sensor.areaId, sensor.zoneId))
