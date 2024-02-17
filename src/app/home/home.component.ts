@@ -77,19 +77,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.armState = string2ArmType(armState);
         this.areaService.getAreas()
           .subscribe(areas => {
-            this.areas = areas
-            this.onStateChanged();
+            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
           });
+        this.onStateChanged();
       });
 
     // AREA STATE
     this.eventService.listen('area_state_change')
       .subscribe((area: Area) => {
-        this.areas.forEach(a => {
-          if (a.id === area.id) {
-            a.armState = area.armState
-          }
-        });
+        this.areaService.getAreas()
+          .subscribe(areas => {
+            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+          });
         this.onStateChanged();
       });
 
@@ -117,7 +116,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(_ => {
         this.sensorService.getSensors()
           .subscribe(sensors => {
-            this.sensors = sensors
+            this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
           });
       });
 

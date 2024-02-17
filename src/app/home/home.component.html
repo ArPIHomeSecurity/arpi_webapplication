@@ -53,8 +53,11 @@
     </div>
 
     <div *ngIf="areas.length > 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <app-area *ngFor="let area of areas; trackBy: areaIdentify" [area]="area" [sensors]="getSensors(area.id)"
-        [delays]="getSensorDelays(area.id)" [sensorAlert]="sensorAlert" [monitoringState]="monitoringState">
+      <app-area *ngFor="let area of areas; trackBy: areaIdentify"
+        [area]="area"
+        [sensors]="getSensors(area.id)"
+        [delays]="getSensorDelays(area.id)"
+        [monitoringState]="monitoringState">
       </app-area>
     </div>
 
