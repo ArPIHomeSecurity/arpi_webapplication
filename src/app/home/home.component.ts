@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
+  ENDLESS_DURATION = 0;
+
   alert: Alert;
   armTypes: any = ARM_TYPE;
   armState: ARM_TYPE = ARM_TYPE.UNDEFINED;

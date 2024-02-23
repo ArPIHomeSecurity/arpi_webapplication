@@ -145,7 +145,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
       triggerType: [output.triggerType, Validators.required],
       areaId: [output.areaId],
       delay: [output.delay, [Validators.required, positiveInteger()]],
-      duration: [output.duration, [Validators.required, (control) => control.value >= -1 ? null : { invalid: $localize`:@@output invalid duration:Must be equal or greater than -1` }]],
+      duration: [output.duration, [Validators.required, Validators.min(0)]],
       defaultState: [output.defaultState],
       enabled: [output.enabled]
     });

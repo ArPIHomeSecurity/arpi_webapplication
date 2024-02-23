@@ -22,11 +22,11 @@
 
     <div *ngIf="outputs" fxLayout="column" fxLayoutGap="5px">
       <div *ngFor="let output of outputs">
-        <mat-button-toggle *ngIf="output.duration === -1" class="output" [checked]="output.state"
+        <mat-button-toggle *ngIf="output.duration === ENDLESS_DURATION" class="output" [checked]="output.state"
           (change)="toggleButton(output)" [disabled]="isOutputDisabled()">
           {{output.name}}
         </mat-button-toggle>
-        <button mat-raised-button *ngIf="output.duration !== -1" class="output"
+        <button mat-raised-button *ngIf="output.duration !== ENDLESS_DURATION" class="output"
           (click)="pressButton(output)" [disabled]="isOutputDisabled()" fxFlex>
           {{output.name}}
         </button>
