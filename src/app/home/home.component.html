@@ -22,14 +22,16 @@
 
     <div *ngIf="outputs" fxLayout="column" fxLayoutGap="5px">
       <div *ngFor="let output of outputs">
-        <mat-button-toggle *ngIf="output.duration === ENDLESS_DURATION" class="output" [checked]="output.state"
-          (change)="toggleButton(output)" [disabled]="isOutputDisabled()">
+        <mat-button-toggle
+          class="output"
+          [checked]="output.state"
+          [disabled]="isOutputDisabled()"
+          (change)="toggleButton(output)"
+        >
           {{output.name}}
+          <mat-progress-spinner *ngIf="output.duration != ENDLESS_DURATION && output.state" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
+          </mat-progress-spinner>
         </mat-button-toggle>
-        <button mat-raised-button *ngIf="output.duration !== ENDLESS_DURATION" class="output"
-          (click)="pressButton(output)" [disabled]="isOutputDisabled()" fxFlex>
-          {{output.name}}
-        </button>
       </div>
     </div>
 

@@ -122,6 +122,11 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
       });
 
+    this.eventService.listen('output_state_change')
+      .subscribe(state => 
+        this.outputs.find(o => o.id === state.id).state = state.state
+      );
+
 
     this.eventService.isConnected()
       .subscribe(connected => {
