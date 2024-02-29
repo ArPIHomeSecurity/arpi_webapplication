@@ -10,7 +10,8 @@
           "baseHref": "/"
         },
         "locales": {
-          "hu": "src/locales/messages.hu.xlf"
+          "hu": "src/locales/messages.hu.xlf",
+          "it": "src/locales/messages.it.xlf"
         }
       },
       "root": "",
@@ -189,7 +190,8 @@
               "defaultLanguage": "en",
               "languages": [
                 "en",
-                "hu"
+                "hu",
+                "it"
               ]
             }
           }
