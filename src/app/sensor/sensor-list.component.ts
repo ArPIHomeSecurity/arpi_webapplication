@@ -124,7 +124,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
       width: '250px',
       data: {
-        description: this.sensors.find(x => x.id === sensorId).description,
+        name: this.sensors.find(x => x.id === sensorId).description,
       }
     });
 

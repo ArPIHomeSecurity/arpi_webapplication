@@ -96,7 +96,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
     const dialogRef = this.dialog.open(OutputDeleteDialogComponent, {
       width: '250px',
       data: {
-        description: this.outputs.find(x => x.id === outputId).description,
+        name: this.outputs.find(x => x.id === outputId).name,
       }
     });
 
