@@ -51,10 +51,11 @@
           <mat-error *ngIf="outputForm.get('duration').invalid">{{outputForm.get('duration').getError('invalid')}}</mat-error>
         </mat-form-field>
 
-        <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">Enabled</mat-checkbox>
-
-        <mat-checkbox formControlName="defaultState" color="primary" i18n="@@output default state">Default state</mat-checkbox>
       </div>
+
+      <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">Enabled</mat-checkbox>
+      <br>
+      <mat-checkbox formControlName="defaultState" color="primary" i18n="@@output default state">Default state</mat-checkbox>
 
     </form>
   </mat-card-content>

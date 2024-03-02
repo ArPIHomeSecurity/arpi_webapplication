@@ -145,7 +145,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
       triggerType: [output.triggerType, Validators.required],
       areaId: [output.areaId],
       delay: [output.delay, [Validators.required, positiveInteger()]],
-      duration: [output.duration, [Validators.required, Validators.min(0)]],
+      duration: new FormControl({value: output.duration, disabled: output.triggerType !== OutputTriggerType.BUTTON}, [Validators.required, Validators.min(0)]),
       defaultState: [output.defaultState],
       enabled: [output.enabled]
     });
@@ -177,13 +177,18 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     if (value === OutputTriggerType.BUTTON) {
       controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
+      controls.duration.enable();
     }
     else if (value === OutputTriggerType.SYSTEM) {
       controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
+      controls.duration.setValue(0);
+      controls.duration.disable();
     }
     else if (value === OutputTriggerType.AREA) {
       controls.areaId.setValidators([Validators.required]);
+      controls.duration.setValue(0);
+      controls.duration.disable();
     }
 
     controls.areaId.updateValueAndValidity();
@@ -205,7 +210,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     output.triggerType = formModel.triggerType;
     output.areaId = formModel.areaId;
     output.delay = formModel.delay;
-    output.duration = formModel.duration;
+    output.duration = formModel.duration || 0;
     output.defaultState = formModel.defaultState;
     output.enabled = formModel.enabled;
 
