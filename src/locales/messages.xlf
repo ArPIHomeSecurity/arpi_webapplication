@@ -816,9 +816,6 @@
       <trans-unit id="output enabled" datatype="html">
         <source>Enabled</source>
       </trans-unit>
-      <trans-unit id="output invalid duration" datatype="html">
-        <source>Must be equal or greater than -1</source>
-      </trans-unit>
       <trans-unit id="output none" datatype="html">
         <source>No outputs found</source>
       </trans-unit>
@@ -833,6 +830,12 @@
       </trans-unit>
       <trans-unit id="outputs menu link" datatype="html">
         <source>Outputs</source>
+      </trans-unit>
+      <trans-unit id="sensor area form" datatype="html">
+        <source>Area</source>
+      </trans-unit>
+      <trans-unit id="sensor zone form" datatype="html">
+        <source>Zone</source>
       </trans-unit>
     </body>
   </file>

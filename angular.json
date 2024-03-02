@@ -150,7 +150,8 @@
             "format": "xlf",
             "outputPath": "src/locales",
             "targetFiles": [
-              "messages.hu.xlf"
+              "messages.hu.xlf",
+              "messages.it.xlf"
             ]
           }
         },
