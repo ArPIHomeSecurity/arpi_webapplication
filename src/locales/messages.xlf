@@ -799,7 +799,7 @@
         <source>Channel</source>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
-        <source>Default state</source>
+        <source>Active default</source>
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>

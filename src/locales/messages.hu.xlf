@@ -1093,8 +1093,8 @@
         <target state="translated">Engedélyezett</target>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
-        <source>Default state</source>
-        <target state="translated">Alap állapot</target>
+        <source>Active default</source>
+        <target state="new">Aktív alapállapot</target>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
         <source>Output not found!</source>

@@ -1061,8 +1061,8 @@
         <target>Canale</target>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
-        <source>Default state</source>
-        <target>Stato predefinito</target>
+        <source>Active default</source>
+        <target state="new">Attivo predefinito</target>
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
