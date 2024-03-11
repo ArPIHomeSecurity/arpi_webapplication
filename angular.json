@@ -146,7 +146,7 @@
         "extract-i18n": {
           "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "argus:build",
+            "buildTarget": "argus:build",
             "format": "xlf",
             "outputPath": "src/locales",
             "targetFiles": [
