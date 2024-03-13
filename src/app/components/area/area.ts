@@ -58,6 +58,13 @@ export class AreaComponent implements OnInit {
   }
 
   hasAlertingSensor(): boolean {
-    return this.sensors.some(sensor => sensor.alert);
+    return this.sensors.some(sensor => sensor.alert && sensor.enabled);
+  }
+
+  canBeArmed(): boolean {
+    return (
+      this.area.armState === ARM_TYPE.DISARMED &&
+      this.monitoringState === MONITORING_STATE.READY
+    )
   }
 }
