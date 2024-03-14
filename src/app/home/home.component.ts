@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area } from '../models';
-import { AlertService, AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area, Output, OutputTriggerType } from '../models';
+import { AlertService, AreaService, EventService, LoaderService, MonitoringService, OutputService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 import { forkJoin } from 'rxjs';
@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
+  ENDLESS_DURATION = 0;
+
   alert: Alert;
   armTypes: any = ARM_TYPE;
   armState: ARM_TYPE = ARM_TYPE.UNDEFINED;
@@ -25,9 +27,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   monitoringState: MONITORING_STATE;
   sensorAlert: boolean;
   sensors: Sensor[];
-  sensorTypes: SensorType [] = [];
+  sensorTypes: SensorType[] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
+  outputs: Output[] = [];
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
@@ -35,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
 
@@ -51,22 +55,23 @@ export class HomeComponent implements OnInit, OnDestroy {
       sensorTypes: this.sensorService.getSensorTypes(),
       zones: this.zoneService.getZones(),
       areas: this.areaService.getAreas(),
-      sensorsAlert: this.sensorService.getAlert()
+      outputs: this.outputService.getOutputs()
     })
-    .subscribe(results => {
-      this.sensors = results.sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-      this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
-      this.zones = results.zones;
-      this.areas = results.areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-      this.sensorAlert = results.sensorsAlert;
-    })
+      .subscribe(results => {
+        this.sensors = results.sensors.sort((s1, s2) => s1.uiOrder > s2.uiOrder ? 1 : s1.uiOrder < s2.uiOrder ? -1 : 0);
+        this.sensorTypes = results.sensorTypes.sort((st1, st2) => st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0);
+        this.zones = results.zones;
+        this.areas = results.areas.sort((a1, a2) => a1.uiOrder > a2.uiOrder ? 1 : a1.uiOrder < a2.uiOrder ? -1 : 0);
+        this.outputs = results.outputs
+          .filter(o => o.triggerType === OutputTriggerType.BUTTON)
+          .sort((o1, o2) => o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0);
+      });
 
     // ALERT STATE
     this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
-      }
-    );
+      });
 
     // ARM STATE
     this.eventService.listen('arm_state_change')
@@ -74,20 +79,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.armState = string2ArmType(armState);
         this.areaService.getAreas()
           .subscribe(areas => {
-            this.areas = areas
-            this.onStateChanged();
-          }
-        );
+            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+          });
+        this.onStateChanged();
       });
 
     // AREA STATE
     this.eventService.listen('area_state_change')
       .subscribe((area: Area) => {
-        this.areas.forEach(a => {
-          if (a.id === area.id) {
-            a.armState = area.armState
-          }
-        });
+        this.areaService.getAreas()
+          .subscribe(areas => {
+            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+          });
         this.onStateChanged();
       });
 
@@ -95,8 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensorAlert = alert;
-      }
-    );
+      });
 
     // SENSOR TYPES: we need only once
     this.sensorService.getSensorTypes()
@@ -108,8 +110,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     // MONITORING STATE
     this.eventService.listen('system_state_change')
       .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState);
-          this.onStateChanged();
+        this.monitoringState = string2MonitoringState(monitoringState);
+        this.onStateChanged();
       });
 
     this.eventService.listen('sensors_state_change')
@@ -117,10 +119,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.sensorService.getSensors()
           .subscribe(sensors => {
             this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          }
-        );
-      }
-    );
+          });
+      });
+
+    this.eventService.listen('output_state_change')
+      .subscribe(state => 
+        this.outputs.find(o => o.id === state.id).state = state.state
+      );
 
 
     this.eventService.isConnected()
@@ -155,7 +160,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onStateChanged();
         }
       );
-    
+
     // SENSORS ALERT STATE
     this.sensorService.getAlert()
       .subscribe(alert => {
@@ -176,7 +181,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.loader.clearMessage();
   }
 
@@ -193,20 +198,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (event.value === 'AWAY') {
       this.action = 'armed away';
       this.monitoringService.arm(ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     } else if (event.value === 'STAY') {
       this.action = 'armed stay';
       this.monitoringService.arm(ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     } else if (event.value === 'DISARMED') {
       this.action = 'disarmed';
       this.monitoringService.disarm()
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     }
   }
 
   isAwayDisabled() {
-    return this.sensorAlert || 
+    return this.sensorAlert ||
       this.armState !== ARM_TYPE.DISARMED ||
       this.monitoringState !== MONITORING_STATE.READY ||
       this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
@@ -219,6 +224,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
   }
 
+  isOutputDisabled() {
+    const disabledStates = [
+      MONITORING_STATE.NOT_READY,
+      MONITORING_STATE.STARTUP,
+      MONITORING_STATE.UPDATING_CONFIG,
+      MONITORING_STATE.INVALID_CONFIG,
+      MONITORING_STATE.ERROR,
+    ];
+    return this.armState === ARM_TYPE.UNDEFINED || disabledStates.includes(this.monitoringState);
+  }
+
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length && sensorTypeId != null) {
       return this.sensorTypes.find(x => x.id === sensorTypeId).name;
@@ -227,7 +243,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  getSensorDelay(areaId: number, zoneId: number) : number {
+  getSensorDelay(areaId: number, zoneId: number): number {
     const armState = this.areas.find(a => a.id == areaId).armState
     if (armState === ARM_TYPE.AWAY) {
       return this.zones.find(z => z.id === zoneId).awayAlertDelay;
@@ -238,15 +254,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (armState === ARM_TYPE.DISARMED) {
       return this.zones.find(z => z.id === zoneId).disarmedDelay;
     }
-    
+
     return null;
   }
 
-  getSensors(areaId: number) : Sensor[] {
+  getSensors(areaId: number): Sensor[] {
     return this.sensors.filter(sensor => sensor.areaId === areaId)
   }
-  
-  getSensorDelays(areaId: number) : number[] {
+
+  getSensorDelays(areaId: number): number[] {
     let sensors = this.getSensors(areaId);
 
     return sensors.map(sensor => this.getSensorDelay(sensor.areaId, sensor.zoneId))
@@ -254,5 +270,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   areaIdentify(index: number, area: Area) {
     return area.id;
+  }
+
+  toggleButton(output: Output) {
+    if (output.state) {
+      output.state = false;
+      this.outputService.deactivateOutput(output.id);
+    }
+    else {
+      output.state = true;
+      this.outputService.activateOutput(output.id);
+    }
+  }
+
+  pressButton(output: Output) {
+    this.outputService.activateOutput(output.id);
   }
 }

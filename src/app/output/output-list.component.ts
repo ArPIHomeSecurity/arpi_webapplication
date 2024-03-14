@@ -8,38 +8,38 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { SensorDeleteDialogComponent } from './sensor-delete.component';
-import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '../models';
-import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
+import { OutputDeleteDialogComponent } from './output-delete.component';
+import { Area, MONITORING_STATE, Output, OutputType, OutputDefinitions, OutputTriggerType } from '../models';
+import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, OutputService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
-  templateUrl: 'sensor-list.component.html',
-  styleUrls: ['sensor-list.component.scss'],
+  templateUrl: 'output-list.component.html',
+  styleUrls: ['output-list.component.scss'],
   providers: []
 })
 
-export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
 
   action: string;
-  sensors: Sensor[] = null;
-  sensorTypes: SensorType [] = [];
-  zones: Zone[] = [];
+  outputs: Output[] = null;
   areas: Area[] = [];
+  outputTypes = OutputType;
+  outputTriggerTypes = OutputTriggerType;
   isDragging = false;
 
   constructor(
-    @Inject('AreaService') public areaService:AreaService,
+    @Inject('AreaService') public areaService: AreaService,
     @Inject('AuthenticationService') public authService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
-    @Inject('SensorService') private sensorService: SensorService,
+    @Inject('OutputService') private outputService: OutputService,
     @Inject('ZoneService') private zoneService: ZoneService,
 
     public dialog: MatDialog,
@@ -59,9 +59,9 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     });
     this.updateComponent();
 
-    // TODO: update only one sensor instead of the whole page
+    // TODO: update only one output instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService.listen('sensors_state_change')
+      this.eventService.listen('outputs_state_change')
         .subscribe(_ => this.updateComponent())
     );
   }
@@ -75,56 +75,28 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       return;
 
     forkJoin({
-      sensors: this.sensorService.getSensors(this.onlyAlerting),
-      sensorTypes: this.sensorService.getSensorTypes(),
-      zones: this.zoneService.getZones(),
+      outputs: this.outputService.getOutputs(),
       areas: this.areaService.getAreas()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
-        this.sensors = results.sensors.sort((a, b) => a.uiOrder - b.uiOrder);
-        this.sensorTypes = results.sensorTypes;
-        this.zones = results.zones;
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
+        this.outputs = results.outputs.sort((a, b) => a.uiOrder - b.uiOrder);
         this.areas = results.areas;
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
-  }
-
-  getZoneName(zoneId: number) {
-    if (this.zones.length && zoneId != null) {
-        return this.zones.find(x => x.id === zoneId).name;
-    }
-
-    return '';
-  }
-
-  getAreaName(areaId: number) {
-    if (this.areas.length && areaId != null) {
-        return this.areas.find(x => x.id === areaId).name;
-    }
-
-    return '';
-  }
-
-  getSensorTypeName(sensorTypeId: number) {
-    if (this.sensorTypes.length) {
-      return this.sensorTypes.find(x => x.id === sensorTypeId).name;
-    }
-
-    return '';
+      );
   }
 
   userCanEdit() {
     return this.authService.getRole() === 'admin';
   }
 
-  openDeleteDialog(sensorId: number) {
-    const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
+  openDeleteDialog(outputId: number) {
+    const dialogRef = this.dialog.open(OutputDeleteDialogComponent, {
       width: '250px',
       data: {
-        name: this.sensors.find(x => x.id === sensorId).description,
+        name: this.outputs.find(x => x.id === outputId).name,
       }
     });
 
@@ -133,25 +105,36 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.action = 'delete';
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.sensorService.deleteSensor(sensorId)
-            .subscribe( _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-          );
+          this.outputService.deleteOutput(outputId)
+            .subscribe(_ => this.updateComponent(),
+              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+            );
         } else {
           this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
         }
       }
     });
   }
 
-  onResetReferences(sensorId: number=null) {
-    if (sensorId) {
-      this.sensorService.resetReference(sensorId);
+  getOutputType(channel: number): OutputType {
+    if (channel) {
+      return OutputDefinitions.get(channel).type;
     }
-    else {
-      this.sensorService.resetReferences();
+  }
+
+  getOutputLabel(channel: number): string {
+    if (channel) {
+      return OutputDefinitions.get(channel).label;
     }
+  }
+
+  getAreaName(areaId: number): string {
+    if (this.areas.length && areaId != null) {
+      return this.areas.find(x => x.id === areaId).name;
+    }
+
+    return '';
   }
 
   onDragStarted(event: CdkDragStart<string[]>) {
@@ -159,15 +142,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   onDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.sensors, event.previousIndex, event.currentIndex);
-    this.sensors.forEach((sensor, index) => {
-      sensor.uiOrder = index;
+    moveItemInArray(this.outputs, event.previousIndex, event.currentIndex);
+    this.outputs.forEach((output, index) => {
+      output.uiOrder = index;
     });
 
-    this.sensorService.reorder(this.sensors);
+    this.outputService.reorder(this.outputs);
     this.isDragging = false;
     // delayed update
     setTimeout(() => this.updateComponent(), 500);
   }
 }
-

@@ -23,6 +23,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   syrenForm: UntypedFormGroup;
   syren: Option;
+  testInProgress = false;
 
   constructor(
     @Inject('EventService') public eventService: EventService,
@@ -54,8 +55,8 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   updateForm() {
     this.syrenForm = this.fb.group({
       silent: new UntypedFormControl(getValue(this.syren.value, 'silent', false),  Validators.required),
-      delay: new UntypedFormControl(getValue(this.syren.value, 'delay', 18000), [Validators.required, Validators.min(0)]),
-      stopTime: new UntypedFormControl(getValue(this.syren.value, 'stop_time', 18000), [Validators.required, Validators.min(0)]),
+      delay: new UntypedFormControl(getValue(this.syren.value, 'delay', 0), [Validators.required, Validators.min(0)]),
+      stopTime: new UntypedFormControl(getValue(this.syren.value, 'stop_time', 0), [Validators.required, Validators.min(0)]),
     });
   }
 
@@ -81,7 +82,10 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   onTestSyren() {
-    this.configurationService.testSyren(5).subscribe();
+    const duration = 5;
+    this.configurationService.testSyren(duration).subscribe();
+    this.testInProgress = true;
+    setTimeout(() => this.testInProgress = false, duration * 1000);
   }
 
   onSubmit() {

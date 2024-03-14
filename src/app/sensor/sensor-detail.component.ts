@@ -355,7 +355,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
       width: '250px',
       data: {
-        description: this.sensor.description,
+        name: this.sensor.description,
       }
     });
 

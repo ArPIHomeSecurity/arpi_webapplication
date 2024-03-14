@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
   smallScreen: boolean;
   locales = [
     {name: 'Magyar', id: 'hu'},
-    {name: 'English', id: 'en'}
+    {name: 'English', id: 'en'},
+    {name: 'Italiano', id: 'it'}
   ];
   currentLocale: string;
   versions: {

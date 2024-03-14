@@ -13,6 +13,7 @@ import {
   KeypadService,
   LoaderService,
   MonitoringService,
+  OutputService,
   SensorService,
   UserService,
   ZoneService,
@@ -33,8 +34,8 @@ export const environment = {
   defaultLanguage: 'en',
   languages: 'hu',
 
-  // authentication toket valid for 15 mins
-  userTokenExpiry: 60*15,
+  // authentication token valid for 15 mins
+  userTokenExpiry: 60 * 15,
 
   // Service types
   alertService: AlertService,
@@ -47,6 +48,7 @@ export const environment = {
   keypadService: KeypadService,
   loaderService: LoaderService,
   monitoringService: MonitoringService,
+  outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
   zoneService: ZoneService,

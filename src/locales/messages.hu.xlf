@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="hu">
+  <file source-language="en" target-language="hu" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
@@ -48,11 +48,11 @@
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can't make changes in the configuration!</source>
+        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can't make changes in the configuration!</source>
+        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
@@ -69,7 +69,7 @@
       </trans-unit>
       <trans-unit id="user delete question" datatype="html">
         <source>Do you want to delete the user?</source>
-        <target state="translated">Valóban törölni akarod a felhasználót?</target>
+        <target state="translated">Valóban törli a felhasználót?</target>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
@@ -522,7 +522,7 @@
         <target state="translated">Nem sikerült törölni!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
+        <source>Can&apos;t delete, system is not ready!</source>
         <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
@@ -631,7 +631,7 @@
       </trans-unit>
       <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
         <source>Do you want to delete the sensor?</source>
-        <target state="translated">Valóban töröli ezt az érzékelőt?</target>
+        <target state="translated">Valóban törli ezt az érzékelőt?</target>
         <note priority="1" from="description">Sensor delete question</note>
       </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
@@ -759,8 +759,8 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications phone1 success" datatype="html">
         <source>SMS sent successfully to phone!</source>
@@ -771,8 +771,8 @@
         <target state="translated">Sikertelen SMS küldés!</target>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -936,7 +936,7 @@
       </trans-unit>
       <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
         <source>Do you want to delete the area?</source>
-        <target state="translated">Törölni akarod ezt a területet?</target>
+        <target state="translated">Valóban törli ezt a területet?</target>
         <note priority="1" from="description">Area delete question</note>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
@@ -1032,8 +1032,8 @@
         <target state="translated">SMS küldése 2</target>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Unregister device </source>
-        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Eszköz eltávolítása </target>
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
+        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eszköz eltávolítása </target>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
@@ -1042,6 +1042,75 @@
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
         <target state="translated">Látható</target>
+      </trans-unit>
+      <trans-unit id="outputs menu link" datatype="html">
+        <source>Outputs</source>
+        <target state="translated">Kimenetek</target>
+      </trans-unit>
+      <trans-unit id="output delete" datatype="html">
+        <source>Delete output</source>
+        <target state="translated">Kimenet törlése</target>
+      </trans-unit>
+      <trans-unit id="2b792fe0548414a36424590188c0802220aa0f9b" datatype="html">
+        <source>Do you want to delete the output?</source>
+        <target state="translated">Valóban töröli a kimenetet?</target>
+        <note priority="1" from="description">Output delete question</note>
+      </trans-unit>
+      <trans-unit id="output channel" datatype="html">
+        <source>Channel</source>
+        <target state="translated">Csatorna</target>
+      </trans-unit>
+      <trans-unit id="output disconnected" datatype="html">
+        <source>Disconnected</source>
+        <target state="translated">Lecsatlakoztatott</target>
+      </trans-unit>
+      <trans-unit id="output trigger" datatype="html">
+        <source>Trigger</source>
+        <target state="translated">Kioldó</target>
+      </trans-unit>
+      <trans-unit id="output area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="output system" datatype="html">
+        <source>System</source>
+        <target state="translated">Rendszer</target>
+      </trans-unit>
+      <trans-unit id="output button" datatype="html">
+        <source>Button</source>
+        <target state="translated">Gomb</target>
+      </trans-unit>
+      <trans-unit id="output delay" datatype="html">
+        <source>Delay [s]</source>
+        <target state="translated">Késleltetés [s]</target>
+      </trans-unit>
+      <trans-unit id="output duration" datatype="html">
+        <source>Duration [s]</source>
+        <target state="translated">Időtartam [s]</target>
+      </trans-unit>
+      <trans-unit id="output enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="output default state" datatype="html">
+        <source>Active default</source>
+        <target state="new">Aktív alapállapot</target>
+      </trans-unit>
+      <trans-unit id="output not found" datatype="html">
+        <source>Output not found!</source>
+        <target state="translated">Kimenet nem található!</target>
+      </trans-unit>
+      <trans-unit id="output none" datatype="html">
+        <source>No outputs found</source>
+        <target state="translated">Nincsenek kimenetek</target>
+      </trans-unit>
+      <trans-unit id="sensor area form" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="sensor zone form" datatype="html">
+        <source>Zone</source>
+        <target state="translated">Zóna</target>
       </trans-unit>
     </body>
   </file>

@@ -39,9 +39,11 @@
     <div class="actions">
       <button mat-raised-button type="submit" color="primary" [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY"
         i18n="@@save button">Save</button>
-      <button mat-raised-button type="button" color="primary" [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onTestSyren()"
-        i18n="@@syren test">Test</button>
+      <button mat-raised-button type="button" color="primary" [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY || testInProgress"
+        (click)="onTestSyren()">
+        <span i18n="@@syren test">Test</span>
+        <mat-progress-spinner *ngIf="testInProgress" class="test-spinner" diameter="15" color="primary" mode="indeterminate"></mat-progress-spinner>
+      </button>
       </div>
   </form>
 </div>

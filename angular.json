@@ -10,7 +10,8 @@
           "baseHref": "/"
         },
         "locales": {
-          "hu": "src/locales/messages.hu.xlf"
+          "hu": "src/locales/messages.hu.xlf",
+          "it": "src/locales/messages.it.xlf"
         }
       },
       "root": "",
@@ -145,11 +146,12 @@
         "extract-i18n": {
           "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "browserTarget": "argus:build",
+            "buildTarget": "argus:build",
             "format": "xlf",
             "outputPath": "src/locales",
             "targetFiles": [
-              "messages.hu.xlf"
+              "messages.hu.xlf",
+              "messages.it.xlf"
             ]
           }
         },
@@ -189,7 +191,8 @@
               "defaultLanguage": "en",
               "languages": [
                 "en",
-                "hu"
+                "hu",
+                "it"
               ]
             }
           }

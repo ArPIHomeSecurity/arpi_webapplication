@@ -153,7 +153,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'celete';
+          this.action = 'delete';
           this.areaService.deleteArea(areaId)
             .subscribe(_ => this.router.navigate(['/areas']),
                 _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})

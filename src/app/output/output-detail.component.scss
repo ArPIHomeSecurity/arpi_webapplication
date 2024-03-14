@@ -1,17 +1,14 @@
-.sensor-form {
+.output-form {
   margin: 15px auto;
   padding: 15px;
   width: 600px;
 }
 
-.sensor-form-xs {
+.output-form-xs {
   padding: 5px;
   width: 100%;
 }
 
-#zoneId {
-  margin-top: 15px;
-}
 
 #areaId {
   margin-top: 15px;
@@ -31,17 +28,4 @@ mat-checkbox {
 
 .actions button {
   margin-right: 10px;
-}
-
-mat-expansion-panel-header .title {
-  margin: auto 0px;
-}
-
-.warning {
-  vertical-align: middle;
-  margin: auto 10px;
-}
-
-.area-name-field {
-  margin-top: 15px;
 }

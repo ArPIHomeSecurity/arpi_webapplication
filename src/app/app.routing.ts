@@ -14,6 +14,7 @@ import { SyrenComponent } from './config/syren';
 import { UserListComponent, UserDetailComponent } from './user';
 import { EventsComponent } from './events/events.component';
 import { AreaDetailComponent, AreaListComponent } from './area';
+import { OutputDetailComponent, OutputListComponent } from './output';
 
 const appRoutes: Routes = [
   {
@@ -114,6 +115,21 @@ const appRoutes: Routes = [
   {
     path: 'config/syren',
     component: SyrenComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'outputs',
+    component: OutputListComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'output/add',
+    component: OutputDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'output/:id',
+    component: OutputDetailComponent,
     canActivate: [AdminGuard]
   },
   // otherwise redirect to home

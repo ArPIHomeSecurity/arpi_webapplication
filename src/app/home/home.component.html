@@ -3,14 +3,10 @@
   <div ngClass.gt-sm="home" ngClass.lt-md="home-small" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
 
     <div class="controller">
-      <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup"
-        [name]="armState"
-        [disabled]="armState == armTypes.UNDEFINED"
-        multiple
-      >
+      <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState"
+        [disabled]="armState == armTypes.UNDEFINED" multiple>
         <mat-button-toggle class="arm-away" value="AWAY" [checked]="[armTypes.AWAY, armTypes.MIXED].includes(armState)"
-          [disabled]="isAwayDisabled()"
-          (change)="armChanged($event)" i18n="@@arm away button">
+          [disabled]="isAwayDisabled()" (change)="armChanged($event)" i18n="@@arm away button">
           AWAY
         </mat-button-toggle>
         <mat-button-toggle class="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert"
@@ -18,11 +14,25 @@
           OFF
         </mat-button-toggle>
         <mat-button-toggle class="arm-stay" value="STAY" [checked]="[armTypes.STAY, armTypes.MIXED].includes(armState)"
-          [disabled]="isStayDisabled()"
-          (change)="armChanged($event)" i18n="@@arm stay button">
+          [disabled]="isStayDisabled()" (change)="armChanged($event)" i18n="@@arm stay button">
           STAY
         </mat-button-toggle>
       </mat-button-toggle-group>
+    </div>
+
+    <div *ngIf="outputs" fxLayout="column" fxLayoutGap="5px">
+      <div *ngFor="let output of outputs">
+        <mat-button-toggle
+          class="output"
+          [checked]="output.state"
+          [disabled]="isOutputDisabled()"
+          (change)="toggleButton(output)"
+        >
+          {{output.name}}
+          <mat-progress-spinner *ngIf="output.duration != ENDLESS_DURATION && output.state" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-button-toggle>
+      </div>
     </div>
 
     <div *ngIf="alert" fxFill>
@@ -40,7 +50,8 @@
     </div>
 
     <div *ngIf="areas.length == 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"></sensor>
+      <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)">
+      </sensor>
     </div>
 
     <div *ngIf="areas.length > 1" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">

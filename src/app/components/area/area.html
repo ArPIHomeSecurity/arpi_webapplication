@@ -20,7 +20,7 @@
             value="AWAY"
             class="arm-away"
             [checked]="area.armState == armTypes.AWAY"
-            [disabled]="hasAlertingSensor() || monitoringState !== monitoringStates.READY"
+            [disabled]="hasAlertingSensor() || !canBeArmed()"
             (change)="armChanged($event)"
             i18n="@@arm away button"
             (click)="$event.stopPropagation()"
@@ -40,7 +40,7 @@
             value="STAY"
             class="arm-stay"
             [checked]="area.armState == armTypes.STAY"
-            [disabled]="hasAlertingSensor() || monitoringState !== monitoringStates.READY"
+            [disabled]="hasAlertingSensor() || !canBeArmed()"
             (change)="armChanged($event)" i18n="@@arm stay button"
             (click)="$event.stopPropagation()"
           >

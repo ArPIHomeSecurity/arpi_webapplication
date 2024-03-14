@@ -2,7 +2,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Output } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -70,6 +70,7 @@ import { EventsComponent } from './events/events.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './output';
 
 
 @NgModule({
@@ -83,24 +84,27 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     NotificationsComponent,
     NetworkComponent,
     SyrenComponent,
-
+    
     UserCardDeleteDialogComponent,
     UserListComponent,
     UserDetailComponent,
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
-
+    
     AreaComponent,
+    AreaListComponent,
+    AreaDetailComponent,
+    AreaDeleteDialogComponent,
+
+    OutputListComponent,
+    OutputDetailComponent,
+    OutputDeleteDialogComponent,
 
     SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
     SensorDeleteDialogComponent,
-
-    AreaListComponent,
-    AreaDetailComponent,
-    AreaDeleteDialogComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
@@ -159,8 +163,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AuthGuard,
     AdminGuard,
 
-    {provide: 'AreaService', useClass: environment.areaService},
     {provide: 'AlertService', useClass: environment.alertService},
+    {provide: 'AreaService', useClass: environment.areaService},
     {provide: 'ArmService', useClass: environment.armService},
     {provide: 'AuthenticationService', useClass: environment.authenticationService},
     {provide: 'CardService', useClass: environment.cardService},
@@ -169,6 +173,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     {provide: 'KeypadService', useClass: environment.keypadService},
     {provide: 'LoaderService', useClass: environment.loaderService},
     {provide: 'MonitoringService', useClass: environment.monitoringService},
+    {provide: 'OutputService', useClass: environment.outputService},
     {provide: 'SensorService', useClass: environment.sensorService},
     {provide: 'UserService', useClass: environment.userService},
     {provide: 'ZoneService', useClass: environment.zoneService},
