@@ -1,4 +1,4 @@
-import { ARM_TYPE, Alert, Arm, ArmEvent, Disarm, ROLE_TYPES } from 'src/app/models';
+import { ARM_TYPE, Alert, Arm, ArmEvent, Disarm, OutputTriggerType, ROLE_TYPES } from 'src/app/models';
 
 export const DEMO_CONFIGURATION = [
     {
@@ -164,6 +164,37 @@ export const ZONES = [
         description: 'Sabotage'
     }
 ];
+
+export const OUTPUTS = [
+    {
+        id: 0,
+        name: "System",
+        description: "System is armed",
+        channel: 1,
+        state: false,
+        triggerType: OutputTriggerType.SYSTEM,
+        areaId: null,
+        delay: 0,
+        duration: 0,
+        defaultState: false,
+        uiOrder: 0,
+        enabled: true
+    },
+    {
+        id: 1,
+        name: "Garage door",
+        description: "Send signal to garage door",
+        channel: 2,
+        state: false,
+        triggerType: OutputTriggerType.BUTTON,
+        areaId: null,
+        delay: 1,
+        duration: 1,
+        defaultState: false,
+        uiOrder: 1,
+        enabled: true
+    }
+]
 
 export const AREAS = [
     {
