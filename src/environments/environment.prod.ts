@@ -32,7 +32,7 @@ export const environment = {
   monitoringPort: 443,
 
   defaultLanguage: 'en',
-  languages: 'hu',
+  languages: 'hu it',
 
   // authentication token valid for 15 mins
   userTokenExpiry: 60 * 15,
