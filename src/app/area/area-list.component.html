@@ -15,7 +15,7 @@
         <mat-card-title>{{area.name}}</mat-card-title>
         <mat-card-subtitle *ngIf="area.name != area.description">{{area.description}}</mat-card-subtitle>
   
-        <mat-expansion-panel (opened)="sensorListOpened[area.id] = true" (closed)="sensorListOpened[area.id] = false">
+        <mat-expansion-panel class="sensors" (opened)="sensorListOpened[area.id] = true" (closed)="sensorListOpened[area.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
             <mat-panel-description *ngIf="!sensorListOpened[area.id]" i18n="@@area no sensor">{{getSensors(area.id).length}} sensor(s)</mat-panel-description>
@@ -33,6 +33,8 @@
           </ng-template>
         </mat-expansion-panel>
       </mat-card-content>
+
+      <mat-divider [fxShow]="userCanEdit()"></mat-divider>
   
       <mat-card-actions [fxShow]="userCanEdit()">
         <!-- drag and drop icon button-->
