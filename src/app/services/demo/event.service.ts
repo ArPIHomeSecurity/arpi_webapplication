@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable , Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { Alert, Area } from '../../models';
+import { Alert, Area, Output } from '../../models';
 import { environment } from '../../../environments/environment';
 
 
@@ -21,6 +21,9 @@ export class EventService {
 
   private monitoringStateSubject = new Subject<string>();
   private monitoringState = this.monitoringStateSubject.asObservable().pipe(delay(environment.delay));
+
+  private outputStateSubject = new Subject<Output>();
+  private outputState = this.outputStateSubject.asObservable().pipe(delay(environment.delay));
 
   private sensorsStateSubject = new Subject<boolean>();
   private sensorsState = this.sensorsStateSubject.asObservable().pipe(delay(environment.delay));
@@ -53,6 +56,8 @@ export class EventService {
       subject = this.armState;
     } else if (event === 'area_state_change') {
       subject = this.areaState;
+    } else if (event === 'output_state_change') {
+      subject = this.outputState;
     } else if (event === 'alert_state_change') {
       subject = this.alertState;
     } else if (event === 'sensors_state_change') {
@@ -98,5 +103,9 @@ export class EventService {
 
   updateCardState(state: boolean = true) {
     this.cardRegisteredStateSubject.next(state);
+  }
+
+  updateOutputState(output: Output) {
+    this.outputStateSubject.next(output);
   }
 }

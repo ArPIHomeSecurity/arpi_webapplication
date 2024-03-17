@@ -56,6 +56,7 @@ export class SensorService {
 
 
   createSensor( sensor: Sensor ): Observable<Sensor> {
+    // get the maximum id and increment it
     sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1;
     sensor.alert = sensor.channel === -1 ? false : this.channels[sensor.channel];
     this.sensors.push(sensor);

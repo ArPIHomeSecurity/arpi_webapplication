@@ -5,6 +5,7 @@
 
 import {
   AlertService,
+  AreaService,
   ArmService,
   AuthenticationService,
   CardService,
@@ -13,11 +14,12 @@ import {
   KeypadService,
   LoaderService,
   MonitoringService,
+  OutputService,
   SensorService,
   UserService,
   ZoneService,
-  AreaService
 } from 'src/app/services/demo';
+
 
 export const environment = {
   production: false,
@@ -47,6 +49,7 @@ export const environment = {
   keypadService: KeypadService,
   loaderService: LoaderService,
   monitoringService: MonitoringService,
+  outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
   zoneService: ZoneService,
