@@ -190,6 +190,12 @@ export class AppComponent implements OnInit {
     // remove leading slash
     pathWithoutLanguage.replace(/^\/+/g, "");
 
+    // get text before first slash
+    var firstSlash = pathWithoutLanguage.indexOf('/');
+    if (firstSlash > 0) {
+      pathWithoutLanguage = pathWithoutLanguage.substring(0, firstSlash);
+    }
+
     // mapping of local urls to documentation urls
     const urlMap = {
       '': 'en/latest/end_users/',
