@@ -95,8 +95,7 @@
         </div>
       </mat-card-content>
 
-      <mat-divider></mat-divider>
-
+      <mat-divider [fxShow]="userCanEdit()"></mat-divider>
       <mat-card-actions [fxShow]="userCanEdit()">
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>

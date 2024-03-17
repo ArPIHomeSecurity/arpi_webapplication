@@ -195,15 +195,22 @@ export class AppComponent implements OnInit {
       '': 'en/latest/end_users/',
       'login': 'en/latest/end_users/login/',
       'events': 'en/latest/end_users/events/',
+      
       'areas': 'en/latest/end_users/areas/',
+      'area': 'en/latest/end_users/areas/#edit-area',
       'sensors': 'en/latest/end_users/sensors/',
+      'sensor': 'en/latest/end_users/sensors/#edit-area',
       'zones': 'en/latest/end_users/zones/',
+      'zone': 'en/latest/end_users/zones/#edit-zone',
+
       'config/syren': 'en/latest/end_users/syren/',
       'config/keypad': 'en/latest/end_users/keypad/',
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/',
-      'users': 'en/latest/end_users/users/'
+      
+      'users': 'en/latest/end_users/users/',
+      'user': 'en/latest/end_users/users/#edit-user'
     }
 
     console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])

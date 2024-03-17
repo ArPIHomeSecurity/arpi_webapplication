@@ -9,7 +9,7 @@ import { ConfigurationBaseComponent } from '../configuration-base/configuration-
 import { UserDeleteDialogComponent } from './user-delete.component';
 import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
 import { Card, MONITORING_STATE, ROLE_TYPES, User } from '../models';
-import { CardService, EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
+import { AuthenticationService, CardService, EventService, LoaderService, MonitoringService, UserService } from 'src/app/services';
 
 import { environment } from 'src/environments/environment';
 import { UserCardDeleteDialogComponent } from '.';
@@ -33,6 +33,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   cards: Card[] = [];
 
   constructor(
+    @Inject('AuthenticationService') public authService: AuthenticationService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('EventService') public eventService: EventService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
@@ -86,6 +87,10 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
         this.loader.disable(false);
       }
     );
+  }
+
+  userCanEdit() {
+    return this.authService.getRole() === 'admin';
   }
 
   openDeleteDialog(userId: number) {

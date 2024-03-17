@@ -15,11 +15,11 @@
           <mat-divider inset></mat-divider>
           <div class="header" i18n="@@user cards">Cards</div>
           <mat-list role="list" *ngFor="let card of getCards(user.id)">
-            <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled">
+            <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled" [disabled]="!userCanEdit()">
               <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon>
               <span [className]="!card.enabled ? 'card-description-disabled' : ''">{{card.description}}</span>
             </mat-checkbox>
-            <button mat-icon-button (click)="openDeleteCardDialog(card.id)" color="warn"><mat-icon>remove_circle_outline</mat-icon></button>
+            <button mat-icon-button (click)="openDeleteCardDialog(card.id)" color="warn" [fxShow]="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
           </mat-list>
         </div>
         <div *ngIf="user.hasRegistrationCode">
@@ -29,12 +29,14 @@
             <span i18n="@@user registration">Expires on: </span>
             <span *ngIf="user.registrationExpiry">{{user.registrationExpiry}}</span>
             <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
-            <button mat-icon-button (click)="removeRegistrationCode(user.id)" color="warn"><mat-icon>remove_circle_outline</mat-icon></button>
+            <button mat-icon-button (click)="removeRegistrationCode(user.id)" color="warn" [fxShow]="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
           </div>
         </div>
       </mat-card-content>
-      <mat-divider inset></mat-divider>
-      <mat-card-actions align="end">
+
+      <mat-divider [fxShow]="userCanEdit()"></mat-divider>
+
+      <mat-card-actions [fxShow]="userCanEdit()">
         <button mat-icon-button [routerLink]="['/user', user.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(user.id)" color="warn" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
         

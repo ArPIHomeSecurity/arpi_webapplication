@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'user/add',
@@ -80,7 +80,7 @@ const appRoutes: Routes = [
   {
     path: 'areas',
     component: AreaListComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'area/add',
@@ -120,7 +120,7 @@ const appRoutes: Routes = [
   {
     path: 'outputs',
     component: OutputListComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'output/add',
