@@ -1,19 +1,36 @@
 @charset "UTF-8";
 
+.user-list {
+  padding: 15px;
+
+  .empty {
+    text-align: center;
+  }
+}
+
+
 .mat-card-header {
   margin-bottom: 15px;
 }
 
-.user-list {
-  padding: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  width: 500px;
+.user-card {
+  .mat-card-title, .mat-card-subtitle{
+    margin-left: 16px;
+  }
+  
+  .mat-card-content {
+    margin-bottom: 0px;
+  }
 }
 
-.user-list-xs {
-  padding: 5px;
-  width: 100%;
+.user-card-large {
+  margin-right: auto;
+  margin-left: auto;
+  width: 350px !important;
+}
+
+.user-card-xs {
+  min-width: 300px !important;
 }
 
 .user-actions {
@@ -25,7 +42,7 @@
 
 .user-actions-xs {
   position: fixed;
-  bottom: 85px;
+  bottom: 65px;
   right: 20px;
   float: right;
 }

@@ -1,6 +1,14 @@
-<div [fxShow]="users !== null" ngClass.gt-xs="user-list" ngClass.xs="user-list-xs" fxLayout="row" fxLayoutAlign="center">
-  <div *ngIf="users && users.length > 0; else no_users" fxLayout="column" fxLayoutGap="20px">
-    <mat-card *ngFor="let user of users">
+<div *ngIf="users !== null">
+  <div
+    *ngIf="users && users.length > 0; else no_users"
+    class="user-list"
+    fxLayout="column"
+    fxLayoutGap="20px">
+    <mat-card
+      *ngFor="let user of users"
+      ngClass.gt-xs="user-card user-card-large"
+      ngClass.xs="user-card user-card-xs">
+
       <mat-card-header>
         <mat-icon mat-card-avatar *ngIf="user.role === roleTypes.ADMIN" mat-list-icon mat-card-avatar class="avatar">person</mat-icon>
         <mat-icon *ngIf="user.role === roleTypes.USER" mat-list-icon mat-card-avatar class="avatar">person_outline</mat-icon>
