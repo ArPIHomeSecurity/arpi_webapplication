@@ -12,10 +12,10 @@
       </mat-card-header>
       <mat-card-content>
         <div *ngIf="user.hasCard">
-          <mat-divider inset></mat-divider>
+          <mat-divider></mat-divider>
           <div class="header" i18n="@@user cards">Cards</div>
           <mat-list role="list" *ngFor="let card of getCards(user.id)">
-            <mat-checkbox (click)="toggleCard(card.id)" color="primary" [checked]="card.enabled" [disabled]="!userCanEdit()">
+            <mat-checkbox (change)="toggleCard(card.id)" color="primary" [checked]="card.enabled" [disabled]="!userCanEdit()">
               <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon>
               <span [className]="!card.enabled ? 'card-description-disabled' : ''">{{card.description}}</span>
             </mat-checkbox>
@@ -23,7 +23,7 @@
           </mat-list>
         </div>
         <div *ngIf="user.hasRegistrationCode">
-          <mat-divider inset></mat-divider>
+          <mat-divider></mat-divider>
           <div class="header" i18n="@@user device registration code">Device registration code</div>
           <div class="registration">
             <span i18n="@@user registration">Expires on: </span>
