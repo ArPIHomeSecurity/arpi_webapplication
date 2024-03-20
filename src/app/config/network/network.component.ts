@@ -71,7 +71,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host'),
 
       accessSsh: getValue(access.value, 'ssh'),
-      accessSshFromRouter: getValue(access.value, 'ssh_from_router')
+      accessSshFromLocalNetwork: getValue(access.value, 'ssh_from_local_network')
     });
   }
 
@@ -112,7 +112,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     const formModel = this.networkForm.value;
     return {
       ssh: formModel.accessSsh,
-      ssh_from_router: formModel.accessSshFromRouter
+      ssh_from_local_network: formModel.accessSshFromLocalNetwork
     };
   }
 
