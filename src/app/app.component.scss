@@ -78,6 +78,22 @@
   margin: 0 15px;
 }
 
+.menu .mat-expansion-panel-header {
+  padding: 0px 16px;
+}
+
+.menu .mat-icon {
+  padding: 4px;
+}
+
+.menu .mat-expansion-panel {
+  box-shadow: none;
+}
+
+.menu .mat-expansion-panel-body {
+  padding: 0 0 0 24px;
+}
+
 #overlay {
   position: fixed;
   display: block;

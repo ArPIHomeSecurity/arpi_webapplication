@@ -840,6 +840,9 @@
       <trans-unit id="network restrict local" datatype="html">
         <source>Restrict SSH connection to local network</source>
       </trans-unit>
+      <trans-unit id="admin menu title" datatype="html">
+        <source>Admin</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

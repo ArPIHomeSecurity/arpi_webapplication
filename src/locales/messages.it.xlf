@@ -241,7 +241,7 @@
       </trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source> AWAY </source>
-        <target state="translated">ASSENTI/FUORI CASA</target>
+        <target state="translated"> ASSENTI/FUORI CASA </target>
       </trans-unit>
       <trans-unit id="disarm button" datatype="html">
         <source> OFF </source>
@@ -249,7 +249,7 @@
       </trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
-        <target state="translated">PRESENTI</target>
+        <target state="translated"> PRESENTI </target>
       </trans-unit>
       <trans-unit id="alert started" datatype="html">
         <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
@@ -1115,6 +1115,10 @@
       <trans-unit id="network restrict local" datatype="html">
         <source>Restrict SSH connection to local network</source>
         <target state="translated">Limita la connessione SSH alla rete locale</target>
+      </trans-unit>
+      <trans-unit id="admin menu title" datatype="html">
+        <source>Admin</source>
+        <target state="translated">Admin</target>
       </trans-unit>
     </body>
   </file>

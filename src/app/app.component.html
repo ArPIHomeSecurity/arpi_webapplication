@@ -48,33 +48,43 @@
         <a mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>crop</mat-icon><span i18n="@@areas menu link">Areas</span>
         </a>
-        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
-        </a>
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>input</mat-icon><span i18n="@@sensors menu link">Sensors</span>
         </a>
         <a mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>output</mat-icon><span i18n="@@outputs menu link">Outputs</span>
         </a>
-        <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
-        </a>
-        <a mat-list-item routerLink="/config/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
-        </a>
-        <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>send</mat-icon><span i18n="@@notifications menu link">Notifications</span>
-        </a>
-        <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>public</mat-icon><span i18n="@@network menu link">Network</span>
-        </a>
-        <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isAdminUser() && isLoggedIn()">
-          <mat-icon mat-list-icon>access_time</mat-icon><span i18n="@@clock menu link">Clock</span>
-        </a>
         <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
-           <mat-icon mat-list-icon>group</mat-icon><span i18n="@@users menu link">Users</span>
+          <mat-icon mat-list-icon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </a>
+        <mat-accordion *ngIf="isAdminUser() && isLoggedIn()" class="menu">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon mat-list-icon>settings</mat-icon><span i18n="@@admin menu title">Admin</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
+            </a>
+            <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
+            </a>
+            <a mat-list-item routerLink="/config/keypad" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>grid_on</mat-icon><span i18n="@@keypad menu link">Keypad</span>
+            </a>
+            <a mat-list-item routerLink="/config/notifications" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>send</mat-icon><span i18n="@@notifications menu link">Notifications</span>
+            </a>
+            <a mat-list-item routerLink="/config/network" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>public</mat-icon><span i18n="@@network menu link">Network</span>
+            </a>
+            <a mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
+              <mat-icon mat-list-icon>access_time</mat-icon><span i18n="@@clock menu link">Clock</span>
+            </a>
+            
+          </mat-expansion-panel>
+        </mat-accordion>
         <mat-divider [fxShow]="isLoggedIn()"></mat-divider>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>

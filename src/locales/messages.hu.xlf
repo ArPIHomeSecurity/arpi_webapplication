@@ -1116,6 +1116,10 @@
         <source>Restrict SSH connection to local network</source>
         <target state="translated">SSH kapcsolat korlátozása a helyi hálózatra</target>
       </trans-unit>
+      <trans-unit id="admin menu title" datatype="html">
+        <source>Admin</source>
+        <target state="translated">Admin</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
