@@ -16,6 +16,7 @@ export class Alert {
   alertType: ALERT_TYPE;
   startTime: string;
   endTime: string;
+  silent: boolean;
   sensors: AlertSensor[];
 }
 

@@ -188,11 +188,42 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       areaId: new FormControl(sensor.areaId, Validators.required),
       typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
-      description: new FormControl(sensor.description, Validators.required),
+      silentAlarm: new FormControl(sensor.silentAlarm),
+      suppression: new FormControl(),
+      monitorSize: new FormControl(sensor.monitorSize, [Validators.required, positiveInteger()]),
+      monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
+      name: new FormControl(sensor.name, Validators.required),
+      description: new FormControl(sensor.description),
       zoneForm: this.zoneForm,
       areaForm: this.areaForm,
       hidden: sensor.uiHidden
     });
+
+    if (sensor.monitorSize != null && sensor.monitorThreshold != null) {
+      this.sensorForm.controls.suppression.setValue(true);
+    }
+    else {
+      this.sensorForm.controls.suppression.setValue(false);
+      this.sensorForm.controls.monitorSize.disable();
+      this.sensorForm.controls.monitorThreshold.disable();
+    }
+  }
+
+  onSuppressionChanged(event) {
+    if (event.checked) {
+      this.sensorForm.controls.monitorSize.setValidators([Validators.required, positiveInteger()]);
+      this.sensorForm.controls.monitorSize.enable();
+      this.sensorForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
+      this.sensorForm.controls.monitorThreshold.enable();
+    }
+    else {
+      this.sensorForm.controls.monitorSize.clearValidators();
+      this.sensorForm.controls.monitorSize.setErrors(null);
+      this.sensorForm.controls.monitorSize.disable();
+      this.sensorForm.controls.monitorThreshold.clearValidators();
+      this.sensorForm.controls.monitorThreshold.setErrors(null);
+      this.sensorForm.controls.monitorThreshold.disable();
+    }
   }
 
   onSubmit() {
@@ -257,13 +288,17 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     return {
       id: this.sensor.id,
+      name: formModel.name,
+      description: formModel.description,
       channel: formModel.channel,
       areaId: formModel.areaId,
       zoneId: formModel.zoneId,
       typeId: formModel.typeId,
       alert: false,
-      description: formModel.description,
       enabled: formModel.enabled,
+      silentAlarm: formModel.silentAlarm,
+      monitorSize: formModel.suppression ? formModel.monitorSize : null,
+      monitorThreshold: formModel.suppression ? formModel.monitorThreshold : null,
       uiOrder: null,
       uiHidden: formModel.hidden
     };

@@ -49,7 +49,7 @@ export class SystemStateComponent implements OnInit {
     this.sensorService.getAlert()
       .subscribe(alert =>  this.sensorAlert = alert);
     this.alertService.getAlert()
-      .subscribe(alert => this.syrenAlert = (alert != null) ? true : null);
+      .subscribe(alert => this.syrenAlert = (alert != null) ? !alert.silent : null);
     this.monitoringService.getMonitoringState()
       .subscribe(
         monitoringState => this.monitoringState = monitoringState,

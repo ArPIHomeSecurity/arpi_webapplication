@@ -20,12 +20,35 @@
       </mat-form-field>
 
       <mat-form-field>
+        <mat-label i18n="@@sensor name">Name</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
+
+      <mat-form-field>
         <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description" required></textarea>
       </mat-form-field>
 
       <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
       <br>
       <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
+      <br>
+      <mat-checkbox formControlName="silentAlarm" color="primary" i18n="@@sensor silent alarm">Silent alarm</mat-checkbox>
+
+      <mat-divider></mat-divider>
+      
+      <div class="suppression" fxLayout="row" fxLayoutGap="20">
+        <mat-checkbox formControlName="suppression" color="primary" i18n="@@sensor suppression" (change)="onSuppressionChanged($event)">Suppression</mat-checkbox>
+
+        <mat-form-field>
+          <mat-label i18n="@@sensor monitor size">Monitoring window[s]</mat-label>
+          <input matInput formControlName="monitorSize" type="number" min="0" required>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label i18n="@@sensor monitor threshold">Monitoring threshold [%]</mat-label>
+          <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required>
+        </mat-form-field>
+      </div>
 
       <mat-accordion>
         <mat-expansion-panel>

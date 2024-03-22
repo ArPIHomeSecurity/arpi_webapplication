@@ -1,13 +1,18 @@
 
 export class Sensor {
   id: number;
+  name: string;
+  description: string;
   channel: number;
   typeId: number;
   areaId: number;
   zoneId: number;
+  
   alert: boolean;
   enabled: boolean;
-  description: string;
+  silentAlarm: boolean;
+  monitorSize: number;
+  monitorThreshold: number;
 
   uiOrder: number = null;
   uiHidden: boolean = null;

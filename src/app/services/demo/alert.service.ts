@@ -80,6 +80,7 @@ export class AlertService {
         startTime: new Date().toISOString().split(".")[0].replace("T", " "),
         endTime: null,
         alertType,
+        silent: false,
         sensors: alertSensors
       };
     }

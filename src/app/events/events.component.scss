@@ -9,8 +9,23 @@
   margin: 20px;
 }
 
-.warn {
+
+
+mat-expansion-panel.alerting {
   background-color: #ed1010;
+  
+  ::ng-deep .mat-expansion-panel-header .mat-expansion-indicator::after {
+    color: #ffffff;
+  }
+
+  mat-panel-title {
+    color: #ffffff;
+  }
+
+  .event-panel-content {
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
 }
 
 .hidden {

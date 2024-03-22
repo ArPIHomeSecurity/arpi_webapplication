@@ -231,6 +231,7 @@ export class ArmService {
         startTime: new Date().toISOString().split(".")[0].replace("T", " "),
         endTime: null,
         alertType: ALERT_TYPE.SABOTAGE,
+        silent: false,
         sensors: []
       };
       setSessionValue('ArmService.events', events);

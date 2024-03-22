@@ -28,7 +28,6 @@
     }
   }
 
-
   .arm-away.mat-button-toggle-checked {
     background-color: #ed1010;
   }
@@ -47,21 +46,36 @@
     text-align: center;
   }
 
-  mat-expansion-panel.alert {
-    background-color: #ed1010;
-  }
 
   .output.mat-button-toggle-checked {
     background-color: map-get($ok, 600);
   }
+  
+  mat-expansion-panel.alert {
+    background-color: #ed1010;
 
-  mat-expansion-panel mat-panel-title img {
-    width: 20px;
-    height: 20px;
+    .mat-expansion-indicator::after {
+      color: #ffffff;
+    }
 
-    /* blinking*/
-    webkit-animation: 2s linear infinite condemed_blink_effect;
-    animation: 2s linear infinite condemed_blink_effect;
+    mat-panel-title {
+      color: #ffffff;
+
+      mat-icon {
+        margin: 0 15px 0 0;
+      }
+    
+      mat-icon.blinking {
+        /* blinking*/
+        webkit-animation: 2s linear infinite condemed_blink_effect;
+        animation: 2s linear infinite condemed_blink_effect;
+      }
+    }
+
+    sensor {
+      margin: 10px 0;
+      display: block;
+    }
   }
 
   .sensor-short-card.mat-card {

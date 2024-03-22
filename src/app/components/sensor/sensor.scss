@@ -13,16 +13,14 @@
         border-radius: 22px;
     }
 
-    mat-card {
-        padding: 5px;
-
-        mat-card-header {
+    mat-card.sensor {
+        .mat-card-header {
             height: 50px;
         }
 
         .mat-card-title-group {
             width: 100%;
-            margin: 5px 5px 5px 10px;
+            margin: 5px 5px 5px 5px;
         }
 
         .enabled {
@@ -50,9 +48,10 @@
             text-align: center;
             background-color: rgb(160, 160, 160);
         }
+
+        .sensor-image {
+            margin: 5px;
+        }
     }
 
-    .sensor-image {
-        margin: 5px;
-    }
 }

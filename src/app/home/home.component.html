@@ -39,9 +39,14 @@
       <mat-expansion-panel class="alert" color="warn">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <img src="assets/images/alarm_lamp_white.png" />
+            <mat-icon mat-list-icon 
+              class="blinking material-icons-outlined">warning</mat-icon>
+            <mat-icon mat-list-icon *ngIf="alert.silent"
+              class="material-icons-outlined">volume_mute</mat-icon>
+            <mat-icon mat-list-icon *ngIf="!alert.silent"
+              class="material-icons-outlined">volume_up</mat-icon>
+            <div>{{alert.startTime}}</div>
           </mat-panel-title>
-          <mat-panel-description i18n="@@alert started">Alert started on: {{alert.startTime}}</mat-panel-description>
         </mat-expansion-panel-header>
 
         <sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"></sensor>
