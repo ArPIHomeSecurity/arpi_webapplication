@@ -14,7 +14,6 @@
     <div matTooltip="Session expiry countdown">
       <countdown #counter *ngIf="isSessionValid" [config]="countdownConfig" (event)="handleCountdown($event)"></countdown>
     </div>
-    <span class="spacer"></span>
 
     <app-system-state></app-system-state>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
