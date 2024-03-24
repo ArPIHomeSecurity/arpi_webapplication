@@ -100,10 +100,11 @@
 
               <mat-list-item>
                 <mat-icon mat-list-icon class="material-icons-outlined">tune</mat-icon>
-                <span *ngIf="sensor.monitorSize != null && sensor.monitorThreshold != null"
-                  class="long-field">{{sensor.monitorSize}}s/{{sensor.monitorThreshold}}%</span>
-                <span *ngIf="sensor.monitorSize == null && sensor.monitorThreshold == null"
-                  i18n="@@sensor no monitor">No suppression</span>
+                <span *ngIf="sensor.monitorPeriod != null && sensor.monitorThreshold != null"
+                  class="long-field">{{sensor.monitorPeriod !== null ? sensor.monitorPeriod+'s' : '-'}}/{{sensor.monitorThreshold}}%</span>
+                <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == 100"
+                  class="long-field" i18n="@@sensor instant">Instant alarm</span>
+                <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == null">-</span>
               </mat-list-item>
 
             </mat-list>

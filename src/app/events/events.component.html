@@ -109,7 +109,8 @@
                       <span>&semi;&nbsp;</span>
                       <span i18n="@@events delay">delay: {{sensor.delay}}</span>
                       <span>&semi;&nbsp;</span>
-                      <span i18n="@@events suppression">suppression: {{sensor.monitorPeriod ? sensor.monitorPeriod + 's' : '-'}}/{{sensor.monitorThreshold}}%</span>
+                      <span *ngIf="sensor.monitorPeriod != null" i18n="@@events sensitivity">sensitivity: {{sensor.monitorPeriod + 's'}}/{{sensor.monitorThreshold}}%</span>
+                      <span *ngIf="sensor.monitorPeriod == null" i18n="@@events sensitivity instant">sensitivity: instant alert</span>
                       <span>&semi;&nbsp;</span>
                       <span *ngIf="sensor.silent" i18n="@@events silent">silent</span>
                     </li>

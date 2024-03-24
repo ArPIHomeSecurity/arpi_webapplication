@@ -189,7 +189,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
       silentAlarm: new FormControl(sensor.silentAlarm),
-      suppression: new FormControl(),
+      sensitivity: new FormControl(),
       monitorSize: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
       name: new FormControl(sensor.name, Validators.required),
@@ -200,16 +200,16 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     });
 
     if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
-      this.sensorForm.controls.suppression.setValue(true);
+      this.sensorForm.controls.sensitivity.setValue(true);
     }
     else {
-      this.sensorForm.controls.suppression.setValue(false);
+      this.sensorForm.controls.sensitivity.setValue(false);
       this.sensorForm.controls.monitorSize.disable();
       this.sensorForm.controls.monitorThreshold.disable();
     }
   }
 
-  onSuppressionChanged(event) {
+  onSensitivityChanged(event) {
     if (event.checked) {
       this.sensorForm.controls.monitorSize.setValidators([Validators.required, positiveInteger()]);
       this.sensorForm.controls.monitorSize.enable();
@@ -297,8 +297,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       alert: false,
       enabled: formModel.enabled,
       silentAlarm: formModel.silentAlarm,
-      monitorPeriod: formModel.suppression ? formModel.monitorSize : null,
-      monitorThreshold: formModel.suppression ? formModel.monitorThreshold : null,
+      monitorPeriod: formModel.sensitivity ? formModel.monitorSize : null,
+      monitorThreshold: formModel.sensitivity ? formModel.monitorThreshold : null,
       uiOrder: null,
       uiHidden: formModel.hidden
     };
