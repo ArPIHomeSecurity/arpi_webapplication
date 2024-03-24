@@ -182,13 +182,24 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       areaName: new FormControl('', [Validators.required, Validators.maxLength(32)]),
     });
 
+    var silentAlert = null;
+    if (sensor.silentAlarm === null) {
+      silentAlert = 'undefined';
+    }
+    else if (sensor.silentAlarm === true) {
+      silentAlert = 'silent';
+    }
+    else if (sensor.silentAlarm === false) {
+      silentAlert = 'normal';
+    }
+
     this.sensorForm = this.fb.group({
       channel: new FormControl(sensor.channel),
       zoneId: new FormControl(sensor.zoneId, Validators.required),
       areaId: new FormControl(sensor.areaId, Validators.required),
       typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
-      silentAlarm: new FormControl(sensor.silentAlarm),
+      silentAlarm: new FormControl(silentAlert),
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
@@ -199,17 +210,22 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       hidden: sensor.uiHidden
     });
 
-    if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
+    if (sensor.monitorPeriod !== null && sensor.monitorThreshold !== null) {
       this.sensorForm.controls.sensitivity.setValue('custom');
     }
-    else if (sensor.monitorPeriod == null) {
+    else if (sensor.monitorPeriod === null && sensor.monitorThreshold !== null) {
       this.sensorForm.controls.sensitivity.setValue('instant');
+      this.sensorForm.controls.monitorPeriod.disable();
+      this.sensorForm.controls.monitorPeriod.clearValidators();
+      this.sensorForm.controls.monitorThreshold.disable();
+      this.sensorForm.controls.monitorThreshold.clearValidators();
     }
     else {
       this.sensorForm.controls.sensitivity.setValue('general');
-      this.sensorForm.controls.sensitivity.setValue(false);
       this.sensorForm.controls.monitorPeriod.disable();
+      this.sensorForm.controls.monitorPeriod.clearValidators();
       this.sensorForm.controls.monitorThreshold.disable();
+      this.sensorForm.controls.monitorThreshold.clearValidators();
     }
 
     if (sensor.typeId === 2) {
@@ -241,9 +257,11 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     else {
       this.sensorForm.controls.monitorPeriod.clearValidators();
       this.sensorForm.controls.monitorPeriod.setErrors(null);
+      this.sensorForm.controls.monitorPeriod.setValue(null);
       this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorThreshold.clearValidators();
       this.sensorForm.controls.monitorThreshold.setErrors(null);
+      this.sensorForm.controls.monitorThreshold.setValue(null);
       this.sensorForm.controls.monitorThreshold.disable();
     }
   }
@@ -308,6 +326,26 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   prepareSensor(): Sensor {
     const formModel = this.sensorForm.value;
 
+    var silentAlert = null;
+    if (formModel.silentAlarm === 'undefined') {
+      silentAlert = null;
+    }
+    else if (formModel.silentAlarm === 'normal') {
+      silentAlert = false;
+    }
+    else if (formModel.silentAlarm === 'silent') {
+      silentAlert = true;
+    }
+
+    if (formModel.sensitivity === 'general') {
+      formModel.monitorPeriod = null;
+      formModel.monitorThreshold = null;
+    }
+    else if (formModel.sensitivity === 'instant') {
+      formModel.monitorPeriod = null;
+      formModel.monitorThreshold = 100;
+    }
+
     return {
       id: this.sensor.id,
       name: formModel.name,
@@ -318,9 +356,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       typeId: formModel.typeId,
       alert: false,
       enabled: formModel.enabled,
-      silentAlarm: formModel.silentAlarm,
-      monitorPeriod: formModel.sensitivity ? formModel.monitorPeriod : null,
-      monitorThreshold: formModel.sensitivity ? formModel.monitorThreshold : null,
+      silentAlarm: silentAlert,
+      monitorPeriod: formModel.monitorPeriod,
+      monitorThreshold: formModel.monitorThreshold,
       uiOrder: null,
       uiHidden: formModel.hidden
     };

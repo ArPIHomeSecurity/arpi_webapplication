@@ -94,16 +94,17 @@
                   class="sensor-status-icon-hide material-icons-outlined">volume_mute</mat-icon>
                 <mat-icon mat-list-icon *ngIf="!sensor.silentAlarm"
                   class="sensor-status-icon-show material-icons-outlined">volume_up</mat-icon>
-                <span *ngIf="sensor.silentAlarm" i18n="@@sensor silent">Silent alarm</span>
-                <span *ngIf="!sensor.silentAlarm" i18n="@@sensor silent">Alarm with syren</span>
+                  <span *ngIf="sensor.silentAlarm === false" i18n="@@sensor silent">Alarm with syren</span>
+                  <span *ngIf="sensor.silentAlarm === true" i18n="@@sensor silent">Silent alarm</span>
+                  <span *ngIf="sensor.silentAlarm === null">-</span>
               </mat-list-item>
 
               <mat-list-item>
                 <mat-icon mat-list-icon class="material-icons-outlined">tune</mat-icon>
-                <span *ngIf="sensor.monitorPeriod != null && sensor.monitorThreshold != null"
-                  class="long-field">{{sensor.monitorPeriod !== null ? sensor.monitorPeriod+'s' : '-'}}/{{sensor.monitorThreshold}}%</span>
-                <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == 100"
-                  class="long-field" i18n="@@sensor instant">Instant alert</span>
+                <span *ngIf="sensor.monitorPeriod != null" class="long-field">
+                  {{sensor.monitorPeriod !== null ? sensor.monitorPeriod+'s' : '-'}}/{{sensor.monitorThreshold}}%
+                </span>
+                <span *ngIf="sensor.monitorPeriod === null && sensor.monitorThreshold != null" class="long-field" i18n="@@sensor instant">Instant alert</span>
                 <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == null">-</span>
               </mat-list-item>
 

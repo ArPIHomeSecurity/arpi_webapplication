@@ -31,12 +31,26 @@
           formControlName="description"></textarea>
       </mat-form-field>
 
-      <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
-      <br>
-      <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
-      <br>
-      <mat-checkbox formControlName="silentAlarm" color="primary" i18n="@@sensor silent alarm">Silent
-        alarm</mat-checkbox>
+      <div fxLayout="row" fxLayoutGap="20">
+        <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
+
+        <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h4 i18n="@@sensor syren">Syren volume</h4>
+      <mat-radio-group class="silent" formControlName="silentAlarm" fxLayout="row" fxLayoutGap="20px">
+        <mat-radio-button value="normal">
+          <span i18n="@@sensor silent normal">Normal</span>
+        </mat-radio-button>
+        <mat-radio-button value="silent">
+          <span i18n="@@sensor silent">Silent alert</span>
+        </mat-radio-button>
+        <mat-radio-button value="undefined">
+          <span i18n="@@sensor silent undefined">Undefined</span>
+        </mat-radio-button>
+      </mat-radio-group>
 
       <mat-divider></mat-divider>
 
