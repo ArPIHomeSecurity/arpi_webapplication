@@ -190,7 +190,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       enabled: sensor.enabled,
       silentAlarm: new FormControl(sensor.silentAlarm),
       suppression: new FormControl(),
-      monitorSize: new FormControl(sensor.monitorSize, [Validators.required, positiveInteger()]),
+      monitorSize: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
       name: new FormControl(sensor.name, Validators.required),
       description: new FormControl(sensor.description),
@@ -199,7 +199,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       hidden: sensor.uiHidden
     });
 
-    if (sensor.monitorSize != null && sensor.monitorThreshold != null) {
+    if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
       this.sensorForm.controls.suppression.setValue(true);
     }
     else {
@@ -297,7 +297,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       alert: false,
       enabled: formModel.enabled,
       silentAlarm: formModel.silentAlarm,
-      monitorSize: formModel.suppression ? formModel.monitorSize : null,
+      monitorPeriod: formModel.suppression ? formModel.monitorSize : null,
       monitorThreshold: formModel.suppression ? formModel.monitorThreshold : null,
       uiOrder: null,
       uiHidden: formModel.hidden

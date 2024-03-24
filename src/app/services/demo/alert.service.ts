@@ -91,10 +91,14 @@ export class AlertService {
           sensorId: sensor.id,
           typeId: sensor.typeId,
           channel: sensor.channel,
+          name: sensor.name,
           description: sensor.description,
           startTime: new Date().toISOString().split(".")[0].replace("T", " "),
           endTime: null,
-          delay: 0
+          delay: 0,
+          silent: sensor.silentAlarm,
+          monitorPeriod: sensor.monitorPeriod,
+          monitorThreshold: sensor.monitorThreshold
         });
       }
     });

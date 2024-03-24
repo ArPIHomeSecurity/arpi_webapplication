@@ -11,7 +11,7 @@ export class Sensor {
   alert: boolean;
   enabled: boolean;
   silentAlarm: boolean;
-  monitorSize: number;
+  monitorPeriod: number;
   monitorThreshold: number;
 
   uiOrder: number = null;

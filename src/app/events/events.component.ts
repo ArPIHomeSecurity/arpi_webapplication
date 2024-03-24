@@ -149,30 +149,31 @@ export class EventsComponent implements OnInit {
   getTimeline(event: ArmEvent) {
     let timeline = [];
     if (event.arm) {
-      timeline.push({ time: event.arm.time, description: $localize`:@@events armed:Armed`, isDefaultDate: event.arm.time == "2000-01-01 01:00:00"})
+      timeline.push({ time: event.arm.time, description: $localize`:@@events armed:Armed`, isDefaultDate: event.arm.time == "2000-01-01 01:00:00" })
     }
 
     if (event.sensorChanges && event.sensorChanges.length > 1) {
       event.sensorChanges.map(armSensor =>
-        timeline.push({ time: armSensor.timestamp, description: $localize`:@@events arm changed:Arm changed`, isDefaultDate: armSensor.timestamp == "2000-01-01 01:00:00"}))
+        timeline.push({ time: armSensor.timestamp, description: $localize`:@@events arm changed:Arm changed`, isDefaultDate: armSensor.timestamp == "2000-01-01 01:00:00" }))
     }
 
     if (event.alert) {
       event.alert.sensors.forEach((sensor) => {
-        timeline.push({time: sensor.startTime, description: $localize`:@@events start:Start ${sensor.description}`, isDefaultDate: sensor.startTime == "2000-01-01 01:00:00"})
+        const silent = sensor.silent ? $localize`:@@events silent:(silent)` : ""
+        timeline.push({ time: sensor.startTime, description: $localize`:@@events start:Start ${sensor.name} ${silent}`, isDefaultDate: sensor.startTime == "2000-01-01 01:00:00" })
         if (sensor.endTime) {
-          timeline.push({time: sensor.endTime, description: $localize`:@@events end:End ${sensor.description}`, isDefaultDate: sensor.endTime == "2000-01-01 01:00:00"})
+          timeline.push({ time: sensor.endTime, description: $localize`:@@events end:End ${sensor.name}`, isDefaultDate: sensor.endTime == "2000-01-01 01:00:00" })
         }
       })
-      
-      timeline.push({time: event.alert.startTime, description: $localize`:@@events alert started:Alert started`, isDefaultDate: event.alert.startTime == "2000-01-01 01:00:00"})
+
+      timeline.push({ time: event.alert.startTime, description: $localize`:@@events alert started:Alert started`, isDefaultDate: event.alert.startTime == "2000-01-01 01:00:00" })
       if (event.alert.endTime) {
-        timeline.push({time: event.alert.endTime, description: $localize`:@@events alert finished:Alert finished`, isDefaultDate: event.alert.endTime == "2000-01-01 01:00:00"})
+        timeline.push({ time: event.alert.endTime, description: $localize`:@@events alert finished:Alert finished`, isDefaultDate: event.alert.endTime == "2000-01-01 01:00:00" })
       }
     }
 
     if (event.disarm) {
-      timeline.push({time: event.disarm.time, description: $localize`:@@events disarmed:Disarmed`, isDefaultDate: event.disarm.time == "2000-01-01 01:00:00"})
+      timeline.push({ time: event.disarm.time, description: $localize`:@@events disarmed:Disarmed`, isDefaultDate: event.disarm.time == "2000-01-01 01:00:00" })
     }
 
     timeline.sort((a, b) => a.time > b.time ? 1 : -1);
@@ -185,7 +186,7 @@ export class EventsComponent implements OnInit {
   }
 
   getEventSensorRange(event: ArmEvent): number[] {
-    return Array(event.sensorChanges[0].sensors.length).fill(0).map((x,i)=>i);
+    return Array(event.sensorChanges[0].sensors.length).fill(0).map((x, i) => i);
   }
 
   getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] {

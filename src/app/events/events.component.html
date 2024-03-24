@@ -105,8 +105,13 @@
                   <li *ngIf="event.alert?.sensors" i18n="@@events sensors">Alerting sensor(s)</li>
                   <ul>
                     <li *ngFor="let sensor of event.alert?.sensors">
-                      {{ sensor.description }} <span>(CH{{ sensor.channel + 1 | number: '2.0-0' }})</span>
-                      <span i18n="@@events delay"> delay: {{sensor.delay}}</span>
+                      {{ sensor.name }} <span>(CH{{ sensor.channel + 1 | number: '2.0-0' }})</span>
+                      <span>&semi;&nbsp;</span>
+                      <span i18n="@@events delay">delay: {{sensor.delay}}</span>
+                      <span>&semi;&nbsp;</span>
+                      <span i18n="@@events suppression">suppression: {{sensor.monitorPeriod ? sensor.monitorPeriod + 's' : '-'}}/{{sensor.monitorThreshold}}%</span>
+                      <span>&semi;&nbsp;</span>
+                      <span *ngIf="sensor.silent" i18n="@@events silent">silent</span>
                     </li>
                   </ul>
 
@@ -134,7 +139,7 @@
             </div>
 
             <!--div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">
-              <span class="title" i18n="@@events sensor states">Sensor states</span>
+              <span class="title" i18n="@@events sensor states">Sensor states VERTICAL</span>
               <mat-divider></mat-divider>
               <div class="content">
                 <div class="mat-table">
@@ -160,7 +165,7 @@
                     <div *ngFor="let timestamp of getEventTimestamps(event)" class="mat-header-cell" [matTooltip]="timestamp">{{timestamp}}</div>
                   </div>
                   <div class="mat-row" *ngFor="let index of getEventSensorRange(event)">
-                    <div class="mat-cell sensor-name">{{event.sensorChanges[0].sensors[index].description}}<br>CH{{ event.sensorChanges[0].sensors[index].channel + 1 | number: '2.0-0' }}</div>
+                    <div class="mat-cell sensor-name">{{event.sensorChanges[0].sensors[index].name}}<br>CH{{ event.sensorChanges[0].sensors[index].channel + 1 | number: '2.0-0' }}</div>
                     <div class="mat-cell" *ngFor="let sensor of getEventSensorStates(event, index)">{{sensor.enabled && sensor.delay !== null ? sensor.delay : '-'}}</div>
                   </div>
                 </div>

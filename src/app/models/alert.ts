@@ -24,10 +24,14 @@ export class AlertSensor {
   sensorId: number;
   typeId: number;
   channel: number;
+  name: string;
   description: string;
   startTime: string;
   endTime: string;
   delay: number;
+  silent: boolean;
+  monitorPeriod: number;
+  monitorThreshold: number;
 }
 
 export const string2AlertType = (alertType: string): ALERT_TYPE => ({
