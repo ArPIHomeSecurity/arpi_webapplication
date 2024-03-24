@@ -48,4 +48,10 @@ mat-expansion-panel-header .title {
 
 .sensitivity {
   margin: 15px 0px;
+
+  .mat-radio-button {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+  }
 }

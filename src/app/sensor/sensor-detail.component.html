@@ -37,17 +37,29 @@
       <mat-divider></mat-divider>
       
       <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
-        <mat-checkbox formControlName="sensitivity" color="primary" i18n="@@sensor sensitivity" (change)="onSensitivityChanged($event)">Sensitivity</mat-checkbox>
+        <mat-radio-group formControlName="sensitivity" (change)="onSensitivityChanged($event)">
+          <mat-radio-button value="general">
+            <span i18n="@@sensor sensitivity general">General sensitivity</span>
+          </mat-radio-button>
+          <mat-radio-button value="instant">
+            <span i18n="@@sensor sensitivity instant">Instant alert</span>
+          </mat-radio-button>
+          <mat-radio-button value="custom">
+            <span i18n="@@sensor sensitivity custom">Custom</span>
+          </mat-radio-button>
+        </mat-radio-group>
 
-        <mat-form-field>
-          <mat-label i18n="@@sensor monitor size">Monitoring window[s]</mat-label>
-          <input matInput formControlName="monitorSize" type="number" min="0" required>
-        </mat-form-field>
-        
-        <mat-form-field>
-          <mat-label i18n="@@sensor monitor threshold">Monitoring threshold [%]</mat-label>
-          <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required>
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="20" fxLayoutAlign="end" [fxHide]="sensorForm.value.sensitivity !== 'custom'">
+          <mat-form-field>
+            <mat-label i18n="@@sensor monitor period">Monitoring period[s]</mat-label>
+            <input matInput formControlName="monitorPeriod" type="number" min="1" required>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label i18n="@@sensor monitor threshold">Monitoring threshold [%]</mat-label>
+            <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required>
+          </mat-form-field>
+        </div>
       </div>
 
       <mat-accordion>

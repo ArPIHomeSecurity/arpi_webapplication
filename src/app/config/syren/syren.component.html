@@ -8,29 +8,42 @@
           <mat-panel-title i18n="@@syren sources">Syren</mat-panel-title>
         </mat-expansion-panel-header>
         
-        <mat-list>
-          <div mat-subheader>Silent alarm</div>
-          <mat-list-item>
+          <div class="silent">
+            <h4 i18n="@@syren silent">Silent alarm</h4>
             <mat-checkbox formControlName="silent" i18n="@@syren silent hint">Do not use the syren in case of an alarm</mat-checkbox>
-          </mat-list-item>
+          </div>
 
           <mat-divider></mat-divider>
 
-          <div mat-subheader>Timing</div>
-          <mat-list-item class="timing">
-            <div mat-line fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15">
-              <mat-form-field class="full-width">
-                <input matInput type="number" min="0" i18n-placeholder="@@syren delay" placeholder="Delay" formControlName="delay" required/>
-                <mat-hint i18n="@@syren delay hint">Delay the syren in seconds</mat-hint>
-              </mat-form-field>
-              
-              <mat-form-field class="full-width">
-                <input matInput type="number" min="0" i18n-placeholder="@@syren stop" placeholder="Stop time" formControlName="stopTime" required/>
-                <mat-hint i18n="@@syren stop hint">Stop the syren in seconds</mat-hint>
-              </mat-form-field>
-            </div>
-          </mat-list-item>
-        </mat-list>
+          <h4 i18n="@@syren timing">Syren timing</h4>
+          <div class="timing" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15">
+            <mat-form-field class="full-width">
+              <input matInput type="number" min="0" i18n-placeholder="@@syren delay" placeholder="Delay" formControlName="delay" required/>
+              <mat-hint i18n="@@syren delay hint">Delay the syren in seconds</mat-hint>
+            </mat-form-field>
+            
+            <mat-form-field class="full-width">
+              <input matInput type="number" min="0" i18n-placeholder="@@syren stop" placeholder="Stop time" formControlName="stopTime" required/>
+              <mat-hint i18n="@@syren stop hint">Stop the syren in seconds</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <mat-divider></mat-divider>
+          
+          <h4 i18n="@@syren sensitivity">Alert sensitivity</h4>
+          <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
+            <mat-checkbox formControlName="sensitivity" color="primary" i18n="@@sensor sensitivity" (change)="onSensitivityChanged($event)">Custom sensitivity</mat-checkbox>
+
+            <mat-form-field [fxHide]="!syrenForm.value.sensitivity">
+              <mat-label i18n="@@alert monitor period">Monitoring period[s]</mat-label>
+              <input matInput formControlName="monitorPeriod" type="number" min="1" required>
+            </mat-form-field>
+            
+            <mat-form-field [fxHide]="!syrenForm.value.sensitivity">
+              <mat-label i18n="@@alert monitor threshold">Monitoring threshold [%]</mat-label>
+              <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required>
+            </mat-form-field>
+          </div>
 
       </mat-expansion-panel>
       

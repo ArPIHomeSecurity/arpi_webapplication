@@ -190,7 +190,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       enabled: sensor.enabled,
       silentAlarm: new FormControl(sensor.silentAlarm),
       sensitivity: new FormControl(),
-      monitorSize: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
+      monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
       name: new FormControl(sensor.name, Validators.required),
       description: new FormControl(sensor.description),
@@ -200,26 +200,30 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     });
 
     if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
-      this.sensorForm.controls.sensitivity.setValue(true);
+      this.sensorForm.controls.sensitivity.setValue('custom');
+    }
+    else if (sensor.monitorPeriod == null) {
+      this.sensorForm.controls.sensitivity.setValue('instant');
     }
     else {
+      this.sensorForm.controls.sensitivity.setValue('general');
       this.sensorForm.controls.sensitivity.setValue(false);
-      this.sensorForm.controls.monitorSize.disable();
+      this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorThreshold.disable();
     }
   }
 
   onSensitivityChanged(event) {
-    if (event.checked) {
-      this.sensorForm.controls.monitorSize.setValidators([Validators.required, positiveInteger()]);
-      this.sensorForm.controls.monitorSize.enable();
+    if (event.value === 'custom') {
+      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
+      this.sensorForm.controls.monitorPeriod.enable();
       this.sensorForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
       this.sensorForm.controls.monitorThreshold.enable();
     }
     else {
-      this.sensorForm.controls.monitorSize.clearValidators();
-      this.sensorForm.controls.monitorSize.setErrors(null);
-      this.sensorForm.controls.monitorSize.disable();
+      this.sensorForm.controls.monitorPeriod.clearValidators();
+      this.sensorForm.controls.monitorPeriod.setErrors(null);
+      this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorThreshold.clearValidators();
       this.sensorForm.controls.monitorThreshold.setErrors(null);
       this.sensorForm.controls.monitorThreshold.disable();
@@ -297,7 +301,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       alert: false,
       enabled: formModel.enabled,
       silentAlarm: formModel.silentAlarm,
-      monitorPeriod: formModel.sensitivity ? formModel.monitorSize : null,
+      monitorPeriod: formModel.sensitivity ? formModel.monitorPeriod : null,
       monitorThreshold: formModel.sensitivity ? formModel.monitorThreshold : null,
       uiOrder: null,
       uiHidden: formModel.hidden

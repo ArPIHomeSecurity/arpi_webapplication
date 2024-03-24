@@ -1,28 +1,31 @@
 import { Component, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '../../services';
-import { getValue } from '../../utils';
+import { getValue, positiveInteger } from '../../utils';
 import { Option } from '../../models';
 import { environment } from 'src/environments/environment';
+import { forkJoin } from 'rxjs';
 
-const scheduleMicrotask = Promise.resolve( null );
+const scheduleMicrotask = Promise.resolve(null);
 
 
-@Component( {
+@Component({
   templateUrl: 'syren.component.html',
   styleUrls: ['syren.component.scss'],
   providers: []
-} )
+})
 
 export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  syrenForm: UntypedFormGroup;
+  syrenForm: FormGroup;
   syren: Option;
+  sensitivity: Option;
+
   testInProgress = false;
 
   constructor(
@@ -31,7 +34,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('ConfigurationService') public configurationService: ConfigurationService,
 
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private snackBar: MatSnackBar,
   ) {
     super(eventService, loader, monitoringService);
@@ -54,22 +57,43 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     this.syrenForm = this.fb.group({
-      silent: new UntypedFormControl(getValue(this.syren.value, 'silent', false),  Validators.required),
-      delay: new UntypedFormControl(getValue(this.syren.value, 'delay', 0), [Validators.required, Validators.min(0)]),
-      stopTime: new UntypedFormControl(getValue(this.syren.value, 'stop_time', 0), [Validators.required, Validators.min(0)]),
+      silent: new FormControl(getValue(this.syren.value, 'silent', false), Validators.required),
+      delay: new FormControl(getValue(this.syren.value, 'delay', 0), [Validators.required, Validators.min(0)]),
+      stopTime: new FormControl(getValue(this.syren.value, 'stop_time', 0), [Validators.required, Validators.min(0)]),
+
+      sensitivity: new FormControl(),
+      monitorPeriod: new FormControl(getValue(this.sensitivity.value, 'monitor_period', null)),
+      monitorThreshold: new FormControl(getValue(this.sensitivity.value, 'monitor_threshold', null)),
     });
+
+    if (getValue(this.sensitivity.value, 'monitor_period', null) != null && getValue(this.sensitivity.value, 'monitor_threshold', null) != null) {
+      this.syrenForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
+      this.syrenForm.controls.monitorPeriod.enable();
+      this.syrenForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
+      this.syrenForm.controls.monitorThreshold.enable();
+      this.syrenForm.controls.sensitivity.setValue(true);
+    }
+    else {
+      this.syrenForm.controls.monitorPeriod.clearValidators();
+      this.syrenForm.controls.monitorPeriod.disable();
+      this.syrenForm.controls.monitorThreshold.clearValidators();
+      this.syrenForm.controls.monitorThreshold.disable();
+      this.syrenForm.controls.sensitivity.setValue(false);
+    }
   }
 
   updateComponent() {
-    this.configurationService.getOption('syren', 'timing')
+    forkJoin({
+      syren: this.configurationService.getOption('syren', 'timing'),
+      alertSensitivity: this.configurationService.getOption('alert', 'sensitivity')
+    })
       .pipe(finalize(() => this.loader.display(false)))
-      .subscribe(syren => {
+      .subscribe(({ syren, alertSensitivity }) => {
         this.syren = syren;
+        this.sensitivity = alertSensitivity;
         this.updateForm();
         this.loader.display(false);
-        this.loader.disable(false);
-      }
-    );
+      });
   }
 
   prepareSyren(): any {
@@ -81,6 +105,31 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     };
   }
 
+  prepareAlertSensitivity(): any {
+    const formModel = this.syrenForm.value;
+    return {
+      monitor_period: formModel.sensitivity ? formModel.monitorPeriod : null,
+      monitor_threshold: formModel.sensitivity ? formModel.monitorThreshold : null
+    };
+  }
+
+  onSensitivityChanged(event) {
+    if (event.checked) {
+      this.syrenForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
+      this.syrenForm.controls.monitorPeriod.enable();
+      this.syrenForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
+      this.syrenForm.controls.monitorThreshold.enable();
+    }
+    else {
+      this.syrenForm.controls.monitorPeriod.clearValidators();
+      this.syrenForm.controls.monitorPeriod.setValue(null);
+      this.syrenForm.controls.monitorPeriod.disable();
+      this.syrenForm.controls.monitorThreshold.clearValidators();
+      this.syrenForm.controls.monitorThreshold.setValue(null);
+      this.syrenForm.controls.monitorThreshold.disable();
+    }
+  }
+
   onTestSyren() {
     const duration = 5;
     this.configurationService.testSyren(duration).subscribe();
@@ -90,10 +139,15 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   onSubmit() {
     this.loader.disable(true);
-    this.configurationService.setOption('syren', 'timing', this.prepareSyren())
+
+    forkJoin({
+      syren: this.configurationService.setOption('syren', 'timing', this.prepareSyren()),
+      alertSensitivity: this.configurationService.setOption('alert', 'sensitivity', this.prepareAlertSensitivity())
+    })
+      .pipe(finalize(() => this.loader.disable(false)))
       .subscribe(
         _ => this.updateComponent(),
-        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-    );
+        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+      );
   }
 }

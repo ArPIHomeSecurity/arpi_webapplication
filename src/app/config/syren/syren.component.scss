@@ -57,3 +57,11 @@
   float: right;
   margin: 10px 10px;
 }
+
+.silent, .timing, .sensitivity {
+  margin: 15px 0px;
+}
+
+::ng-deep .sensitivity .mat-checkbox label {
+  margin-top: 15px;
+}

@@ -103,7 +103,7 @@
                 <span *ngIf="sensor.monitorPeriod != null && sensor.monitorThreshold != null"
                   class="long-field">{{sensor.monitorPeriod !== null ? sensor.monitorPeriod+'s' : '-'}}/{{sensor.monitorThreshold}}%</span>
                 <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == 100"
-                  class="long-field" i18n="@@sensor instant">Instant alarm</span>
+                  class="long-field" i18n="@@sensor instant">Instant alert</span>
                 <span *ngIf="sensor.monitorPeriod == null && sensor.monitorThreshold == null">-</span>
               </mat-list-item>
 
