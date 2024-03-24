@@ -211,6 +211,24 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorThreshold.disable();
     }
+
+    if (sensor.typeId === 2) {
+      this.sensorForm.controls.sensitivity.setValue('instant');
+      this.sensorForm.controls.sensitivity.disable();
+    }
+    else {
+      this.sensorForm.controls.sensitivity.enable();
+    }
+  }
+
+  onSensorTypeChanged(event) {
+    if (event.value === 2) {
+      this.sensorForm.controls.sensitivity.setValue('instant');
+      this.sensorForm.controls.sensitivity.disable();
+    }
+    else {
+      this.sensorForm.controls.sensitivity.enable();
+    }
   }
 
   onSensitivityChanged(event) {
