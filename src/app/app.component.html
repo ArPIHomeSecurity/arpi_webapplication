@@ -37,7 +37,7 @@
       </div>
 
       <mat-nav-list>
-        <a mat-list-item routerLink="/" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" fxHide.lt-md="true" [fxShow]="isLoggedIn()">
+        <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="smallScreen ? sidenav.close() : null" fxHide.lt-md="true" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>home</mat-icon><span i18n="@@home menu link">Control</span>
         </a>
         <a mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
@@ -46,6 +46,9 @@
         <h3 mat-subheader i18n="Settings menu title" [fxShow]="isLoggedIn()">Settings</h3>
         <a mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>crop</mat-icon><span i18n="@@areas menu link">Areas</span>
+        </a>
+        <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
+          <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
         </a>
         <a mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" [fxShow]="isLoggedIn()">
           <mat-icon mat-list-icon>input</mat-icon><span i18n="@@sensors menu link">Sensors</span>
@@ -57,15 +60,12 @@
           <mat-icon mat-list-icon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </a>
         <mat-accordion *ngIf="isAdminUser() && isLoggedIn()" class="menu">
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="router.url.includes('/config/')">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon mat-list-icon>settings</mat-icon><span i18n="@@admin menu title">Admin</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-              <mat-icon mat-list-icon>tab</mat-icon><span i18n="@@zones menu link">Zones</span>
-            </a>
             <a mat-list-item routerLink="/config/syren" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
               <mat-icon mat-list-icon>volume_up</mat-icon><span i18n="@@syren menu link">Syren</span>
             </a>

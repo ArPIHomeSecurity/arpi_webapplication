@@ -78,6 +78,10 @@
   margin: 0 15px;
 }
 
+.mat-list-item.active {
+  background-color: #ff6e40;
+}
+
 .menu .mat-expansion-panel-header {
   padding: 0px 16px;
 }
@@ -91,7 +95,11 @@
 }
 
 .menu .mat-expansion-panel-body {
-  padding: 0 0 0 24px;
+  padding: 0;
+
+  .mat-list-item-content {
+    padding-left: 32px !important;
+  }
 }
 
 #overlay {

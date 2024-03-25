@@ -13,6 +13,7 @@ import { ROLE_TYPES } from './models';
 import { environment } from '../environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 import { UserDeviceUnregisterDialogComponent } from './user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -60,7 +61,8 @@ export class AppComponent implements OnInit {
     @Inject('MonitoringService') private monitoring: MonitoringService,
     public mediaObserver: MediaObserver,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public router: Router
   ) {
 
     this.currentLocale = localStorage.getItem('localeId');
