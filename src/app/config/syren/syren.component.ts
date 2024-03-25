@@ -56,8 +56,20 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateForm() {
+    const silentAlertValue = getValue(this.syren.value, 'silent', null);
+    var silentAlert = null;
+    if (silentAlertValue === null) {
+      silentAlert = 'undefined';
+    }
+    else if (silentAlertValue === true) {
+      silentAlert = 'silent';
+    }
+    else if (silentAlertValue === false) {
+      silentAlert = 'loud';
+    }
+
     this.syrenForm = this.fb.group({
-      silent: new FormControl(getValue(this.syren.value, 'silent', false), Validators.required),
+      silentAlert: new FormControl(silentAlert, Validators.required),
       delay: new FormControl(getValue(this.syren.value, 'delay', 0), [Validators.required, Validators.min(0)]),
       stopTime: new FormControl(getValue(this.syren.value, 'stop_time', 0), [Validators.required, Validators.min(0)]),
 
@@ -98,8 +110,19 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   prepareSyren(): any {
     const formModel = this.syrenForm.value;
+    var silentAlert = null;
+    if (formModel.silentAlert === 'undefined') {
+      silentAlert = null;
+    }
+    else if (formModel.silentAlert === 'silent') {
+      silentAlert = true;
+    }
+    else if (formModel.silentAlert === 'loud') {
+      silentAlert = false;
+    }
+
     return {
-      silent: formModel.silent,
+      silent: silentAlert,
       delay: formModel.delay,
       stop_time: formModel.stopTime
     };

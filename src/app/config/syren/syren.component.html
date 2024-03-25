@@ -9,8 +9,18 @@
         </mat-expansion-panel-header>
         
           <div class="silent">
-            <h4 i18n="@@syren silent">Silent alarm</h4>
-            <mat-checkbox formControlName="silent" i18n="@@syren silent hint">Do not use the syren in case of an alarm</mat-checkbox>
+            <h4 i18n="@@syren silent">Syren volume</h4>
+            <mat-radio-group class="silent" formControlName="silentAlert" fxLayout="column" fxLayoutGap="5px">
+              <mat-radio-button value="undefined">
+                <span i18n="@@sensor silent undefined">Normal</span>
+              </mat-radio-button>
+              <mat-radio-button value="silent">
+                <span i18n="@@sensor silent">Silent alert</span>
+              </mat-radio-button>
+              <mat-radio-button value="loud">
+                <span i18n="@@sensor silent loud">Loud alarm (forced)</span>
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
 
           <mat-divider></mat-divider>

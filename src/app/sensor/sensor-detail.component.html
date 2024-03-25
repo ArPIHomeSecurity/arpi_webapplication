@@ -39,25 +39,26 @@
 
       <mat-divider></mat-divider>
 
-      <h4 i18n="@@sensor syren">Syren volume</h4>
-      <mat-radio-group class="silent" formControlName="silentAlarm" fxLayout="row" fxLayoutGap="20px">
-        <mat-radio-button value="normal">
-          <span i18n="@@sensor silent normal">Normal</span>
+      <h4 i18n="@@sensor syren">Syren config</h4>
+      <mat-radio-group class="silent" formControlName="silentAlert" fxLayout="column" fxLayoutGap="5px">
+        <mat-radio-button value="undefined">
+          <span i18n="@@sensor silent undefined">System default</span>
+        </mat-radio-button>
+        <mat-radio-button value="loud">
+          <span i18n="@@sensor silent loud">Loud alarm</span>
         </mat-radio-button>
         <mat-radio-button value="silent">
           <span i18n="@@sensor silent">Silent alert</span>
-        </mat-radio-button>
-        <mat-radio-button value="undefined">
-          <span i18n="@@sensor silent undefined">Undefined</span>
         </mat-radio-button>
       </mat-radio-group>
 
       <mat-divider></mat-divider>
 
+      <h4 i18n="@@sensor sensitivity">Sensor sensitivity</h4>
       <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
-        <mat-radio-group formControlName="sensitivity" (change)="onSensitivityChanged($event)">
-          <mat-radio-button value="general">
-            <span i18n="@@sensor sensitivity general">General sensitivity</span>
+        <mat-radio-group formControlName="sensitivity" (change)="onSensitivityChanged($event)" fxLayout="column" fxLayoutGap="5px">
+          <mat-radio-button value="undefined">
+            <span i18n="@@sensor sensitivity undefined">System default</span>
           </mat-radio-button>
           <mat-radio-button value="instant">
             <span i18n="@@sensor sensitivity instant">Instant alert</span>

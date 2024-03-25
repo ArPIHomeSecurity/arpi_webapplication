@@ -96,7 +96,7 @@ export class AlertService {
           startTime: new Date().toISOString().split(".")[0].replace("T", " "),
           endTime: null,
           delay: 0,
-          silent: sensor.silentAlarm,
+          silent: sensor.silentAlert,
           monitorPeriod: sensor.monitorPeriod,
           monitorThreshold: sensor.monitorThreshold
         });

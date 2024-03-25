@@ -112,7 +112,8 @@
                       <span *ngIf="sensor.monitorPeriod != null" i18n="@@events sensitivity">sensitivity: {{sensor.monitorPeriod + 's'}}/{{sensor.monitorThreshold}}%</span>
                       <span *ngIf="sensor.monitorPeriod == null" i18n="@@events sensitivity instant">sensitivity: instant alert</span>
                       <span>&semi;&nbsp;</span>
-                      <span *ngIf="sensor.silent" i18n="@@events silent">silent</span>
+                      <span *ngIf="sensor.silent === true" i18n="@@events silent">silent</span>
+                      <span *ngIf="sensor.silent === false" i18n="@@events loud">loud</span>
                     </li>
                   </ul>
 
@@ -122,7 +123,7 @@
                     [ngClass]="{'warn': event.disarm?.time == null}" i18n="@@events disarmed system">
                     Disarmed by system
                   </li>
-                  <li *ngIf="event.alert?.silent" i18n="@@events silent">Silent alarm</li>
+                  <li *ngIf="event.alert?.silent" i18n="@@events silent">Silent alert</li>
                 </ul>
               </div>
             </div>

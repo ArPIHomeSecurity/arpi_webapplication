@@ -90,13 +90,13 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon *ngIf="sensor.silentAlarm"
+                <mat-icon mat-list-icon *ngIf="sensor.silentAlert"
                   class="sensor-status-icon-hide material-icons-outlined">volume_mute</mat-icon>
-                <mat-icon mat-list-icon *ngIf="!sensor.silentAlarm"
+                <mat-icon mat-list-icon *ngIf="!sensor.silentAlert"
                   class="sensor-status-icon-show material-icons-outlined">volume_up</mat-icon>
-                  <span *ngIf="sensor.silentAlarm === false" i18n="@@sensor silent">Alarm with syren</span>
-                  <span *ngIf="sensor.silentAlarm === true" i18n="@@sensor silent">Silent alarm</span>
-                  <span *ngIf="sensor.silentAlarm === null">-</span>
+                  <span *ngIf="sensor.silentAlert === false" i18n="@@sensor silent">Alarm with syren</span>
+                  <span *ngIf="sensor.silentAlert === true" i18n="@@sensor silent">Silent alert</span>
+                  <span *ngIf="sensor.silentAlert === null">-</span>
               </mat-list-item>
 
               <mat-list-item>

@@ -183,14 +183,14 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     });
 
     var silentAlert = null;
-    if (sensor.silentAlarm === null) {
+    if (sensor.silentAlert === null) {
       silentAlert = 'undefined';
     }
-    else if (sensor.silentAlarm === true) {
+    else if (sensor.silentAlert === true) {
       silentAlert = 'silent';
     }
-    else if (sensor.silentAlarm === false) {
-      silentAlert = 'normal';
+    else if (sensor.silentAlert === false) {
+      silentAlert = 'loud';
     }
 
     this.sensorForm = this.fb.group({
@@ -199,7 +199,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       areaId: new FormControl(sensor.areaId, Validators.required),
       typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
-      silentAlarm: new FormControl(silentAlert),
+      silentAlert: new FormControl(silentAlert),
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
@@ -221,7 +221,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.monitorThreshold.clearValidators();
     }
     else {
-      this.sensorForm.controls.sensitivity.setValue('general');
+      this.sensorForm.controls.sensitivity.setValue('undefined');
       this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorPeriod.clearValidators();
       this.sensorForm.controls.monitorThreshold.disable();
@@ -327,13 +327,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const formModel = this.sensorForm.value;
 
     var silentAlert = null;
-    if (formModel.silentAlarm === 'undefined') {
+    if (formModel.silentAlert === 'undefined') {
       silentAlert = null;
     }
-    else if (formModel.silentAlarm === 'normal') {
+    else if (formModel.silentAlert === 'loud') {
       silentAlert = false;
     }
-    else if (formModel.silentAlarm === 'silent') {
+    else if (formModel.silentAlert === 'silent') {
       silentAlert = true;
     }
 
@@ -356,7 +356,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       typeId: formModel.typeId,
       alert: false,
       enabled: formModel.enabled,
-      silentAlarm: silentAlert,
+      silentAlert: silentAlert,
       monitorPeriod: formModel.monitorPeriod,
       monitorThreshold: formModel.monitorThreshold,
       uiOrder: null,

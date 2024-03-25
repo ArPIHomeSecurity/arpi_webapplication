@@ -10,7 +10,7 @@ export class Sensor {
   
   alert: boolean;
   enabled: boolean;
-  silentAlarm: boolean;
+  silentAlert: boolean;
   monitorPeriod: number;
   monitorThreshold: number;
 
