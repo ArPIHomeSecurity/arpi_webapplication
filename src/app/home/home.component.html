@@ -23,9 +23,9 @@
     <div *ngIf="outputs" fxLayout="column" fxLayoutGap="5px">
       <div *ngFor="let output of outputs">
         <mat-button-toggle
-          class="output"
+          [ngClass]="{output: true, active: output.state}"
           [checked]="output.state"
-          [disabled]="isOutputDisabled()"
+          [disabled]="isOutputDisabled(output)"
           (change)="toggleButton(output)"
         >
           {{output.name}}

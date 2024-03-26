@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     this.eventService.listen('output_state_change')
-      .subscribe(state => 
+      .subscribe(state =>
         this.outputs.find(o => o.id === state.id).state = state.state
       );
 
@@ -224,7 +224,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
   }
 
-  isOutputDisabled() {
+  isOutputDisabled(output: Output) {
     const disabledStates = [
       MONITORING_STATE.NOT_READY,
       MONITORING_STATE.STARTUP,
@@ -232,7 +232,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       MONITORING_STATE.INVALID_CONFIG,
       MONITORING_STATE.ERROR,
     ];
-    return this.armState === ARM_TYPE.UNDEFINED || disabledStates.includes(this.monitoringState);
+    return (
+      this.armState === ARM_TYPE.UNDEFINED
+      || disabledStates.includes(this.monitoringState)
+      || output.state === true && output.duration > 0
+    );
   }
 
   getSensorTypeName(sensorTypeId: number) {
@@ -274,11 +278,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   toggleButton(output: Output) {
     if (output.state) {
-      output.state = false;
       this.outputService.deactivateOutput(output.id);
     }
     else {
-      output.state = true;
       this.outputService.activateOutput(output.id);
     }
   }
