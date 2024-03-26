@@ -42,7 +42,7 @@
       <h4 i18n="@@sensor syren">Syren config</h4>
       <mat-radio-group class="silent" formControlName="silentAlert" fxLayout="column" fxLayoutGap="5px">
         <mat-radio-button value="undefined">
-          <span i18n="@@sensor silent undefined">System default</span>
+          <span i18n="@@sensor silent undefined">System setting</span>
         </mat-radio-button>
         <mat-radio-button value="loud">
           <span i18n="@@sensor silent loud">Loud alarm</span>
@@ -58,7 +58,7 @@
       <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
         <mat-radio-group formControlName="sensitivity" (change)="onSensitivityChanged($event)" fxLayout="column" fxLayoutGap="5px">
           <mat-radio-button value="undefined">
-            <span i18n="@@sensor sensitivity undefined">System default</span>
+            <span i18n="@@sensor sensitivity undefined">System setting</span>
           </mat-radio-button>
           <mat-radio-button value="instant">
             <span i18n="@@sensor sensitivity instant">Instant alert</span>
