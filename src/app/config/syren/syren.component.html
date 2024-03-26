@@ -9,16 +9,16 @@
         </mat-expansion-panel-header>
         
           <div class="silent">
-            <h4 i18n="@@syren silent">Syren volume</h4>
+            <h4 i18n="@@syren volume">Syren volume</h4>
             <mat-radio-group class="silent" formControlName="silentAlert" fxLayout="column" fxLayoutGap="5px">
               <mat-radio-button value="undefined">
-                <span i18n="@@sensor silent undefined">Normal</span>
+                <span i18n="@@syren silent undefined">Normal</span>
               </mat-radio-button>
               <mat-radio-button value="silent">
-                <span i18n="@@sensor silent">Silent alert</span>
+                <span i18n="@@syren silent">Silent alert</span>
               </mat-radio-button>
               <mat-radio-button value="loud">
-                <span i18n="@@sensor silent loud">Loud alarm (forced)</span>
+                <span i18n="@@syren silent loud">Loud alarm (forced)</span>
               </mat-radio-button>
             </mat-radio-group>
           </div>
@@ -40,12 +40,12 @@
 
           <mat-divider></mat-divider>
           
-          <h4 i18n="@@syren sensitivity">Alert sensitivity</h4>
+          <h4 i18n="@@syren sensitivity alerty">Alert sensitivity</h4>
           <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
-            <mat-checkbox formControlName="sensitivity" color="primary" i18n="@@sensor sensitivity" (change)="onSensitivityChanged($event)">Custom sensitivity</mat-checkbox>
+            <mat-checkbox formControlName="sensitivity" color="primary" i18n="@@syren sensitivity" (change)="onSensitivityChanged($event)">Custom sensitivity</mat-checkbox>
 
             <mat-form-field [fxHide]="!syrenForm.value.sensitivity">
-              <mat-label i18n="@@alert monitor period">Monitoring period[s]</mat-label>
+              <mat-label i18n="@@alert monitor period">Monitoring period [s]</mat-label>
               <input matInput formControlName="monitorPeriod" type="number" min="1" required>
             </mat-form-field>
             

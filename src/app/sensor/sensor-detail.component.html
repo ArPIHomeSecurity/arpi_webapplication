@@ -48,7 +48,7 @@
           <span i18n="@@sensor silent loud">Loud alarm</span>
         </mat-radio-button>
         <mat-radio-button value="silent">
-          <span i18n="@@sensor silent">Silent alert</span>
+          <span i18n="@@sensor silent alert">Silent alert</span>
         </mat-radio-button>
       </mat-radio-group>
 
@@ -70,7 +70,7 @@
 
         <div fxLayout="row" fxLayoutGap="20" fxLayoutAlign="end" [fxHide]="sensorForm.value.sensitivity !== 'custom'">
           <mat-form-field>
-            <mat-label i18n="@@sensor monitor period">Monitoring period[s]</mat-label>
+            <mat-label i18n="@@sensor monitor period">Monitoring period [s]</mat-label>
             <input matInput formControlName="monitorPeriod" type="number" min="1" required>
           </mat-form-field>
 

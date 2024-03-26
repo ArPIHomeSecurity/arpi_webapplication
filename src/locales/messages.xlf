@@ -189,9 +189,6 @@
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
       </trans-unit>
-      <trans-unit id="alert started" datatype="html">
-        <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
-      </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
       </trans-unit>
@@ -587,7 +584,7 @@
         <source>Test</source>
       </trans-unit>
       <trans-unit id="events start" datatype="html">
-        <source>Start <x id="PH" equiv-text="sensor.description"/></source>
+        <source>Start <x id="PH" equiv-text="sensor.name"/> <x id="PH_1" equiv-text="silent"/></source>
       </trans-unit>
       <trans-unit id="events menu link" datatype="html">
         <source>Events</source>
@@ -602,7 +599,7 @@
         <source>Alert finished</source>
       </trans-unit>
       <trans-unit id="events end" datatype="html">
-        <source>End <x id="PH" equiv-text="sensor.description"/></source>
+        <source>End <x id="PH" equiv-text="sensor.name"/></source>
       </trans-unit>
       <trans-unit id="events alert" datatype="html">
         <source>Alert event</source>
@@ -650,7 +647,7 @@
         <source>Enter a date range</source>
       </trans-unit>
       <trans-unit id="events delay" datatype="html">
-        <source> delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+        <source>delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
       </trans-unit>
       <trans-unit id="events disarmed" datatype="html">
         <source>Disarmed</source>
@@ -756,16 +753,13 @@
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
       </trans-unit>
       <trans-unit id="events silent" datatype="html">
-        <source>Silent alarm</source>
+        <source>silent</source>
       </trans-unit>
       <trans-unit id="syren delay" datatype="html">
         <source>Delay</source>
       </trans-unit>
       <trans-unit id="syren delay hint" datatype="html">
         <source>Delay the syren in seconds</source>
-      </trans-unit>
-      <trans-unit id="syren silent hint" datatype="html">
-        <source>Do not use the syren in case of an alarm</source>
       </trans-unit>
       <trans-unit id="syren stop hint" datatype="html">
         <source>Stop the syren in seconds</source>
@@ -842,6 +836,87 @@
       </trans-unit>
       <trans-unit id="admin menu title" datatype="html">
         <source>Admin</source>
+      </trans-unit>
+      <trans-unit id="alert monitor period" datatype="html">
+        <source>Monitoring period [s]</source>
+      </trans-unit>
+      <trans-unit id="alert monitor threshold" datatype="html">
+        <source>Monitoring threshold [%]</source>
+      </trans-unit>
+      <trans-unit id="events loud" datatype="html">
+        <source>loud</source>
+      </trans-unit>
+      <trans-unit id="events sensitivity" datatype="html">
+        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+      </trans-unit>
+      <trans-unit id="events sensitivity instant" datatype="html">
+        <source>sensitivity: instant alert</source>
+      </trans-unit>
+      <trans-unit id="sensor instant" datatype="html">
+        <source>Instant alert</source>
+      </trans-unit>
+      <trans-unit id="sensor monitor period" datatype="html">
+        <source>Monitoring period [s]</source>
+      </trans-unit>
+      <trans-unit id="sensor monitor threshold" datatype="html">
+        <source>Monitoring threshold [%]</source>
+      </trans-unit>
+      <trans-unit id="sensor name" datatype="html">
+        <source>Name</source>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity" datatype="html">
+        <source>Sensor sensitivity</source>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity custom" datatype="html">
+        <source>Custom</source>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity instant" datatype="html">
+        <source>Instant alert</source>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity undefined" datatype="html">
+        <source>System setting</source>
+      </trans-unit>
+      <trans-unit id="sensor silent loud" datatype="html">
+        <source>Loud alarm</source>
+      </trans-unit>
+      <trans-unit id="sensor silent undefined" datatype="html">
+        <source>System setting</source>
+      </trans-unit>
+      <trans-unit id="sensor syren" datatype="html">
+        <source>Syren config</source>
+      </trans-unit>
+      <trans-unit id="syren sensitivity" datatype="html">
+        <source>Custom sensitivity</source>
+      </trans-unit>
+      <trans-unit id="syren silent" datatype="html">
+        <source>Silent alert</source>
+      </trans-unit>
+      <trans-unit id="syren timing" datatype="html">
+        <source>Syren timing</source>
+      </trans-unit>
+      <trans-unit id="events silent alert" datatype="html">
+        <source>Silent alert</source>
+      </trans-unit>
+      <trans-unit id="events timeline silent" datatype="html">
+        <source>(silent)</source>
+      </trans-unit>
+      <trans-unit id="sensor silent alert" datatype="html">
+        <source>Silent alert</source>
+      </trans-unit>
+      <trans-unit id="sensor silent syren" datatype="html">
+        <source>Alarm with syren</source>
+      </trans-unit>
+      <trans-unit id="syren silent loud" datatype="html">
+        <source>Loud alarm (forced)</source>
+      </trans-unit>
+      <trans-unit id="syren silent undefined" datatype="html">
+        <source>Normal</source>
+      </trans-unit>
+      <trans-unit id="syren sensitivity alerty" datatype="html">
+        <source>Alert sensitivity</source>
+      </trans-unit>
+      <trans-unit id="syren volume" datatype="html">
+        <source>Syren volume</source>
       </trans-unit>
     </body>
   </file>

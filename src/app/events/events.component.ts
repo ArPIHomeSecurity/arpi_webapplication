@@ -159,7 +159,7 @@ export class EventsComponent implements OnInit {
 
     if (event.alert) {
       event.alert.sensors.forEach((sensor) => {
-        const silent = sensor.silent ? $localize`:@@events silent:(silent)` : ""
+        const silent = sensor.silent ? $localize`:@@events timeline silent:(silent)` : ""
         timeline.push({ time: sensor.startTime, description: $localize`:@@events start:Start ${sensor.name} ${silent}`, isDefaultDate: sensor.startTime == "2000-01-01 01:00:00" })
         if (sensor.endTime) {
           timeline.push({ time: sensor.endTime, description: $localize`:@@events end:End ${sensor.name}`, isDefaultDate: sensor.endTime == "2000-01-01 01:00:00" })

@@ -48,11 +48,11 @@
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can't make changes in the configuration!</source>
+        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can't make changes in the configuration!</source>
+        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
@@ -136,10 +136,6 @@
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
         <target state="translated"> MARADÓ </target>
-      </trans-unit>
-      <trans-unit id="alert started" datatype="html">
-        <source>Alert started on: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></source>
-        <target state="translated">Riasztás kezdete: <x id="INTERPOLATION" equiv-text="{{alert.startTime}}"/></target>
       </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
@@ -522,7 +518,7 @@
         <target state="translated">Nem sikerült törölni!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
+        <source>Can&apos;t delete, system is not ready!</source>
         <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
@@ -759,8 +755,8 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications phone1 success" datatype="html">
         <source>SMS sent successfully to phone!</source>
@@ -771,8 +767,8 @@
         <target state="translated">Sikertelen SMS küldés!</target>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -783,8 +779,8 @@
         <target state="translated">Események</target>
       </trans-unit>
       <trans-unit id="events start" datatype="html">
-        <source>Start <x id="PH" equiv-text="sensor.description"/></source>
-        <target state="translated">Kezdés <x id="PH" equiv-text="sensor.description"/></target>
+        <source>Start <x id="PH" equiv-text="sensor.name"/> <x id="PH_1" equiv-text="silent"/></source>
+        <target state="translated">Kezdés <x id="PH" equiv-text="sensor.name"/> <x id="PH_1" equiv-text="silent"/></target>
       </trans-unit>
       <trans-unit id="events arm undefined" datatype="html">
         <source>Undefined</source>
@@ -855,8 +851,8 @@
         <target state="translated">Aktív érzékelő(k)</target>
       </trans-unit>
       <trans-unit id="events delay" datatype="html">
-        <source> delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
-        <target state="translated"> késleltetés: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></target>
+        <source>delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+        <target state="translated">késleltetés: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></target>
       </trans-unit>
       <trans-unit id="events disarmed" datatype="html">
         <source>Disarmed</source>
@@ -883,8 +879,8 @@
         <target state="translated">TÁVOZÓ</target>
       </trans-unit>
       <trans-unit id="events end" datatype="html">
-        <source>End <x id="PH" equiv-text="sensor.description"/></source>
-        <target state="translated">Vége <x id="PH" equiv-text="sensor.description"/></target>
+        <source>End <x id="PH" equiv-text="sensor.name"/></source>
+        <target state="translated">Vége <x id="PH" equiv-text="sensor.name"/></target>
       </trans-unit>
       <trans-unit id="events alert started" datatype="html">
         <source>Alert started</source>
@@ -1003,10 +999,6 @@
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
         <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> érzékelő(k)</target>
       </trans-unit>
-      <trans-unit id="syren silent hint" datatype="html">
-        <source>Do not use the syren in case of an alarm</source>
-        <target state="translated">Ne használja a szirénát riasztás esetén</target>
-      </trans-unit>
       <trans-unit id="syren delay" datatype="html">
         <source>Delay</source>
         <target state="translated">Késleltetés</target>
@@ -1020,8 +1012,8 @@
         <target state="translated">Sziréna kikapcsolása másodpercben</target>
       </trans-unit>
       <trans-unit id="events silent" datatype="html">
-        <source>Silent alarm</source>
-        <target state="translated">Csendes riasztás</target>
+        <source>silent</source>
+        <target state="translated">csendes</target>
       </trans-unit>
       <trans-unit id="notifications target phone2" datatype="html">
         <source>Target phone number 2</source>
@@ -1032,8 +1024,8 @@
         <target state="translated">SMS küldése 2</target>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Unregister device </source>
-        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon>"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/> Eszköz eltávolítása </target>
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
+        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eszköz eltávolítása </target>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
@@ -1119,6 +1111,114 @@
       <trans-unit id="admin menu title" datatype="html">
         <source>Admin</source>
         <target state="translated">Admin</target>
+      </trans-unit>
+      <trans-unit id="syren silent" datatype="html">
+        <source>Silent alert</source>
+        <target state="translated">Csendes riasztás</target>
+      </trans-unit>
+      <trans-unit id="sensor silent undefined" datatype="html">
+        <source>System setting</source>
+        <target state="translated">Rendszer beállítás</target>
+      </trans-unit>
+      <trans-unit id="sensor silent loud" datatype="html">
+        <source>Loud alarm</source>
+        <target state="translated">Hangos riasztás</target>
+      </trans-unit>
+      <trans-unit id="syren timing" datatype="html">
+        <source>Syren timing</source>
+        <target state="translated">Sziréna időzítés</target>
+      </trans-unit>
+      <trans-unit id="syren sensitivity" datatype="html">
+        <source>Custom sensitivity</source>
+        <target state="translated">Egyéni érzékenység</target>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity" datatype="html">
+        <source>Sensor sensitivity</source>
+        <target state="translated">Érzékelő érzékenysége</target>
+      </trans-unit>
+      <trans-unit id="alert monitor period" datatype="html">
+        <source>Monitoring period [s]</source>
+        <target state="translated">Monitor időtartam [s]</target>
+      </trans-unit>
+      <trans-unit id="alert monitor threshold" datatype="html">
+        <source>Monitoring threshold [%]</source>
+        <target state="translated">Monitor küszöbérték [%]</target>
+      </trans-unit>
+      <trans-unit id="events sensitivity" datatype="html">
+        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
+      </trans-unit>
+      <trans-unit id="events sensitivity instant" datatype="html">
+        <source>sensitivity: instant alert</source>
+        <target state="translated">érzékenység: azonnali riasztás</target>
+      </trans-unit>
+      <trans-unit id="events loud" datatype="html">
+        <source>loud</source>
+        <target state="translated">hangos</target>
+      </trans-unit>
+      <trans-unit id="sensor name" datatype="html">
+        <source>Name</source>
+        <target state="translated">Név</target>
+      </trans-unit>
+      <trans-unit id="sensor syren" datatype="html">
+        <source>Syren config</source>
+        <target state="translated">Sziréna beállítás</target>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity undefined" datatype="html">
+        <source>System setting</source>
+        <target state="translated">Rendszer beállítás</target>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity instant" datatype="html">
+        <source>Instant alert</source>
+        <target state="translated">Azonnali riasztás</target>
+      </trans-unit>
+      <trans-unit id="sensor sensitivity custom" datatype="html">
+        <source>Custom</source>
+        <target state="translated">Egyedi</target>
+      </trans-unit>
+      <trans-unit id="sensor monitor period" datatype="html">
+        <source>Monitoring period [s]</source>
+        <target state="translated">Monitor időtartam [s]</target>
+      </trans-unit>
+      <trans-unit id="sensor monitor threshold" datatype="html">
+        <source>Monitoring threshold [%]</source>
+        <target state="translated">Monitor küszöbérték [%]</target>
+      </trans-unit>
+      <trans-unit id="sensor instant" datatype="html">
+        <source>Instant alert</source>
+        <target state="translated">Azonnali riasztás</target>
+      </trans-unit>
+      <trans-unit id="events silent alert" datatype="html">
+        <source>Silent alert</source>
+        <target state="translated">Csendes riasztás</target>
+      </trans-unit>
+      <trans-unit id="events timeline silent" datatype="html">
+        <source>(silent)</source>
+        <target state="translated">(csendes)</target>
+      </trans-unit>
+      <trans-unit id="sensor silent alert" datatype="html">
+        <source>Silent alert</source>
+        <target state="translated">Csendes riasztás</target>
+      </trans-unit>
+      <trans-unit id="sensor silent syren" datatype="html">
+        <source>Alarm with syren</source>
+        <target state="translated">Riasztás szirénával</target>
+      </trans-unit>
+      <trans-unit id="syren silent undefined" datatype="html">
+        <source>Normal</source>
+        <target state="translated">Normál</target>
+      </trans-unit>
+      <trans-unit id="syren silent loud" datatype="html">
+        <source>Loud alarm (forced)</source>
+        <target state="translated">Hangos riasztás (kényszerített)</target>
+      </trans-unit>
+      <trans-unit id="syren volume" datatype="html">
+        <source>Syren volume</source>
+        <target state="translated">Sziréna hangerő</target>
+      </trans-unit>
+      <trans-unit id="syren sensitivity alerty" datatype="html">
+        <source>Alert sensitivity</source>
+        <target state="translated">Riasztási érzékenység</target>
       </trans-unit>
     </body>
   </file>
