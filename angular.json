@@ -202,7 +202,7 @@
     "argus-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "prefix": "",
+      "prefix": "app-root",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
@@ -229,6 +229,7 @@
     }
   },
   "cli": {
-    "analytics": "0de31eea-8e59-49c3-94dc-9475fa533ca5"
+    "analytics": "0de31eea-8e59-49c3-94dc-9475fa533ca5",
+    "packageManager": "npm"
   }
 }
