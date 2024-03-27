@@ -1,6 +1,6 @@
 <!-- DESKTOP VERSION-->
 <span fxShow fxHide.xs>
-  <mat-chip-list
+  <mat-chip-listbox
     *ngIf="monitoringState == monitoringStates.STARTUP ||
            monitoringState == monitoringStates.UPDATING_CONFIG ||
            monitoringState == monitoringStates.INVALID_CONFIG ||
@@ -15,12 +15,12 @@
     </span>
     
     <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger" i18n="@@error state">ERROR</mat-chip>
-  </mat-chip-list>
+  </mat-chip-listbox>
 </span>
 
 <!-- MOBILE VERSION -->
 <span  fxHide fxShow.xs>
-  <mat-chip-list
+  <mat-chip-listbox
     *ngIf="monitoringState == monitoringStates.STARTUP ||
            monitoringState == monitoringStates.UPDATING_CONFIG ||
            monitoringState == monitoringStates.INVALID_CONFIG ||
@@ -36,7 +36,7 @@
     <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger">
       <mat-icon mat-list-icon>error</mat-icon>
     </mat-chip>
-  </mat-chip-list>
+  </mat-chip-listbox>
 </span>
 
 <!-- ALL SIZE-->
