@@ -14,18 +14,6 @@
   }
 }
 
-.output-card-large {
-  margin-right: auto;
-  margin-left: auto;
-  width: 458px !important;
-  height: unset !important;
-}
-
-.output-card-xs {
-  min-width: 390px !important;
-  height: unset !important;
-}
-
 .disabled {
   background-color: lightgray;
 }
@@ -35,13 +23,8 @@
   border-radius: 10px;
 }
 
-
 .empty {
   text-align: center;
-}
-
-.output-title-sm {
-  display: inline-block;
 }
 
 .output-icon {
@@ -73,27 +56,9 @@
   color: grey;
 }
 
-.output-actions {
-  position: fixed;
-  bottom: 84px;
-  right: 20px;
-}
-
-.output-actions-xs {
-  position: fixed;
-  bottom: 65px;
-  right: 20px;
-}
-
-.output-action {
-  margin: 5px 0px;
-  float: left;
-  clear: both;
-}
-
 /*
-  list of attributes in the output card
-*/
+ *  list of attributes in the output card
+ */
 .mat-list.attribute-list {
   .long-field {
     text-overflow: ellipsis;
@@ -101,7 +66,7 @@
     overflow: hidden;
   }
 
-  & .mat-list-item {
+  & .mat-mdc-list-item{
     height: 30px !important;
 
     & .mat-list-item-content {

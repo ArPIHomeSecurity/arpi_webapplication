@@ -1,16 +1,11 @@
-<div *ngIf="zones != null && sensors != null">
-  <div cdkDropList
-    *ngIf="zones.length > 0; else no_zones"
-    class="zone-list"
-    fxLayout="column"
-    fxLayoutGap="20px"
-    (cdkDropListDropped)="onDrop($event)">
+<div *ngIf="zones != null && sensors != null" class="container">
+
+  <div cdkDropList *ngIf="zones.length > 0; else no_zones" class="zone-list flex flex-col space-y-5" (cdkDropListDropped)="onDrop($event)">
 
     <mat-card
       cdkDrag
       *ngFor="let zone of zones"
-      ngClass.gt-xs="zone-card zone-card-large"
-      ngClass.xs="zone-card zone-card-xs">
+      class="zone-card container-item">
 
       <mat-card-content layout="row">
   
@@ -20,21 +15,19 @@
         <mat-expansion-panel (opened)="onOpenConfig(zone.id)" (closed)="onCloseConfig(zone.id)" [expanded]="configOpened[zone.id]">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!configOpened[zone.id]" fxShow.xs="false">
-              <span i18n="@@zone away_l">Away:</span>
-              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}&nbsp;|&nbsp;
-              <span i18n="@@zone stay_l">Stay:</span>
-              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}&nbsp;|&nbsp;
-              <span i18n="@@zone disarme_l">Disarmed:</span>
-              {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
-            </mat-panel-description>
-            <mat-panel-description *ngIf="!configOpened[zone.id]" fxShow.gt-xs="false">
-              <span i18n="@@zone away_s">A:</span>
-              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}&nbsp;|&nbsp;
-              <span i18n="@@zone stay_s">S:</span>
-              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}&nbsp;|&nbsp;
-              <span i18n="@@zone disarmed_s">D:</span>
-              {{zone.disarmedDelay !== null ? zone.disarmedDelay : '-'}}
+            <mat-panel-description *ngIf="!configOpened[zone.id]" class="hidden sm:block">
+              <mat-icon>directions_walk</mat-icon>
+              {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
+
+              <span class="divider">|</span>
+
+              <mat-icon class="icon_margin">hotel</mat-icon>
+              {{zone.stayArmDelay !== null ? zone.stayArmDelay : "-"}}/{{zone.stayAlertDelay !== null ? zone.stayAlertDelay : "-"}}
+
+              <span class="divider">|</span>
+
+              <mat-icon>clear</mat-icon>
+              {{zone.disarmedDelay !== null ? zone.disarmedDelay : "-"}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="mat-table">
@@ -46,25 +39,25 @@
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm away">Away</div >
-                <div class="mat-cell" *ngIf="zone.awayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell" *ngIf="zone.awayAlertDelay!==null; else disabled"><mat-icon matListIcon>done</mat-icon></div >
                   <div class="mat-cell">{{zone.awayArmDelay!==null? zone.awayArmDelay : "-"}}</div >
                 <div class="mat-cell">{{zone.awayAlertDelay!==null? zone.awayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone arm stay">Stay</div >
-                <div class="mat-cell" *ngIf="zone.stayAlertDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell" *ngIf="zone.stayAlertDelay!==null; else disabled"><mat-icon matListIcon>done</mat-icon></div >
                   <div class="mat-cell">{{zone.stayArmDelay!==null ? zone.stayArmDelay : "-"}}</div >
                 <div class="mat-cell">{{zone.stayAlertDelay!==null ? zone.stayAlertDelay : "-"}}</div >
               </div>
               <div class="mat-row">
                 <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div >
-                <div class="mat-cell" *ngIf="zone.disarmedDelay!==null; else disabled"><mat-icon mat-list-icon>done</mat-icon></div >
+                <div class="mat-cell" *ngIf="zone.disarmedDelay!==null; else disabled"><mat-icon matListIcon>done</mat-icon></div >
                 <div class="mat-cell">{{zone.disarmedDelay!==null ? "0" : "-"}}</div >
                 <div class="mat-cell">{{zone.disarmedDelay!==null ? zone.disarmedDelay : "-"}}</div >
               </div>
           </div>
           <ng-template #disabled>
-            <div class="mat-cell"><mat-icon mat-list-icon>clear</mat-icon></div >
+            <div class="mat-cell"><mat-icon matListIcon>clear</mat-icon></div >
           </ng-template>
         </mat-expansion-panel>
   
@@ -78,7 +71,7 @@
               <li *ngFor="let sensor of getSensors(zone.id)">
                 <!-- button mat-button [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}" color="primary">{{sensor.description}}</button-->
                 {{sensor.description}}
-                <button mat-button [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent" [fxShow]="authService.getRole() == 'admin'"><mat-icon mat-list-icon>mode_edit</mat-icon></button>
+                <button mat-button [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent" [ngClass]="{'block': authService.getRole() == 'admin'}"><mat-icon matListIcon>mode_edit</mat-icon></button>
               </li>
             </ul>
           </div>
@@ -88,7 +81,7 @@
         </mat-expansion-panel>
       </mat-card-content>
   
-      <mat-card-actions [fxShow]="userCanEdit()">
+      <mat-card-actions [ngClass]="{'hidden': !userCanEdit()}">
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
@@ -99,15 +92,15 @@
   </div>
   
   <ng-template #no_zones>
-    <div ngClass.gt-xs="zone-list" ngClass.xs="zone-list-xs">
+    <div class="zone-list-xs sm:zone-list">
       <h1 class="empty" i18n="@@zone none">No zones found</h1>
     </div>
   </ng-template>
 </div>
 
-<div ngClass.gt-xs="zone-actions" ngClass.xs="zone-actions-xs" [fxShow]="userCanEdit()">
-  <button class="zone-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
-  <button class="zone-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon mat-list-icon>add</mat-icon></button>
+<div *ngIf="userCanEdit()" class="list-actions">
+  <!--button class="zone-action" mat-min-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" class="hidden sm:block"><mat-icon matListIcon>add</mat-icon></button-->
+  <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" class="block sm:hidden"><mat-icon matListIcon>add</mat-icon></button>
 </div>
 
 <ng-template #snackbarTemplate>

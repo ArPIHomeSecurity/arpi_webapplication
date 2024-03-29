@@ -14,7 +14,7 @@
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
           [disabled]="area.armState == armTypes.UNDEFINED"
-          [fxHide]="sensors.length == 0"
+          [ngClass]="{'hidden': sensors.length == 0}"
         >
           <mat-button-toggle 
             value="AWAY"
@@ -51,7 +51,7 @@
     </mat-expansion-panel-header>
 
     
-    <div fxLayout="column" fxFlexAlign="center" fxLayoutGap="5px">
+    <div fxFlexAlign="center" class="flex flex-col space-y-2">
       <span *ngFor="let sensor of sensors; let i = index">
         <sensor *ngIf="!sensor.uiHidden || sensor.alert" [sensor]="sensor" [delay]="delays[i]"></sensor>
       </span>

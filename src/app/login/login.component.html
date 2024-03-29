@@ -1,74 +1,75 @@
-<div fxLayout="row" fxLayoutAlign="center">
-  
-  <form *ngIf="!isRegistered" name="form" [formGroup]="registerForm">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n="Register device">Register device</mat-card-title>
-      </mat-card-header>
- 
-      <mat-form-field class="full-width">
-        <input matInput
-          #registration_code_field
-          [type]="hide ? 'password' : 'text'"
-          [formControl]="registerCode"
-          placeholder="Registration code"
-          i18n-placeholder="Regstration code"
-          autocomplete="off"
-          required
-          autofocus
-        >
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </mat-form-field>
+<form *ngIf="!isRegistered" name="form" [formGroup]="registerForm" class="register">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title i18n="Register device">Register device</mat-card-title>
+    </mat-card-header>
 
-      <div class="form-group actions" fxLayout="column" fxLayoutAlign="space-between center">
-        <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary" i18n="Register button">Register</button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      </div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-    </mat-card>
-  </form>
+    <mat-form-field class="full-width">
+      <mat-label i18n="@@register registration code">Registration code</mat-label>
+      <input matInput
+        #registration_code_field
+        [type]="hide ? 'password' : 'text'"
+        [formControl]="registerCode"
+        autocomplete="off"
+        required
+        autofocus
+      >
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
 
-  <form *ngIf="isRegistered" name="form" [formGroup]="loginForm">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title i18n="Login title">Login</mat-card-title>
-      </mat-card-header>
+    <div class="form-group actions flex flex-col justify-between items-center">
+      <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary" i18n="Register button">Register</button>
+      <mat-progress-spinner *ngIf="loading" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  </mat-card>
+</form>
 
-        <mat-form-field class="full-width">
-        <input matInput
-          #access_code_field
-          type="text"
-          [formControl]="accessCode"
-          [ngClass]="{'hidden': hide}"
-          placeholder="Access code"
-          i18n-placeholder="Access code"
-          inputmode="numeric"
-          pattern="[0-9]*"
-          maxlength="10"
-          autocomplete="off"
-          digitOnly
-          required
-          autofocus
-        >
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </mat-form-field>
+<form *ngIf="isRegistered" name="form" [formGroup]="loginForm" class="login">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title i18n="Login title">Login</mat-card-title>
+    </mat-card-header>
 
-      <div class="form-group actions" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-        <button mat-raised-button (click)="login()" [disabled]="loading || !loginForm.valid" color="primary" i18n="Login button">Login</button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      </div>
+    <mat-form-field class="full-width">
+      <mat-label i18n="@@login access code">Access code</mat-label>
+      <input matInput
+        #access_code_field
+        type="text"
+        [formControl]="accessCode"
+        [ngClass]="{'password': hide}"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="10"
+        autocomplete="off"
+        digitOnly
+        required
+        autofocus
+      >
+      <button matSuffix mat-icon-button (click)="hide = !hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
 
-      <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
-        <div *ngSwitchCase="'invalid origin'" i18n="@@login host not allowed">Host not allowed!</div>
-        <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token! Register your device!</div>
-        <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
-        <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
-        <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
-        <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration code!</div>
-        <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
-        <div *ngSwitchCase="'no connection'" i18n="@@login no connedtion">No connection to the security system!</div>
-        <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
-      </div>
-    </mat-card>
-  </form>
-</div>
+    <div class="form-group actions flex flex-col space-y-4 justify-between items-center">
+      <button mat-raised-button type="submit" (click)="login()" [disabled]="loading || !loginForm.valid" color="primary">
+          <span i18n="Login button">Login</span>
+      </button>
+      <mat-progress-spinner *ngIf="loading" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+
+    <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
+      <div *ngSwitchCase="'invalid origin'" i18n="@@login host not allowed">Host not allowed!</div>
+      <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token! Register your device!</div>
+      <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
+      <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
+      <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
+      <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration code!</div>
+      <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
+      <div *ngSwitchCase="'no connection'" i18n="@@login no connedtion">No connection to the security system!</div>
+      <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
+    </div>
+  </mat-card>
+</form>

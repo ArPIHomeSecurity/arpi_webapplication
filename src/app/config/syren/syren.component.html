@@ -1,6 +1,6 @@
-<div *ngIf="syren != null">
-  <form [formGroup]="syrenForm" (ngSubmit)="onSubmit()"
-      ngClass.gt-xs="syren-form" ngClass.xs="syren-form-xs" fxLayout="column" fxLayoutGap="20px">
+<div *ngIf="syren != null" class="container">
+  
+  <form [formGroup]="syrenForm" (ngSubmit)="onSubmit()" class="syren-form">
 
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
@@ -10,7 +10,7 @@
         
           <div class="silent">
             <h4 i18n="@@syren volume">Syren volume</h4>
-            <mat-radio-group class="silent" formControlName="silentAlert" fxLayout="column" fxLayoutGap="5px">
+            <mat-radio-group class="silent" formControlName="silentAlert">
               <mat-radio-button value="undefined">
                 <span i18n="@@syren silent undefined">Normal</span>
               </mat-radio-button>
@@ -26,7 +26,7 @@
           <mat-divider></mat-divider>
 
           <h4 i18n="@@syren timing">Syren timing</h4>
-          <div class="timing" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="15">
+          <div class="timing row">
             <mat-form-field class="full-width">
               <input matInput type="number" min="0" i18n-placeholder="@@syren delay" placeholder="Delay" formControlName="delay" required/>
               <mat-hint i18n="@@syren delay hint">Delay the syren in seconds</mat-hint>
@@ -41,15 +41,15 @@
           <mat-divider></mat-divider>
           
           <h4 i18n="@@syren sensitivity alerty">Alert sensitivity</h4>
-          <div class="sensitivity" fxLayout="row" fxLayoutGap="20">
+          <div class="sensitivity row">
             <mat-checkbox formControlName="sensitivity" color="primary" i18n="@@syren sensitivity" (change)="onSensitivityChanged($event)">Custom sensitivity</mat-checkbox>
 
-            <mat-form-field [fxHide]="!syrenForm.value.sensitivity">
+            <mat-form-field [ngClass]="{'block': !syrenForm.value.sensitivity}">
               <mat-label i18n="@@alert monitor period">Monitoring period [s]</mat-label>
               <input matInput formControlName="monitorPeriod" type="number" min="1" required>
             </mat-form-field>
             
-            <mat-form-field [fxHide]="!syrenForm.value.sensitivity">
+            <mat-form-field [ngClass]="{'block': !syrenForm.value.sensitivity}">
               <mat-label i18n="@@alert monitor threshold">Monitoring threshold [%]</mat-label>
               <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required>
             </mat-form-field>

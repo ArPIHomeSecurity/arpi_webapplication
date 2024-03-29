@@ -23,3 +23,49 @@ html, body, material-app, .my-content {
 .drag-handle {
   cursor: move !important;
 }
+
+
+/*
+ *  Common page design
+ */
+
+.container {
+  margin: 20px auto 25px auto;
+  min-width: 400px;
+  max-width: 600px;
+}
+
+.container-item {
+  margin: 20px auto;
+  width: 100%;
+}
+
+.icon_margin {
+  margin: 0px 3px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list-actions {
+  position: fixed;
+  bottom: 85px;
+  right: 20px;
+  float: right;
+}
+
+.list-action {
+  margin: 5px 0px;
+  float: left;
+  clear: both;
+}
+

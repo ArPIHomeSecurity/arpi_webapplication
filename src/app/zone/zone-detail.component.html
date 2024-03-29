@@ -1,59 +1,87 @@
-<mat-card *ngIf="zone != null" ngClass.gt-xs="zone-form" ngClass.xs="zone-form-xs" fxLayout="column">
-  <mat-card-content>
-    <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate>
-        <mat-form-field>
-          <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description" required></textarea>
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-checkbox formControlName="disarmedAlert" color="primary" (change)="alertWhenChanged($event, 'disarmedDelay')" i18n="@@zone alert when disarmed">Alert when disarmed</mat-checkbox>
-        <mat-form-field [fxShow]="zoneForm.get('disarmedAlert').value">
-          <input matInput i18n-placeholder="@@zone disarmed delay" placeholder="Delay alert when not armed" formControlName="disarmedDelay">
-          <mat-error *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-checkbox formControlName="awayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@zone alert when away">Alert when away armed</mat-checkbox>
-        <div fxLayout="row" fxLayoutGap="10">
-          <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
-            <input matInput i18n-placeholder="@@zone away alert delay" placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
-            <mat-error *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
+<div class="container">
+  <mat-card *ngIf="zone != null" class="container-item zone-form">
+    <mat-card-content>
+      <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="column">
+          <mat-form-field>
+            <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
           </mat-form-field>
-          <mat-form-field [fxShow]="zoneForm.get('awayArmedAlert').value">
-            <input matInput i18n-placeholder="@@zone away arm delay" placeholder="Delay arm when arming away" formControlName="awayArmDelay">
-            <mat-error *ngIf="zoneForm.get('awayArmDelay').invalid">{{zoneForm.get('awayArmDelay').getError('invalid')}}</mat-error>
+
+          <mat-form-field>
+            <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description"
+              required></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-checkbox formControlName="disarmedAlert" color="primary"
+          (change)="alertWhenChanged($event, 'disarmedDelay')" i18n="@@zone alert when disarmed">Alert when
+          disarmed</mat-checkbox>
+        <div *ngIf="zoneForm.get('disarmedAlert').value" class="row">
+          <mat-form-field>
+            <input matInput type="number" i18n-placeholder="@@zone disarmed delay"
+              placeholder="Delay alert when not armed" formControlName="disarmedDelay">
+            <mat-error
+              *ngIf="zoneForm.get('disarmedDelay').invalid">{{zoneForm.get('disarmedDelay').getError('invalid')}}</mat-error>
           </mat-form-field>
         </div>
 
         <mat-divider></mat-divider>
-        <mat-checkbox formControlName="stayArmedAlert" color="primary" (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@zone alert when stay">Alert when stay armed</mat-checkbox>
-        <div fxLayout="row" fxLayoutGap="10">
-          <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
-            <input matInput i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay" formControlName="stayAlertDelay">
-            <mat-error *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
-          </mat-form-field>  
-          <mat-form-field [fxShow]="zoneForm.get('stayArmedAlert').value">
-            <input matInput i18n-placeholder="@@zone stay arm delay" placeholder="Delay arm when arming stay" formControlName="stayArmDelay">
-            <mat-error *ngIf="zoneForm.get('stayArmDelay').invalid">{{zoneForm.get('stayArmDelay').getError('invalid')}}</mat-error>
+        <mat-checkbox formControlName="awayArmedAlert" color="primary"
+          (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@zone alert when away">Alert when away
+          armed</mat-checkbox>
+        <div *ngIf="zoneForm.get('awayArmedAlert').value" class="row">
+          <mat-form-field>
+            <input matInput type="number" i18n-placeholder="@@zone away alert delay"
+              placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
+            <mat-error
+              *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" i18n-placeholder="@@zone away arm delay"
+              placeholder="Delay arm when arming away" formControlName="awayArmDelay">
+            <mat-error
+              *ngIf="zoneForm.get('awayArmDelay').invalid">{{zoneForm.get('awayArmDelay').getError('invalid')}}</mat-error>
           </mat-form-field>
         </div>
-    </form>
-  </mat-card-content>
-  <mat-divider inset></mat-divider>
-  <mat-card-actions align="end">
-    <button mat-icon-button color="primary" [disabled]="zoneForm.invalid || monitoringState != monitoringStates.READY" (click)="onSubmit()"><mat-icon>save</mat-icon></button>
-    <button *ngIf="zoneId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(zone.id)" [disabled]="getSensors().length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
-    <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
-  </mat-card-actions>
 
+        <mat-divider></mat-divider>
+        <mat-checkbox formControlName="stayArmedAlert" color="primary"
+          (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@zone alert when stay">Alert when stay
+          armed</mat-checkbox>
+        <div *ngIf="zoneForm.get('stayArmedAlert').value" class="row">
+          <mat-form-field>
+            <input matInput type="number" i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay"
+              formControlName="stayAlertDelay">
+            <mat-error
+              *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" i18n-placeholder="@@zone stay arm delay"
+              placeholder="Delay arm when arming stay" formControlName="stayArmDelay">
+            <mat-error
+              *ngIf="zoneForm.get('stayArmDelay').invalid">{{zoneForm.get('stayArmDelay').getError('invalid')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-divider inset></mat-divider>
+
+    <mat-card-actions align="end">
+      <button mat-icon-button color="primary" [disabled]="zoneForm.invalid || monitoringState != monitoringStates.READY"
+        (click)="onSubmit()"><mat-icon>save</mat-icon></button>
+      <button *ngIf="zoneId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(zone.id)"
+        [disabled]="getSensors().length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+    </mat-card-actions>
+
+  </mat-card>
   <ng-template #not_found>
-    <h1 i18n="@@zone not found">Zone not found!</h1>
+    <div class="container-item">
+      <h1 i18n="@@zone not found">Zone not found!</h1>
+    </div>
   </ng-template>
-</mat-card>
+</div>
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>

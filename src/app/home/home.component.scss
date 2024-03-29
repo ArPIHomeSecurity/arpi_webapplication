@@ -5,17 +5,12 @@
   $foreground: map-get($theme, foreground);
 
   .container {
-    margin-top: 20px;
+    margin: 20px auto 25px auto;
+    min-width: 300px;
+    max-width: 450px;
+
     padding: 5px;
     
-    .home {
-      width: 400px;
-      margin: auto;
-    }
-    
-    .home-small {
-      width: 100%;
-    }
     
     .controller {
       width: 100%;

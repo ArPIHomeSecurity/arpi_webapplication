@@ -1,11 +1,13 @@
-form {
-  margin-bottom: 25px;
+form.register, form.login {
+  margin: 0 auto 25px auto;
+
+  min-width: 300px;
+  max-width: 450px;
 }
 
 mat-card {
   margin: 30px;
   padding: 30px 50px;
-  
 }
 
 .actions button {
@@ -27,7 +29,7 @@ mat-card {
   src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
 }
 
-.hidden {
+.password {
   font-family: text-security-disc;
   text-security: disc;
   -webkit-text-security: disc;

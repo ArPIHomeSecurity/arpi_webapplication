@@ -1,4 +1,4 @@
-<div ngClass.gt-md="event-list" ngClass.lt-lg="event-list-xs" fxLayout="column">
+<div class="flex flex-col event-list-xs sm:event-list-xs">
 
   <mat-expansion-panel>
 
@@ -8,7 +8,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <div class="filters" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+    <div class="filters flex flex-row flex-wrap space-x-8 items-center">
 
       <mat-form-field appearance="fill">
         <mat-label i18n="@@events filter arm">Arm type</mat-label>
@@ -62,19 +62,19 @@
     showFirstLastButtons="true" (page)="paginate()">
   </mat-paginator>
 
-  <div *ngIf="events; else loading" fxLayout="column" fxLayoutGap="3px">
-    <div *ngIf="events && events.length > 0; else no_arms" fxLayout="column" fxLayoutGap="3px">
+  <div *ngIf="events; else loading" class="flex flex-col space-y-1">
+    <div *ngIf="events && events.length > 0; else no_arms" class="flex flex-col space-y-1">
 
       <mat-accordion *ngFor="let event of events">
         <mat-expansion-panel [ngClass]="{'alerting': event.alert && !event.alert.endTime}">
           <mat-expansion-panel-header>
-            <mat-panel-title fxLayout="row" fxLayoutGap="30px" [ngClass]="{'warn': event.disarm?.time == null}">
+            <mat-panel-title [ngClass]="{'warn': event.disarm?.time == null}" class="flex flex-row space-x-8">
               <div class="arm-icon">
-                <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" mat-list-icon>directions_walk</mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.STAY" mat-list-icon>hotel</mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>directions_walk</mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" mat-list-icon>hotel</mat-icon>
-                <mat-icon *ngIf="!event.arm?.type" mat-list-icon>verified_user</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" matListIcon>directions_walk</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.STAY" matListIcon>hotel</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" matListIcon>directions_walk</mat-icon>
+                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" matListIcon>hotel</mat-icon>
+                <mat-icon *ngIf="!event.arm?.type" matListIcon>verified_user</mat-icon>
               </div>
               <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
@@ -83,9 +83,9 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="event-panel-content" fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxFill>
+          <div class="event-panel-content flex flex-row flex-wrap justify-evenly h-full w-full min-h-full min-w-full">
 
-            <div class="panel" fxFlex.lt-md="100" fxFlex="48">
+            <div class="panel basis-12/25" fxFlex.lt-md="100">
               <span class="title" i18n="@@events properties">Properties</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -128,7 +128,7 @@
               </div>
             </div>
 
-            <div class="panel" fxFlex.lt-md="100" fxFlex="48">
+            <div class="panel basis-12/25" fxFlex.lt-md="100">
               <span class="title" i18n="@@events timeline">Timeline</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -140,7 +140,7 @@
               </div>
             </div>
 
-            <!--div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">
+            <!--div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">->
               <span class="title" i18n="@@events sensor states">Sensor states VERTICAL</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -157,7 +157,7 @@
               </div>
             </div-->
 
-            <div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">
+            <div class="panel basis-full" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">
               <span class="title" i18n="@@events sensor states">Sensor states</span>
               <mat-divider></mat-divider>
               <div class="content">
@@ -182,7 +182,7 @@
 </div>
 
 <ng-template #no_arms>
-  <div ngClass.gt-xs="event-list" ngClass.xs="event-list-xs">
+  <div class="event-list-xs sm:event-list">
     <h1 class="empty" i18n="@@events empty">No arms/alerts found</h1>
   </div>
 </ng-template>

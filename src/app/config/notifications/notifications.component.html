@@ -1,75 +1,98 @@
-<div *ngIf="smtp != null && gsm != null && subscriptions != null">
-  <form class="notifications-form" [formGroup]="notificationsForm" (ngSubmit)="onSubmit()"
-      ngClass.gt-xs="notifications-form" ngClass.xs="notifications-form-xs" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+<div *ngIf="smtp != null && gsm != null && subscriptions != null" class="container">
+  <form class="notifications-form" [formGroup]="notificationsForm"
+    (ngSubmit)="onSubmit()" class="notifications-form">
 
     <mat-accordion multi="true">
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title i18n="@@notifications smtp">SMTP</mat-panel-title>
-          <mat-panel-description i18n="@@notifications smtp settings">SMTP settings for sending notifications</mat-panel-description>
+          <mat-panel-description i18n="@@notifications smtp settings">SMTP settings for sending
+            notifications</mat-panel-description>
         </mat-expansion-panel-header>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="smtpUsername" i18n-placeholder="@@notifications smtp username" placeholder="SMTP username">
-        </mat-form-field>
-        
-        <mat-form-field class="half-width">
-          <input type="password" matInput formControlName="smtpPassword" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
-        </mat-form-field>
-        
-        <mat-form-field class="half-width">
-          <input matInput formControlName="smtpHostname" i18n-placeholder="@@notifications smtp hostname" placeholder="SMTP hostname">
+          <input matInput formControlName="smtpUsername" i18n-placeholder="@@notifications smtp username"
+            placeholder="SMTP username">
         </mat-form-field>
 
         <mat-form-field class="half-width">
-          <input matInput formControlName="smtpPort" i18n-placeholder="@@notifications smtp port" placeholder="SMTP port">
+          <input type="password" matInput formControlName="smtpPassword" (focus)="onPasswordFocus()"
+            (blur)="onPasswordBlur()" i18n-placeholder="@@notifications stmp password" placeholder="SMTP password">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="smtpHostname" i18n-placeholder="@@notifications smtp hostname"
+            placeholder="SMTP hostname">
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <input matInput formControlName="smtpPort" i18n-placeholder="@@notifications smtp port"
+            placeholder="SMTP port">
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput formControlName="emailAddress1" i18n-placeholder="@@notifications smtp email1" placeholder="Email address 1">
+          <input matInput formControlName="emailAddress1" i18n-placeholder="@@notifications smtp email1"
+            placeholder="Email address 1">
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput formControlName="emailAddress2" i18n-placeholder="@@notifications smtp email2" placeholder="Email address 2">
+          <input matInput formControlName="emailAddress2" i18n-placeholder="@@notifications smtp email2"
+            placeholder="Email address 2">
         </mat-form-field>
-        
-        <div fxLayout="row" fxLayoutGap="20px">
-          <button *ngIf="!smtpEnabled" mat-raised-button color="primary" type="button" (click)="onEnableSmtp()" [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications enable smtp">Enable SMTP</button>
-          <button *ngIf="smtpEnabled == true" mat-raised-button color="accent" type="button" (click)="onDisableSmtp()" [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications disable smtp">Disable SMTP</button>
-          <button mat-raised-button color="primary" type="button" (click)="onSendTestEmail()" [disabled]="monitoringState != monitoringStates.READY || notificationsForm.touched" i18n="@@notifications send test email">Send test email</button>
+
+        <div class="row">
+          <button *ngIf="!smtpEnabled" mat-raised-button color="primary" type="button" (click)="onEnableSmtp()"
+            [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications enable smtp">Enable
+            SMTP</button>
+          <button *ngIf="smtpEnabled == true" mat-raised-button color="accent" type="button" (click)="onDisableSmtp()"
+            [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications disable smtp">Disable
+            SMTP</button>
+          <button mat-raised-button color="primary" type="button" (click)="onSendTestEmail()"
+            [disabled]="monitoringState != monitoringStates.READY || notificationsForm.touched"
+            i18n="@@notifications send test email">Send test email</button>
         </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title i18n="@@notifications gsm">GSM</mat-panel-title>
-          <mat-panel-description i18n="@@notifications gsm settings">Mobil settings for sending notifications</mat-panel-description>
+          <mat-panel-description i18n="@@notifications gsm settings">Mobil settings for sending
+            notifications</mat-panel-description>
         </mat-expansion-panel-header>
 
         <mat-form-field class="pin-code">
-          <input matInput formControlName="pinCode" i18n-placeholder="@@notifications sim card pin" placeholder="SIM card PIN code">
+          <input matInput formControlName="pinCode" i18n-placeholder="@@notifications sim card pin"
+            placeholder="SIM card PIN code">
         </mat-form-field>
 
         <mat-form-field class="phone-number">
-          <input matInput formControlName="phoneNumber1" i18n-placeholder="@@notifications target phone1" placeholder="Target phone number 1">
+          <input matInput formControlName="phoneNumber1" i18n-placeholder="@@notifications target phone1"
+            placeholder="Target phone number 1">
         </mat-form-field>
 
         <mat-form-field class="phone-number">
-          <input matInput formControlName="phoneNumber2" i18n-placeholder="@@notifications target phone2" placeholder="Target phone number 2">
+          <input matInput formControlName="phoneNumber2" i18n-placeholder="@@notifications target phone2"
+            placeholder="Target phone number 2">
         </mat-form-field>
 
-        <div fxLayout="row" fxLayoutGap="20px">
-          <button *ngIf="!gsmEnabled" mat-raised-button color="primary" type="button" (click)="onEnableGsm()" [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications enable gsm">Enable GSM</button>
-          <button *ngIf="gsmEnabled == true" mat-raised-button color="accent" type="button" (click)="onDisableGsm()" [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications disable gsm">Disable GSM</button>
-          <button mat-raised-button color="primary" type="button" (click)="onSendTestSMS()" [disabled]="monitoringState != monitoringStates.READY || notificationsForm.touched" i18n="@@notifications send test sms">Send test SMS</button>
+        <div class="row">
+          <button *ngIf="!gsmEnabled" mat-raised-button color="primary" type="button" (click)="onEnableGsm()"
+            [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications enable gsm">Enable GSM</button>
+          <button *ngIf="gsmEnabled == true" mat-raised-button color="accent" type="button" (click)="onDisableGsm()"
+            [disabled]="monitoringState != monitoringStates.READY" i18n="@@notifications disable gsm">Disable
+            GSM</button>
+          <button mat-raised-button color="primary" type="button" (click)="onSendTestSMS()"
+            [disabled]="monitoringState != monitoringStates.READY || notificationsForm.touched"
+            i18n="@@notifications send test sms">Send test SMS</button>
         </div>
       </mat-expansion-panel>
-      
+
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title i18n="@@notifications subscriptions">Subscriptions</mat-panel-title>
-          <mat-panel-description i18n="@@notifications subscriptions settings">Configure subscriptions</mat-panel-description>
+          <mat-panel-description i18n="@@notifications subscriptions settings">Configure
+            subscriptions</mat-panel-description>
         </mat-expansion-panel-header>
 
         <div class="mat-table">
@@ -145,7 +168,8 @@
 
     </mat-accordion>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY"
+      i18n="@@save button">Save</button>
   </form>
 </div>
 
@@ -161,7 +185,8 @@
       <div *ngSwitchCase="false" i18n="@@notifications email2 failed">Failed to send to email address 2!</div>
     </div>
   </div>
-  <div *ngIf="testEmailResult['connection'] == false" i18n="@@notifications smtp connection failed">Failed to connect to SMTP server!<br/>Please check logs for more information!</div>
+  <div *ngIf="testEmailResult['connection'] == false" i18n="@@notifications smtp connection failed">Failed to connect to
+    SMTP server!<br />Please check logs for more information!</div>
 </ng-template>
 
 
@@ -172,5 +197,6 @@
       <div *ngSwitchCase="false" i18n="@@notifications phone1 failed">Failed to send SMS!</div>
     </div>
   </div>
-  <div *ngIf="testSmsResult['connection'] == false" i18n="@@notifications sms connection failed">Failed to connect to GSM module!<br/>Please check logs for more information!</div>
+  <div *ngIf="testSmsResult['connection'] == false" i18n="@@notifications sms connection failed">Failed to connect to
+    GSM module!<br />Please check logs for more information!</div>
 </ng-template>

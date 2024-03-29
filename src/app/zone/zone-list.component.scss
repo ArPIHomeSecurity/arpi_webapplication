@@ -1,10 +1,12 @@
 @charset "UTF-8";
 
 .zone-list {
-  padding: 15px;
-  
   .empty {
     text-align: center;
+  }
+
+  .divider {
+    margin: 0 10px;
   }
 }
 
@@ -18,16 +20,6 @@
   }
 }
 
-.zone-card-large {
-  margin-right: auto;
-  margin-left: auto;
-  width: 458px !important;
-}
-
-.zone-card-xs {
-  min-width: 390px !important;
-}
-
 .cdk-drag {
   height: unset !important;
 }
@@ -39,27 +31,6 @@ h3 {
 ul {
   margin-top: 0px;
 }
-
-.zone-actions {
-  position: fixed;
-  bottom: 85px;
-  right: 20px;
-  float: right;
-}
-
-.zone-actions-xs {
-  position: fixed;
-  bottom: 65px;
-  right: 20px;
-  float: right;
-}
-
-.zone-action {
-  margin: 5px 0px;
-  float: left;
-  clear: both;
-}
-
 
 .mat-table {
   display: block;

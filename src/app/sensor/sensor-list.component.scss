@@ -1,29 +1,15 @@
 @charset "UTF-8";
 
 .sensor-list {
-  padding: 15px;
-}
-
-.sensor-card {
-  .mat-card-title {
-    margin-left: 16px;
+  .sensor-card {
+    .mat-card-title {
+      margin-left: 16px;
+    }
+    
+    .mat-card-subtitle {
+      text-align: justify;
+    }
   }
-  
-  .mat-card-subtitle {
-    text-align: justify;
-  }
-}
-
-.sensor-card-large {
-  margin-right: auto;
-  margin-left: auto;
-  width: 458px !important;
-  height: unset !important;
-}
-
-.sensor-card-xs {
-  min-width: 390px !important;
-  height: unset !important;
 }
 
 .disabled {
@@ -38,10 +24,6 @@
 
 .empty {
   text-align: center;
-}
-
-.sensor-title-sm {
-  display: inline-block;
 }
 
 .sensor-icon {
@@ -73,23 +55,6 @@
   color: grey;
 }
 
-.sensor-actions {
-  position: fixed;
-  bottom: 84px;
-  right: 20px;
-}
-
-.sensor-actions-xs {
-  position: fixed;
-  bottom: 65px;
-  right: 20px;
-}
-
-.sensor-action {
-  margin: 5px 0px;
-  float: left;
-  clear: both;
-}
 
 /*
   list of attributes in the sensor card
@@ -101,7 +66,7 @@
     overflow: hidden;
   }
 
-  & .mat-list-item {
+  & .mat-mdc-list-item{
     height: 30px !important;
 
     & .mat-list-item-content {

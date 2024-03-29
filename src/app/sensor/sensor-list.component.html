@@ -1,14 +1,13 @@
-<div *ngIf="sensors != null">
-  <div cdkDropList *ngIf="sensors.length > 0; else no_sensors" class="sensor-list" fxLayout="column" fxLayoutGap="20px"
-    (cdkDropListDropped)="onDrop($event)">
+<div *ngIf="sensors != null" class="container">
+  <div cdkDropList *ngIf="sensors.length > 0; else no_sensors" (cdkDropListDropped)="onDrop($event)">
 
     <mat-card cdkDrag (cdkDragStarted)="onDragStarted($event)" id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors"
-      [ngClass.gt-xs]="{'disabled': !sensor.enabled, 'sensor-card': true, 'sensor-card-large': true}"
-      [ngClass.xs]="{'disabled': !sensor.enabled, 'sensor-card': true, 'sensor-card-xs': true}">
+      class="sensor-card container-item"
+      [ngClass]="{'disabled': !sensor.enabled}">
 
-      <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center">
-        <div [ngSwitch]="sensor.typeId" [ngClass.xs]="{'sensor-image-small': true, 'alerting': sensor.alert}"
-          [ngClass.gt-xs]="{'sensor-image': true, 'alerting': sensor.alert}">
+      <mat-card-content>
+        <div [ngSwitch]="sensor.typeId"
+          [ngClass]="{'sensor-image-small sm:sensor-image': true, 'alerting': sensor.alert}">
           <img *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
           <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
           <img *ngSwitchCase="3" src="assets/images/sensor_open.png" />
@@ -16,17 +15,17 @@
           <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}" />
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="space-between start">
+        <div class="column">
           <mat-card-title-group>
             <mat-card-title>
               {{sensor.name}}
             </mat-card-title>
           </mat-card-title-group>          
 
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="row">
             <mat-list class="attribute-list first-column">
               <mat-list-item>
-                <mat-icon mat-list-icon [ngSwitch]="sensor.typeId">
+                <mat-icon matListItemIcon [ngSwitch]="sensor.typeId">
                   <img ngClass="sensor-icon" *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
                   <img ngClass="sensor-icon" *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
                   <img ngClass="sensor-icon" *ngSwitchCase="3" src="assets/images/sensor_open.png" />
@@ -44,7 +43,7 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon class="material-icons-outlined">label</mat-icon>
+                <mat-icon matListItemIcon class="material-icons-outlined">label</mat-icon>
                 <div *ngIf="sensor.channel !== -1">
                   <span>CH{{ sensor.channel + 1 | number: '2.0-0'}}</span>
                 </div>
@@ -54,9 +53,9 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon *ngIf="sensor.enabled"
+                <mat-icon matListItemIcon *ngIf="sensor.enabled"
                   class="sensor-status-icon-enabled material-icons-outlined">check_circle</mat-icon>
-                <mat-icon mat-list-icon *ngIf="!sensor.enabled"
+                <mat-icon matListItemIcon *ngIf="!sensor.enabled"
                   class="sensor-status-icon-disabled material-icons-outlined">circle</mat-icon>
                 <div *ngIf="sensor.enabled">
                   <span i18n="@@sensor enabled">Enabled</span>
@@ -67,9 +66,9 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon *ngIf="!sensor.uiHidden"
+                <mat-icon matListItemIcon *ngIf="!sensor.uiHidden"
                   class="sensor-status-icon-show material-icons-outlined">visibility</mat-icon>
-                <mat-icon mat-list-icon *ngIf="sensor.uiHidden"
+                <mat-icon matListItemIcon *ngIf="sensor.uiHidden"
                   class="sensor-status-icon-hide material-icons-outlined">visibility_off</mat-icon>
                 <span *ngIf="sensor.uiHidden" i18n="@@sensor hidden">Hidden</span>
                 <span *ngIf="!sensor.uiHidden" i18n="@@sensor visible">Visible</span>
@@ -79,20 +78,20 @@
 
             <mat-list class="attribute-list second-column">
               <mat-list-item>
-                <mat-icon mat-list-icon class="material-icons-outlined">crop</mat-icon>
+                <mat-icon matListItemIcon class="material-icons-outlined">crop</mat-icon>
                 <span class="long-field">{{getAreaName(sensor.areaId)}}</span>
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon class="material-icons-outlined">rectangle</mat-icon>
+                <mat-icon matListItemIcon class="material-icons-outlined">rectangle</mat-icon>
                 <span *ngIf="sensor.channel !== -1" class="long-field">{{getZoneName(sensor.zoneId)}}</span>
                 <span *ngIf="sensor.channel === -1" class="long-field">-</span>
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon *ngIf="sensor.silentAlert"
+                <mat-icon matListItemIcon *ngIf="sensor.silentAlert"
                   class="sensor-status-icon-hide material-icons-outlined">volume_mute</mat-icon>
-                <mat-icon mat-list-icon *ngIf="!sensor.silentAlert"
+                <mat-icon matListItemIcon *ngIf="!sensor.silentAlert"
                   class="sensor-status-icon-show material-icons-outlined">volume_up</mat-icon>
                   <span *ngIf="sensor.silentAlert === false" i18n="@@sensor silent syren">Alarm with syren</span>
                   <span *ngIf="sensor.silentAlert === true" i18n="@@sensor silent alert">Silent alert</span>
@@ -100,7 +99,7 @@
               </mat-list-item>
 
               <mat-list-item>
-                <mat-icon mat-list-icon class="material-icons-outlined">tune</mat-icon>
+                <mat-icon matListItemIcon class="material-icons-outlined">tune</mat-icon>
                 <span *ngIf="sensor.monitorPeriod != null" class="long-field">
                   {{sensor.monitorPeriod !== null ? sensor.monitorPeriod+'s' : '-'}}/{{sensor.monitorThreshold}}%
                 </span>
@@ -121,8 +120,8 @@
         </mat-card-title-group>
       </mat-card-content>
 
-      <mat-divider [fxShow]="userCanEdit()"></mat-divider>
-      <mat-card-actions [fxShow]="userCanEdit()">
+      <mat-divider [ngClass]="{'hidden': !userCanEdit()}"></mat-divider>
+      <mat-card-actions [ngClass]="{'hidden': !userCanEdit()}">
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle"
           [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
@@ -137,24 +136,23 @@
   </div>
 
   <ng-template #no_sensors>
-    <div ngClass.gt-xs="sensor-list" ngClass.xs="sensor-list-xs">
+    <div class="sensor-list-xs sm:sensor-list">
       <h1 class="empty" i18n="@@sensor none">No sensors found</h1>
     </div>
   </ng-template>
 
 </div>
 
-<div ngClass.gt-xs="sensor-actions" ngClass.xs="sensor-actions-xs" [fxShow]="userCanEdit()">
-  <button class="sensor-action" mat-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()" fxShow.xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-  <button class="sensor-action" mat-fab color="accent" routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY" fxShow.xs="false"><mat-icon
-      mat-list-icon>add</mat-icon></button>
-  <button class="sensor-action" mat-mini-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()" fxShow.gt-xs="false"><mat-icon mat-list-icon>refresh</mat-icon></button>
-  <button class="sensor-action" mat-mini-fab color="accent" routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY" fxShow.gt-xs="false"><mat-icon
-      mat-list-icon>add</mat-icon></button>
+<div *ngIf="userCanEdit()" class="list-actions">
+  <!--button class="list-action" mat-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
+    (click)="onResetReferences()"><mat-icon matListItemIcon>refresh</mat-icon></button-->
+  <!--button class="list-action" mat-fab color="accent" routerLink="/sensor/add"
+    [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListItemIcon>add</mat-icon></button-->
+  <button class="list-action" mat-mini-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
+    (click)="onResetReferences()"><mat-icon matListItemIcon>refresh</mat-icon></button>
+  <button class="list-action" mat-mini-fab color="accent" routerLink="/sensor/add"
+    [disabled]="monitoringState != monitoringStates.READY"><mat-icon
+      matListItemIcon>add</mat-icon></button>
 </div>
 
 <ng-template #snackbarTemplate>

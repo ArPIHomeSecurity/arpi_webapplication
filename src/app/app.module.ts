@@ -1,12 +1,11 @@
-// animation for material desing
+// animation for material design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Output } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { CountdownModule } from 'ngx-countdown';
@@ -19,7 +18,7 @@ import { ClockComponent } from './config/clock';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
 import { SyrenComponent } from './config/syren';
-import { KeypadComponent } from './keypad';
+import { KeypadComponent } from './config/keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
 import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './area';
@@ -123,7 +122,6 @@ import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent
     ClipboardModule,
     CountdownModule,
     DigitOnlyModule,
-    FlexLayoutModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

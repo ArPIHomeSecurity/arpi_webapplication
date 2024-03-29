@@ -1,6 +1,6 @@
 <mat-toolbar color="accent">
   <button mat-raised-button color="primary" (click)="help()" class="help">
-    <span fxHide fxShow.gt-xs="true" >ArPI - Simulator&nbsp;&nbsp;</span>
+    <span>ArPI - Simulator&nbsp;&nbsp;</span>
     <mat-icon>help</mat-icon>
   </button>
 
@@ -11,7 +11,7 @@
   </button>
 
   <button mat-raised-button *ngFor="let channel of channels; let i = index" type="button" (click)="toogleChannel(i)" color="primary">
-    <span fxHide.xs="true">CH{{ i+1 | number: '2.0-0'}}</span>
+    <span class="hidden sm:block">CH{{ i+1 | number: '2.0-0'}}</span>
     <mat-icon *ngIf="channel">my_location</mat-icon>
     <mat-icon *ngIf="!channel">trip_origin</mat-icon>
   </button>

@@ -1,4 +1,4 @@
-<mat-card *ngIf="user != null" ngClass.gt-xs="user-form" ngClass.xs="user-form-xs" fxLayout="column">
+<mat-card *ngIf="user != null" class="flex flex-col user-form-xs sm:user-form-xs">
   <mat-card-content>
     <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
       <mat-form-field>

@@ -1,6 +1,5 @@
-<div *ngIf="keypad != null">
-  <form [formGroup]="keypadForm" (ngSubmit)="onSubmit()"
-    ngClass.gt-xs="keypad-form" ngClass.xs="keypad-form-xs" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+<div *ngIf="keypad != null" class="container">
+  <form [formGroup]="keypadForm" (ngSubmit)="onSubmit()" class="keypad-form">
 
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">

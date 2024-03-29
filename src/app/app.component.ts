@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject } from '@angular/core';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
@@ -55,16 +54,20 @@ export class AppComponent implements OnInit {
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
+  width$ = new BehaviorSubject<number>(1000);
+  resizeObserver!: ResizeObserver;
+
   constructor(
     @Inject('AuthenticationService') public authenticationService: AuthenticationService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
-    public mediaObserver: MediaObserver,
+    public router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public router: Router
+    
+    private host: ElementRef,
+    private zone: NgZone
   ) {
-
     this.currentLocale = localStorage.getItem('localeId');
 
     if (!this.currentLocale) {
@@ -74,24 +77,33 @@ export class AppComponent implements OnInit {
     this.versions = {serverVersion: '', webapplicationVersion: VERSION};
     this.isSessionValid = false;
   }
-
+  
   ngOnInit() {
-    this.watcher = this.mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
-      this.smallScreen = false;
-      changes.forEach(change => this.smallScreen = this.smallScreen || (change.mqAlias === 'lt-sm'));
-
-      if (this.smallScreen) {
-        this.sidenav.opened = false;
-        this.sidenav.mode = 'over';
-        this.sidenav.disableClose = false;
-      } else {
-        this.sidenav.opened = true;
-        this.sidenav.mode = 'side';
-        this.sidenav.disableClose = true;
-      }
+    this.resizeObserver = new ResizeObserver(entries => {
+      this.zone.run(() => {
+        this.width$.next(entries[0].contentRect.width);
+      });
     });
+    this.resizeObserver.observe(this.host.nativeElement);
 
-    this.smallScreen = (this.mediaObserver.isActive('xs') || this.mediaObserver.isActive('sm'));
+    this.width$.subscribe(width => {
+      if (width > 640) {
+        this.smallScreen = false;
+        if (this.sidenav) {
+          this.sidenav.opened = true;
+          this.sidenav.mode = 'side';
+          this.sidenav.disableClose = true;
+        }
+      } else {
+        this.smallScreen = true;
+        if (this.sidenav) {
+          this.sidenav.opened = false;
+          this.sidenav.mode = 'over';
+          this.sidenav.disableClose = false;
+        }
+      }
+    })
+
     this.loader.displayed.subscribe(value => this.displayLoader = value);
     this.loader.disabled.subscribe(value => this.disablePage = value);
     this.loader.message.subscribe(message => this.message = message);

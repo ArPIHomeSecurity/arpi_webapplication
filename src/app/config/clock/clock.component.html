@@ -1,6 +1,5 @@
-<div *ngIf="clock != null">
-  <form [formGroup]="clockForm" (ngSubmit)="onSubmit()"
-      ngClass.gt-xs="clock-form" ngClass.xs="clock-form-xs" fxLayout="column" fxLayoutGap="20px">
+<div *ngIf="clock != null" class="container">
+  <form [formGroup]="clockForm" (ngSubmit)="onSubmit()" class="clock-form">
 
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">

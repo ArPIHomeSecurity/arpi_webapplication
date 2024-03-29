@@ -4,9 +4,9 @@ import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ConfigurationBaseComponent } from '../configuration-base/configuration-base.component';
-import { Keypad, KeypadType } from '../models';
-import { EventService, KeypadService, LoaderService, MonitoringService } from '../services';
+import { ConfigurationBaseComponent } from '../../configuration-base/configuration-base.component';
+import { Keypad, KeypadType } from '../../models';
+import { EventService, KeypadService, LoaderService, MonitoringService } from '../../services';
 
 const scheduleMicrotask = Promise.resolve( null );
 

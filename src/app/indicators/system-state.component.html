@@ -1,5 +1,5 @@
 <!-- DESKTOP VERSION-->
-<span fxShow fxHide.xs>
+<span class="hidden sm:block">
   <mat-chip-listbox
     *ngIf="monitoringState == monitoringStates.STARTUP ||
            monitoringState == monitoringStates.UPDATING_CONFIG ||
@@ -19,7 +19,7 @@
 </span>
 
 <!-- MOBILE VERSION -->
-<span  fxHide fxShow.xs>
+<span class="hidden sm:block">
   <mat-chip-listbox
     *ngIf="monitoringState == monitoringStates.STARTUP ||
            monitoringState == monitoringStates.UPDATING_CONFIG ||
@@ -34,7 +34,7 @@
       <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state short">T</mat-chip>
     </span>
     <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger">
-      <mat-icon mat-list-icon>error</mat-icon>
+      <mat-icon matListIcon>error</mat-icon>
     </mat-chip>
   </mat-chip-listbox>
 </span>
@@ -56,11 +56,11 @@
     [ngSwitch]="armState">
 
     <mat-icon *ngSwitchCase="armTypes.MIXED">directions_walk</mat-icon>
-    <mat-icon *ngSwitchCase="armTypes.MIXED" style="margin: 0px 3px;">hotel</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.MIXED" class="icon_margin">hotel</mat-icon>
     
     <mat-icon *ngSwitchCase="armTypes.AWAY">directions_walk</mat-icon>
     
-    <mat-icon *ngSwitchCase="armTypes.STAY" style="margin: 0px 3px;">hotel</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.STAY" class="icon_margin">hotel</mat-icon>
   </span>
   
   <!-- SENSOR STATES -->
@@ -72,15 +72,15 @@
       monitoringState === monitoringStates.ALERT"
     [ngSwitch]="sensorAlert">
 
-    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
-    <mat-icon *ngSwitchCase="true" class="danger" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="false" class="normal" class="icon_margin">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="danger" class="icon_margin">sensors</mat-icon>
   </span>
   <span
     *ngIf="monitoringState === monitoringStates.ALERT_DELAY"
     [ngSwitch]="sensorAlert">
 
-    <mat-icon *ngSwitchCase="false" class="normal" style="margin: 0px 3px;">sensors</mat-icon>
-    <mat-icon *ngSwitchCase="true" class="warning" style="margin: 0px 3px;">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="false" class="normal" class="icon_margin">sensors</mat-icon>
+    <mat-icon *ngSwitchCase="true" class="warning" class="icon_margin">sensors</mat-icon>
   </span>
 
   <!-- SYREN -->

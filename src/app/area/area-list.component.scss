@@ -1,9 +1,7 @@
 @charset "UTF-8";
 
 .area-list {
-  padding: 15px;
-
-  .empty {
+   .empty {
     text-align: center;
   }
 }
@@ -18,16 +16,6 @@
   }
 }
 
-.area-card-large {
-  margin-right: auto;
-  margin-left: auto;
-  width: 458px !important;
-}
-
-.area-card-xs {
-  min-width: 390px !important;
-}
-
 .cdk-drag {
   height: unset !important;
 }
@@ -38,26 +26,6 @@ h3 {
 
 ul {
   margin-top: 0px;
-}
-
-.area-actions {
-  position: fixed;
-  bottom: 85px;
-  right: 20px;
-  float: right;
-}
-
-.area-actions-xs {
-  position: fixed;
-  bottom: 65px;
-  right: 20px;
-  float: right;
-}
-
-.area-action {
-  margin: 5px 0px;
-  float: left;
-  clear: both;
 }
 
 .sensors {

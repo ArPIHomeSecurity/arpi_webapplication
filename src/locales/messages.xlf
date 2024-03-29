@@ -771,7 +771,7 @@
         <source>Target phone number 2</source>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon mat-list-icon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>

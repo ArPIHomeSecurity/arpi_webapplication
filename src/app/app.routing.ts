@@ -6,7 +6,7 @@ import { LoginComponent } from './login';
 import { HomeComponent } from './home';
 import { ZoneListComponent, ZoneDetailComponent } from './zone';
 import { SensorListComponent, SensorDetailComponent } from './sensor';
-import { KeypadComponent } from './keypad';
+import { KeypadComponent } from './config/keypad';
 import { NotificationsComponent } from './config/notifications';
 import { NetworkComponent } from './config/network';
 import { ClockComponent } from './config/clock';

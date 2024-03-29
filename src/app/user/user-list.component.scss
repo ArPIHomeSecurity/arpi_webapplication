@@ -1,13 +1,10 @@
 @charset "UTF-8";
 
 .user-list {
-  padding: 15px;
-
   .empty {
     text-align: center;
   }
 }
-
 
 .mat-card-header {
   margin-bottom: 15px;
@@ -21,36 +18,6 @@
   .mat-card-content {
     margin-bottom: 0px;
   }
-}
-
-.user-card-large {
-  margin-right: auto;
-  margin-left: auto;
-  width: 350px !important;
-}
-
-.user-card-xs {
-  min-width: 300px !important;
-}
-
-.user-actions {
-  position: fixed;
-  bottom: 85px;
-  right: 20px;
-  float: right;
-}
-
-.user-actions-xs {
-  position: fixed;
-  bottom: 65px;
-  right: 20px;
-  float: right;
-}
-
-.user-action {
-  margin: 5px 0px;
-  float: left;
-  clear: both;
 }
 
 .mat-card-avatar {

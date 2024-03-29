@@ -5,6 +5,11 @@
   $foreground: map-get($theme, foreground);
 }
 
+app-root {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 .app-viewport {
   position: fixed;
@@ -78,7 +83,7 @@
   margin: 0 15px;
 }
 
-.mat-list-item.active {
+.mat-mdc-list-item.active {
   background-color: #ff6e40;
 }
 
