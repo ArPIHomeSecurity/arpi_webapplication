@@ -12,6 +12,7 @@ import { AuthenticationService, EventService, LoaderService, SensorService, Zone
 
 import { environment } from '../../environments/environment';
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AUTHENTICATION_SERVICE } from '../tokens';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -37,7 +38,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   isDragging = false;
 
   constructor(
-    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService,

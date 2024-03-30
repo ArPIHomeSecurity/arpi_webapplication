@@ -70,6 +70,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './output';
+import { AUTHENTICATION_SERVICE } from './tokens';
 
 
 @NgModule({
@@ -158,13 +159,10 @@ import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent
     DragDropModule
   ],
   providers: [
-    AuthGuard,
-    AdminGuard,
-
     {provide: 'AlertService', useClass: environment.alertService},
     {provide: 'AreaService', useClass: environment.areaService},
     {provide: 'ArmService', useClass: environment.armService},
-    {provide: 'AuthenticationService', useClass: environment.authenticationService},
+    {provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService},
     {provide: 'CardService', useClass: environment.cardService},
     {provide: 'ConfigurationService', useClass: environment.configurationService},
     {provide: 'EventService', useClass: environment.eventService},

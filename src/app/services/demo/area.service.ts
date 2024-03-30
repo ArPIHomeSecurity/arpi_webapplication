@@ -10,6 +10,7 @@ import { ARM_TYPE, Area, MONITORING_STATE } from 'src/app/models';
 import { AREAS } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class AreaService {
   areas: Area[];
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
     @Inject('MonitoringService') private monitoringService: MonitoringService
   ) {

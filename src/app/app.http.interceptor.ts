@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService, LoaderService } from './services';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from './tokens';
 
 
 const BASE_URL = window.location.protocol + '//' + window.location.hostname + ':' + environment.apiPort;
@@ -14,7 +15,7 @@ const BASE_URL = window.location.protocol + '//' + window.location.hostname + ':
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
     constructor(
-        @Inject('AuthenticationService') public authService: AuthenticationService,
+        @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
         @Inject('LoaderService') public loaderService: LoaderService,
         private router: Router
         ) { }

@@ -13,6 +13,7 @@ import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '../models';
 import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '../services';
 
 import { environment } from '../../environments/environment';
+import { AUTHENTICATION_SERVICE } from '../tokens';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -35,7 +36,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   constructor(
     @Inject('AreaService') public areaService:AreaService,
-    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,

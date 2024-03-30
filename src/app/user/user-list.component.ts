@@ -13,6 +13,7 @@ import { AuthenticationService, CardService, EventService, LoaderService, Monito
 
 import { environment } from 'src/environments/environment';
 import { UserCardDeleteDialogComponent } from '.';
+import { AUTHENTICATION_SERVICE } from '../tokens';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -33,7 +34,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   cards: Card[] = [];
 
   constructor(
-    @Inject('AuthenticationService') public authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('EventService') public eventService: EventService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,

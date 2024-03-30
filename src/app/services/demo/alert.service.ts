@@ -11,6 +11,7 @@ import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from 'src/app/models';
 import { ALERTS } from 'src/app/demo/configuration';
 import { getSessionValue, getValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable()
@@ -24,7 +25,7 @@ export class AlertService {
   syrenIsOn: boolean;
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('ConfigurationService') private configurationService: ConfigurationService,
     @Inject('EventService') private eventService: EventService,
 

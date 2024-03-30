@@ -12,6 +12,7 @@ import { ARM_TYPE, Arm, ArmEvent, Disarm, Option, SensorsChange, SensorState, AL
 import { ARMS, DISARMS, EVENTS } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ import { environment } from 'src/environments/environment';
 export class ArmService {
   constructor(
     @Inject('AreaService') private areaService: AreaService,
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('ConfigurationService') private configurationService: ConfigurationService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,

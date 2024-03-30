@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { AuthenticationService } from '../services';
+import { AUTHENTICATION_SERVICE } from '../tokens';
 
 
 
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   constructor(
-    @Inject('AuthenticationService') private authenticationService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
     private router: Router
     ) {
 

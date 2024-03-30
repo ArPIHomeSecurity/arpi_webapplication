@@ -9,6 +9,7 @@ import { Output } from '../../models';
 import { OUTPUTS } from 'src/app/demo/configuration';
 
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class OutputService {
   outputs: Output[] = [];
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
   ) {
     this.outputs = getSessionValue('OutputService.outputs', OUTPUTS);

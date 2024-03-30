@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 import { UserDeviceUnregisterDialogComponent } from './user';
 import { Router } from '@angular/router';
+import { AUTHENTICATION_SERVICE } from './tokens';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit {
   resizeObserver!: ResizeObserver;
 
   constructor(
-    @Inject('AuthenticationService') public authenticationService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
     public router: Router,

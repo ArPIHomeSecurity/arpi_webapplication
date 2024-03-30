@@ -13,6 +13,7 @@ import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE,
 
 import { environment } from '../../../environments/environment';
 import { getSessionValue, setSessionValue } from '../../utils';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable({
@@ -29,7 +30,7 @@ export class MonitoringService {
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
     @Inject('ZoneService') private zoneService: ZoneService,
 

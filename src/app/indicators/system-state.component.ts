@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ARM_TYPE, MONITORING_STATE, string2MonitoringState, string2ArmType, POWER_STATE, string2PowerState } from '../models';
 import { AlertService, AuthenticationService, EventService, MonitoringService, SensorService } from '../services';
+import { AUTHENTICATION_SERVICE } from '../tokens';
 
 
 @Component({
@@ -25,11 +26,10 @@ export class SystemStateComponent implements OnInit {
 
   constructor(
     @Inject('AlertService') private alertService: AlertService,
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
     @Inject('MonitoringService') private monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
-    private router: Router
   ) { }
 
   ngOnInit() {

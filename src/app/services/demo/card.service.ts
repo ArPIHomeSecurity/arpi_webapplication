@@ -8,6 +8,7 @@ import { Card } from 'src/app/models';
 import { CARDS } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class CardService {
   cards: Card[];
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService,
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
     @Inject('MonitoringService') private monitoringService: MonitoringService,
     @Inject('UserService') private userService: UserService,

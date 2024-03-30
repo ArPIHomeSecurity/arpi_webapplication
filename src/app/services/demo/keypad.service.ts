@@ -6,6 +6,7 @@ import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environments/environment';
 import { Keypad, KeypadType } from 'src/app/models';
 import { KEYPADS, KEYPAD_TYPES } from 'src/app/demo/configuration';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 @Injectable()
 export class KeypadService {
@@ -14,7 +15,7 @@ export class KeypadService {
   keypadTypes: KeypadType[] = KEYPAD_TYPES;
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
   ) { }
 
   getKeypads(): Observable<Keypad[]> {

@@ -8,6 +8,7 @@ import { Option } from 'src/app/models';
 import { DEMO_CONFIGURATION } from 'src/app/demo/configuration';
 import { getSessionValue, setSessionValue } from 'src/app/utils';
 import { environment } from 'src/environments/environment';
+import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class ConfigurationService {
   configuration: Option[];
 
   constructor(
-    @Inject('AuthenticationService') private authService: AuthenticationService
+    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
   ) {
     this.configuration = getSessionValue('ConfigurationService.configuration', DEMO_CONFIGURATION);
   }
