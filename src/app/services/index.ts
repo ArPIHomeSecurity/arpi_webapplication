@@ -10,5 +10,6 @@ export * from './loader.service';
 export * from './monitoring.service';
 export * from './output.service';
 export * from './sensor.service';
+export * from './theme.service';
 export * from './user.service';
 export * from './zone.service';

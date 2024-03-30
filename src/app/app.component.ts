@@ -14,6 +14,7 @@ import { AuthenticationService, LoaderService, MonitoringService } from './servi
 import { UserDeviceUnregisterDialogComponent } from './user';
 import { Router } from '@angular/router';
 import { AUTHENTICATION_SERVICE } from './tokens';
+import { ThemeService } from './services/theme.service';
 
 
 @Component({
@@ -58,10 +59,13 @@ export class AppComponent implements OnInit {
   width$ = new BehaviorSubject<number>(1000);
   resizeObserver!: ResizeObserver;
 
+  darkTheme;
+
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
+    @Inject('ThemeService') private themeService: ThemeService,
     public router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -80,6 +84,8 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.darkTheme = this.themeService.load();
+
     this.resizeObserver = new ResizeObserver(entries => {
       this.zone.run(() => {
         this.width$.next(entries[0].contentRect.width);
@@ -155,6 +161,11 @@ export class AppComponent implements OnInit {
       // if the current language isn't the default, add the language
       location.pathname = ('/' + newLocale + location.pathname)
     }
+  }
+
+  onThemeSwitched($event) {
+    console.log('Theme switched: ', $event.checked);
+    this.themeService.update($event.checked ? 'argus-dark-theme' : 'argus-light-theme');
   }
 
   handleCountdown($event) {

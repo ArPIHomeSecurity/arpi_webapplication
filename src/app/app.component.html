@@ -33,7 +33,7 @@
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
       <div class="logo" *ngIf="!smallScreen">
-        <img src="assets/images/argus-eye-64.jpg">
+        <img src="assets/images/argus-eye-64.png">
       </div>
 
       <mat-nav-list>
@@ -96,6 +96,10 @@
           <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
             <mat-option *ngFor="let locale of locales" [value]="locale.id">{{ locale.name }}</mat-option>
           </mat-select>
+        </mat-list-item>
+        <mat-list-item [disableRipple]="true">
+          <mat-icon matListItemIcon>invert_colors</mat-icon>
+          <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme">Dark theme</mat-slide-toggle>
         </mat-list-item>
         <mat-list-item *ngIf="!isLoggedIn() && isDeviceRegistered" i18n="@@unregister menu link" (click)="unregister()">
           <mat-icon matListItemIcon>disabled_by_default</mat-icon>

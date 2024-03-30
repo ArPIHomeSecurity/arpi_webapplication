@@ -5,7 +5,7 @@
   $foreground: map-get($theme, foreground);
 }
 
-app-root {
+::ng-deep app-root {
   display: block;
   width: 100%;
   height: 100%;

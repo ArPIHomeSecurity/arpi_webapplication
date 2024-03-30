@@ -1,29 +1,35 @@
-@import "@angular/material/theming";
+@use '@angular/material' as mat;
 
-@import 'app/app.component.scss';
-@import 'app/indicators/system-state.component.scss';
-@import 'app/components/sensor/sensor.scss';
-@import 'app/home/home.component.scss';
+@include mat.core();
 
-@include mat-core();
+$argus-primary: mat.define-palette(mat.$indigo-palette, 500);
+$argus-accent: mat.define-palette(mat.$orange-palette, A400, A100, A700);
+$argus-warn: mat.define-palette(mat.$red-palette);
 
-$argus-primary: mat-palette($mat-indigo);
-$argus-accent:  mat-palette($mat-deep-orange, A200, A100, A400);
-$argus-warn:    mat-palette($mat-red);
-$argus-ok:      mat-palette($mat-light-green);
+$argus-light-theme: mat.define-light-theme((
+  color: (
+    primary: $argus-primary,
+    accent: $argus-accent,
+    warn: $argus-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
 
-$argus-theme: mat-light-theme($argus-primary, $argus-accent, $argus-warn);
+$argus-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $argus-primary,
+    accent: $argus-accent,
+    warn: $argus-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
 
-@mixin argus-theme($theme, $ok) {
-  @include application-theme(theme);
-  @include sensors-indicator-theme(theme, ok);
-  @include arm-state-indicator-theme(theme, ok);
-  @include syren-state-indicator-theme(theme, ok);
+.argus-light-theme {
+  @include mat.all-component-themes($argus-light-theme);
 }
 
-@include angular-material-theme($argus-theme);
-
-@include application-theme($argus-theme);
-@include system-state-indicator-theme($argus-theme, $argus-ok);
-@include sensor-theme($argus-theme, $argus-ok);
-@include home-theme($argus-theme, $argus-ok);
+.argus-dark-theme {
+  @include mat.all-component-themes($argus-dark-theme);
+}

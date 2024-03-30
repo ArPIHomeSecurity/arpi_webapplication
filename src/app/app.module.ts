@@ -71,6 +71,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './output';
 import { AUTHENTICATION_SERVICE } from './tokens';
+import { ThemeService } from './services/theme.service';
 
 
 @NgModule({
@@ -159,6 +160,7 @@ import { AUTHENTICATION_SERVICE } from './tokens';
     DragDropModule
   ],
   providers: [
+    {provide: 'ThemeService', useClass: ThemeService},
     {provide: 'AlertService', useClass: environment.alertService},
     {provide: 'AreaService', useClass: environment.areaService},
     {provide: 'ArmService', useClass: environment.armService},
