@@ -1,13 +1,8 @@
-form.register, form.login {
-  margin: 0 auto 25px auto;
+.register, .login {
+  margin: 25px auto 25px auto;
 
   min-width: 300px;
   max-width: 450px;
-}
-
-mat-card {
-  margin: 30px;
-  padding: 30px 50px;
 }
 
 .actions button {

@@ -1,75 +1,76 @@
-<form *ngIf="!isRegistered" name="form" [formGroup]="registerForm" class="register">
-  <mat-card>
-    <mat-card-header>
+<mat-card *ngIf="!isRegistered" class="register">
+  <mat-card-header>
+    <mat-card-title-group>
       <mat-card-title i18n="Register device">Register device</mat-card-title>
-    </mat-card-header>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+    <form name="form" [formGroup]="registerForm">
 
-    <mat-form-field class="full-width">
-      <mat-label i18n="@@register registration code">Registration code</mat-label>
-      <input matInput
-        #registration_code_field
-        [type]="hide ? 'password' : 'text'"
-        [formControl]="registerCode"
-        autocomplete="off"
-        required
-        autofocus
-      >
+      <mat-form-field class="full-width">
+        <mat-label i18n="@@register registration code">Registration code</mat-label>
+        <input matInput #registration_code_field [type]="hide ? 'password' : 'text'" [formControl]="registerCode"
+          autocomplete="off" required autofocus>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="form-group actions flex flex-col justify-between items-center">
-      <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary" i18n="Register button">Register</button>
-      <mat-progress-spinner *ngIf="loading" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
-      </mat-progress-spinner>
-    </div>
-    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  </mat-card>
-</form>
+      <div class="form-group actions flex flex-col justify-between items-center">
+        <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary">
+          <span i18n="Register button">Register</span>
+          <mat-icon>
+            <mat-progress-spinner *ngIf="loading" diameter="15" color="primary" mode="indeterminate"/>
+          </mat-icon>
+        </button>
+      </div>
+      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+  </mat-card-content>
+</mat-card>
 
-<form *ngIf="isRegistered" name="form" [formGroup]="loginForm" class="login">
-  <mat-card>
-    <mat-card-header>
+<mat-card *ngIf="isRegistered" class="login">
+  <mat-card-header>
+    <mat-card-title-group>
       <mat-card-title i18n="Login title">Login</mat-card-title>
-    </mat-card-header>
+    </mat-card-title-group>
+  </mat-card-header>
 
-    <mat-form-field class="full-width">
-      <mat-label i18n="@@login access code">Access code</mat-label>
-      <input matInput
-        #access_code_field
-        type="text"
-        [formControl]="accessCode"
-        [ngClass]="{'password': hide}"
-        inputmode="numeric"
-        pattern="[0-9]*"
-        maxlength="10"
-        autocomplete="off"
-        digitOnly
-        required
-        autofocus
-      >
-      <button matSuffix mat-icon-button (click)="hide = !hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
+  <mat-card-content>
+    <form name="form" [formGroup]="loginForm">
+      <mat-form-field class="full-width">
+        <mat-label i18n="@@login access code">Access code</mat-label>
+        <input matInput #access_code_field type="text" [formControl]="accessCode" [ngClass]="{'password': hide}"
+          inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" digitOnly required autofocus>
+        <button matSuffix mat-icon-button (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
 
-    <div class="form-group actions flex flex-col space-y-4 justify-between items-center">
-      <button mat-raised-button type="submit" (click)="login()" [disabled]="loading || !loginForm.valid" color="primary">
+      <div class="form-group actions flex flex-col space-y-4 justify-between items-center">
+        <button mat-raised-button type="submit" (click)="login()" [disabled]="loading || !loginForm.valid"
+          color="primary">
           <span i18n="Login button">Login</span>
-      </button>
-      <mat-progress-spinner *ngIf="loading" class="impulse-spinner" diameter="25" color="primary" mode="indeterminate">
-      </mat-progress-spinner>
-    </div>
+          <mat-icon>
+            <mat-progress-spinner *ngIf="loading" diameter="15" color="primary" mode="indeterminate"/>
+          </mat-icon>
+        </button>
+      </div>
 
-    <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
-      <div *ngSwitchCase="'invalid origin'" i18n="@@login host not allowed">Host not allowed!</div>
-      <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token! Register your device!</div>
-      <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
-      <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device registration code!</div>
-      <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
-      <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration code!</div>
-      <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
-      <div *ngSwitchCase="'no connection'" i18n="@@login no connedtion">No connection to the security system!</div>
-      <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
-    </div>
-  </mat-card>
-</form>
+      <div *ngIf="error" [ngSwitch]="error" class="alert alert-danger">
+        <div *ngSwitchCase="'invalid origin'" i18n="@@login host not allowed">Host not allowed!</div>
+        <div *ngSwitchCase="'missing device token'" i18n="@@login missing device token">Missing device token! Register
+          your device!</div>
+        <div *ngSwitchCase="'invalid device token'" i18n="@@login invalid device token">Invalid device token! Update
+          your device registration!</div>
+        <div *ngSwitchCase="'expired registration code'" i18n="@@login expired registration code">Expired device
+          registration code!</div>
+        <div *ngSwitchCase="'invalid user id'" i18n="@@login invalid user id">Invalid user id! Update your device
+          registration!</div>
+        <div *ngSwitchCase="'invalid registration code'" i18n="@@login invalid registration code">Invalid registration
+          code!</div>
+        <div *ngSwitchCase="'invalid access code'" i18n="@@login invalid access code">Invalid access code!</div>
+        <div *ngSwitchCase="'no connection'" i18n="@@login no connedtion">No connection to the security system!</div>
+        <div *ngSwitchDefault i18n="@@login error">Something went wrong!?</div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
