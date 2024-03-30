@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "indigo-orange.scss";
+//@import "indigo-orange.scss";
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 /* Datetime picker*/
 @import "~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
