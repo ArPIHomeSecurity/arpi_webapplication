@@ -3,7 +3,9 @@
     (opened)="onToggle(true)"
     (closed)="onToggle(false)"
     [expanded]="expanded"
-    [disabled]="sensors.length == 0">
+    [disabled]="sensors.length == 0"
+  >
+    
     <mat-expansion-panel-header [ngClass]="{'alert': hasAlertingSensor() && !expanded}">
       <mat-panel-title>
         {{ area.name }}

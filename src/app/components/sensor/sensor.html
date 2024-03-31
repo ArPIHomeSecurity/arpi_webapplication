@@ -1,3 +1,6 @@
+{{ sensor | json}}
+{{ delay | json}}
+
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{'alerting': sensor.alert}">
@@ -10,7 +13,8 @@
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
       <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
-      <div *ngIf="sensor.enabled != null" class="sensor-state" [ngClass]="{'enabled': sensor.enabled, 'disabled': !sensor.enabled}">
+      
+      <div *ngIf="sensor.enabled != null && delay != null" class="sensor-state" [ngClass]="{'enabled': sensor.enabled, 'disabled': !sensor.enabled}">
         <span *ngIf="delay !== null && delay > 0" class="delay">{{delay}}</span>
       </div>
     </mat-card-title-group>
