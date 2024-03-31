@@ -4,12 +4,10 @@
     width: 100%;
   }
 
-  .output {
+  component-output {
+    display: inline-block;
     margin-bottom: 10px;
-
-    .active {
-      background-color: mat.get-color-from-palette($argus-ok);
-    }
+    width: 100%;
   }
 
   component-area {
@@ -79,17 +77,5 @@
 }
 
 
-.sensor-image {
-  width: 120px;
-  height: 120px;
-}
 
-.sensor-image img {
-  width: 100%;
-  height: 100%;
-}
 
-.impulse-spinner {
-  float: right;
-  margin: 10px 10px;
-}

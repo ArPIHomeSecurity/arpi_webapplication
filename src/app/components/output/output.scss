@@ -1,0 +1,10 @@
+@mixin output-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  .output-button.active {
+    background-color: mat.get-color-from-palette($argus-ok);
+  }
+}
+
+.mat-mdc-progress-spinner {
+  float: right;
+  margin: 10px 10px;
+}

@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   action: string;
 
-  ENDLESS_DURATION = 0;
-
   alert: Alert;
   armTypes: any = ARM_TYPE;
   armState: ARM_TYPE = ARM_TYPE.UNDEFINED;
@@ -123,8 +121,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     this.eventService.listen('output_state_change')
-      .subscribe(state =>
-        this.outputs.find(o => o.id === state.id).state = state.state
+      .subscribe(output =>
+        this.outputs.find(o => o.id === output.id).state = output.state
       );
 
 
@@ -260,18 +258,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   areaIdentify(index: number, area: Area) {
     return area.id;
-  }
-
-  toggleButton(output: Output) {
-    if (output.state) {
-      this.outputService.deactivateOutput(output.id);
-    }
-    else {
-      this.outputService.activateOutput(output.id);
-    }
-  }
-
-  pressButton(output: Output) {
-    this.outputService.activateOutput(output.id);
   }
 }

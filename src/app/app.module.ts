@@ -11,7 +11,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
-import { AuthGuard, AdminGuard } from './guards';
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
 import { ClockComponent } from './config/clock';
@@ -40,7 +39,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { AreaComponent, ControllerComponent, SensorComponent } from './components';
+import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -99,6 +98,7 @@ import { ThemeService } from './services/theme.service';
     AreaDetailComponent,
     AreaDeleteDialogComponent,
 
+    OutputComponent,
     OutputListComponent,
     OutputDetailComponent,
     OutputDeleteDialogComponent,

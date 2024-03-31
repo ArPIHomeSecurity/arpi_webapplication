@@ -1,0 +1,7 @@
+<mat-button-toggle class="output-button" [ngClass]="{active: output.state}" [checked]="output.state"
+  [disabled]="disabled" (change)="onToggleButton(output)">
+  {{output.name}}
+  <mat-progress-spinner *ngIf="output.duration != ENDLESS_DURATION && output.state"
+    diameter="25" color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</mat-button-toggle>
