@@ -1,4 +1,4 @@
-<div class="flex flex-col event-list-xs sm:event-list-xs">
+<div class="container event-list">
 
   <mat-expansion-panel>
 
@@ -62,8 +62,8 @@
     showFirstLastButtons="true" (page)="paginate()">
   </mat-paginator>
 
-  <div *ngIf="events; else loading" class="flex flex-col space-y-1">
-    <div *ngIf="events && events.length > 0; else no_arms" class="flex flex-col space-y-1">
+  <div *ngIf="events; else loading" class="container-item">
+    <div *ngIf="events && events.length > 0; else no_arms" class="container-item">
 
       <mat-accordion *ngFor="let event of events">
         <mat-expansion-panel [ngClass]="{'alerting': event.alert && !event.alert.endTime}">
