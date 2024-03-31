@@ -18,7 +18,7 @@ import {
   UserService,
   ZoneService,
   AreaService
-} from 'src/app/services/remote';
+} from '@app/services/remote';
 
 export const environment = {
   production: true,

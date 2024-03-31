@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 
-import { MONITORING_STATE, string2MonitoringState } from '../models';
-import { LoaderService, EventService, MonitoringService } from '../services';
+import { MONITORING_STATE, string2MonitoringState } from '@app/models';
+import { LoaderService, EventService, MonitoringService } from '@app/services';
 
 
 export class ConfigurationBaseComponent {

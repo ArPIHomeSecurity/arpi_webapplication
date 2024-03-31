@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthenticationService, LoaderService } from './services';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
 

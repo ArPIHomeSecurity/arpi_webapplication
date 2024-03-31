@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
-import { Output } from '../../models';
-import { OutputService } from 'src/app/services';
+import { Output } from '@app/models';
+import { OutputService } from '@app/services';
 
 
 @Component({

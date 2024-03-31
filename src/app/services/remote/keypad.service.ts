@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Keypad, KeypadType } from '../../models';
+import { Keypad, KeypadType } from '@app/models';
 
 
 @Injectable()

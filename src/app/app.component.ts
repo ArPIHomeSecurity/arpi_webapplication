@@ -9,9 +9,9 @@ import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts
 
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { UserDeviceUnregisterDialogComponent } from './user';
+import { UserDeviceUnregisterDialogComponent } from './pages/user';
 import { Router } from '@angular/router';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';

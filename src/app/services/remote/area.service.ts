@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ARM_TYPE, Area, armType2String, string2ArmType } from '../../models';
+import { ARM_TYPE, Area, armType2String, string2ArmType } from '@app/models';
 
 
 @Injectable()

@@ -1,7 +1,7 @@
 
 import { Observable } from 'rxjs';
 
-import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '../models';
+import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '@app/models';
 
 
 export interface MonitoringService {

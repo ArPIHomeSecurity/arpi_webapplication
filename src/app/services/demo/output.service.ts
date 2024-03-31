@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { getSessionValue, setSessionValue } from 'src/app/utils';
+import { getSessionValue, setSessionValue } from '@app/utils';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
-import { Output } from '../../models';
-import { OUTPUTS } from 'src/app/demo/configuration';
+import { Output } from '@app/models';
+import { OUTPUTS } from '@app/demo/configuration';
 
-import { environment } from 'src/environments/environment';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 @Injectable()

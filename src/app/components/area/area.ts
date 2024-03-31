@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from 'src/app/models';
-import { AreaService } from 'src/app/services';
-import { environment } from 'src/environments/environment';
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from '@app/models';
+import { AreaService } from '@app/services';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'component-area',

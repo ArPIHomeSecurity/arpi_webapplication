@@ -18,7 +18,7 @@ import {
   SensorService,
   UserService,
   ZoneService,
-} from 'src/app/services/demo';
+} from '@app/services/demo';
 
 
 export const environment = {

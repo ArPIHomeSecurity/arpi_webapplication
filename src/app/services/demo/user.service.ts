@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { User } from 'src/app/models';
-import { environment } from 'src/environments/environment';
-import { getSessionValue, setSessionValue } from 'src/app/utils';
-import { USERS } from 'src/app/demo/configuration';
+import { User } from '@app/models';
+import { environment } from '@environments/environment';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { USERS } from '@app/demo/configuration';
 
 export class UserDemo extends User {
   registrationCode: string;

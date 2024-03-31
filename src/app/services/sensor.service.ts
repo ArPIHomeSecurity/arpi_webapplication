@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Sensor, SensorType } from '../models';
+import { Sensor, SensorType } from '@app/models';
 
 
 export interface SensorService {

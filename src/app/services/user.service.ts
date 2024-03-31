@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { User } from '../models';
+import { User } from '@app/models';
 
 
 export interface UserService {

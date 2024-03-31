@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Sensor, SensorType } from 'src/app/models';
+import { Sensor, SensorType } from '@app/models';
 
 
 @Component({

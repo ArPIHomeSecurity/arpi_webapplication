@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Zone } from '../../models';
+import { Zone } from '@app/models';
 
 
 @Injectable()

@@ -4,14 +4,14 @@ import { map, delay } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { ArmService } from './arm.service';
-import { ConfigurationService } from '../configuration.service';
+import { ConfigurationService } from '@app/services/configuration.service';
 import { EventService } from './event.service';
 
-import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from 'src/app/models';
-import { ALERTS } from 'src/app/demo/configuration';
-import { getSessionValue, getValue, setSessionValue } from 'src/app/utils';
-import { environment } from 'src/environments/environment';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from '@app/models';
+import { ALERTS } from '@app/demo/configuration';
+import { getSessionValue, getValue, setSessionValue } from '@app/utils';
+import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 @Injectable()

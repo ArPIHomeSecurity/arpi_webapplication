@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Card } from '../models';
+import { Card } from '@app/models';
 
 
 export interface CardService {

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Output } from '../models';
+import { Output } from '@app/models';
 
 
 export interface OutputService {

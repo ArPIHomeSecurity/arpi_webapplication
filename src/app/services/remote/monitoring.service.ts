@@ -5,7 +5,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError as of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { ARM_TYPE, armType2String, Clocks, MONITORING_STATE, string2MonitoringState, string2ArmType, POWER_STATE, string2PowerState } from '../../models';
+import { ARM_TYPE, armType2String, Clocks, MONITORING_STATE, string2MonitoringState, string2ArmType, POWER_STATE, string2PowerState } from '@app/models';
 
 
 @Injectable()

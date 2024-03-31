@@ -4,15 +4,15 @@ import { map, delay } from 'rxjs/operators';
 
 import { AreaService } from './area.service';
 import { AuthenticationService } from './authentication.service';
-import { ConfigurationService } from '../configuration.service';
+import { ConfigurationService } from '@app/services/configuration.service';
 import { SensorService } from './sensor.service';
 import { ZoneService } from './zone.service';
 
-import { ARM_TYPE, Arm, ArmEvent, Disarm, Option, SensorsChange, SensorState, ALERT_TYPE, Alert, Sensor } from 'src/app/models';
-import { ARMS, DISARMS, EVENTS } from 'src/app/demo/configuration';
-import { getSessionValue, setSessionValue } from 'src/app/utils';
-import { environment } from 'src/environments/environment';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { ARM_TYPE, Arm, ArmEvent, Disarm, Option, SensorsChange, SensorState, ALERT_TYPE, Alert, Sensor } from '@app/models';
+import { ARMS, DISARMS, EVENTS } from '@app/demo/configuration';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 @Injectable({

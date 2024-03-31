@@ -12,8 +12,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SystemStateComponent } from './indicators/system-state.component';
-import { environment } from 'src/environments/environment.demo';
+import { SystemStateComponent } from './components/indicators/system-state.component';
+import { environment } from '@environments/environment.demo';
 
 
 describe('AppComponent', () => {

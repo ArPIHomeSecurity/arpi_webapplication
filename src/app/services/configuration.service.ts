@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Option } from '../models';
+import { Option } from '@app/models';
 
 export interface ConfigurationService {
 

@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Arm, ArmEvent, armType2String, ARM_TYPE, string2AlertType, string2ArmType } from '../../models';
+import { Arm, ArmEvent, armType2String, ARM_TYPE, string2AlertType, string2ArmType } from '@app/models';
 
 function formatDate(date: Date) {
   const year = date.toLocaleString('default', {year: 'numeric'}).replace('.','');

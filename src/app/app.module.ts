@@ -11,16 +11,16 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { CountdownModule } from 'ngx-countdown';
 
 // user authentication
-import { LoginComponent } from './login';
-import { HomeComponent } from './home';
-import { ClockComponent } from './config/clock';
-import { NotificationsComponent } from './config/notifications';
-import { NetworkComponent } from './config/network';
-import { SyrenComponent } from './config/syren';
-import { KeypadComponent } from './config/keypad';
-import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './sensor';
-import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './zone';
-import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './area';
+import { LoginComponent } from './pages/login';
+import { HomeComponent } from './pages/home';
+import { ClockComponent } from './pages/config/clock';
+import { NotificationsComponent } from './pages/config/notifications';
+import { NetworkComponent } from './pages/config/network';
+import { SyrenComponent } from './pages/config/syren';
+import { KeypadComponent } from './pages/config/keypad';
+import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './pages/sensor';
+import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './pages/zone';
+import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './pages/area';
 import {
   UserListComponent,
   UserDetailComponent,
@@ -28,15 +28,15 @@ import {
   UserDeviceRegistrationDialogComponent,
   UserDeviceUnregisterDialogComponent,
   UserCardDeleteDialogComponent,
-} from './user';
-import { SystemStateComponent } from './indicators/system-state.component';
+} from './pages/user';
+import { SystemStateComponent } from './components/indicators/system-state.component';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { routing } from './app.routing';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
@@ -64,11 +64,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { EventsComponent } from './events/events.component';
+import { EventsComponent } from './pages/events/events.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './output';
+import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
 

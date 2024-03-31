@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Sensor, SensorType } from '../../models';
+import { Sensor, SensorType } from '@app/models';
 
 
 @Injectable()

@@ -6,11 +6,11 @@ import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { MonitoringService } from './monitoring.service';
 
-import { Sensor, SensorType } from 'src/app/models';
-import { SENSORS, SENSOR_TYPES } from 'src/app/demo/configuration';
-import { getSessionValue, setSessionValue } from 'src/app/utils';
-import { environment } from 'src/environments/environment';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { Sensor, SensorType } from '@app/models';
+import { SENSORS, SENSOR_TYPES } from '@app/demo/configuration';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { ARM_TYPE, Area } from '../models';
+import { ARM_TYPE, Area } from '@app/models';
 
 
 export interface AreaService {

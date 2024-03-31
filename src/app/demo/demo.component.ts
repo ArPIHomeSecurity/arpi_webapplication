@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
-import { SensorService, CardService } from '../services/demo';
-import { getSessionValue, setSessionValue } from '../utils';
+import { SensorService, CardService } from '@app/services/demo';
+import { getSessionValue, setSessionValue } from '@app/utils';
 
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-demo',

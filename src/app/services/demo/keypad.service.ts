@@ -3,10 +3,10 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { environment } from 'src/environments/environment';
-import { Keypad, KeypadType } from 'src/app/models';
-import { KEYPADS, KEYPAD_TYPES } from 'src/app/demo/configuration';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { environment } from '@environments/environment';
+import { Keypad, KeypadType } from '@app/models';
+import { KEYPADS, KEYPAD_TYPES } from '@app/demo/configuration';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 @Injectable()
 export class KeypadService {

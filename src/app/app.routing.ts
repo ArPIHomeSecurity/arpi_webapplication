@@ -2,19 +2,19 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard, AdminGuard } from './guards';
 
-import { LoginComponent } from './login';
-import { HomeComponent } from './home';
-import { ZoneListComponent, ZoneDetailComponent } from './zone';
-import { SensorListComponent, SensorDetailComponent } from './sensor';
-import { KeypadComponent } from './config/keypad';
-import { NotificationsComponent } from './config/notifications';
-import { NetworkComponent } from './config/network';
-import { ClockComponent } from './config/clock';
-import { SyrenComponent } from './config/syren';
-import { UserListComponent, UserDetailComponent } from './user';
-import { EventsComponent } from './events/events.component';
-import { AreaDetailComponent, AreaListComponent } from './area';
-import { OutputDetailComponent, OutputListComponent } from './output';
+import { LoginComponent } from './pages/login';
+import { HomeComponent } from './pages/home';
+import { ZoneListComponent, ZoneDetailComponent } from './pages/zone';
+import { SensorListComponent, SensorDetailComponent } from './pages/sensor';
+import { KeypadComponent } from './pages/config/keypad';
+import { NotificationsComponent } from './pages/config/notifications';
+import { NetworkComponent } from './pages/config/network';
+import { ClockComponent } from './pages/config/clock';
+import { SyrenComponent } from './pages/config/syren';
+import { UserListComponent, UserDetailComponent } from './pages/user';
+import { EventsComponent } from './pages/events/events.component';
+import { AreaDetailComponent, AreaListComponent } from './pages/area';
+import { OutputDetailComponent, OutputListComponent } from './pages/output';
 
 const appRoutes: Routes = [
   {

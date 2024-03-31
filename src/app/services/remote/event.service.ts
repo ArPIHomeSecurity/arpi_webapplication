@@ -3,7 +3,7 @@ import { Observable ,  Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 
 @Injectable()
 export class EventService {

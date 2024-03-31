@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { AuthenticationService } from 'src/app/services';
-import { EventService, MonitoringService, UserService } from 'src/app/services/demo';
-import { Card } from 'src/app/models';
-import { CARDS } from 'src/app/demo/configuration';
-import { getSessionValue, setSessionValue } from 'src/app/utils';
-import { environment } from 'src/environments/environment';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { AuthenticationService } from '@app/services';
+import { EventService, MonitoringService, UserService } from '@app/services/demo';
+import { Card } from '@app/models';
+import { CARDS } from '@app/demo/configuration';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 @Injectable({
   providedIn: 'root'

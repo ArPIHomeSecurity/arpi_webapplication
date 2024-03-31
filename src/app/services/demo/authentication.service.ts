@@ -4,9 +4,9 @@ import { Observable, of, Subject } from 'rxjs';
 import { delay, map, startWith } from 'rxjs/operators';
 
 import { UserService } from './user.service';
-import { User } from '../../models';
-import { environment } from '../../../environments/environment';
-import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '../../utils';
+import { User } from '@app/models';
+import { environment } from '@environments/environment';
+import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '@app/utils';
 
 @Injectable()
 export class AuthenticationService {

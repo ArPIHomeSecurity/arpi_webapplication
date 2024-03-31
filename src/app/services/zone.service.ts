@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Zone } from '../models';
+import { Zone } from '@app/models';
 
 
 export interface ZoneService {

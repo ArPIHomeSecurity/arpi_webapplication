@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Keypad, KeypadType } from '../models';
+import { Keypad, KeypadType } from '@app/models';
 
 
 export interface KeypadService {

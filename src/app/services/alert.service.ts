@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Alert } from '../models';
+import { Alert } from '@app/models';
 
 
 export interface AlertService {

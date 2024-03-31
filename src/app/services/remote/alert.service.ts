@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Alert, string2AlertType } from '../../models';
+import { Alert, string2AlertType } from '@app/models';
 
 
 @Injectable()

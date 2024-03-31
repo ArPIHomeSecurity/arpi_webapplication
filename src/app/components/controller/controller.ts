@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ARM_TYPE, MONITORING_STATE } from 'src/app/models';
+import { ARM_TYPE, MONITORING_STATE } from '@app/models';
 
 
 @Component({

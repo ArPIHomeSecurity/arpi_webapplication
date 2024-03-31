@@ -9,11 +9,11 @@ import { ArmService } from './arm.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String, POWER_STATE } from '../../models';
+import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String, POWER_STATE } from '@app/models';
 
-import { environment } from '../../../environments/environment';
-import { getSessionValue, setSessionValue } from '../../utils';
-import { AUTHENTICATION_SERVICE } from 'src/app/tokens';
+import { environment } from '@environments/environment';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 @Injectable({

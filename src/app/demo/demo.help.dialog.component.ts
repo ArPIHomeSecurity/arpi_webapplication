@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-demo-help-dialog',

@@ -1,4 +1,4 @@
-import { ARM_TYPE, Alert, Arm, ArmEvent, Disarm, OutputTriggerType, ROLE_TYPES } from 'src/app/models';
+import { ARM_TYPE, Alert, Arm, ArmEvent, Disarm, OutputTriggerType, ROLE_TYPES } from '@app/models';
 
 export const DEMO_CONFIGURATION = [
     {
