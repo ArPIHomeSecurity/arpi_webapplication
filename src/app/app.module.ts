@@ -40,7 +40,7 @@ import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { environment } from 'src/environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { AreaComponent, SensorComponent } from './components';
+import { AreaComponent, ControllerComponent, SensorComponent } from './components';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -79,6 +79,7 @@ import { ThemeService } from './services/theme.service';
     AppComponent,
     LoginComponent,
     HomeComponent,
+    ControllerComponent,
 
     KeypadComponent,
     ClockComponent,

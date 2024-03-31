@@ -1,10 +1,18 @@
 @use '@angular/material' as mat;
 
 @include mat.core();
+//@import 'app/app.component.scss';
+@import 'app/indicators/system-state.component.scss';
+@import 'app/components/sensor/sensor.scss';
+@import 'app/home/home.component.scss';
+@import 'app/components/controller/controller.scss';
 
 $argus-primary: mat.define-palette(mat.$indigo-palette, 500);
 $argus-accent: mat.define-palette(mat.$orange-palette, A400, A100, A700);
-$argus-warn: mat.define-palette(mat.$red-palette);
+
+$argus-ok: mat.define-palette(mat.$green-palette);
+$argus-alert: mat.define-palette(mat.$red-palette);
+$argus-warn: mat.define-palette(mat.$orange-palette);
 
 $argus-light-theme: mat.define-light-theme((
   color: (
@@ -28,8 +36,16 @@ $argus-dark-theme: mat.define-dark-theme((
 
 .argus-light-theme {
   @include mat.all-component-themes($argus-light-theme);
+  @include system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
 }
 
 .argus-dark-theme {
   @include mat.all-component-themes($argus-dark-theme);
+  @include system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
 }

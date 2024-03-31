@@ -1,0 +1,39 @@
+<mat-button-toggle-group
+    #group="matButtonToggleGroup"
+    [name]="armState"
+    [disabled]="armState == armTypes.UNDEFINED"
+    multiple
+>
+    <mat-button-toggle
+        class="arm-away"
+        value="AWAY"
+        [checked]="[armTypes.AWAY, armTypes.MIXED].includes(armState)"
+        [disabled]="isAwayDisabled()"
+        (change)="armChangedHandler(armTypes.AWAY)"
+        (click)="$event.stopPropagation()"
+        i18n="@@arm away button"
+    >
+        AWAY
+    </mat-button-toggle>
+    <mat-button-toggle
+        class="disarm"
+        value="DISARMED"
+        [checked]="armState == armTypes.DISARMED && systemAlert !== null"
+        (change)="armChangedHandler(armTypes.DISARMED)"
+        (click)="$event.stopPropagation()"
+        i18n="@@disarm button"
+    >
+        OFF
+    </mat-button-toggle>
+    <mat-button-toggle
+        class="arm-stay"
+        value="STAY"
+        [checked]="[armTypes.STAY, armTypes.MIXED].includes(armState)"
+        [disabled]="isStayDisabled()"
+        (change)="armChangedHandler(armTypes.STAY)"
+        (click)="$event.stopPropagation()"
+        i18n="@@arm stay button"
+    >
+        STAY
+    </mat-button-toggle>
+</mat-button-toggle-group>

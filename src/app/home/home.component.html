@@ -1,21 +1,13 @@
 <div class="container">
 
   <div class="container-item controller">
-    <mat-button-toggle-group id="arm-state-control" #group="matButtonToggleGroup" [name]="armState"
-      [disabled]="armState == armTypes.UNDEFINED" multiple>
-      <mat-button-toggle class="arm-away" value="AWAY" [checked]="[armTypes.AWAY, armTypes.MIXED].includes(armState)"
-        [disabled]="isAwayDisabled()" (change)="armChanged($event)" i18n="@@arm away button">
-        AWAY
-      </mat-button-toggle>
-      <mat-button-toggle class="disarm" value="DISARMED" [checked]="armState == armTypes.DISARMED && !alert"
-        (change)="armChanged($event)" i18n="@@disarm button">
-        OFF
-      </mat-button-toggle>
-      <mat-button-toggle class="arm-stay" value="STAY" [checked]="[armTypes.STAY, armTypes.MIXED].includes(armState)"
-        [disabled]="isStayDisabled()" (change)="armChanged($event)" i18n="@@arm stay button">
-        STAY
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+    <component-controller
+      [armState]="armState"
+      [monitoringState]="monitoringState"
+      [sensorAlert]="sensorAlert"
+      [systemAlert]="alert != null"
+      (armChanged)="armChanged($event)"
+    />
   </div>
 
   <div *ngIf="outputs" class="container-item ">
@@ -52,9 +44,9 @@
   </div>
 
   <div *ngIf="areas.length > 1" class="container-item">
-    <app-area *ngFor="let area of areas; trackBy: areaIdentify" [area]="area" [sensors]="getSensors(area.id)"
+    <component-area *ngFor="let area of areas; trackBy: areaIdentify" [area]="area" [sensors]="getSensors(area.id)"
       [delays]="getSensorDelays(area.id)" [monitoringState]="monitoringState">
-    </app-area>
+    </component-area>
   </div>
 
 </div>

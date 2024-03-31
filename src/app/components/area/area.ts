@@ -6,7 +6,7 @@ import { AreaService } from 'src/app/services';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-area',
+  selector: 'component-area',
   templateUrl: './area.html',
   styleUrls: ['./area.scss']
 })
@@ -36,16 +36,16 @@ export class AreaComponent implements OnInit {
     this.expanded = localStorage.getItem('expanded_'+this.area.id) === 'true';
   }
 
-  armChanged(event) {
-    if (event.value === 'AWAY') {
+  armChanged(armType: ARM_TYPE) {
+    if (armType === ARM_TYPE.AWAY) {
       this.action = 'armed away';
       this.areaService.arm(this.area.id, ARM_TYPE.AWAY)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
-    } else if (event.value === 'STAY') {
+    } else if (armType === ARM_TYPE.STAY) {
       this.action = 'armed stay';
       this.areaService.arm(this.area.id, ARM_TYPE.STAY)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
-    } else if (event.value === 'DISARMED') {
+    } else if (armType === ARM_TYPE.DISARMED) {
       this.action = 'disarmed';
       this.areaService.disarm(this.area.id)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));

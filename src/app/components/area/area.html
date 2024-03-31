@@ -11,47 +11,18 @@
       
       <mat-panel-description>
         <div *ngIf="sensors.length == 0" class="empty" i18n="@@area no sensors">No sensors</div>
-        <mat-button-toggle-group
-          #group="matButtonToggleGroup"
-          [disabled]="area.armState == armTypes.UNDEFINED"
-          [ngClass]="{'hidden': sensors.length == 0}"
-        >
-          <mat-button-toggle 
-            value="AWAY"
-            class="arm-away"
-            [checked]="area.armState == armTypes.AWAY"
-            [disabled]="hasAlertingSensor() || !canBeArmed()"
-            (change)="armChanged($event)"
-            i18n="@@arm away button"
-            (click)="$event.stopPropagation()"
-            >
-            AWAY
-          </mat-button-toggle>
-          <mat-button-toggle 
-            value="DISARMED"
-            class="disarm"
-            [checked]="area.armState == armTypes.DISARMED"
-            (change)="armChanged($event)" i18n="@@disarm button"
-            (click)="$event.stopPropagation()"
-            >
-            OFF
-          </mat-button-toggle>
-          <mat-button-toggle 
-            value="STAY"
-            class="arm-stay"
-            [checked]="area.armState == armTypes.STAY"
-            [disabled]="hasAlertingSensor() || !canBeArmed()"
-            (change)="armChanged($event)" i18n="@@arm stay button"
-            (click)="$event.stopPropagation()"
-          >
-            STAY
-          </mat-button-toggle>
-        </mat-button-toggle-group>
+          <component-controller
+            *ngIf="sensors.length > 0"
+            [armState]="area.armState"
+            [monitoringState]="monitoringState"
+            [sensorAlert]="hasAlertingSensor()"
+            [systemAlert]="false"
+            (armChanged)="armChanged($event)"
+          />
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    
-    <div fxFlexAlign="center" class="flex flex-col space-y-2">
+    <div fxFlexAlign="center">
       <span *ngFor="let sensor of sensors; let i = index">
         <sensor *ngIf="!sensor.uiHidden || sensor.alert" [sensor]="sensor" [delay]="delays[i]"></sensor>
       </span>

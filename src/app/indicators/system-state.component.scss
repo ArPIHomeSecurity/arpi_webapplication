@@ -9,15 +9,10 @@
   vertical-align: text-bottom;
 }
 
-@mixin system-state-indicator-theme($theme, $ok) {
-  $primary: map-get($theme, primary);
-  $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
-
+@mixin system-state-indicator-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   /* states */
   .normal {
-    color: map-get($ok, 600),
+    color: mat.get-color-from-palette($argus-ok),
   }
 
   .warning {
@@ -25,11 +20,11 @@
   }
 
   .danger {
-    color: mat-color($warn);
+    color: mat.get-color-from-palette($argus-warn);
   }
 
   .mat-chip.normal {
-    background-color: map-get($ok, 600),
+    background-color: mat.get-color-from-palette($argus-ok),
   }
 
   .mat-chip.warning {
@@ -37,6 +32,6 @@
   }
 
   .mat-chip.danger {
-    background-color: mat-color($warn);
+    background-color: mat.get-color-from-palette($argus-warn);
   }
 }

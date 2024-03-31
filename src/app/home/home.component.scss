@@ -1,53 +1,25 @@
-@mixin home-theme($theme, $ok) {
-  $primary: map-get($theme, primary);
-  $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $foreground: map-get($theme, foreground);
+@mixin home-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  component-controller {
+    display: inline-block;
+    width: 100%;
+  }
 
-  .container {
-    margin: 20px auto 25px auto;
-    min-width: 300px;
-    max-width: 450px;
+  .output {
+    margin-bottom: 10px;
 
-    padding: 5px;
-    
-    
-    .controller {
-      width: 100%;
-      mat-button-toggle-group {
-        width: 100%;
-        .mat-button-toggle {
-          width: 33%;
-        }
-      }
+    .active {
+      background-color: mat.get-color-from-palette($argus-ok);
     }
   }
 
-  .arm-away.mat-button-toggle-checked {
-    background-color: #ed1010;
-  }
-
-  .disarm.mat-button-toggle-checked {
-    background-color: map-get($ok, 600);
-  }
-
-  .arm-stay.mat-button-toggle-checked {
-    background-color: #ffb600;
-  }
-
-  .mat-button-toggle {
+  component-area {
+    margin-bottom: 10px;
+    display: inline-block;
     width: 100%;
-    height: 100%;
-    text-align: center;
-  }
-
-
-  .output.active {
-    background-color: map-get($ok, 600);
   }
   
   mat-expansion-panel.alert {
-    background-color: #ed1010;
+    background-color: mat.get-color-from-palette($argus-alert);
 
     .mat-expansion-indicator::after {
       color: #ffffff;

@@ -1,0 +1,23 @@
+@mixin controller-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  mat-button-toggle-group {
+    width: 100%;
+  }
+
+  .arm-away.mat-button-toggle-checked {
+    background-color: mat.get-color-from-palette($argus-alert) !important;
+  }
+
+  .disarm.mat-button-toggle-checked {
+    background-color: mat.get-color-from-palette($argus-ok) !important;
+  }
+
+  .arm-stay.mat-button-toggle-checked {
+    background-color: mat.get-color-from-palette($argus-warn) !important;
+  }
+
+  .mat-button-toggle {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+}

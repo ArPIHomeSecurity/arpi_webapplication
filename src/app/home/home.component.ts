@@ -194,34 +194,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  armChanged(event) {
-    if (event.value === 'AWAY') {
+  armChanged(armType: ARM_TYPE) {
+    if (armType === ARM_TYPE.AWAY) {
       this.action = 'armed away';
       this.monitoringService.arm(ARM_TYPE.AWAY)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
-    } else if (event.value === 'STAY') {
+    } else if (armType === ARM_TYPE.STAY) {
       this.action = 'armed stay';
       this.monitoringService.arm(ARM_TYPE.STAY)
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
-    } else if (event.value === 'DISARMED') {
+    } else if (armType === ARM_TYPE.DISARMED) {
       this.action = 'disarmed';
       this.monitoringService.disarm()
         .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
     }
-  }
-
-  isAwayDisabled() {
-    return this.sensorAlert ||
-      this.armState !== ARM_TYPE.DISARMED ||
-      this.monitoringState !== MONITORING_STATE.READY ||
-      this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
-  }
-
-  isStayDisabled() {
-    return this.sensorAlert ||
-      this.armState !== ARM_TYPE.DISARMED ||
-      this.monitoringState !== MONITORING_STATE.READY ||
-      this.monitoringState === MONITORING_STATE.READY && this.alert !== null && this.alert !== undefined
   }
 
   isOutputDisabled(output: Output) {

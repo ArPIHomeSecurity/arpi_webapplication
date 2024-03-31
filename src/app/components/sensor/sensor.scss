@@ -1,15 +1,10 @@
 
-@mixin sensor-theme($theme, $ok) {
-    $primary: map-get($theme, primary);
-    $warn: map-get($theme, warn);
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
-
+@mixin sensor-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
     .alerting {
         -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
         -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
         box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-        background-color: mat-color($warn);
+        background-color: mat.get-color-from-palette($argus-warn);
         border-radius: 22px;
     }
 
@@ -33,7 +28,7 @@
             line-height: 40px;
             margin: auto 0px;
             text-align: center;
-            background-color: mat-color($ok);
+            background-color: mat.get-color-from-palette($argus-ok);
         }
 
         .disabled {
