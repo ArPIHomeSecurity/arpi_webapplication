@@ -8,15 +8,12 @@
   .divider {
     margin: 0 10px;
   }
-}
 
-.zone-card {
-  .mat-card-title {
-    margin-left: 16px;
-  }
-  
-  .mat-card-content {
-    margin-bottom: 0px;
+  .description {
+    margin: {
+      top: 10px;
+      bottom: 10px;
+    }
   }
 }
 

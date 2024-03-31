@@ -4,10 +4,12 @@
       <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="column">
           <mat-form-field>
+            <mat-label i18n="@@name">Name</mat-label>
             <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label i18n="@@description">Description</mat-label>
             <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description"
               required></textarea>
           </mat-form-field>
@@ -18,6 +20,7 @@
           disarmed</mat-checkbox>
         <div *ngIf="zoneForm.get('disarmedAlert').value" class="row">
           <mat-form-field>
+            <mat-label i18n="@@zone disarmed delay field">Disarmed delay</mat-label>
             <input matInput type="number" i18n-placeholder="@@zone disarmed delay"
               placeholder="Delay alert when not armed" formControlName="disarmedDelay">
             <mat-error
@@ -26,17 +29,20 @@
         </div>
 
         <mat-divider></mat-divider>
+
         <mat-checkbox formControlName="awayArmedAlert" color="primary"
           (change)="alertWhenChanged($event, 'awayAlertDelay')" i18n="@@zone alert when away">Alert when away
           armed</mat-checkbox>
         <div *ngIf="zoneForm.get('awayArmedAlert').value" class="row">
-          <mat-form-field>
+          <mat-form-field class="row-item">
+            <mat-label i18n="@@zone away alert delay field">Away alert delay</mat-label>
             <input matInput type="number" i18n-placeholder="@@zone away alert delay"
               placeholder="Delay alert when armed away" formControlName="awayAlertDelay">
             <mat-error
               *ngIf="zoneForm.get('awayAlertDelay').invalid">{{zoneForm.get('awayAlertDelay').getError('invalid')}}</mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="row-item">
+            <mat-label i18n="@@zone away arm delay field">Away arm delay</mat-label>
             <input matInput type="number" i18n-placeholder="@@zone away arm delay"
               placeholder="Delay arm when arming away" formControlName="awayArmDelay">
             <mat-error
@@ -49,13 +55,15 @@
           (change)="alertWhenChanged($event, 'stayAlertDelay')" i18n="@@zone alert when stay">Alert when stay
           armed</mat-checkbox>
         <div *ngIf="zoneForm.get('stayArmedAlert').value" class="row">
-          <mat-form-field>
+          <mat-form-field class="row-item">
+            <mat-label i18n="@@zone stay delay field">Stay alert delay</mat-label>
             <input matInput type="number" i18n-placeholder="@@zone stay delay" placeholder="Delay alert when armed stay"
               formControlName="stayAlertDelay">
             <mat-error
               *ngIf="zoneForm.get('stayAlertDelay').invalid">{{zoneForm.get('stayAlertDelay').getError('invalid')}}</mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="row-item">
+            <mat-label i18n="@@zone stay arm delay field">Stay arm delay</mat-label>
             <input matInput type="number" i18n-placeholder="@@zone stay arm delay"
               placeholder="Delay arm when arming stay" formControlName="stayArmDelay">
             <mat-error
@@ -65,7 +73,7 @@
       </form>
     </mat-card-content>
 
-    <mat-divider inset></mat-divider>
+    <mat-divider></mat-divider>
 
     <mat-card-actions align="end">
       <button mat-icon-button color="primary" [disabled]="zoneForm.invalid || monitoringState != monitoringStates.READY"

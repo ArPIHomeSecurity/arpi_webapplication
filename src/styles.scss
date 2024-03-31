@@ -49,6 +49,7 @@ html, body, material-app, .my-content {
 .row {
   display: flex;
   flex-direction: row;
+  align-items: stretch;
   gap: 10px;
 }
 
@@ -56,6 +57,10 @@ html, body, material-app, .my-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.column-item, .row-item {
+  flex-grow: 1;
 }
 
 .list-actions {

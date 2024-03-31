@@ -7,11 +7,11 @@
       *ngFor="let zone of zones"
       class="zone-card container-item">
 
-      <mat-card-content layout="row">
-  
+      <mat-card-header>
         <mat-card-title>{{zone.name}}</mat-card-title>
-        <mat-card-subtitle *ngIf="zone.name != zone.description">{{zone.description}}</mat-card-subtitle>
-  
+      </mat-card-header>
+
+      <mat-card-content>
         <mat-expansion-panel (opened)="onOpenConfig(zone.id)" (closed)="onCloseConfig(zone.id)" [expanded]="configOpened[zone.id]">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
@@ -80,6 +80,12 @@
           </ng-template>
         </mat-expansion-panel>
       </mat-card-content>
+
+      <mat-card-content *ngIf="zone.description" class="description">
+        <mat-card-subtitle *ngIf="zone.name != zone.description">{{zone.description}}</mat-card-subtitle>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
   
       <mat-card-actions [ngClass]="{'hidden': !userCanEdit()}">
         <!-- drag and drop icon button-->
