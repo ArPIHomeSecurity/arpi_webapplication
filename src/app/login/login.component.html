@@ -40,9 +40,7 @@
         <mat-label i18n="@@login access code">Access code</mat-label>
         <input matInput #access_code_field type="text" [formControl]="accessCode" [ngClass]="{'password': hide}"
           inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" digitOnly required autofocus>
-        <button matSuffix mat-icon-button (click)="hide = !hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
       <div class="form-group actions flex flex-col space-y-4 justify-between items-center">

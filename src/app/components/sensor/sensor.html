@@ -1,6 +1,3 @@
-{{ sensor | json}}
-{{ delay | json}}
-
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{'alerting': sensor.alert}">
