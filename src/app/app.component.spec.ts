@@ -12,7 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SystemStateComponent } from './components/indicators/system-state.component';
+import { SystemStateComponent } from './components/system-state/system-state.component';
 import { environment } from '@environments/environment.demo';
 
 

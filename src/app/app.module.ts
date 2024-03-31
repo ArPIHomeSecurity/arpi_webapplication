@@ -29,7 +29,7 @@ import {
   UserDeviceUnregisterDialogComponent,
   UserCardDeleteDialogComponent,
 } from './pages/user';
-import { SystemStateComponent } from './components/indicators/system-state.component';
+import { SystemStateComponent } from './components/system-state/system-state.component';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { routing } from './app.routing';

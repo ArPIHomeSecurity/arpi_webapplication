@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 @include mat.core();
-@import 'app/components/indicators/system-state.component.scss';
+@import 'app/components/system-state/system-state.component.scss';
 @import 'app/components/sensor/sensor.scss';
 @import 'app/components/controller/controller.scss';
 @import 'app/components/output/output.scss';
