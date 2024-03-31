@@ -1,52 +1,48 @@
-
 @mixin sensor-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
-    .alerting {
-        -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-        -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-        box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-        background-color: mat.get-color-from-palette($argus-warn);
-        border-radius: 22px;
+  .mat-mdc-card {
+    .mat-mdc-card-header {
+      padding: 16px;
     }
 
-    mat-card.sensor {
-        .mat-card-header {
-            height: 50px;
-        }
-
-        .mat-card-title-group {
-            width: 100%;
-            margin: 5px 5px 5px 5px;
-        }
-
-        .enabled {
-            -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            border-radius: 22px;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            margin: auto 0px;
-            text-align: center;
-            background-color: mat.get-color-from-palette($argus-ok);
-        }
-
-        .disabled {
-            -moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-            border-radius: 22px;
-            width: 40px;
-            height: 40px;
-            margin: auto 0px;
-            line-height: 40px;
-            text-align: center;
-            background-color: rgb(160, 160, 160);
-        }
-
-        .sensor-image {
-            margin: 5px;
-        }
+    .mat-mdc-card-title-group {
+      margin-left: 15px;
     }
 
+    .sensor-state {
+      -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      border-radius: 22px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      margin: auto 0px;
+      text-align: center;
+    }
+
+    .sensor-state.enabled {
+      background-color: mat.get-color-from-palette($argus-ok);
+    }
+    
+    .sensor-state.disabled {
+      background-color: rgb(160, 160, 160);
+    }
+
+    .sensor-image {
+      margin: 5px;
+    }
+
+    .sensor-image.alerting {
+      -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      background-color: mat.get-color-from-palette($argus-warn);
+      border-radius: 22px;
+    }
+  }
+}
+
+.argus-dark-theme .sensor-image {
+  -webkit-filter: invert(1);
+  filter: invert(1);
 }

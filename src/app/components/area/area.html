@@ -22,11 +22,9 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <div fxFlexAlign="center">
-      <span *ngFor="let sensor of sensors; let i = index">
-        <sensor *ngIf="!sensor.uiHidden || sensor.alert" [sensor]="sensor" [delay]="delays[i]"></sensor>
-      </span>
-    </div>
+    <span *ngFor="let sensor of sensors; let i = index">
+      <component-sensor *ngIf="!sensor.uiHidden || sensor.alert" [sensor]="sensor" [delay]="delays[i]"/>
+    </span>
 
   </mat-expansion-panel>
 </mat-accordion>

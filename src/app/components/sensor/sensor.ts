@@ -3,7 +3,7 @@ import { Sensor, SensorType } from 'src/app/models';
 
 
 @Component({
-    selector: 'sensor',
+    selector: 'component-sensor',
     templateUrl: 'sensor.html',
     styleUrls: ['sensor.scss'],
     providers: []

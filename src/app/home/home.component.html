@@ -33,14 +33,13 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"></sensor>
+      <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"/>
 
     </mat-expansion-panel>
   </div>
 
   <div *ngIf="areas.length == 1" class="container-item">
-    <sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)">
-    </sensor>
+    <component-sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"/>
   </div>
 
   <div *ngIf="areas.length > 1" class="container-item">

@@ -31,9 +31,10 @@ html, body, material-app, .my-content {
  */
 
 .container {
-  margin: 20px auto 25px auto;
+  margin: auto;
   min-width: 400px;
   max-width: 600px;
+  padding: 15px;
 }
 
 .container-item {
