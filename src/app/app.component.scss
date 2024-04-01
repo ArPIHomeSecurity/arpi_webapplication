@@ -68,7 +68,7 @@
   margin: 0px 15px;
 }
 
-.message {
+.mat-mdc-card.message {
   margin: 5px;
   background-color: #f8d7da;
 }
@@ -119,10 +119,4 @@
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */   
-}
-
-// remove margin from mat-card-header-text
-// to avoid unnecessary space between image and text
-::ng-deep div.mat-card-header-text {
-  margin: 0px !important;
 }

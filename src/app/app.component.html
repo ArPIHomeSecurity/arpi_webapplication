@@ -112,7 +112,9 @@
       <div id="overlay" *ngIf="disablePage"></div>
 
       <mat-card *ngIf="message && !displayLoader" class="message">
-        <span>{{ message }}</span>
+        <mat-card-content>
+          <span>{{ message }}</span>
+        </mat-card-content>
       </mat-card>
 
       <!-- main app container -->
