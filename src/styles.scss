@@ -47,7 +47,7 @@ html, body, material-app, .my-content {
 }
 
 .row {
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   align-items: stretch;
   gap: 10px;

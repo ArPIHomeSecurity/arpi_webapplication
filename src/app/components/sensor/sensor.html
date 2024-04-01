@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="sensor-component">
   <mat-card-header>
     <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{'alerting': sensor.alert}">
       <img *ngSwitchCase="1" src="assets/images/sensor_motion.png" />

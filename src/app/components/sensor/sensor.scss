@@ -1,5 +1,5 @@
 @mixin sensor-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
-  .mat-mdc-card {
+  .mat-mdc-card.sensor-component {
     .mat-mdc-card-header {
       padding: 16px;
     }
@@ -42,11 +42,12 @@
       box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
       background-color: mat.get-color-from-palette($argus-warn);
       border-radius: 22px;
+      background-color: mat.get-color-from-palette($argus-alert);
     }
   }
 }
 
-.argus-dark-theme .sensor-image {
+.argus-dark-theme .mat-mdc-card.sensor-component .sensor-image img {
   -webkit-filter: invert(1);
   filter: invert(1);
 }
