@@ -3,11 +3,11 @@
   <app-demo *ngIf="environment.demo"></app-demo>
 
   <mat-toolbar color="primary">
-    <button mat-button (click)="sidenav.toggle()" *ngIf="smallScreen" class="menu">
+    <button mat-icon-button (click)="sidenav.toggle()" *ngIf="smallScreen" class="menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <button mat-button *ngIf="isLoggedIn() && smallScreen" routerLink="/" (click)="sidenav.close()">
-      <img class="logo-button" src="assets/images/argus-eye-30.png"><span>ArPI</span>
+    <button mat-flat-button *ngIf="isLoggedIn() && smallScreen" routerLink="/" (click)="sidenav.close()" class="logo-button">
+      <img src="assets/images/argus-eye-30.png"><span>ArPI</span>
     </button>
 
     <span class="spacer"></span>

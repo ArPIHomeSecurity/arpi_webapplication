@@ -24,7 +24,14 @@
 }
 
 .logo-button {
-  margin: 5px;
+  img {
+    margin: 5px;
+    vertical-align: middle;
+  }
+
+  span {
+    vertical-align: middle;
+  }
 }
 
 .mat-toolbar .menu {
