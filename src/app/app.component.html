@@ -109,8 +109,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <!-- AJAX loading spinner triggered by the loader service -->
-      <mat-progress-spinner *ngIf="displayLoader" class="ajax-loader" color="primary" mode="indeterminate"></mat-progress-spinner>
       <div id="overlay" *ngIf="disablePage"></div>
 
       <mat-card *ngIf="message && !displayLoader" class="message">
@@ -120,6 +118,8 @@
       <!-- main app container -->
       <div class="page-wrapper">
         <div class="page">
+          <!-- AJAX loading spinner triggered by the loader service -->
+          <mat-progress-spinner *ngIf="displayLoader" class="ajax-loader" color="primary" mode="indeterminate" diameter="100"/>
           <router-outlet></router-outlet>
         </div>
   
