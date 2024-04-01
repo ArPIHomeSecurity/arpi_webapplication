@@ -32,8 +32,6 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
-  watcher: Subscription;
-  smallScreen: boolean;
   locales = [
     {name: 'Magyar', id: 'hu'},
     {name: 'English', id: 'en'},
@@ -52,12 +50,14 @@ export class AppComponent implements OnInit {
   };
   isSessionValid: boolean;
   isDeviceRegistered = false;
-
+  
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
+  // theming
   width$ = new BehaviorSubject<number>(1000);
   resizeObserver!: ResizeObserver;
+  smallScreen: boolean;
 
   darkTheme;
 

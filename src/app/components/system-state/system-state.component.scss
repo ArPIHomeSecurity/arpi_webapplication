@@ -12,26 +12,26 @@
 @mixin system-state-indicator-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   /* states */
   .normal {
-    color: mat.get-color-from-palette($argus-ok),
+    color: mat.get-color-from-palette($argus-ok);
   }
 
   .warning {
-    color: #ffb600;
-  }
-
-  .danger {
     color: mat.get-color-from-palette($argus-warn);
   }
 
-  .mat-chip.normal {
+  .danger {
+    color: mat.get-color-from-palette($argus-alert);
+  }
+
+  .mat-mdc-chip.normal {
     background-color: mat.get-color-from-palette($argus-ok),
   }
 
-  .mat-chip.warning {
-    background-color: #ffb600;
+  .mat-mdc-chip.warning {
+    background-color: mat.get-color-from-palette($argus-warn),
   }
 
-  .mat-chip.danger {
-    background-color: mat.get-color-from-palette($argus-warn);
+  .mat-mdc-chip.danger {
+    background-color: mat.get-color-from-palette($argus-alert);
   }
 }
