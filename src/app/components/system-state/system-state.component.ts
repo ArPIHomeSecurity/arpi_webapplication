@@ -1,10 +1,8 @@
-import { Component, ElementRef, Inject, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { ARM_TYPE, MONITORING_STATE, string2MonitoringState, string2ArmType, POWER_STATE, string2PowerState } from '@app/models';
 import { AlertService, AuthenticationService, EventService, MonitoringService, SensorService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -25,18 +23,12 @@ export class SystemStateComponent implements OnInit {
   // true=syren / false=syren muted / null=no syren
   syrenAlert: boolean;
 
-  smallScreen: boolean;
-  width$ = new BehaviorSubject<number>(1000);
-  resizeObserver!: ResizeObserver;
-
   constructor(
     @Inject('AlertService') private alertService: AlertService,
     @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
     @Inject('EventService') private eventService: EventService,
     @Inject('MonitoringService') private monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
-
-    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -46,21 +38,6 @@ export class SystemStateComponent implements OnInit {
           this.updateComponent();
         }
       });
-
-    this.resizeObserver = new ResizeObserver(entries => {
-      this.zone.run(() => {
-        this.width$.next(entries[0].contentRect.width);
-      });
-    });
-    this.resizeObserver.observe(document.querySelector('body'));
-
-    this.width$.subscribe(width => {
-      if (width > 640) {
-        this.smallScreen = false;
-      } else {
-        this.smallScreen = true;
-      }
-    });
   }
 
   updateComponent() {

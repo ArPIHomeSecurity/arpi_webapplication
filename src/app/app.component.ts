@@ -96,6 +96,7 @@ export class AppComponent implements OnInit {
     this.width$.subscribe(width => {
       if (width > 640) {
         this.smallScreen = false;
+        this.themeService.updateSize(false);
         if (this.sidenav) {
           this.sidenav.opened = true;
           this.sidenav.mode = 'side';
@@ -103,6 +104,7 @@ export class AppComponent implements OnInit {
         }
       } else {
         this.smallScreen = true;
+        this.themeService.updateSize(true);
         if (this.sidenav) {
           this.sidenav.opened = false;
           this.sidenav.mode = 'over';
@@ -165,7 +167,7 @@ export class AppComponent implements OnInit {
 
   onThemeSwitched($event) {
     console.log('Theme switched: ', $event.checked);
-    this.themeService.update($event.checked ? 'argus-dark-theme' : 'argus-light-theme');
+    this.themeService.updateTheme($event.checked ? 'argus-dark-theme' : 'argus-light-theme');
   }
 
   handleCountdown($event) {

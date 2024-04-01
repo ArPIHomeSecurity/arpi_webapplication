@@ -41,10 +41,20 @@ export class ThemeService {
         return this.theme === 'argus-dark-theme';
     }
 
-    update(theme: string) {
+    updateTheme(theme: string) {
         this._saveTheme(theme);
         this.renderer.addClass(document.body, this.theme);
         this.renderer.removeClass(document.body, this.theme === 'argus-dark-theme' ? 'argus-light-theme' : 'argus-dark-theme');
+    }
+
+    updateSize(isSmallScreen: boolean) {
+        if (isSmallScreen) {
+            this.renderer.addClass(document.body, 'small-screen');
+            this.renderer.removeClass(document.body, 'large-screen');
+        } else {
+            this.renderer.addClass(document.body, 'large-screen');
+            this.renderer.removeClass(document.body, 'small-screen');
+        }
     }
 
     currentActive() {

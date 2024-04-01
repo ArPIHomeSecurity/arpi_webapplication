@@ -127,3 +127,15 @@
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */   
 }
+
+.small-screen {
+  .logo {
+    display: none;
+  }
+}
+
+::ng-deep .large-screen {
+  .menu, .logo-button {
+    display: none;
+  }
+}

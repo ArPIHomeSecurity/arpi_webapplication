@@ -1,10 +1,10 @@
 <!-- DESKTOP VERSION-->
-<mat-chip-listbox
-  *ngIf="!smallScreen && (monitoringState == monitoringStates.STARTUP ||
+<mat-chip-listbox class="system-state-desktop"
+  *ngIf="monitoringState == monitoringStates.STARTUP ||
           monitoringState == monitoringStates.UPDATING_CONFIG ||
           monitoringState == monitoringStates.INVALID_CONFIG ||
           monitoringState == monitoringStates.SABOTAGE ||
-          monitoringState == monitoringStates.NOT_READY)">
+          monitoringState == monitoringStates.NOT_READY">
   <!-- MONITORING STATES -->
   <span [ngSwitch]="monitoringState">
     <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state">Starting up</mat-chip>
@@ -17,12 +17,12 @@
 </mat-chip-listbox>
 
 <!-- MOBILE VERSION -->
-<mat-chip-listbox
-  *ngIf="smallScreen && (monitoringState == monitoringStates.STARTUP ||
+<mat-chip-listbox class="system-state-mobile"
+  *ngIf="monitoringState == monitoringStates.STARTUP ||
           monitoringState == monitoringStates.UPDATING_CONFIG ||
           monitoringState == monitoringStates.INVALID_CONFIG ||
           monitoringState == monitoringStates.SABOTAGE ||
-          monitoringState == monitoringStates.NOT_READY)">
+          monitoringState == monitoringStates.NOT_READY">
   <!-- MONITORING STATES -->
   <span [ngSwitch]="monitoringState">
     <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state short">S</mat-chip>

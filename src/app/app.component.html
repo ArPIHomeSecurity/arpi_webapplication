@@ -3,10 +3,10 @@
   <app-demo *ngIf="environment.demo"></app-demo>
 
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="sidenav.toggle()" *ngIf="smallScreen" class="menu">
+    <button mat-icon-button (click)="sidenav.toggle()" class="menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <button mat-flat-button *ngIf="isLoggedIn() && smallScreen" routerLink="/" (click)="sidenav.close()" class="logo-button">
+    <button mat-flat-button *ngIf="isLoggedIn()" routerLink="/" (click)="sidenav.close()" class="logo-button">
       <img src="assets/images/argus-eye-30.png"><span>ArPI</span>
     </button>
 
@@ -32,7 +32,7 @@
   <mat-sidenav-container (backdropClick)="sidenav.close()">
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
-      <div class="logo" *ngIf="!smallScreen">
+      <div class="logo">
         <img src="assets/images/argus-eye-64.png">
       </div>
 

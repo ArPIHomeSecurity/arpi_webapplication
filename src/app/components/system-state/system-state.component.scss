@@ -35,3 +35,11 @@
     background-color: mat.get-color-from-palette($argus-alert);
   }
 }
+
+.small-screen .system-state-desktop {
+  display: none;
+}
+
+.large-screen .system-state-mobile {
+  display: none;
+}
