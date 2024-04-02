@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.areas = results.areas.sort((a1, a2) => a1.uiOrder > a2.uiOrder ? 1 : a1.uiOrder < a2.uiOrder ? -1 : 0);
         this.outputs = results.outputs
           .filter(o => o.triggerType === OutputTriggerType.BUTTON)
+          .filter(o => o.enabled)
           .sort((o1, o2) => o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0);
       });
 

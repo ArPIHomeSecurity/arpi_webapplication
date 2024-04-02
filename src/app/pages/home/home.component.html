@@ -11,9 +11,7 @@
   </div>
 
   <div *ngIf="outputs" class="container-item ">
-    <div *ngFor="let output of outputs">
-      <component-output [output]="output"/>
-    </div>
+    <component-output *ngFor="let output of outputs" [output]="output"/>
   </div>
 
   <div *ngIf="alert" class="container-item">
