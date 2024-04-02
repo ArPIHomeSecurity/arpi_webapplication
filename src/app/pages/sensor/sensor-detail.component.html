@@ -3,6 +3,7 @@
     <mat-card-content>
       <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate class="column">
         <mat-form-field>
+          <mat-label i18n="@@sensor channel">Channel</mat-label>
           <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
             <mat-option *ngFor="let channel of orderedChannels()" [value]="channel.channel"
               [disabled]="channel.sensor != null">
@@ -16,6 +17,7 @@
         </mat-form-field>
   
         <mat-form-field>
+          <mat-label i18n="@@sensor type">Sensor type</mat-label>
           <mat-select formControlName="typeId" i18n-placeholder="@@sensor type" placeholder="Sensor type"
             (selectionChange)="onSensorTypeChanged($event)">
             <mat-option *ngFor="let type of sensorTypes" [value]="type.id">{{ type.name }}</mat-option>
@@ -28,6 +30,7 @@
         </mat-form-field>
   
         <mat-form-field>
+          <mat-label i18n="@@description">Description</mat-label>
           <textarea matInput i18n-placeholder="@@description" placeholder="Description"
             formControlName="description"></textarea>
         </mat-form-field>
