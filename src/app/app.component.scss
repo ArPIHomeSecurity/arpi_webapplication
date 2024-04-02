@@ -19,6 +19,8 @@
 }
 
 @mixin app-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  $argus-accent: map-get($theme, accent);
+
   .logo {
     text-align:center;
     margin: 15px 0;
