@@ -1,91 +1,89 @@
 @charset "UTF-8";
 
 @mixin sensor-list-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
-  .sensor-list {
-    .sensor-card {
-      .mat-card-title {
-        margin-left: 16px;
-      }
+  .sensor-card {
+    .mat-card-title {
+      margin-left: 16px;
+    }
 
-      .attributes {
+    .attributes {
+      width: 100%;
+
+      .row {
+        gap: 0px;
+      }
+    }
+
+    .mat-card-subtitle {
+      text-align: justify;
+    }
+
+    .sensor-image {
+      max-width: 130px;
+      margin: auto 10px !important;
+      border-radius: 5px;
+
+      img {
         width: 100%;
-
-        .row {
-          gap: 0px;
-        }
-      }
-
-      .mat-card-subtitle {
-        text-align: justify;
-      }
-
-      .sensor-image {
-        max-width: 130px;
-        margin: auto 10px !important;
-        border-radius: 5px;
-
-        img {
-          width: 100%;
-          min-width: 50px;
-        }
-      }
-
-      .sensor-image.alerting {
-        background-color: mat.get-color-from-palette($argus-alert);
-      }
-
-      .sensor-icon {
-        width: 100%;
-        opacity: 0.5;
-      }
-
-      .sensor-status-icon-enabled {
-        color: mat.get-color-from-palette($argus-ok);
-      }
-
-      /*
-       *list of attributes in the sensor card
-       */
-      .mat-mdc-list.attribute-list {
-        .long-field {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-
-        & .mat-mdc-list-item {
-          height: 30px !important;
-
-          .mat-icon {
-            margin-right: 16px !important;
-          }
-
-          & .mat-list-item-content {
-            padding: 0 0 0 16px !important;
-          }
-        }
-
-        &.first {
-          width: 40%;
-          margin-top: 0px;
-          margin-bottom: auto;
-        }
-
-        &.second {
-          width: 60%;
-          margin-top: 0px;
-          margin-bottom: auto;
-        }
+        min-width: 50px;
       }
     }
 
-    .sensor-card.disabled {
-      background-color: rgb(160, 160, 160);
+    .sensor-image.alerting {
+      background-color: mat.get-color-from-palette($argus-alert);
     }
 
-    .empty {
-      text-align: center;
+    .sensor-icon {
+      width: 100%;
+      opacity: 0.5;
     }
+
+    .sensor-status-icon-enabled {
+      color: mat.get-color-from-palette($argus-ok);
+    }
+
+    /*
+      *list of attributes in the sensor card
+      */
+    .mat-mdc-list.attribute-list {
+      .long-field {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      & .mat-mdc-list-item {
+        height: 30px !important;
+
+        .mat-icon {
+          margin-right: 16px !important;
+        }
+
+        & .mat-list-item-content {
+          padding: 0 0 0 16px !important;
+        }
+      }
+
+      &.first {
+        width: 40%;
+        margin-top: 0px;
+        margin-bottom: auto;
+      }
+
+      &.second {
+        width: 60%;
+        margin-top: 0px;
+        margin-bottom: auto;
+      }
+    }
+  }
+
+  .sensor-card.disabled {
+    background-color: rgb(160, 160, 160);
+  }
+
+  .empty {
+    text-align: center;
   }
 }
 
