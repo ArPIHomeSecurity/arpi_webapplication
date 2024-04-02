@@ -283,39 +283,42 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : of(null),
         resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : of(null)
       })
-        .subscribe(results => {
-          if (results.resultZone) {
-            sensor.zoneId = results.resultZone.id;
-          }
-          if (results.resultArea) {
-            sensor.areaId = results.resultArea.id;
-          }
+        .subscribe({
+          next: results => {
+            if (results.resultZone) {
+              sensor.zoneId = results.resultZone.id;
+            }
+            if (results.resultArea) {
+              sensor.areaId = results.resultArea.id;
+            }
 
-          if (this.sensor.id !== undefined) {
-            this.action = 'update';
-            return this.sensorService.updateSensor(sensor)
+            if (this.sensor.id !== undefined) {
+              this.action = 'update';
+              return this.sensorService.updateSensor(sensor)
+                .subscribe(_ => this.router.navigate(['/sensors']));
+            }
+
+            return this.sensorService.createSensor(sensor)
               .subscribe(_ => this.router.navigate(['/sensors']));
-          }
-
-          return this.sensorService.createSensor(sensor)
-            .subscribe(_ => this.router.navigate(['/sensors']));
-        },
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-        );
+          },
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        });
     }
     else if (this.sensorId != null) {
       this.action = 'update';
       this.sensorService.updateSensor(sensor)
-        .subscribe(_ => this.router.navigate(['/sensors']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-        );
+        .subscribe({
+          next: () => this.router.navigate(['/sensors']),
+          error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        });
     }
     else {
       this.action = 'create';
       this.sensorService.createSensor(sensor)
-        .subscribe(_ => this.router.navigate(['/sensors']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-        );
+        .subscribe({
+          next: () => this.router.navigate(['/sensors']),
+          error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        });
     }
   }
 
@@ -364,6 +367,11 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     };
   }
 
+  getZoneName() : string {
+    const zone = this.zones.find(zone => zone.id === this.sensor.zoneId);
+    return zone ? zone.name : this.zoneForm.value.zoneName;
+  }
+
   prepareZone(): Zone {
     const sensorModel = this.sensorForm.value;
     const zoneModel = this.zoneForm.value;
@@ -371,14 +379,19 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return {
       id: sensorModel.zoneId,
       name: zoneModel.zoneName,
+      description: zoneModel.zoneName,
       disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
       awayAlertDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayAlertDelay, 10) : null,
       awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
       stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
       stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
-      description: zoneModel.zoneName,
       uiOrder: null
     };
+  }
+
+  getAreaName() : string {
+    const area = this.areas.find(area => area.id === this.sensor.areaId);
+    return area ? area.name : this.areaForm.value.areaName;
   }
 
   prepareArea(): Area {

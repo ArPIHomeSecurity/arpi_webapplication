@@ -69,7 +69,7 @@
             </mat-radio-button>
           </mat-radio-group>
   
-          <div *ngIf="sensorForm.value.sensitivity === 'custom'">
+          <div *ngIf="sensorForm.value.sensitivity === 'custom'" class="row">
             <mat-form-field>
               <mat-label i18n="@@sensor monitor period">Monitoring period [s]</mat-label>
               <input matInput formControlName="monitorPeriod" type="number" min="1" required>
@@ -85,8 +85,11 @@
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <div i18n="@@sensor area form">Area</div>
-              <mat-icon *ngIf="areaForm.invalid" class="warning">warning</mat-icon>
+              <mat-panel-title>
+                <span i18n="@@sensor area form">Area</span>
+                <mat-icon *ngIf="areaForm.invalid" class="warning">warning</mat-icon>
+                <span *ngIf="!areaForm.invalid">&nbsp;({{ getAreaName() || '-' }})</span>
+              </mat-panel-title>
             </mat-expansion-panel-header>
   
             <div>
@@ -111,8 +114,11 @@
   
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <div class="title" i18n="@@sensor zone form">Zone</div>
-              <mat-icon *ngIf="zoneForm.invalid" class="warning">warning</mat-icon>
+              <mat-panel-title>
+                <span class="title" i18n="@@sensor zone form">Zone</span>
+                <mat-icon *ngIf="zoneForm.invalid" class="warning">warning</mat-icon>
+                <span *ngIf="!zoneForm.invalid">&nbsp;({{ getZoneName() || '-' }})</span>
+              </mat-panel-title>
             </mat-expansion-panel-header>
   
             <mat-form-field id="zoneId">
