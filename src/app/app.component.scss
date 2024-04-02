@@ -128,17 +128,24 @@
     -ms-user-select: none;      /* IE 10+ */
     user-select: none;          /* Likely future */   
   }
-
 }
 
 ::ng-deep .small-screen {
   .logo {
     display: none;
   }
+
+  .versions {
+    margin-right: 30px;
+  }
 }
 
 ::ng-deep .large-screen {
   .menu, .logo-button {
     display: none;
+  }
+
+  .versions {
+    margin-right: 60px;
   }
 }

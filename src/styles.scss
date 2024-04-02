@@ -63,16 +63,34 @@ html, body, material-app, .my-content {
   flex-grow: 1;
 }
 
-.list-actions {
-  position: fixed;
-  bottom: 85px;
-  right: 20px;
-  float: right;
-}
-
 .list-action {
   margin: 5px 0px;
   float: left;
   clear: both;
 }
 
+.small-screen {
+  .list-actions {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    float: right;
+  }
+
+  .list-actions .list-action.mat-mdc-fab {
+    display: none;
+  }
+}
+
+.large-screen {
+  .list-actions {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    float: right;
+  }
+
+  .list-actions .list-action.mat-mdc-mini-fab {
+    display: none;
+  }
+}
