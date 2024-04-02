@@ -10,7 +10,7 @@
 @import 'app/pages/sensor/sensor-list.component.scss';
 @import 'app/pages/output/output-list.component.scss';
 
-$argus-primary: mat.define-palette(mat.$indigo-palette, 500);
+$argus-primary: mat.define-palette(mat.$indigo-palette, 500, 100, 800);
 $argus-accent: mat.define-palette(mat.$orange-palette, A400, A100, A700);
 
 $argus-ok: mat.define-palette(mat.$green-palette);
@@ -21,7 +21,7 @@ $argus-light-theme: mat.define-light-theme((
   color: (
     primary: $argus-primary,
     accent: $argus-accent,
-    warn: $argus-warn,
+    warn: $argus-alert,
   ),
   typography: mat.define-typography-config(),
   density: 0,
@@ -29,9 +29,9 @@ $argus-light-theme: mat.define-light-theme((
 
 $argus-dark-theme: mat.define-dark-theme((
   color: (
-    primary: $argus-primary,
+    primary: mat.define-palette(mat.$indigo-palette, 300),
     accent: $argus-accent,
-    warn: $argus-warn,
+    warn: $argus-alert,
   ),
   typography: mat.define-typography-config(),
   density: 0,
