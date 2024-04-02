@@ -204,7 +204,7 @@
         (click)="onSubmit()"><mat-icon>save</mat-icon></button>
       <button *ngIf="sensorId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(sensor.id)"
         [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+      <button mat-icon-button color="warn" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
   
     <ng-template #not_found>

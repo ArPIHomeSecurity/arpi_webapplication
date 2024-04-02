@@ -79,7 +79,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private location: Location,
     private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);
@@ -182,24 +181,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       areaName: new FormControl('', [Validators.required, Validators.maxLength(32)]),
     });
 
-    var silentAlert = null;
-    if (sensor.silentAlert === null) {
-      silentAlert = 'undefined';
-    }
-    else if (sensor.silentAlert === true) {
-      silentAlert = 'silent';
-    }
-    else if (sensor.silentAlert === false) {
-      silentAlert = 'loud';
-    }
-
     this.sensorForm = this.fb.group({
       channel: new FormControl(sensor.channel),
       zoneId: new FormControl(sensor.zoneId, Validators.required),
       areaId: new FormControl(sensor.areaId, Validators.required),
       typeId: new FormControl(sensor.typeId, Validators.required),
       enabled: sensor.enabled,
-      silentAlert: new FormControl(silentAlert),
+      silentAlert: new FormControl(),
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
@@ -210,10 +198,24 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       hidden: sensor.uiHidden
     });
 
-    if (sensor.monitorPeriod !== null && sensor.monitorThreshold !== null) {
-      this.sensorForm.controls.sensitivity.setValue('custom');
+    if (sensor.silentAlert == null) {
+      this.sensorForm.controls.silentAlert.setValue('undefined');
     }
-    else if (sensor.monitorPeriod === null && sensor.monitorThreshold !== null) {
+    else if (sensor.silentAlert === true) {
+      this.sensorForm.controls.silentAlert.setValue('silent');
+    }
+    else if (sensor.silentAlert === false) {
+      this.sensorForm.controls.silentAlert.setValue('loud');
+    }
+
+    if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
+      this.sensorForm.controls.sensitivity.setValue('custom');
+      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
+      this.sensorForm.controls.monitorPeriod.enable();
+      this.sensorForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
+      this.sensorForm.controls.monitorThreshold.enable();
+    }
+    else if (sensor.monitorPeriod == null && sensor.monitorThreshold != null) {
       this.sensorForm.controls.sensitivity.setValue('instant');
       this.sensorForm.controls.monitorPeriod.disable();
       this.sensorForm.controls.monitorPeriod.clearValidators();
@@ -340,7 +342,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       silentAlert = true;
     }
 
-    if (formModel.sensitivity === 'general') {
+    if (formModel.sensitivity === 'undefined') {
       formModel.monitorPeriod = null;
       formModel.monitorThreshold = null;
     }
