@@ -8,6 +8,7 @@
 @import 'app/components/output/output.scss';
 @import 'app/pages/home/home.component.scss';
 @import 'app/pages/sensor/sensor-list.component.scss';
+@import 'app/pages/output/output-list.component.scss';
 
 $argus-primary: mat.define-palette(mat.$indigo-palette, 500);
 $argus-accent: mat.define-palette(mat.$orange-palette, A400, A100, A700);
@@ -45,6 +46,7 @@ $argus-dark-theme: mat.define-dark-theme((
   @include controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
 }
 
 .argus-dark-theme {
@@ -56,4 +58,5 @@ $argus-dark-theme: mat.define-dark-theme((
   @include controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
 }

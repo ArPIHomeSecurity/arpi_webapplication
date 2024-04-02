@@ -1,4 +1,4 @@
-<div *ngIf="outputs != null" class="container">
+<div *ngIf="outputs != null" class="container output-list">
 
   <div cdkDropList *ngIf="outputs.length > 0; else no_outputs"
     (cdkDropListDropped)="onDrop($event)">
@@ -6,9 +6,8 @@
     <mat-card cdkDrag (cdkDragStarted)="onDragStarted($event)" id="output-{{output.id}}" *ngFor="let output of outputs"
       class="output-card container-item" [ngClass]="{'disabled': !output.enabled}">
 
-      <mat-card-content>
-        <div [ngSwitch]="getOutputType(output.channel)"
-          [ngClass]="{'output-image-small sm:output-image': true, 'alerting': output.alert}">
+      <mat-card-content class="row">
+        <div [ngSwitch]="getOutputType(output.channel)" class="output-image">
           <img *ngSwitchCase="outputTypes.OUTPUT" src="assets/images/output_oc.png" />
           <img *ngSwitchCase="outputTypes.RELAY" src="assets/images/output_relay.png" />
           <img *ngSwitchCase="null" src="assets/images/disconnected.png" />
@@ -40,6 +39,18 @@
               <mat-list-item *ngIf="output.triggerType==outputTriggerTypes.AREA">
                 <mat-icon matListItemIcon class="material-icons-outlined">crop</mat-icon>
                 <span *ngIf="output.areaId">{{getAreaName(output.areaId)}}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon *ngIf="output.enabled"
+                  class="output-status-icon-enabled material-icons-outlined">check_circle</mat-icon>
+                <mat-icon matListItemIcon *ngIf="!output.enabled"
+                  class="material-icons-outlined">circle</mat-icon>
+                <div *ngIf="output.enabled">
+                  <span i18n="@@sensor enabled">Enabled</span>
+                </div>
+                <div *ngIf="!output.enabled">
+                  <span i18n="@@sensor disable">Disabled</span>
+                </div>
               </mat-list-item>
             </mat-list>
 
@@ -86,7 +97,7 @@
   </div>
 
   <ng-template #no_outputs>
-    <div class="output-list-xs sm:output-list">
+    <div class="output-list">
       <h1 class="empty" i18n="@@output none">No outputs found</h1>
     </div>
   </ng-template>
