@@ -53,7 +53,9 @@
 
     </mat-accordion>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
+    </div>
   </form>
 </div>
 

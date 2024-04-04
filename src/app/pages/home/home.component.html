@@ -25,7 +25,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"/>
+      <div class="column">
+        <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"/>
+      </div>
 
     </mat-expansion-panel>
   </div>

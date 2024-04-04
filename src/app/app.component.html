@@ -3,7 +3,7 @@
   <app-demo *ngIf="environment.demo"></app-demo>
 
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="sidenav.toggle()" class="menu">
+    <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
     <button mat-flat-button *ngIf="isLoggedIn()" routerLink="/" (click)="sidenav.close()" class="logo-button">
@@ -60,6 +60,7 @@
         <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </mat-list-item>
+
         <mat-accordion *ngIf="isAdminUser() && isLoggedIn()" class="menu">
           <mat-expansion-panel [expanded]="router.url.includes('/config/')">
             <mat-expansion-panel-header>
@@ -82,9 +83,9 @@
             <mat-list-item routerLink="/config/clock" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
               <mat-icon matListItemIcon>access_time</mat-icon><span i18n="@@clock menu link">Clock</span>
             </mat-list-item>
-            
           </mat-expansion-panel>
         </mat-accordion>
+
         <mat-divider *ngIf="isLoggedIn()"></mat-divider>
         <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>exit_to_app</mat-icon>

@@ -19,18 +19,22 @@ export class ControllerComponent {
   armTypes: any = ARM_TYPE;
   monitoringStates: any = MONITORING_STATE;
 
-  isAwayDisabled() {
-    return this.sensorAlert ||
+  isAwayArmDisabled() {
+    return (
+      this.sensorAlert ||
+      this.systemAlert ||
       this.armState !== ARM_TYPE.DISARMED ||
-      this.monitoringState !== MONITORING_STATE.READY ||
-      this.systemAlert
+      this.monitoringState !== MONITORING_STATE.READY && this.monitoringState !== MONITORING_STATE.ARMED
+    )
   }
 
-  isStayDisabled() {
-    return this.sensorAlert ||
+  isStayArmDisabled() {
+    return (
+      this.sensorAlert ||
+      this.systemAlert ||
       this.armState !== ARM_TYPE.DISARMED ||
-      this.monitoringState !== MONITORING_STATE.READY ||
-      this.systemAlert
+      this.monitoringState !== MONITORING_STATE.READY && this.monitoringState !== MONITORING_STATE.ARMED
+    )
   }
 
   armChangedHandler(arm: ARM_TYPE) {

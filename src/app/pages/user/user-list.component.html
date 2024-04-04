@@ -22,7 +22,7 @@
               <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">credit_card</mat-icon>
               <span [className]="!card.enabled ? 'card-description-disabled' : ''">{{card.description}}</span>
             </mat-checkbox>
-            <button mat-icon-button (click)="openDeleteCardDialog(card.id)" color="warn"
+            <button mat-icon-button (click)="openDeleteCardDialog(card.id)" color="warn" class="delete"
               *ngIf="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
           </mat-list>
         </div>
@@ -33,7 +33,7 @@
             <span i18n="@@user registration">Expires on: </span>
             <span *ngIf="user.registrationExpiry">{{user.registrationExpiry}}</span>
             <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
-            <button mat-icon-button (click)="removeRegistrationCode(user.id)" color="warn"
+            <button mat-icon-button (click)="removeRegistrationCode(user.id)" color="warn" class="delete"
               *ngIf="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
           </div>
         </div>
@@ -74,9 +74,9 @@
 </div>
 
 <div class="list-actions">
-  <button class="list-action" mat-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != monitoringStates.READY" class="hidden sm:block"><mat-icon matListIcon>add</mat-icon></button>
+  <button class="list-action" mat-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
   <button class="list-action" mat-mini-fab color="accent" routerLink="/user/add"
-    [disabled]="monitoringState != monitoringStates.READY" class="hidden sm:block"><mat-icon
+    [disabled]="monitoringState != monitoringStates.READY"><mat-icon
       matListIcon>add</mat-icon></button>
 </div>
 

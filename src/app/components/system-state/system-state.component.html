@@ -45,18 +45,11 @@
          monitoringState != monitoringStates.INVALID_CONFIG &&
          monitoringState != monitoringStates.SABOTAGE &&
          monitoringState != monitoringStates.NOT_READY">
-  <span
-    [ngClass]="{
-      'warning': monitoringState == monitoringStates.ARM_DELAY,
-      'danger': monitoringState == monitoringStates.ARMED || monitoringState == monitoringStates.ALERT || monitoringState == monitoringStates.ALERT_DELAY}"
-    [ngSwitch]="armState">
-
-    <mat-icon *ngSwitchCase="armTypes.MIXED">directions_walk</mat-icon>
-    <mat-icon *ngSwitchCase="armTypes.MIXED" class="icon_margin">hotel</mat-icon>
-    
-    <mat-icon *ngSwitchCase="armTypes.AWAY">directions_walk</mat-icon>
-    
-    <mat-icon *ngSwitchCase="armTypes.STAY" class="icon_margin">hotel</mat-icon>
+  <span [ngSwitch]="armState">
+    <mat-icon *ngSwitchCase="armTypes.MIXED" [ngClass]="getArmClass()">directions_walk</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.MIXED" [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.AWAY" [ngClass]="getArmClass()">directions_walk</mat-icon>
+    <mat-icon *ngSwitchCase="armTypes.STAY" [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
   </span>
   
   <!-- SENSOR STATES -->

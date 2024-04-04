@@ -6,11 +6,6 @@
   width: 600px;
 }
 
-.syren-form-xs {
-  padding: 5px;
-  width: 100%;
-}
-
 .syren {
   margin: 2px 2px 10px 2px;
 }
@@ -19,17 +14,10 @@
   height: 80px;
 }
 
-.actions button {
-  margin-right: 10px;
-}
-
-.half-width{
-  width: 48%;
-  margin: auto 1%;
-}
-
-.full-width {
-  width: 100%;
+.form-actions {
+  .mat-mdc-progress-spinner {
+    margin: 0px;
+  }
 }
 
 .mat-table {
@@ -51,6 +39,10 @@
   flex: 1;
   overflow: hidden;
   word-wrap: break-word;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
 }
 
 .test-spinner {

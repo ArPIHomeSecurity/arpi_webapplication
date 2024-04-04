@@ -121,8 +121,8 @@
         </mat-card-title-group>
       </mat-card-content>
 
-      <mat-divider [ngClass]="{'hidden': !userCanEdit()}"></mat-divider>
-      <mat-card-actions [ngClass]="{'hidden': !userCanEdit()}">
+      <mat-divider *ngIf="userCanEdit()"></mat-divider>
+      <mat-card-actions *ngIf="userCanEdit()">
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle"
           [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>

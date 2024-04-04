@@ -13,10 +13,15 @@
   margin: 15px 0px;
 }
 
-.full-width {
+.mat-mdc-form-field {
   width: 100%;
 }
 
+.actions {
+  .mat-mdc-progress-spinner {
+    margin: 0px;
+  }
+}
 
 // Hide input field
 @font-face{

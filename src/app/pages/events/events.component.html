@@ -8,7 +8,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <div class="filters flex flex-row flex-wrap space-x-8 items-center">
+    <div class="filters">
 
       <mat-form-field appearance="fill">
         <mat-label i18n="@@events filter arm">Arm type</mat-label>
@@ -68,7 +68,7 @@
       <mat-accordion *ngFor="let event of events">
         <mat-expansion-panel [ngClass]="{'alerting': event.alert && !event.alert.endTime}">
           <mat-expansion-panel-header>
-            <mat-panel-title [ngClass]="{'warn': event.disarm?.time == null}" class="flex flex-row space-x-8">
+            <mat-panel-title [ngClass]="{'warn': event.disarm?.time == null}">
               <div class="arm-icon">
                 <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" matListIcon>directions_walk</mat-icon>
                 <mat-icon *ngIf="event.arm?.type == armTypes.STAY" matListIcon>hotel</mat-icon>
@@ -83,7 +83,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="event-panel-content flex flex-row flex-wrap justify-evenly h-full w-full min-h-full min-w-full">
+          <div class="event-panel-content">
 
             <div class="panel basis-12/25" fxFlex.lt-md="100">
               <span class="title" i18n="@@events properties">Properties</span>

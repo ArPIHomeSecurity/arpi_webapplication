@@ -7,18 +7,18 @@
   <mat-card-content>
     <form name="form" [formGroup]="registerForm">
 
-      <mat-form-field class="full-width">
+      <mat-form-field>
         <mat-label i18n="@@register registration code">Registration code</mat-label>
         <input matInput #registration_code_field [type]="hide ? 'password' : 'text'" [formControl]="registerCode"
           autocomplete="off" required autofocus>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
-      <div class="form-group actions flex flex-col justify-between items-center">
+      <div class="form-group actions">
         <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary">
           <span i18n="Register button">Register</span>
-          <mat-icon>
-            <mat-progress-spinner *ngIf="loading" diameter="15" color="primary" mode="indeterminate"/>
+          <mat-icon *ngIf="loading">
+            <mat-spinner diameter="18"/>
           </mat-icon>
         </button>
       </div>
@@ -36,19 +36,19 @@
 
   <mat-card-content>
     <form name="form" [formGroup]="loginForm">
-      <mat-form-field class="full-width">
+      <mat-form-field>
         <mat-label i18n="@@login access code">Access code</mat-label>
         <input matInput #access_code_field type="text" [formControl]="accessCode" [ngClass]="{'password': hide}"
           inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" digitOnly required autofocus>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
-      <div class="form-group actions flex flex-col space-y-4 justify-between items-center">
+      <div class="form-group actions">
         <button mat-raised-button type="submit" (click)="login()" [disabled]="loading || !loginForm.valid"
           color="primary">
           <span i18n="Login button">Login</span>
-          <mat-icon>
-            <mat-progress-spinner *ngIf="loading" diameter="15" color="primary" mode="indeterminate"/>
+          <mat-icon *ngIf="loading">
+            <mat-spinner diameter="18"/>
           </mat-icon>
         </button>
       </div>

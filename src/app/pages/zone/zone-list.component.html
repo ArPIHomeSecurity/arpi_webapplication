@@ -1,6 +1,6 @@
 <div *ngIf="zones != null && sensors != null" class="container">
 
-  <div cdkDropList *ngIf="zones.length > 0; else no_zones" class="zone-list flex flex-col space-y-5" (cdkDropListDropped)="onDrop($event)">
+  <div cdkDropList *ngIf="zones.length > 0; else no_zones" class="zone-list" (cdkDropListDropped)="onDrop($event)">
 
     <mat-card
       cdkDrag
@@ -15,7 +15,7 @@
         <mat-expansion-panel (opened)="onOpenConfig(zone.id)" (closed)="onCloseConfig(zone.id)" [expanded]="configOpened[zone.id]">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
-            <mat-panel-description *ngIf="!configOpened[zone.id]" class="hidden sm:block">
+            <mat-panel-description *ngIf="!configOpened[zone.id]">
               <mat-icon>directions_walk</mat-icon>
               {{zone.awayArmDelay !== null ? zone.awayArmDelay : "-"}}/{{zone.awayAlertDelay !== null ? zone.awayAlertDelay : "-"}}
 
@@ -71,7 +71,7 @@
               <li *ngFor="let sensor of getSensors(zone.id)">
                 <!-- button mat-button [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}" color="primary">{{sensor.description}}</button-->
                 {{sensor.description}}
-                <button mat-button [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent" [ngClass]="{'block': authService.getRole() == 'admin'}"><mat-icon matListIcon>mode_edit</mat-icon></button>
+                <button mat-button *ngIf="userCanEdit()" [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent"><mat-icon matListIcon>mode_edit</mat-icon></button>
               </li>
             </ul>
           </div>
@@ -87,7 +87,7 @@
 
       <mat-divider></mat-divider>
   
-      <mat-card-actions [ngClass]="{'hidden': !userCanEdit()}">
+      <mat-card-actions *ngIf="userCanEdit()">
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/zone', zone.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
@@ -105,8 +105,8 @@
 </div>
 
 <div *ngIf="userCanEdit()" class="list-actions">
-  <button class="zone-action" mat-min-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" class="hidden sm:block"><mat-icon matListIcon>add</mat-icon></button>
-  <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY" class="block sm:hidden"><mat-icon matListIcon>add</mat-icon></button>
+  <button class="zone-action" mat-min-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
+  <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
 </div>
 
 <ng-template #snackbarTemplate>

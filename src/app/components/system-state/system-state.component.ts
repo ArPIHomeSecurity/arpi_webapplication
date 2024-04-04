@@ -89,4 +89,12 @@ export class SystemStateComponent implements OnInit {
       this.monitoringState === MONITORING_STATE.READY ||
       this.monitoringState === MONITORING_STATE.ARM_DELAY;
   }
+
+  getArmClass() {
+    if (this.monitoringState == MONITORING_STATE.ARM_DELAY)
+      return 'warning';
+    else if (this.monitoringState == MONITORING_STATE.ARMED || this.monitoringState == MONITORING_STATE.ALERT || this.monitoringState == MONITORING_STATE.ALERT_DELAY) {
+      return 'danger';
+    }
+  }
 }

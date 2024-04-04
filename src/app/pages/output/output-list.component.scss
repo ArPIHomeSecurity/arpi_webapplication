@@ -94,3 +94,10 @@
     text-align: center;
   }
 }
+
+.argus-dark-theme {
+  .output-list .output-card .output-image img {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+  }
+}
