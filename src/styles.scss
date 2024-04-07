@@ -32,7 +32,6 @@ html, body, material-app, .my-content {
 
 .container {
   margin: auto;
-  min-width: 420px;
   max-width: 600px;
   padding: 15px;
 }
@@ -72,7 +71,7 @@ html, body, material-app, .my-content {
 .small-screen {
   .list-actions {
     position: fixed;
-    bottom: 15px;
+    bottom: 40px;
     right: 15px;
     float: right;
   }
@@ -85,7 +84,7 @@ html, body, material-app, .my-content {
 .large-screen {
   .list-actions {
     position: fixed;
-    bottom: 25px;
+    bottom: 35px;
     right: 25px;
     float: right;
   }

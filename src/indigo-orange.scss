@@ -39,7 +39,7 @@ $argus-dark-theme: mat.define-dark-theme((
   $argus-warn: mat.define-palette(mat.$orange-palette);
 
   @include mat.all-component-themes($argus-light-theme);
-  @include app-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include app-theme($argus-light-theme, map-get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
   @include system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
@@ -61,7 +61,7 @@ $argus-dark-theme: mat.define-dark-theme((
 
   @include mat.all-component-themes($argus-dark-theme);
   @include mat.toolbar-color($argus-light-theme);
-  @include app-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include app-theme($argus-dark-theme, map-get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
   @include system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);

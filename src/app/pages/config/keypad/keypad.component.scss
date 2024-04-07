@@ -1,9 +1,12 @@
 
 .keypad-form {
-  padding: 15px;
   margin-right: auto;
   margin-left: auto;
-  width: 600px;
+  max-width: 600px;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
 }
 
 .keypad {
@@ -14,15 +17,6 @@ ng2-timezone-picker {
   display: inline-block;
 }
 
-.half-width{
-  display: inline-block;
-  width: 48%;
-  margin: auto 1%;
-}
-
-.full-width {
-  width: 100%;
-}
 
 .mat-table {
   display: block;

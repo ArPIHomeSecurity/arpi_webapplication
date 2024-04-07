@@ -18,7 +18,7 @@
   }
 }
 
-@mixin app-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+@mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
   $argus-accent: map-get($theme, accent);
 
   .logo {
@@ -37,6 +37,10 @@
     }
   }
 
+  .spacer {
+    flex: 1 1 auto;
+  }
+
   .mat-toolbar .menu {
     margin-right: 10px;
   }
@@ -46,31 +50,41 @@
     padding: 0px;
   }
 
-  .mat-drawer-container {
-    height: 100%;
-  }
-
-  .spacer {
-    flex: 1 1 auto;
-  }
-
   .ajax-loader {
     margin: 25px auto;
     float: none;
   }
 
+  .all-wrap {
+    min-height: calc(100dvh - 56px);
+  }
+
   .page-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: calc(100dvh - 56px);
   }
 
   .page {
     flex: 1;
   }
 
+  div.page {
+    display: flex;
+    flex-direction: column;
+  
+    // Select all direct descendants only of the <main> element
+    // that are not <router-outlet> elements:
+    > *:not(router-outlet) {
+  
+      flex: 1; // child will set to an equal size inside the container
+      display: block;
+    }
+  }
+
   .footer {
-    height: 64px;
+    color: white;
+    background-color: mat.get-color-from-palette($argus-toolbar-primary);
   }
 
   .version {
@@ -137,8 +151,17 @@
     display: none;
   }
 
-  .versions {
-    margin-right: 30px;
+  .footer {
+    display: flex;
+    flex-direction: column;
+
+    .links, .versions {
+      margin: auto;
+    }
+  
+    .versions {
+      line-height: 2;
+    }
   }
 }
 
@@ -147,7 +170,17 @@
     display: none;
   }
 
-  .versions {
-    margin-right: 60px;
+  .footer {
+    display: flex;
+    flex-direction: row;
+
+    .links {
+      margin: auto;
+    }
+  
+    .versions {
+      line-height: 2;
+      margin-right: 60px;
+    }
   }
 }

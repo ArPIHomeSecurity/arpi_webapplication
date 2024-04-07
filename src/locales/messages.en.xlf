@@ -656,7 +656,7 @@
           <context context-type="sourcefile">src/app/config/notifications/notifications.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
-      </trans-unit><trans-unit id="notifications stmp password" datatype="html">
+      </trans-unit><trans-unit id="notifications smtp password" datatype="html">
         <source>SMTP password</source>
         <target state="final">SMTP password</target>
         <context-group purpose="location">

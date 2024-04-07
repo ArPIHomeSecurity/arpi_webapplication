@@ -1,14 +1,12 @@
 
 .notifications-form {
-  padding: 15px;
   margin-right: auto;
   margin-left: auto;
-  width: 600px;
-}
+  max-width: 600px;
 
-.notifications-form-xs {
-  padding: 15px;
-  width: 100%;
+  .mat-mdc-form-field {
+    width: 100%;
+  }
 }
 
 .pin-code {
@@ -19,10 +17,6 @@
 .phone-number {
   width: 38%;
   margin: auto 1%;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .mat-table {

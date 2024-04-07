@@ -105,7 +105,7 @@
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
       </trans-unit>
-      <trans-unit id="notifications stmp password" datatype="html">
+      <trans-unit id="notifications smtp password" datatype="html">
         <source>SMTP password</source>
       </trans-unit>
       <trans-unit id="notifications smtp hostname" datatype="html">

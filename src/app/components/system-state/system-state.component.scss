@@ -3,11 +3,12 @@
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.2);
   padding: 2px;
+
+  .mat-icon {
+    vertical-align: text-bottom;
+  }
 }
 
-.mat-icon {
-  vertical-align: text-bottom;
-}
 
 @mixin system-state-indicator-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   /* states */

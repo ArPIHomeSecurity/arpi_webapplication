@@ -29,7 +29,7 @@
   </mat-menu>
 
 
-  <mat-sidenav-container (backdropClick)="sidenav.close()">
+  <mat-sidenav-container class="all-wrap" (backdropClick)="sidenav.close()" autosize>
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
       <div class="logo">
@@ -109,7 +109,7 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content class="page-wrapper">
       <div id="overlay" *ngIf="disablePage"></div>
 
       <mat-card *ngIf="message && !displayLoader" class="message">
@@ -119,34 +119,28 @@
       </mat-card>
 
       <!-- main app container -->
-      <div class="page-wrapper">
-        <div class="page">
-          <!-- AJAX loading spinner triggered by the loader service -->
-          <mat-progress-spinner *ngIf="displayLoader" class="ajax-loader" color="primary" mode="indeterminate" diameter="100"/>
-          <router-outlet></router-outlet>
+      <div class="page">
+        <!-- AJAX loading spinner triggered by the loader service -->
+        <mat-progress-spinner *ngIf="displayLoader" class="ajax-loader" color="primary" mode="indeterminate" diameter="100"/>
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- footer -->
+      <div class="footer">
+        <div class="links">
+          <a href="https://www.arpi-security.info/" target="project">
+            <button mat-button color="accent">ArPI Home Security</button>
+          </a>
+          |
+          <a href="https://docs.arpi-security.info" target="">
+            <button mat-button color="accent">DOCS</button>
+          </a>
         </div>
-  
-        <!-- footer -->
-        <mat-toolbar color="primary" class="footer">
-          <span class="spacer"></span>
-          
-          <div>
-            <a href="https://www.arpi-security.info/" target="project">
-              <button mat-button color="accent">ArPI Home Security</button>
-            </a>
-            |
-            <a href="https://docs.arpi-security.info" target="">
-              <button mat-button color="accent">DOCS</button>
-            </a>
-          </div>
-          
-          <span class="spacer"></span>
-          
-          <div class="versions">
-            <div class="version">WebApp {{versions.webapplicationVersion}}</div>
-            <div class="version">Server {{versions.serverVersion}}</div>
-          </div>
-        </mat-toolbar>
+        
+        <div class="versions">
+          <div class="version">WebApp {{versions.webapplicationVersion}}</div>
+          <div class="version">Server {{versions.serverVersion}}</div>
+        </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

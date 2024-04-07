@@ -197,7 +197,7 @@
         <source>SMTP username</source>
         <target state="translated">SMTP felhasználónév</target>
       </trans-unit>
-      <trans-unit id="notifications stmp password" datatype="html">
+      <trans-unit id="notifications smtp password" datatype="html">
         <source>SMTP password</source>
         <target state="translated">SMTP jelszó</target>
       </trans-unit>

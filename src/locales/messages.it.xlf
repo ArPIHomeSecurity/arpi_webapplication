@@ -139,7 +139,7 @@
         <source>SMTP username</source>
         <target>Nome utente SMTP</target>
       </trans-unit>
-      <trans-unit id="notifications stmp password" datatype="html">
+      <trans-unit id="notifications smtp password" datatype="html">
         <source>SMTP password</source>
         <target>Password SMTP</target>
       </trans-unit>
