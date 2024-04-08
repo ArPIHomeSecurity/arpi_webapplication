@@ -316,10 +316,9 @@
         <target>Registra il dispositivo</target>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
-      <trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
+      <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
         <target>Codice di registrazione</target>
-        <note priority="1" from="description">Regstration code</note>
       </trans-unit>
       <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
         <source>Register</source>
@@ -331,10 +330,9 @@
         <target>Accesso</target>
         <note priority="1" from="description">Login title</note>
       </trans-unit>
-      <trans-unit id="385a7ecc73f455fde7746d8c9859c3b711c401fc" datatype="html">
+      <trans-unit id="login access code" datatype="html">
         <source>Access code</source>
         <target>Codice di accesso</target>
-        <note priority="1" from="description">Access code</note>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
         <source>Host not allowed!</source>
@@ -646,30 +644,6 @@
         <source>Configuration</source>
         <target>Configurazione</target>
       </trans-unit>
-      <trans-unit id="zone away_l" datatype="html">
-        <source>Away:</source>
-        <target state="translated">Assenti:</target>
-      </trans-unit>
-      <trans-unit id="zone stay_l" datatype="html">
-        <source>Stay:</source>
-        <target state="translated">Presenti:</target>
-      </trans-unit>
-      <trans-unit id="zone disarme_l" datatype="html">
-        <source>Disarmed:</source>
-        <target>Disarmato:</target>
-      </trans-unit>
-      <trans-unit id="zone away_s" datatype="html">
-        <source>A:</source>
-        <target>A:</target>
-      </trans-unit>
-      <trans-unit id="zone stay_s" datatype="html">
-        <source>S:</source>
-        <target>S:</target>
-      </trans-unit>
-      <trans-unit id="zone disarmed_s" datatype="html">
-        <source>D:</source>
-        <target>D:</target>
-      </trans-unit>
       <trans-unit id="zone alert type" datatype="html">
         <source>Alert type</source>
         <target>Tipo di avviso</target>
@@ -759,16 +733,16 @@
         <target>Inviare un SMS di prova</target>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
-        <target>Impossibile connettersi al modulo GSM!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Controllare i log per maggiori informazioni!</target>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Impossibile connettersi al modulo GSM!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Controllare i log per maggiori informazioni!</target>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
         <target>SMTP</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
-        <target>Impossibile connettersi al server SMTP!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Controllare i log per maggiori informazioni!</target>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Impossibile connettersi al server SMTP!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Controllare i log per maggiori informazioni!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -1024,8 +998,8 @@
         <target state="translated">Numero di telefono 2</target>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
-        <target><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Disregistrare il dispositivo </target>
+        <source>Unregister device</source>
+        <target state="translated">Disregistrare il dispositivo</target>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
@@ -1058,7 +1032,7 @@
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
-        <target>Ritardo [s]</target>
+        <target state="translated">Ritardo [s]</target>
       </trans-unit>
       <trans-unit id="output delete" datatype="html">
         <source>Delete output</source>
@@ -1070,7 +1044,7 @@
       </trans-unit>
       <trans-unit id="output duration" datatype="html">
         <source>Duration [s]</source>
-        <target>Durata [s]</target>
+        <target state="translated">Durata [s]</target>
       </trans-unit>
       <trans-unit id="output enabled" datatype="html">
         <source>Enabled</source>
@@ -1128,7 +1102,7 @@
         <source>Syren timing</source>
         <target state="translated">Tempismo della sirena</target>
       </trans-unit>
-      <trans-unit id="syren sensitivity" datatype="html">
+      <trans-unit id="syren sensitivity custom" datatype="html">
         <source>Custom sensitivity</source>
         <target state="translated">Sensibilità personalizzata</target>
       </trans-unit>
@@ -1216,9 +1190,41 @@
         <source>Syren volume</source>
         <target state="translated">Impostazioni di sistema</target>
       </trans-unit>
-      <trans-unit id="syren sensitivity alerty" datatype="html">
+      <trans-unit id="syren sensitivity alert" datatype="html">
         <source>Alert sensitivity</source>
         <target state="translated">Sensibilità all&apos;allarme</target>
+      </trans-unit>
+      <trans-unit id="area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Area</target>
+      </trans-unit>
+      <trans-unit id="user role" datatype="html">
+        <source>Role</source>
+        <target state="translated">Ruolo</target>
+      </trans-unit>
+      <trans-unit id="user access code" datatype="html">
+        <source>Access code</source>
+        <target state="translated">Codice di accesso</target>
+      </trans-unit>
+      <trans-unit id="zone disarmed delay field" datatype="html">
+        <source>Disarmed delay</source>
+        <target state="translated">Ritardo al disarmo</target>
+      </trans-unit>
+      <trans-unit id="zone away alert delay field" datatype="html">
+        <source>Away alert delay</source>
+        <target state="translated">Ritardo dell&apos;avviso di allontanamento</target>
+      </trans-unit>
+      <trans-unit id="zone away arm delay field" datatype="html">
+        <source>Away arm delay</source>
+        <target state="translated">Ritardo del braccio in allontanamento</target>
+      </trans-unit>
+      <trans-unit id="zone stay delay field" datatype="html">
+        <source>Stay alert delay</source>
+        <target state="translated">Ritardo nell&apos;allerta</target>
+      </trans-unit>
+      <trans-unit id="zone stay arm delay field" datatype="html">
+        <source>Stay arm delay</source>
+        <target state="translated">Ritardo del braccio di permanenza</target>
       </trans-unit>
     </body>
   </file>

@@ -48,13 +48,13 @@
   
         <div class="row">
           <mat-form-field>
-            <mat-label i18n="@@output delay">Delay</mat-label>
+            <mat-label i18n="@@output delay">Delay [s]</mat-label>
             <input matInput type="number" i18n-placeholder="@@output delay" placeholder="Delay [s]" formControlName="delay" required>
             <mat-error *ngIf="outputForm.get('delay').invalid">{{outputForm.get('delay').getError('invalid')}}</mat-error>
           </mat-form-field>
   
           <mat-form-field>
-            <mat-label i18n="@@output duration">Duration</mat-label>
+            <mat-label i18n="@@output duration">Duration [s]</mat-label>
             <input matInput type="number" i18n-placeholder="@@output duration" placeholder="Duration [s]" formControlName="duration" required>
             <mat-error *ngIf="outputForm.get('duration').invalid">{{outputForm.get('duration').getError('invalid')}}</mat-error>
           </mat-form-field>

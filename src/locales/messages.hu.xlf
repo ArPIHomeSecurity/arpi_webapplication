@@ -84,10 +84,9 @@
         <target state="translated">Bejelentkezés</target>
         <note priority="1" from="description">Login title</note>
       </trans-unit>
-      <trans-unit id="385a7ecc73f455fde7746d8c9859c3b711c401fc" datatype="html">
+      <trans-unit id="login access code" datatype="html">
         <source>Access code</source>
         <target state="translated">Hozzáférési kód</target>
-        <note priority="1" from="description">Access code</note>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
         <source>Host not allowed!</source>
@@ -422,30 +421,6 @@
         <source>Configuration</source>
         <target state="translated">Konfiguráció</target>
       </trans-unit>
-      <trans-unit id="zone away_l" datatype="html">
-        <source>Away:</source>
-        <target state="translated">Távozó:</target>
-      </trans-unit>
-      <trans-unit id="zone stay_l" datatype="html">
-        <source>Stay:</source>
-        <target state="translated">Maradó:</target>
-      </trans-unit>
-      <trans-unit id="zone disarme_l" datatype="html">
-        <source>Disarmed:</source>
-        <target state="translated">Hatástalanított:</target>
-      </trans-unit>
-      <trans-unit id="zone away_s" datatype="html">
-        <source>A:</source>
-        <target state="translated">T:</target>
-      </trans-unit>
-      <trans-unit id="zone stay_s" datatype="html">
-        <source>S:</source>
-        <target state="translated">M:</target>
-      </trans-unit>
-      <trans-unit id="zone disarmed_s" datatype="html">
-        <source>D:</source>
-        <target state="translated">H:</target>
-      </trans-unit>
       <trans-unit id="zone alert type" datatype="html">
         <source>Alert type</source>
         <target state="translated">Riasztás típusa</target>
@@ -483,10 +458,9 @@
         <target state="translated">Eszköz regisztrálása</target>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
-      <trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
+      <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
         <target state="translated">Regisztrációs kód</target>
-        <note priority="1" from="description">Regstration code</note>
       </trans-unit>
       <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
         <source>Register</source>
@@ -755,8 +729,8 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications phone1 success" datatype="html">
         <source>SMS sent successfully to phone!</source>
@@ -767,8 +741,8 @@
         <target state="translated">Sikertelen SMS küldés!</target>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -1024,8 +998,8 @@
         <target state="translated">SMS küldése 2</target>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
-        <target state="translated"><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eszköz eltávolítása </target>
+        <source>Unregister device</source>
+        <target state="translated">Eszköz eltávolítása</target>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
@@ -1128,7 +1102,7 @@
         <source>Syren timing</source>
         <target state="translated">Sziréna időzítés</target>
       </trans-unit>
-      <trans-unit id="syren sensitivity" datatype="html">
+      <trans-unit id="syren sensitivity custom" datatype="html">
         <source>Custom sensitivity</source>
         <target state="translated">Egyéni érzékenység</target>
       </trans-unit>
@@ -1216,9 +1190,41 @@
         <source>Syren volume</source>
         <target state="translated">Sziréna hangerő</target>
       </trans-unit>
-      <trans-unit id="syren sensitivity alerty" datatype="html">
+      <trans-unit id="syren sensitivity alert" datatype="html">
         <source>Alert sensitivity</source>
         <target state="translated">Riasztási érzékenység</target>
+      </trans-unit>
+      <trans-unit id="area" datatype="html">
+        <source>Area</source>
+        <target state="translated">Terület</target>
+      </trans-unit>
+      <trans-unit id="user role" datatype="html">
+        <source>Role</source>
+        <target state="translated">Szerepkör</target>
+      </trans-unit>
+      <trans-unit id="user access code" datatype="html">
+        <source>Access code</source>
+        <target state="translated">Hozzáférés kód</target>
+      </trans-unit>
+      <trans-unit id="zone disarmed delay field" datatype="html">
+        <source>Disarmed delay</source>
+        <target state="translated">Hatástalanított késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone away alert delay field" datatype="html">
+        <source>Away alert delay</source>
+        <target state="translated">Távozó riasztási késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone away arm delay field" datatype="html">
+        <source>Away arm delay</source>
+        <target state="translated">Távozó élesítési késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone stay delay field" datatype="html">
+        <source>Stay alert delay</source>
+        <target state="translated">Maradó riasztási késleltetés</target>
+      </trans-unit>
+      <trans-unit id="zone stay arm delay field" datatype="html">
+        <source>Stay arm delay</source>
+        <target state="translated">Maradó élesítési késleltetés</target>
       </trans-unit>
     </body>
   </file>

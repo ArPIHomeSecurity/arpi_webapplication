@@ -238,9 +238,8 @@
         <source>Register device</source>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
-      <trans-unit id="d5a32fe08114ea2611421c35262d955c11adddef" datatype="html">
+      <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
-        <note priority="1" from="description">Regstration code</note>
       </trans-unit>
       <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
         <source>Register</source>
@@ -250,9 +249,8 @@
         <source>Login</source>
         <note priority="1" from="description">Login title</note>
       </trans-unit>
-      <trans-unit id="385a7ecc73f455fde7746d8c9859c3b711c401fc" datatype="html">
+      <trans-unit id="login access code" datatype="html">
         <source>Access code</source>
-        <note priority="1" from="description">Access code</note>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
         <source>Host not allowed!</source>
@@ -487,24 +485,6 @@
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
       </trans-unit>
-      <trans-unit id="zone away_l" datatype="html">
-        <source>Away:</source>
-      </trans-unit>
-      <trans-unit id="zone stay_l" datatype="html">
-        <source>Stay:</source>
-      </trans-unit>
-      <trans-unit id="zone disarme_l" datatype="html">
-        <source>Disarmed:</source>
-      </trans-unit>
-      <trans-unit id="zone away_s" datatype="html">
-        <source>A:</source>
-      </trans-unit>
-      <trans-unit id="zone stay_s" datatype="html">
-        <source>S:</source>
-      </trans-unit>
-      <trans-unit id="zone disarmed_s" datatype="html">
-        <source>D:</source>
-      </trans-unit>
       <trans-unit id="zone alert type" datatype="html">
         <source>Alert type</source>
       </trans-unit>
@@ -572,13 +552,13 @@
         <source>Send test SMS</source>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please check logs for more information!</source>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -771,7 +751,7 @@
         <source>Target phone number 2</source>
       </trans-unit>
       <trans-unit id="unregister menu link" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon matListIcon&gt;"/>disabled_by_default<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Unregister device </source>
+        <source>Unregister device</source>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
@@ -885,7 +865,7 @@
       <trans-unit id="sensor syren" datatype="html">
         <source>Syren config</source>
       </trans-unit>
-      <trans-unit id="syren sensitivity" datatype="html">
+      <trans-unit id="syren sensitivity custom" datatype="html">
         <source>Custom sensitivity</source>
       </trans-unit>
       <trans-unit id="syren silent" datatype="html">
@@ -912,11 +892,35 @@
       <trans-unit id="syren silent undefined" datatype="html">
         <source>Normal</source>
       </trans-unit>
-      <trans-unit id="syren sensitivity alerty" datatype="html">
+      <trans-unit id="syren sensitivity alert" datatype="html">
         <source>Alert sensitivity</source>
       </trans-unit>
       <trans-unit id="syren volume" datatype="html">
         <source>Syren volume</source>
+      </trans-unit>
+      <trans-unit id="area" datatype="html">
+        <source>Area</source>
+      </trans-unit>
+      <trans-unit id="user access code" datatype="html">
+        <source>Access code</source>
+      </trans-unit>
+      <trans-unit id="user role" datatype="html">
+        <source>Role</source>
+      </trans-unit>
+      <trans-unit id="zone away alert delay field" datatype="html">
+        <source>Away alert delay</source>
+      </trans-unit>
+      <trans-unit id="zone away arm delay field" datatype="html">
+        <source>Away arm delay</source>
+      </trans-unit>
+      <trans-unit id="zone disarmed delay field" datatype="html">
+        <source>Disarmed delay</source>
+      </trans-unit>
+      <trans-unit id="zone stay arm delay field" datatype="html">
+        <source>Stay arm delay</source>
+      </trans-unit>
+      <trans-unit id="zone stay delay field" datatype="html">
+        <source>Stay alert delay</source>
       </trans-unit>
     </body>
   </file>
