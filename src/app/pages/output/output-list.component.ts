@@ -60,7 +60,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
 
     // TODO: update only one output instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService.listen('outputs_state_change')
+      this.eventService.listen('output_state_change')
         .subscribe(_ => this.updateComponent())
     );
   }
