@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { ARM_TYPE, Area, MONITORING_STATE } from '@app/models';
 import { AREAS } from '@app/demo/configuration';
+import { ARM_TYPE, Area, MONITORING_STATE } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { getSessionValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { MonitoringService } from './monitoring.service';
-import { EventService } from './event.service';
 import { AuthenticationService } from './authentication.service';
+import { EventService } from './event.service';
+import { MonitoringService } from './monitoring.service';
 
 @Injectable({
   providedIn: 'root'
@@ -143,5 +143,10 @@ export class AreaService {
     });
 
     return armState;
+  }
+
+  reorder(areas: Area[]) {
+    this.areas = areas;
+    setSessionValue('AreaService.areas', this.areas);
   }
 }

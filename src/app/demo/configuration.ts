@@ -94,7 +94,8 @@ export const SENSORS = [
     areaId: 0,
     typeId: 1,
     alert: false,
-    description: 'Test 1',
+    name: 'Sensor 1',
+    description: 'Test sensor 1',
     enabled: true
   },
   {
@@ -104,7 +105,8 @@ export const SENSORS = [
     areaId: 0,
     typeId: 2,
     alert: false,
-    description: 'Tamper',
+    name: 'Tamper',
+    description: 'Tamper sensor',
     enabled: true
   },
   {
@@ -114,7 +116,8 @@ export const SENSORS = [
     areaId: 1,
     typeId: 1,
     alert: false,
-    description: 'Test 2',
+    name: 'Sensor 2',
+    description: 'Test sensor 2',
     enabled: true
   }
 ];

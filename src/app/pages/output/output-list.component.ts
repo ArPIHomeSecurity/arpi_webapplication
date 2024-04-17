@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,9 +7,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { Area, MONITORING_STATE, Output, OutputType, OutputDefinitions, OutputTriggerType } from '@app/models';
+import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
+import { Area, MONITORING_STATE, Output, OutputDefinitions, OutputTriggerType, OutputType } from '@app/models';
 import {
   AreaService,
   AuthenticationService,
@@ -20,8 +20,8 @@ import {
   ZoneService
 } from '@app/services';
 
-import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -67,9 +67,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
     this.updateComponent();
 
     // TODO: update only one output instead of the whole page
-    this.baseSubscriptions.push(
-      this.eventService.listen('outputs_state_change').subscribe(_ => this.updateComponent())
-    );
+    this.baseSubscriptions.push(this.eventService.listen('output_state_change').subscribe(_ => this.updateComponent()));
   }
 
   ngOnDestroy() {

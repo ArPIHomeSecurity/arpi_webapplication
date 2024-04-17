@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { Zone } from '@app/models';
 import { ZONES } from '@app/demo/configuration';
+import { Zone } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { getSessionValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable()
@@ -62,5 +62,10 @@ export class ZoneService {
 
   getZoneDirectly(zoneId: number) {
     return this.zones.find(z => z.id === zoneId);
+  }
+
+  reorder(zones: Zone[]) {
+    this.zones = zones;
+    setSessionValue('ZoneService.zones', this.zones);
   }
 }

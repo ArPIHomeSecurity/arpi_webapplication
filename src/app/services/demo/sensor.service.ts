@@ -2,14 +2,14 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { Sensor, SensorType } from '@app/models';
 import { SENSORS, SENSOR_TYPES } from '@app/demo/configuration';
+import { Sensor, SensorType } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { getSessionValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { MonitoringService } from './monitoring.service';
-import { EventService } from './event.service';
 import { AuthenticationService } from './authentication.service';
+import { EventService } from './event.service';
+import { MonitoringService } from './monitoring.service';
 
 @Injectable({
   providedIn: 'root'
@@ -156,5 +156,10 @@ export class SensorService {
         monitoringService.stopAlert(sensor);
       }
     }
+  }
+
+  reorder(sensors: Sensor[]) {
+    this.sensors = sensors;
+    setSessionValue('SensorService.sensors', this.sensors);
   }
 }
