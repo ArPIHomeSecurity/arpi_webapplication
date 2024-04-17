@@ -151,5 +151,8 @@ export class AreaService {
     return armState;
   }
 
-
+  reorder(areas: Area[]) {
+    this.areas = areas;
+    setSessionValue('AreaService.areas', this.areas);
+  }
 }

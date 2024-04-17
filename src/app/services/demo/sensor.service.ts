@@ -166,6 +166,9 @@ export class SensorService {
       }
     }
   }
+
+  reorder(sensors: Sensor[] ) {
+    this.sensors = sensors;
+    setSessionValue('SensorService.sensors', this.sensors);
+  }
 }
-
-

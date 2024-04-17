@@ -70,4 +70,9 @@ export class ZoneService {
   getZoneDirectly(zoneId: number) {
     return this.zones.find(z => z.id === zoneId);
   }
+
+  reorder(zones: Zone[]) {
+    this.zones = zones;
+    setSessionValue('ZoneService.zones', this.zones);
+  }
 }
