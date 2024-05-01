@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-.user-list {
-  .empty {
-    text-align: center;
-  }
-}
 
 .mat-card-header {
   margin-bottom: 15px;
@@ -17,6 +12,10 @@
   
   .mat-card-content {
     margin-bottom: 0px;
+  }
+
+  mat-icon.entry {
+    vertical-align: middle;
   }
 }
 

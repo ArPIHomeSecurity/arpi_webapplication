@@ -20,4 +20,12 @@ export interface UserService {
   deleteRegistrationCode(userId: number): Observable<object>;
 
   registerCard(userId: number): Observable<any>;
+
+  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string>;
+
+  setPublicKey(userId: number, publicKey: string): Observable<boolean>;
+
+  hasSshKey(userId: number): Observable<boolean>;
+
+  deleteSshKey(userId: number): Observable<boolean>;
 }

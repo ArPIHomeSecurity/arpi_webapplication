@@ -10,7 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { CountdownModule } from 'ngx-countdown';
 
-// user authentication
+// application components
 import { LoginComponent } from './pages/login';
 import { HomeComponent } from './pages/home';
 import { ClockComponent } from './pages/config/clock';
@@ -28,6 +28,7 @@ import {
   UserDeviceRegistrationDialogComponent,
   UserDeviceUnregisterDialogComponent,
   UserCardDeleteDialogComponent,
+  UserSshKeySetupDialogComponent
 } from './pages/user';
 import { SystemStateComponent } from './components/system-state/system-state.component';
 
@@ -40,6 +41,7 @@ import { environment } from '@environments/environment';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
+import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -68,7 +70,6 @@ import { EventsComponent } from './pages/events/events.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
 
@@ -92,7 +93,8 @@ import { ThemeService } from './services/theme.service';
     UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
     UserDeviceUnregisterDialogComponent,
-    
+    UserSshKeySetupDialogComponent,
+
     AreaComponent,
     AreaListComponent,
     AreaDetailComponent,
