@@ -51,7 +51,7 @@
         <button mat-icon-button [routerLink]="['/user', user.id]" color="primary"
           [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(user.id)" color="warn"
-          [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+          [disabled]="monitoringState != monitoringStates.READY || !canBeDeleted(user.id)"><mat-icon>delete</mat-icon></button>
 
         <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
         <mat-menu #menu="matMenu">

@@ -94,6 +94,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     return this.authService.getRole() === 'admin';
   }
 
+  canBeDeleted(userId: number) {
+    return (
+      this.users.filter(x => x.role === ROLE_TYPES.ADMIN).length > 1 ||
+      this.users.find(x => x.id === userId).role !== ROLE_TYPES.ADMIN
+    )
+  }
+
   openDeleteDialog(userId: number) {
     const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
