@@ -937,6 +937,9 @@
       <trans-unit id="clock uptime system" datatype="html">
         <source>System</source>
       </trans-unit>
+      <trans-unit id="dark theme" datatype="html">
+        <source>Dark theme</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

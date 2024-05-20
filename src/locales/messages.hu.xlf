@@ -1246,6 +1246,10 @@
         <source>Nginx</source>
         <target state="translated">Nginx</target>
       </trans-unit>
+      <trans-unit id="dark theme" datatype="html">
+        <source>Dark theme</source>
+        <target state="translated">Sötét téma</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
