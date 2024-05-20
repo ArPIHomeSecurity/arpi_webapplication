@@ -10,6 +10,7 @@ import { TIME_ZONES } from './timezones';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { EventService, LoaderService, MonitoringService } from '@app/services';
 import { environment } from '@environments/environment';
+import * as moment from 'moment';
 
 const scheduleMicrotask = Promise.resolve( null );
 
@@ -141,6 +142,10 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
           this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
         }
     );
+  }
+
+  getDuration(uptime) {
+    return moment.duration(-uptime, 'seconds').humanize(true);
   }
 
   private filterGroup(value: string): TimeZoneGroup[] {

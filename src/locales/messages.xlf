@@ -922,6 +922,21 @@
       <trans-unit id="zone stay delay field" datatype="html">
         <source>Stay alert delay</source>
       </trans-unit>
+      <trans-unit id="clock uptime" datatype="html">
+        <source>Uptime</source>
+      </trans-unit>
+      <trans-unit id="clock uptime monitor" datatype="html">
+        <source>Monitor</source>
+      </trans-unit>
+      <trans-unit id="clock uptime nginx" datatype="html">
+        <source>Nginx</source>
+      </trans-unit>
+      <trans-unit id="clock uptime server" datatype="html">
+        <source>Server</source>
+      </trans-unit>
+      <trans-unit id="clock uptime system" datatype="html">
+        <source>System</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

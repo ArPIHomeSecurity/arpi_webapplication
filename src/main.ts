@@ -3,10 +3,12 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import * as moment from 'moment';
 
 
 let locale = localStorage.getItem('localeId');
 console.log('Selected language: ', locale);
+moment.locale(locale);
 if (locale === null) {
   locale = 'en';
 }
@@ -19,6 +21,7 @@ console.log('Current locale: ', matches === null ? 'en' : matches[1]);
 
 if ((matches === null && locale === 'en') || (matches !== null && locale === matches[1])) {
   console.log('Correct locale, no need to redirect!');
+
 }
 else if (matches === null && locale != 'en') {
   // redirect to locale (EN => X)

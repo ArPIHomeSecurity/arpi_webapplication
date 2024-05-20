@@ -48,11 +48,11 @@
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
+        <source>The system is not working correctly, you can't make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
+        <source>The system is not ready, you can't make changes in the configuration!</source>
         <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
@@ -492,7 +492,7 @@
         <target state="translated">Nem sikerült törölni!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can&apos;t delete, system is not ready!</source>
+        <source>Can't delete, system is not ready!</source>
         <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
@@ -729,7 +729,7 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
         <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications phone1 success" datatype="html">
@@ -741,8 +741,8 @@
         <target state="translated">Sikertelen SMS küldés!</target>
       </trans-unit>
       <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Bővebb információért nézd meg a logokat!</target>
+        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -1119,8 +1119,8 @@
         <target state="translated">Monitor küszöbérték [%]</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
-        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
+        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
         <source>sensitivity: instant alert</source>
@@ -1225,6 +1225,26 @@
       <trans-unit id="zone stay arm delay field" datatype="html">
         <source>Stay arm delay</source>
         <target state="translated">Maradó élesítési késleltetés</target>
+      </trans-unit>
+      <trans-unit id="clock uptime" datatype="html">
+        <source>Uptime</source>
+        <target state="translated">Üzemidő</target>
+      </trans-unit>
+      <trans-unit id="clock uptime system" datatype="html">
+        <source>System</source>
+        <target state="translated">Rendszer</target>
+      </trans-unit>
+      <trans-unit id="clock uptime server" datatype="html">
+        <source>Server</source>
+        <target state="translated">Server</target>
+      </trans-unit>
+      <trans-unit id="clock uptime monitor" datatype="html">
+        <source>Monitor</source>
+        <target state="translated">Monitor</target>
+      </trans-unit>
+      <trans-unit id="clock uptime nginx" datatype="html">
+        <source>Nginx</source>
+        <target state="translated">Nginx</target>
       </trans-unit>
     </body>
   </file>
