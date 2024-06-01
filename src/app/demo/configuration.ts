@@ -57,7 +57,7 @@ export const DEMO_CONFIGURATION = [
         value: {
             sylent: false,
             delay: 0,
-            stop_time: null
+            duration: null
         }
     }
 ];

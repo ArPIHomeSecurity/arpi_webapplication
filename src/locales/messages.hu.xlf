@@ -75,10 +75,6 @@
         <source>Syren</source>
         <target state="translated">Sziréna</target>
       </trans-unit>
-      <trans-unit id="syren stop" datatype="html">
-        <source>Stop time</source>
-        <target state="translated">Kikapcsolási idő</target>
-      </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
         <target state="translated">Bejelentkezés</target>
@@ -981,7 +977,7 @@
         <source>Delay the syren in seconds</source>
         <target state="translated">Sziréna késleltetése másodperceben</target>
       </trans-unit>
-      <trans-unit id="syren stop hint" datatype="html">
+      <trans-unit id="syren duration hint" datatype="html">
         <source>Stop the syren in seconds</source>
         <target state="translated">Sziréna kikapcsolása másodpercben</target>
       </trans-unit>
@@ -1249,6 +1245,10 @@
       <trans-unit id="dark theme" datatype="html">
         <source>Dark theme</source>
         <target state="translated">Sötét téma</target>
+      </trans-unit>
+      <trans-unit id="syren duration" datatype="html">
+        <source>Duration</source>
+        <target state="translated">Időtartam</target>
       </trans-unit>
     </body>
   </file>

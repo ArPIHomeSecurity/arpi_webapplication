@@ -219,10 +219,6 @@
         <source>Syren</source>
         <target state="translated">Sirena</target>
       </trans-unit>
-      <trans-unit id="syren stop" datatype="html">
-        <source>Stop time</source>
-        <target>Fermare il tempo</target>
-      </trans-unit>
       <trans-unit id="message system error" datatype="html">
         <source>The system is not working correctly, you can't make changes in the configuration!</source>
         <target>Il sistema non funziona correttamente, non è possibile apportare modifiche alla configurazione!</target>
@@ -985,7 +981,7 @@
         <source>Delay the syren in seconds</source>
         <target>Ritardo della sirena in secondi</target>
       </trans-unit>
-      <trans-unit id="syren stop hint" datatype="html">
+      <trans-unit id="syren duration hint" datatype="html">
         <source>Stop the syren in seconds</source>
         <target state="translated">Spegnimento sirena in secondi</target>
       </trans-unit>
@@ -1249,6 +1245,10 @@
       <trans-unit id="dark theme" datatype="html">
         <source>Dark theme</source>
         <target state="translated">Tema scuro</target>
+      </trans-unit>
+      <trans-unit id="syren duration" datatype="html">
+        <source>Duration</source>
+        <target state="translated">Durata</target>
       </trans-unit>
     </body>
   </file>
