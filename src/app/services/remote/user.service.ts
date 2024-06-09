@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { User } from '@app/models';
 
@@ -54,5 +54,25 @@ export class UserService {
 
   registerCard(userId: number): Observable<any> {
     return this.http.put('/api/user/' + userId + '/register_card', {});
+  }
+
+  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string> {
+    return this.http.post('/api/user/' + userId + '/ssh_key', { keyType, passphrase })
+      .pipe(map((res: any) => res));
+  }
+
+  setPublicKey(userId: number, publicKey: string): Observable<boolean> {
+    return this.http.put('/api/user/' + userId + '/ssh_key', { publicKey })
+      .pipe(map((res: any) => res));
+  }
+
+  hasSshKey(userId: number): Observable<boolean> {
+    return this.http.get('/api/user/' + userId + '/has_ssh_key')
+      .pipe(map((res: any) => res));
+  }
+
+  deleteSshKey(userId: number): Observable<boolean> {
+    return this.http.delete('/api/user/' + userId + '/ssh_key')
+      .pipe(map((res: any) => res));
   }
 }

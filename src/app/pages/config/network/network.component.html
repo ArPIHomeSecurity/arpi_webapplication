@@ -10,7 +10,7 @@
         </mat-expansion-panel-header>
         
         <div class="row">
-          <mat-form-field class="half-width">
+          <mat-form-field class="container-item">
             <mat-label i18n="@@network provider">Provider</mat-label>
             <mat-select formControlName="dyndnsProvider" i18n-placeholder="@@network provider" placeholder="Provider">
               <mat-option *ngFor="let provider of providers" [value]="provider.value">
@@ -19,17 +19,17 @@
             </mat-select>
           </mat-form-field>
           
-          <mat-form-field class="half-width">
+          <mat-form-field class="container-item">
             <input matInput formControlName="dyndnsHostname" i18n-placeholder="@@network hostname" placeholder="Hostname">
           </mat-form-field>
         </div>
 
         <div class="row">
-          <mat-form-field class="half-width">
+          <mat-form-field class="container-item">
             <input matInput formControlName="dyndnsUsername" i18n-placeholder="@@network username" placeholder="Username">
           </mat-form-field>
           
-          <mat-form-field class="half-width">
+          <mat-form-field class="container-item">
             <input type="password" matInput formControlName="dyndnsPassword" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" i18n-placeholder="@@network password" placeholder="Password">
           </mat-form-field>
         </div>
@@ -39,15 +39,19 @@
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title i18n="@@network access locally">Access locally</mat-panel-title>
-          <mat-panel-description i18n="@@network local settings">Local access settings</mat-panel-description>
+          <mat-panel-title i18n="@@network terminal access">Terminal access</mat-panel-title>
+          <mat-panel-description i18n="@@network ssh settings">SSH settings</mat-panel-description>
         </mat-expansion-panel-header>
 
-        <mat-checkbox formControlName="accessSsh" i18n="@@network enable ssh">Enable SSH connection</mat-checkbox>
+        <mat-checkbox formControlName="accessSshService" i18n="@@network enable ssh">Enable SSH connection</mat-checkbox>
         
         <br/>
         
         <mat-checkbox formControlName="accessSshRestrictLocalNetwork" i18n="@@network restrict local">Restrict SSH connection to local network</mat-checkbox>
+
+        <br/>
+        
+        <mat-checkbox formControlName="accessSshPasswordAuthentication" i18n="@@network password authentication">Enable SSH password authentication</mat-checkbox>
 
       </mat-expansion-panel>
 

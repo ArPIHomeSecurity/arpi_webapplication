@@ -14,6 +14,7 @@ import { AuthenticationService, CardService, EventService, LoaderService, Monito
 import { environment } from '@environments/environment';
 import { UserCardDeleteDialogComponent } from '.';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { UserSshKeySetupDialogComponent } from './user-ssh-key-setup.component';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -32,6 +33,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   action: string;
   users: User[] = null;
   cards: Card[] = [];
+  has_ssh_key: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
@@ -78,6 +80,15 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.users = results.users;
+
+        // iterate users and ask for has_ssh_key
+        this.users.forEach((user) => {
+          this.userService.hasSshKey(user.id)
+            .subscribe((res) => {
+              this.has_ssh_key.set(user.id, res);
+            });
+        });
+
         if (results.cards) {
           this.cards = results.cards;
         }
@@ -94,6 +105,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     return this.authService.getRole() === 'admin';
   }
 
+  canBeDeleted(userId: number) {
+    return (
+      this.users.filter(x => x.role === ROLE_TYPES.ADMIN).length > 1 ||
+      this.users.find(x => x.id === userId).role !== ROLE_TYPES.ADMIN
+    )
+  }
+
   openDeleteDialog(userId: number) {
     const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
       width: '250px',
@@ -108,13 +126,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
           this.action = 'delete';
           this.loader.disable(true);
           this.userService.deleteUser(userId)
-            .subscribe(
-              _ => this.updateComponent(),
-              _ => {
+            .subscribe({
+              next: _ => this.updateComponent(),
+              error: _ => {
                 this.loader.disable(false);
                 this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
               }
-            );
+            });
         } else {
           this.action = 'cant delete';
           this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
@@ -134,13 +152,13 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
           this.action = 'delete';
           this.loader.disable(true);
           this.cardService.deleteCard(cardId)
-            .subscribe(
-              _ => this.updateComponent(),
-              _ => {
+            .subscribe({
+              next: _ => this.updateComponent(),
+              error: _ => {
                 this.loader.disable(false);
                 this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
               }
-            );
+            });
         } else {
           this.action = 'cant delete';
           this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
@@ -169,19 +187,31 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
         this.loader.disable(true);
         this.cardService.updateCard(tmpCard)
-        .subscribe(
-          _ => this.updateComponent(),
-          _ => {
+        .subscribe({
+          next: _ => this.updateComponent(),
+          error: _ => {
             this.loader.disable(false);
             this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
           }
-        );
+        });
       }
     });
   }
 
   onClickRegisterCard(userId: number){
     this.userService.registerCard(userId).subscribe();
+  }
+
+  openSshKeySetupDialog(userId: number) {
+    const dialogRef = this.dialog.open(UserSshKeySetupDialogComponent, {
+      width: '350px',
+      data: this.users.find(x => x.id === userId),
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loader.disable(true);
+      this.updateComponent();
+    });
   }
 
   openDeviceRegistrationDialog(userId: number) {
@@ -199,6 +229,12 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   removeRegistrationCode(userId: number) {
     this.loader.disable(true);
     this.userService.deleteRegistrationCode(userId)
+      .subscribe(_ => this.updateComponent());
+  }
+
+  deleteSSHKey(userId: number) {
+    this.loader.disable(true);
+    this.userService.deleteSshKey(userId)
       .subscribe(_ => this.updateComponent());
   }
 }

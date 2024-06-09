@@ -32,14 +32,23 @@
     </mat-expansion-panel>
   </div>
 
-  <div *ngIf="areas.length == 1" class="container-item">
-    <component-sensor *ngFor="let sensor of sensors" [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"/>
+  <div *ngIf="areas.length == 1">
+    <component-sensor
+      *ngFor="let sensor of sensors"
+      [sensor]="sensor"
+      [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
+    />
   </div>
 
-  <div *ngIf="areas.length > 1" class="container-item">
-    <component-area *ngFor="let area of areas; trackBy: areaIdentify" [area]="area" [sensors]="getSensors(area.id)"
-      [delays]="getSensorDelays(area.id)" [monitoringState]="monitoringState">
-    </component-area>
+  <div *ngIf="areas.length > 1">
+    <component-area
+      *ngFor="let area of areas;
+      trackBy: areaIdentify"
+      [area]="area"
+      [sensors]="getSensors(area.id)"
+      [delays]="getSensorDelays(area.id)"
+      [monitoringState]="monitoringState"
+    />
   </div>
 
 </div>

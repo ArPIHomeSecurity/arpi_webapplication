@@ -30,6 +30,7 @@
           <mat-divider></mat-divider>
           <div class="header" i18n="@@user device registration code">Device registration code</div>
           <div class="registration">
+            <mat-icon class="entry">key</mat-icon>
             <span i18n="@@user registration">Expires on: </span>
             <span *ngIf="user.registrationExpiry">{{user.registrationExpiry}}</span>
             <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
@@ -37,11 +38,20 @@
               *ngIf="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
           </div>
         </div>
+        <div *ngIf="has_ssh_key.get(user.id)">
+          <mat-divider></mat-divider>
+          <div class="header" i18n="@@user ssh key">SSH key</div>
+          <div class="registration">
+            <mat-icon class="entry">terminal</mat-icon>
+            <button mat-icon-button (click)="deleteSSHKey(user.id)" color="warn" class="delete"
+              *ngIf="userCanEdit()"><mat-icon>remove_circle_outline</mat-icon></button>
+          </div>
+        </div>
       </mat-card-content>
 
       <mat-card-content *ngIf="user.comment">
         <mat-card-title-group>
-          <mat-card-subtitle>{{user.comment}}kovg</mat-card-subtitle>
+          <mat-card-subtitle>{{user.comment}}</mat-card-subtitle>
         </mat-card-title-group>
       </mat-card-content>
 
@@ -51,7 +61,7 @@
         <button mat-icon-button [routerLink]="['/user', user.id]" color="primary"
           [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
         <button mat-icon-button (click)="openDeleteDialog(user.id)" color="warn"
-          [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+          [disabled]="monitoringState != monitoringStates.READY || !canBeDeleted(user.id)"><mat-icon>delete</mat-icon></button>
 
         <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
         <mat-menu #menu="matMenu">
@@ -61,6 +71,8 @@
           <button mat-menu-item (click)="onClickRegisterCard(user.id)" color="primary"
             [disabled]="monitoringState != monitoringStates.READY" i18n="@@user register card button">Register
             card</button>
+          <button mat-menu-item (click)="openSshKeySetupDialog(user.id)" color="primary"
+            [disabled]="monitoringState != monitoringStates.READY || has_ssh_key.get(user.id)" i18n="@@user generate ssk key">Setup SSH key</button>
         </mat-menu>
       </mat-card-actions>
     </mat-card>

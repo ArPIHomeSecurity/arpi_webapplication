@@ -165,9 +165,6 @@
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
       </trans-unit>
-      <trans-unit id="syren stop" datatype="html">
-        <source>Stop time</source>
-      </trans-unit>
       <trans-unit id="message system error" datatype="html">
         <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
       </trans-unit>
@@ -741,7 +738,7 @@
       <trans-unit id="syren delay hint" datatype="html">
         <source>Delay the syren in seconds</source>
       </trans-unit>
-      <trans-unit id="syren stop hint" datatype="html">
+      <trans-unit id="syren duration hint" datatype="html">
         <source>Stop the syren in seconds</source>
       </trans-unit>
       <trans-unit id="notifications send sms2" datatype="html">
@@ -921,6 +918,27 @@
       </trans-unit>
       <trans-unit id="zone stay delay field" datatype="html">
         <source>Stay alert delay</source>
+      </trans-unit>
+      <trans-unit id="clock uptime" datatype="html">
+        <source>Uptime</source>
+      </trans-unit>
+      <trans-unit id="clock uptime monitor" datatype="html">
+        <source>Monitor</source>
+      </trans-unit>
+      <trans-unit id="clock uptime nginx" datatype="html">
+        <source>Nginx</source>
+      </trans-unit>
+      <trans-unit id="clock uptime server" datatype="html">
+        <source>Server</source>
+      </trans-unit>
+      <trans-unit id="clock uptime system" datatype="html">
+        <source>System</source>
+      </trans-unit>
+      <trans-unit id="dark theme" datatype="html">
+        <source>Dark theme</source>
+      </trans-unit>
+      <trans-unit id="syren duration" datatype="html">
+        <source>Duration</source>
       </trans-unit>
     </body>
   </file>

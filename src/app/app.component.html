@@ -100,7 +100,7 @@
         </mat-list-item>
         <mat-list-item [disableRipple]="true">
           <mat-icon matListItemIcon>invert_colors</mat-icon>
-          <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme">Dark theme</mat-slide-toggle>
+          <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme" i18n="@@dark theme">Dark theme</mat-slide-toggle>
         </mat-list-item>
         <mat-list-item *ngIf="!isLoggedIn() && isDeviceRegistered" (click)="unregister()">
           <mat-icon matListItemIcon>disabled_by_default</mat-icon>

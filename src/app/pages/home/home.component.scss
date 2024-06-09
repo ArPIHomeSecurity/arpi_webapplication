@@ -11,11 +11,17 @@
   }
 
   component-area {
-    margin-bottom: 10px;
     display: inline-block;
+    margin-bottom: 10px;
     width: 100%;
   }
-  
+
+  component-sensor {
+    display: block;
+    margin: 5px 0;
+    width: 100%;
+  }
+
   mat-expansion-panel.alert {
     background-color: mat.get-color-from-palette($argus-alert);
 
@@ -33,12 +39,6 @@
         webkit-animation: 2s linear infinite condemed_blink_effect;
         animation: 2s linear infinite condemed_blink_effect;
       }
-    }
-
-    component-sensor {
-      margin: 10px 0;
-      display: block;
-      width: 100%;
     }
   }
 

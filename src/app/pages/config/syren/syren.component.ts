@@ -71,7 +71,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     this.syrenForm = this.fb.group({
       silentAlert: new FormControl(silentAlert, Validators.required),
       delay: new FormControl(getValue(this.syren.value, 'delay', 0), [Validators.required, Validators.min(0)]),
-      stopTime: new FormControl(getValue(this.syren.value, 'stop_time', 0), [Validators.required, Validators.min(0)]),
+      duration: new FormControl(getValue(this.syren.value, 'duration', 0), [Validators.required, Validators.min(0)]),
 
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(getValue(this.sensitivity.value, 'monitor_period', null)),
@@ -124,7 +124,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     return {
       silent: silentAlert,
       delay: formModel.delay,
-      stop_time: formModel.stopTime
+      duration: formModel.duration
     };
   }
 
