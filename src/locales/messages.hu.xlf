@@ -272,14 +272,6 @@
         <source>Restrict access to host</source>
         <target state="translated">Hozzáférés korlátozása hoszthoz</target>
       </trans-unit>
-      <trans-unit id="network access locally" datatype="html">
-        <source>Access locally</source>
-        <target state="translated">Helyi hozzáférés</target>
-      </trans-unit>
-      <trans-unit id="network local settings" datatype="html">
-        <source>Local access settings</source>
-        <target state="translated">Helyi hozzáférés beállítása</target>
-      </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
         <target state="translated">SSH kapcsolat engedélyezett</target>
@@ -1249,6 +1241,58 @@
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
         <target state="translated">Időtartam</target>
+      </trans-unit>
+      <trans-unit id="network terminal access" datatype="html">
+        <source>Terminal access</source>
+        <target state="translated">Terminál-hozzáférés</target>
+      </trans-unit>
+      <trans-unit id="network ssh settings" datatype="html">
+        <source>SSH settings</source>
+        <target state="translated">SSH beállítások</target>
+      </trans-unit>
+      <trans-unit id="network password authentication" datatype="html">
+        <source>Enable SSH password authentication</source>
+        <target state="translated">SSH jelszó-hitelesítés engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="user ssh key" datatype="html">
+        <source>SSH key</source>
+        <target state="translated">SSH kulcs</target>
+      </trans-unit>
+      <trans-unit id="user generate ssk key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">SSH kulcs beállítása</target>
+      </trans-unit>
+      <trans-unit id="user ssh key setup" datatype="html">
+        <source>Setup ssh key</source>
+        <target state="translated">Setup ssh kulcs</target>
+      </trans-unit>
+      <trans-unit id="user ssh setup method" datatype="html">
+        <source>Setup method</source>
+        <target state="translated">Beállítási módszer</target>
+      </trans-unit>
+      <trans-unit id="user ssh key type" datatype="html">
+        <source>SSH key type</source>
+        <target state="translated">SSH kulcs típusa</target>
+      </trans-unit>
+      <trans-unit id="user ssh key passphrase" datatype="html">
+        <source>SSH key passphrase</source>
+        <target state="translated">SSH kulcs jelszava</target>
+      </trans-unit>
+      <trans-unit id="user ssh key public key" datatype="html">
+        <source>SSh public key</source>
+        <target state="translated">SSh nyilvános kulcs</target>
+      </trans-unit>
+      <trans-unit id="user generate ssh key" datatype="html">
+        <source>Generate SSH key</source>
+        <target state="translated">SSH kulcs generálása</target>
+      </trans-unit>
+      <trans-unit id="user setup ssh key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">SSH kulcs beállítása</target>
+      </trans-unit>
+      <trans-unit id="user copy ssh key" datatype="html">
+        <source>Copy key</source>
+        <target state="translated">Kulcs másolása</target>
       </trans-unit>
     </body>
   </file>

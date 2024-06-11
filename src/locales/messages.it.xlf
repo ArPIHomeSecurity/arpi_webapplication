@@ -119,14 +119,6 @@
         <source>Restrict access to host</source>
         <target>Limitare l'accesso all'host</target>
       </trans-unit>
-      <trans-unit id="network access locally" datatype="html">
-        <source>Access locally</source>
-        <target>Accesso locale</target>
-      </trans-unit>
-      <trans-unit id="network local settings" datatype="html">
-        <source>Local access settings</source>
-        <target>Impostazioni di accesso locale</target>
-      </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
         <target>Abilita la connessione SSH</target>
@@ -1249,6 +1241,58 @@
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
         <target state="translated">Durata</target>
+      </trans-unit>
+      <trans-unit id="network terminal access" datatype="html">
+        <source>Terminal access</source>
+        <target state="translated">Accesso al terminale</target>
+      </trans-unit>
+      <trans-unit id="network ssh settings" datatype="html">
+        <source>SSH settings</source>
+        <target state="translated">Impostazioni SSH</target>
+      </trans-unit>
+      <trans-unit id="network password authentication" datatype="html">
+        <source>Enable SSH password authentication</source>
+        <target state="translated">Abilita l'autenticazione con password SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key" datatype="html">
+        <source>SSH key</source>
+        <target state="translated">Chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user generate ssk key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">Impostazione della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key setup" datatype="html">
+        <source>Setup ssh key</source>
+        <target state="translated">Impostazione della chiave ssh</target>
+      </trans-unit>
+      <trans-unit id="user ssh setup method" datatype="html">
+        <source>Setup method</source>
+        <target state="translated">Metodo di impostazione</target>
+      </trans-unit>
+      <trans-unit id="user ssh key type" datatype="html">
+        <source>SSH key type</source>
+        <target state="translated">Tipo di chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key passphrase" datatype="html">
+        <source>SSH key passphrase</source>
+        <target state="translated">Passphrase della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key public key" datatype="html">
+        <source>SSh public key</source>
+        <target state="translated">Chiave pubblica SSh</target>
+      </trans-unit>
+      <trans-unit id="user generate ssh key" datatype="html">
+        <source>Generate SSH key</source>
+        <target state="translated">Generare la chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user setup ssh key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">Impostazione della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user copy ssh key" datatype="html">
+        <source>Copy key</source>
+        <target state="translated">Tasto copia</target>
       </trans-unit>
     </body>
   </file>
