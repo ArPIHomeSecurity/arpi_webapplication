@@ -72,7 +72,8 @@ export const USERS = [
     registrationCode: 'ABCDEF000001',
     accessCode: 1234,
     comment: '',
-    registrationExpiry: new Date().toISOString().split('.')[0].replace('T', ' ')
+    registrationExpiry: new Date().toISOString().split('.')[0].replace('T', ' '),
+    hasSSHKey: false
   },
   {
     id: 2,
@@ -83,7 +84,8 @@ export const USERS = [
     registrationCode: 'ABCDEF000002',
     accessCode: 1111,
     comment: '',
-    registrationExpiry: new Date().toISOString().split('.')[0].replace('T', ' ')
+    registrationExpiry: new Date().toISOString().split('.')[0].replace('T', ' '),
+    hasSSHKey: false
   }
 ];
 export const SENSORS = [
