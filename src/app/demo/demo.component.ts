@@ -30,7 +30,10 @@ export class DemoComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    const appRoot = document.getElementsByTagName('app-root')[0];
+    if (appRoot) {
+      appRoot.classList.add('demo');
+    }
   }
 
   help() {
