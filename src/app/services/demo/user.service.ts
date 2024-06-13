@@ -10,6 +10,7 @@ import { USERS } from '@app/demo/configuration';
 export class UserDemo extends User {
   registrationCode: string;
   registeringCards: boolean;
+  hasSSHKey: boolean;
 }
 
 
@@ -100,6 +101,46 @@ export class UserService {
 
   registerCard(userId: number): Observable<any> {
     this.users[this.users.findIndex(u => u.id === userId)].registeringCards = true;
+    setSessionValue('UserService.users', this.users);
+    return of(true);
+  }
+
+  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string> {
+    const user = this.users.find(u => u.id === userId);
+    if (keyType === 'rsa') {
+      user.hasSSHKey = true;
+      setSessionValue('UserService.users', this.users);
+      return of("ssh-rsa " + generateRandomString(2048));
+    } else if (keyType === 'ed25519') {
+      user.hasSSHKey = true;
+      setSessionValue('UserService.users', this.users);
+      return of("ssh-ed25519 " + generateRandomString(256));
+    } else {
+      return of('invalid key type');
+    }
+
+    function generateRandomString(length: number): string {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
+  }
+
+  setPublicKey(userId: number, publicKey: string): Observable<boolean> {
+    this.users.find(u => u.id === userId).hasSSHKey = true;
+    setSessionValue('UserService.users', this.users);
+    return of(true);
+  }
+
+  hasSshKey(userId: number): Observable<boolean> {
+    return of(this.users.find(u => u.id === userId).hasSSHKey);
+  }
+
+  deleteSshKey(userId: number): Observable<boolean> {
+    this.users.find(u => u.id === userId).hasSSHKey = false;
     setSessionValue('UserService.users', this.users);
     return of(true);
   }
