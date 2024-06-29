@@ -161,6 +161,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
           _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
         );
     } else {
+      output.state = output.defaultState;
       this.action = 'create';
       this.outputService.createOutput(output)
         .subscribe(
@@ -206,7 +207,6 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     output.name = formModel.name;
     output.description = formModel.description;
     output.channel = formModel.channel === -1 ? null : formModel.channel;
-    output.state = false;
     output.triggerType = formModel.triggerType;
     output.areaId = formModel.areaId;
     output.delay = formModel.delay;
