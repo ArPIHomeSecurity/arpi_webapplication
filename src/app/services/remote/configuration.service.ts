@@ -31,6 +31,10 @@ export class ConfigurationService implements ConfigurationService {
     return this.http.get('/api/config/test_sms');
   }
 
+  doTestCall() {
+    return this.http.get('/api/config/test_call');
+  }
+
   testSyren(duration?: number) {
     const params = duration ?
       new HttpParams().set('duration', duration)

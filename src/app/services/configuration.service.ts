@@ -12,5 +12,7 @@ export interface ConfigurationService {
   
   sendTestSMS(): Observable<any>;
 
+  doTestCall(): Observable<any>;
+
   testSyren(duration?: number): Observable<any>;
 }
