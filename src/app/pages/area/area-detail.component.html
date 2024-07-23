@@ -17,7 +17,7 @@
         <mat-icon>save</mat-icon>
       </button>
       <button *ngIf="areaId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(area.id)"
-        [disabled]="getSensors().length > 0 || monitoringState != monitoringStates.READY">
+        [disabled]="getSensors().length > 0  || getOutputs().length > 0|| monitoringState != monitoringStates.READY">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-icon-button color="accent" type="button" (click)="onCancel()">
@@ -27,7 +27,7 @@
   </mat-card>
 
   <ng-template #not_found>
-    <h1 i18n="@@area not found">Zone not found!</h1>
+    <h1 i18n="@@area not found">Area not found!</h1>
   </ng-template>
 </div>
 

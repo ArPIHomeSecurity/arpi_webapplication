@@ -12,8 +12,8 @@ import { finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { AreaDeleteDialogComponent } from './area-delete.component';
 
-import { MONITORING_STATE, Sensor, Area } from '@app/models';
-import { EventService, LoaderService, MonitoringService, SensorService, AreaService } from '@app/services';
+import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
+import { EventService, LoaderService, MonitoringService, SensorService, AreaService, OutputService } from '@app/services';
 import { positiveInteger } from '@app/utils';
 
 import { environment } from '@environments/environment';
@@ -33,12 +33,14 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   areaId: number;
   area: Area = null;
   sensors: Sensor[];
+  outputs: Output[];
   areaForm: UntypedFormGroup;
 
   constructor(
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('EventService') public eventService: EventService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('AreaService') private areaService: AreaService,
 
@@ -70,12 +72,14 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
 
       forkJoin({
         area: this.areaService.getArea(this.areaId),
+        outputs: this.outputService.getOutputs(),
         sensors: this.sensorService.getSensors()
       })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
           this.area = results.area;
           this.updateForm(this.area);
+          this.outputs = results.outputs;
           this.sensors = results.sensors;
           this.loader.display(false);
         }
@@ -126,6 +130,19 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
       this.sensors.forEach((sensor) => {
         if (sensor.areaId === this.area.id) {
           results.push(sensor);
+        }
+      });
+    }
+
+    return results;
+  }
+
+  getOutputs(): Output[] {
+    const results: Output[] = [];
+    if (this.area) {
+      this.outputs.forEach((output) => {
+        if (output.areaId === this.area.id) {
+          results.push(output);
         }
       });
     }

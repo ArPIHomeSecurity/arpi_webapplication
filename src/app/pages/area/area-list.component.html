@@ -27,6 +27,25 @@
             <h3 i18n="@@area no sensors">No sensors</h3>
           </ng-template>
         </mat-expansion-panel>
+        
+        <mat-expansion-panel class="outputs" (opened)="outputListOpened[area.id] = true" (closed)="outputListOpened[area.id] = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
+            <mat-panel-description *ngIf="!outputListOpened[area.id]" i18n="@@area no output">{{getOutputs(area.id).length}} output(s)</mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngIf="getOutputs(area.id).length > 0; else no_outputs">
+            <ul class="output-list">
+              <li *ngFor="let output of getOutputs(area.id)">
+                {{output.description}}
+                <button mat-button *ngIf="userCanEdit()" [routerLink]="['/output', output.id]" routerLinkActive="active" color="accent"><mat-icon matListIcon>mode_edit</mat-icon></button>
+              </li>
+            </ul>
+          </div>
+          <ng-template #no_outputs>
+            <h3 i18n="@@area no outputs">No outputs</h3>
+          </ng-template>
+        </mat-expansion-panel>
+
       </mat-card-content>
 
       <mat-divider *ngIf="userCanEdit()"></mat-divider>
@@ -35,7 +54,7 @@
         <!-- drag and drop icon button-->
         <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
         <button mat-icon-button [routerLink]="['/area', area.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
-        <button mat-icon-button (click)="openDeleteDialog(area.id)" color="warn" [disabled]="getSensors(area.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button (click)="openDeleteDialog(area.id)" color="warn" [disabled]="getSensors(area.id).length > 0 || getOutputs(area.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
   
     </mat-card>
