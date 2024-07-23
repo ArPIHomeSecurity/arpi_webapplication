@@ -676,14 +676,6 @@
         <source>Failed to send to email address 1!</source>
         <target>Invio fallito all'indirizzo e-mail 1!</target>
       </trans-unit>
-      <trans-unit id="notifications disable gsm" datatype="html">
-        <source>Disable GSM</source>
-        <target>Disattivare il GSM</target>
-      </trans-unit>
-      <trans-unit id="notifications disable smtp" datatype="html">
-        <source>Disable SMTP</source>
-        <target>Disattivare SMTP</target>
-      </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
         <source>Email sent successfully to email address 1!</source>
         <target>Email inviata con successo all'indirizzo email 1!</target>
@@ -696,21 +688,9 @@
         <source>Email sent successfully to email address 2!</source>
         <target>Email inviata con successo all'indirizzo email 2!</target>
       </trans-unit>
-      <trans-unit id="notifications enable gsm" datatype="html">
-        <source>Enable GSM</source>
-        <target>Abilitazione del GSM</target>
-      </trans-unit>
-      <trans-unit id="notifications enable smtp" datatype="html">
-        <source>Enable SMTP</source>
-        <target>Abilita SMTP</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 failed" datatype="html">
-        <source>Failed to send SMS!</source>
-        <target>Invio di SMS fallito!</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 success" datatype="html">
-        <source>SMS sent successfully to phone!</source>
-        <target state="translated">SMS inviato con successo!</target>
+      <trans-unit id="notifications sms1 success" datatype="html">
+        <source>SMS sent successfully to phone 1!</source>
+        <target state="new">SMS inviato con successo!</target>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
@@ -719,10 +699,6 @@
       <trans-unit id="notifications send test sms" datatype="html">
         <source>Send test SMS</source>
         <target>Inviare un SMS di prova</target>
-      </trans-unit>
-      <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
-        <target state="translated">Impossibile connettersi al modulo GSM!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Controllare i log per maggiori informazioni!</target>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
@@ -1293,6 +1269,78 @@
       <trans-unit id="user copy ssh key" datatype="html">
         <source>Copy key</source>
         <target state="translated">Tasto copia</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp enabled" datatype="html">
+        <source>SMTP enabled</source>
+        <target state="translated">SMTP abilitato</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm enabled" datatype="html">
+        <source>GSM enabled</source>
+        <target state="translated">GSM abilitato</target>
+      </trans-unit>
+      <trans-unit id="notifications test call" datatype="html">
+        <source>Test call</source>
+        <target state="translated">Chiamata di prova</target>
+      </trans-unit>
+      <trans-unit id="notifications call 1" datatype="html">
+        <source>Call 1</source>
+        <target state="translated">Chiamata 1</target>
+      </trans-unit>
+      <trans-unit id="notifications call 2" datatype="html">
+        <source>Call 2</source>
+        <target state="translated">Chiamata 1</target>
+      </trans-unit>
+      <trans-unit id="notifications test failed" datatype="html">
+        <source>Please check logs for more information!</source>
+        <target state="new">Please check logs for more information!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms1 failed" datatype="html">
+        <source>Failed to send SMS to phone 1!</source>
+        <target state="new">Failed to send SMS to phone 1!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 success" datatype="html">
+        <source>SMS sent successfully to phone 2!</source>
+        <target state="new">SMS sent successfully to phone 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 failed" datatype="html">
+        <source>Failed to send SMS to phone 2!</source>
+        <target state="new">Failed to send SMS to phone 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm connection failed" datatype="html">
+        <source>Failed to connect to GSM module!</source>
+        <target state="translated">Impossibile connettersi al modulo GSM!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 success" datatype="html">
+        <source>Successfully called phone 1!</source>
+        <target state="new">Successfully called phone 1!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 failed" datatype="html">
+        <source>Failed to call phone 1!</source>
+        <target state="new">Failed to call phone 1!</target>
+      </trans-unit>
+      <trans-unit id="notification sms" datatype="html">
+        <source>SMS messages</source>
+        <target state="translated">Messaggi SMS</target>
+      </trans-unit>
+      <trans-unit id="notifications loading sms" datatype="html">
+        <source>Loading SMS messages...</source>
+        <target state="translated">Caricamento dei messaggi SMS...</target>
+      </trans-unit>
+      <trans-unit id="notifications no sms" datatype="html">
+        <source>No SMS messages</source>
+        <target state="translated">Nessun messaggio SMS</target>
+      </trans-unit>
+      <trans-unit id="notifications delete all" datatype="html">
+        <source>Delete all</source>
+        <target state="translated">Cancella tutto</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 success" datatype="html">
+        <source>Successfully called phone 2!</source>
+        <target state="new">Successfully called phone 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 failed" datatype="html">
+        <source>Failed to call phone 2!</source>
+        <target state="new">Failed to call phone 2!</target>
       </trans-unit>
     </body>
   </file>

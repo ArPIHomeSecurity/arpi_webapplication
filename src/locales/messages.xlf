@@ -509,12 +509,6 @@
       <trans-unit id="email1 failed" datatype="html">
         <source>Failed to send to email address 1!</source>
       </trans-unit>
-      <trans-unit id="notifications disable gsm" datatype="html">
-        <source>Disable GSM</source>
-      </trans-unit>
-      <trans-unit id="notifications disable smtp" datatype="html">
-        <source>Disable SMTP</source>
-      </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
         <source>Email sent successfully to email address 1!</source>
       </trans-unit>
@@ -524,26 +518,14 @@
       <trans-unit id="notifications email2 success" datatype="html">
         <source>Email sent successfully to email address 2!</source>
       </trans-unit>
-      <trans-unit id="notifications enable gsm" datatype="html">
-        <source>Enable GSM</source>
-      </trans-unit>
-      <trans-unit id="notifications enable smtp" datatype="html">
-        <source>Enable SMTP</source>
-      </trans-unit>
-      <trans-unit id="notifications phone1 failed" datatype="html">
-        <source>Failed to send SMS!</source>
-      </trans-unit>
-      <trans-unit id="notifications phone1 success" datatype="html">
-        <source>SMS sent successfully to phone!</source>
+      <trans-unit id="notifications sms1 success" datatype="html">
+        <source>SMS sent successfully to phone 1!</source>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
       </trans-unit>
       <trans-unit id="notifications send test sms" datatype="html">
         <source>Send test SMS</source>
-      </trans-unit>
-      <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
@@ -972,6 +954,60 @@
       </trans-unit>
       <trans-unit id="user ssh setup method" datatype="html">
         <source>Setup method</source>
+      </trans-unit>
+      <trans-unit id="notification sms" datatype="html">
+        <source>SMS messages</source>
+      </trans-unit>
+      <trans-unit id="notifications call 1" datatype="html">
+        <source>Call 1</source>
+      </trans-unit>
+      <trans-unit id="notifications call 2" datatype="html">
+        <source>Call 2</source>
+      </trans-unit>
+      <trans-unit id="notifications call1 failed" datatype="html">
+        <source>Failed to call phone 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications call1 success" datatype="html">
+        <source>Successfully called phone 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications delete all" datatype="html">
+        <source>Delete all</source>
+      </trans-unit>
+      <trans-unit id="notifications gsm connection failed" datatype="html">
+        <source>Failed to connect to GSM module!</source>
+      </trans-unit>
+      <trans-unit id="notifications gsm enabled" datatype="html">
+        <source>GSM enabled</source>
+      </trans-unit>
+      <trans-unit id="notifications loading sms" datatype="html">
+        <source>Loading SMS messages...</source>
+      </trans-unit>
+      <trans-unit id="notifications no sms" datatype="html">
+        <source>No SMS messages</source>
+      </trans-unit>
+      <trans-unit id="notifications sms1 failed" datatype="html">
+        <source>Failed to send SMS to phone 1!</source>
+      </trans-unit>
+      <trans-unit id="notifications sms2 failed" datatype="html">
+        <source>Failed to send SMS to phone 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications sms2 success" datatype="html">
+        <source>SMS sent successfully to phone 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications smtp enabled" datatype="html">
+        <source>SMTP enabled</source>
+      </trans-unit>
+      <trans-unit id="notifications test call" datatype="html">
+        <source>Test call</source>
+      </trans-unit>
+      <trans-unit id="notifications test failed" datatype="html">
+        <source>Please check logs for more information!</source>
+      </trans-unit>
+      <trans-unit id="notifications call2 failed" datatype="html">
+        <source>Failed to call phone 2!</source>
+      </trans-unit>
+      <trans-unit id="notifications call2 success" datatype="html">
+        <source>Successfully called phone 2!</source>
       </trans-unit>
     </body>
   </file>

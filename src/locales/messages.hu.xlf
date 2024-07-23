@@ -676,25 +676,9 @@
         <source>SMTP</source>
         <target state="translated">SMTP</target>
       </trans-unit>
-      <trans-unit id="notifications enable smtp" datatype="html">
-        <source>Enable SMTP</source>
-        <target state="translated">SMTP engedélyezése</target>
-      </trans-unit>
-      <trans-unit id="notifications disable smtp" datatype="html">
-        <source>Disable SMTP</source>
-        <target state="translated">SMTP letiltás</target>
-      </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
         <target state="translated">Teszt email küldés</target>
-      </trans-unit>
-      <trans-unit id="notifications enable gsm" datatype="html">
-        <source>Enable GSM</source>
-        <target state="translated">GSM engedélyezése</target>
-      </trans-unit>
-      <trans-unit id="notifications disable gsm" datatype="html">
-        <source>Disable GSM</source>
-        <target state="translated">GSM letiltás</target>
       </trans-unit>
       <trans-unit id="notifications send test sms" datatype="html">
         <source>Send test SMS</source>
@@ -720,17 +704,9 @@
         <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
         <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
-      <trans-unit id="notifications phone1 success" datatype="html">
-        <source>SMS sent successfully to phone!</source>
-        <target state="translated">Sikeres SMS küldés a telefonra!</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 failed" datatype="html">
-        <source>Failed to send SMS!</source>
-        <target state="translated">Sikertelen SMS küldés!</target>
-      </trans-unit>
-      <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Bővebb információért nézd meg a logokat!</target>
+      <trans-unit id="notifications sms1 success" datatype="html">
+        <source>SMS sent successfully to phone 1!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 1-re!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -1293,6 +1269,78 @@
       <trans-unit id="user copy ssh key" datatype="html">
         <source>Copy key</source>
         <target state="translated">Kulcs másolása</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp enabled" datatype="html">
+        <source>SMTP enabled</source>
+        <target state="translated">SMTP engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm enabled" datatype="html">
+        <source>GSM enabled</source>
+        <target state="translated">GSM engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="notifications test call" datatype="html">
+        <source>Test call</source>
+        <target state="translated">Teszt hívás</target>
+      </trans-unit>
+      <trans-unit id="notifications call 1" datatype="html">
+        <source>Call 1</source>
+        <target state="translated">Hívás 1</target>
+      </trans-unit>
+      <trans-unit id="notifications call 2" datatype="html">
+        <source>Call 2</source>
+        <target state="translated">Hívás 2</target>
+      </trans-unit>
+      <trans-unit id="notifications test failed" datatype="html">
+        <source>Please check logs for more information!</source>
+        <target state="translated">További információk a log-ban!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms1 failed" datatype="html">
+        <source>Failed to send SMS to phone 1!</source>
+        <target state="translated">Telefon 1 SMS küldés nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 success" datatype="html">
+        <source>SMS sent successfully to phone 2!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 2-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 failed" datatype="html">
+        <source>Failed to send SMS to phone 2!</source>
+        <target state="translated">Telefon 2 SMS küldés nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm connection failed" datatype="html">
+        <source>Failed to connect to GSM module!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 success" datatype="html">
+        <source>Successfully called phone 1!</source>
+        <target state="translated">Sikeres hívás a telefon 1-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 failed" datatype="html">
+        <source>Failed to call phone 1!</source>
+        <target state="translated">Telefon 1 hívása nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notification sms" datatype="html">
+        <source>SMS messages</source>
+        <target state="translated">SMS üzenetek</target>
+      </trans-unit>
+      <trans-unit id="notifications loading sms" datatype="html">
+        <source>Loading SMS messages...</source>
+        <target state="translated">SMS üzenetek betöltése...</target>
+      </trans-unit>
+      <trans-unit id="notifications no sms" datatype="html">
+        <source>No SMS messages</source>
+        <target state="translated">Nincsenek SMS üzenetek</target>
+      </trans-unit>
+      <trans-unit id="notifications delete all" datatype="html">
+        <source>Delete all</source>
+        <target state="translated">Összes törlése</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 success" datatype="html">
+        <source>Successfully called phone 2!</source>
+        <target state="translated">Sikeres hívás a telefon 2-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 failed" datatype="html">
+        <source>Failed to call phone 2!</source>
+        <target state="translated">Telefon 2 hívása nem sikerült!</target>
       </trans-unit>
     </body>
   </file>

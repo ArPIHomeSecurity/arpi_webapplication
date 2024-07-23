@@ -116,7 +116,7 @@
           </button>
           <button mat-raised-button color="primary" type="button" (click)="onShowSmsMessages()"
             [disabled]="monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()">
-            <span i18n="@@notifications sms messages">SMS messages</span>
+            <span i18n="@@notification sms">SMS messages</span>
           </button>
         </div>
       </form>
@@ -280,8 +280,8 @@
       <div *ngSwitchCase="false" i18n="@@notifications call1 failed">Failed to call phone 1!</div>
     </div>
     <div [ngSwitch]="testCallResult['phone2']">
-      <div *ngSwitchCase="true" i18n="@@notifications call1 success">Successfully called phone 2!</div>
-      <div *ngSwitchCase="false" i18n="@@notifications call1 failed">Failed to call phone 2!</div>
+      <div *ngSwitchCase="true" i18n="@@notifications call2 success">Successfully called phone 2!</div>
+      <div *ngSwitchCase="false" i18n="@@notifications call2 failed">Failed to call phone 2!</div>
     </div>
   </div>
   <div *ngIf="testCallResult['connection'] == false" i18n="@@notifications gsm connection failed">Failed to connect to
