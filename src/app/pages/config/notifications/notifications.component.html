@@ -114,6 +114,10 @@
               <mat-spinner diameter="18"/>
             </mat-icon>
           </button>
+          <button mat-raised-button color="primary" type="button" (click)="onShowSmsMessages()"
+            [disabled]="monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()">
+            <span i18n="@@notifications sms messages">SMS messages</span>
+          </button>
         </div>
       </form>
     </mat-expansion-panel>

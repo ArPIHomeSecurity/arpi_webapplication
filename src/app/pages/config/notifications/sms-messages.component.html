@@ -1,0 +1,42 @@
+<h1 mat-dialog-title i18n="@@notification sms">SMS messages</h1>
+
+<div mat-dialog-content>
+  <div *ngIf="smsMessages === null">
+    <div class="message-content">
+      <p i18n="@@notifications loading sms">Loading SMS messages...</p>
+    </div>
+  </div>
+
+  <div *ngIf="smsMessages && smsMessages.length === 0">
+    <div class="message-content">
+      <p i18n="@@notifications no sms">No SMS messages</p>
+    </div>
+  </div>
+
+  <div *ngFor="let message of smsMessages || []">
+    <div class="message-header">
+      <mat-label>
+        <span>{{ message.number }}</span> - <span class="message-date">{{ message.time | date: 'yyyy-MM-dd HH:mm' }}</span>
+      </mat-label>
+
+      <button class="delete" mat-icon-button (click)="onDeleteMessage(message)" tabindex="1" color="warn" [disabled]="loading">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <mat-form-field class="message-content">
+      <textarea matInput rows="3" disabled>{{ message.text }}</textarea>
+    </mat-form-field>
+
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onDeleteAllMessages()" tabindex="2" color="warn" [disabled]="smsMessages == null || smsMessages.length == 0 || loading">
+    <span i18n="@@notifications delete all">Delete all</span>
+    <mat-icon *ngIf="smsMessages != null && loading">
+      <mat-spinner diameter="18"/>
+    </mat-icon>
+  </button>
+  <button mat-button (click)="onClose()" tabindex="-1" i18n="@@cancel button">Close</button>
+</div>

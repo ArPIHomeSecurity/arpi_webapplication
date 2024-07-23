@@ -10,6 +10,8 @@ import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NO
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
+import { SmsMessagesDialogComponent } from './sms-messages.component';
+import { MatDialog } from '@angular/material/dialog';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -45,6 +47,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
+    public dialog: MatDialog
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -315,6 +318,12 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
           this.snackBar.openFromTemplate(this.snackbarTemplateCall, { duration: environment.snackDuration });
         }
       });
+  }
+
+  onShowSmsMessages() {
+    this.dialog.open(SmsMessagesDialogComponent, {
+      width: '500px',
+    });
   }
 
   onPasswordFocus() {

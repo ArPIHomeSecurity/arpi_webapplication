@@ -14,7 +14,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { LoginComponent } from './pages/login';
 import { HomeComponent } from './pages/home';
 import { ClockComponent } from './pages/config/clock';
-import { NotificationsComponent } from './pages/config/notifications';
+import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { NetworkComponent } from './pages/config/network';
 import { SyrenComponent } from './pages/config/syren';
 import { KeypadComponent } from './pages/config/keypad';
@@ -84,6 +84,7 @@ import { ThemeService } from './services/theme.service';
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
+    SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
     
