@@ -1,7 +1,7 @@
 <div class="container">
-  <mat-card *ngIf="zone != null" class="container-item zone-form">
+  <mat-card *ngIf="zone" class="container-item zone-form">
     <mat-card-content>
-      <form *ngIf="zone; else not_found" [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="zoneForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="column">
           <mat-form-field>
             <mat-label i18n="@@name">Name</mat-label>
@@ -84,12 +84,12 @@
     </mat-card-actions>
 
   </mat-card>
-  <ng-template #not_found>
-    <div class="container-item">
-      <h1 i18n="@@zone not found">Zone not found!</h1>
-    </div>
-  </ng-template>
+  
+  <div *ngIf="zone === null" class="container-item">
+    <h1 i18n="@@zone not found">The zone was not found!</h1>
+  </div>
 </div>
+
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>

@@ -1,7 +1,7 @@
 <div class="container">
-  <mat-card *ngIf="sensor != null" class="sensor-form container-item">
+  <mat-card *ngIf="sensor" class="sensor-form container-item">
     <mat-card-content>
-      <form *ngIf="sensor; else not_found" [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate class="column">
+      <form [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate class="column">
         <mat-form-field>
           <mat-label i18n="@@sensor channel">Channel</mat-label>
           <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
@@ -43,7 +43,7 @@
   
         <mat-divider></mat-divider>
   
-        <h4 i18n="@@sensor syren">Syren config</h4>
+        <label i18n="@@sensor syren">Syren config</label>
         <mat-radio-group class="silent" formControlName="silentAlert">
           <mat-radio-button value="undefined">
             <span i18n="@@sensor silent undefined">System setting</span>
@@ -58,7 +58,7 @@
   
         <mat-divider></mat-divider>
   
-        <h4 i18n="@@sensor sensitivity">Sensor sensitivity</h4>
+        <label i18n="@@sensor sensitivity">Sensor sensitivity</label>
         <div class="sensitivity">
           <mat-radio-group formControlName="sensitivity" (change)="onSensitivityChanged($event)">
             <mat-radio-button value="undefined">
@@ -207,10 +207,11 @@
       <button mat-icon-button color="warn" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
   
-    <ng-template #not_found>
-      <h1 i18n="@@sensor not found">Sensor not found!</h1>
-    </ng-template>
   </mat-card>
+
+  <div *ngIf="sensor === null" class="container-item">
+    <h1 i18n="@@sensor not found">The sensor was not found!</h1>
+  </div>
 </div>
 
 <ng-template #snackbarTemplate>

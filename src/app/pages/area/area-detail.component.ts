@@ -6,8 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { AreaDeleteDialogComponent } from './area-delete.component';
@@ -31,7 +31,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   action: string;
 
   areaId: number;
-  area: Area = null;
+  area: Area = undefined;
   sensors: Sensor[];
   outputs: Output[];
   areaForm: UntypedFormGroup;
@@ -47,7 +47,6 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
     private route: ActivatedRoute,
     public router: Router,
     private fb: UntypedFormBuilder,
-    private location: Location,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -75,15 +74,23 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
         outputs: this.outputService.getOutputs(),
         sensors: this.sensorService.getSensors()
       })
-      .pipe(finalize(() => this.loader.display(false)))
-      .subscribe(results => {
-          this.area = results.area;
-          this.updateForm(this.area);
-          this.outputs = results.outputs;
-          this.sensors = results.sensors;
-          this.loader.display(false);
-        }
-      );
+        .pipe(
+          catchError((error) => {
+            if (error.status === 404) {
+              this.area = null 
+            }
+            return throwError(() => error);
+          }),
+          finalize(() => this.loader.display(false))
+        )
+        .subscribe(results => {
+            this.area = results.area;
+            this.updateForm(this.area);
+            this.outputs = results.outputs;
+            this.sensors = results.sensors;
+            this.loader.display(false);
+          }
+        );
     } else {
       this.area = new Area();
       this.area.name = null;
@@ -102,21 +109,21 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   onSubmit() {
-    const area = this.prepareSaveArea();
+    const area = this.prepareArea();
     if (this.areaId != null) {
       this.action = 'update';
       this.areaService.updateArea(area)
-        .subscribe(
-          _ => this.router.navigate(['/areas']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/areas']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     } else {
       this.action = 'create';
       this.areaService.createArea(area)
-        .subscribe(
-          _ => this.router.navigate(['/areas']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/areas']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     }
   }
 
@@ -150,7 +157,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
     return results;
   }
 
-  prepareSaveArea(): Area {
+  prepareArea(): Area {
     const formModel = this.areaForm.value;
 
     const area: Area = new Area();

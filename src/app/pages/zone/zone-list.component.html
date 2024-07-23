@@ -12,7 +12,7 @@
       </mat-card-header>
 
       <mat-card-content>
-        <mat-expansion-panel (opened)="onOpenConfig(zone.id)" (closed)="onCloseConfig(zone.id)" [expanded]="configOpened[zone.id]">
+        <mat-expansion-panel class="configs" (opened)="onOpenConfig(zone.id)" (closed)="onCloseConfig(zone.id)" [expanded]="configOpened[zone.id]">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
             <mat-panel-description *ngIf="!configOpened[zone.id]">
@@ -61,7 +61,7 @@
           </ng-template>
         </mat-expansion-panel>
   
-        <mat-expansion-panel (opened)="onOpenSensor(zone.id)" (closed)="onCloseSensor(zone.id)" [expanded]="sensorOpened[zone.id]">
+        <mat-expansion-panel class="sensors" (opened)="onOpenSensor(zone.id)" (closed)="onCloseSensor(zone.id)" [expanded]="sensorOpened[zone.id]">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
             <mat-panel-description *ngIf="!sensorOpened[zone.id]" i18n="@@zone no sensor">{{getSensors(zone.id).length}} sensor(s)</mat-panel-description>

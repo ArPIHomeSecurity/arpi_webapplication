@@ -5,7 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { finalize } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { UserDeleteDialogComponent } from './user-delete.component';
@@ -25,7 +26,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   userId: number;
-  user: User = null;
+  user: User = undefined;
   userForm: UntypedFormGroup;
   roles: any = [];
   hide = true;
@@ -42,8 +43,8 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private location: Location) {
+    private snackBar: MatSnackBar
+  ) {
       super(eventService, loader, monitoringService);
 
       this.route.paramMap.subscribe(params => {
@@ -69,13 +70,28 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         this.loader.display(true);
       });
       this.userService.getUser(this.userId)
-        .pipe(finalize(() => this.loader.display(false)))
-        .subscribe(user => {
+        .pipe(
+          catchError((error) => {
+            if (error.status === 404) {
+              this.user = null;
+            }
+            return throwError(() => error);
+          }),
+          finalize(() => this.loader.display(false))
+        )
+        .subscribe({
+          next: (user) => {
             this.user = user;
             this.updateForm(this.user);
             this.loader.display(false);
-        }
-      );
+          },
+          error: (error) => {
+            // handle error
+          },
+          complete: () => {
+            // handle completion
+          }
+        });
     } else {
       this.user = new User();
       this.user.name = null;
@@ -106,21 +122,21 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   onSubmit() {
-    const user = this.prepareSaveUser();
+    const user = this.prepareUser();
     if (this.userId != null) {
       this.action = 'update';
       this.userService.updateUser(user)
-        .subscribe(
-          _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/users']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     } else {
       this.action = 'create';
       this.userService.createUser(user)
-        .subscribe(
-          _ => this.router.navigate(['/users']),
-          error => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/users']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     }
   }
 
@@ -128,7 +144,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     this.router.navigate(['/users']);
   }
 
-  prepareSaveUser(): User {
+  prepareUser(): User {
     const formModel = this.userForm.value;
 
     const user: User = new User();
@@ -154,10 +170,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.userService.deleteUser(userId)
-            .subscribe(
-              _ => this.router.navigate(['/users']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-            );
+            .subscribe({
+              next: _ => this.router.navigate(['/users']),
+              error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+            });
         } else {
           this.action = 'cant delete';
           this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
