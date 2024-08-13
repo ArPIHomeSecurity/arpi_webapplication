@@ -2,8 +2,12 @@
   
   <div cdkDropList *ngIf="areas.length > 0; else no_areas" class="area-list" (cdkDropListDropped)="onDrop($event)">
 
-    <mat-card cdkDrag
+    <mat-card
+      id="area-{{area.id}}"
       *ngFor="let area of areas"
+      cdkDrag
+      (cdkDragStarted)="onDragStarted($event)"
+      [cdkDragDisabled]="!userCanEdit()"
       ngClass="area-card container-item">
       <mat-card-content>
   

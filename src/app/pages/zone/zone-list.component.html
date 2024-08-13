@@ -3,8 +3,11 @@
   <div cdkDropList *ngIf="zones.length > 0; else no_zones" class="zone-list" (cdkDropListDropped)="onDrop($event)">
 
     <mat-card
-      cdkDrag
+      id="zone-{{zone.id}}"
       *ngFor="let zone of zones"
+      cdkDrag
+      (cdkDragStarted)="onDragStarted($event)"
+      [cdkDragDisabled]="!userCanEdit()"
       class="zone-card container-item">
 
       <mat-card-header>

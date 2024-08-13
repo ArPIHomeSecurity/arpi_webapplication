@@ -1,7 +1,12 @@
 <div *ngIf="sensors != null" class="container sensor-list">
   <div cdkDropList *ngIf="sensors.length > 0; else no_sensors" (cdkDropListDropped)="onDrop($event)">
 
-    <mat-card cdkDrag (cdkDragStarted)="onDragStarted($event)" id="sensor-{{sensor.id}}" *ngFor="let sensor of sensors"
+    <mat-card 
+      id="sensor-{{sensor.id}}"
+      *ngFor="let sensor of sensors"
+      cdkDrag
+      (cdkDragStarted)="onDragStarted($event)"
+      [cdkDragDisabled]="!userCanEdit()"
       class="sensor-card container-item"
       [ngClass]="{'disabled': !sensor.enabled}">
 
