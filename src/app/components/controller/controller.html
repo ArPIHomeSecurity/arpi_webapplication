@@ -19,6 +19,7 @@
         class="disarm"
         value="DISARMED"
         [checked]="armState == armTypes.DISARMED && systemAlert !== null"
+        [disabled]="isDisarmDisabled()"
         (change)="armChangedHandler(armTypes.DISARMED)"
         (click)="$event.stopPropagation()"
         i18n="@@disarm button"

@@ -37,6 +37,10 @@ export class ControllerComponent {
     )
   }
 
+  isDisarmDisabled() {
+    return this.armState === ARM_TYPE.DISARMED
+  }
+
   armChangedHandler(arm: ARM_TYPE) {
     this.armChanged.emit(arm);
   }
