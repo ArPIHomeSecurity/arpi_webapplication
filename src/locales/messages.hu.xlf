@@ -374,8 +374,8 @@
         <target state="translated">Riasztás késleltetés maradó élesítés esetén</target>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source>
-        <target state="translated">Érzékelő nem található!</target>
+        <source>The sensor was not found!</source>
+        <target state="translated">Az érzékelő nem található!</target>
       </trans-unit>
       <trans-unit id="message lost connection" datatype="html">
         <source>Lost connection to the security system!</source>
@@ -402,8 +402,8 @@
         <target state="translated">Riaszt nem élesített állapotban</target>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source>
-        <target state="translated">Zóna nem található!</target>
+        <source>The zone was not found!</source>
+        <target state="translated">A zóna nem található!</target>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -464,8 +464,8 @@
         <target state="translated">Biztos, hogy törölni akarod ezt a kártyát ?</target>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
-        <source>User not found!</source>
-        <target state="translated">Felhasználó nem található!</target>
+        <source>The user was not found!</source>
+        <target state="translated">A felhasználó nem található!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -874,8 +874,8 @@
         <note priority="1" from="description">Area delete question</note>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
-        <source>Zone not found!</source>
-        <target state="translated">Zóna nem található!</target>
+        <source>The area was not found!</source>
+        <target state="translated">A terület nem található!</target>
       </trans-unit>
       <trans-unit id="area sensors" datatype="html">
         <source>Sensors</source>
@@ -925,7 +925,7 @@
         <source>Area name</source>
         <target state="translated">Terület neve</target>
       </trans-unit>
-      <trans-unit id="area no sensor" datatype="html">
+      <trans-unit id="area number of sensors" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
         <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> érzékelő(k)</target>
       </trans-unit>
@@ -1027,8 +1027,8 @@
         <target state="translated">Aktív alapállapot</target>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
-        <source>Output not found!</source>
-        <target state="translated">Kimenet nem található!</target>
+        <source>The output was not found!</source>
+        <target state="translated">A kimenet nem található!</target>
       </trans-unit>
       <trans-unit id="output none" datatype="html">
         <source>No outputs found</source>
@@ -1341,6 +1341,18 @@
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
         <target state="translated">Telefon 2 hívása nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="area outputs" datatype="html">
+        <source>Outputs</source>
+        <target state="translated">Kimenetek</target>
+      </trans-unit>
+      <trans-unit id="area number of outputs" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> kimenet(ek)</target>
+      </trans-unit>
+      <trans-unit id="area no outputs" datatype="html">
+        <source>No outputs</source>
+        <target state="translated">Nincsenek kimenetek</target>
       </trans-unit>
     </body>
   </file>

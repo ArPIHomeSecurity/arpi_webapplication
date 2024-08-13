@@ -440,8 +440,8 @@
         <target state="translated">Ritardo quando armato</target>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source>
-        <target>Sensore non trovato!</target>
+        <source>The sensor was not found!</source>
+        <target state="new">Sensore non trovato!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -516,8 +516,8 @@
         <target>Commento</target>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
-        <source>User not found!</source>
-        <target>Utente non trovato!</target>
+        <source>The user was not found!</source>
+        <target state="new">Utente non trovato!</target>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -625,8 +625,8 @@
         <target state="translated">Ritardo allarme quando si è presenti con sistema armato</target>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source>
-        <target>Zona non trovata!</target>
+        <source>The zone was not found!</source>
+        <target state="new">Zona non trovata!</target>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -894,8 +894,8 @@
         <target>Nessuna area trovata</target>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
-        <source>Zone not found!</source>
-        <target>Zona non trovata!</target>
+        <source>The area was not found!</source>
+        <target state="translated">Area non trovata!</target>
       </trans-unit>
       <trans-unit id="area sensors" datatype="html">
         <source>Sensors</source>
@@ -925,7 +925,7 @@
         <source>New</source>
         <target>Nuovo</target>
       </trans-unit>
-      <trans-unit id="area no sensor" datatype="html">
+      <trans-unit id="area number of sensors" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
         <target><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensore/i</target>
       </trans-unit>
@@ -1019,8 +1019,8 @@
         <target>Nessuna uscita trovata</target>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
-        <source>Output not found!</source>
-        <target state="translated">Uscita non trovata!</target>
+        <source>The output was not found!</source>
+        <target state="new">Uscita non trovata!</target>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
         <source>System</source>
@@ -1341,6 +1341,18 @@
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
         <target state="new">Failed to call phone 2!</target>
+      </trans-unit>
+      <trans-unit id="area outputs" datatype="html">
+        <source>Outputs</source>
+        <target state="new">Outputs</target>
+      </trans-unit>
+      <trans-unit id="area number of outputs" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</target>
+      </trans-unit>
+      <trans-unit id="area no outputs" datatype="html">
+        <source>No outputs</source>
+        <target state="needs-l10n">No outputs</target>
       </trans-unit>
     </body>
   </file>

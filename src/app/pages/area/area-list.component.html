@@ -13,7 +13,7 @@
         <mat-expansion-panel class="sensors" (opened)="sensorListOpened[area.id] = true" (closed)="sensorListOpened[area.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorListOpened[area.id]" i18n="@@area no sensor">{{getSensors(area.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!sensorListOpened[area.id]" i18n="@@area number of sensors">{{getSensors(area.id).length}} sensor(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(area.id).length > 0; else no_sensors">
             <ul class="sensor-list">
@@ -31,7 +31,7 @@
         <mat-expansion-panel class="outputs" (opened)="outputListOpened[area.id] = true" (closed)="outputListOpened[area.id] = false">
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
-            <mat-panel-description *ngIf="!outputListOpened[area.id]" i18n="@@area no output">{{getOutputs(area.id).length}} output(s)</mat-panel-description>
+            <mat-panel-description *ngIf="!outputListOpened[area.id]" i18n="@@area number of outputs">{{getOutputs(area.id).length}} output(s)</mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getOutputs(area.id).length > 0; else no_outputs">
             <ul class="output-list">

@@ -332,7 +332,7 @@
         <source>Delay arm when arming stay</source>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source>
+        <source>The sensor was not found!</source>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -389,7 +389,7 @@
         <source>Comment</source>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
-        <source>User not found!</source>
+        <source>The user was not found!</source>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -471,7 +471,7 @@
         <source>Delay alert when armed stay</source>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source>
+        <source>The zone was not found!</source>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -673,7 +673,7 @@
         <source>No areas found</source>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
-        <source>Zone not found!</source>
+        <source>The area was not found!</source>
       </trans-unit>
       <trans-unit id="area sensors" datatype="html">
         <source>Sensors</source>
@@ -696,7 +696,7 @@
       <trans-unit id="sensor new area" datatype="html">
         <source>New</source>
       </trans-unit>
-      <trans-unit id="area no sensor" datatype="html">
+      <trans-unit id="area number of sensors" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
       </trans-unit>
       <trans-unit id="sensor none" datatype="html">
@@ -767,7 +767,7 @@
         <source>No outputs found</source>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
-        <source>Output not found!</source>
+        <source>The output was not found!</source>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
         <source>System</source>
@@ -1008,6 +1008,15 @@
       </trans-unit>
       <trans-unit id="notifications call2 success" datatype="html">
         <source>Successfully called phone 2!</source>
+      </trans-unit>
+      <trans-unit id="area number of outputs" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+      </trans-unit>
+      <trans-unit id="area no outputs" datatype="html">
+        <source>No outputs</source>
+      </trans-unit>
+      <trans-unit id="area outputs" datatype="html">
+        <source>Outputs</source>
       </trans-unit>
     </body>
   </file>
