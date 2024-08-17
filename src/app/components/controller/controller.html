@@ -9,7 +9,7 @@
         value="AWAY"
         [checked]="[armTypes.AWAY, armTypes.MIXED].includes(armState)"
         [disabled]="isAwayArmDisabled()"
-        (change)="armChangedHandler(armTypes.AWAY)"
+        (change)="armChangedHandler($event, armTypes.AWAY)"
         (click)="$event.stopPropagation()"
         i18n="@@arm away button"
     >
@@ -20,7 +20,7 @@
         value="DISARMED"
         [checked]="armState == armTypes.DISARMED && systemAlert !== null"
         [disabled]="isDisarmDisabled()"
-        (change)="armChangedHandler(armTypes.DISARMED)"
+        (change)="armChangedHandler($event, armTypes.DISARMED)"
         (click)="$event.stopPropagation()"
         i18n="@@disarm button"
     >
@@ -31,7 +31,7 @@
         value="STAY"
         [checked]="[armTypes.STAY, armTypes.MIXED].includes(armState)"
         [disabled]="isStayArmDisabled()"
-        (change)="armChangedHandler(armTypes.STAY)"
+        (change)="armChangedHandler($event, armTypes.STAY)"
         (click)="$event.stopPropagation()"
         i18n="@@arm stay button"
     >

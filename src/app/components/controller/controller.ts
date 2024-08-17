@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ARM_TYPE, MONITORING_STATE } from '@app/models';
 
 
@@ -38,10 +39,18 @@ export class ControllerComponent {
   }
 
   isDisarmDisabled() {
-    return this.armState === ARM_TYPE.DISARMED
+    // you can disarm if the system is armed or in sabotage state
+    return this.armState === ARM_TYPE.DISARMED &&
+      ![
+        MONITORING_STATE.ARM_DELAY,
+        MONITORING_STATE.ARMED,
+        MONITORING_STATE.ALERT_DELAY,
+        MONITORING_STATE.SABOTAGE
+      ].includes(this.monitoringState)
   }
 
-  armChangedHandler(arm: ARM_TYPE) {
-    this.armChanged.emit(arm);
+  armChangedHandler(event: MatButtonToggleChange, arm: ARM_TYPE) {
+    this.armChanged.emit(arm)
+    event.source.checked = true
   }
 }
