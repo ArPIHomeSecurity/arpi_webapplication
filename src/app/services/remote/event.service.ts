@@ -26,12 +26,25 @@ export class EventService {
   }
 
   connect() {
-    const deviceToken = localStorage.getItem('deviceToken');
+    const prefix = localStorage.getItem('selectedInstallationId') || 'default';
+    const deviceToken = localStorage.getItem(`${prefix}:deviceToken`);
     if (this.socket) {
       this.socket.disconnect();
     }
 
-    this.socket = io(window.location.protocol + '//' + window.location.hostname + ':' + environment.monitoringPort, { query: {token: deviceToken }});
+    const backendScheme = localStorage.getItem('backend.scheme');
+    const backendDomain = localStorage.getItem('backend.domain');
+    const backendPort = localStorage.getItem('backend.port');
+
+    var backendUrl = '';
+    if (backendScheme && backendDomain && backendPort) {
+      backendUrl = backendScheme + '://' + backendDomain + ':' + backendPort;
+    }
+    else {
+      console.warn('No URL configured for backend events!', backendScheme, backendDomain, backendPort);
+    }
+
+    this.socket = io(backendUrl, { query: {token: deviceToken }});
     this.socket.connect();
 
     this.socketConnected$.next(this.socket.connected);
@@ -53,6 +66,11 @@ export class EventService {
   listen(event: string): Observable<any> {
     // console.log("Listen:", event)
     return new Observable(observer => {
+      if (!this.socket) {
+        console.warn('No socket connection');
+        return;
+      }
+
       this.socket.on(event, data => {
         // console.log("Event:", event);
         // console.log("Data:", data);

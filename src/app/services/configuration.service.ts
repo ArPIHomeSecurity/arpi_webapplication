@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
-import { Option } from '@app/models';
+import { Installation, Option } from '@app/models';
+
 
 export interface ConfigurationService {
 
@@ -19,4 +20,6 @@ export interface ConfigurationService {
   doTestCall(): Observable<any>;
 
   testSyren(duration?: number): Observable<any>;
+
+  getInstallation(): Observable<Installation>;
 }

@@ -4,6 +4,7 @@ export * from './arm';
 export * from './card';
 export * from './event';
 export * from './keypad';
+export * from './installation'
 export * from './option';
 export * from './output';
 export * from './power';

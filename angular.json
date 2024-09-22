@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "argus": {
+    "app": {
       "i18n": {
         "sourceLocale": {
           "code": "en",
-          "baseHref": "/"
+          "baseHref": "/en/"
         },
         "locales": {
           "hu": "src/locales/messages.hu.xlf",
@@ -28,6 +28,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist-development",
+            "localize": true,
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -199,7 +200,7 @@
         }
       }
     },
-    "argus-e2e": {
+    "app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "app-root",

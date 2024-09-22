@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">argus</string>
+    <string name="title_activity_main">argus</string>
+    <string name="package_name">com.arpi.webapp</string>
+    <string name="custom_url_scheme">com.arpi.webapp</string>
+</resources>

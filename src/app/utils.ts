@@ -1,6 +1,7 @@
 import { ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 
+
 export function positiveInteger(): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
     const error: ValidationErrors = { integer: true };
@@ -45,4 +46,28 @@ export function getValue(value: any, attribute: string, defaultValue: any = '') 
   }
 
   return defaultValue;
+}
+
+export const checkUrl = async (url: string): Promise<boolean> => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    if (!response.ok) {
+      console.error('No connection to the security system: ', url);
+      return false;
+    }
+    console.log('Connected to the security system: ', url);
+    return true;
+  } catch (error) {
+    console.error('Failed to connect to the security system: ', url, 'Error: ', error);
+    return false;
+  }
+}
+
+export const createHash = async (text: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(await hashBuffer));
+  const hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+  return hashHex;
 }
