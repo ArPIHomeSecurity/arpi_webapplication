@@ -1,5 +1,5 @@
 
-.notifications-form {
+.notifications {
   margin-right: auto;
   margin-left: auto;
   max-width: 600px;
@@ -7,40 +7,48 @@
   .mat-mdc-form-field {
     width: 100%;
   }
-}
 
-.pin-code {
-  width: 18%;
-  margin: auto 1%;
-}
+  .mat-mdc-checkbox {
+    margin-bottom: 10px;
+  }
+  
+  .pin-code {
+    width: 18%;
+    margin: auto 1%;
+  }
+  
+  .phone-number {
+    width: 38%;
+    margin: auto 1%;
+  }
 
-.phone-number {
-  width: 38%;
-  margin: auto 1%;
-}
+  .mat-table {
+    display: block;
+  }
 
-.mat-table {
-  display: block;
-}
+  .mat-row,
+  .mat-header-row {
+    display: flex;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 24px;
+  }
 
-.mat-row,
-.mat-header-row {
-  display: flex;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 24px;
-}
+  .mat-cell,
+  .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: center;
+    
+    mat-checkbox {
+      margin: 10px auto;
+    }
+  }
 
-.mat-cell,
-.mat-header-cell {
-  flex: 1;
-  overflow: hidden;
-  word-wrap: break-word;
-  text-align: center;
-
-  mat-checkbox {
-    margin: 10px auto;
+  .mat-mdc-progress-spinner {
+    margin: 0px;
   }
 }

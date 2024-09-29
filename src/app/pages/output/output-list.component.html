@@ -3,8 +3,14 @@
   <div cdkDropList *ngIf="outputs.length > 0; else no_outputs"
     (cdkDropListDropped)="onDrop($event)">
 
-    <mat-card cdkDrag (cdkDragStarted)="onDragStarted($event)" id="output-{{output.id}}" *ngFor="let output of outputs"
-      class="output-card container-item" [ngClass]="{'disabled': !output.enabled}">
+    <mat-card
+      id="output-{{output.id}}"
+      *ngFor="let output of outputs"
+      cdkDrag
+      (cdkDragStarted)="onDragStarted($event)"
+      [cdkDragDisabled]="!userCanEdit()"
+      class="output-card container-item"
+      [ngClass]="{'disabled': !output.enabled}">
 
       <mat-card-content class="row">
         <div [ngSwitch]="getOutputType(output.channel)" class="output-image">
@@ -115,5 +121,5 @@
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
-  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+  <span *ngIf="action=='cant delete'" i18n="cant delete">Can't delete, system is not ready!</span>
 </ng-template>

@@ -36,6 +36,14 @@
       }
     }
 
+    .sensor-image.disabled {
+      -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+      border-radius: 22px;
+      background-color: rgb(160, 160, 160);
+    }
+
     .sensor-image.alerting {
       -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
       -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);

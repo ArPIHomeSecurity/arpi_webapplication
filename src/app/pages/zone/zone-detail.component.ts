@@ -6,8 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, throwError } from 'rxjs';
+import { finalize, catchError } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { ZoneDeleteDialogComponent } from './zone-delete.component';
@@ -31,7 +31,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   action: string;
 
   zoneId: number;
-  zone: Zone = null;
+  zone: Zone = undefined;
   sensors: Sensor[];
   zoneForm: FormGroup;
   areaForm: FormGroup;
@@ -46,7 +46,6 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     private route: ActivatedRoute,
     public router: Router,
     private fb: UntypedFormBuilder,
-    private location: Location,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -73,7 +72,15 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         zone: this.zoneService.getZone(this.zoneId),
         sensors: this.sensorService.getSensors()
       })
-      .pipe(finalize(() => this.loader.display(false)))
+      .pipe(
+        catchError((error) => {
+          if (error.status === 404) {
+            this.zone = null;
+          }
+          return throwError(() => error);
+        }),
+        finalize(() => this.loader.display(false))
+      )
       .subscribe(results => {
           this.zone = results.zone;
           this.updateForm(this.zone);
@@ -112,21 +119,21 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   onSubmit() {
-    const zone = this.prepareSaveZone();
+    const zone = this.prepareZone();
     if (this.zoneId != null) {
       this.action = 'update';
       this.zoneService.updateZone(zone)
-        .subscribe(
-          _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/zones']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     } else {
       this.action = 'create';
       this.zoneService.createZone(zone)
-        .subscribe(
-          _ => this.router.navigate(['/zones']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/zones']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+        });
     }
   }
 
@@ -147,7 +154,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     return results;
   }
 
-  prepareSaveZone(): Zone {
+  prepareZone(): Zone {
     const formModel = this.zoneForm.value;
 
     const zone: Zone = new Zone();
@@ -192,9 +199,10 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.action = 'delete';
           this.zoneService.deleteZone(zoneId)
-            .subscribe(_ => this.router.navigate(['/zones']),
-                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-          );
+            .subscribe({
+              next: _ => this.router.navigate(['/zones']),
+               error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+            });
         } else {
           this.action = 'cant delete';
           this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});

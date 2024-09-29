@@ -10,8 +10,16 @@
     margin-left: 16px;
   }
   
-  .mat-card-content {
+  .mat-mdc-card-content {
     margin-bottom: 0px;
+
+    .mat-mdc-progress-spinner {
+      float: left;
+    }
+
+    .mat-mdc-list {
+      clear: both;
+    }
   }
 
   mat-icon.entry {

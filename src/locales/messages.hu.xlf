@@ -272,14 +272,6 @@
         <source>Restrict access to host</source>
         <target state="translated">Hozzáférés korlátozása hoszthoz</target>
       </trans-unit>
-      <trans-unit id="network access locally" datatype="html">
-        <source>Access locally</source>
-        <target state="translated">Helyi hozzáférés</target>
-      </trans-unit>
-      <trans-unit id="network local settings" datatype="html">
-        <source>Local access settings</source>
-        <target state="translated">Helyi hozzáférés beállítása</target>
-      </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
         <target state="translated">SSH kapcsolat engedélyezett</target>
@@ -382,8 +374,8 @@
         <target state="translated">Riasztás késleltetés maradó élesítés esetén</target>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source>
-        <target state="translated">Érzékelő nem található!</target>
+        <source>The sensor was not found!</source>
+        <target state="translated">Az érzékelő nem található!</target>
       </trans-unit>
       <trans-unit id="message lost connection" datatype="html">
         <source>Lost connection to the security system!</source>
@@ -410,8 +402,8 @@
         <target state="translated">Riaszt nem élesített állapotban</target>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source>
-        <target state="translated">Zóna nem található!</target>
+        <source>The zone was not found!</source>
+        <target state="translated">A zóna nem található!</target>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -472,8 +464,8 @@
         <target state="translated">Biztos, hogy törölni akarod ezt a kártyát ?</target>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
-        <source>User not found!</source>
-        <target state="translated">Felhasználó nem található!</target>
+        <source>The user was not found!</source>
+        <target state="translated">A felhasználó nem található!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -488,8 +480,8 @@
         <target state="translated">Nem sikerült törölni!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
-        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
+        <source>Cant delete!</source>
+        <target state="translated">Nem lehetséges törölni!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -684,25 +676,9 @@
         <source>SMTP</source>
         <target state="translated">SMTP</target>
       </trans-unit>
-      <trans-unit id="notifications enable smtp" datatype="html">
-        <source>Enable SMTP</source>
-        <target state="translated">SMTP engedélyezése</target>
-      </trans-unit>
-      <trans-unit id="notifications disable smtp" datatype="html">
-        <source>Disable SMTP</source>
-        <target state="translated">SMTP letiltás</target>
-      </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
         <target state="translated">Teszt email küldés</target>
-      </trans-unit>
-      <trans-unit id="notifications enable gsm" datatype="html">
-        <source>Enable GSM</source>
-        <target state="translated">GSM engedélyezése</target>
-      </trans-unit>
-      <trans-unit id="notifications disable gsm" datatype="html">
-        <source>Disable GSM</source>
-        <target state="translated">GSM letiltás</target>
       </trans-unit>
       <trans-unit id="notifications send test sms" datatype="html">
         <source>Send test SMS</source>
@@ -728,17 +704,9 @@
         <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
         <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
-      <trans-unit id="notifications phone1 success" datatype="html">
-        <source>SMS sent successfully to phone!</source>
-        <target state="translated">Sikeres SMS küldés a telefonra!</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 failed" datatype="html">
-        <source>Failed to send SMS!</source>
-        <target state="translated">Sikertelen SMS küldés!</target>
-      </trans-unit>
-      <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
-        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Bővebb információért nézd meg a logokat!</target>
+      <trans-unit id="notifications sms1 success" datatype="html">
+        <source>SMS sent successfully to phone 1!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 1-re!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -906,8 +874,8 @@
         <note priority="1" from="description">Area delete question</note>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
-        <source>Zone not found!</source>
-        <target state="translated">Zóna nem található!</target>
+        <source>The area was not found!</source>
+        <target state="translated">A terület nem található!</target>
       </trans-unit>
       <trans-unit id="area sensors" datatype="html">
         <source>Sensors</source>
@@ -957,7 +925,7 @@
         <source>Area name</source>
         <target state="translated">Terület neve</target>
       </trans-unit>
-      <trans-unit id="area no sensor" datatype="html">
+      <trans-unit id="area number of sensors" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
         <target state="translated"><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> érzékelő(k)</target>
       </trans-unit>
@@ -1059,8 +1027,8 @@
         <target state="translated">Aktív alapállapot</target>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
-        <source>Output not found!</source>
-        <target state="translated">Kimenet nem található!</target>
+        <source>The output was not found!</source>
+        <target state="translated">A kimenet nem található!</target>
       </trans-unit>
       <trans-unit id="output none" datatype="html">
         <source>No outputs found</source>
@@ -1249,6 +1217,155 @@
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
         <target state="translated">Időtartam</target>
+      </trans-unit>
+      <trans-unit id="network terminal access" datatype="html">
+        <source>Terminal access</source>
+        <target state="translated">Terminál-hozzáférés</target>
+      </trans-unit>
+      <trans-unit id="network ssh settings" datatype="html">
+        <source>SSH settings</source>
+        <target state="translated">SSH beállítások</target>
+      </trans-unit>
+      <trans-unit id="network password authentication" datatype="html">
+        <source>Enable SSH password authentication</source>
+        <target state="translated">SSH jelszó-hitelesítés engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="user ssh key" datatype="html">
+        <source>SSH key</source>
+        <target state="translated">SSH kulcs</target>
+      </trans-unit>
+      <trans-unit id="user generate ssk key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">SSH kulcs beállítása</target>
+      </trans-unit>
+      <trans-unit id="user ssh key setup" datatype="html">
+        <source>Setup ssh key</source>
+        <target state="translated">Setup ssh kulcs</target>
+      </trans-unit>
+      <trans-unit id="user ssh setup method" datatype="html">
+        <source>Setup method</source>
+        <target state="translated">Beállítási módszer</target>
+      </trans-unit>
+      <trans-unit id="user ssh key type" datatype="html">
+        <source>SSH key type</source>
+        <target state="translated">SSH kulcs típusa</target>
+      </trans-unit>
+      <trans-unit id="user ssh key passphrase" datatype="html">
+        <source>SSH key passphrase</source>
+        <target state="translated">SSH kulcs jelszava</target>
+      </trans-unit>
+      <trans-unit id="user ssh key public key" datatype="html">
+        <source>SSh public key</source>
+        <target state="translated">SSh nyilvános kulcs</target>
+      </trans-unit>
+      <trans-unit id="user generate ssh key" datatype="html">
+        <source>Generate SSH key</source>
+        <target state="translated">SSH kulcs generálása</target>
+      </trans-unit>
+      <trans-unit id="user setup ssh key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">SSH kulcs beállítása</target>
+      </trans-unit>
+      <trans-unit id="user copy ssh key" datatype="html">
+        <source>Copy key</source>
+        <target state="translated">Kulcs másolása</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp enabled" datatype="html">
+        <source>SMTP enabled</source>
+        <target state="translated">SMTP engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm enabled" datatype="html">
+        <source>GSM enabled</source>
+        <target state="translated">GSM engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="notifications test call" datatype="html">
+        <source>Test call</source>
+        <target state="translated">Teszt hívás</target>
+      </trans-unit>
+      <trans-unit id="notifications call 1" datatype="html">
+        <source>Call 1</source>
+        <target state="translated">Hívás 1</target>
+      </trans-unit>
+      <trans-unit id="notifications call 2" datatype="html">
+        <source>Call 2</source>
+        <target state="translated">Hívás 2</target>
+      </trans-unit>
+      <trans-unit id="notifications test failed" datatype="html">
+        <source>Please check logs for more information!</source>
+        <target state="translated">További információk a log-ban!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms1 failed" datatype="html">
+        <source>Failed to send SMS to phone 1!</source>
+        <target state="translated">Telefon 1 SMS küldés nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 success" datatype="html">
+        <source>SMS sent successfully to phone 2!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 2-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 failed" datatype="html">
+        <source>Failed to send SMS to phone 2!</source>
+        <target state="translated">Telefon 2 SMS küldés nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm connection failed" datatype="html">
+        <source>Failed to connect to GSM module!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 success" datatype="html">
+        <source>Successfully called phone 1!</source>
+        <target state="translated">Sikeres hívás a telefon 1-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 failed" datatype="html">
+        <source>Failed to call phone 1!</source>
+        <target state="translated">Telefon 1 hívása nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="notification sms" datatype="html">
+        <source>SMS messages</source>
+        <target state="translated">SMS üzenetek</target>
+      </trans-unit>
+      <trans-unit id="notifications loading sms" datatype="html">
+        <source>Loading SMS messages...</source>
+        <target state="translated">SMS üzenetek betöltése...</target>
+      </trans-unit>
+      <trans-unit id="notifications no sms" datatype="html">
+        <source>No SMS messages</source>
+        <target state="translated">Nincsenek SMS üzenetek</target>
+      </trans-unit>
+      <trans-unit id="notifications delete all" datatype="html">
+        <source>Delete all</source>
+        <target state="translated">Összes törlése</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 success" datatype="html">
+        <source>Successfully called phone 2!</source>
+        <target state="translated">Sikeres hívás a telefon 2-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 failed" datatype="html">
+        <source>Failed to call phone 2!</source>
+        <target state="translated">Telefon 2 hívása nem sikerült!</target>
+      </trans-unit>
+      <trans-unit id="area outputs" datatype="html">
+        <source>Outputs</source>
+        <target state="translated">Kimenetek</target>
+      </trans-unit>
+      <trans-unit id="area number of outputs" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> kimenet(ek)</target>
+      </trans-unit>
+      <trans-unit id="area no outputs" datatype="html">
+        <source>No outputs</source>
+        <target state="translated">Nincsenek kimenetek</target>
+      </trans-unit>
+      <trans-unit id="card registered" datatype="html">
+        <source>Card registered!</source>
+        <target state="translated">Sikeres kártya regisztrálás!</target>
+      </trans-unit>
+      <trans-unit id="card not registered" datatype="html">
+        <source>Failed to register!</source>
+        <target state="translated">Sikertelen regisztráció!</target>
+      </trans-unit>
+      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+        <source>Can't delete, system is not ready!</source>
+        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
+        <note priority="1" from="description">cant delete</note>
       </trans-unit>
     </body>
   </file>

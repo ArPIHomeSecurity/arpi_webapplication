@@ -65,6 +65,16 @@
     min-height: calc(100dvh - 56px);
   }
 
+  app-root.demo .all-wrap {
+    min-height: calc(100dvh - 128px);
+  }
+
+  app-root.demo .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - 128px);
+  }
+
   .page {
     flex: 1;
   }

@@ -1,15 +1,17 @@
 import { Component, Input, OnInit, OnDestroy, Inject, ViewChild, TemplateRef } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS, DEFAULT_PASSWORD_VALUE } from '@app/models';
+import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS, DEFAULT_PASSWORD_VALUE, MONITORING_STATE } from '@app/models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
+import { SmsMessagesDialogComponent } from './sms-messages.component';
+import { MatDialog } from '@angular/material/dialog';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -23,16 +25,19 @@ const scheduleMicrotask = Promise.resolve(null);
 export class NotificationsComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplateEmail') snackbarTemplateEmail: TemplateRef<any>;
   @ViewChild('snackbarTemplateSms') snackbarTemplateSms: TemplateRef<any>;
+  @ViewChild('snackbarTemplateCall') snackbarTemplateCall: TemplateRef<any>;
   @Input() onlyAlerting = false;
-  notificationsForm: UntypedFormGroup;
-  smtpEnabled: boolean = null;
-  gsmEnabled: boolean = null;
-  smtp: Option = null;
-  gsm: Option = null;
-  subscriptions: Option = null;
+
+  smtpForm: FormGroup;
+  gsmForm: FormGroup;
+  subscriptionsForm: FormGroup;
 
   testEmailResult: any = {}
+  testingEmail = false;
   testSmsResult: any = {}
+  testingSms = false;
+  testCallResult: any = {}
+  testingCall = false;
 
   constructor(
     @Inject('ConfigurationService') private configService: ConfigurationService,
@@ -41,7 +46,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private snackBar: MatSnackBar,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -66,33 +72,43 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 //    console.log('Email', this.email);
 //    console.log('GSM', this.gsm);
 //    console.log('Subscriptions', this.subscriptions);
-    this.smtpEnabled = getValue(smtp.value, 'enabled')
-    this.gsmEnabled = getValue(gsm.value, 'enabled')
 
-    this.notificationsForm = this.fb.group({
+    this.smtpForm = this.fb.group({
       smtpUsername: getValue(smtp.value, 'smtp_username'),
       smtpPassword: getValue(smtp.value, 'smtp_password'),
       smtpHostname: getValue(smtp.value, 'smtp_hostname'),
       smtpPort: getValue(smtp.value, 'smtp_port'),
       emailAddress1: getValue(smtp.value, 'email_address_1'),
       emailAddress2: getValue(smtp.value, 'email_address_2'),
-
+      smtpEnabled: getValue(smtp.value, 'enabled')
+    });
+      
+    this.gsmForm = this.fb.group({
       pinCode: getValue(gsm.value, 'pin_code'),
       phoneNumber1: getValue(gsm.value, 'phone_number_1'),
       phoneNumber2: getValue(gsm.value, 'phone_number_2'),
+      gsmEnabled: getValue(gsm.value, 'enabled')
+    });
+      
+    this.subscriptionsForm = this.fb.group({
+      alertStartedCall1: getValue(getValue(subscriptions.value, 'call1'), 'alert_started'),
+      alertStartedCall2: getValue(getValue(subscriptions.value, 'call2'), 'alert_started'),
 
       alertStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_started'),
       alertStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'alert_stopped'),
       powerOutageStartedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'power_outage_started'),
       powerOutageStoppedEmail1: getValue(getValue(subscriptions.value, 'email1'), 'power_outage_stopped'),
+
       alertStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_started'),
       alertStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'alert_stopped'),
       powerOutageStartedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_started'),
       powerOutageStoppedEmail2: getValue(getValue(subscriptions.value, 'email2'), 'power_outage_stopped'),
+
       alertStartedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'alert_started'),
       alertStoppedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'alert_stopped'),
       powerOutageStartedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'power_outage_started'),
       powerOutageStoppedSms1: getValue(getValue(subscriptions.value, 'sms1'), 'power_outage_stopped'),
+
       alertStartedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'alert_started'),
       alertStoppedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'alert_stopped'),
       powerOutageStartedSms2: getValue(getValue(subscriptions.value, 'sms2'), 'power_outage_started'),
@@ -108,11 +124,11 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
-        this.smtp = getValue(results, 'smtp', DEFAULT_NOTIFICATION_SMTP);
-        this.gsm = getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM);
-        this.subscriptions = getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS);
-
-        this.updateForm(this.smtp, this.gsm, this.subscriptions);
+        this.updateForm(
+          getValue(results, 'smtp', DEFAULT_NOTIFICATION_SMTP),
+          getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM),
+          getValue(results, 'subscriptions', DEFAULT_NOTIFICATION_SUBSCRIPTIONS)
+        );
         this.loader.display(false);
         this.loader.disable(false);
       }
@@ -120,9 +136,9 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   prepareSmtp(): any {
-    const formModel = this.notificationsForm.value;
+    const formModel = this.smtpForm.value;
     const smtp: any = {
-      enabled: this.smtpEnabled,
+      enabled: formModel.smtpEnabled,
       smtp_username: formModel.smtpUsername,
       smtp_hostname: formModel.smtpHostname,
       smtp_port: formModel.smtpPort,
@@ -138,9 +154,9 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   prepareGsm(): any {
-    const formModel = this.notificationsForm.value;
+    const formModel = this.gsmForm.value;
     return {
-      enabled: this.gsmEnabled,
+      enabled: formModel.gsmEnabled,
       pin_code: formModel.pinCode,
       phone_number_1: formModel.phoneNumber1,
       phone_number_2: formModel.phoneNumber2
@@ -148,8 +164,14 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   prepareSubscriptions(): any {
-    const formModel = this.notificationsForm.value;
+    const formModel = this.subscriptionsForm.value;
     return {
+      call1: {
+        alert_started: formModel.alertStartedCall1
+      },
+      call2: {
+        alert_started: formModel.alertStartedCall2
+      },
       email1: {
         alert_started: formModel.alertStartedEmail1,
         alert_stopped: formModel.alertStoppedEmail1,
@@ -177,38 +199,135 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     };
   }
 
-  onEnableSmtp() {
-    this.smtpEnabled = true;
+  canSaveSmtp() {
+    return (
+      this.monitoringState == MONITORING_STATE.READY &&
+      this.smtpForm.valid && !this.smtpForm.pristine
+    );
   }
 
-  onDisableSmtp() {
-    this.smtpEnabled = false;
+  canTestSmtp() {
+    return (
+      this.monitoringState == MONITORING_STATE.READY &&
+      this.smtpForm.valid && !this.smtpForm.touched &&
+      this.smtpForm.value.smtpHostname && this.smtpForm.value.smtpPort &&
+      this.smtpForm.value.smtpUsername && this.smtpForm.value.smtpPassword &&
+      (this.smtpForm.value.emailAddress1 || this.smtpForm.value.emailAddress2) &&
+      this.smtpForm.value.smtpEnabled
+    );
   }
 
   onSendTestEmail(){
+    this.testingEmail = true;
+
+    this.gsmForm.disable();
+    this.smtpForm.disable();
+    this.subscriptionsForm.disable();
+
     this.testEmailResult = {};
     this.testSmsResult = {};
+    this.testCallResult = {};
+
     this.configService.sendTestEmail()
-      .subscribe(response => {
-        this.testEmailResult = response;
-        this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
-      },
-      error => {
-        this.testEmailResult = error.error;
-        this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
-      })
+      .pipe(finalize(() => {
+        this.testingEmail = false;
+        this.gsmForm.enable();
+        this.smtpForm.enable();
+        this.subscriptionsForm.enable();
+      }))
+      .subscribe({
+        next: response => {
+          this.testEmailResult = response;
+          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+        },
+        error: error => {
+          this.testEmailResult = error.error;
+          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+        }
+      });
   }
 
-  onEnableGsm() {
-    this.gsmEnabled = true;
+  canSaveGsm() {
+    return (
+      this.monitoringState == MONITORING_STATE.READY &&
+      this.gsmForm.valid && !this.gsmForm.pristine
+    );
   }
 
-  onDisableGsm() {
-    this.gsmEnabled = false;
+  canTestGsm() {
+    return this.gsmForm.valid &&
+      this.gsmForm.value.pinCode && (this.gsmForm.value.phoneNumber1 || this.gsmForm.value.phoneNumber2) &&
+      this.gsmForm.value.gsmEnabled;
+  }
+
+  onSendTestSMS(){
+    this.testingSms = true;
+
+    this.gsmForm.disable();
+    this.smtpForm.disable();
+    this.subscriptionsForm.disable();
+
+    this.testEmailResult = {};
+    this.testSmsResult = {};
+    this.testCallResult = {};
+
+    this.configService.sendTestSMS()
+      .pipe(finalize(() => {
+        this.testingSms = false;
+        this.gsmForm.enable();
+        this.smtpForm.enable();
+        this.subscriptionsForm.enable();
+      }))
+      .subscribe({
+        next: response => {
+          this.testSmsResult = response;
+          this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+        },
+        error: error => {
+          this.testSmsResult = error.error;
+          this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+        }
+      });
+  }
+
+  onTestCall() {
+    this.testingCall = true;
+    
+    this.gsmForm.disable();
+    this.smtpForm.disable();
+    this.subscriptionsForm.disable();
+
+    this.testEmailResult = {};
+    this.testSmsResult = {};
+    this.testCallResult = {};
+
+    this.configService.doTestCall()
+      .pipe(finalize(() => {
+        this.testingCall = false;
+        this.gsmForm.enable();
+        this.smtpForm.enable();
+        this.subscriptionsForm.enable();
+      }))
+      .subscribe({
+        next: response => {
+          this.testCallResult = response;
+          this.snackBar.openFromTemplate(this.snackbarTemplateCall, { duration: environment.snackDuration });
+        },
+        error: error => {
+          this.testCallResult = error.error;
+          this.snackBar.openFromTemplate(this.snackbarTemplateCall, { duration: environment.snackDuration });
+        }
+      });
+  }
+
+  onShowSmsMessages() {
+    this.dialog.open(SmsMessagesDialogComponent, {
+      width: '500px',
+    });
   }
 
   onPasswordFocus() {
-    const passwordControl = this.notificationsForm.get('smtpPassword');
+    const passwordControl = this.smtpForm.get('smtpPassword');
 
     if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
       passwordControl.markAsTouched();
@@ -217,7 +336,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
   
   onPasswordBlur() {
-    const passwordControl = this.notificationsForm.get('smtpPassword');
+    const passwordControl = this.smtpForm.get('smtpPassword');
   
     // Check if the user has changed the password field's value.
     if (!passwordControl.dirty) {
@@ -226,31 +345,24 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     }
   }
 
-  onSendTestSMS(){
-    this.testEmailResult = {};
-    this.testSmsResult = {};
-    this.configService.sendTestSMS()
-      .subscribe(response => {
-        this.testSmsResult = response;
-        this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
-      },
-      error => {
-        this.testSmsResult = error.error;
-        this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
-      })
+  onSubmitSmtp() {
+    const smtp = this.prepareSmtp();
+    this.loader.disable(true);
+    this.configService.setOption('notifications', 'smtp', smtp)
+      .subscribe(_ => this.updateComponent());
   }
 
-  onSubmit() {
-    const smtp = this.prepareSmtp();
+  onSubmitGsm() {
     const gsm = this.prepareGsm();
+    this.loader.disable(true);
+    this.configService.setOption('notifications', 'gsm', gsm)
+      .subscribe(_ => this.updateComponent());
+  }
+
+  onSubmitSubscriptions() {
     const subscriptions = this.prepareSubscriptions();
     this.loader.disable(true);
-    forkJoin({
-      smtp: this.configService.setOption('notifications', 'smtp', smtp),
-      gsm: this.configService.setOption('notifications', 'gsm', gsm),
-      subscriptions: this.configService.setOption('notifications', 'subscriptions', subscriptions)
-    })
-    .subscribe(_ => this.updateComponent());
+    this.configService.setOption('notifications', 'subscriptions', subscriptions)
+      .subscribe(_ => this.updateComponent());
   }
 }
-

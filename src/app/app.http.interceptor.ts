@@ -63,6 +63,10 @@ export class AppHttpInterceptor implements HttpInterceptor {
                         }
                     }
 
+                    if (error.status === 404) {
+                        return throwError(() => error);
+                    }
+
                     console.error('Error when calling backend service:', error);
                     return of(undefined);
             })) as any;

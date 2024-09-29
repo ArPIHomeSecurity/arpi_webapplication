@@ -14,7 +14,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { LoginComponent } from './pages/login';
 import { HomeComponent } from './pages/home';
 import { ClockComponent } from './pages/config/clock';
-import { NotificationsComponent } from './pages/config/notifications';
+import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { NetworkComponent } from './pages/config/network';
 import { SyrenComponent } from './pages/config/syren';
 import { KeypadComponent } from './pages/config/keypad';
@@ -33,15 +33,21 @@ import {
 import { SystemStateComponent } from './components/system-state/system-state.component';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
-import { routing } from './app.routing';
-import { PageNotFoundComponent } from './page-not-found.component';
+import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
+import { AUTHENTICATION_SERVICE } from './tokens';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
-import { environment } from '@environments/environment';
-import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
+import { EventsComponent } from './pages/events/events.component';
 import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { routing } from './app.routing';
+import { ThemeService } from './services/theme.service';
+
+import { environment } from '@environments/environment';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -57,6 +63,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -66,12 +75,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { EventsComponent } from './pages/events/events.component';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { AUTHENTICATION_SERVICE } from './tokens';
-import { ThemeService } from './services/theme.service';
 
 
 @NgModule({
@@ -84,6 +87,7 @@ import { ThemeService } from './services/theme.service';
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
+    SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
     
@@ -136,29 +140,30 @@ import { ThemeService } from './services/theme.service';
     routing,
 
     MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatIconModule,
     MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatButtonToggleModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatTableModule,
-    MatChipsModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    MatPaginatorModule,
 
     DragDropModule
   ],

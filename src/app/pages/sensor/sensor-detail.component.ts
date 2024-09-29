@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { Location } from '@angular/common';
 import { UntypedFormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { forkJoin, of } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, of, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { SensorDeleteDialogComponent } from './sensor-delete.component';
@@ -54,7 +53,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   action: string;
 
   sensorId: number;
-  sensor: Sensor = null;
+  sensor: Sensor = undefined;
   sensors: Sensor[];
   channels: Channel[];
   areas: Area[];
@@ -113,7 +112,15 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         areas: this.areaService.getAreas(),
         sensorTypes: this.sensorService.getSensorTypes()
       })
-        .pipe(finalize(() => this.loader.display(false)))
+        .pipe(
+          catchError((error) => {
+            if (error.status === 404) {
+              this.sensor = null;
+            }
+            return throwError(() => error);
+          }),
+          finalize(() => this.loader.display(false))
+        )
         .subscribe(results => {
           this.sensor = results.sensor;
           this.sensors = results.sensors;

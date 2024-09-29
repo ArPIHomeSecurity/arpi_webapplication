@@ -30,10 +30,11 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   readonly roleTypes = ROLE_TYPES;
-  action: string;
   users: User[] = null;
   cards: Card[] = [];
   has_ssh_key: Map<number, boolean> = new Map<number, boolean>();
+
+  registering_card: number = null;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
@@ -61,8 +62,21 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
     this.baseSubscriptions.push(
       this.eventService.listen('card_registered')
-        .subscribe(_ => {
-          this.loader.disable(true);
+        .subscribe(result => {
+          this.registering_card = null;
+          this.snackBar.dismiss();
+          if (result) {
+            // registered
+            this.snackBar.open($localize`:@@card registered:Card registered!`, null, {duration: environment.snackDuration});
+          }
+          else if (result === false) {
+            // not registered
+            this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {duration: environment.snackDuration});
+          }
+          else if (result === null) {
+            // time expired
+            this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {duration: environment.snackDuration});
+          }
           this.updateComponent();
         })
     );
@@ -123,19 +137,17 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
           this.loader.disable(true);
           this.userService.deleteUser(userId)
             .subscribe({
               next: _ => this.updateComponent(),
               error: _ => {
                 this.loader.disable(false);
-                this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {duration: environment.snackDuration});
               }
             });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete:Cant delete!`, null, {duration: environment.snackDuration});
         }
       }
     });
@@ -149,19 +161,17 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
           this.loader.disable(true);
           this.cardService.deleteCard(cardId)
             .subscribe({
               next: _ => this.updateComponent(),
               error: _ => {
                 this.loader.disable(false);
-                this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {duration: environment.snackDuration});
               }
             });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete:Cant delete!`, null, {duration: environment.snackDuration});
         }
       }
     });
@@ -199,7 +209,10 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   onClickRegisterCard(userId: number){
-    this.userService.registerCard(userId).subscribe();
+    this.userService.registerCard(userId)
+      .subscribe(() => {
+        this.registering_card = userId;
+    });
   }
 
   openSshKeySetupDialog(userId: number) {

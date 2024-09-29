@@ -1,0 +1,29 @@
+.message-content {
+  width: 100%;
+
+  textarea {
+    width: 100%;
+  }
+}
+
+.message-header {
+  font-weight: bold;
+  padding: 0px 5px;
+
+  .title {
+    float: left;
+  }
+
+  .delete {
+    float: right;
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+  }
+}
+
+.mat-mdc-dialog-actions {
+  .mat-mdc-progress-spinner {
+    margin: 0px;
+  }
+}

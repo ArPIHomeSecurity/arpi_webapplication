@@ -6,8 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { OutputDeleteDialogComponent } from './output-delete.component';
@@ -38,7 +38,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   action: string;
 
   outputId: number;
-  output: Output = null;
+  output: Output = undefined;
   outputs: Output[];
   areas: Area[];
   channelOptions: ChannelOption[] = [];
@@ -71,19 +71,28 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   ngOnInit() {
     super.initialize();
 
+    // avoid ExpressionChangedAfterItHasBeenCheckedError
+    // https://github.com/angular/angular/issues/17572#issuecomment-323465737
+    scheduleMicrotask.then(() => {
+      this.loader.display(true);
+    });
+
     if (this.outputId != null) {
-      // avoid ExpressionChangedAfterItHasBeenCheckedError
-      // https://github.com/angular/angular/issues/17572#issuecomment-323465737
-      scheduleMicrotask.then(() => {
-        this.loader.display(true);
-      });
 
       forkJoin({
         output: this.outputService.getOutput(this.outputId),
         outputs: this.outputService.getOutputs(),
         areas: this.areaService.getAreas()
       })
-        .pipe(finalize(() => this.loader.display(false)))
+        .pipe(
+          catchError((error) => {
+            if (error.status === 404) {
+              this.output = null;
+            }
+            return throwError(() => error);
+          }),
+          finalize(() => this.loader.display(false))
+        )
         .subscribe(results => {
           this.output = results.output;
           this.output.channel = this.output.channel === null ? -1 : this.output.channel;
@@ -156,11 +165,12 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     if (this.outputId != null) {
       this.action = 'update';
       this.outputService.updateOutput(output)
-        .subscribe(
-          _ => this.router.navigate(['/outputs']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/outputs']),
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        });
     } else {
+      output.state = output.defaultState;
       this.action = 'create';
       this.outputService.createOutput(output)
         .subscribe(
@@ -206,7 +216,6 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     output.name = formModel.name;
     output.description = formModel.description;
     output.channel = formModel.channel === -1 ? null : formModel.channel;
-    output.state = false;
     output.triggerType = formModel.triggerType;
     output.areaId = formModel.areaId;
     output.delay = formModel.delay;

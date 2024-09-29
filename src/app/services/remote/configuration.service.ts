@@ -31,6 +31,18 @@ export class ConfigurationService implements ConfigurationService {
     return this.http.get('/api/config/test_sms');
   }
 
+  getSmsMessages() {
+    return this.http.get('/api/config/sms');
+  }
+
+  deleteSmsMessage(id: number) {
+    return this.http.delete('/api/config/sms/' + id);
+  }
+
+  doTestCall() {
+    return this.http.get('/api/config/test_call');
+  }
+
   testSyren(duration?: number) {
     const params = duration ?
       new HttpParams().set('duration', duration)

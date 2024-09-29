@@ -1,7 +1,7 @@
 <div class="container">
-  <mat-card *ngIf="user != null" class="conteiner-item user-form">
+  <mat-card *ngIf="user" class="conteiner-item user-form">
     <mat-card-content>
-      <form *ngIf="user; else not_found" [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
         <mat-form-field>
           <mat-label i18n="@@name">Name</mat-label>
           <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required>
@@ -42,15 +42,16 @@
       <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
 
-    <ng-template #not_found>
-      <h1 i18n="@@user not found">User not found!</h1>
-    </ng-template>
   </mat-card>
+
+  <div *ngIf="user === null" class="container-item">
+    <h1 i18n="@@user not found">The user was not found!</h1>
+  </div>
 </div>
 
 <ng-template #snackbarTemplate>
   <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>
   <span *ngIf="action=='update'" i18n="@@failed update">Failed to update!</span>
   <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
-  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+  <span *ngIf="action=='cant delete'" i18n="cant delete">Can't delete, system is not ready!</span>
 </ng-template>

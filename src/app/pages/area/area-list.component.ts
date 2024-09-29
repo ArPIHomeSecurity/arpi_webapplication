@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject, output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -8,8 +8,8 @@ import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { AreaDeleteDialogComponent } from './area-delete.component';
-import { MONITORING_STATE, Sensor, Area } from '@app/models';
-import { AuthenticationService, EventService, LoaderService, SensorService, AreaService } from '@app/services';
+import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
+import { AuthenticationService, EventService, LoaderService, SensorService, AreaService, OutputService } from '@app/services';
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
@@ -31,8 +31,9 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   SENSORS = 1;
 
   areas: Area[] = null;
+  outputs: Output[] = [];
   sensors: Sensor[] = [];
-  sensorListClosed: boolean[] = [];
+  outputListOpened: boolean[] = [];
   sensorListOpened: boolean[] = [];
   isDragging = false;
 
@@ -42,6 +43,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService,
+    @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
 
     public dialog: MatDialog,
@@ -72,11 +74,13 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
 
     forkJoin({
       areas: this.areaService.getAreas(),
+      outputs: this.outputService.getOutputs(),
       sensors: this.sensorService.getSensors()
     })
     .pipe(finalize(() => this.loader.display(false)))
     .subscribe(results => {
         this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder);
+        this.outputs = results.outputs;
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);
@@ -89,6 +93,17 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     this.sensors.forEach((sensor) => {
       if (sensor.areaId === areaId) {
         results.push(sensor);
+      }
+    });
+
+    return results;
+  }
+
+  getOutputs(areaId: number): Output[] {
+    const results: Output[] = [];
+    this.outputs.forEach((output) => {
+      if (output.areaId === areaId) {
+        results.push(output);
       }
     });
 

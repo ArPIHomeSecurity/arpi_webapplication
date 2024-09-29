@@ -119,14 +119,6 @@
         <source>Restrict access to host</source>
         <target>Limitare l'accesso all'host</target>
       </trans-unit>
-      <trans-unit id="network access locally" datatype="html">
-        <source>Access locally</source>
-        <target>Accesso locale</target>
-      </trans-unit>
-      <trans-unit id="network local settings" datatype="html">
-        <source>Local access settings</source>
-        <target>Impostazioni di accesso locale</target>
-      </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
         <source>Enable SSH connection</source>
         <target>Abilita la connessione SSH</target>
@@ -448,8 +440,8 @@
         <target state="translated">Ritardo quando armato</target>
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
-        <source>Sensor not found!</source>
-        <target>Sensore non trovato!</target>
+        <source>The sensor was not found!</source>
+        <target state="translated">Sensore non trovato!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -464,8 +456,8 @@
         <target>Cancellazione fallita!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
-        <target>Non è possibile cancellare, il sistema non è pronto!</target>
+        <source>Cant delete!</source>
+        <target state="translated">Non si può cancellare!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -524,8 +516,8 @@
         <target>Commento</target>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
-        <source>User not found!</source>
-        <target>Utente non trovato!</target>
+        <source>The user was not found!</source>
+        <target state="translated">Utente non trovato!</target>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -633,8 +625,8 @@
         <target state="translated">Ritardo allarme quando si è presenti con sistema armato</target>
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
-        <source>Zone not found!</source>
-        <target>Zona non trovata!</target>
+        <source>The zone was not found!</source>
+        <target state="translated">Zona non trovata!</target>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -684,14 +676,6 @@
         <source>Failed to send to email address 1!</source>
         <target>Invio fallito all'indirizzo e-mail 1!</target>
       </trans-unit>
-      <trans-unit id="notifications disable gsm" datatype="html">
-        <source>Disable GSM</source>
-        <target>Disattivare il GSM</target>
-      </trans-unit>
-      <trans-unit id="notifications disable smtp" datatype="html">
-        <source>Disable SMTP</source>
-        <target>Disattivare SMTP</target>
-      </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
         <source>Email sent successfully to email address 1!</source>
         <target>Email inviata con successo all'indirizzo email 1!</target>
@@ -704,21 +688,9 @@
         <source>Email sent successfully to email address 2!</source>
         <target>Email inviata con successo all'indirizzo email 2!</target>
       </trans-unit>
-      <trans-unit id="notifications enable gsm" datatype="html">
-        <source>Enable GSM</source>
-        <target>Abilitazione del GSM</target>
-      </trans-unit>
-      <trans-unit id="notifications enable smtp" datatype="html">
-        <source>Enable SMTP</source>
-        <target>Abilita SMTP</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 failed" datatype="html">
-        <source>Failed to send SMS!</source>
-        <target>Invio di SMS fallito!</target>
-      </trans-unit>
-      <trans-unit id="notifications phone1 success" datatype="html">
-        <source>SMS sent successfully to phone!</source>
-        <target state="translated">SMS inviato con successo!</target>
+      <trans-unit id="notifications sms1 success" datatype="html">
+        <source>SMS sent successfully to phone 1!</source>
+        <target state="translated">SMS inviato con successo al telefono 1!</target>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
@@ -727,10 +699,6 @@
       <trans-unit id="notifications send test sms" datatype="html">
         <source>Send test SMS</source>
         <target>Inviare un SMS di prova</target>
-      </trans-unit>
-      <trans-unit id="notifications sms connection failed" datatype="html">
-        <source>Failed to connect to GSM module!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
-        <target state="translated">Impossibile connettersi al modulo GSM!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Controllare i log per maggiori informazioni!</target>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
@@ -926,8 +894,8 @@
         <target>Nessuna area trovata</target>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
-        <source>Zone not found!</source>
-        <target>Zona non trovata!</target>
+        <source>The area was not found!</source>
+        <target state="translated">Area non trovata!</target>
       </trans-unit>
       <trans-unit id="area sensors" datatype="html">
         <source>Sensors</source>
@@ -957,7 +925,7 @@
         <source>New</source>
         <target>Nuovo</target>
       </trans-unit>
-      <trans-unit id="area no sensor" datatype="html">
+      <trans-unit id="area number of sensors" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
         <target><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensore/i</target>
       </trans-unit>
@@ -1051,7 +1019,7 @@
         <target>Nessuna uscita trovata</target>
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
-        <source>Output not found!</source>
+        <source>The output was not found!</source>
         <target state="translated">Uscita non trovata!</target>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
@@ -1249,6 +1217,155 @@
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
         <target state="translated">Durata</target>
+      </trans-unit>
+      <trans-unit id="network terminal access" datatype="html">
+        <source>Terminal access</source>
+        <target state="translated">Accesso al terminale</target>
+      </trans-unit>
+      <trans-unit id="network ssh settings" datatype="html">
+        <source>SSH settings</source>
+        <target state="translated">Impostazioni SSH</target>
+      </trans-unit>
+      <trans-unit id="network password authentication" datatype="html">
+        <source>Enable SSH password authentication</source>
+        <target state="translated">Abilita l'autenticazione con password SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key" datatype="html">
+        <source>SSH key</source>
+        <target state="translated">Chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user generate ssk key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">Impostazione della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key setup" datatype="html">
+        <source>Setup ssh key</source>
+        <target state="translated">Impostazione della chiave ssh</target>
+      </trans-unit>
+      <trans-unit id="user ssh setup method" datatype="html">
+        <source>Setup method</source>
+        <target state="translated">Metodo di impostazione</target>
+      </trans-unit>
+      <trans-unit id="user ssh key type" datatype="html">
+        <source>SSH key type</source>
+        <target state="translated">Tipo di chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key passphrase" datatype="html">
+        <source>SSH key passphrase</source>
+        <target state="translated">Passphrase della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user ssh key public key" datatype="html">
+        <source>SSh public key</source>
+        <target state="translated">Chiave pubblica SSh</target>
+      </trans-unit>
+      <trans-unit id="user generate ssh key" datatype="html">
+        <source>Generate SSH key</source>
+        <target state="translated">Generare la chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user setup ssh key" datatype="html">
+        <source>Setup SSH key</source>
+        <target state="translated">Impostazione della chiave SSH</target>
+      </trans-unit>
+      <trans-unit id="user copy ssh key" datatype="html">
+        <source>Copy key</source>
+        <target state="translated">Tasto copia</target>
+      </trans-unit>
+      <trans-unit id="notifications smtp enabled" datatype="html">
+        <source>SMTP enabled</source>
+        <target state="translated">SMTP abilitato</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm enabled" datatype="html">
+        <source>GSM enabled</source>
+        <target state="translated">GSM abilitato</target>
+      </trans-unit>
+      <trans-unit id="notifications test call" datatype="html">
+        <source>Test call</source>
+        <target state="translated">Chiamata di prova</target>
+      </trans-unit>
+      <trans-unit id="notifications call 1" datatype="html">
+        <source>Call 1</source>
+        <target state="translated">Chiamata 1</target>
+      </trans-unit>
+      <trans-unit id="notifications call 2" datatype="html">
+        <source>Call 2</source>
+        <target state="translated">Chiamata 1</target>
+      </trans-unit>
+      <trans-unit id="notifications test failed" datatype="html">
+        <source>Please check logs for more information!</source>
+        <target state="translated">Per ulteriori informazioni, consultare i log!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms1 failed" datatype="html">
+        <source>Failed to send SMS to phone 1!</source>
+        <target state="translated">Fallito l'invio di SMS al telefono 1!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 success" datatype="html">
+        <source>SMS sent successfully to phone 2!</source>
+        <target state="translated">SMS inviato con successo al telefono 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms2 failed" datatype="html">
+        <source>Failed to send SMS to phone 2!</source>
+        <target state="translated">Fallito l'invio di SMS al telefono 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications gsm connection failed" datatype="html">
+        <source>Failed to connect to GSM module!</source>
+        <target state="translated">Impossibile connettersi al modulo GSM!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 success" datatype="html">
+        <source>Successfully called phone 1!</source>
+        <target state="translated">Chiamato con successo il telefono 1!</target>
+      </trans-unit>
+      <trans-unit id="notifications call1 failed" datatype="html">
+        <source>Failed to call phone 1!</source>
+        <target state="translated">Impossibile chiamare il telefono 1!</target>
+      </trans-unit>
+      <trans-unit id="notification sms" datatype="html">
+        <source>SMS messages</source>
+        <target state="translated">Messaggi SMS</target>
+      </trans-unit>
+      <trans-unit id="notifications loading sms" datatype="html">
+        <source>Loading SMS messages...</source>
+        <target state="translated">Caricamento dei messaggi SMS...</target>
+      </trans-unit>
+      <trans-unit id="notifications no sms" datatype="html">
+        <source>No SMS messages</source>
+        <target state="translated">Nessun messaggio SMS</target>
+      </trans-unit>
+      <trans-unit id="notifications delete all" datatype="html">
+        <source>Delete all</source>
+        <target state="translated">Cancella tutto</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 success" datatype="html">
+        <source>Successfully called phone 2!</source>
+        <target state="translated">Chiamato con successo il telefono 2!</target>
+      </trans-unit>
+      <trans-unit id="notifications call2 failed" datatype="html">
+        <source>Failed to call phone 2!</source>
+        <target state="translated">Mancata chiamata al telefono 2!</target>
+      </trans-unit>
+      <trans-unit id="area outputs" datatype="html">
+        <source>Outputs</source>
+        <target state="translated">Uscite</target>
+      </trans-unit>
+      <trans-unit id="area number of outputs" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> uscita(i)</target>
+      </trans-unit>
+      <trans-unit id="area no outputs" datatype="html">
+        <source>No outputs</source>
+        <target state="translated">Nessuna uscita</target>
+      </trans-unit>
+      <trans-unit id="card registered" datatype="html">
+        <source>Card registered!</source>
+        <target state="translated">Carta registrata!</target>
+      </trans-unit>
+      <trans-unit id="card not registered" datatype="html">
+        <source>Failed to register!</source>
+        <target state="translated">Registrazione fallita!</target>
+      </trans-unit>
+      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+        <source>Can't delete, system is not ready!</source>
+        <target state="translated">Non è possibile cancellare, il sistema non è pronto!</target>
+        <note priority="1" from="description">cant delete</note>
       </trans-unit>
     </body>
   </file>

@@ -13,9 +13,15 @@
         <mat-card-subtitle *ngIf="user.role === roleTypes.USER" i18n="@@user type user">User</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <div *ngIf="user.hasCard">
+        <div *ngIf="user.hasCard || registering_card == user.id">
           <mat-divider></mat-divider>
           <div class="header" i18n="@@user cards">Cards</div>
+          <mat-progress-spinner
+            *ngIf="registering_card == user.id"
+            color="primary"
+            mode="indeterminate"
+            diameter="20">
+          </mat-progress-spinner>
           <mat-list role="list" *ngFor="let card of getCards(user.id)">
             <mat-checkbox (change)="toggleCard(card.id)" color="primary" [checked]="card.enabled"
               [disabled]="!userCanEdit()">
@@ -69,7 +75,7 @@
             [disabled]="user.hasRegistrationCode || monitoringState != monitoringStates.READY"
             i18n="@@user register device button">Device registration</button>
           <button mat-menu-item (click)="onClickRegisterCard(user.id)" color="primary"
-            [disabled]="monitoringState != monitoringStates.READY" i18n="@@user register card button">Register
+            [disabled]="monitoringState != monitoringStates.READY || registering_card" i18n="@@user register card button">Register
             card</button>
           <button mat-menu-item (click)="openSshKeySetupDialog(user.id)" color="primary"
             [disabled]="monitoringState != monitoringStates.READY || has_ssh_key.get(user.id)" i18n="@@user generate ssk key">Setup SSH key</button>
@@ -93,6 +99,5 @@
 </div>
 
 <ng-template #snackbarTemplate>
-  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
-  <span *ngIf="action=='cant delete'" i18n="@@cant delete">Can't delete, system is not ready!</span>
+  <mat-progress-bar *ngIf="registering_card" mode="indeterminate"></mat-progress-bar>
 </ng-template>

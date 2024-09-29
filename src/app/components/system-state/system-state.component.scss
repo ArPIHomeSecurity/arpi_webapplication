@@ -1,11 +1,22 @@
-.states {
-  // rounded border with opaque background
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 2px;
 
-  .mat-icon {
-    vertical-align: text-bottom;
+.system-states {
+  display: flex;
+  gap: 3px;
+  flex-direction: row;
+
+  .mat-mdc-chip {
+    margin: 0px;
+  }
+
+  .states {
+    // rounded border with opaque background
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 2px;
+
+    .mat-icon {
+      vertical-align: text-bottom;
+    }
   }
 }
 
