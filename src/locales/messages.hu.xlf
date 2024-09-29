@@ -480,8 +480,8 @@
         <target state="translated">Nem sikerült törölni!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
-        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
+        <source>Cant delete!</source>
+        <target state="translated">Nem lehetséges törölni!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -1353,6 +1353,19 @@
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
         <target state="translated">Nincsenek kimenetek</target>
+      </trans-unit>
+      <trans-unit id="card registered" datatype="html">
+        <source>Card registered!</source>
+        <target state="translated">Sikeres kártya regisztrálás!</target>
+      </trans-unit>
+      <trans-unit id="card not registered" datatype="html">
+        <source>Failed to register!</source>
+        <target state="translated">Sikertelen regisztráció!</target>
+      </trans-unit>
+      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+        <source>Can't delete, system is not ready!</source>
+        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
+        <note priority="1" from="description">cant delete</note>
       </trans-unit>
     </body>
   </file>

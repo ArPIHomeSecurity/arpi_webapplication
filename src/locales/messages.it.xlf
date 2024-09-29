@@ -441,7 +441,7 @@
       </trans-unit>
       <trans-unit id="sensor not found" datatype="html">
         <source>The sensor was not found!</source>
-        <target state="new">Sensore non trovato!</target>
+        <target state="translated">Sensore non trovato!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -456,8 +456,8 @@
         <target>Cancellazione fallita!</target>
       </trans-unit>
       <trans-unit id="cant delete" datatype="html">
-        <source>Can't delete, system is not ready!</source>
-        <target>Non è possibile cancellare, il sistema non è pronto!</target>
+        <source>Cant delete!</source>
+        <target state="translated">Non si può cancellare!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -517,7 +517,7 @@
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
         <source>The user was not found!</source>
-        <target state="new">Utente non trovato!</target>
+        <target state="translated">Utente non trovato!</target>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -626,7 +626,7 @@
       </trans-unit>
       <trans-unit id="zone not found" datatype="html">
         <source>The zone was not found!</source>
-        <target state="new">Zona non trovata!</target>
+        <target state="translated">Zona non trovata!</target>
       </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
@@ -690,7 +690,7 @@
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
         <source>SMS sent successfully to phone 1!</source>
-        <target state="new">SMS inviato con successo!</target>
+        <target state="translated">SMS inviato con successo al telefono 1!</target>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
@@ -1020,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="output not found" datatype="html">
         <source>The output was not found!</source>
-        <target state="new">Uscita non trovata!</target>
+        <target state="translated">Uscita non trovata!</target>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
         <source>System</source>
@@ -1292,19 +1292,19 @@
       </trans-unit>
       <trans-unit id="notifications test failed" datatype="html">
         <source>Please check logs for more information!</source>
-        <target state="new">Please check logs for more information!</target>
+        <target state="translated">Per ulteriori informazioni, consultare i log!</target>
       </trans-unit>
       <trans-unit id="notifications sms1 failed" datatype="html">
         <source>Failed to send SMS to phone 1!</source>
-        <target state="new">Failed to send SMS to phone 1!</target>
+        <target state="translated">Fallito l'invio di SMS al telefono 1!</target>
       </trans-unit>
       <trans-unit id="notifications sms2 success" datatype="html">
         <source>SMS sent successfully to phone 2!</source>
-        <target state="new">SMS sent successfully to phone 2!</target>
+        <target state="translated">SMS inviato con successo al telefono 2!</target>
       </trans-unit>
       <trans-unit id="notifications sms2 failed" datatype="html">
         <source>Failed to send SMS to phone 2!</source>
-        <target state="new">Failed to send SMS to phone 2!</target>
+        <target state="translated">Fallito l'invio di SMS al telefono 2!</target>
       </trans-unit>
       <trans-unit id="notifications gsm connection failed" datatype="html">
         <source>Failed to connect to GSM module!</source>
@@ -1312,11 +1312,11 @@
       </trans-unit>
       <trans-unit id="notifications call1 success" datatype="html">
         <source>Successfully called phone 1!</source>
-        <target state="new">Successfully called phone 1!</target>
+        <target state="translated">Chiamato con successo il telefono 1!</target>
       </trans-unit>
       <trans-unit id="notifications call1 failed" datatype="html">
         <source>Failed to call phone 1!</source>
-        <target state="new">Failed to call phone 1!</target>
+        <target state="translated">Impossibile chiamare il telefono 1!</target>
       </trans-unit>
       <trans-unit id="notification sms" datatype="html">
         <source>SMS messages</source>
@@ -1336,23 +1336,36 @@
       </trans-unit>
       <trans-unit id="notifications call2 success" datatype="html">
         <source>Successfully called phone 2!</source>
-        <target state="new">Successfully called phone 2!</target>
+        <target state="translated">Chiamato con successo il telefono 2!</target>
       </trans-unit>
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
-        <target state="new">Failed to call phone 2!</target>
+        <target state="translated">Mancata chiamata al telefono 2!</target>
       </trans-unit>
       <trans-unit id="area outputs" datatype="html">
         <source>Outputs</source>
-        <target state="new">Outputs</target>
+        <target state="translated">Uscite</target>
       </trans-unit>
       <trans-unit id="area number of outputs" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
-        <target state="new"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> uscita(i)</target>
       </trans-unit>
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
-        <target state="needs-l10n">No outputs</target>
+        <target state="translated">Nessuna uscita</target>
+      </trans-unit>
+      <trans-unit id="card registered" datatype="html">
+        <source>Card registered!</source>
+        <target state="translated">Carta registrata!</target>
+      </trans-unit>
+      <trans-unit id="card not registered" datatype="html">
+        <source>Failed to register!</source>
+        <target state="translated">Registrazione fallita!</target>
+      </trans-unit>
+      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+        <source>Can't delete, system is not ready!</source>
+        <target state="translated">Non è possibile cancellare, il sistema non è pronto!</target>
+        <note priority="1" from="description">cant delete</note>
       </trans-unit>
     </body>
   </file>
