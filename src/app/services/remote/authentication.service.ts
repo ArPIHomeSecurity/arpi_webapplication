@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import JWT from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 import { EventService } from './event.service';
 
@@ -66,7 +66,7 @@ export class AuthenticationService implements AuthenticationService {
       const userToken = localStorage.getItem('userToken');
       if (userToken) {
         try {
-          return Date.now()/1000 - parseInt((JWT(userToken) as any).timestamp) < environment.userTokenExpiry;
+          return Date.now()/1000 - parseInt((jwtDecode(userToken) as any).timestamp) < environment.userTokenExpiry;
         } catch (error) {
         }
       }
@@ -80,7 +80,7 @@ export class AuthenticationService implements AuthenticationService {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
       try {
-        return (JWT(userToken) as any).role;
+        return (jwtDecode(userToken) as any).role;
       } catch (error) {
 
       }
@@ -92,7 +92,7 @@ export class AuthenticationService implements AuthenticationService {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
       try {
-        return (JWT(userToken) as any).name;
+        return (jwtDecode(userToken) as any).name;
       } catch (error) {
       }
       return '';
@@ -114,7 +114,7 @@ export class AuthenticationService implements AuthenticationService {
   updateUserToken(token: string) {
     localStorage.setItem('userToken', token);
     try {
-      JWT(localStorage.getItem('userToken'));
+      jwtDecode(localStorage.getItem('userToken'));
       return this.isSessionValidSubject.next(true);
     } catch (error) {}
     return this.isSessionValidSubject.next(false);
