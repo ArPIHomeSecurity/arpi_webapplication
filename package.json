@@ -36,7 +36,7 @@
     "jwt-decode": "^4.0.0",
     "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
-    "ngx-countdown": "^16.0.0",
+    "ngx-countdown": "^18.0.0",
     "rxjs": "^7.8.1",
     "socket.io-client": "^4.7.5",
     "tslib": "^2.0.0",
