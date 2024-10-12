@@ -43,7 +43,7 @@
     }
 
     .output-status-icon-enabled {
-      color: mat.get-color-from-palette($argus-ok);
+      color: mat.m2-get-color-from-palette($argus-ok);
     }
 
     .output-status-icon-disabled {

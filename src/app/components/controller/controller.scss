@@ -4,15 +4,15 @@
   }
 
   .arm-away.mat-button-toggle-checked {
-    background-color: mat.get-color-from-palette($argus-alert) !important;
+    background-color: mat.m2-get-color-from-palette($argus-alert) !important;
   }
 
   .disarm.mat-button-toggle-checked {
-    background-color: mat.get-color-from-palette($argus-ok) !important;
+    background-color: mat.m2-get-color-from-palette($argus-ok) !important;
   }
 
   .arm-stay.mat-button-toggle-checked {
-    background-color: mat.get-color-from-palette($argus-warn) !important;
+    background-color: mat.m2-get-color-from-palette($argus-warn) !important;
   }
 
   .mat-button-toggle {

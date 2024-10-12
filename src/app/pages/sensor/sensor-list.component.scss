@@ -30,7 +30,7 @@
     }
 
     .sensor-image.alerting {
-      background-color: mat.get-color-from-palette($argus-alert);
+      background-color: mat.m2-get-color-from-palette($argus-alert);
     }
 
     .sensor-icon {
@@ -39,7 +39,7 @@
     }
 
     .sensor-status-icon-enabled {
-      color: mat.get-color-from-palette($argus-ok);
+      color: mat.m2-get-color-from-palette($argus-ok);
     }
 
     /*

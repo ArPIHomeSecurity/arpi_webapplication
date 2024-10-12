@@ -94,7 +94,7 @@
 
   .footer {
     color: white;
-    background-color: mat.get-color-from-palette($argus-toolbar-primary);
+    background-color: mat.m2-get-color-from-palette($argus-toolbar-primary);
   }
 
   .version {
@@ -112,7 +112,7 @@
   }
 
   .mat-mdc-list-item.active {
-    background-color: mat.get-color-from-palette($argus-accent);
+    background-color: mat.m2-get-color-from-palette($argus-accent);
   }
 
   .menu .mat-expansion-panel-header {
