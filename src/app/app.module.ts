@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { CountdownModule } from 'ngx-countdown';
@@ -90,7 +90,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
-    
+
     UserCardDeleteDialogComponent,
     UserListComponent,
     UserDetailComponent,
@@ -125,6 +125,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DemoHelpDialogComponent,
     EventsComponent
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -132,11 +133,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CountdownModule,
     DigitOnlyModule,
     FormsModule,
-    HttpClientModule,
+
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    
+
     routing,
 
     MatAutocompleteModule,
@@ -168,28 +169,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DragDropModule
   ],
   providers: [
-    {provide: 'ThemeService', useClass: ThemeService},
-    {provide: 'AlertService', useClass: environment.alertService},
-    {provide: 'AreaService', useClass: environment.areaService},
-    {provide: 'ArmService', useClass: environment.armService},
-    {provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService},
-    {provide: 'CardService', useClass: environment.cardService},
-    {provide: 'ConfigurationService', useClass: environment.configurationService},
-    {provide: 'EventService', useClass: environment.eventService},
-    {provide: 'KeypadService', useClass: environment.keypadService},
-    {provide: 'LoaderService', useClass: environment.loaderService},
-    {provide: 'MonitoringService', useClass: environment.monitoringService},
-    {provide: 'OutputService', useClass: environment.outputService},
-    {provide: 'SensorService', useClass: environment.sensorService},
-    {provide: 'UserService', useClass: environment.userService},
-    {provide: 'ZoneService', useClass: environment.zoneService},
-
+    { provide: 'ThemeService', useClass: ThemeService },
+    { provide: 'AlertService', useClass: environment.alertService },
+    { provide: 'AreaService', useClass: environment.areaService },
+    { provide: 'ArmService', useClass: environment.armService },
+    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
+    { provide: 'CardService', useClass: environment.cardService },
+    { provide: 'ConfigurationService', useClass: environment.configurationService },
+    { provide: 'EventService', useClass: environment.eventService },
+    { provide: 'KeypadService', useClass: environment.keypadService },
+    { provide: 'LoaderService', useClass: environment.loaderService },
+    { provide: 'MonitoringService', useClass: environment.monitoringService },
+    { provide: 'OutputService', useClass: environment.outputService },
+    { provide: 'SensorService', useClass: environment.sensorService },
+    { provide: 'UserService', useClass: environment.userService },
+    { provide: 'ZoneService', useClass: environment.zoneService },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
       multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    },
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule { }

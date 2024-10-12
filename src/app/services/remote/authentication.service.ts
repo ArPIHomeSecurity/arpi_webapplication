@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import * as JWT from 'jwt-decode';
+import JWT from 'jwt-decode';
 
 import { EventService } from './event.service';
 

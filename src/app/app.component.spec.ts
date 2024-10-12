@@ -1,5 +1,5 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -19,36 +19,33 @@ import { environment } from '@environments/environment.demo';
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        BrowserAnimationsModule,
+      declarations: [
+        AppComponent,
+        SystemStateComponent,
+        MatSidenav
+      ],
+      imports: [BrowserAnimationsModule,
         FlexLayoutModule,
-        HttpClientModule,
         RouterTestingModule,
         MatIconModule,
         MatListModule,
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
-        MatToolbarModule
-      ],
+        MatToolbarModule],
       providers: [
-        {provide: 'AlertService', useClass: environment.alertService},
-        {provide: 'AuthenticationService', useClass: environment.authenticationService},
-        {provide: 'ConfigurationService', useClass: environment.configurationService},
-        {provide: 'EventService', useClass: environment.eventService},
-        {provide: 'KeypadService', useClass: environment.keypadService},
-        {provide: 'LoaderService', useClass: environment.loaderService},
-        {provide: 'MonitoringService', useClass: environment.monitoringService},
-        {provide: 'SensorService', useClass: environment.sensorService},
-        {provide: 'UserService', useClass: environment.userService},
-        {provide: 'ZoneService', useClass: environment.zoneService},
-      ],
-      declarations: [
-        AppComponent,
-        SystemStateComponent,
-
-        MatSidenav
-      ],
+        { provide: 'AlertService', useClass: environment.alertService },
+        { provide: 'AuthenticationService', useClass: environment.authenticationService },
+        { provide: 'ConfigurationService', useClass: environment.configurationService },
+        { provide: 'EventService', useClass: environment.eventService },
+        { provide: 'KeypadService', useClass: environment.keypadService },
+        { provide: 'LoaderService', useClass: environment.loaderService },
+        { provide: 'MonitoringService', useClass: environment.monitoringService },
+        { provide: 'SensorService', useClass: environment.sensorService },
+        { provide: 'UserService', useClass: environment.userService },
+        { provide: 'ZoneService', useClass: environment.zoneService },
+        provideHttpClient(withInterceptorsFromDi()),
+      ]
     }).compileComponents();
   }));
 
