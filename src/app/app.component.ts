@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef }
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
