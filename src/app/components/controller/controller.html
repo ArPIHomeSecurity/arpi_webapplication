@@ -1,7 +1,7 @@
 <mat-button-toggle-group
     #group="matButtonToggleGroup"
     [name]="armState"
-    [disabled]="armState == armTypes.UNDEFINED"
+    [disabled]="armState === armTypes.UNDEFINED"
     multiple
 >
     <mat-button-toggle
@@ -18,7 +18,7 @@
     <mat-button-toggle
         class="disarm"
         value="DISARMED"
-        [checked]="armState == armTypes.DISARMED && systemAlert !== null"
+        [checked]="armState === armTypes.DISARMED && systemAlert !== null"
         [disabled]="isDisarmDisabled()"
         (change)="armChangedHandler($event, armTypes.DISARMED)"
         (click)="$event.stopPropagation()"

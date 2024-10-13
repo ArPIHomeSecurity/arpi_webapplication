@@ -3,7 +3,7 @@
     (opened)="onToggle(true)"
     (closed)="onToggle(false)"
     [expanded]="expanded"
-    [disabled]="sensors.length == 0"
+    [disabled]="sensors.length === 0"
   >
     
     <mat-expansion-panel-header [ngClass]="{'alert': hasAlertingSensor() && !expanded}">
@@ -12,7 +12,7 @@
       </mat-panel-title>
       
       <mat-panel-description>
-        <div *ngIf="sensors.length == 0" class="empty" i18n="@@area no sensors">No sensors</div>
+        <div *ngIf="sensors.length === 0" class="empty" i18n="@@area no sensors">No sensors</div>
           <component-controller
             *ngIf="sensors.length > 0"
             [armState]="area.armState"
@@ -32,7 +32,7 @@
 </mat-accordion>
 
 <ng-template #snackbarTemplate>
-  <span *ngIf="action=='armed away'" i18n="@@area armed away">Area armed away</span>
-  <span *ngIf="action=='armed stay'" i18n="@@area armed stay">Area armed stay</span>
-  <span *ngIf="action=='disarmed'" i18n="@@area disarmed">Area disarmed</span>
+  <span *ngIf="action==='armed away'" i18n="@@area armed away">Area armed away</span>
+  <span *ngIf="action==='armed stay'" i18n="@@area armed stay">Area armed stay</span>
+  <span *ngIf="action==='disarmed'" i18n="@@area disarmed">Area disarmed</span>
 </ng-template>
