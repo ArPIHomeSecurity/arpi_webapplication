@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { Location } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -113,7 +112,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     }
 
     this.userForm = this.fb.group({
-      name: user.name,
+      name: new FormControl(user.name, [Validators.required, Validators.maxLength(32)]),
       role: user.role,
       hasRegistrationCode: user.hasRegistrationCode,
       accessCode,

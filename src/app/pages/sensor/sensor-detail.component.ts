@@ -198,7 +198,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
       monitorThreshold: new FormControl(sensor.monitorThreshold, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(/^\d+$/)]),
-      name: new FormControl(sensor.name, Validators.required),
+      name: new FormControl(sensor.name, [Validators.required, Validators.maxLength(16)]),
       description: new FormControl(sensor.description),
       zoneForm: this.zoneForm,
       areaForm: this.areaForm,
