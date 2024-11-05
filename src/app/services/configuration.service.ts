@@ -19,4 +19,6 @@ export interface ConfigurationService {
   doTestCall(): Observable<any>;
 
   testSyren(duration?: number): Observable<any>;
+
+  getPublicAccess(): Observable<boolean>;
 }
