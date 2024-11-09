@@ -25,3 +25,24 @@
   overflow: hidden;
   word-wrap: break-word;
 }
+
+.status {
+  margin: 10px 5px;
+  
+  .link-icon {
+    vertical-align: middle;
+    margin: 3px;
+  }
+  
+  .icon-accessible {
+    color: green;
+  }
+  
+  .icon-inaccessible {
+    color: red;
+  }
+
+  mat-spinner {
+    float: left;
+  }
+}

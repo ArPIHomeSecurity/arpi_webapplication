@@ -12,31 +12,31 @@
 @import 'app/pages/output/output-list.component.scss';
 
 
-$argus-light-theme: mat.define-light-theme((
+$argus-light-theme: mat.m2-define-light-theme((
   color: (
-    primary: mat.define-palette(mat.$indigo-palette, 500, 100, 800),
-    accent: mat.define-palette(mat.$orange-palette, A400, A100, A700),
-    warn: mat.define-palette(mat.$red-palette),
+    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 100, 800),
+    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+    warn: mat.m2-define-palette(mat.$m2-red-palette),
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.m2-define-typography-config(),
   density: 0,
 ));
 
-$argus-dark-theme: mat.define-dark-theme((
+$argus-dark-theme: mat.m2-define-dark-theme((
   color: (
-    primary: mat.define-palette(mat.$indigo-palette, 300),
-    accent: mat.define-palette(mat.$orange-palette, A400, A100, A700),
-    warn: mat.define-palette(mat.$red-palette, 400),
+    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 300),
+    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+    warn: mat.m2-define-palette(mat.$m2-red-palette, 400),
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.m2-define-typography-config(),
   density: 0,
 ));
 
 
 .argus-light-theme {
-  $argus-ok: mat.define-palette(mat.$green-palette);
-  $argus-alert: mat.define-palette(mat.$red-palette);
-  $argus-warn: mat.define-palette(mat.$orange-palette);
+  $argus-ok: mat.m2-define-palette(mat.$m2-green-palette);
+  $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
+  $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
   @include mat.all-component-themes($argus-light-theme);
   @include app-theme($argus-light-theme, map-get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
@@ -50,14 +50,14 @@ $argus-dark-theme: mat.define-dark-theme((
   @include output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   
   button.drag-handle.cdk-focused, button.drag-handle:hover {
-    color: mat.get-color-from-palette(map-get($argus-light-theme, accent));
+    color: mat.m2-get-color-from-palette(map-get($argus-light-theme, accent));
   }
 }
 
 .argus-dark-theme {
-  $argus-ok: mat.define-palette(mat.$green-palette);
-  $argus-alert: mat.define-palette(mat.$red-palette);
-  $argus-warn: mat.define-palette(mat.$orange-palette);
+  $argus-ok: mat.m2-define-palette(mat.$m2-green-palette);
+  $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
+  $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
   @include mat.all-component-themes($argus-dark-theme);
   @include mat.toolbar-color($argus-light-theme);
@@ -72,7 +72,7 @@ $argus-dark-theme: mat.define-dark-theme((
   @include output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   
   button.drag-handle.cdk-focused, button.drag-handle:hover {
-    color: mat.get-color-from-palette(map-get($argus-dark-theme, accent));
+    color: mat.m2-get-color-from-palette(map-get($argus-dark-theme, accent));
   }
 }
 

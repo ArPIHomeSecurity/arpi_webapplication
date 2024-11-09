@@ -50,4 +50,8 @@ export class ConfigurationService implements ConfigurationService {
       null;
     return this.http.get('/api/config/test_syren', { params });
   }
+
+  getPublicAccess() {
+    return this.http.get<boolean>('/api/config/public_access');
+  }
 }

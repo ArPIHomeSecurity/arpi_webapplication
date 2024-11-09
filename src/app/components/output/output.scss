@@ -1,6 +1,6 @@
 @mixin output-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .output-button.active {
-    background-color: mat.get-color-from-palette($argus-ok);
+    background-color: mat.m2-get-color-from-palette($argus-ok);
   }
 }
 

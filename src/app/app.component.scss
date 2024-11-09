@@ -94,12 +94,22 @@
 
   .footer {
     color: white;
-    background-color: mat.get-color-from-palette($argus-toolbar-primary);
+    background-color: mat.m2-get-color-from-palette($argus-toolbar-primary);
   }
 
-  .version {
-    font-size: 10px;
-    margin: 0px 15px;
+  .versions {
+    .version {
+      b {
+        display: table-cell;
+        text-align: right;
+      }
+
+      display: table-row;
+      font-size: 10px;
+      margin: 0px 15px;
+    }
+
+    display: table;
   }
 
   .mat-mdc-card.message {
@@ -112,7 +122,7 @@
   }
 
   .mat-mdc-list-item.active {
-    background-color: mat.get-color-from-palette($argus-accent);
+    background-color: mat.m2-get-color-from-palette($argus-accent);
   }
 
   .menu .mat-expansion-panel-header {

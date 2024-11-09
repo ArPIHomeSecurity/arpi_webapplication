@@ -23,7 +23,7 @@
   }
 
   mat-expansion-panel.alert {
-    background-color: mat.get-color-from-palette($argus-alert);
+    background-color: mat.m2-get-color-from-palette($argus-alert);
 
     .mat-expansion-indicator::after {
       color: #ffffff;

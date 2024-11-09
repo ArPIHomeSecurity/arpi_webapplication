@@ -1,54 +1,53 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SystemStateComponent } from './components/system-state/system-state.component';
+import { AUTHENTICATION_SERVICE } from './tokens';
 import { environment } from '@environments/environment.demo';
+import { ThemeService } from './services';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        HttpClientModule,
-        RouterTestingModule,
+      declarations: [
+        AppComponent,
+        SystemStateComponent
+      ],
+      imports: [BrowserAnimationsModule,
         MatIconModule,
         MatListModule,
+        MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
-        MatToolbarModule
-      ],
+        MatToolbarModule],
       providers: [
-        {provide: 'AlertService', useClass: environment.alertService},
-        {provide: 'AuthenticationService', useClass: environment.authenticationService},
-        {provide: 'ConfigurationService', useClass: environment.configurationService},
-        {provide: 'EventService', useClass: environment.eventService},
-        {provide: 'KeypadService', useClass: environment.keypadService},
-        {provide: 'LoaderService', useClass: environment.loaderService},
-        {provide: 'MonitoringService', useClass: environment.monitoringService},
-        {provide: 'SensorService', useClass: environment.sensorService},
-        {provide: 'UserService', useClass: environment.userService},
-        {provide: 'ZoneService', useClass: environment.zoneService},
-      ],
-      declarations: [
-        AppComponent,
-        SystemStateComponent,
-
-        MatSidenav
-      ],
+        { provide: 'AlertService', useClass: environment.alertService },
+        { provide: 'ArmService', useClass: environment.armService },
+        { provide: 'AreaService', useClass: environment.areaService },
+        { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
+        { provide: 'ConfigurationService', useClass: environment.configurationService },
+        { provide: 'EventService', useClass: environment.eventService },
+        { provide: 'KeypadService', useClass: environment.keypadService },
+        { provide: 'LoaderService', useClass: environment.loaderService },
+        { provide: 'MonitoringService', useClass: environment.monitoringService },
+        { provide: 'SensorService', useClass: environment.sensorService },
+        { provide: 'ThemeService', useClass: ThemeService },
+        { provide: 'UserService', useClass: environment.userService },
+        { provide: 'ZoneService', useClass: environment.zoneService },
+        provideHttpClient(withInterceptorsFromDi()),
+      ]
     }).compileComponents();
   }));
 

@@ -119,7 +119,7 @@
 
                   <li *ngIf="event.disarm?.userId" i18n="@@events disarmed by">Disarmed by {{ getUsername(event.disarm?.userId) }}</li>
                   <li *ngIf="event.disarm?.keypadId" i18n="@@events disarmed keypad">Disarmed with keypad</li>
-                  <li *ngIf="!event.disarm?.userId && !event.disarm?.keypadId && event.disarm?.time == '2000-01-01 01:00:00'"
+                  <li *ngIf="!event.disarm?.userId && !event.disarm?.keypadId && event.disarm?.time === '2000-01-01 01:00:00'"
                     [ngClass]="{'warn': event.disarm?.time == null}" i18n="@@events disarmed system">
                     Disarmed by system
                   </li>

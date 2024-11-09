@@ -25,12 +25,18 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist-development",
+            "allowedCommonJsDependencies": [
+              "moment"
+            ],
+            "outputPath": {
+              "base": "dist-development"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets"
@@ -39,12 +45,11 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -54,14 +59,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputPath": "dist-production",
+              "outputPath": {
+                "base": "dist-production"
+              },
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -85,7 +90,9 @@
                 "input": "src/index.demo.html",
                 "output": "index.html"
               },
-              "outputPath": "dist-demo-dev"
+              "outputPath": {
+                "base": "dist-demo-dev"
+              }
             },
             "demo": {
               "fileReplacements": [
@@ -102,14 +109,14 @@
                 "src/assets",
                 "src/404.html"
               ],
-              "outputPath": "dist-demo",
+              "outputPath": {
+                "base": "dist-demo"
+              },
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -230,6 +237,7 @@
   },
   "cli": {
     "analytics": "0de31eea-8e59-49c3-94dc-9475fa533ca5",
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

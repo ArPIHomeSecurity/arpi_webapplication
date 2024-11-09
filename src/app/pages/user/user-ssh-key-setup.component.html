@@ -11,7 +11,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value == 'custom'">
+    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'">
       <label i18n="@@user ssh key type">SSH key type</label>
       <mat-select formControlName="keyType">
         <mat-option *ngFor="let keyType of keyTypes" [value]="keyType.value" required>
@@ -20,12 +20,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value == 'custom'">
+    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'">
       <label i18n="@@user ssh key passphrase">SSH key passphrase</label>
       <input matInput formControlName="passphrase" type="text" placeholder="Passphrase">
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value == 'generate'">
+    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'generate'">
       <label i18n="@@user ssh key public key">SSh public key</label>
       <input matInput formControlName="publicKey" type="text" placeholder="Public key">
     </mat-form-field>
@@ -40,14 +40,14 @@
 <div mat-dialog-actions>
   <button mat-raised-button color="primary"
     [disabled]="!setupKeyForm.valid || loading"
-    [hidden]="setupKeyForm.controls.setupMethod.value == 'custom' || privateKey != null"
+    [hidden]="setupKeyForm.controls.setupMethod.value === 'custom' || privateKey != null"
     (click)="generateKey()"
     tabindex="2"
     i18n="@@user generate ssh key">Generate SSH key</button>
     
   <button mat-raised-button color="primary"
     [disabled]="!setupKeyForm.valid || privateKey || loading"
-    [hidden]="setupKeyForm.controls.setupMethod.value == 'generate' || privateKey != null"
+    [hidden]="setupKeyForm.controls.setupMethod.value === 'generate' || privateKey != null"
     (click)="setPublicKey()"
     tabindex="2"
     i18n="@@user setup ssh key">Setup SSH key</button>

@@ -5,7 +5,7 @@
         <div class="column">
           <mat-form-field>
             <mat-label i18n="@@name">Name</mat-label>
-            <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
+            <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required maxlength="32">
           </mat-form-field>
 
           <mat-form-field>
@@ -92,8 +92,8 @@
 
 
 <ng-template #snackbarTemplate>
-  <span *ngIf="action=='create'" i18n="@@failed create">Failed to create!</span>
-  <span *ngIf="action=='update'" i18n="@@failed update">Failed to update!</span>
-  <span *ngIf="action=='delete'" i18n="@@failed delete">Failed to delete!</span>
-  <span *ngIf="action=='cant delete'" i18n="cant delete">Can't delete, system is not ready!</span>
+  <span *ngIf="action==='create'" i18n="@@failed create">Failed to create!</span>
+  <span *ngIf="action==='update'" i18n="@@failed update">Failed to update!</span>
+  <span *ngIf="action==='delete'" i18n="@@failed delete">Failed to delete!</span>
+  <span *ngIf="action==='cant delete'" i18n="cant delete">Can't delete, system is not ready!</span>
 </ng-template>
