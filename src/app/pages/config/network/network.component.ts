@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, UntypedFormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
@@ -10,7 +10,6 @@ import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS, DEFAU
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { fork } from 'child_process';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -131,11 +130,12 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   updateDyndnsForm(dyndns: Option) {
     this.dyndnsForm = this.fb.group({
-      dyndnsUsername: getValue(dyndns.value, 'username'),
-      dyndnsPassword: getValue(dyndns.value, 'password'),
-      dyndnsHostname: getValue(dyndns.value, 'hostname'),
-      dyndnsProvider: getValue(dyndns.value, 'provider'),
-      dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host')
+      dyndnsUsername: [getValue(dyndns.value, 'username'), Validators.required],
+      dyndnsPassword: [getValue(dyndns.value, 'password'), Validators.required],
+      dyndnsHostname: [getValue(dyndns.value, 'hostname'), Validators.required],
+      dyndnsProvider: [getValue(dyndns.value, 'provider'), Validators.required],
+      dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host'),
+      certbotEmail: [getValue(dyndns.value, 'certbot_email'), Validators.required]
     });
   }
 
@@ -182,7 +182,8 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       username: formModel.dyndnsUsername,
       hostname: formModel.dyndnsHostname,
       provider: formModel.dyndnsProvider,
-      restrict_host: formModel.dyndnsRestrictHost
+      restrict_host: formModel.dyndnsRestrictHost,
+      certbot_email: formModel.certbotEmail
     };
 
     if (formModel.dyndnsPassword != DEFAULT_PASSWORD_VALUE) {
