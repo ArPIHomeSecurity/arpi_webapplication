@@ -65,4 +65,8 @@ export class ConfigurationService {
   testSyren(duration?: number) {
     
   }
+  
+  getPublicAccess(): Observable<boolean> {
+    return of(true)
+  }
 }

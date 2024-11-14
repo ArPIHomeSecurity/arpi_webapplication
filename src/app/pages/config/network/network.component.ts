@@ -10,7 +10,6 @@ import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS, DEFAU
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { fork } from 'child_process';
 
 
 const scheduleMicrotask = Promise.resolve(null);
