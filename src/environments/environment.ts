@@ -28,8 +28,7 @@ export const environment = {
   channelCount: 15,
   snackDuration: 5000,
 
-  apiPort: 8080,
-  monitoringPort: 8081,
+  isMultiInstallation: true,
 
   defaultLanguage: 'en',
   languages: 'hu it',

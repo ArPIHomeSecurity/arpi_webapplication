@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Option } from '@app/models';
+import { Installation, Option } from '@app/models';
 
 
 @Injectable()
@@ -53,5 +53,9 @@ export class ConfigurationService implements ConfigurationService {
 
   getPublicAccess() {
     return this.http.get<boolean>('/api/config/public_access');
+  }
+
+  getInstallation() : Observable<Installation> {
+    return this.http.get<Installation>('/api/config/installation');
   }
 }

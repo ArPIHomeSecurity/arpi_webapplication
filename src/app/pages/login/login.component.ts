@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
   constructor(
     @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
     private router: Router
-    ) {
+  ) {
 
-    }
+  }
 
   ngOnInit() {
     if (this.authenticationService.isLoggedIn()) {

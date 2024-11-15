@@ -15,122 +15,129 @@ import { UserListComponent, UserDetailComponent } from './pages/user';
 import { EventsComponent } from './pages/events/events.component';
 import { AreaDetailComponent, AreaListComponent } from './pages/area';
 import { OutputDetailComponent, OutputListComponent } from './pages/output';
+import { SetupComponent } from './pages/setup/setup.component';
+import { setupGuard } from './guards/setup.guard';
 
 const appRoutes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
   {
     pathMatch: 'full',
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
+  },
+  {
+    path: 'setup',
+    component: SetupComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [setupGuard]
   },
   {
     path: 'events',
     component: EventsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'user/add',
     component: UserDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'user/:id',
     component: UserDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'sensors',
     component: SensorListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'sensor/add',
     component: SensorDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'sensor/:id',
     component: SensorDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'zones',
     component: ZoneListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'zone/add',
     component: ZoneDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'zone/:id',
     component: ZoneDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'areas',
     component: AreaListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'area/add',
     component: AreaDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'area/:id',
     component: AreaDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'config/keypad',
     component: KeypadComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'config/notifications',
     component: NotificationsComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'config/network',
     component: NetworkComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'config/clock',
     component: ClockComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'config/syren',
     component: SyrenComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'outputs',
     component: OutputListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'output/add',
     component: OutputDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'output/:id',
     component: OutputDetailComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

@@ -1,0 +1,101 @@
+<div class="container">
+  <div *ngIf="installations">
+    <form [formGroup]="setupForm">
+
+      <mat-card class="conteiner-item user-form">
+        <mat-card-header *ngIf="!isMultiInstallation">
+          <mat-card-title>Setup</mat-card-title>
+        </mat-card-header>
+
+        <mat-divider></mat-divider>
+
+        <div *ngFor="let installationForm of installationForms.controls; let i = index">
+
+          <mat-card-header *ngIf="isMultiInstallation">
+            <mat-card-title>Installation: {{installationForm.get('name').value}}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <form [formGroup]="installationForm">
+
+              <input type="hidden" name="id" formControlName="id">
+
+              <input *ngIf="!isMultiInstallation" type="hidden" name="name" formControlName="name">
+
+              <div class="row" *ngIf="isMultiInstallation">
+                <mat-form-field>
+                  <mat-label>Name</mat-label>
+                  <input matInput type="text" name="name" formControlName="name">
+                </mat-form-field>
+
+                <button *ngIf="installationForms.controls.length > 1" mat-icon-button color="warn"
+                  (click)="deleteInstallation(i)"><mat-icon>delete</mat-icon>
+                </button>
+
+                <!--button *ngIf="installationForms.controls.length > 1" mat-icon-button color="warn"
+                  (click)="activateInstallation(i)" [disabled]="setupForm.dirty || setupForm.invalid">
+                  <mat-icon *ngIf="isInstallationActive(i)" class="material-icons-outlined active">check_circle</mat-icon>
+                  <mat-icon *ngIf="!isInstallationActive(i)" class="material-icons-outlined">circle</mat-icon>
+                </button-->
+              </div>
+
+              
+              <div class="row">
+                <mat-form-field class="scheme">
+                  <mat-label>Scheme</mat-label>
+                  <mat-select name="scheme" formControlName="scheme" (selectionChange)="onChangeScheme($event, i)">
+                    <mat-option value="http">http</mat-option>
+                    <mat-option value="https">https</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Primary Domain</mat-label>
+                  <input matInput type="text" name="primaryDomain" formControlName="primaryDomain">
+                </mat-form-field>
+
+                <mat-form-field class="port">
+                  <mat-label>Port</mat-label>
+                  <input matInput type="number" name="primaryPort" formControlName="primaryPort">
+                </mat-form-field>
+              </div>
+
+              <div class="row">
+                <mat-form-field class="scheme">
+                  <mat-label>Scheme</mat-label>
+                  <mat-select name="scheme" formControlName="scheme" (selectionChange)="onChangeScheme($event, i)">
+                    <mat-option value="http">http</mat-option>
+                    <mat-option value="https">https</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Secondary Domain:</mat-label>
+                  <input matInput type="text" name="secondaryDomain" formControlName="secondaryDomain">
+                </mat-form-field>
+
+                <mat-form-field class="port">
+                  <mat-label>Port</mat-label>
+                  <input matInput type="number" name="secondaryPort" formControlName="secondaryPort">
+                </mat-form-field>
+              </div>
+            </form>
+          </mat-card-content>
+
+          <mat-divider></mat-divider>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions align="end">
+          <button mat-icon-button color="primary" (click)="addInstallation()"><mat-icon>add</mat-icon></button>
+          <button mat-icon-button color="primary"
+            [disabled]="setupForm.invalid || (monitoringState && monitoringState != monitoringStates.READY)"
+            (click)="onSave()"><mat-icon>save</mat-icon></button>
+          <!--a mat-button color="primary" href="/login"><mat-icon>login</mat-icon></a-->
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+  </div>
+</div>

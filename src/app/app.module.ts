@@ -21,6 +21,7 @@ import { KeypadComponent } from './pages/config/keypad';
 import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './pages/sensor';
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './pages/zone';
 import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './pages/area';
+import { SetupComponent } from './pages/setup/setup.component';
 import {
   UserListComponent,
   UserDetailComponent,
@@ -81,6 +82,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   declarations: [
     AppComponent,
     LoginComponent,
+    SetupComponent,
     HomeComponent,
     ControllerComponent,
 

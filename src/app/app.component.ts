@@ -32,6 +32,9 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
+  installations: {name: string, id: string}[] = [];
+  selectedInstallationId: string;
+
   locales = [
     {name: 'Magyar', id: 'hu'},
     {name: 'English', id: 'en'},
@@ -129,6 +132,13 @@ export class AppComponent implements OnInit {
       .subscribe(isRegistered => {
         this.isDeviceRegistered = isRegistered;
       });
+
+    this.installations = JSON.parse(localStorage.getItem('installations')).map(i => ({name: i.name, id: i.id}));
+    this.selectedInstallationId = localStorage.getItem('selectedInstallationId');
+  }
+
+  isMultiInstallation() {
+    return environment.isMultiInstallation;
   }
 
   isLoggedIn() {
@@ -146,6 +156,23 @@ export class AppComponent implements OnInit {
 
   isAdminUser() {
     return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
+  }
+
+  getInstallationName() {
+    if (this.selectedInstallationId) {
+      const installation = this.installations.find(i => i.id === this.selectedInstallationId);
+      if (installation) {
+        return installation.name;
+      }
+    }
+
+    return '';
+  }
+
+  onInstallationChange(event) {
+    this.selectedInstallationId = event.value;
+    localStorage.setItem('selectedInstallationId', event.value);
+    window.location.reload();
   }
 
   onLocaleSelected(event) {
@@ -207,7 +234,7 @@ export class AppComponent implements OnInit {
     // remove language from path
     var currentLocale = localStorage.getItem('localeId');
     if (currentLocale == environment.defaultLanguage) {
-      currentLocale = '/';
+      currentLocale = '/en/';
     }
     else {
       currentLocale = '/' + currentLocale + '/';
@@ -241,15 +268,25 @@ export class AppComponent implements OnInit {
       'user': 'en/latest/end_users/users/#edit-user'
     }
 
+    if (!(pathWithoutLanguage in urlMap)) {
+      console.error("No mapping found for: "+pathWithoutLanguage);
+      pathWithoutLanguage = '';
+    }
+
     console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])
     // check if documentation path exists
     const http = new XMLHttpRequest();
     const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
     http.open('HEAD', url, false);
-    http.send();
-    if (http.status === 404) {
-      // fallback to main page
-      pathWithoutLanguage = '';
+
+    try {
+      http.send();
+    }
+    catch (error) {
+      if (http.status === 404) {
+        // fallback to main page
+        pathWithoutLanguage = '';
+      }
     }
 
     // TODO:

@@ -6,8 +6,14 @@
     <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
+
     <button mat-flat-button *ngIf="isLoggedIn()" routerLink="/" (click)="sidenav.close()" class="logo-button">
-      <img src="assets/images/argus-eye-30.png"><span>ArPI</span>
+      <img src="assets/images/argus-eye-30.png">
+      <span class="installation">{{getInstallationName()}}</span>
+    </button>
+    <button mat-flat-button *ngIf="!isLoggedIn()" class="logo-button">
+      <img src="assets/images/argus-eye-30.png">
+      <span class="installation">{{getInstallationName()}}</span>
     </button>
 
     <span class="spacer"></span>
@@ -32,12 +38,24 @@
   <mat-sidenav-container class="all-wrap" (backdropClick)="sidenav.close()" autosize>
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
-      <div class="logo">
-        <img src="assets/images/argus-eye-64.png">
-      </div>
-
       <mat-nav-list>
-        <mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item *ngIf="isMultiInstallation()">
+          <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
+          <mat-select [value]="selectedInstallationId" (selectionChange)="onInstallationChange($event)">
+            <mat-option *ngFor="let installation of installations" [value]="installation.id">{{ installation.name }}</mat-option>
+          </mat-select>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="!isMultiInstallation()">
+          <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
+          <div matListItemTitle>{{ getInstallationName() }}</div>
+        </mat-list-item>
+
+
+        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isLoggedIn()">
+          <mat-icon matListItemIcon>login</mat-icon><div matListItemTitle i18n="@@home menu link">Login</div>
+        </mat-list-item>
+        <mat-list-item routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>home</mat-icon><div matListItemTitle i18n="@@home menu link">Control</div>
         </mat-list-item>
         <mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
@@ -97,10 +115,18 @@
           <mat-icon matListItemIcon>invert_colors</mat-icon>
           <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme" i18n="@@dark theme">Dark theme</mat-slide-toggle>
         </mat-list-item>
+
         <mat-list-item *ngIf="!isLoggedIn() && isDeviceRegistered" (click)="unregister()">
           <mat-icon matListItemIcon>disabled_by_default</mat-icon>
           <div mat-line i18n="@@unregister menu link">Unregister device</div>
         </mat-list-item>
+        <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isMultiInstallation()">
+          <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@installations menu link">Installations</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isMultiInstallation()">
+          <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@setup menu link">Setup</span>
+        </mat-list-item>
+
         <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>exit_to_app</mat-icon>
           <div mat-line i18n="@@logout menu link">Logout</div>
