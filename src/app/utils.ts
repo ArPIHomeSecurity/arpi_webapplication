@@ -50,7 +50,7 @@ export function getValue(value: any, attribute: string, defaultValue: any = '') 
 
 export const checkUrl = async (url: string): Promise<boolean> => {
   try {
-    const response = await fetch(url, { method: 'HEAD' });
+    const response = await fetch(url, { method: 'OPTIONS' });
     if (!response.ok) {
       console.error('No connection to the security system: ', url);
       return false;
