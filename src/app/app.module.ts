@@ -2,7 +2,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -46,6 +46,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { routing } from './app.routing';
 import { ThemeService } from './services/theme.service';
 
+import { configureBackend } from './utils';
 import { environment } from '@environments/environment';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -191,7 +192,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       useClass: AppHttpInterceptor,
       multi: true
     },
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: () => configureBackend,
+    }
   ]
 })
 export class AppModule { }

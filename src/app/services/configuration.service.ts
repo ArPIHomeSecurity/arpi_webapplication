@@ -24,4 +24,6 @@ export interface ConfigurationService {
   getPublicAccess(): Observable<boolean>;
 
   getInstallation(): Observable<Installation>;
+
+  getInstallationId(): Observable<string>;
 }

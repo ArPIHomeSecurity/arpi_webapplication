@@ -25,7 +25,7 @@ export class AuthenticationService implements AuthenticationService {
 
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
     return this.http.post(
         '/api/user/authenticate',
         JSON.stringify({device_token: localStorage.getItem(`${prefix}:deviceToken`), access_code: accessCode}),
@@ -55,7 +55,7 @@ export class AuthenticationService implements AuthenticationService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
     localStorage.removeItem(`${prefix}:userToken`);
     // clear returnUrl to start from home
     localStorage.removeItem('returnUrl');
@@ -109,26 +109,34 @@ export class AuthenticationService implements AuthenticationService {
     }
   }
 
-  getInstallationPrefix(): string {
-    const installationId = localStorage.getItem('selectedInstallationId');
-    if (installationId) {
-      return installationId;
+  getInstallationId(): string {
+    const installationId = parseInt(localStorage.getItem('selectedInstallationId'));
+    if (installationId === null) {
+      return;
     }
-
-    if (!environment.isMultiInstallation) {
-      return 'default';
+    const installations = JSON.parse(localStorage.getItem('installations'));
+    if (!installations) {
+      return;
     }
-
-    return '';
+    const installation = installations.find(installation => installation.id === installationId);
+    if (installation) {
+      return installation.installation_id;
+    }
   }
 
   getUserToken(): string {
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
+    if (!prefix) {
+      return;
+    }
     return localStorage.getItem(`${prefix}:userToken`);
   }
 
   updateUserToken(token: string) {
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
+    if (!prefix) {
+      return;
+    }
     localStorage.setItem(`${prefix}:userToken`, token);
     try {
       jwtDecode(this.getUserToken());
@@ -142,13 +150,13 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   getDeviceToken() {
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
     return localStorage.getItem(`${prefix}:deviceToken`);
   }
 
   registerDevice(registrationCode: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
     return this.http.post('/api/user/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
@@ -164,7 +172,7 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   unRegisterDevice() {
-    const prefix = this.getInstallationPrefix();
+    const prefix = this.getInstallationId();
     localStorage.removeItem(`${prefix}:deviceToken`);
     localStorage.removeItem(`${prefix}:userToken`);
     this.isDeviceRegisteredSubject.next(false);

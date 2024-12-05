@@ -5,7 +5,7 @@
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
       </trans-unit>
-      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
+      <trans-unit id="4930506384627295710" datatype="html">
         <source>Settings</source>
         <note priority="1" from="description">Settings menu title</note>
       </trans-unit>
@@ -225,18 +225,18 @@
       <trans-unit id="keypad type" datatype="html">
         <source>Keypad type</source>
       </trans-unit>
-      <trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
+      <trans-unit id="6414252246095738391" datatype="html">
         <source>Register device</source>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
       <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
       </trans-unit>
-      <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
+      <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
         <note priority="1" from="description">Register button</note>
       </trans-unit>
-      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+      <trans-unit id="2454050363478003966" datatype="html">
         <source>Login</source>
         <note priority="1" from="description">Login title</note>
       </trans-unit>
@@ -273,7 +273,7 @@
       <trans-unit id="sensor delete" datatype="html">
         <source>Delete sensor</source>
       </trans-unit>
-      <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
+      <trans-unit id="7604311539351739136" datatype="html">
         <source>Do you want to delete the sensor?</source>
         <note priority="1" from="description">Sensor delete question</note>
       </trans-unit>
@@ -451,7 +451,7 @@
       <trans-unit id="zone delete" datatype="html">
         <source>Delete zone</source>
       </trans-unit>
-      <trans-unit id="f6e336ca8f297b4c0254fb8ee592eac55b0f98f7" datatype="html">
+      <trans-unit id="2052630284425845150" datatype="html">
         <source>Do you want to delete the zone?</source>
         <note priority="1" from="description">Zone delete question</note>
       </trans-unit>
@@ -647,7 +647,7 @@
       <trans-unit id="events armed by" datatype="html">
         <source>Armed by</source>
       </trans-unit>
-      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+      <trans-unit id="317610987479889132" datatype="html">
         <source>Do you want to delete the area?</source>
         <note priority="1" from="description">Area delete question</note>
       </trans-unit>
@@ -732,7 +732,7 @@
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
       </trans-unit>
-      <trans-unit id="2b792fe0548414a36424590188c0802220aa0f9b" datatype="html">
+      <trans-unit id="8816088142158195091" datatype="html">
         <source>Do you want to delete the output?</source>
         <note priority="1" from="description">Output delete question</note>
       </trans-unit>
@@ -1024,9 +1024,48 @@
       <trans-unit id="card registered" datatype="html">
         <source>Card registered!</source>
       </trans-unit>
-      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+      <trans-unit id="1312262728455859711" datatype="html">
         <source>Can&apos;t delete, system is not ready!</source>
         <note priority="1" from="description">cant delete</note>
+      </trans-unit>
+      <trans-unit id="installations menu link" datatype="html">
+        <source>Installations</source>
+      </trans-unit>
+      <trans-unit id="network certbot email" datatype="html">
+        <source>Certificate email</source>
+      </trans-unit>
+      <trans-unit id="setup backend" datatype="html">
+        <source>Setup backend</source>
+      </trans-unit>
+      <trans-unit id="setup check" datatype="html">
+        <source>Check API version and certificate</source>
+      </trans-unit>
+      <trans-unit id="setup device registered" datatype="html">
+        <source>Device registered</source>
+      </trans-unit>
+      <trans-unit id="setup installation" datatype="html">
+        <source>Installation: <x id="INTERPOLATION" equiv-text="{{installation.name}}"/></source>
+      </trans-unit>
+      <trans-unit id="setup menu link" datatype="html">
+        <source>Setup</source>
+      </trans-unit>
+      <trans-unit id="setup name" datatype="html">
+        <source>Name</source>
+      </trans-unit>
+      <trans-unit id="setup port" datatype="html">
+        <source>Port</source>
+      </trans-unit>
+      <trans-unit id="setup primary domain" datatype="html">
+        <source>Primary Domain</source>
+      </trans-unit>
+      <trans-unit id="setup secondary domain" datatype="html">
+        <source>Secondary Domain</source>
+      </trans-unit>
+      <trans-unit id="setup version" datatype="html">
+        <source>Version: <x id="INTERPOLATION" equiv-text="{{installation.version}}"/></source>
+      </trans-unit>
+      <trans-unit id="login menu link" datatype="html">
+        <source>Login</source>
       </trans-unit>
     </body>
   </file>

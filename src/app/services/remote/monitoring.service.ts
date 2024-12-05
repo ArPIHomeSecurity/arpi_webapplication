@@ -44,7 +44,7 @@ export class MonitoringService {
     return this.http.get('/api/monitoring/state')
     .pipe(
       map(( response: any ) => string2MonitoringState( response.state )),
-      catchError(() => of(MONITORING_STATE.NOT_READY))
+      catchError(() => of(MONITORING_STATE.UNDEFINED))
     );
   }
 

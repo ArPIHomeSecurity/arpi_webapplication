@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  Subject } from 'rxjs';
+import { fromEvent, Observable ,  Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
 
-import { environment } from '@environments/environment';
 
 @Injectable()
 export class EventService {
@@ -19,6 +18,11 @@ export class EventService {
     window.onbeforeunload= () => {
       this.unloading = true;
     };
+
+    fromEvent(window, 'storage')
+      .subscribe((event: StorageEvent) => {
+        this.connect();
+      })
   }
 
   isConnected() {
@@ -26,8 +30,19 @@ export class EventService {
   }
 
   connect() {
-    const prefix = localStorage.getItem('selectedInstallationId') || 'default';
-    const deviceToken = localStorage.getItem(`${prefix}:deviceToken`);
+    const id = parseInt(localStorage.getItem('selectedInstallationId'));
+    if (id === null) {
+      return;
+    }
+    const installations = JSON.parse(localStorage.getItem('installations'));
+    if (!installations) {
+      return;
+    }
+    const installation = installations.find(installation => installation.id === id);
+    if (!installation) {
+      return;
+    }
+    const deviceToken = localStorage.getItem(`${installation.installation_id}:deviceToken`);
     if (this.socket) {
       this.socket.disconnect();
     }

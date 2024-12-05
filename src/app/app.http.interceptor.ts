@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpErrorResponse, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, fromEvent } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { AuthenticationService, LoaderService } from './services';
@@ -26,6 +26,22 @@ export class AppHttpInterceptor implements HttpInterceptor {
         } else {
             this.backendUrl = '';
         }
+
+        fromEvent(window, 'storage')
+            .subscribe((event: StorageEvent) => 
+            {
+                if (event.key === 'backend.scheme' || event.key === 'backend.domain' || event.key === 'backend.port') {
+                    const backendScheme = localStorage.getItem('backend.scheme');
+                    const backendDomain = localStorage.getItem('backend.domain');
+                    const backendPort = localStorage.getItem('backend.port');
+
+                    if (backendScheme && backendDomain && backendPort) {
+                        this.backendUrl = backendScheme + '://' + backendDomain + ':' + backendPort;
+                    } else {
+                        this.backendUrl = '';
+                    }
+                }
+            })
     }
 
     intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any> > {

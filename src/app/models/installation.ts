@@ -1,10 +1,13 @@
 
 export class Installation {
-  id: string;
+  id: number;
+  installation_id: string | null;
+  version: string;
   name: string;
-  scheme: string;
-  primaryDomain: string;
-  primaryPort: number;
-  secondaryDomain: string;
-  secondaryPort: number;
+  scheme: string = 'https';
+  primaryDomain: string = '';
+  primaryPort: number = null;
+  secondaryDomain: string = '';
+  secondaryPort: number = null;
+  order: number = 0;
 }

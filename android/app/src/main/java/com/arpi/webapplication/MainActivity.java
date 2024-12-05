@@ -1,4 +1,4 @@
-package com.arpi.webapp;
+package com.arpi.webapplication;
 
 import com.getcapacitor.BridgeActivity;
 

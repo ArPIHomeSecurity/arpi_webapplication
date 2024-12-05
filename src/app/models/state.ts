@@ -1,6 +1,6 @@
 
 export enum MONITORING_STATE {
-  NOT_READY = 0,
+  UNDEFINED = 0,
   STARTUP = 1,
   READY = 2,
   UPDATING_CONFIG = 3,

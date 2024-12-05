@@ -19,16 +19,16 @@ export class ConfigurationBaseComponent {
 
   initialize() {
     this.monitoringService.getMonitoringState()
-      .subscribe(
-        monitoringState => {
-          this.monitoringState = monitoringState;
-          this.onStateChange();
-        },
-        _ => {
-          this.monitoringState = MONITORING_STATE.NOT_READY;
-          this.onStateChange();
-        }
-    );
+    .subscribe({
+      next: monitoringState => {
+        this.monitoringState = monitoringState;
+        this.onStateChange();
+      },
+      error: _ => {
+        this.monitoringState = MONITORING_STATE.UNDEFINED;
+        this.onStateChange();
+      }
+    });
 
     this.eventService.isConnected()
       .subscribe(connected => {
@@ -36,7 +36,7 @@ export class ConfigurationBaseComponent {
           this.loader.clearMessage();
         }
         else {
-          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.monitoringState = MONITORING_STATE.UNDEFINED;
           this.onStateChange();
         }
       });
@@ -62,7 +62,7 @@ export class ConfigurationBaseComponent {
   onStateChange() {
     if (this.monitoringState === MONITORING_STATE.ERROR) {
       this.loader.setMessage($localize`:@@message system error:The system is not working correctly, you can't make changes in the configuration!`);
-    } else if (this.monitoringState === MONITORING_STATE.NOT_READY) {
+    } else if (this.monitoringState === MONITORING_STATE.UNDEFINED) {
       this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
     } else if (!this.editableStates.includes(this.monitoringState)) {
       this.loader.setMessage($localize`:@@message system not ready:The system is not ready, you can't make changes in the configuration!`);

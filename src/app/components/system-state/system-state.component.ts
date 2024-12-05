@@ -29,12 +29,21 @@ export class SystemStateComponent implements OnInit {
     @Inject('EventService') private eventService: EventService,
     @Inject('MonitoringService') private monitoringService: MonitoringService,
     @Inject('SensorService') private sensorService: SensorService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.authService.isDeviceRegistered()
       .subscribe(isRegistered => {
         if (isRegistered) {
+          this.updateComponent();
+        }
+      });
+
+    this.eventService.isConnected()
+      .subscribe(connected => {
+        if (connected) {
           this.updateComponent();
         }
       });
@@ -53,7 +62,7 @@ export class SystemStateComponent implements OnInit {
     this.monitoringService.getMonitoringState()
       .subscribe({
         next: monitoringState => this.monitoringState = monitoringState,
-        error: () => this.monitoringState = MONITORING_STATE.NOT_READY
+        error: () => this.monitoringState = MONITORING_STATE.UNDEFINED
       });
     this.monitoringService.getPowerState()
       .subscribe(powerState => this.powerState = powerState);
@@ -80,7 +89,7 @@ export class SystemStateComponent implements OnInit {
     this.eventService.listen('disconnect')
       .subscribe(event => {
         this.armState = ARM_TYPE.UNDEFINED;
-        this.monitoringState = MONITORING_STATE.NOT_READY;
+        this.monitoringState = MONITORING_STATE.UNDEFINED;
       });
   }
 

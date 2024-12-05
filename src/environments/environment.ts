@@ -5,6 +5,7 @@
 
 import {
   AlertService,
+  AreaService,
   ArmService,
   AuthenticationService,
   CardService,
@@ -17,8 +18,8 @@ import {
   SensorService,
   UserService,
   ZoneService,
-  AreaService
 } from '@app/services/remote';
+
 
 export const environment = {
   production: false,
@@ -28,7 +29,8 @@ export const environment = {
   channelCount: 15,
   snackDuration: 5000,
 
-  isMultiInstallation: true,
+  isMultiInstallation: false,
+  showApiLink: false,
 
   defaultLanguage: 'en',
   languages: 'hu it',

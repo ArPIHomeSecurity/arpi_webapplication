@@ -58,4 +58,8 @@ export class ConfigurationService implements ConfigurationService {
   getInstallation() : Observable<Installation> {
     return this.http.get<Installation>('/api/config/installation');
   }
+
+  getInstallationId() : Observable<string> {
+    return this.http.get<string>('/api/config/installation_id');
+  }
 }

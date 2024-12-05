@@ -22,7 +22,7 @@ import {
 
 
 export const environment = {
-  production: false,
+  production: true,
   demo: true,
   delay: 100,
 

@@ -1,6 +1,6 @@
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=demo` then `environment.demo.ts` will be used instead.
+// `ng build --env=remote` then `environment.remote.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 import {
@@ -18,15 +18,15 @@ import {
   SensorService,
   UserService,
   ZoneService,
-} from '@app/services/demo';
+} from '@app/services/remote';
 
 
 export const environment = {
-  production: false,
-  demo: true,
-  delay: 100,
+  production: true,
+  demo: false,
+  delay: 0,
 
-  channelCount: 3,
+  channelCount: 15,
   snackDuration: 5000,
 
   isMultiInstallation: true,

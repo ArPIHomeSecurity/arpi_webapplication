@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef }
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
@@ -32,13 +32,13 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
-  installations: {name: string, id: string}[] = [];
-  selectedInstallationId: string;
+  installations: { name: string, id: number }[] = [];
+  selectedInstallationId: number;
 
   locales = [
-    {name: 'Magyar', id: 'hu'},
-    {name: 'English', id: 'en'},
-    {name: 'Italiano', id: 'it'}
+    { name: 'Magyar', id: 'hu' },
+    { name: 'English', id: 'en' },
+    { name: 'Italiano', id: 'it' }
   ];
   currentLocale: string;
   versions: {
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   };
   isSessionValid: boolean;
   isDeviceRegistered = false;
-  
+
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     public router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    
+
     private host: ElementRef,
     private zone: NgZone
   ) {
@@ -82,10 +82,10 @@ export class AppComponent implements OnInit {
       this.currentLocale = 'en';
     }
 
-    this.versions = {serverVersion: '', webapplicationVersion: VERSION};
+    this.versions = { serverVersion: '', webapplicationVersion: VERSION };
     this.isSessionValid = false;
   }
-  
+
   ngOnInit() {
     this.darkTheme = this.themeService.load();
 
@@ -133,8 +133,22 @@ export class AppComponent implements OnInit {
         this.isDeviceRegistered = isRegistered;
       });
 
-    this.installations = JSON.parse(localStorage.getItem('installations')).map(i => ({name: i.name, id: i.id}));
-    this.selectedInstallationId = localStorage.getItem('selectedInstallationId');
+    const installations = localStorage.getItem('installations');
+    if (installations) {
+      this.installations = JSON.parse(installations)
+        .sort((a, b) => a.order - b.order)
+        .map(i => ({ name: i.name, id: i.id }));
+    }
+    else {
+      this.installations = [];
+    }
+
+    this.selectedInstallationId = parseInt(localStorage.getItem('selectedInstallationId'));
+    if (isNaN(this.selectedInstallationId)) {
+      this.selectedInstallationId = null;
+    }
+
+    fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
   }
 
   isMultiInstallation() {
@@ -159,7 +173,7 @@ export class AppComponent implements OnInit {
   }
 
   getInstallationName() {
-    if (this.selectedInstallationId) {
+    if (this.selectedInstallationId !== null) {
       const installation = this.installations.find(i => i.id === this.selectedInstallationId);
       if (installation) {
         return installation.name;
@@ -169,10 +183,32 @@ export class AppComponent implements OnInit {
     return '';
   }
 
+  getBackend() {
+    const backendScheme = localStorage.getItem('backend.scheme');
+    const backendDomain = localStorage.getItem('backend.domain');
+    const backendPort = localStorage.getItem('backend.port');
+    return `${backendScheme}://${backendDomain}:${backendPort}`;
+  }
+
+  onConfigurationChanged(event: StorageEvent) {
+    if (event.key === 'installations') {
+      const installations = JSON.parse(event.newValue);
+      this.installations = installations
+        .sort((a, b) => a.order - b.order)
+        .map(i => ({ name: i.name, id: i.id }));
+    }
+    else if (event.key === 'selectedInstallationId') {
+      this.selectedInstallationId = parseInt(event.newValue);
+    }
+  }
+
   onInstallationChange(event) {
     this.selectedInstallationId = event.value;
     localStorage.setItem('selectedInstallationId', event.value);
-    window.location.reload();
+
+    // navigate to the default page and reload the page
+    localStorage.removeItem('returnUrl');
+    this.router.navigate(['/']).then(() => window.location.reload());
   }
 
   onLocaleSelected(event) {
@@ -199,9 +235,9 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
     } else if ($event.action === 'done') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+      this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
       this.logout();
     }
   }
@@ -211,7 +247,7 @@ export class AppComponent implements OnInit {
     if (!currentLocale) {
       currentLocale = 'en';
     }
-    return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
+    return this.humanizer.humanize((environment.userTokenExpiry / 3) * 1000, { language: currentLocale });
   }
 
   unregister() {
@@ -230,11 +266,11 @@ export class AppComponent implements OnInit {
   openHelp() {
     // get current path
     const currentPath = window.location.pathname;
-    
+
     // remove language from path
     var currentLocale = localStorage.getItem('localeId');
     if (currentLocale == environment.defaultLanguage) {
-      currentLocale = '/en/';
+      currentLocale = '/';
     }
     else {
       currentLocale = '/' + currentLocale + '/';
@@ -250,7 +286,7 @@ export class AppComponent implements OnInit {
       '': 'en/latest/end_users/',
       'login': 'en/latest/end_users/login/',
       'events': 'en/latest/end_users/events/',
-      
+
       'areas': 'en/latest/end_users/areas/',
       'area': 'en/latest/end_users/areas/#edit-area',
       'sensors': 'en/latest/end_users/sensors/',
@@ -263,17 +299,24 @@ export class AppComponent implements OnInit {
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/',
-      
+
       'users': 'en/latest/end_users/users/',
-      'user': 'en/latest/end_users/users/#edit-user'
+      'user': 'en/latest/end_users/users/#edit-user',
+    }
+
+    if (environment.isMultiInstallation) {
+      urlMap['setup'] = 'en/latest/end_users/installations/';
+    }
+    else {
+      urlMap['setup'] = 'en/latest/end_users/setup/';
     }
 
     if (!(pathWithoutLanguage in urlMap)) {
-      console.error("No mapping found for: "+pathWithoutLanguage);
+      console.error("No mapping found for: " + pathWithoutLanguage);
       pathWithoutLanguage = '';
     }
 
-    console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])
+    console.debug("Mapping: " + pathWithoutLanguage + " => " + urlMap[pathWithoutLanguage])
     // check if documentation path exists
     const http = new XMLHttpRequest();
     const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];

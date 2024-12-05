@@ -38,22 +38,23 @@
   <mat-sidenav-container class="all-wrap" (backdropClick)="sidenav.close()" autosize>
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
-      <mat-nav-list>
-        <mat-list-item *ngIf="isMultiInstallation()">
+      <mat-list role="list" *ngIf="installations.length > 0">
+        <mat-list-item *ngIf="isMultiInstallation() && selectedInstallationId != null">
           <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
           <mat-select [value]="selectedInstallationId" (selectionChange)="onInstallationChange($event)">
             <mat-option *ngFor="let installation of installations" [value]="installation.id">{{ installation.name }}</mat-option>
           </mat-select>
         </mat-list-item>
-
-        <mat-list-item *ngIf="!isMultiInstallation()">
+  
+        <mat-list-item *ngIf="!isMultiInstallation()" role="listitem">
           <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
           <div matListItemTitle>{{ getInstallationName() }}</div>
         </mat-list-item>
+      </mat-list>
 
-
+      <mat-nav-list>
         <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isLoggedIn()">
-          <mat-icon matListItemIcon>login</mat-icon><div matListItemTitle i18n="@@home menu link">Login</div>
+          <mat-icon matListItemIcon>login</mat-icon><div matListItemTitle i18n="@@login menu link">Login</div>
         </mat-list-item>
         <mat-list-item routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>home</mat-icon><div matListItemTitle i18n="@@home menu link">Control</div>

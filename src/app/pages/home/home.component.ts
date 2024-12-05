@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
         else {
           this.armState = ARM_TYPE.UNDEFINED;
-          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.monitoringState = MONITORING_STATE.UNDEFINED;
           this.onStateChanged();
         }
       });
@@ -177,7 +177,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onStateChanged();
         },
         _ => {
-          this.monitoringState = MONITORING_STATE.NOT_READY;
+          this.monitoringState = MONITORING_STATE.UNDEFINED;
           this.onStateChanged();
         }
       );
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onStateChanged() {
-    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY) {
+    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.UNDEFINED) {
       this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
     }
     else {
@@ -214,7 +214,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   isOutputDisabled(output: Output) {
     const disabledStates = [
-      MONITORING_STATE.NOT_READY,
+      MONITORING_STATE.UNDEFINED,
       MONITORING_STATE.STARTUP,
       MONITORING_STATE.UPDATING_CONFIG,
       MONITORING_STATE.INVALID_CONFIG,

@@ -18,15 +18,15 @@ import {
   SensorService,
   UserService,
   ZoneService,
-} from '@app/services/demo';
+} from '@app/services/remote';
 
 
 export const environment = {
   production: false,
-  demo: true,
-  delay: 100,
+  demo: false,
+  delay: 0,
 
-  channelCount: 3,
+  channelCount: 15,
   snackDuration: 5000,
 
   isMultiInstallation: true,

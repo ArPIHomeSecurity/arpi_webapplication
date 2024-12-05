@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'arpi_webapplication',
-  webDir: 'dist-development',
+  appId: 'com.arpi.webapplication',
+  appName: 'ArPI',
+  webDir: 'capacitor-app',
   server: {
     cleartext: true,
     androidScheme: 'http'

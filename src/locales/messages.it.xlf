@@ -4,9 +4,9 @@
     <body>
       <trans-unit id="home menu link" datatype="html">
         <source>Control</source>
-        <target>Controllo</target>
+        <target state="translated">Controllo</target>
       </trans-unit>
-      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
+      <trans-unit id="4930506384627295710" datatype="html">
         <source>Settings</source>
         <target>Impostazioni</target>
         <note priority="1" from="description">Settings menu title</note>
@@ -299,7 +299,7 @@
         <source>Keypad type</source>
         <target state="translated">Tipo di tastierino</target>
       </trans-unit>
-      <trans-unit id="7f5c11cc322f6b6375d4a665c5b77903db8cde7f" datatype="html">
+      <trans-unit id="6414252246095738391" datatype="html">
         <source>Register device</source>
         <target>Registra il dispositivo</target>
         <note priority="1" from="description">Register device</note>
@@ -308,12 +308,12 @@
         <source>Registration code</source>
         <target>Codice di registrazione</target>
       </trans-unit>
-      <trans-unit id="cfc2f436ec2beffb042e7511a73c89c372e86a6c" datatype="html">
+      <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
         <target>Registro</target>
         <note priority="1" from="description">Register button</note>
       </trans-unit>
-      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+      <trans-unit id="2454050363478003966" datatype="html">
         <source>Login</source>
         <target>Accesso</target>
         <note priority="1" from="description">Login title</note>
@@ -362,7 +362,7 @@
         <source>Delete sensor</source>
         <target>Cancellare il sensore</target>
       </trans-unit>
-      <trans-unit id="a045efb7c686848c5075e108114313d28aeb065d" datatype="html">
+      <trans-unit id="7604311539351739136" datatype="html">
         <source>Do you want to delete the sensor?</source>
         <target>Si vuole eliminare il sensore?</target>
         <note priority="1" from="description">Sensor delete question</note>
@@ -599,7 +599,7 @@
         <source>Delete zone</source>
         <target>Eliminare la zona</target>
       </trans-unit>
-      <trans-unit id="f6e336ca8f297b4c0254fb8ee592eac55b0f98f7" datatype="html">
+      <trans-unit id="2052630284425845150" datatype="html">
         <source>Do you want to delete the zone?</source>
         <target>Si desidera eliminare la zona?</target>
         <note priority="1" from="description">Zone delete question</note>
@@ -860,7 +860,7 @@
         <source>Armed by</source>
         <target>Armato da</target>
       </trans-unit>
-      <trans-unit id="65a0434200194de2f19391f359b6a9797677e7c1" datatype="html">
+      <trans-unit id="317610987479889132" datatype="html">
         <source>Do you want to delete the area?</source>
         <target>Si desidera eliminare l'area?</target>
         <note priority="1" from="description">Area delete question</note>
@@ -973,7 +973,7 @@
         <source>Visible</source>
         <target>Visibile</target>
       </trans-unit>
-      <trans-unit id="2b792fe0548414a36424590188c0802220aa0f9b" datatype="html">
+      <trans-unit id="8816088142158195091" datatype="html">
         <source>Do you want to delete the output?</source>
         <target>Si desidera eliminare l'output?</target>
         <note priority="1" from="description">Output delete question</note>
@@ -1362,10 +1362,62 @@
         <source>Failed to register!</source>
         <target state="translated">Registrazione fallita!</target>
       </trans-unit>
-      <trans-unit id="aca209913ce5c657a7f58ca6eb1f51f89a40d9f9" datatype="html">
+      <trans-unit id="1312262728455859711" datatype="html">
         <source>Can't delete, system is not ready!</source>
         <target state="translated">Non è possibile cancellare, il sistema non è pronto!</target>
         <note priority="1" from="description">cant delete</note>
+      </trans-unit>
+      <trans-unit id="installations menu link" datatype="html">
+        <source>Installations</source>
+        <target state="new">Installations</target>
+      </trans-unit>
+      <trans-unit id="setup menu link" datatype="html">
+        <source>Setup</source>
+        <target state="translated">Setup</target>
+      </trans-unit>
+      <trans-unit id="network certbot email" datatype="html">
+        <source>Certificate email</source>
+        <target state="translated">Email di certificazione</target>
+      </trans-unit>
+      <trans-unit id="setup backend" datatype="html">
+        <source>Setup backend</source>
+        <target state="new">Setup backend</target>
+      </trans-unit>
+      <trans-unit id="setup version" datatype="html">
+        <source>Version: <x id="INTERPOLATION" equiv-text="{{installation.version}}"/></source>
+        <target state="new">Version: <x id="INTERPOLATION" equiv-text="{{installation.version}}"/></target>
+      </trans-unit>
+      <trans-unit id="setup device registered" datatype="html">
+        <source>Device registered</source>
+        <target state="translated">Dispositivo registrato</target>
+      </trans-unit>
+      <trans-unit id="setup installation" datatype="html">
+        <source>Installation: <x id="INTERPOLATION" equiv-text="{{installation.name}}"/></source>
+        <target state="new">Installation: <x id="INTERPOLATION" equiv-text="{{installation.name}}"/></target>
+      </trans-unit>
+      <trans-unit id="setup name" datatype="html">
+        <source>Name</source>
+        <target state="translated">Nome</target>
+      </trans-unit>
+      <trans-unit id="setup primary domain" datatype="html">
+        <source>Primary Domain</source>
+        <target state="translated">Dominio primario</target>
+      </trans-unit>
+      <trans-unit id="setup check" datatype="html">
+        <source>Check API version and certificate</source>
+        <target state="translated">Controllare la versione e il certificato API</target>
+      </trans-unit>
+      <trans-unit id="setup port" datatype="html">
+        <source>Port</source>
+        <target state="translated">Port</target>
+      </trans-unit>
+      <trans-unit id="setup secondary domain" datatype="html">
+        <source>Secondary Domain</source>
+        <target state="translated">Dominio secondario</target>
+      </trans-unit>
+      <trans-unit id="login menu link" datatype="html">
+        <source>Login</source>
+        <target state="translated">Login</target>
       </trans-unit>
     </body>
   </file>

@@ -11,7 +11,7 @@ import { ARM_TYPE, MONITORING_STATE } from '@app/models';
 })
 export class ControllerComponent {
   @Input() armState:ARM_TYPE = ARM_TYPE.UNDEFINED;
-  @Input() monitoringState:MONITORING_STATE = MONITORING_STATE.NOT_READY;
+  @Input() monitoringState:MONITORING_STATE = MONITORING_STATE.UNDEFINED;
   @Input() systemAlert: boolean;
   @Input() sensorAlert: boolean;
   @Output() armChanged = new EventEmitter<ARM_TYPE>();

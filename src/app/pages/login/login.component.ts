@@ -71,28 +71,30 @@ export class LoginComponent implements OnInit {
       const re  = /-/gi;
       this.authenticationService.registerDevice(this.registerCode.value.replace(re, ''))
         .pipe(finalize(() => this.loading = false))
-        .subscribe(result => {
-          this.registerCode.setValue(null);
-          if (result) {
-            setTimeout (() => {
-              this.loginForm.reset();
-              this.accessCodeField.nativeElement.focus();
-            }, 0.5);
-          } else {
-            this.error = 'invalid registration code';
+        .subscribe({
+          next: result => {
+            this.registerCode.setValue(null);
+            if (result) {
+              setTimeout (() => {
+                this.loginForm.reset();
+                this.accessCodeField.nativeElement.focus();
+              }, 0.5);
+            } else {
+              this.error = 'invalid registration code';
+            }
+            this.loading = false;
+          },
+          error: error => {
+            console.log('Failed to register device', error);
+            if (error && 'error' in error && 'error' in error.error) {
+              this.error = error.error.error;
+            }
+            else {
+              this.error = 'no connection';
+            }
+            this.loading = false;
           }
-          this.loading = false;
-        },
-        error => {
-          if (error && 'error' in error && 'error' in error.error) {
-            this.error = error.error.error;
-          }
-          else {
-            this.error = 'no connection';
-          }
-          this.loading = false;
-        }
-      );
+        });
     } else {
       this.loading = false;
       this.error = 'invalid form';
@@ -106,27 +108,29 @@ export class LoginComponent implements OnInit {
     if (this.accessCode.value) {
       this.authenticationService.login(this.accessCode.value)
         .pipe(finalize(() => this.loading = false))
-        .subscribe(result => {
-          this.accessCode.setValue(null);
-          if (result) {
-            // after login navigate to returnUrl or home
-            const returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
-            this.router.navigate([returnUrl || '/']);
-          } else {
-            this.error = 'invalid access code';
+        .subscribe({
+          next: result => {
+            this.accessCode.setValue(null);
+            if (result) {
+              // after login navigate to returnUrl or home
+              const returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
+              this.router.navigate([returnUrl || '/']);
+            } else {
+              this.error = 'invalid access code';
+              this.loading = false;
+            }
+          },
+          error: error => {
+            console.log('Failed to login', error);
+            if (error && 'error' in error && 'error' in error.error) {
+              this.error = error.error.error;
+            }
+            else {
+              this.error = 'no connection';
+            }
             this.loading = false;
           }
-        },
-        error => {
-          if (error && 'error' in error && 'error' in error.error) {
-            this.error = error.error.error;
-          }
-          else {
-            this.error = 'no connection';
-          }
-          this.loading = false;
-        }
-      );
+        });
     } else {
       this.loading = false;
       this.error = 'invalid form';

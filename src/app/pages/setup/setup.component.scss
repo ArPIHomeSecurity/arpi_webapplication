@@ -1,3 +1,18 @@
+::ng-deep .mat-mdc-card-header-text {
+  width: 100%;
+  
+  .mat-mdc-card-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+}
+
+.mat-mdc-card-content {
+  padding-top: 10px;
+}
+
 .mat-mdc-form-field {
   width: 100%;
 }
@@ -11,5 +26,19 @@
 }
 
 .port {
-  width: 130px;
+  width: 160px;
+}
+
+.status {
+  .icon-accessible {
+    vertical-align: middle;
+    margin: 3px;
+    color: #4caf50;
+  }
+  
+  .icon-inaccessible {
+    vertical-align: middle;
+    margin: 3px;
+    color: #f44336;
+  }
 }
