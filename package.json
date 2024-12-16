@@ -15,8 +15,9 @@
     "serve-demo": "scripts/serve.sh dist-demo/browser",
     "serve-remote-dev": "scripts/serve.sh dist-remote-dev/browser",
     "serve-remote": "scripts/serve.sh dist-remote/browser",
-    "release-remote": "scripts/release-remote.sh",
-    "release-remote-dev": "scripts/release-remote.sh dev"
+    "serve-capacitor": "scripts/serve.sh dist-capacitor/browser",
+    "serve-capacitor-dev": "scripts/serve.sh dist-capacitor-dev/browser",
+    "release-remote": "scripts/release-remote.sh"
   },
   "private": true,
   "dependencies": {

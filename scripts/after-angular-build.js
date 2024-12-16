@@ -1,6 +1,38 @@
 // File needs to be CommonJs
 const fs = require("fs");
 
+function createIndexHtml(indexHtmlPath) {
+  console.log("Creating index.html file: ", indexHtmlPath);
+
+  const htmlContent = `
+  <script type="text/javascript">
+      // const currentLocale = navigator.language;
+      const currentLocale = window.localStorage.getItem("localeId");
+      console.log("INDEX: Current language: ", currentLocale)
+      if (currentLocale === "hu") {
+          location.pathname = "/hu/index.html";
+          console.log("Moving to: HU")
+      }
+      else if (currentLocale === "it") {
+          location.pathname = "/it/index.html";
+          console.log("Moving to: IT")
+      }
+      else{
+          location.pathname = "/en/index.html";
+          console.log("Moving to: EN")
+      }
+  </script>
+  `;
+
+  fs.writeFile(indexHtmlPath, htmlContent, (error) => {
+    if (error) {
+      throw new Error(`Error writing file: ${indexHtmlPath}`, { cause: error });
+    } else {
+      console.log("Successfully created file:", indexHtmlPath);
+    }
+  });
+}
+
 async function copyApplicationFiles(sourcePath, destinationPath) {
   console.log("Copying application files from ", sourcePath, " to ", destinationPath);
   
@@ -62,5 +94,7 @@ module.exports = async function (ctx) {
 
   await copyApplicationFiles(sourcePath, destinationPath);
 
-  await restructureApplication(destinationPath);
+  await createIndexHtml(`${destinationPath}/index.html`);
+
+  // await restructureApplication(destinationPath);
 };

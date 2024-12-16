@@ -73,10 +73,12 @@ export class AppHttpInterceptor implements HttpInterceptor {
                     if (error instanceof HttpErrorResponse) {
                         if (error.status === 400 || error.status === 403 || error.status === 500) {
                             // Bad request/unauthorized access/internal server error
+                            console.error('Error when calling backend service:', error);
                             return throwError(() => error);
                         } else if (error.status === 401) {
                             // Unauthorized => session expired
                             this.authService.logout();
+                            console.error('Session expired! Redirecting to login page...');
                             return of(undefined);
                         } else if (error.status === 0 && error.statusText === 'Unknown Error') {
                             // No connection to the REST API

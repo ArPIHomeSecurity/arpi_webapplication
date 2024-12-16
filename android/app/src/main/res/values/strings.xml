@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ArPI</string>
+    <string name="app_name">ArPI - Home Security</string>
     <string name="title_activity_main">ArPI</string>
     <string name="package_name">com.arpi.webapplication</string>
     <string name="custom_url_scheme">com.arpi.webapplication</string>
