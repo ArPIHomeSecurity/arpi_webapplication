@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -86,7 +87,10 @@ export class LoginComponent implements OnInit {
           },
           error: error => {
             console.log('Failed to register device', error);
-            if (error && 'error' in error && 'error' in error.error) {
+            if (error instanceof HttpErrorResponse && error.status === 0) {
+              this.error = 'no connection';
+            }
+            else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
             }
             else {
@@ -122,7 +126,10 @@ export class LoginComponent implements OnInit {
           },
           error: error => {
             console.log('Failed to login', error);
-            if (error && 'error' in error && 'error' in error.error) {
+            if (error instanceof HttpErrorResponse && error.status === 0) {
+              this.error = 'no connection';
+            }
+            else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
             }
             else {
