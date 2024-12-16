@@ -10,7 +10,7 @@
       >
 
       <mat-card-header *ngIf="!isMultiInstallation">
-          <mat-card-title i18n="@@setup backend">Setup backend</mat-card-title>
+        <mat-card-title i18n="@@setup backend">Setup backend</mat-card-title>
           <mat-card-subtitle *ngIf="installation.version != null" i18n="@@setup version">Version: {{installation.version}}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="installation.installation_id !== null" class="status">
             <span *ngIf="isRegistered(installation.installation_id) === true"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-accessible">check</mat-icon></span>
@@ -45,7 +45,7 @@
               <mat-label i18n="@@setup primary domain">Primary Domain</mat-label>
               <input matInput type="text" autocapitalize="off" name="primary-domain-{{installation.id}}" class="form-control" [(ngModel)]="installation.primaryDomain">
               <mat-hint *ngIf="showApiLink && getTestResult(i) !== null && getTestResult(i).primary === false">
-                <a href="https://{{installation.primaryDomain}}:{{installation.primaryPort}}/api/version" target="_blank"><span i18n="@@setup check">Check API version and certificate</span><mat-icon>open_in_new</mat-icon></a>
+                <a href="https://{{installation.primaryDomain}}:{{installation.primaryPort}}/api/version" target="_blank"><span i18n="@@setup check" class="no-wrap">Check API version and certificate</span><mat-icon>open_in_new</mat-icon></a>
               </mat-hint>
             </mat-form-field>
 
