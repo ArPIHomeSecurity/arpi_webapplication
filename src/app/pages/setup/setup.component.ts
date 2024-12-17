@@ -232,14 +232,14 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
 
   onDrop(event: CdkDragDrop<string[]>) {
     this.isDragging = false;
-    this.installations.forEach((installation, index) => {
-      installation.order = index;
-    });
-
+    
     // hack dnd
     const installations = this.installations.slice();
     this.installations = [];
     moveItemInArray(installations, event.previousIndex, event.currentIndex);
+    installations.forEach((installation, index) => {
+      installation.order = index;
+    });
     setTimeout(() => {
       this.installations = installations
       this.onSave();
