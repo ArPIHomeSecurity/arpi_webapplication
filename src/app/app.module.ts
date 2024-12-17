@@ -77,6 +77,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CapacitorService } from './services/capacitor.service';
 
 
 @NgModule({
@@ -172,6 +173,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DragDropModule
   ],
   providers: [
+    { provide: 'CapacitorService', useClass: CapacitorService },
     { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'AlertService', useClass: environment.alertService },
     { provide: 'AreaService', useClass: environment.areaService },
@@ -197,7 +199,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       provide: APP_INITIALIZER,
       multi: true,
       useFactory: () => configureBackend,
-    }
+    },
   ]
 })
 export class AppModule { }

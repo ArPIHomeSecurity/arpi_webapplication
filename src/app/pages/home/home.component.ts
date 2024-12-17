@@ -1,11 +1,14 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { App as CapacitorApp } from '@capacitor/app';
 
 import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area, Output, OutputTriggerType } from '@app/models';
 import { AlertService, AreaService, EventService, LoaderService, MonitoringService, OutputService, SensorService, ZoneService } from '@app/services';
 
 import { environment } from '@environments/environment';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+
+import { CapacitorService } from '@app/services/capacitor.service';
 
 
 @Component({
@@ -30,6 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   areas: Area[] = [];
   outputs: Output[] = [];
 
+  goBackSubscription: Subscription
+
   constructor(
     @Inject('AlertService') private alertService: AlertService,
     @Inject('AreaService') private areaService: AreaService,
@@ -39,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
+    @Inject('CapacitorService') private capacitorService: CapacitorService,
 
     private snackBar: MatSnackBar,
   ) {
@@ -46,6 +52,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(() => {
+      console.log('Pressed backButton - on home');
+      CapacitorApp.exitApp();
+    });
+
     this.loadStates();
 
     forkJoin({
@@ -152,16 +163,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // ARM STATE
     this.monitoringService.getArmState()
-      .subscribe(
-        armState => {
+      .subscribe({
+        next: armState => {
           this.armState = armState;
           this.onStateChanged();
         },
-        _ => {
+        error: _ => {
           this.armState = ARM_TYPE.UNDEFINED;
           this.onStateChanged();
         }
-      );
+      });
 
     // SENSORS ALERT STATE
     this.sensorService.getAlert()
@@ -171,19 +182,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // MONITORING STATE
     this.monitoringService.getMonitoringState()
-      .subscribe(
-        monitoringState => {
+      .subscribe({
+        next: monitoringState => {
           this.monitoringState = monitoringState;
           this.onStateChanged();
         },
-        _ => {
+        error: _ => {
           this.monitoringState = MONITORING_STATE.UNDEFINED;
           this.onStateChanged();
         }
-      );
+      });
   }
 
   ngOnDestroy() {
+    if (this.goBackSubscription) {
+      this.goBackSubscription.unsubscribe();
+    }
     this.loader.clearMessage();
   }
 

@@ -1,12 +1,15 @@
-import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { App as CapacitorApp } from '@capacitor/app';
 
 import { finalize } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CapacitorService } from '@app/services/capacitor.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -15,7 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: 'login.component.html'
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('registration_code_field') registrationCodeField: ElementRef;
   @ViewChild('access_code_field') accessCodeField: ElementRef;
 
@@ -28,14 +31,22 @@ export class LoginComponent implements OnInit {
   error = '';
   hide = true;
 
+  goBackSubscription: Subscription;
+
   constructor(
     @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
+    @Inject('CapacitorService') private capacitorService: CapacitorService,
     private router: Router
   ) {
 
   }
 
   ngOnInit() {
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(() => {
+      console.log('Pressed backButton - on login');
+      CapacitorApp.exitApp();
+    });
+
     if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(["/"]);
     }
@@ -53,6 +64,12 @@ export class LoginComponent implements OnInit {
       });
 
     this.updateForms();
+  }
+
+  ngOnDestroy() {
+    if (this.goBackSubscription) {
+      this.goBackSubscription.unsubscribe();
+    }
   }
 
   updateForms() {

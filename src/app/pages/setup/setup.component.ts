@@ -182,7 +182,7 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
         console.error('Error loading installation id', {
           message: error.message,
           stack: error.stack,
-          installationIdURL
+          installationIdURL: installationIdURL
         });
       });
   }
