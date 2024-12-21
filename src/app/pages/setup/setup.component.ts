@@ -207,6 +207,12 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
     return this.selectedInstallationId === this.installations[index].id;
   }
 
+  onTextChanged($event: Event) {
+    // trimming the input value
+    const target = $event.target as HTMLInputElement;
+    target.value = target.value.trim();
+  }
+
   onSave() {
     const installations = JSON.stringify(this.installations);
     localStorage.setItem('installations', installations);

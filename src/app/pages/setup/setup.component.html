@@ -36,14 +36,14 @@
           <div class="row">
             <mat-form-field>
               <mat-label i18n="@@setup name">Name</mat-label>
-              <input matInput type="text" name="name_{{installation.id}}" class="form-control" [(ngModel)]="installation.name" maxlength="16">
+              <input matInput type="text" name="name_{{installation.id}}" class="form-control" [(ngModel)]="installation.name" maxlength="16" (change)="onTextChanged($event)">
             </mat-form-field>
           </div>
           
           <div class="row">
             <mat-form-field>
               <mat-label i18n="@@setup primary domain">Primary Domain</mat-label>
-              <input matInput type="text" autocapitalize="off" name="primary-domain-{{installation.id}}" class="form-control" [(ngModel)]="installation.primaryDomain">
+              <input matInput type="text" autocapitalize="off" name="primary-domain-{{installation.id}}" class="form-control" [(ngModel)]="installation.primaryDomain" (change)="onTextChanged($event)">
               <mat-hint *ngIf="showApiLink && getTestResult(i) !== null && getTestResult(i).primary === false">
                 <a href="https://{{installation.primaryDomain}}:{{installation.primaryPort}}/api/version" target="_blank"><span i18n="@@setup check" class="no-wrap">Check API version and certificate</span><mat-icon>open_in_new</mat-icon></a>
               </mat-hint>
@@ -65,7 +65,7 @@
           <div class="row">
             <mat-form-field>
               <mat-label i18n="@@setup secondary domain">Secondary Domain</mat-label>
-              <input matInput type="text" autocapitalize="off" name="secondary-domain-{{installation.id}}" class="form-control" [(ngModel)]="installation.secondaryDomain">
+              <input matInput type="text" autocapitalize="off" name="secondary-domain-{{installation.id}}" class="form-control" [(ngModel)]="installation.secondaryDomain" (change)="onTextChanged($event)">
               <mat-hint *ngIf="showApiLink && getTestResult(i) !== null && getTestResult(i).secondary === false">
                 <a href="https://{{installation.secondaryDomain}}:{{installation.secondaryPort}}/api/version" target="_blank"><span i18n="@@setup check">Check API version and certificate</span><mat-icon>open_in_new</mat-icon></a>
               </mat-hint>

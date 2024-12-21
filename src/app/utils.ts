@@ -1,12 +1,21 @@
 import { ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 
+import { Dialog } from '@capacitor/dialog';
+
+const showAlert = async (title: string, message: string) => {
+  await Dialog.alert({
+    title: title,
+    message: message,
+  });
+};
+
 
 export function positiveInteger(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} => {
+  return (control: AbstractControl): { [key: string]: any } => {
     const error: ValidationErrors = { integer: true };
     if (Number(control.value) < 0 || isNaN(Number(control.value))) {
-      return {invalid: 'Should be a positive value!'};
+      return { invalid: 'Should be a positive value!' };
     } else {
       return null;
     }
@@ -50,7 +59,7 @@ export function getValue(value: any, attribute: string, defaultValue: any = '') 
 
 export const checkUrl = async (url: string): Promise<boolean> => {
   try {
-    const response = await fetch(url, { method: 'OPTIONS' });
+    const response = await fetch(url, { method: 'OPTIONS', signal: AbortSignal.timeout(15000) });
     if (!response.ok) {
       console.error('No connection to the security system: ', url);
       return false;
@@ -72,11 +81,51 @@ export const createHash = async (text: string): Promise<string> => {
   return hashHex;
 }
 
+
 /**
- * Load the domains and check which one is available.
- * Set the base domain to the first available one.
+ * Check if the domain is available and set it as the base domain.
+ * 
+ * @param installation The installation object.
+ * @param type The type of the domain (primary or secondary).
+ * @param backendDomain The current backend domain.
+ * @returns True if the domain is available and set, false otherwise.
  */
-export async function configureBackend(): Promise<void>{
+async function checkAndSetDomain(installation, type, backendDomain) {
+  const domainKey = `${type}Domain`;
+  const portKey = `${type}Port`;
+  if (installation[domainKey]) {
+    const url = `${installation.scheme}://${installation[domainKey]}:${installation[portKey]}/api/version`;
+    const available = await checkUrl(url);
+    if (available && backendDomain !== installation[domainKey]) {
+      console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} domain is available: `, installation[domainKey]);
+      localStorage.setItem('backend.scheme', installation.scheme);
+      window.dispatchEvent(new StorageEvent('storage', { key: 'backend.domain', newValue: installation[domainKey] }));
+
+      localStorage.setItem('backend.domain', installation[domainKey]);
+      window.dispatchEvent(new StorageEvent('storage', { key: 'backend.port', newValue: installation[portKey] }));
+
+      localStorage.setItem('backend.port', installation[portKey]);
+      window.dispatchEvent(new StorageEvent('storage', { key: 'backend.scheme', newValue: installation.scheme }));
+
+      console.log('Connected to: ', url);
+      return true;
+    } else if (backendDomain === installation[domainKey]) {
+      console.log(`Already connected to ${type} domain`, installation[domainKey]);
+      return true;
+    }
+  }
+  return false;
+}
+
+
+/**
+ * Load the domains and check which one is available. Set the base domain to the first available one.
+ * 
+ * @returns A promise that resolves when the backend is configured.
+ * @throws An error if the backend cannot be configured.
+ * @remarks The backend configuration is stored in the local storage.
+ */
+export async function configureBackend(): Promise<void> {
   return new Promise(async (resolve, reject) => {
     try {
       const installations = JSON.parse(localStorage.getItem('installations'));
@@ -86,63 +135,29 @@ export async function configureBackend(): Promise<void>{
       if (installations && selectedInstallationId !== null) {
         const installation = installations.find(i => i.id === selectedInstallationId);
         if (installation) {
-          if (installation.primaryDomain) {
-            const primaryURL = `${installation.scheme}://${installation.primaryDomain}:${installation.primaryPort}/api/version`;
-            const primaryAvailable = await checkUrl(primaryURL);
-            if (primaryAvailable && backendDomain !== installation.primaryDomain) {
-              console.log('Primary domain is available: ', installation.primaryDomain);
-              localStorage.setItem('backend.scheme', installation.scheme);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.domain', newValue: installation.primaryDomain }));
-
-              localStorage.setItem('backend.domain', installation.primaryDomain);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.port', newValue: installation.primaryPort }));
-
-              localStorage.setItem('backend.port', installation.primaryPort);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.scheme', newValue: installation.scheme }));
-
-              console.log('Connected to: ', primaryURL);
-              resolve();
-              return;
-            }
-            else if (backendDomain === installation.primaryDomain) {
-              console.log('Already connected to primary domain', installation.primaryDomain);
-              resolve();
-              return;
-            }
+          const primaryAvailable = await checkAndSetDomain(installation, 'primary', backendDomain);
+          if (primaryAvailable) {
+            resolve();
+            return;
           }
 
-          if (installation.secondaryDomain) {
-            const secondaryURL = `${installation.scheme}://${installation.secondaryDomain}:${installation.secondaryPort}/api/version`;
-            const secondaryAvailable = await checkUrl(secondaryURL);
-            if (secondaryAvailable && backendDomain !== installation.secondaryDomain) {
-              console.log('Secondary domain is available: ', installation.secondaryDomain);
-              localStorage.setItem('backend.scheme', installation.scheme);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.domain', newValue: installation.secondaryDomain }));
-
-              localStorage.setItem('backend.domain', installation.secondaryDomain);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.port', newValue: installation.secondaryPort }));
-
-              localStorage.setItem('backend.port', installation.secondaryPort);
-              window.dispatchEvent(new StorageEvent('storage', { key: 'backend.scheme', newValue: installation.scheme }));
-              console.log('Connected to: ', secondaryURL);
-              resolve();
-              return;
-            }
-            else if (backendDomain === installation.secondaryDomain) {
-              console.log('Already connected to secondary domain', installation.secondaryDomain);
-              resolve();
-              return;
-            }
+          const secondaryAvailable = await checkAndSetDomain(installation, 'secondary', backendDomain);
+          if (secondaryAvailable) {
+            resolve();
+            return;
           }
         }
       }
-      console.log('No valid installation found or no domains available');
+
+      console.warn('No valid installation found or no domains available');
       localStorage.removeItem('backend.scheme');
       localStorage.removeItem('backend.domain');
       localStorage.removeItem('backend.port');
       resolve();
     } catch (error) {
-      reject(error);
+      console.error('Failed to configure the backend: ', error);
+      resolve();
+      return;
     }
   });
 }

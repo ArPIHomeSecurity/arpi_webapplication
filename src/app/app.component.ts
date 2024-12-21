@@ -216,15 +216,19 @@ export class AppComponent implements OnInit {
     console.log('Change locale: ', currentLocale, '=>', event.value);
     localStorage.setItem('localeId', event.value);
 
-    const newLocale = event.value === environment.defaultLanguage ? '' : event.value;
-    const languagePattern = new RegExp('^/(' + environment.languages.split(' ').join('|') + ')/');
-    if (languagePattern.test(location.pathname)) {
-      // change the language
-      const newPath = location.pathname.replace('/' + currentLocale, (newLocale ? '/' + newLocale : ''));
-      location.pathname = newPath.replace(/\/$/, '');
-    } else {
-      // if the current language isn't the default, add the language
-      location.pathname = ('/' + newLocale + location.pathname)
+    const newLocale = event.value;
+    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+
+    // replace the language in the path
+    const path = window.location.pathname;
+    const matches = pathParser.exec(path);
+    if (matches !== null) {
+      const newPath = [matches.groups.version, newLocale, matches.groups.path].join('/');
+      console.log('Redirect to ' + newPath);
+      window.location.pathname = newPath;
+    }
+    else {
+      console.error('No match found for path: ', path);
     }
   }
 
@@ -265,21 +269,15 @@ export class AppComponent implements OnInit {
 
   openHelp() {
     // get current path
-    const currentPath = window.location.pathname;
+    const currentPath = location.pathname;
 
-    // remove language from path
-    var currentLocale = localStorage.getItem('localeId');
-    if (currentLocale == environment.defaultLanguage) {
-      currentLocale = '/';
+    // remove version and language from the path
+    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+    const matches = pathParser.exec(currentPath);
+    let pathWithoutLanguage = '';
+    if (matches !== null) {
+      pathWithoutLanguage = matches.groups.path;
     }
-    else {
-      currentLocale = '/' + currentLocale + '/';
-    }
-
-    // remove language prefix
-    var pathWithoutLanguage = currentPath.replace(currentLocale, '');
-    // remove leading slash
-    pathWithoutLanguage.replace(/^\/+/g, "");
 
     // mapping of local urls to documentation urls
     const urlMap = {
@@ -289,8 +287,12 @@ export class AppComponent implements OnInit {
 
       'areas': 'en/latest/end_users/areas/',
       'area': 'en/latest/end_users/areas/#edit-area',
+      'outputs': 'en/latest/end_users/outputs/',
+      'output': 'en/latest/end_users/outputs/#edit-output',
       'sensors': 'en/latest/end_users/sensors/',
       'sensor': 'en/latest/end_users/sensors/#edit-area',
+      'users': 'en/latest/end_users/users/',
+      'user': 'en/latest/end_users/users/#edit-user',
       'zones': 'en/latest/end_users/zones/',
       'zone': 'en/latest/end_users/zones/#edit-zone',
 
@@ -299,9 +301,6 @@ export class AppComponent implements OnInit {
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/',
-
-      'users': 'en/latest/end_users/users/',
-      'user': 'en/latest/end_users/users/#edit-user',
     }
 
     if (environment.isMultiInstallation) {

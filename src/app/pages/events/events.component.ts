@@ -189,7 +189,12 @@ export class EventsComponent implements OnInit {
     return Array(event.sensorChanges[0].sensors.length).fill(0).map((x, i) => i);
   }
 
-  getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] {
-    return event.sensorChanges.map(a => a.sensors[sensorIndex]);
+  getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] | []{
+    return event.sensorChanges.map(a => {
+      if (a.sensors.length <= sensorIndex) {
+        return null;
+      }
+      return a.sensors[sensorIndex];
+    }).filter(sensorState => sensorState !== null) as SensorState[];
   }
 }

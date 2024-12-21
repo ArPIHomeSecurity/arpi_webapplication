@@ -14,6 +14,12 @@ if [ ! -d $source ]; then
   exit 1
 fi
 
-cp -r $source/browser/en/* ../../app
-cp -r $source/browser/hu ../../app
-cp -r $source/browser/it ../../app
+if [ "$1" == "dev" ]; then
+  cp -r $source/browser/en ../../app/$2-dev
+  cp -r $source/browser/hu ../../app/$2-dev
+  cp -r $source/browser/it ../../app/$2-dev
+else
+  cp -r $source/browser/en ../../app/$2
+  cp -r $source/browser/hu ../../app/$2
+  cp -r $source/browser/it ../../app/$2
+fi

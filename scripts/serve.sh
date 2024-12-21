@@ -26,11 +26,19 @@ fi
 
 docker rm -fv arpi-webserver || true
 
+destination="$2"
+
+if [ ! -z "$destination" ]; then
+    echo "Serving $source on http://localhost:4200/$destination/"
+else
+    echo "Serving $source on http://localhost:4200"
+fi
+
 docker run -d --name arpi-webserver \
     -p 4200:8080 \
     -v $(pwd)/arpi_dhparams.pem:/etc/nginx/arpi_dhparams.pem:ro \
     -v $(pwd)/arpi_dev.crt:/etc/nginx/arpi_dev.crt:ro \
     -v $(pwd)/arpi_dev.key:/etc/nginx/arpi_dev.key:ro \
     -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \
-    -v $source:/usr/share/nginx/html:ro \
+    -v $source:/usr/share/nginx/html/$destination:ro \
     nginx
