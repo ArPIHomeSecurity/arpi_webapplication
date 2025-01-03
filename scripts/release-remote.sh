@@ -15,10 +15,12 @@ if [ ! -d $source ]; then
 fi
 
 if [ "$1" == "dev" ]; then
+  rm -rf ../../app/$2-dev/*
   cp -r $source/browser/en ../../app/$2-dev
   cp -r $source/browser/hu ../../app/$2-dev
   cp -r $source/browser/it ../../app/$2-dev
 else
+  rm -rf ../../app/$2/*
   cp -r $source/browser/en ../../app/$2
   cp -r $source/browser/hu ../../app/$2
   cp -r $source/browser/it ../../app/$2

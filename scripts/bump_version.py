@@ -91,7 +91,7 @@ def bump_version(version_type: str, pre_release: str = None):
                 lines[i] = f'{line[:line.index("versionCode")]}versionCode {version_code}\n'
             if "versionName" in line:
                 lines[i] = (
-                    f'{line[:line.index("versionName")]}versionName "v{major}.{minor}.{patch}"\n'
+                    f'{line[:line.index("versionName")]}versionName "v{major}.{minor}.{patch}{f"_{pre_release}" if pre_release else ""}"\n'
                 )
 
     with open("android/app/build.gradle", "w", encoding="utf-8") as f:
