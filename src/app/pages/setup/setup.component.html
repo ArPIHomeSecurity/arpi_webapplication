@@ -108,13 +108,13 @@
   <button *ngIf="isMultiInstallation" mat-fab color="accent" (click)="addInstallation()" class="list-action">
     <mat-icon>add</mat-icon>
   </button>
-  <button mat-fab color="accent" (click)="onSave()" class="list-action">
+  <button mat-fab color="accent" (click)="onSave()" class="list-action" [disabled]="anyInstallationWithoutId()">
     <mat-icon>save</mat-icon>
   </button>
   <button *ngIf="isMultiInstallation" mat-mini-fab color="accent" (click)="addInstallation()" class="list-action">
     <mat-icon>add</mat-icon>
   </button>
-  <button mat-mini-fab color="accent" (click)="onSave()" class="list-action">
+  <button mat-mini-fab color="accent" (click)="onSave()" class="list-action" [disabled]="anyInstallationWithoutId()">
     <mat-icon>save</mat-icon>
   </button>
 </div>

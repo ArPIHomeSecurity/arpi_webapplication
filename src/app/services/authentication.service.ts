@@ -26,6 +26,8 @@ export interface AuthenticationService {
   registerDevice(registrationCode: string): Observable<boolean>;
 
   unRegisterDevice();
-
+  
   isDeviceRegistered(): Observable<boolean>;
+ 
+  getRegisteredUserId(): number;
 }

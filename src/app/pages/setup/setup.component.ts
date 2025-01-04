@@ -209,6 +209,10 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
     target.value = target.value.trim();
   }
 
+  anyInstallationWithoutId(): boolean {
+    return this.installations.some(i => !i.installationId);
+  }
+
   onSave() {
     const installations = JSON.stringify(this.installations);
     localStorage.setItem('installations', installations);

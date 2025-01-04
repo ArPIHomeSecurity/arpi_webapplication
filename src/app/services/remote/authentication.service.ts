@@ -269,4 +269,14 @@ export class AuthenticationService implements AuthenticationService {
       startWith(!!this.getDeviceToken()) 
     );
   }
+
+  getRegisteredUserId(): number {
+    const userToken = this.getDeviceToken();
+    if (userToken) {
+      try {
+        return (jwtDecode(userToken) as any).user_id;
+      } catch (error) {
+      }
+    }
+  }
 }

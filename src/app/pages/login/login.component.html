@@ -31,7 +31,7 @@
   <mat-card *ngIf="isRegistered" class="login container-item">
     <mat-card-header>
       <mat-card-title-group>
-        <mat-card-title i18n="Login title">Login</mat-card-title>
+        <mat-card-title i18n="Login title">Login <span *ngIf="userName">({{userName}})</span></mat-card-title>
       </mat-card-title-group>
     </mat-card-header>
 

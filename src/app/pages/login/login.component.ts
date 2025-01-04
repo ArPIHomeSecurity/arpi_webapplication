@@ -1,11 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { App as CapacitorApp } from '@capacitor/app';
 
 import { finalize } from 'rxjs/operators';
 
-import { AuthenticationService } from '@app/services';
+import { AuthenticationService, UserService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CapacitorService } from '@app/services/capacitor.service';
@@ -22,19 +22,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('registration_code_field') registrationCodeField: ElementRef;
   @ViewChild('access_code_field') accessCodeField: ElementRef;
 
-  registerForm: UntypedFormGroup;
-  registerCode: UntypedFormControl;
-  loginForm: UntypedFormGroup;
-  accessCode: UntypedFormControl;
+  registerForm: FormGroup;
+  registerCode: FormControl;
+  loginForm: FormGroup;
+  accessCode: FormControl;
   isRegistered = false;
   loading = false;
   error = '';
   hide = true;
+  userName = '';
 
   goBackSubscription: Subscription;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
+    @Inject('UserService') private userService: UserService,
     @Inject('CapacitorService') private capacitorService: CapacitorService,
     private router: Router
   ) {
@@ -54,11 +56,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authenticationService.isDeviceRegistered()
       .subscribe(isRegistered => {
         this.isRegistered = isRegistered;
+
+        if (isRegistered) {
+          this.userService.getUserName(this.authenticationService.getRegisteredUserId()).subscribe(userName => {
+            this.userName = userName;
+          });
+        }
+
         setTimeout (() => {
           if (isRegistered) {
-            this.accessCodeField.nativeElement.focus();
+            this.accessCodeField?.nativeElement.focus();
           } else {
-            this.registrationCodeField.nativeElement.focus();
+            this.registrationCodeField?.nativeElement.focus();
           }
         }, 0.5);
       });
@@ -73,11 +82,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   updateForms() {
-    this.registerForm = new UntypedFormGroup({
-      registerCode: this.registerCode = new UntypedFormControl('', Validators.required)
+    this.registerForm = new FormGroup({
+      registerCode: this.registerCode = new FormControl('', Validators.required)
     });
-    this.loginForm = new UntypedFormGroup({
-      accessCode: this.accessCode = new UntypedFormControl('', Validators.required)
+    this.loginForm = new FormGroup({
+      accessCode: this.accessCode = new FormControl('', Validators.required)
     });
   }
 

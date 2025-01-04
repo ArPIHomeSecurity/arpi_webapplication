@@ -9,6 +9,8 @@ export interface UserService {
 
   getUser(userId: number): Observable<User>;
 
+  getUserName(userId: number): Observable<string>;
+
   createUser(user: User): Observable<User>;
 
   updateUser(user: User): Observable<User>;
