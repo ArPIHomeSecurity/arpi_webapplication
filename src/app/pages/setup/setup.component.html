@@ -12,21 +12,21 @@
       <mat-card-header *ngIf="!isMultiInstallation">
         <mat-card-title i18n="@@setup backend">Setup backend</mat-card-title>
           <mat-card-subtitle *ngIf="installation.version != null" i18n="@@setup version">Version: {{installation.version}}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="installation.installation_id !== null" class="status">
-            <span *ngIf="isRegistered(installation.installation_id) === true"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-accessible">check</mat-icon></span>
-            <span *ngIf="isRegistered(installation.installation_id) === false"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">error</mat-icon></span>
-            <span *ngIf="isRegistered(installation.installation_id) === null"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">question_mark</mat-icon></span>
+          <mat-card-subtitle *ngIf="installation.installationId !== null" class="status">
+            <span *ngIf="isRegistered(installation.installationId) === true"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-accessible">check</mat-icon></span>
+            <span *ngIf="isRegistered(installation.installationId) === false"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">error</mat-icon></span>
+            <span *ngIf="isRegistered(installation.installationId) === null"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">question_mark</mat-icon></span>
           </mat-card-subtitle>
         </mat-card-header>
         
         <mat-card-header *ngIf="isMultiInstallation">
           <mat-card-title i18n="@@setup installation">Installation: {{installation.name}}</mat-card-title>
-          <mat-card-subtitle *ngIf="installation.installation_id != null">ID: {{installation.installation_id}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="installation.installationId != null">ID: {{installation.installationId}}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="installation.version != null" i18n="@@setup version">Version: {{installation.version}}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="installation.installation_id !== null" class="status">
-            <span *ngIf="isRegistered(installation.installation_id) === true"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-accessible">check</mat-icon></span>
-            <span *ngIf="isRegistered(installation.installation_id) === false"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">error</mat-icon></span>
-            <span *ngIf="isRegistered(installation.installation_id) === null"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">question_mark</mat-icon></span>
+          <mat-card-subtitle *ngIf="installation.installationId !== null" class="status">
+            <span *ngIf="isRegistered(installation.installationId) === true"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-accessible">check</mat-icon></span>
+            <span *ngIf="isRegistered(installation.installationId) === false"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">error</mat-icon></span>
+            <span *ngIf="isRegistered(installation.installationId) === null"><span i18n="@@setup device registered">Device registered</span><mat-icon class="icon-inaccessible">question_mark</mat-icon></span>
           </mat-card-subtitle>
         </mat-card-header>
 

@@ -25,20 +25,26 @@ export class AuthenticationService implements AuthenticationService {
 
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const prefix = this.getInstallationId();
+    const installationId = this.getInstallationId();
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
     return this.http.post(
         '/api/user/authenticate',
-        JSON.stringify({device_token: localStorage.getItem(`${prefix}:deviceToken`), access_code: accessCode}),
+        JSON.stringify({device_token: deviceTokens[installationId], access_code: accessCode}),
         {headers}
       )
       .pipe(
         map((response: any) => {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
-            localStorage.setItem(`${prefix}:deviceToken`, response.device_token);
+            // save in new format
+            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+            deviceTokens[installationId] = response.device_token;
+            localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+
             this.eventService.connect();
             this.isDeviceRegisteredSubject.next(true);
           }
+
           if (response.user_token) {
             // store user info with jwt token in local storage to keep user logged in between page refreshes
             this.updateUserToken(response.user_token);
@@ -55,8 +61,13 @@ export class AuthenticationService implements AuthenticationService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    const prefix = this.getInstallationId();
-    localStorage.removeItem(`${prefix}:userToken`);
+    const installationId = this.getInstallationId();
+    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    if (installationId in userTokens) {
+      delete userTokens[installationId];
+    }
+    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+
     // clear returnUrl to start from home
     localStorage.removeItem('returnUrl');
     this.isSessionValidSubject.next(false);
@@ -120,26 +131,52 @@ export class AuthenticationService implements AuthenticationService {
     }
     const installation = installations.find(installation => installation.id === installationId);
     if (installation) {
-      return installation.installation_id;
+      return installation.installationId;
     }
   }
 
   getUserToken(): string {
-    const prefix = this.getInstallationId();
-    if (!prefix) {
+    const installationId = this.getInstallationId();
+    if (!installationId) {
       return;
     }
-    return localStorage.getItem(`${prefix}:userToken`);
+
+    const userToken = localStorage.getItem(`${installationId}:userToken`);
+    if (!userToken) {
+      // check in new format
+      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+      return userTokens[installationId];
+    }
+
+    // save in new format
+    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    userTokens[installationId] = userToken;
+    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+
+    // remove old format
+    localStorage.removeItem(`${installationId}:userToken`);
+
+    return userToken;
   }
 
   updateUserToken(token: string) {
-    const prefix = this.getInstallationId();
-    if (!prefix) {
+    const installationId = this.getInstallationId();
+    if (!installationId) {
       return;
     }
-    localStorage.setItem(`${prefix}:userToken`, token);
+    
     try {
-      jwtDecode(this.getUserToken());
+      // check if token is valid
+      jwtDecode(token);
+
+      // save in new format
+      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+      userTokens[installationId] = token;
+      localStorage.setItem('userTokens', JSON.stringify(userTokens));
+
+      // remove old format
+      localStorage.removeItem(`${installationId}:userToken`);
+
       return this.isSessionValidSubject.next(true);
     } catch (error) {}
     return this.isSessionValidSubject.next(false);
@@ -149,19 +186,50 @@ export class AuthenticationService implements AuthenticationService {
     return this.isSessionValidSubject.pipe(startWith(this.isLoggedIn()));
   }
 
-  getDeviceToken() {
-    const prefix = this.getInstallationId();
-    return localStorage.getItem(`${prefix}:deviceToken`);
+  /**
+   * Retrieves the device token for the given installation or the current.
+   * @param installationId Optional installation id.
+   * @returns 
+   */
+  getDeviceToken(installationId?: string): string {
+    if (!installationId) {
+      installationId = this.getInstallationId();
+    }
+
+    if (!installationId) {
+      return;
+    }
+
+    const deviceToken = localStorage.getItem(`${installationId}:deviceToken`);
+    if (!deviceToken) {
+      // check in new format
+      const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+      return deviceTokens[installationId];
+    }
+
+    // save in new format
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    deviceTokens[installationId] = deviceToken;
+    localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+
+    // remove old format
+    localStorage.removeItem(`${installationId}:deviceToken`);
+
+    return deviceToken;
   }
 
   registerDevice(registrationCode: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const prefix = this.getInstallationId();
+    const installationId = this.getInstallationId();
     return this.http.post('/api/user/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
         if (response.device_token) {
-          localStorage.setItem(`${prefix}:deviceToken`, response.device_token);
+          // save in new format
+          const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+          deviceTokens[installationId] = response.device_token;
+          localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+
           this.eventService.connect();
           this.isDeviceRegisteredSubject.next(true);
           return true;
@@ -172,10 +240,28 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   unRegisterDevice() {
-    const prefix = this.getInstallationId();
-    localStorage.removeItem(`${prefix}:deviceToken`);
-    localStorage.removeItem(`${prefix}:userToken`);
+    const installationId = this.getInstallationId();
+
+    // remove device token
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    if (installationId in deviceTokens) {
+      delete deviceTokens[installationId];
+    }
+    localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+
+    // remove user token
+    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    if (installationId in userTokens) {
+      delete userTokens[installationId];
+    }
+    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+
+    // invalidate session
+    this.isSessionValidSubject.next(false);
     this.isDeviceRegisteredSubject.next(false);
+
+    // clear returnUrl to start from home
+    localStorage.removeItem('returnUrl');
   }
 
   isDeviceRegistered(): Observable<boolean> {

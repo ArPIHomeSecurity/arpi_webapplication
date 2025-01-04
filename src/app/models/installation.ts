@@ -1,7 +1,7 @@
 
 export class Installation {
   id: number;
-  installation_id: string | null;
+  installationId: string | null;
   version: string;
   name: string;
   scheme: string = 'https';

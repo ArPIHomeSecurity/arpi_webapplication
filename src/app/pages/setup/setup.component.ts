@@ -2,12 +2,13 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
+import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 
 import { Installation } from '@app/models';
 import { environment } from '@environments/environment';
 import { configureBackend } from '@app/utils';
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 /**
@@ -41,6 +42,7 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
   isDragging = false;
 
   constructor(
+    @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
@@ -61,7 +63,7 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
   setupDefaultInstallation(): void {
     this.installations = [{
       id: 0,
-      installation_id: null,
+      installationId: null,
       version: null,
       name: 'Default',
       scheme: 'https',
@@ -80,18 +82,12 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
     }
   }
 
-  isRegistered(installation_id: string): boolean {
-    if (!installation_id) {
+  isRegistered(installationId: string): boolean {
+    if (!installationId) {
       return null;
     }
 
-    const installation = this.installations.find(item => item.installation_id === installation_id);
-
-    if (!installation) {
-      return false;
-    }
-
-    return localStorage.getItem(`${installation.installation_id}:deviceToken`) != null;
+    return this.authenticationService.getDeviceToken(installationId) != null;
   }
 
   isActive(index: number): boolean {
@@ -175,7 +171,7 @@ export class SetupComponent extends ConfigurationBaseComponent implements OnInit
           console.error('Invalid installation id', installationId.substring(0, 100));
           return;
         }
-        installation.installation_id = installationId;
+        installation.installationId = installationId;
         this.onSave();
       })
       .catch(error => {

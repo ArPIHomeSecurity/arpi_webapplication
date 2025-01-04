@@ -42,7 +42,8 @@ export class EventService {
     if (!installation) {
       return;
     }
-    const deviceToken = localStorage.getItem(`${installation.installation_id}:deviceToken`);
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    const deviceToken = deviceTokens[installation.id];
     if (this.socket) {
       this.socket.disconnect();
     }
