@@ -43,7 +43,7 @@ export class EventService {
       return;
     }
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    const deviceToken = deviceTokens[installation.id];
+    const deviceToken = deviceTokens[installation.installation_id];
     if (this.socket) {
       this.socket.disconnect();
     }
