@@ -78,6 +78,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CapacitorService } from './services/capacitor.service';
+import { LongPressToggleDirective } from './directives';
 
 
 @NgModule({
@@ -170,7 +171,9 @@ import { CapacitorService } from './services/capacitor.service';
     MatToolbarModule,
     MatTooltipModule,
 
-    DragDropModule
+    DragDropModule,
+
+    LongPressToggleDirective
   ],
   providers: [
     { provide: 'CapacitorService', useClass: CapacitorService },

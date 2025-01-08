@@ -4,27 +4,33 @@ import { OutputService } from '@app/services';
 
 
 @Component({
-    selector: 'component-output',
-    templateUrl: 'output.html',
-    styleUrls: ['output.scss'],
-    providers: []
+  selector: 'component-output',
+  templateUrl: 'output.html',
+  styleUrls: ['output.scss'],
+  providers: []
 })
 export class OutputComponent {
-  @Input() output:Output;
-  @Input() disabled:boolean;
+  @Input() output: Output;
+  @Input() disabled: boolean;
 
   ENDLESS_DURATION = 0;
+
+  longPressActive: boolean = false;
 
   constructor(
     @Inject('OutputService') private outputService: OutputService,
   ) { }
 
-  onToggleButton(output: Output) {
-    if (output.state) {
-      this.outputService.deactivateOutput(output.id);
+  onLongPressed() {
+    if (this.output.state) {
+      this.outputService.deactivateOutput(this.output.id);
     }
     else {
-      this.outputService.activateOutput(output.id);
+      this.outputService.activateOutput(this.output.id);
     }
+  }
+
+  onLongPressAvailable(available: boolean) {
+    this.longPressActive = available;
   }
 }
