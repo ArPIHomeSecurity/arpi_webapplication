@@ -77,12 +77,7 @@ export class AuthenticationService implements AuthenticationService {
   isLoggedIn(): boolean {
     try {
       const userToken = this.getUserToken();
-      if (userToken) {
-        try {
-          return Date.now()/1000 - parseInt((jwtDecode(userToken) as any).timestamp) < environment.userTokenExpiry;
-        } catch (error) {
-        }
-      }
+      return !!userToken;
     } catch (error) {
         // console.error('Invalid token');
     }
@@ -135,6 +130,11 @@ export class AuthenticationService implements AuthenticationService {
     }
   }
 
+  /**
+   * Retrieves the user token if there is a valid token for the current installation.
+   * If the token is in the old format, it will be converted to the new format.
+   * If the token is expired, it will be removed.
+   */
   getUserToken(): string {
     const installationId = this.getInstallationId();
     if (!installationId) {
@@ -155,6 +155,28 @@ export class AuthenticationService implements AuthenticationService {
 
     // remove old format
     localStorage.removeItem(`${installationId}:userToken`);
+
+    // parse token
+    var userData;
+    try {
+      userData = jwtDecode(userToken);
+    }
+    catch (error) {
+      console.error('Invalid token');
+      return;
+    }
+
+    // check expiry
+    if (Date.now()/1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
+      // remove token
+      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+      if (installationId in userTokens) {
+        delete userTokens[installationId];
+      }
+
+      this.isSessionValidSubject.next(false);
+      return;
+    }
 
     return userToken;
   }
