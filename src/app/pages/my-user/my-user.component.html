@@ -1,0 +1,9 @@
+<div class="container">
+    <user-card
+        *ngIf="user"
+        [user]="user"
+        class="container-item"
+        [disabled]="monitoringState != monitoringStates.READY"
+        (onNavigateToUserEdit)="onNavigateToUserEdit()"
+    />
+</div>

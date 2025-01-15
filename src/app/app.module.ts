@@ -22,16 +22,13 @@ import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent
 import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './pages/zone';
 import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './pages/area';
 import { SetupComponent } from './pages/setup/setup.component';
-import {
-  UserListComponent,
-  UserDetailComponent,
-  UserDeleteDialogComponent,
-  UserDeviceRegistrationDialogComponent,
-  UserDeviceUnregisterDialogComponent,
-  UserCardDeleteDialogComponent,
-  UserSshKeySetupDialogComponent
-} from './pages/user';
+import { UserListComponent, UserDetailComponent } from './pages/user';
 import { SystemStateComponent } from './components/system-state/system-state.component';
+import { UserCardComponent } from './components/user/user-card/user-card.component';
+import { MyUserComponent } from './pages/my-user/my-user.component';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
+import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
@@ -88,6 +85,7 @@ import { LongPressToggleDirective } from './directives';
     SetupComponent,
     HomeComponent,
     ControllerComponent,
+    QuestionDialogComponent,
 
     KeypadComponent,
     ClockComponent,
@@ -96,13 +94,12 @@ import { LongPressToggleDirective } from './directives';
     NetworkComponent,
     SyrenComponent,
 
-    UserCardDeleteDialogComponent,
+    UserCardComponent,
     UserListComponent,
     UserDetailComponent,
-    UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
-    UserDeviceUnregisterDialogComponent,
     UserSshKeySetupDialogComponent,
+    MyUserComponent,
 
     AreaComponent,
     AreaListComponent,

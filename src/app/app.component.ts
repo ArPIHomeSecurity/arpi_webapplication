@@ -11,10 +11,10 @@ import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
 import { environment } from '@environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { UserDeviceUnregisterDialogComponent } from './pages/user';
 import { Router } from '@angular/router';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 
 
 @Component({
@@ -255,13 +255,27 @@ export class AppComponent implements OnInit {
   }
 
   unregister() {
-    const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
-      data: null,
+      data: {
+        title: $localize`:@@unregister device:Unregister device`,
+        message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@unregister:Unregister`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         this.authenticationService.unRegisterDevice();
       }
     });

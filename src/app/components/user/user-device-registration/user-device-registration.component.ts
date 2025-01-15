@@ -56,7 +56,7 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
       } else if (this.registrationForm.controls.unit.value === 'hours') {
         expiry = this.registrationForm.controls.counter.value * 60 * 60;
       } else {
-        console.error('Uknown time unit: ', this.registrationForm.controls.unit.value);
+        console.error('Unknown time unit: ', this.registrationForm.controls.unit.value);
       }
     } else if (this.registrationForm.controls.mode.value === 'no_expiry') {
 

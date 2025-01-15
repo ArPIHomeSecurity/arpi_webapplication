@@ -1,4 +1,11 @@
 @mixin output-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  .output-button {
+    .mat-mdc-progress-spinner {
+      float: right;
+      margin: 10px 10px;
+    }
+  }
+
   .output-button.active {
     background-color: mat.m2-get-color-from-palette($argus-ok) !important;
   }
@@ -13,7 +20,3 @@
   }
 }
 
-.mat-mdc-progress-spinner {
-  float: right;
-  margin: 10px 10px;
-}

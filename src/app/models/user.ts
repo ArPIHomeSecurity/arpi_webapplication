@@ -13,4 +13,21 @@ export class User {
   registrationExpiry: string;
   accessCode: number;
   comment: string;
-};
+}
+
+export class UserCreate {
+  name: string;
+  role: string;
+  accessCode: number;
+  comment: string;
+}
+
+
+export class UserUpdate {
+  id: number;
+  name: string;
+  role: string;
+  oldAccessCode: number;
+  newAccessCode: number;
+  comment: string;
+}

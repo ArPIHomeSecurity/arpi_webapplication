@@ -107,6 +107,16 @@ export class AuthenticationService implements AuthenticationService {
     }
   }
 
+  getUserId(): number {
+    const userToken = this.getUserToken();
+    if (userToken) {
+      try {
+        return (jwtDecode(userToken) as any).id;
+      } catch (error) {
+      }
+    }
+  }
+
   getToken(): string {
     if (this.getUserToken()) {
       return this.getUserToken();

@@ -13,6 +13,8 @@ export interface AuthenticationService {
 
   getUsername(): string;
 
+  getUserId(): number;
+
   getToken(): string;
 
   getUserToken(): string;

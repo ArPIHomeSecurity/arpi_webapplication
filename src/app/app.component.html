@@ -64,6 +64,9 @@
           <span matListItemTitle i18n="@@events menu link">Events</span>
         </mat-list-item>
         <h3 mat-subheader i18n="Settings menu title" *ngIf="isLoggedIn()">Settings</h3>
+        <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isMultiInstallation()">
+          <mat-icon matListItemIcon>other_houses</mat-icon><span i18n="@@installations menu link">Installations</span>
+        </mat-list-item>
         <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>crop</mat-icon><span i18n="@@areas menu link">Areas</span>
         </mat-list-item>
@@ -76,7 +79,7 @@
         <mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>output</mat-icon><span i18n="@@outputs menu link">Outputs</span>
         </mat-list-item>
-        <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isAdminUser()">
           <mat-icon matListItemIcon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </mat-list-item>
 
@@ -106,6 +109,9 @@
         </mat-accordion>
 
         <mat-divider *ngIf="isLoggedIn()"></mat-divider>
+        <mat-list-item routerLink="/my-user" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn() && !isAdminUser()">
+          <mat-icon matListItemIcon>person</mat-icon><span i18n="@@my-user menu link">My user</span>
+        </mat-list-item>
         <mat-list-item>
           <mat-icon matListItemIcon>language</mat-icon>
           <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
@@ -120,9 +126,6 @@
         <mat-list-item *ngIf="!isLoggedIn() && isDeviceRegistered" (click)="unregister()">
           <mat-icon matListItemIcon>disabled_by_default</mat-icon>
           <div mat-line i18n="@@unregister menu link">Unregister device</div>
-        </mat-list-item>
-        <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isMultiInstallation()">
-          <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@installations menu link">Installations</span>
         </mat-list-item>
         <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isMultiInstallation()">
           <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@setup menu link">Setup</span>

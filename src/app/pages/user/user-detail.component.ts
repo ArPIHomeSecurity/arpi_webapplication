@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { FormControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,11 +8,12 @@ import { throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { UserDeleteDialogComponent } from './user-delete.component';
-import { User, MONITORING_STATE, ROLE_TYPES } from '@app/models';
-import { EventService, LoaderService, MonitoringService, UserService } from '@app/services';
+import { User, ROLE_TYPES, UserUpdate, UserCreate } from '@app/models';
+import { AuthenticationService, EventService, LoaderService, MonitoringService, UserService } from '@app/services';
 
 import { environment } from '@environments/environment';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -24,14 +25,17 @@ const scheduleMicrotask = Promise.resolve(null);
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
-  userId: number;
-  user: User = undefined;
-  userForm: UntypedFormGroup;
+  userId: number = null;
+  user: User = null;
+  userForm: FormGroup;
   roles: any = [];
-  hide = true;
+  hideOld = true;
+  hideNew = true;
+  isMyProfile = false;
   action: string;
 
   constructor(
+    @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
@@ -39,18 +43,28 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     public router: Router,
 
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-      super(eventService, loader, monitoringService);
+    super(eventService, loader, monitoringService);
 
-      this.route.paramMap.subscribe(params => {
-        if (params.get('id') != null) {
-          this.userId = +params.get('id');
-        }
-      });
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id === 'add') {
+        this.userId = null;
+        this.isMyProfile = false;
+      }
+      else if (id === 'my-user') {
+        this.userId = this.authenticationService.getUserId();
+        this.isMyProfile = true;
+      }
+      else if (id != null) {
+        this.userId = parseInt(id, 10);
+        this.isMyProfile = false;
+      }
+    });
   }
 
   ngOnInit() {
@@ -58,7 +72,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     for (const role in ROLE_TYPES) {
       if (ROLE_TYPES.hasOwnProperty(role)) {
-        this.roles.push({name: role, value: ROLE_TYPES[role]});
+        this.roles.push({ name: role, value: ROLE_TYPES[role] });
       }
     }
 
@@ -105,7 +119,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   updateForm(user: User) {
-    const accessCode = new UntypedFormControl(user.accessCode, [Validators.pattern('^\\d{4,12}$')]);
+    const accessCode = new FormControl(user.accessCode, [Validators.pattern('^\\d{4,12}$')]);
 
     if (!user.id) {
       accessCode.setValidators([Validators.required, Validators.pattern('^\\d{4,12}$')]);
@@ -115,26 +129,37 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       name: new FormControl(user.name, [Validators.required, Validators.maxLength(32)]),
       role: user.role,
       hasRegistrationCode: user.hasRegistrationCode,
-      accessCode,
+      oldAccessCode: new FormControl('', [Validators.pattern('^\\d{4,12}$')]),
+      newAccessCode: new FormControl('', [Validators.pattern('^\\d{4,12}$')]),
       comment: user.comment,
     });
   }
 
-  onSubmit() {
-    const user = this.prepareUser();
+  onSave() {
     if (this.userId != null) {
+      const user = this.prepareUserUpdate();
       this.action = 'update';
       this.userService.updateUser(user)
         .subscribe({
-          next: _ => this.router.navigate(['/users']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          next: _ => {
+            if (this.isMyProfile) {
+              this.router.navigate(['/my-user']);
+            }
+            else {
+              this.router.navigate(['/users']);
+            }
+          },
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
         });
     } else {
+      const user = this.prepareUserCreate();
       this.action = 'create';
       this.userService.createUser(user)
         .subscribe({
-          next: _ => this.router.navigate(['/users']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          next: _ => {
+            this.router.navigate(['/users'])
+          },
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
         });
     }
   }
@@ -143,40 +168,60 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     this.router.navigate(['/users']);
   }
 
-  prepareUser(): User {
-    const formModel = this.userForm.value;
+  prepareUserUpdate(): UserUpdate {
+    const userModel = this.userForm.value;
 
-    const user: User = new User();
+    const user: UserUpdate = new UserUpdate();
     user.id = this.userId;
-    user.name = formModel.name;
-    user.role = formModel.role;
-    user.comment = formModel.comment;
-    user.accessCode = formModel.accessCode;
+    user.name = userModel.name;
+    user.role = userModel.role;
+    user.comment = userModel.comment;
+    user.oldAccessCode = userModel.oldAccessCode;
+    user.newAccessCode = userModel.newAccessCode;
+
+    return user;
+  }
+
+  prepareUserCreate(): UserCreate {
+    const userModel = this.userForm.value;
+
+    const user: UserCreate = new UserCreate();
+    user.name = userModel.name;
+    user.role = userModel.role;
+    user.accessCode = userModel.newAccessCode;
+    user.comment = userModel.comment;
 
     return user;
   }
 
   openDeleteDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
-      width: '250px',
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       data: {
-        name: this.user.name,
+        title: $localize`:@@delete user:Delete user`,
+        message: $localize`:@@delete user message:Are you sure you want to delete this user?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ],
+        width: '250px',
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
-          this.userService.deleteUser(userId)
-            .subscribe({
-              next: _ => this.router.navigate(['/users']),
-              error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-            });
-        } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
-        }
+      if (result === 'ok') {
+        this.action = 'delete';
+        this.userService.deleteUser(userId)
+          .subscribe({
+            next: _ => this.router.navigate(['/users']),
+            error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          });
       }
     });
   }

@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   areas: Area[] = [];
   outputs: Output[] = [];
 
+  subscriptions: Subscription[] = [];
   goBackSubscription: Subscription
 
   constructor(
@@ -78,80 +79,95 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     // ALERT STATE
-    this.eventService.listen('alert_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
-      });
+      })
+    );
 
     // ARM STATE
-    this.eventService.listen('arm_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('arm_state_change')
       .subscribe(armState => {
         this.armState = string2ArmType(armState);
         this.areaService.getAreas()
-          .subscribe(areas => {
-            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
+        .subscribe(areas => {
+          this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
         this.onStateChanged();
-      });
+      })
+    );
 
     // AREA STATE
-    this.eventService.listen('area_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('area_state_change')
       .subscribe((area: Area) => {
         this.areaService.getAreas()
-          .subscribe(areas => {
-            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
+        .subscribe(areas => {
+          this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
         this.onStateChanged();
-      });
+      })
+    );
 
     // SENSORS ALERT STATE
-    this.eventService.listen('sensors_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensorAlert = alert;
-      });
+      })
+    );
 
     // SENSOR TYPES: we need only once
-    this.sensorService.getSensorTypes()
+    this.subscriptions.push(
+      this.sensorService.getSensorTypes()
       .subscribe(st => {
-        this.sensorTypes = st
-      });
-
+        this.sensorTypes = st;
+      })
+    );
 
     // MONITORING STATE
-    this.eventService.listen('system_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
       .subscribe(monitoringState => {
         this.monitoringState = string2MonitoringState(monitoringState);
         this.onStateChanged();
-      });
+      })
+    );
 
-    this.eventService.listen('sensors_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('sensors_state_change')
       .subscribe(_ => {
         this.sensorService.getSensors()
-          .subscribe(sensors => {
-            this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
-      });
+        .subscribe(sensors => {
+          this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
+      })
+    );
 
-    this.eventService.listen('output_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('output_state_change')
       .subscribe(output => {
-        const tmpOutput = this.outputs.find(o => o.id === output.id)
+        const tmpOutput = this.outputs.find(o => o.id === output.id);
         if (tmpOutput) {
-          tmpOutput.state = output.state
+        tmpOutput.state = output.state;
         }
-      });
+      })
+    );
 
-
-    this.eventService.isConnected()
+    this.subscriptions.push(
+      this.eventService.isConnected()
       .subscribe(connected => {
         if (connected) {
-          this.loadStates();
+        this.loadStates();
+        } else {
+        this.armState = ARM_TYPE.UNDEFINED;
+        this.monitoringState = MONITORING_STATE.UNDEFINED;
+        this.onStateChanged();
         }
-        else {
-          this.armState = ARM_TYPE.UNDEFINED;
-          this.monitoringState = MONITORING_STATE.UNDEFINED;
-          this.onStateChanged();
-        }
-      });
+      })
+    );
   }
 
   loadStates() {
@@ -195,6 +211,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subscriptions.forEach(_ => _.unsubscribe());
+
     if (this.goBackSubscription) {
       this.goBackSubscription.unsubscribe();
     }

@@ -17,6 +17,7 @@ import { AreaDetailComponent, AreaListComponent } from './pages/area';
 import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { SetupComponent } from './pages/setup/setup.component';
 import { setupGuard } from './guards/setup.guard';
+import { MyUserComponent } from './pages/my-user/my-user.component';
 
 const appRoutes: Routes = [
   {
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [AuthGuard, setupGuard]
+    canActivate: [AdminGuard, setupGuard]
   },
   {
     path: 'user/add',
@@ -52,7 +53,12 @@ const appRoutes: Routes = [
   {
     path: 'user/:id',
     component: UserDetailComponent,
-    canActivate: [AdminGuard, setupGuard]
+    canActivate: [AuthGuard, setupGuard]
+  },
+  {
+    path: 'my-user',
+    component: MyUserComponent,
+    canActivate: [AuthGuard, setupGuard]
   },
   {
     path: 'sensors',

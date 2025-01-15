@@ -12,15 +12,18 @@ export class CardService {
     private http: HttpClient
   ) { }
 
-  getCards(): Observable<Card[]> {
+  getCards(userId: number = null): Observable<Card[]> {
+    if (userId) {
+      return this.http.get<Card[]>('/api/cards', { params: { userId: userId.toString() } });
+    }
     return this.http.get<Card[]>('/api/cards');
   }
 
-  getCard(cardId: number): Observable<Card>{
+  getCard(cardId: number): Observable<Card> {
     return this.http.get<Card>('/api/card/' + cardId);
   }
 
-  updateCard(card: Card): Observable<Card>{
+  updateCard(card: Card): Observable<Card> {
     return this.http.put<Card>('/api/card/' + card.id, card);
   }
 

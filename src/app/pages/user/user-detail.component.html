@@ -1,27 +1,39 @@
 <div class="container">
   <mat-card *ngIf="user" class="conteiner-item user-form">
     <mat-card-content>
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="userForm" novalidate>
         <mat-form-field>
           <mat-label i18n="@@name">Name</mat-label>
-          <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required maxlength="32">
+          <input matInput i18n-placeholder="@@user name" placeholder="Name" formControlName="name" required
+            maxlength="32">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hidden': isMyProfile}">
           <mat-label i18n="@@user role">Role</mat-label>
           <mat-select i18n-placeholder="@@user select role" placeholder="Select a role" formControlName="role" required>
             <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name }}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label i18n="@@user access code">Access code</mat-label>
+        <mat-form-field *ngIf="isMyProfile">
+          <mat-label i18n="@@user old access code">Old access code</mat-label>
           <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="10" digitOnly
-            i18n-placeholder="@@user new code" placeholder="New access code" formControlName="accessCode"
-            [type]="hide ? 'password' : 'text'">
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            i18n-placeholder="@@user old code" placeholder="Old access code" formControlName="oldAccessCode"
+            [type]="hideOld ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hideOld = !hideOld">{{hideOld ? 'visibility_off' : 'visibility'}}</mat-icon>
           <mat-error
-            *ngIf="userForm.get('accessCode').invalid">{{userForm.get('accessCode').getError('invalid')}}</mat-error>
+            *ngIf="userForm.get('oldAccessCode').invalid">{{userForm.get('oldAccessCode').getError('invalid')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label i18n="@@user new access code">New access code</mat-label>
+          <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="10" digitOnly
+            i18n-placeholder="@@user new code" placeholder="New access code" formControlName="newAccessCode"
+            [autocomplete]="isMyProfile ? 'on' : 'off'"
+            [type]="hideNew ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hideNew = !hideNew">{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-error
+            *ngIf="userForm.get('newAccessCode').invalid">{{userForm.get('newAccessCode').getError('invalid')}}</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -36,10 +48,11 @@
 
     <mat-card-actions align="end">
       <button mat-icon-button color="primary" [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSubmit()"><mat-icon>save</mat-icon></button>
-      <button *ngIf="userId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(user.id)"
+        (click)="onSave()"><mat-icon>save</mat-icon></button>
+      <button *ngIf="!isMyProfile" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(user.id)"
         [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+      <button *ngIf="!isMyProfile" mat-icon-button color="accent" type="button"
+        (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
 
   </mat-card>

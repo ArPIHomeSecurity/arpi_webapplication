@@ -1,0 +1,26 @@
+.user-card {
+  mat-card-content .mat-mdc-card-title {
+    font-size: medium;
+    font-weight: bold;
+  }
+
+  .avatar {
+    font-size: 40px;
+  }
+
+  .mat-mdc-progress-spinner {
+    margin: 10px;
+  }
+
+  .mdc-icon-button{
+    vertical-align: baseline;
+  }
+  
+  mat-icon {
+    vertical-align: middle;
+  }
+
+  .registration mat-icon:not(button mat-icon), .ssh mat-icon:not(button mat-icon) {
+    margin: 10px;
+  }
+}
