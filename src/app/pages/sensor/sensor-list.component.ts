@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { SensorDeleteDialogComponent } from './sensor-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '@app/models';
 import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
 
@@ -29,13 +29,13 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   action: string;
   sensors: Sensor[] = null;
-  sensorTypes: SensorType [] = [];
+  sensorTypes: SensorType[] = [];
   zones: Zone[] = [];
   areas: Area[] = [];
   isDragging = false;
 
   constructor(
-    @Inject('AreaService') public areaService:AreaService,
+    @Inject('AreaService') public areaService: AreaService,
     @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
@@ -81,8 +81,8 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       zones: this.zoneService.getZones(),
       areas: this.areaService.getAreas()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
         this.sensors = results.sensors.sort((a, b) => a.uiOrder - b.uiOrder);
         this.sensorTypes = results.sensorTypes;
         this.zones = results.zones;
@@ -90,12 +90,12 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
+      );
   }
 
   getZoneName(zoneId: number) {
     if (this.zones.length && zoneId != null) {
-        return this.zones.find(x => x.id === zoneId).name;
+      return this.zones.find(x => x.id === zoneId).name;
     }
 
     return '';
@@ -103,7 +103,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   getAreaName(areaId: number) {
     if (this.areas.length && areaId != null) {
-        return this.areas.find(x => x.id === areaId).name;
+      return this.areas.find(x => x.id === areaId).name;
     }
 
     return '';
@@ -122,31 +122,47 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(sensorId: number) {
-    const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
+    const sensor = this.sensors.find(x => x.id === sensorId);
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
       data: {
-        name: this.sensors.find(x => x.id === sensorId).description,
+        title: $localize`:@@delete sensor:Delete Sensor`,
+        message: $localize`:@@delete sensor message:Are you sure you want to delete the sensor "${sensor.description}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.action = 'delete';
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
           this.sensorService.deleteSensor(sensorId)
-            .subscribe( _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-          );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, { duration: environment.snackDuration });
+                this.updateComponent();
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });
   }
 
-  onResetReferences(sensorId: number=null) {
+  onResetReferences(sensorId: number = null) {
     if (sensorId) {
       this.sensorService.resetReference(sensorId);
     }

@@ -18,9 +18,9 @@ import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/conf
 import { NetworkComponent } from './pages/config/network';
 import { SyrenComponent } from './pages/config/syren';
 import { KeypadComponent } from './pages/config/keypad';
-import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './pages/sensor';
-import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './pages/zone';
-import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './pages/area';
+import { SensorListComponent, SensorDetailComponent } from './pages/sensor';
+import { ZoneListComponent, ZoneDetailComponent } from './pages/zone';
+import { AreaListComponent, AreaDetailComponent } from './pages/area';
 import { SetupComponent } from './pages/setup/setup.component';
 import { UserListComponent, UserDetailComponent } from './pages/user';
 import { SystemStateComponent } from './components/system-state/system-state.component';
@@ -38,7 +38,7 @@ import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { EventsComponent } from './pages/events/events.component';
-import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
+import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { routing } from './app.routing';
 import { ThemeService } from './services/theme.service';
@@ -104,21 +104,17 @@ import { LongPressToggleDirective } from './directives';
     AreaComponent,
     AreaListComponent,
     AreaDetailComponent,
-    AreaDeleteDialogComponent,
 
     OutputComponent,
     OutputListComponent,
     OutputDetailComponent,
-    OutputDeleteDialogComponent,
 
     SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
-    SensorDeleteDialogComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
-    ZoneDeleteDialogComponent,
 
     SystemStateComponent,
     PageNotFoundComponent,

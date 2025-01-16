@@ -8,7 +8,7 @@ import { throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { User, ROLE_TYPES, UserUpdate, UserCreate } from '@app/models';
+import { User, ROLE_TYPES, UserUpdate, UserCreate, MONITORING_STATE } from '@app/models';
 import { AuthenticationService, EventService, LoaderService, MonitoringService, UserService } from '@app/services';
 
 import { environment } from '@environments/environment';
@@ -198,7 +198,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
       data: {
         title: $localize`:@@delete user:Delete user`,
-        message: $localize`:@@delete user message:Are you sure you want to delete this user?`,
+        message: $localize`:@@delete user message:Are you sure you want to delete the user "${this.user.name}"?`,
         options: [
           {
             id: 'ok',
@@ -216,12 +216,19 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
-        this.action = 'delete';
-        this.userService.deleteUser(userId)
-          .subscribe({
-            next: _ => this.router.navigate(['/users']),
-            error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-          });
+        if (this.monitoringState === MONITORING_STATE.READY) {
+          this.loader.disable(true);
+          this.userService.deleteUser(userId)
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => this.router.navigate(['/users']),
+              error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+            });
+        }
+        else {
+          this.action = 'cant delete';
+          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+        }
       }
     });
   }

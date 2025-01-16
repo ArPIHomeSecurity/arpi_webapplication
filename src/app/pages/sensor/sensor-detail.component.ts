@@ -9,7 +9,7 @@ import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { SensorDeleteDialogComponent } from './sensor-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '@app/models';
 import { AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
 import { positiveInteger } from '@app/utils';
@@ -376,7 +376,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     };
   }
 
-  getZoneName() : string {
+  getZoneName(): string {
     const zone = this.zones.find(zone => zone.id === this.sensor.zoneId);
     return zone ? zone.name : this.zoneForm.value.zoneName;
   }
@@ -398,7 +398,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     };
   }
 
-  getAreaName() : string {
+  getAreaName(): string {
     const area = this.areas.find(area => area.id === this.sensor.areaId);
     return area ? area.name : this.areaForm.value.areaName;
   }
@@ -442,7 +442,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   onAreaSelected(areaId: number) {
     this.sensor.areaId = areaId;
-    const {controls} = this.areaForm;
+    const { controls } = this.areaForm;
 
     // if NEW area selected
     if (this.sensor.areaId === -1) {
@@ -457,7 +457,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   alertWhenChanged(event, delayName) {
-    const {controls} = this.zoneForm;
+    const { controls } = this.zoneForm;
     if (event.checked) {
       controls[delayName].setValidators([Validators.required, positiveInteger()]);
     } else {
@@ -469,26 +469,41 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   openDeleteDialog(sensorId: number) {
-    const dialogRef = this.dialog.open(SensorDeleteDialogComponent, {
+    const sensor = this.sensors.find(x => x.id === sensorId);
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
       data: {
-        name: this.sensor.description,
+        title: $localize`:@@delete sensor:Delete Sensor`,
+        message: $localize`:@@delete sensor message:Are you sure you want to delete the sensor "${sensor.description}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
+          this.loader.disable(true);
           this.sensorService.deleteSensor(sensorId)
-            .subscribe(_ => {
-              this.router.navigate(['/sensors']);
-            },
-              error => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-            );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, { duration: environment.snackDuration });
+                this.router.navigate(['/sensors'])
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

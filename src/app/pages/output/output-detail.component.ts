@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { Location } from '@angular/common';
 import { UntypedFormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,7 +9,7 @@ import { forkJoin, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { OutputDeleteDialogComponent } from './output-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 
 import { MONITORING_STATE, Output, OutputDefinitions, Area, OutputTriggerType, SYREN_CHANNEL } from '@app/models';
 import { AreaService, EventService, LoaderService, MonitoringService, OutputService } from '@app/services';
@@ -154,7 +153,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
       triggerType: [output.triggerType, Validators.required],
       areaId: [output.areaId],
       delay: [output.delay, [Validators.required, positiveInteger()]],
-      duration: new FormControl({value: output.duration, disabled: output.triggerType !== OutputTriggerType.BUTTON}, [Validators.required, Validators.min(0)]),
+      duration: new FormControl({ value: output.duration, disabled: output.triggerType !== OutputTriggerType.BUTTON }, [Validators.required, Validators.min(0)]),
       defaultState: [output.defaultState],
       enabled: [output.enabled]
     });
@@ -227,24 +226,40 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   }
 
   openDeleteDialog(outputId: number) {
-    const dialogRef = this.dialog.open(OutputDeleteDialogComponent, {
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
       data: {
-        name: this.output.name,
+        title: $localize`:@@delete output:Delete Output`,
+        message: $localize`:@@delete output message:Are you sure you want to delete the output "${this.output.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
+          this.loader.disable(true)
           this.outputService.deleteOutput(outputId)
-            .subscribe(_ => this.router.navigate(['/outputs']),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-            );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, { duration: environment.snackDuration });
+                this.router.navigate(['/outputs']);
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

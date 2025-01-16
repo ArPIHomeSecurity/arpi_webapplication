@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { Location } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +9,7 @@ import { forkJoin, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { AreaDeleteDialogComponent } from './area-delete.component';
-
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
 import { EventService, LoaderService, MonitoringService, SensorService, AreaService, OutputService } from '@app/services';
 import { positiveInteger } from '@app/utils';
@@ -77,19 +75,19 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
         .pipe(
           catchError((error) => {
             if (error.status === 404) {
-              this.area = null 
+              this.area = null
             }
             return throwError(() => error);
           }),
           finalize(() => this.loader.display(false))
         )
         .subscribe(results => {
-            this.area = results.area;
-            this.updateForm(this.area);
-            this.outputs = results.outputs;
-            this.sensors = results.sensors;
-            this.loader.display(false);
-          }
+          this.area = results.area;
+          this.updateForm(this.area);
+          this.outputs = results.outputs;
+          this.sensors = results.sensors;
+          this.loader.display(false);
+        }
         );
     } else {
       this.area = new Area();
@@ -115,14 +113,14 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
       this.areaService.updateArea(area)
         .subscribe({
           next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
         });
     } else {
       this.action = 'create';
       this.areaService.createArea(area)
         .subscribe({
           next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
         });
     }
   }
@@ -167,24 +165,41 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(areaId: number) {
-    const dialogRef = this.dialog.open(AreaDeleteDialogComponent, {
+    const area = this.area;
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
       data: {
-        name: this.area.name,
+        title: $localize`:@@delete area:Delete Area`,
+        message: $localize`:@@delete area message:Are you sure you want to delete the area "${area.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
+          this.loader.disable(true)
           this.areaService.deleteArea(areaId)
-            .subscribe(_ => this.router.navigate(['/areas']),
-                _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-          );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, { duration: environment.snackDuration });
+                this.router.navigate(['/areas']);
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

@@ -111,8 +111,3 @@
   <button class="list-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
   <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
 </div>
-
-<ng-template #snackbarTemplate>
-  <span *ngIf="action==='delete'" i18n="@@failed delete">Failed to delete!</span>
-  <span *ngIf="action==='cant delete'" i18n="cant delete">Can't delete, system is not ready!</span>
-</ng-template>

@@ -10,7 +10,6 @@ import { AuthenticationService, CardService, EventService, LoaderService, Monito
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { UserSshKeySetupDialogComponent } from '../../components/user/user-ssh-key-setup/user-ssh-key-setup.component';
 import { Router } from '@angular/router';
 
 

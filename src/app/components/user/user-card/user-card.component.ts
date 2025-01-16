@@ -84,7 +84,7 @@ export class UserCardComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
       data: {
         title: $localize`:@@delete user:Delete user`,
-        message: $localize`:@@delete user message:Are you sure you want to delete this user?`,
+        message: $localize`:@@delete user message:Are you sure you want to delete the user "${this.user.name}"?`,
         options: [
           {
             id: 'ok',
@@ -134,11 +134,11 @@ export class UserCardComponent implements OnInit {
 
         this.loading = true;
         this.cardService.updateCard(tmpCard)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe({
-          next: _ => this.cardService.getCards(this.user.id).subscribe(cards => this.cards = cards),
-          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
-        });
+          .pipe(finalize(() => this.loading = false))
+          .subscribe({
+            next: _ => this.cardService.getCards(this.user.id).subscribe(cards => this.cards = cards),
+            error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+          });
       }
     });
   }
