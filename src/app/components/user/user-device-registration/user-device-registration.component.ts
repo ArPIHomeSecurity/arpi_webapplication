@@ -16,7 +16,6 @@ import { environment } from '@environments/environment';
   styleUrls: ['user-device-registration.component.scss'],
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   registrationForm: UntypedFormGroup;
   modes: any[];
@@ -89,7 +88,6 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   copyText(val: string) {
     this.clipboard.copy(val);
-
-    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, { duration: environment.snackDuration });
   }
 }

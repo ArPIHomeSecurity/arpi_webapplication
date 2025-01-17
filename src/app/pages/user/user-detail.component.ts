@@ -23,7 +23,6 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['user-detail.component.scss']
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   userId: number = null;
   user: User = null;
@@ -32,7 +31,6 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   hideOld = true;
   hideNew = true;
   isMyProfile = false;
-  action: string;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
@@ -138,7 +136,6 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   onSave() {
     if (this.userId != null) {
       const user = this.prepareUserUpdate();
-      this.action = 'update';
       this.userService.updateUser(user)
         .subscribe({
           next: _ => {
@@ -149,17 +146,16 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
               this.router.navigate(['/users']);
             }
           },
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     } else {
       const user = this.prepareUserCreate();
-      this.action = 'create';
       this.userService.createUser(user)
         .subscribe({
           next: _ => {
             this.router.navigate(['/users'])
           },
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
   }
@@ -222,12 +218,11 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => this.router.navigate(['/users']),
-              error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
             });
         }
         else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

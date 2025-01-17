@@ -26,8 +26,6 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   zoneId: number;
   zone: Zone = undefined;
@@ -120,18 +118,16 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const zone = this.prepareZone();
     if (this.zoneId != null) {
-      this.action = 'update';
       this.zoneService.updateZone(zone)
         .subscribe({
           next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     } else {
-      this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe({
           next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
   }
@@ -190,8 +186,8 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
       data: {
-        title: $localize`@@delete zone:Delete Zone`,
-        message: $localize`@@delete zone message:Are you sure you want to delete the zone "${zone.name}"?`,
+        title: $localize`:@@delete zone:Delete Zone`,
+        message: $localize`:@@delete zone message:Are you sure you want to delete the zone "${zone.name}"?`,
         options: [
           {
             id: 'ok',
@@ -214,13 +210,13 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`@@zone deleted:Zone deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, null, { duration: environment.snackDuration });
                 this.router.navigate(['/zones'])
               },
-              error: _ => this.snackBar.open($localize`@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
             });
         } else {
-          this.snackBar.open($localize`@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

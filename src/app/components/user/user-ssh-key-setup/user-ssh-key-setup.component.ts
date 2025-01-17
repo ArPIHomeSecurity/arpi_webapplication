@@ -15,8 +15,6 @@ import { environment } from '@environments/environment';
   styleUrl: './user-ssh-key-setup.component.scss'
 })
 export class UserSshKeySetupDialogComponent implements OnInit {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  
   setupKeyForm: FormGroup
   keyTypes: any[]
   setupMethods: any[]
@@ -31,13 +29,13 @@ export class UserSshKeySetupDialogComponent implements OnInit {
     private clipboard: Clipboard
   ) {
     this.keyTypes = [
-      {value: 'rsa', viewValue: 'RSA'},
-      {value: 'ed25519', viewValue: 'ED25519'},
+      { value: 'rsa', viewValue: 'RSA' },
+      { value: 'ed25519', viewValue: 'ED25519' },
     ];
 
     this.setupMethods = [
-      {value: 'custom', viewValue: 'Custom'},
-      {value: 'generate', viewValue: 'Generate'},
+      { value: 'custom', viewValue: 'Custom' },
+      { value: 'generate', viewValue: 'Generate' },
     ];
   }
 
@@ -84,7 +82,7 @@ export class UserSshKeySetupDialogComponent implements OnInit {
   onCopyKey(value: string) {
     this.clipboard.copy(value);
 
-    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, { duration: environment.snackDuration });
   }
 
   onClickClose() {

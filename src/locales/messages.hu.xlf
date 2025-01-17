@@ -48,28 +48,24 @@
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can't make changes in the configuration!</source>
+        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can't make changes in the configuration!</source>
+        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
-        <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source>
-        <target state="translated">A munkamenet lejár <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
+        <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
+        <target state="translated">A munkamenet lejár <x id="PH" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
       </trans-unit>
       <trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source>
         <target state="translated">A munkamenet lejárt, kijelentkezett!</target>
       </trans-unit>
-      <trans-unit id="user delete" datatype="html">
+      <trans-unit id="delete user" datatype="html">
         <source>Delete user</source>
         <target state="translated">Felhasználó törlés</target>
-      </trans-unit>
-      <trans-unit id="user delete question" datatype="html">
-        <source>Do you want to delete the user?</source>
-        <target state="translated">Valóban törli a felhasználót?</target>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
@@ -276,18 +272,9 @@
         <source>Enable SSH connection</source>
         <target state="translated">SSH kapcsolat engedélyezett</target>
       </trans-unit>
-      <trans-unit id="failed save" datatype="html">
-        <source>Failed to save!</source>
-        <target state="translated">Nem sikerült elmenteni!</target>
-      </trans-unit>
-      <trans-unit id="sensor delete" datatype="html">
-        <source>Delete sensor</source>
-        <target state="translated">Érzékelő törlés</target>
-      </trans-unit>
-      <trans-unit id="2052630284425845150" datatype="html">
-        <source>Do you want to delete the zone?</source>
-        <target state="translated">Valóban törli ezt a zónát?</target>
-        <note priority="1" from="description">Zone delete question</note>
+      <trans-unit id="delete sensor" datatype="html">
+        <source>Delete Sensor</source>
+        <target state="translated">Érzékelő törlése</target>
       </trans-unit>
       <trans-unit id="zone alert enabled" datatype="html">
         <source>Alert enabled</source>
@@ -413,11 +400,7 @@
         <source>Alert type</source>
         <target state="translated">Riasztás típusa</target>
       </trans-unit>
-      <trans-unit id="yes button" datatype="html">
-        <source>Yes</source>
-        <target state="translated">Igen</target>
-      </trans-unit>
-      <trans-unit id="cancel button" datatype="html">
+      <trans-unit id="cancel" datatype="html">
         <source>Cancel</source>
         <target state="translated">Mégsem</target>
       </trans-unit>
@@ -455,21 +438,13 @@
         <target state="translated">Regisztrálás</target>
         <note priority="1" from="description">Register button</note>
       </trans-unit>
-      <trans-unit id="user card delete" datatype="html">
+      <trans-unit id="delete card" datatype="html">
         <source>Delete card</source>
         <target state="translated">Kártya törlése</target>
-      </trans-unit>
-      <trans-unit id="user card delete question" datatype="html">
-        <source>Are you sure to delete this card?</source>
-        <target state="translated">Biztos, hogy törölni akarod ezt a kártyát ?</target>
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
         <source>The user was not found!</source>
         <target state="translated">A felhasználó nem található!</target>
-      </trans-unit>
-      <trans-unit id="failed create" datatype="html">
-        <source>Failed to create!</source>
-        <target state="translated">Nem sikerült létrehozni!</target>
       </trans-unit>
       <trans-unit id="failed update" datatype="html">
         <source>Failed to update!</source>
@@ -478,10 +453,6 @@
       <trans-unit id="failed delete" datatype="html">
         <source>Failed to delete!</source>
         <target state="translated">Nem sikerült törölni!</target>
-      </trans-unit>
-      <trans-unit id="cant delete" datatype="html">
-        <source>Cant delete!</source>
-        <target state="translated">Nem lehetséges törölni!</target>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -543,16 +514,16 @@
         <source>Days</source>
         <target state="translated">Nap</target>
       </trans-unit>
-      <trans-unit id="user code copied" datatype="html">
+      <trans-unit id="copied to clipboard" datatype="html">
         <source>Copied to clipboard!</source>
         <target state="translated">Vágólapra került!</target>
       </trans-unit>
-      <trans-unit id="user unregister device" datatype="html">
+      <trans-unit id="unregister device" datatype="html">
         <source>Unregister device</source>
         <target state="translated">Regisztráció megszüntetése</target>
       </trans-unit>
-      <trans-unit id="user unregister question" datatype="html">
-        <source>Are you sure to unregister this device?</source>
+      <trans-unit id="unregister device message" datatype="html">
+        <source>Are you sure you want to unregister this device?</source>
         <target state="translated">Valóban meg akarod szüntetni az eszköz regisztrációját?</target>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
@@ -587,11 +558,6 @@
         <source>Save</source>
         <target state="translated">Mentés</target>
       </trans-unit>
-      <trans-unit id="7604311539351739136" datatype="html">
-        <source>Do you want to delete the sensor?</source>
-        <target state="translated">Valóban törli ezt az érzékelőt?</target>
-        <note priority="1" from="description">Sensor delete question</note>
-      </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
         <source>Zone</source>
         <target state="translated">Zóna</target>
@@ -608,9 +574,9 @@
         <source>Sensor type</source>
         <target state="translated">Érzékelő típusa</target>
       </trans-unit>
-      <trans-unit id="zone delete" datatype="html">
-        <source>Delete zone</source>
-        <target state="translated">Zóna törlés</target>
+      <trans-unit id="delete zone" datatype="html">
+        <source>Delete Zone</source>
+        <target state="translated">Zóna törlése</target>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
         <source>Starting up</source>
@@ -701,7 +667,7 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
         <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
@@ -864,14 +830,9 @@
         <source>Areas</source>
         <target state="translated">Területek</target>
       </trans-unit>
-      <trans-unit id="area delete" datatype="html">
-        <source>Delete area</source>
+      <trans-unit id="delete area" datatype="html">
+        <source>Delete Area</source>
         <target state="translated">Terület törlése</target>
-      </trans-unit>
-      <trans-unit id="317610987479889132" datatype="html">
-        <source>Do you want to delete the area?</source>
-        <target state="translated">Valóban törli ezt a területet?</target>
-        <note priority="1" from="description">Area delete question</note>
       </trans-unit>
       <trans-unit id="area not found" datatype="html">
         <source>The area was not found!</source>
@@ -977,14 +938,9 @@
         <source>Outputs</source>
         <target state="translated">Kimenetek</target>
       </trans-unit>
-      <trans-unit id="output delete" datatype="html">
-        <source>Delete output</source>
+      <trans-unit id="delete output" datatype="html">
+        <source>Delete Output</source>
         <target state="translated">Kimenet törlése</target>
-      </trans-unit>
-      <trans-unit id="8816088142158195091" datatype="html">
-        <source>Do you want to delete the output?</source>
-        <target state="translated">Valóban töröli a kimenetet?</target>
-        <note priority="1" from="description">Output delete question</note>
       </trans-unit>
       <trans-unit id="output channel" datatype="html">
         <source>Channel</source>
@@ -1083,8 +1039,8 @@
         <target state="translated">Monitor küszöbérték [%]</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
-        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
+        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
         <source>sensitivity: instant alert</source>
@@ -1165,10 +1121,6 @@
       <trans-unit id="user role" datatype="html">
         <source>Role</source>
         <target state="translated">Szerepkör</target>
-      </trans-unit>
-      <trans-unit id="user access code" datatype="html">
-        <source>Access code</source>
-        <target state="translated">Hozzáférés kód</target>
       </trans-unit>
       <trans-unit id="zone disarmed delay field" datatype="html">
         <source>Disarmed delay</source>
@@ -1362,11 +1314,6 @@
         <source>Failed to register!</source>
         <target state="translated">Sikertelen regisztráció!</target>
       </trans-unit>
-      <trans-unit id="1312262728455859711" datatype="html">
-        <source>Can't delete, system is not ready!</source>
-        <target state="translated">Nem lehetséges törölni, a rendszer nincs készenléti állapotban!</target>
-        <note priority="1" from="description">cant delete</note>
-      </trans-unit>
       <trans-unit id="installations menu link" datatype="html">
         <source>Installations</source>
         <target state="translated">Telepítések</target>
@@ -1418,6 +1365,110 @@
       <trans-unit id="login menu link" datatype="html">
         <source>Login</source>
         <target state="translated">Bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="my-user menu link" datatype="html">
+        <source>My user</source>
+        <target state="translated">Saját felhasználó</target>
+      </trans-unit>
+      <trans-unit id="unregister" datatype="html">
+        <source>Unregister</source>
+        <target state="translated">Regisztráció törlése</target>
+      </trans-unit>
+      <trans-unit id="user no cards" datatype="html">
+        <source>No cards registered</source>
+        <target state="translated">Nincs regisztrált kártya</target>
+      </trans-unit>
+      <trans-unit id="user no registration code" datatype="html">
+        <source>No registration code</source>
+        <target state="translated">Nincs regisztrációs kód</target>
+      </trans-unit>
+      <trans-unit id="user no ssh key" datatype="html">
+        <source>No SSH key</source>
+        <target state="translated">Nincs SSH kulcs</target>
+      </trans-unit>
+      <trans-unit id="delete user message" datatype="html">
+        <source>Are you sure you want to delete the user &quot;<x id="PH" equiv-text="this.user.name"/>&quot;?</source>
+        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="this.user.name"/>&quot; felhasználót?</target>
+      </trans-unit>
+      <trans-unit id="delete" datatype="html">
+        <source>Delete</source>
+        <target state="translated">Törlés</target>
+      </trans-unit>
+      <trans-unit id="user deleted" datatype="html">
+        <source>User deleted!</source>
+        <target state="translated">Felhasználó törölve!</target>
+      </trans-unit>
+      <trans-unit id="delete card message" datatype="html">
+        <source>Are you sure you want to delete this card?</source>
+        <target state="translated">Biztosan törölni akarod ezt a kártyát?</target>
+      </trans-unit>
+      <trans-unit id="card deleted" datatype="html">
+        <source>Card deleted!</source>
+        <target state="translated">Kártya törölve!</target>
+      </trans-unit>
+      <trans-unit id="delete registration code" datatype="html">
+        <source>Delete registration code</source>
+        <target state="translated">Regisztrációs kód törlése</target>
+      </trans-unit>
+      <trans-unit id="delete registration code message" datatype="html">
+        <source>Are you sure you want to delete the registration code?</source>
+        <target state="translated">Biztosan törölni akarod a regisztrációs kódot?</target>
+      </trans-unit>
+      <trans-unit id="delete ssh key" datatype="html">
+        <source>Delete SSH key</source>
+        <target state="translated">SSH kulcs törlése</target>
+      </trans-unit>
+      <trans-unit id="delete ssh key message" datatype="html">
+        <source>Are you sure you want to delete the SSH key?</source>
+        <target state="translated">Biztosan törölni akarod az SSH kulcsot?</target>
+      </trans-unit>
+      <trans-unit id="delete area message" datatype="html">
+        <source>Are you sure you want to delete the area &quot;<x id="PH" equiv-text="area.name"/>&quot;?</source>
+        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="area.name"/>&quot; területet?</target>
+      </trans-unit>
+      <trans-unit id="area deleted" datatype="html">
+        <source>Area deleted!</source>
+        <target state="translated">Terület törölve!</target>
+      </trans-unit>
+      <trans-unit id="cant delete state" datatype="html">
+        <source>Cannot delete while not in READY state!</source>
+        <target state="translated">Nem lehetséges törölni, amíg nincs KÉSZ állapotban!</target>
+      </trans-unit>
+      <trans-unit id="delete output message" datatype="html">
+        <source>Are you sure you want to delete the output &quot;<x id="PH" equiv-text="this.output.name"/>&quot;?</source>
+        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="this.output.name"/>&quot; kimenetet?</target>
+      </trans-unit>
+      <trans-unit id="output deleted" datatype="html">
+        <source>Output deleted!</source>
+        <target state="translated">Kimenet törölve!</target>
+      </trans-unit>
+      <trans-unit id="delete sensor message" datatype="html">
+        <source>Are you sure you want to delete the sensor &quot;<x id="PH" equiv-text="sensor.description"/>&quot;?</source>
+        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="sensor.description"/>&quot; érzékelőt?</target>
+      </trans-unit>
+      <trans-unit id="sensor deleted" datatype="html">
+        <source>Sensor deleted!</source>
+        <target state="translated">Érzékelő törölve!</target>
+      </trans-unit>
+      <trans-unit id="user old access code" datatype="html">
+        <source>Old access code</source>
+        <target state="translated">Régi hozzáférési kód</target>
+      </trans-unit>
+      <trans-unit id="user new access code" datatype="html">
+        <source>New access code</source>
+        <target state="translated">Új hozzáférési kód</target>
+      </trans-unit>
+      <trans-unit id="delete zone message" datatype="html">
+        <source>Are you sure you want to delete the zone &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</source>
+        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="zone.name"/>&quot; zónát?</target>
+      </trans-unit>
+      <trans-unit id="zone deleted" datatype="html">
+        <source>Zone deleted!</source>
+        <target state="translated">Zóna törölve!</target>
+      </trans-unit>
+      <trans-unit id="failed create" datatype="html">
+        <source>Failed to create!</source>
+        <target state="translated">Nem sikerült létrehozni!</target>
       </trans-unit>
     </body>
   </file>

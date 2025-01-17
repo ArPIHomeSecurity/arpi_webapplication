@@ -25,8 +25,6 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class AreaDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   areaId: number;
   area: Area = undefined;
@@ -109,18 +107,16 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const area = this.prepareArea();
     if (this.areaId != null) {
-      this.action = 'update';
       this.areaService.updateArea(area)
         .subscribe({
           next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     } else {
-      this.action = 'create';
       this.areaService.createArea(area)
         .subscribe({
           next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
   }

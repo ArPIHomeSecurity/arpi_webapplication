@@ -23,7 +23,6 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
@@ -239,9 +238,9 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+      this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, { duration: environment.snackDuration });
     } else if ($event.action === 'done') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, { duration: environment.snackDuration });
       this.logout();
     }
   }

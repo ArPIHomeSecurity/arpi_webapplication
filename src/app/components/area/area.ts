@@ -11,15 +11,12 @@ import { environment } from '@environments/environment';
   styleUrls: ['./area.scss']
 })
 export class AreaComponent implements OnInit {
-  @Input() area:Area;
-  @Input() delays:number[];
-  @Input() sensors:Sensor[];
-  @Input("data") sensorTypes:SensorType[];
+  @Input() area: Area;
+  @Input() delays: number[];
+  @Input() sensors: Sensor[];
+  @Input("data") sensorTypes: SensorType[];
   @Input() monitoringState: MONITORING_STATE;
 
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-
-  action: string;
   armTypes: any = ARM_TYPE;
   monitoringStates: any = MONITORING_STATE;
   expanded: boolean;
@@ -33,28 +30,25 @@ export class AreaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.expanded = localStorage.getItem('expanded_'+this.area.id) === 'true';
+    this.expanded = localStorage.getItem('expanded_' + this.area.id) === 'true';
   }
 
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
-      this.action = 'armed away';
       this.areaService.arm(this.area.id, ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.open($localize`:@@area armed away:Area armed away`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.STAY) {
-      this.action = 'armed stay';
       this.areaService.arm(this.area.id, ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.open($localize`:@@area armed stay:Area armed stay`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.DISARMED) {
-      this.action = 'disarmed';
       this.areaService.disarm(this.area.id)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration}));
+        .subscribe(() => this.snackBar.open($localize`:@@area disarmed:Area disarmed`, null, { duration: environment.snackDuration }));
     }
   }
 
   onToggle(expanded: boolean) {
     this.expanded = expanded;
-    localStorage.setItem('expanded_'+this.area.id, this.expanded.toString());
+    localStorage.setItem('expanded_' + this.area.id, this.expanded.toString());
   }
 
   hasAlertingSensor(): boolean {

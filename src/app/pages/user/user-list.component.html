@@ -6,6 +6,7 @@
       [canManageCards]="userCanEdit"
       [canManageSshKeys]="userCanEdit"
       [canManageUser]="userCanEdit"
+      [canManageRegistration]="userCanEdit"
       (onUserDeleted)="onUserDeleted($event)"
       (onNavigateToUserEdit)="navigateToUserEdit(user.id)">
 

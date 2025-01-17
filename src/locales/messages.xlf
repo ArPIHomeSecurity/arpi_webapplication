@@ -37,7 +37,7 @@
         <source>Logout</source>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
-        <source>Your session will expire in <x id="INTERPOLATION" equiv-text="{{ getSessionDuration() }}"/>!</source>
+        <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
       </trans-unit>
       <trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source>
@@ -65,9 +65,6 @@
       </trans-unit>
       <trans-unit id="save button" datatype="html">
         <source>Save</source>
-      </trans-unit>
-      <trans-unit id="failed save" datatype="html">
-        <source>Failed to save!</source>
       </trans-unit>
       <trans-unit id="network dns" datatype="html">
         <source>Dynamic DNS</source>
@@ -168,7 +165,7 @@
       <trans-unit id="message system not ready" datatype="html">
         <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
       </trans-unit>
-      <trans-unit id="user code copied" datatype="html">
+      <trans-unit id="copied to clipboard" datatype="html">
         <source>Copied to clipboard!</source>
       </trans-unit>
       <trans-unit id="arm away button" datatype="html">
@@ -270,17 +267,10 @@
       <trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source>
       </trans-unit>
-      <trans-unit id="sensor delete" datatype="html">
-        <source>Delete sensor</source>
+      <trans-unit id="delete sensor" datatype="html">
+        <source>Delete Sensor</source>
       </trans-unit>
-      <trans-unit id="7604311539351739136" datatype="html">
-        <source>Do you want to delete the sensor?</source>
-        <note priority="1" from="description">Sensor delete question</note>
-      </trans-unit>
-      <trans-unit id="yes button" datatype="html">
-        <source>Yes</source>
-      </trans-unit>
-      <trans-unit id="cancel button" datatype="html">
+      <trans-unit id="cancel" datatype="html">
         <source>Cancel</source>
       </trans-unit>
       <trans-unit id="sensor channel" datatype="html">
@@ -334,17 +324,11 @@
       <trans-unit id="sensor not found" datatype="html">
         <source>The sensor was not found!</source>
       </trans-unit>
-      <trans-unit id="failed create" datatype="html">
-        <source>Failed to create!</source>
-      </trans-unit>
       <trans-unit id="failed update" datatype="html">
         <source>Failed to update!</source>
       </trans-unit>
       <trans-unit id="failed delete" datatype="html">
         <source>Failed to delete!</source>
-      </trans-unit>
-      <trans-unit id="cant delete" datatype="html">
-        <source>Cant delete!</source>
       </trans-unit>
       <trans-unit id="sensor motion" datatype="html">
         <source>Motion</source>
@@ -364,17 +348,11 @@
       <trans-unit id="sensor disable" datatype="html">
         <source>Disabled</source>
       </trans-unit>
-      <trans-unit id="user card delete" datatype="html">
+      <trans-unit id="delete card" datatype="html">
         <source>Delete card</source>
       </trans-unit>
-      <trans-unit id="user card delete question" datatype="html">
-        <source>Are you sure to delete this card?</source>
-      </trans-unit>
-      <trans-unit id="user delete" datatype="html">
+      <trans-unit id="delete user" datatype="html">
         <source>Delete user</source>
-      </trans-unit>
-      <trans-unit id="user delete question" datatype="html">
-        <source>Do you want to delete the user?</source>
       </trans-unit>
       <trans-unit id="user name" datatype="html">
         <source>Name</source>
@@ -418,11 +396,11 @@
       <trans-unit id="expiry days" datatype="html">
         <source>Days</source>
       </trans-unit>
-      <trans-unit id="user unregister device" datatype="html">
+      <trans-unit id="unregister device" datatype="html">
         <source>Unregister device</source>
       </trans-unit>
-      <trans-unit id="user unregister question" datatype="html">
-        <source>Are you sure to unregister this device?</source>
+      <trans-unit id="unregister device message" datatype="html">
+        <source>Are you sure you want to unregister this device?</source>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
         <source>Administrator</source>
@@ -448,12 +426,8 @@
       <trans-unit id="user no users" datatype="html">
         <source>No users found</source>
       </trans-unit>
-      <trans-unit id="zone delete" datatype="html">
-        <source>Delete zone</source>
-      </trans-unit>
-      <trans-unit id="2052630284425845150" datatype="html">
-        <source>Do you want to delete the zone?</source>
-        <note priority="1" from="description">Zone delete question</note>
+      <trans-unit id="delete zone" datatype="html">
+        <source>Delete Zone</source>
       </trans-unit>
       <trans-unit id="name" datatype="html">
         <source>Name</source>
@@ -647,18 +621,14 @@
       <trans-unit id="events armed by" datatype="html">
         <source>Armed by</source>
       </trans-unit>
-      <trans-unit id="317610987479889132" datatype="html">
-        <source>Do you want to delete the area?</source>
-        <note priority="1" from="description">Area delete question</note>
-      </trans-unit>
       <trans-unit id="area armed away" datatype="html">
         <source>Area armed away</source>
       </trans-unit>
       <trans-unit id="area armed stay" datatype="html">
         <source>Area armed stay</source>
       </trans-unit>
-      <trans-unit id="area delete" datatype="html">
-        <source>Delete area</source>
+      <trans-unit id="delete area" datatype="html">
+        <source>Delete Area</source>
       </trans-unit>
       <trans-unit id="area disarmed" datatype="html">
         <source>Area disarmed</source>
@@ -732,10 +702,6 @@
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
       </trans-unit>
-      <trans-unit id="8816088142158195091" datatype="html">
-        <source>Do you want to delete the output?</source>
-        <note priority="1" from="description">Output delete question</note>
-      </trans-unit>
       <trans-unit id="output area" datatype="html">
         <source>Area</source>
       </trans-unit>
@@ -751,8 +717,8 @@
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
       </trans-unit>
-      <trans-unit id="output delete" datatype="html">
-        <source>Delete output</source>
+      <trans-unit id="delete output" datatype="html">
+        <source>Delete Output</source>
       </trans-unit>
       <trans-unit id="output disconnected" datatype="html">
         <source>Disconnected</source>
@@ -873,9 +839,6 @@
       </trans-unit>
       <trans-unit id="area" datatype="html">
         <source>Area</source>
-      </trans-unit>
-      <trans-unit id="user access code" datatype="html">
-        <source>Access code</source>
       </trans-unit>
       <trans-unit id="user role" datatype="html">
         <source>Role</source>
@@ -1024,10 +987,6 @@
       <trans-unit id="card registered" datatype="html">
         <source>Card registered!</source>
       </trans-unit>
-      <trans-unit id="1312262728455859711" datatype="html">
-        <source>Can&apos;t delete, system is not ready!</source>
-        <note priority="1" from="description">cant delete</note>
-      </trans-unit>
       <trans-unit id="installations menu link" datatype="html">
         <source>Installations</source>
       </trans-unit>
@@ -1066,6 +1025,84 @@
       </trans-unit>
       <trans-unit id="login menu link" datatype="html">
         <source>Login</source>
+      </trans-unit>
+      <trans-unit id="area deleted" datatype="html">
+        <source>Area deleted!</source>
+      </trans-unit>
+      <trans-unit id="cant delete state" datatype="html">
+        <source>Cannot delete while not in READY state!</source>
+      </trans-unit>
+      <trans-unit id="card deleted" datatype="html">
+        <source>Card deleted!</source>
+      </trans-unit>
+      <trans-unit id="delete" datatype="html">
+        <source>Delete</source>
+      </trans-unit>
+      <trans-unit id="delete area message" datatype="html">
+        <source>Are you sure you want to delete the area &quot;<x id="PH" equiv-text="area.name"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="delete card message" datatype="html">
+        <source>Are you sure you want to delete this card?</source>
+      </trans-unit>
+      <trans-unit id="delete output message" datatype="html">
+        <source>Are you sure you want to delete the output &quot;<x id="PH" equiv-text="this.output.name"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="delete registration code" datatype="html">
+        <source>Delete registration code</source>
+      </trans-unit>
+      <trans-unit id="delete registration code message" datatype="html">
+        <source>Are you sure you want to delete the registration code?</source>
+      </trans-unit>
+      <trans-unit id="delete sensor message" datatype="html">
+        <source>Are you sure you want to delete the sensor &quot;<x id="PH" equiv-text="sensor.description"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="delete ssh key" datatype="html">
+        <source>Delete SSH key</source>
+      </trans-unit>
+      <trans-unit id="delete ssh key message" datatype="html">
+        <source>Are you sure you want to delete the SSH key?</source>
+      </trans-unit>
+      <trans-unit id="delete user message" datatype="html">
+        <source>Are you sure you want to delete the user &quot;<x id="PH" equiv-text="this.user.name"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="delete zone message" datatype="html">
+        <source>Are you sure you want to delete the zone &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="my-user menu link" datatype="html">
+        <source>My user</source>
+      </trans-unit>
+      <trans-unit id="output deleted" datatype="html">
+        <source>Output deleted!</source>
+      </trans-unit>
+      <trans-unit id="sensor deleted" datatype="html">
+        <source>Sensor deleted!</source>
+      </trans-unit>
+      <trans-unit id="unregister" datatype="html">
+        <source>Unregister</source>
+      </trans-unit>
+      <trans-unit id="user deleted" datatype="html">
+        <source>User deleted!</source>
+      </trans-unit>
+      <trans-unit id="user new access code" datatype="html">
+        <source>New access code</source>
+      </trans-unit>
+      <trans-unit id="user no cards" datatype="html">
+        <source>No cards registered</source>
+      </trans-unit>
+      <trans-unit id="user no registration code" datatype="html">
+        <source>No registration code</source>
+      </trans-unit>
+      <trans-unit id="user no ssh key" datatype="html">
+        <source>No SSH key</source>
+      </trans-unit>
+      <trans-unit id="user old access code" datatype="html">
+        <source>Old access code</source>
+      </trans-unit>
+      <trans-unit id="zone deleted" datatype="html">
+        <source>Zone deleted!</source>
+      </trans-unit>
+      <trans-unit id="failed create" datatype="html">
+        <source>Failed to create!</source>
       </trans-unit>
     </body>
   </file>

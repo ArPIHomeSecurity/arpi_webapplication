@@ -21,7 +21,7 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
+
   syrenForm: FormGroup;
   syren: Option;
   sensitivity: Option;
@@ -168,9 +168,9 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
       alertSensitivity: this.configurationService.setOption('alert', 'sensitivity', this.prepareAlertSensitivity())
     })
       .pipe(finalize(() => this.loader.disable(false)))
-      .subscribe(
-        _ => this.updateComponent(),
-        _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-      );
+      .subscribe({
+        next: _ => this.updateComponent(),
+        error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+      });
   }
 }

@@ -49,8 +49,6 @@ class SensorInfo {
   providers: []
 })
 export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   sensorId: number;
   sensor: Sensor = undefined;
@@ -287,7 +285,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     if (this.sensor.zoneId === -1 || this.sensor.areaId === -1) {
-      this.action = 'create';
       forkJoin({
         resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : of(null),
         resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : of(null)
@@ -302,7 +299,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
             }
 
             if (this.sensor.id !== undefined) {
-              this.action = 'update';
               return this.sensorService.updateSensor(sensor)
                 .subscribe(_ => this.router.navigate(['/sensors']));
             }
@@ -310,23 +306,21 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
             return this.sensorService.createSensor(sensor)
               .subscribe(_ => this.router.navigate(['/sensors']));
           },
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
     else if (this.sensorId != null) {
-      this.action = 'update';
       this.sensorService.updateSensor(sensor)
         .subscribe({
           next: () => this.router.navigate(['/sensors']),
-          error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: () => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     }
     else {
-      this.action = 'create';
       this.sensorService.createSensor(sensor)
         .subscribe({
           next: () => this.router.navigate(['/sensors']),
-          error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: () => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
   }

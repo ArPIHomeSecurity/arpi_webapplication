@@ -18,7 +18,7 @@
         <mat-form-field *ngIf="isMyProfile">
           <mat-label i18n="@@user old access code">Old access code</mat-label>
           <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="10" digitOnly
-            i18n-placeholder="@@user old code" placeholder="Old access code" formControlName="oldAccessCode"
+            i18n-placeholder="@@user old access code" placeholder="Old access code" formControlName="oldAccessCode"
             [type]="hideOld ? 'password' : 'text'">
           <mat-icon matSuffix (click)="hideOld = !hideOld">{{hideOld ? 'visibility_off' : 'visibility'}}</mat-icon>
           <mat-error

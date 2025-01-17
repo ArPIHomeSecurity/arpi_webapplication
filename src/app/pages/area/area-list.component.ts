@@ -24,8 +24,6 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   CONFIG = 0;
   SENSORS = 1;

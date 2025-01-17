@@ -18,8 +18,6 @@ import { CapacitorService } from '@app/services/capacitor.service';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   alert: Alert;
   armTypes: any = ARM_TYPE;
@@ -230,17 +228,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
-      this.action = 'armed away';
       this.monitoringService.arm(ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home armed away:System armed away`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.STAY) {
-      this.action = 'armed stay';
       this.monitoringService.arm(ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home armed stay:System armed stay`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.DISARMED) {
-      this.action = 'disarmed';
       this.monitoringService.disarm()
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home disarmed:System disarmed`, null, { duration: environment.snackDuration }));
     }
   }
 

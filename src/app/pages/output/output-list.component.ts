@@ -24,10 +24,8 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
 
-  action: string;
   outputs: Output[] = null;
   areas: Area[] = [];
   outputTypes = OutputType;

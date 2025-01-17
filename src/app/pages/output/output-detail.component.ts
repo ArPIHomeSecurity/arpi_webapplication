@@ -33,8 +33,6 @@ class ChannelOption {
   providers: []
 })
 export class OutputDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   outputId: number;
   output: Output = undefined;
@@ -162,20 +160,18 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   onSubmit() {
     const output = this.prepareOutput();
     if (this.outputId != null) {
-      this.action = 'update';
       this.outputService.updateOutput(output)
         .subscribe({
           next: _ => this.router.navigate(['/outputs']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     } else {
       output.state = output.defaultState;
-      this.action = 'create';
       this.outputService.createOutput(output)
-        .subscribe(
-          _ => this.router.navigate(['/outputs']),
-          _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-        );
+        .subscribe({
+          next: _ => this.router.navigate(['/outputs']),
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
+        });
     }
   }
 

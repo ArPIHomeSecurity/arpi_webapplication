@@ -24,8 +24,6 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   CONFIG = 0;
   SENSORS = 1;
@@ -133,13 +131,13 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@zone deleted:Zone deleted`, '', { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, '', { duration: environment.snackDuration });
                 this.updateComponent();
               },
               error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, '', { duration: environment.snackDuration })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete:Cannot delete zone while not in READY state!`, '', { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, '', { duration: environment.snackDuration });
         }
       }
     });

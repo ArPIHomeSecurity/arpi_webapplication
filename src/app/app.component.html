@@ -175,8 +175,3 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-
-<ng-template #snackbarTemplate>
-  <div *ngIf="isSessionValid" i18n="@@session expiry">Your session will expire in {{ getSessionDuration() }}!</div>
-  <div *ngIf="!isSessionValid" i18n="@@session expired">Your session expired, logged out!</div>
-</ng-template>

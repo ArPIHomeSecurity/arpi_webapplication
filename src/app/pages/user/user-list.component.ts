@@ -23,7 +23,6 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   readonly roleTypes = ROLE_TYPES;
   users: User[] = null;
