@@ -79,7 +79,7 @@
               <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
               <span *ngIf="!event.arm && !event.disarm">{{ event.alert?.startTime | date: 'longDate' }}</span>
-              <mat-icon *ngIf="event.alert" [ngStyle]="{'color': event.disarm?.time != null ? 'red' : ''}">warning</mat-icon>
+              <mat-icon *ngIf="event.alert" [ngStyle]="{'color': event.disarm?.time == null ? 'white' : 'red', 'margin': '10px'}">warning</mat-icon>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
