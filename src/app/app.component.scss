@@ -176,6 +176,9 @@
     flex-direction: column;
 
     .links, .versions {
+      a {
+        color: white;
+      }
       margin: auto;
     }
   
@@ -195,6 +198,9 @@
     flex-direction: row;
 
     .links {
+      a {
+        color: white;
+      }
       margin: auto;
     }
   
