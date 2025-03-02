@@ -36,7 +36,6 @@ mat-expansion-panel.alerting {
 .event-list {
   margin-right: auto;
   margin-left: auto;
-  width: 1000px;
 
   .arm-icon {
     width: 48px;
@@ -152,4 +151,17 @@ mat-expansion-panel.alerting {
   text-align: left;
   text-overflow: ellipsis;
   word-wrap: normal;
+}
+
+::ng-deep .small-screen {
+  .event-list {
+    width: 450px;
+  }
+}
+
+::ng-deep .large-screen {
+  .event-list {
+    // the same as the container
+    width: 600px;
+  }
 }
