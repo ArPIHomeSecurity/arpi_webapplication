@@ -7,7 +7,7 @@
   (longPressAvailable)="onLongPressAvailable($event)"
   long-press-toggle
 >
-  {{output.name}} ({{output.state}})
+  {{output.name}}
   <mat-progress-spinner *ngIf="output.duration !== ENDLESS_DURATION && output.state"
     diameter="25" color="primary" mode="indeterminate">
   </mat-progress-spinner>
