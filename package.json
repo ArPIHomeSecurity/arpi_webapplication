@@ -18,7 +18,7 @@
     "serve-capacitor": "scripts/serve.sh dist-capacitor/browser",
     "serve-capacitor-dev": "scripts/serve.sh dist-capacitor-dev/browser",
     "release-remote": "scripts/release-remote.sh",
-    "bump-version": "scripts/bump-version.py"
+    "bump-version": "scripts/bump_version.py"
   },
   "private": true,
   "dependencies": {

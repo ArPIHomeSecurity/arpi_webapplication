@@ -49,7 +49,7 @@
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
-        <target state="new">La sessione scadrà tra <x id="PH" equiv-text="{{ getSessionDuration() }}"/>!</target>
+        <target state="translated">La sessione scadrà tra <x id="PH" equiv-text="this.getSessionDuration()"/>!</target>
       </trans-unit>
       <trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source>
@@ -1380,7 +1380,7 @@
       </trans-unit>
       <trans-unit id="user deleted" datatype="html">
         <source>User deleted!</source>
-        <target state="new">User deleted!</target>
+        <target state="translated">Utente cancellato!</target>
       </trans-unit>
       <trans-unit id="delete card message" datatype="html">
         <source>Are you sure you want to delete this card?</source>
@@ -1448,7 +1448,7 @@
       </trans-unit>
       <trans-unit id="zone deleted" datatype="html">
         <source>Zone deleted!</source>
-        <target state="new">Zone deleted!</target>
+        <target state="translated">Zona cancellata!</target>
       </trans-unit>
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
@@ -1468,19 +1468,19 @@
       </trans-unit>
       <trans-unit id="backend error suggestion 1" datatype="html">
         <source>The location configuration is correct</source>
-        <target state="new">The location configuration is correct</target>
+        <target state="translated">La configurazione della posizione è corretta</target>
       </trans-unit>
       <trans-unit id="backend error suggestion 2" datatype="html">
         <source>Your network connection is working</source>
-        <target state="new">Your network connection is working</target>
+        <target state="translated">La connessione di rete funziona</target>
       </trans-unit>
       <trans-unit id="backend error suggestion 3" datatype="html">
         <source>The backend is not blocked by a firewall</source>
-        <target state="new">The backend is not blocked by a firewall</target>
+        <target state="translated">Il backend non è bloccato da un firewall</target>
       </trans-unit>
       <trans-unit id="backend error reload" datatype="html">
         <source>Try to reconnect</source>
-        <target state="new">Try to reconnect</target>
+        <target state="translated">Prova a riconnetterti</target>
       </trans-unit>
       <trans-unit id="backend error locations" datatype="html">
         <source>Edit locations</source>
@@ -1488,7 +1488,7 @@
       </trans-unit>
       <trans-unit id="location version" datatype="html">
         <source>Version:</source>
-        <target state="new">Version:</target>
+        <target state="translated">Versione:</target>
       </trans-unit>
       <trans-unit id="location device not registered" datatype="html">
         <source>Device NOT registered</source>
@@ -1496,7 +1496,7 @@
       </trans-unit>
       <trans-unit id="location not found" datatype="html">
         <source>The location was not found!</source>
-        <target state="new">The location was not found!</target>
+        <target state="translated">La posizione non è stata trovata!</target>
       </trans-unit>
       <trans-unit id="location already exists" datatype="html">
         <source>Location already exists!</source>
