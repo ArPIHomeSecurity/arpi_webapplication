@@ -1314,10 +1314,6 @@
         <source>Failed to register!</source>
         <target state="translated">Sikertelen regisztráció!</target>
       </trans-unit>
-      <trans-unit id="installations menu link" datatype="html">
-        <source>Installations</source>
-        <target state="translated">Telepítések</target>
-      </trans-unit>
       <trans-unit id="setup menu link" datatype="html">
         <source>Setup</source>
         <target state="translated">Beállítás</target>
@@ -1326,39 +1322,27 @@
         <source>Certificate email</source>
         <target state="translated">Tanúsítvány email</target>
       </trans-unit>
-      <trans-unit id="setup backend" datatype="html">
-        <source>Setup backend</source>
-        <target state="translated">Backend beállítása</target>
-      </trans-unit>
-      <trans-unit id="setup version" datatype="html">
-        <source>Version: <x id="INTERPOLATION" equiv-text="{{installation.version}}"/></source>
-        <target state="translated">Verzió: <x id="INTERPOLATION" equiv-text="{{installation.version}}"/></target>
-      </trans-unit>
-      <trans-unit id="setup device registered" datatype="html">
+      <trans-unit id="location device registered" datatype="html">
         <source>Device registered</source>
         <target state="translated">Eszköz regisztráció</target>
       </trans-unit>
-      <trans-unit id="setup installation" datatype="html">
-        <source>Installation: <x id="INTERPOLATION" equiv-text="{{installation.name}}"/></source>
-        <target state="translated">Telepítés: <x id="INTERPOLATION" equiv-text="{{installation.name}}"/></target>
-      </trans-unit>
-      <trans-unit id="setup name" datatype="html">
+      <trans-unit id="location name" datatype="html">
         <source>Name</source>
         <target state="translated">Név</target>
       </trans-unit>
-      <trans-unit id="setup primary domain" datatype="html">
+      <trans-unit id="location primary domain" datatype="html">
         <source>Primary Domain</source>
         <target state="translated">Elsődleges Domain</target>
       </trans-unit>
-      <trans-unit id="setup check" datatype="html">
+      <trans-unit id="location check" datatype="html">
         <source>Check API version and certificate</source>
         <target state="translated">API verzió és tanúsítvány ellenörzése</target>
       </trans-unit>
-      <trans-unit id="setup port" datatype="html">
+      <trans-unit id="location port" datatype="html">
         <source>Port</source>
         <target state="translated">Port</target>
       </trans-unit>
-      <trans-unit id="setup secondary domain" datatype="html">
+      <trans-unit id="location secondary domain" datatype="html">
         <source>Secondary Domain</source>
         <target state="translated">Másodlagos Domain</target>
       </trans-unit>
@@ -1469,6 +1453,78 @@
       <trans-unit id="failed create" datatype="html">
         <source>Failed to create!</source>
         <target state="translated">Nem sikerült létrehozni!</target>
+      </trans-unit>
+      <trans-unit id="locations menu link" datatype="html">
+        <source>Locations</source>
+        <target state="translated">Helyszínek</target>
+      </trans-unit>
+      <trans-unit id="backend error message" datatype="html">
+        <source>Connecting to the backend failed!</source>
+        <target state="translated">A backendhez való csatlakozás sikertelen!</target>
+      </trans-unit>
+      <trans-unit id="backend error suggestion" datatype="html">
+        <source>Check the followings:</source>
+        <target state="translated">Ellenőrizze a következőket:</target>
+      </trans-unit>
+      <trans-unit id="backend error suggestion 1" datatype="html">
+        <source>The location configuration is correct</source>
+        <target state="translated">Helyszín beállítások helyessége</target>
+      </trans-unit>
+      <trans-unit id="backend error suggestion 2" datatype="html">
+        <source>Your network connection is working</source>
+        <target state="translated">A hálózat elérhető</target>
+      </trans-unit>
+      <trans-unit id="backend error suggestion 3" datatype="html">
+        <source>The backend is not blocked by a firewall</source>
+        <target state="translated">A tűzfal blokkolja a backend-et</target>
+      </trans-unit>
+      <trans-unit id="backend error reload" datatype="html">
+        <source>Try to reconnect</source>
+        <target state="translated">Újracsatlakozás</target>
+      </trans-unit>
+      <trans-unit id="backend error locations" datatype="html">
+        <source>Edit locations</source>
+        <target state="translated">Helyszínek szerkesztése</target>
+      </trans-unit>
+      <trans-unit id="location version" datatype="html">
+        <source>Version:</source>
+        <target state="translated">Verzió:</target>
+      </trans-unit>
+      <trans-unit id="location device not registered" datatype="html">
+        <source>Device NOT registered</source>
+        <target state="translated">NEM regisztrált eszköz</target>
+      </trans-unit>
+      <trans-unit id="location not found" datatype="html">
+        <source>The location was not found!</source>
+        <target state="translated">A helyszín nem található!</target>
+      </trans-unit>
+      <trans-unit id="location already exists" datatype="html">
+        <source>Location already exists!</source>
+        <target state="translated">A helyszín már létezik!</target>
+      </trans-unit>
+      <trans-unit id="delete location" datatype="html">
+        <source>Delete Location</source>
+        <target state="translated">Hely törlése</target>
+      </trans-unit>
+      <trans-unit id="delete location message" datatype="html">
+        <source>Are you sure you want to delete the location &quot;<x id="PH" equiv-text="this.location.name"/>&quot;?</source>
+        <target state="translated">Biztos, hogy törölni akarja a &quot;<x id="PH" equiv-text="this.location.name"/>&quot; helyet?</target>
+      </trans-unit>
+      <trans-unit id="location backend" datatype="html">
+        <source>Location backend</source>
+        <target state="translated">Helyszín backend</target>
+      </trans-unit>
+      <trans-unit id="location location" datatype="html">
+        <source>Location: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></source>
+        <target state="translated">Helyszín: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></target>
+      </trans-unit>
+      <trans-unit id="location primary url" datatype="html">
+        <source>Primary URL</source>
+        <target state="translated">Elsődleges URL</target>
+      </trans-unit>
+      <trans-unit id="location secondary url" datatype="html">
+        <source>Secondary URL</source>
+        <target state="translated">Másodlagos URL</target>
       </trans-unit>
     </body>
   </file>

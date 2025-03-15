@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Installation, Option } from '@app/models';
+import { Location, Option } from '@app/models';
 
 
 export interface ConfigurationService {
@@ -23,7 +23,7 @@ export interface ConfigurationService {
 
   getPublicAccess(): Observable<boolean>;
 
-  getInstallation(): Observable<Installation>;
+  getLocation(): Observable<Location>;
 
-  getInstallationId(): Observable<string>;
+  getLocationId(): Observable<string>;
 }

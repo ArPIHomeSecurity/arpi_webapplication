@@ -1,8 +1,6 @@
 
-export class Installation {
-  id: number;
-  installationId: string | null;
-  version: string;
+export class Location {
+  id: string | null;
   name: string;
   scheme: string = 'https';
   primaryDomain: string = '';

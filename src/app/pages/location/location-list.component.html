@@ -1,0 +1,120 @@
+<div class="container">
+  <div *ngIf="locations">
+    <form class="form-group" #locationsForm="ngForm" cdkDropList (cdkDropListDropped)="onDrop($event)"
+      [cdkDropListDisabled]="!isMultiLocation">
+      <mat-card *ngFor="let location of locations; let index = index; trackBy:getLocationKey"
+        id="location-{{location.id}}" cdkDrag (cdkDragStarted)="onDragStarted($event)"
+        class="container-item location-form">
+
+        <mat-card-header *ngIf="!isMultiLocation">
+          <div mat-card-avatar [ngClass]="{'registered': isRegistered(location.id), 'not-registered': !isRegistered(location.id)}">
+            <mat-icon>location_on</mat-icon>
+          </div>
+          <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
+          <mat-card-subtitle *ngIf="location.version != null" i18n="@@location version">Version:
+            {{location.version}}</mat-card-subtitle>
+          <mat-card-subtitle>
+            <span *ngIf="isRegistered(location.id) === true">
+              <span i18n="@@location device registered">Device registered</span>
+            </span>
+            <span *ngIf="isRegistered(location.id) === false">
+              <span i18n="@@location device not registered">Device NOT registered</span>
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-header *ngIf="isMultiLocation">
+          <div mat-card-avatar [ngClass]="{'registered': isRegistered(location.id), 'not-registered': !isRegistered(location.id)}">
+            <mat-icon>location_on</mat-icon>
+          </div>
+          <mat-card-title i18n="@@location location">Location: {{location.name}}</mat-card-title>
+          <mat-card-subtitle *ngIf="location.id != null">ID: {{location.id}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="location.version != null" i18n="@@location version">Version:
+            {{location.version}}</mat-card-subtitle>
+          <mat-card-subtitle>
+            <span *ngIf="isRegistered(location.id) === true">
+              <span i18n="@@location device registered">Device registered</span>
+            </span>
+            <span *ngIf="isRegistered(location.id) === false">
+              <span i18n="@@location device not registered">Device NOT registered</span>
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item class="primary">
+              <mat-icon *ngIf="getTestResult(location.id) === null" matListItemIcon>link</mat-icon>
+              <mat-spinner matListItemIcon
+                *ngIf="getTestResult(location.id) !== null && getTestResult(location.id)?.primary === null"
+                diameter="16" />
+              <mat-icon *ngIf="getTestResult(location.id)?.primary === true" matListItemIcon
+                class="icon-accessible">check_circle</mat-icon>
+              <mat-icon *ngIf="getTestResult(location.id)?.primary === false" matListItemIcon
+                class="icon-inaccessible">error</mat-icon>
+              <div matListItemTitle i18n="@@location primary domain">Primary URL</div>
+              <div matListItemLine>{{'https://' + location.primaryDomain + ':' + location.primaryPort}}</div>
+              <div matListItemLine
+                *ngIf="showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).primary === false">
+                <a href="https://{{location.primaryDomain}}:{{location.primaryPort}}/api/version" target="_blank"
+                  class="test-link">
+                  <span i18n="@@location check">Check API version and certificate</span><mat-icon>open_in_new</mat-icon>
+                </a>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item class="secondary">
+              <mat-icon *ngIf="getTestResult(location.id) === null" matListItemIcon>link</mat-icon>
+              <mat-spinner matListItemIcon
+                *ngIf="getTestResult(location.id) !== null && getTestResult(location.id)?.secondary === null"
+                diameter="16" />
+              <mat-icon *ngIf="getTestResult(location.id)?.secondary === true" matListItemIcon
+                class="icon-accessible">check_circle</mat-icon>
+              <mat-icon *ngIf="getTestResult(location.id)?.secondary === false" matListItemIcon
+                class="icon-inaccessible">error</mat-icon>
+              <div matListItemTitle i18n="@@location secondary domain">Secondary URL</div>
+              <div matListItemLine>{{'https://' + location.secondaryDomain + ':' + location.secondaryPort}}</div>
+              <div matListItemLine
+                *ngIf="showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).secondary === false">
+                <a href="https://{{location.secondaryDomain}}:{{location.secondaryPort}}/api/version" target="_blank"
+                  class="test-link">
+                  <span i18n="@@location check">Check API version and certificate</span><mat-icon>open_in_new</mat-icon>
+                </a>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions>
+          <button *ngIf="isMultiLocation" mat-icon-button cdkDragHandle class="drag-handle">
+            <mat-icon>drag_indicator</mat-icon>
+          </button>
+
+          <button mat-icon-button [routerLink]="['/location', location.id]"
+            color="primary"><mat-icon>mode_edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="executeLocationTest(location)"
+            [disabled]="locationsForm.invalid">
+            <mat-icon>search</mat-icon>
+          </button>
+
+          <button *ngIf="locations.length > 1" mat-icon-button color="warn" (click)="openDeleteDialog(location.id)"
+            [disabled]="selectedLocationId === location.id">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
+
+<div class="list-actions">
+  <button *ngIf="isMultiLocation" class="list-action" mat-fab color="accent" routerLink="/location/add">
+    <mat-icon matListItemIcon>add</mat-icon>
+  </button>
+</div>

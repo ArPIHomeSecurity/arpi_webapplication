@@ -23,7 +23,7 @@ export interface AuthenticationService {
 
   isSessionValid(): Observable<boolean>;
 
-  getDeviceToken(installationId?: string): string;
+  getDeviceToken(locationId?: string): string;
 
   registerDevice(registrationCode: string): Observable<boolean>;
 

@@ -11,6 +11,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { CountdownModule } from 'ngx-countdown';
 
 // application components
+import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 import { LoginComponent } from './pages/login';
 import { HomeComponent } from './pages/home';
 import { ClockComponent } from './pages/config/clock';
@@ -21,11 +22,12 @@ import { KeypadComponent } from './pages/config/keypad';
 import { SensorListComponent, SensorDetailComponent } from './pages/sensor';
 import { ZoneListComponent, ZoneDetailComponent } from './pages/zone';
 import { AreaListComponent, AreaDetailComponent } from './pages/area';
-import { SetupComponent } from './pages/setup/setup.component';
+import { LocationListComponent, LocationDetailsComponent } from './pages/location';
 import { UserListComponent, UserDetailComponent } from './pages/user';
 import { SystemStateComponent } from './components/system-state/system-state.component';
 import { UserCardComponent } from './components/user/user-card/user-card.component';
 import { MyUserComponent } from './pages/my-user/my-user.component';
+import { MessageComponent } from './components/message/message.component';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
 import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
@@ -81,29 +83,33 @@ import { LongPressToggleDirective } from './directives';
 @NgModule({
   declarations: [
     AppComponent,
+    BackendErrorComponent,
     LoginComponent,
-    SetupComponent,
     HomeComponent,
     ControllerComponent,
     QuestionDialogComponent,
-
+    MessageComponent,
+    
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
-
+    
     UserCardComponent,
     UserListComponent,
     UserDetailComponent,
     UserDeviceRegistrationDialogComponent,
     UserSshKeySetupDialogComponent,
     MyUserComponent,
-
+    
     AreaComponent,
     AreaListComponent,
     AreaDetailComponent,
+
+    LocationDetailsComponent,
+    LocationListComponent,
 
     OutputComponent,
     OutputListComponent,

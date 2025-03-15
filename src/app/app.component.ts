@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
-  installations: { name: string, id: number }[] = [];
-  selectedInstallationId: number;
+  locations: { name: string, id: string }[] = [];
+  selectedLocationId: string;
 
   locales = [
     { name: 'Magyar', id: 'hu' },
@@ -44,7 +44,10 @@ export class AppComponent implements OnInit {
     serverVersion: string;
     webapplicationVersion: string;
   };
-  environment = environment;
+
+  isMultiLocation = environment.isMultiLocation;
+  demoMode = environment.demo;
+
   countdownConfig = {
     leftTime: environment.userTokenExpiry,
     format: 'mm:ss',
@@ -132,26 +135,19 @@ export class AppComponent implements OnInit {
         this.isDeviceRegistered = isRegistered;
       });
 
-    const installations = localStorage.getItem('installations');
-    if (installations) {
-      this.installations = JSON.parse(installations)
+    const locations = localStorage.getItem('locations');
+    if (locations) {
+      this.locations = JSON.parse(locations)
         .sort((a, b) => a.order - b.order)
         .map(i => ({ name: i.name, id: i.id }));
     }
     else {
-      this.installations = [];
+      this.locations = [];
     }
 
-    this.selectedInstallationId = parseInt(localStorage.getItem('selectedInstallationId'));
-    if (isNaN(this.selectedInstallationId)) {
-      this.selectedInstallationId = null;
-    }
+    this.selectedLocationId = localStorage.getItem('selectedLocationId');
 
     fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
-  }
-
-  isMultiInstallation() {
-    return environment.isMultiInstallation;
   }
 
   isLoggedIn() {
@@ -171,11 +167,11 @@ export class AppComponent implements OnInit {
     return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
   }
 
-  getInstallationName() {
-    if (this.selectedInstallationId !== null) {
-      const installation = this.installations.find(i => i.id === this.selectedInstallationId);
-      if (installation) {
-        return installation.name;
+  getLocationName() {
+    if (this.selectedLocationId !== null) {
+      const location = this.locations.find(i => i.id === this.selectedLocationId);
+      if (location) {
+        return location.name;
       }
     }
 
@@ -190,20 +186,20 @@ export class AppComponent implements OnInit {
   }
 
   onConfigurationChanged(event: StorageEvent) {
-    if (event.key === 'installations') {
-      const installations = JSON.parse(event.newValue);
-      this.installations = installations
+    if (event.key === 'locations') {
+      const locations = JSON.parse(event.newValue);
+      this.locations = locations
         .sort((a, b) => a.order - b.order)
         .map(i => ({ name: i.name, id: i.id }));
     }
-    else if (event.key === 'selectedInstallationId') {
-      this.selectedInstallationId = parseInt(event.newValue);
+    else if (event.key === 'selectedLocationId') {
+      this.selectedLocationId = event.newValue;
     }
   }
 
-  onInstallationChange(event) {
-    this.selectedInstallationId = event.value;
-    localStorage.setItem('selectedInstallationId', event.value);
+  onLocationChange(event) {
+    this.selectedLocationId = event.value;
+    localStorage.setItem('selectedLocationId', event.value);
 
     // navigate to the default page and reload the page
     localStorage.removeItem('returnUrl');
@@ -316,8 +312,8 @@ export class AppComponent implements OnInit {
       'config/clock': 'en/latest/end_users/clock/',
     }
 
-    if (environment.isMultiInstallation) {
-      urlMap['setup'] = 'en/latest/end_users/installations/';
+    if (environment.isMultiLocation) {
+      urlMap['setup'] = 'en/latest/end_users/locations/';
     }
     else {
       urlMap['setup'] = 'en/latest/end_users/setup/';

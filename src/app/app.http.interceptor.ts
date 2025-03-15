@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { AuthenticationService, LoaderService } from './services';
 import { AUTHENTICATION_SERVICE } from './tokens';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -16,6 +17,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     constructor(
         @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
         @Inject('LoaderService') public loaderService: LoaderService,
+        private router: Router,
     ) {
         const backendScheme = localStorage.getItem('backend.scheme');
         const backendDomain = localStorage.getItem('backend.domain');
@@ -47,6 +49,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any> > {
         if (this.backendUrl == ''){
             console.warn('No URL configured for backend requests!', this.backendUrl);
+            this.router.navigate(['/backend-error']);
             return throwError(() => new HttpErrorResponse({status: 0, statusText: 'No URL configured for backend requests!'}));
         }
 

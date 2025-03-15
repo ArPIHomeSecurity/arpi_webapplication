@@ -29,8 +29,8 @@ export const environment = {
   channelCount: 15,
   snackDuration: 5000,
 
-  isMultiInstallation: false,
-  showApiLink: false,
+  isMultiLocation: true,
+  showApiLink: true,
 
   defaultLanguage: 'en',
   languages: 'hu it',

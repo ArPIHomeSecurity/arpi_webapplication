@@ -25,11 +25,11 @@ export class AuthenticationService implements AuthenticationService {
 
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const installationId = this.getInstallationId();
+    const locationId = this.getLocationId();
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
     return this.http.post(
         '/api/user/authenticate',
-        JSON.stringify({device_token: deviceTokens[installationId], access_code: accessCode}),
+        JSON.stringify({device_token: deviceTokens[locationId], access_code: accessCode}),
         {headers}
       )
       .pipe(
@@ -38,7 +38,7 @@ export class AuthenticationService implements AuthenticationService {
           if (response.device_token) {
             // save in new format
             const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-            deviceTokens[installationId] = response.device_token;
+            deviceTokens[locationId] = response.device_token;
             localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
             this.eventService.connect();
@@ -61,10 +61,10 @@ export class AuthenticationService implements AuthenticationService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    const installationId = this.getInstallationId();
+    const locationId = this.getLocationId();
     const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-    if (installationId in userTokens) {
-      delete userTokens[installationId];
+    if (locationId in userTokens) {
+      delete userTokens[locationId];
     }
     localStorage.setItem('userTokens', JSON.stringify(userTokens));
 
@@ -125,46 +125,35 @@ export class AuthenticationService implements AuthenticationService {
     }
   }
 
-  getInstallationId(): string {
-    const installationId = parseInt(localStorage.getItem('selectedInstallationId'));
-    if (installationId === null) {
-      return;
-    }
-    const installations = JSON.parse(localStorage.getItem('installations'));
-    if (!installations) {
-      return;
-    }
-    const installation = installations.find(installation => installation.id === installationId);
-    if (installation) {
-      return installation.installationId;
-    }
+  getLocationId(): string {
+    return localStorage.getItem('selectedLocationId');
   }
 
   /**
-   * Retrieves the user token if there is a valid token for the current installation.
+   * Retrieves the user token if there is a valid token for the current location.
    * If the token is in the old format, it will be converted to the new format.
    * If the token is expired, it will be removed.
    */
   getUserToken(): string {
-    const installationId = this.getInstallationId();
-    if (!installationId) {
+    const locationId = this.getLocationId();
+    if (!locationId) {
       return;
     }
 
-    const userToken = localStorage.getItem(`${installationId}:userToken`);
+    const userToken = localStorage.getItem(`${locationId}:userToken`);
     if (!userToken) {
       // check in new format
       const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-      return userTokens[installationId];
+      return userTokens[locationId];
     }
 
     // save in new format
     const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-    userTokens[installationId] = userToken;
+    userTokens[locationId] = userToken;
     localStorage.setItem('userTokens', JSON.stringify(userTokens));
 
     // remove old format
-    localStorage.removeItem(`${installationId}:userToken`);
+    localStorage.removeItem(`${locationId}:userToken`);
 
     // parse token
     var userData;
@@ -180,8 +169,8 @@ export class AuthenticationService implements AuthenticationService {
     if (Date.now()/1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
       // remove token
       const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-      if (installationId in userTokens) {
-        delete userTokens[installationId];
+      if (locationId in userTokens) {
+        delete userTokens[locationId];
       }
 
       this.isSessionValidSubject.next(false);
@@ -192,8 +181,8 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   updateUserToken(token: string) {
-    const installationId = this.getInstallationId();
-    if (!installationId) {
+    const locationId = this.getLocationId();
+    if (!locationId) {
       return;
     }
     
@@ -203,11 +192,11 @@ export class AuthenticationService implements AuthenticationService {
 
       // save in new format
       const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-      userTokens[installationId] = token;
+      userTokens[locationId] = token;
       localStorage.setItem('userTokens', JSON.stringify(userTokens));
 
       // remove old format
-      localStorage.removeItem(`${installationId}:userToken`);
+      localStorage.removeItem(`${locationId}:userToken`);
 
       return this.isSessionValidSubject.next(true);
     } catch (error) {}
@@ -219,47 +208,47 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   /**
-   * Retrieves the device token for the given installation or the current.
-   * @param installationId Optional installation id.
+   * Retrieves the device token for the given location or the current.
+   * @param locationId Optional location id.
    * @returns 
    */
-  getDeviceToken(installationId?: string): string {
-    if (!installationId) {
-      installationId = this.getInstallationId();
+  getDeviceToken(locationId?: string): string {
+    if (!locationId) {
+      locationId = this.getLocationId();
     }
 
-    if (!installationId) {
+    if (!locationId) {
       return;
     }
 
-    const deviceToken = localStorage.getItem(`${installationId}:deviceToken`);
+    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`);
     if (!deviceToken) {
       // check in new format
       const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-      return deviceTokens[installationId];
+      return deviceTokens[locationId];
     }
 
     // save in new format
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    deviceTokens[installationId] = deviceToken;
+    deviceTokens[locationId] = deviceToken;
     localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
     // remove old format
-    localStorage.removeItem(`${installationId}:deviceToken`);
+    localStorage.removeItem(`${locationId}:deviceToken`);
 
     return deviceToken;
   }
 
   registerDevice(registrationCode: string): Observable<boolean> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const installationId = this.getInstallationId();
+    const locationId = this.getLocationId();
     return this.http.post('/api/user/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
       map((response: any) => {
         // login successful if there's a jwt token in the response
         if (response.device_token) {
           // save in new format
           const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-          deviceTokens[installationId] = response.device_token;
+          deviceTokens[locationId] = response.device_token;
           localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
           this.eventService.connect();
@@ -272,19 +261,19 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   unRegisterDevice() {
-    const installationId = this.getInstallationId();
+    const locationId = this.getLocationId();
 
     // remove device token
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    if (installationId in deviceTokens) {
-      delete deviceTokens[installationId];
+    if (locationId in deviceTokens) {
+      delete deviceTokens[locationId];
     }
     localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
     // remove user token
     const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-    if (installationId in userTokens) {
-      delete userTokens[installationId];
+    if (locationId in userTokens) {
+      delete userTokens[locationId];
     }
     localStorage.setItem('userTokens', JSON.stringify(userTokens));
 

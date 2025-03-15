@@ -30,20 +30,20 @@ export class EventService {
   }
 
   connect() {
-    const id = parseInt(localStorage.getItem('selectedInstallationId'));
+    const id = localStorage.getItem('selectedLocationId');
     if (id === null) {
       return;
     }
-    const installations = JSON.parse(localStorage.getItem('installations'));
-    if (!installations) {
+    const locations = JSON.parse(localStorage.getItem('locations'));
+    if (!locations) {
       return;
     }
-    const installation = installations.find(installation => installation.id === id);
-    if (!installation) {
+    const location = locations.find(l => l.id === id);
+    if (!location) {
       return;
     }
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    const deviceToken = deviceTokens[installation.installationId];
+    const deviceToken = deviceTokens[location.id];
     if (this.socket) {
       this.socket.disconnect();
     }
