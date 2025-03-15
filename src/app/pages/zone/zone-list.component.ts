@@ -105,7 +105,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   openDeleteDialog(zoneId: number) {
     const zone = this.zones.find(x => x.id === zoneId);
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
         title: $localize`:@@delete zone:Delete Zone`,
         message: $localize`:@@delete zone message:Are you sure you want to delete the zone "${zone.name}"?`,

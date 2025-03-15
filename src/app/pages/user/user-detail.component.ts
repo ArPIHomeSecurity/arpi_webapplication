@@ -206,7 +206,7 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
             text: $localize`:@@cancel:Cancel`
           }
         ],
-        width: '250px',
+        width: '450px',
       }
     });
 

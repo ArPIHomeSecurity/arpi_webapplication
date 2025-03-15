@@ -94,7 +94,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
   openDeleteDialog(outputId: number) {
     const output = this.outputs.find(x => x.id === outputId);
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
         title: $localize`:@@delete output:Delete Output`,
         message: $localize`:@@delete output message:Are you sure you want to delete the output "${output.name}"?`,

@@ -122,7 +122,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   openDeleteDialog(sensorId: number) {
     const sensor = this.sensors.find(x => x.id === sensorId);
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
         title: $localize`:@@delete sensor:Delete Sensor`,
         message: $localize`:@@delete sensor message:Are you sure you want to delete the sensor "${sensor.description}"?`,

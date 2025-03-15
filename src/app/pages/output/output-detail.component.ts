@@ -223,7 +223,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
 
   openDeleteDialog(outputId: number) {
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
         title: $localize`:@@delete output:Delete Output`,
         message: $localize`:@@delete output message:Are you sure you want to delete the output "${this.output.name}"?`,

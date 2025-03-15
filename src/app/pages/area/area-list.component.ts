@@ -115,7 +115,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   openDeleteDialog(areaId: number) {
     const area = this.areas.find(x => x.id === areaId);
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: '450px',
       data: {
         title: $localize`:@@delete area:Delete Area`,
         message: $localize`:@@delete area message:Are you sure you want to delete the area "${area.name}"?`,

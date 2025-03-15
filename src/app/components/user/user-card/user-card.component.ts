@@ -97,7 +97,7 @@ export class UserCardComponent implements OnInit {
           }
         ]
       },
-      width: '250px'
+      width: '450px'
     });
 
     dialogRef.afterClosed().subscribe(result => {

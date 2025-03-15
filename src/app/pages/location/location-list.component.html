@@ -11,8 +11,9 @@
             <mat-icon>location_on</mat-icon>
           </div>
           <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
-          <mat-card-subtitle *ngIf="location.version != null" i18n="@@location version">Version:
-            {{location.version}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="location.version != null">
+            <span i18n="@@location version">Version:</span>{{location.version}}
+          </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">
               <span i18n="@@location device registered">Device registered</span>
@@ -29,8 +30,9 @@
           </div>
           <mat-card-title i18n="@@location location">Location: {{location.name}}</mat-card-title>
           <mat-card-subtitle *ngIf="location.id != null">ID: {{location.id}}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="location.version != null" i18n="@@location version">Version:
-            {{location.version}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="location.version != null">
+            <span i18n="@@location version">Version:</span>{{location.version}}
+          </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">
               <span i18n="@@location device registered">Device registered</span>
@@ -54,7 +56,7 @@
                 class="icon-accessible">check_circle</mat-icon>
               <mat-icon *ngIf="getTestResult(location.id)?.primary === false" matListItemIcon
                 class="icon-inaccessible">error</mat-icon>
-              <div matListItemTitle i18n="@@location primary domain">Primary URL</div>
+              <div matListItemTitle i18n="@@location primary url">Primary URL</div>
               <div matListItemLine>{{'https://' + location.primaryDomain + ':' + location.primaryPort}}</div>
               <div matListItemLine
                 *ngIf="showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).primary === false">
@@ -74,7 +76,7 @@
                 class="icon-accessible">check_circle</mat-icon>
               <mat-icon *ngIf="getTestResult(location.id)?.secondary === false" matListItemIcon
                 class="icon-inaccessible">error</mat-icon>
-              <div matListItemTitle i18n="@@location secondary domain">Secondary URL</div>
+              <div matListItemTitle i18n="@@location secondary url">Secondary URL</div>
               <div matListItemLine>{{'https://' + location.secondaryDomain + ':' + location.secondaryPort}}</div>
               <div matListItemLine
                 *ngIf="showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).secondary === false">
