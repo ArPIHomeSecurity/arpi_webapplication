@@ -53,7 +53,7 @@
       </mat-list>
 
       <mat-nav-list>
-        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isLoggedIn()">
+        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isLoggedIn() && locations.length > 0">
           <mat-icon matListItemIcon>login</mat-icon><div matListItemTitle i18n="@@login menu link">Login</div>
         </mat-list-item>
         <mat-list-item routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">

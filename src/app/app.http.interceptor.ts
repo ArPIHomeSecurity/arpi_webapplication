@@ -49,7 +49,13 @@ export class AppHttpInterceptor implements HttpInterceptor {
     intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any> > {
         if (this.backendUrl == ''){
             console.warn('No URL configured for backend requests!', this.backendUrl);
-            this.router.navigate(['/backend-error']);
+            const locations = JSON.parse(localStorage.getItem('locations') || "[]");
+            if (locations.length > 0) {
+                this.router.navigate(['/backend-error']);
+            }
+            else {
+                this.router.navigate(['/location/add']);
+            }
             return throwError(() => new HttpErrorResponse({status: 0, statusText: 'No URL configured for backend requests!'}));
         }
 

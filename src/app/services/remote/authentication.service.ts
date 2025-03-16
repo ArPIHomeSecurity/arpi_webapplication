@@ -221,17 +221,21 @@ export class AuthenticationService implements AuthenticationService {
       return;
     }
 
-    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`);
+    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || null;
     if (!deviceToken) {
       // check in new format
       const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-      return deviceTokens[locationId];
+      if (locationId in deviceTokens) {
+        return deviceTokens[locationId];
+      }
     }
 
     // save in new format
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    deviceTokens[locationId] = deviceToken;
-    localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+    if (deviceToken) {
+      deviceTokens[locationId] = deviceToken;
+      localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+    }
 
     // remove old format
     localStorage.removeItem(`${locationId}:deviceToken`);

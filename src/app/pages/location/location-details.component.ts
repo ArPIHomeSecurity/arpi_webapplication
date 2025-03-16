@@ -64,14 +64,14 @@ export class LocationDetailsComponent {
   }
 
   executeLocationTest() {
-    const location = this.prepareLocation();
+    this.location = this.prepareLocation();
     this.testResult = new LocationTestResult();
-    testLocation(location).subscribe(result => {
+    testLocation(this.location).subscribe(result => {
       this.testResult = result
       this.locationForm.value.id = result.locationId;
       this.location.id = result.locationId;
     });
-    getVersion(location).subscribe(version => this.version = version);
+    getVersion(this.location).subscribe(version => this.version = version);
   }
 
   isRegistered() {
@@ -151,13 +151,18 @@ export class LocationDetailsComponent {
 
   onSubmit() {
     const location = this.prepareLocation();
-    var locations = JSON.parse(localStorage.getItem('locations')) || [];
+    var locations = JSON.parse(localStorage.getItem('locations') || "[]");
     const index = locations.findIndex(l => l.id === location.id);
     if (index >= 0) {
       locations[index] = location;
     }
     else {
       locations.push(location);
+    }
+
+    if (locations.length === 1) {
+      localStorage.setItem('selectedLocationId', location.id);
+      window.location.pathname = '/';
     }
 
     localStorage.setItem('locations', JSON.stringify(locations));

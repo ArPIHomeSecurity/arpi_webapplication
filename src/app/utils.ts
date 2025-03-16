@@ -136,7 +136,7 @@ export async function configureBackend(): Promise<void> {
     upgradeInstallationsToLocations();
 
     try {
-      const locations: [Location] = JSON.parse(localStorage.getItem('locations'));
+      const locations: [Location] = JSON.parse(localStorage.getItem('locations') || "[]");
       const selectedLocationId = localStorage.getItem('selectedLocationId');
       const backendDomain = localStorage.getItem('backend.domain');
 
