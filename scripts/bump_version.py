@@ -73,7 +73,7 @@ def bump_version(version_type: str, pre_release: str = None):
     if version_type == "patch":
         patch += 1
 
-    if pre_release != "":
+    if pre_release == "":
         pre_release = old_pre_release
 
     commit = get_git_commit()
@@ -101,7 +101,9 @@ def bump_version(version_type: str, pre_release: str = None):
 def main():
     """Main entry point"""
     parser = argparse.ArgumentParser()
-    parser.add_argument("version_type", choices=["major", "minor", "patch"])
+    parser.add_argument(
+        "-t", "--type", required=False, choices=["major", "minor", "patch"], help="Version type"
+    )
     parser.add_argument("-p", "--pre-release", help="Pre-release identifier")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args()
@@ -109,7 +111,9 @@ def main():
     if args.verbose:
         basicConfig(level=INFO)
 
-    bump_version(args.version_type, args.pre_release)
+    info("Bumping version with type: %s and pre-release: %s", args.type, args.pre_release)
+
+    bump_version(args.type, args.pre_release)
 
 
 if __name__ == "__main__":
