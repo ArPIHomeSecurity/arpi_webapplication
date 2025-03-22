@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -6,6 +6,7 @@ import { BehaviorSubject, fromEvent } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
+import { StatusBar } from '@capacitor/status-bar';
 
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
@@ -75,6 +76,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
 
+    private renderer: Renderer2,
     private host: ElementRef,
     private zone: NgZone
   ) {
@@ -88,7 +90,7 @@ export class AppComponent implements OnInit {
     this.isSessionValid = false;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.darkTheme = this.themeService.load();
 
     this.resizeObserver = new ResizeObserver(entries => {
@@ -143,6 +145,34 @@ export class AppComponent implements OnInit {
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
 
     fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
+
+    // update navigation bar for edge-to-edge
+    const isEdgeToEdge = await this.isEdgeToEdgeEnabled();
+    if (isEdgeToEdge) {
+      console.log('Edge-to-edge enabled, update padding');
+      // update the style of the mat-toolbar
+      const toolbar = document.querySelector('mat-toolbar');
+      this.renderer.setStyle(toolbar, 'padding-top', '40px');
+      this.renderer.setStyle(toolbar, 'height', '90px');
+
+      // update the style of the page-wrapper
+      const pageWrapper = document.querySelector('.page-wrapper');
+      this.renderer.setStyle(pageWrapper, 'min-height', 'calc(100vh - 96px)');
+
+      // update the style of the all-wrapper
+      const allWrapper = document.querySelector('.all-wrap');
+      this.renderer.setStyle(allWrapper, 'min-height', 'calc(100vh - 96px)');
+    }
+  }
+
+  async isEdgeToEdgeEnabled(): Promise<boolean> {
+    try {
+      // This checks if the web content extends into the system UI areas
+      const statusBarInfo = await StatusBar.getInfo();
+      return statusBarInfo.overlays;
+    } catch (error) {
+      return false;
+    }
   }
 
   isLoggedIn() {
