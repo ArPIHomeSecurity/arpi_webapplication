@@ -108,6 +108,10 @@
 </div>
 
 <div *ngIf="userCanEdit()" class="list-actions">
-  <button class="list-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
-  <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListIcon>add</mat-icon></button>
+  <button class="list-action" mat-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button class="list-action" mat-mini-fab color="accent" routerLink="/zone/add" [disabled]="monitoringState != monitoringStates.READY">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

@@ -48,11 +48,11 @@
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
+        <source>The system is not working correctly, you can't make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
+        <source>The system is not ready, you can't make changes in the configuration!</source>
         <target state="translated">A rendszer nem áll készen, nem lehet módosítani a konfigurációt!</target>
       </trans-unit>
       <trans-unit id="session expiry" datatype="html">
@@ -667,7 +667,7 @@
         <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
         <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
@@ -1039,8 +1039,8 @@
         <target state="translated">Monitor küszöbérték [%]</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
-        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
+        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
         <source>sensitivity: instant alert</source>
@@ -1371,8 +1371,8 @@
         <target state="translated">Nincs SSH kulcs</target>
       </trans-unit>
       <trans-unit id="delete user message" datatype="html">
-        <source>Are you sure you want to delete the user &quot;<x id="PH" equiv-text="this.user.name"/>&quot;?</source>
-        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="this.user.name"/>&quot; felhasználót?</target>
+        <source>Are you sure you want to delete the user "<x id="PH" equiv-text="this.user.name"/>"?</source>
+        <target state="translated">Biztosan törölni akarod a(z) "<x id="PH" equiv-text="this.user.name"/>" felhasználót?</target>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
         <source>Delete</source>
@@ -1407,8 +1407,8 @@
         <target state="translated">Biztosan törölni akarod az SSH kulcsot?</target>
       </trans-unit>
       <trans-unit id="delete area message" datatype="html">
-        <source>Are you sure you want to delete the area &quot;<x id="PH" equiv-text="area.name"/>&quot;?</source>
-        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="area.name"/>&quot; területet?</target>
+        <source>Are you sure you want to delete the area "<x id="PH" equiv-text="area.name"/>"?</source>
+        <target state="translated">Biztosan törölni akarod a(z) "<x id="PH" equiv-text="area.name"/>" területet?</target>
       </trans-unit>
       <trans-unit id="area deleted" datatype="html">
         <source>Area deleted!</source>
@@ -1419,16 +1419,16 @@
         <target state="translated">Nem lehetséges törölni, amíg nincs KÉSZ állapotban!</target>
       </trans-unit>
       <trans-unit id="delete output message" datatype="html">
-        <source>Are you sure you want to delete the output &quot;<x id="PH" equiv-text="this.output.name"/>&quot;?</source>
-        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="this.output.name"/>&quot; kimenetet?</target>
+        <source>Are you sure you want to delete the output "<x id="PH" equiv-text="this.output.name"/>"?</source>
+        <target state="translated">Biztosan törölni akarod a(z) "<x id="PH" equiv-text="this.output.name"/>" kimenetet?</target>
       </trans-unit>
       <trans-unit id="output deleted" datatype="html">
         <source>Output deleted!</source>
         <target state="translated">Kimenet törölve!</target>
       </trans-unit>
       <trans-unit id="delete sensor message" datatype="html">
-        <source>Are you sure you want to delete the sensor &quot;<x id="PH" equiv-text="sensor.description"/>&quot;?</source>
-        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="sensor.description"/>&quot; érzékelőt?</target>
+        <source>Are you sure you want to delete the sensor "<x id="PH" equiv-text="sensor.description"/>"?</source>
+        <target state="translated">Biztosan törölni akarod a(z) "<x id="PH" equiv-text="sensor.description"/>" érzékelőt?</target>
       </trans-unit>
       <trans-unit id="sensor deleted" datatype="html">
         <source>Sensor deleted!</source>
@@ -1443,8 +1443,8 @@
         <target state="translated">Új hozzáférési kód</target>
       </trans-unit>
       <trans-unit id="delete zone message" datatype="html">
-        <source>Are you sure you want to delete the zone &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</source>
-        <target state="translated">Biztosan törölni akarod a(z) &quot;<x id="PH" equiv-text="zone.name"/>&quot; zónát?</target>
+        <source>Are you sure you want to delete the zone "<x id="PH" equiv-text="zone.name"/>"?</source>
+        <target state="translated">Biztosan törölni akarod a(z) "<x id="PH" equiv-text="zone.name"/>" zónát?</target>
       </trans-unit>
       <trans-unit id="zone deleted" datatype="html">
         <source>Zone deleted!</source>
@@ -1507,8 +1507,8 @@
         <target state="translated">Hely törlése</target>
       </trans-unit>
       <trans-unit id="delete location message" datatype="html">
-        <source>Are you sure you want to delete the location &quot;<x id="PH" equiv-text="this.location.name"/>&quot;?</source>
-        <target state="translated">Biztos, hogy törölni akarja a &quot;<x id="PH" equiv-text="this.location.name"/>&quot; helyet?</target>
+        <source>Are you sure you want to delete the location "<x id="PH" equiv-text="this.location.name"/>"?</source>
+        <target state="translated">Biztos, hogy törölni akarja a "<x id="PH" equiv-text="this.location.name"/>" helyet?</target>
       </trans-unit>
       <trans-unit id="location backend" datatype="html">
         <source>Location backend</source>
@@ -1525,6 +1525,50 @@
       <trans-unit id="location secondary url" datatype="html">
         <source>Secondary URL</source>
         <target state="translated">Másodlagos URL</target>
+      </trans-unit>
+      <trans-unit id="user biometric login" datatype="html">
+        <source>Biometric login</source>
+        <target state="translated">Biometrikus bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="user biometric enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
+      </trans-unit>
+      <trans-unit id="user biometric disabled" datatype="html">
+        <source>Disabled</source>
+        <target state="translated">Letiltott</target>
+      </trans-unit>
+      <trans-unit id="user delete" datatype="html">
+        <source>Enable biometric login</source>
+        <target state="translated">Biometrikus bejelentkezés engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="login biometric login" datatype="html">
+        <source>Biometric login</source>
+        <target state="translated">Biometrikus bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="biometric description" datatype="html">
+        <source>Do you want to use biometric login?</source>
+        <target state="translated">Biometrikus bejelentkezést szeretne használni?</target>
+      </trans-unit>
+      <trans-unit id="biometric question" datatype="html">
+        <source>You can use biometric login to access the security system.</source>
+        <target state="translated">A biztonsági rendszerbe való belépéshez biometrikus bejelentkezést használhat.</target>
+      </trans-unit>
+      <trans-unit id="biometric yes" datatype="html">
+        <source>Yes</source>
+        <target state="translated">Igen</target>
+      </trans-unit>
+      <trans-unit id="biometric no" datatype="html">
+        <source>No</source>
+        <target state="translated">Nem</target>
+      </trans-unit>
+      <trans-unit id="biometric login description" datatype="html">
+        <source>Use biometric login to access the security system.</source>
+        <target state="translated">A biztonsági rendszerbe való belépéshez használja a biometrikus bejelentkezést.</target>
+      </trans-unit>
+      <trans-unit id="biometric title" datatype="html">
+        <source>Log in to ArPI Home Security</source>
+        <target state="translated">Bejelentkezés az ArPI Home Security rendszerébe</target>
       </trans-unit>
     </body>
   </file>

@@ -30,6 +30,8 @@ export interface AuthenticationService {
   unRegisterDevice();
   
   isDeviceRegistered(): Observable<boolean>;
+
+  getDeviceDomain(): string;
  
   getRegisteredUserId(): number;
 }

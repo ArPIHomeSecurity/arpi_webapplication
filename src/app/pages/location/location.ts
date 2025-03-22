@@ -4,7 +4,8 @@ import { Location } from "@app/models";
 
 /**
  * Location test result
- * 
+ *
+ * - undefined: no test run 
  * - null: test running
  * - true: test passed
  * - false: test failed
@@ -12,7 +13,10 @@ import { Location } from "@app/models";
 export class LocationTestResult {
   primary: boolean = null
   secondary: boolean = null
-  locationId: string = null;
+  primaryLocationId: string = null;
+  primaryVersion: string = null;
+  secondaryLocationId: string = null;
+  secondaryVersion: string = null;
 }
 
 function testUrl(url: string): Observable<boolean> {
@@ -40,17 +44,9 @@ function testUrl(url: string): Observable<boolean> {
   });
 }
 
-function loadLocationId(location: Location): Observable<string> {
-  if (!location) {
+function loadLocationId(locationIdURL: string): Observable<string> {
+  if (!locationIdURL) {
     return;
-  }
-
-  var locationIdURL = '';
-  if (location.primaryDomain !== '') {
-    locationIdURL = `${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/config/installation_id`;
-  }
-  else if (location.secondaryDomain !== '') {
-    locationIdURL = `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/config/installation_id`;
   }
 
   return new Observable<string>(observer => {
@@ -71,7 +67,6 @@ function loadLocationId(location: Location): Observable<string> {
           console.error('Invalid location id', locationId.substring(0, 100));
           observer.next(undefined);
         } else {
-          location.id = locationId;
           observer.next(locationId);
         }
         observer.complete();
@@ -88,6 +83,52 @@ function loadLocationId(location: Location): Observable<string> {
   });
 }
 
+export function getVersion(versionUrl: string): Observable<string> {
+  if (!versionUrl) {
+    return;
+  }
+
+  return new Observable<string>(observer => {
+    fetch(versionUrl)
+      .then(response => {
+        if (!response.ok) {
+          observer.next(undefined);
+          observer.complete();
+          return;
+        }
+
+        return response.text();
+      })
+      .then(version => {
+        observer.next(version);
+        observer.complete();
+      })
+      .catch(error => {
+        console.error('Error loading version', {
+          message: error.message,
+          stack: error.stack,
+          url: versionUrl
+        });
+        observer.next(undefined);
+        observer.complete();
+      });
+  });
+}
+
+const undefinedObservableAny = new Observable<any>(observer => {
+  observer.next(undefined);
+  observer.complete();
+});
+
+const undefinedObservableBoolean = new Observable<boolean>(observer => {
+  observer.next(undefined);
+  observer.complete();
+});
+
+const undefinedObservableString = new Observable<string>(observer => {
+  observer.next(undefined);
+  observer.complete();
+});
 
 export function testLocation(location: Location): Observable<LocationTestResult> {
   if (!location) {
@@ -106,10 +147,7 @@ export function testLocation(location: Location): Observable<LocationTestResult>
       testPrimary = testUrl(primaryURL);
     } else {
       testResult.primary = undefined;
-      testPrimary = new Observable<boolean>(observer => {
-        observer.next(undefined);
-        observer.complete();
-      });
+      testPrimary = undefinedObservableBoolean;
     }
 
     var testSecondary: Observable<boolean>;
@@ -122,63 +160,62 @@ export function testLocation(location: Location): Observable<LocationTestResult>
 
     } else {
       testResult.secondary = undefined;
-      testSecondary = new Observable<boolean>(observer => {
-        observer.next(undefined);
-        observer.complete();
-      });
+      testSecondary = undefinedObservableBoolean;
+    }
+
+    var primaryLocationId: Observable<string>;
+    if (location.primaryDomain !== '') {
+      primaryLocationId = loadLocationId(`${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/config/installation_id`);
+    }
+    else {
+      testResult.primaryLocationId = undefined;
+      primaryLocationId = undefinedObservableString;
+    }
+
+    var secondaryLocationId: Observable<string>;
+    if (location.secondaryDomain !== '') {
+      secondaryLocationId = loadLocationId(`${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/config/installation_id`);
+    }
+    else {
+      testResult.secondaryLocationId = undefined;
+      secondaryLocationId = undefinedObservableString;
+    }
+
+    var primaryVersion: Observable<string>;
+    if (location.primaryDomain !== '') {
+      primaryVersion = getVersion(`${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/version`);
+    }
+    else {
+      testResult.primaryVersion = undefined;
+      primaryVersion = undefinedObservableString;
+    }
+
+    var secondaryVersion: Observable<string>;
+    if (location.secondaryDomain !== '') {
+      secondaryVersion = getVersion(`${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`);
+    }
+    else {
+      testResult.secondaryVersion = undefined;
+      secondaryVersion = undefinedObservableString;
     }
 
     forkJoin({
       primaryAvailable: testPrimary,
       secondaryAvailable: testSecondary,
-      locationId: loadLocationId(location)
+      primaryLocationId: primaryLocationId,
+      primaryVersion: primaryVersion,
+      secondaryLocationId: secondaryLocationId,
+      secondaryVersion: secondaryVersion
     })
     .subscribe((results) => {
       testResult.primary = results.primaryAvailable;
       testResult.secondary = results.secondaryAvailable;
-      testResult.locationId = results.locationId;
+      testResult.primaryLocationId = results.primaryLocationId;
+      testResult.primaryVersion = results.primaryVersion;
+      testResult.secondaryLocationId = results.secondaryLocationId;
+      testResult.secondaryVersion = results.secondaryVersion;
       observer.next(testResult);
       observer.complete();
     });
-  });
-}
-
-export function getVersion(location: Location): Observable<string> {
-  if (!location) {
-    return;
-  }
-
-  return new Observable<string>(observer => {
-     var versionUrl = '';
-    if (location.primaryDomain !== '') {
-      versionUrl = `${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/version`;
-    }
-    else if (location.secondaryDomain !== '') {
-      versionUrl = `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`;
-    }
-
-    fetch(versionUrl)
-      .then(response => {
-        if (!response.ok) {
-          observer.next(undefined);
-          observer.complete();
-          return;
-        }
- 
-        return response.text()
-      })
-      .then(version => {
-        observer.next(version);
-        observer.complete();
-      })
-      .catch(error => {
-        console.error('Error loading version', {
-          message: error.message,
-          stack: error.stack,
-          url: versionUrl
-        });
-        observer.next(undefined);
-        observer.complete();
-      });
   });
 }

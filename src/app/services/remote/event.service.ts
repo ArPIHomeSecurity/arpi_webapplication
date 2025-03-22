@@ -30,18 +30,17 @@ export class EventService {
   }
 
   connect() {
-    const id = localStorage.getItem('selectedLocationId');
-    if (id === null) {
+    const locationId = localStorage.getItem('selectedLocationId');
+    if (!locationId) {
       return;
     }
-    const locations = JSON.parse(localStorage.getItem('locations'));
-    if (!locations) {
-      return;
-    }
-    const location = locations.find(l => l.id === id);
+
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const location = locations.find(l => l.id === locationId);
     if (!location) {
       return;
     }
+
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
     const deviceToken = deviceTokens[location.id];
     if (this.socket) {

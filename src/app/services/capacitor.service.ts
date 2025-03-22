@@ -11,7 +11,6 @@ export class CapacitorService {
   goBack = new Subject<void>();
 
   constructor() {
-    console.log('CapacitorService');
     App.addListener('backButton', ({ canGoBack }) => {
       console.log('Pressed backButton');
       this.goBack.next();

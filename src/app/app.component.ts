@@ -135,15 +135,10 @@ export class AppComponent implements OnInit {
         this.isDeviceRegistered = isRegistered;
       });
 
-    const locations = localStorage.getItem('locations');
-    if (locations) {
-      this.locations = JSON.parse(locations)
-        .sort((a, b) => a.order - b.order)
-        .map(i => ({ name: i.name, id: i.id }));
-    }
-    else {
-      this.locations = [];
-    }
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    this.locations = locations
+      .sort((a, b) => a.order - b.order)
+      .map(i => ({ name: i.name, id: i.id }));
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
 

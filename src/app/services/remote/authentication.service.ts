@@ -71,7 +71,7 @@ export class AuthenticationService implements AuthenticationService {
     // clear returnUrl to start from home
     localStorage.removeItem('returnUrl');
     this.isSessionValidSubject.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { queryParams: { isLogout: true } });
   }
 
   isLoggedIn(): boolean {
@@ -296,12 +296,16 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   getRegisteredUserId(): number {
-    const userToken = this.getDeviceToken();
-    if (userToken) {
+    const deviceToken = this.getDeviceToken();
+    if (deviceToken) {
       try {
-        return (jwtDecode(userToken) as any).user_id;
+        return (jwtDecode(deviceToken) as any).user_id;
       } catch (error) {
       }
     }
+  }
+
+  getDeviceDomain(): string {
+    return localStorage.getItem('backend.domain');
   }
 }

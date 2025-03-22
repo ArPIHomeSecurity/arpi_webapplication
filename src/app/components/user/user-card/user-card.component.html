@@ -15,6 +15,7 @@
   <span *ngIf="!loading">
     <mat-divider></mat-divider>
 
+    <!-- Cards -->
     <mat-card-content>
       <mat-card-title i18n="@@user cards">Cards</mat-card-title>
       <mat-list role="list" *ngFor="let card of cards">
@@ -33,6 +34,7 @@
 
     <mat-divider></mat-divider>
 
+    <!-- Registration code -->
     <mat-card-content>
       <mat-card-title i18n="@@user device registration code">Device registration code</mat-card-title>
       <div class="registration" *ngIf="user.hasRegistrationCode">
@@ -49,6 +51,7 @@
 
     <mat-divider></mat-divider>
 
+    <!-- SSH key -->
     <mat-card-content>
       <mat-card-title i18n="@@user ssh key">SSH key</mat-card-title>
       <div class="ssh" *ngIf="hasSshKey">
@@ -61,8 +64,24 @@
 
     <mat-divider *ngIf="user.comment"></mat-divider>
 
+    <!-- Comment -->
     <mat-card-content *ngIf="user.comment">
       <p>{{user.comment}}</p>
+    </mat-card-content>
+
+    <mat-divider *ngIf="biometricAvailable"></mat-divider>
+
+    <!-- Biometric login -->
+    <mat-card-content *ngIf="biometricAvailable">
+      <mat-card-title i18n="@@user biometric login">Biometric login</mat-card-title>
+      <div *ngIf="biometricEnabled()" class="biometric">
+        <mat-icon class="entry">fingerprint</mat-icon>
+        <span i18n="@@user biometric enabled">Enabled</span>
+      </div>
+      <div *ngIf="!biometricEnabled()" class="biometric">
+        <mat-icon class="entry">fingerprint</mat-icon>
+        <span i18n="@@user biometric disabled">Disabled</span>
+      </div>
     </mat-card-content>
 
   </span>
@@ -84,6 +103,15 @@
         card</button>
       <button mat-menu-item color="primary" [disabled]="!canManageSshKeys || hasSshKey || disabled"
         (click)="openSshKeySetupDialog()" i18n="@@user generate ssk key">Setup SSH key</button>
+
+      <!-- Biometric login -->
+       <div *ngIf="biometricAvailable">
+        <mat-divider></mat-divider>
+        <button *ngIf="!biometricEnabled()" mat-menu-item color="primary" [disabled]="!canManageUser || disabled"
+          (click)="enableBiometricLogin()"><span i18n="@@user delete">Enable biometric login</span></button>
+        <button *ngIf="biometricEnabled()" mat-menu-item color="warn" [disabled]="!canManageUser || disabled"
+          (click)="disableBiometricLogin()"><span i18n="@@user delete">Disable biometric login</span></button>
+      </div>
     </mat-menu>
   </mat-card-actions>
 </mat-card>

@@ -4,11 +4,12 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component";
 
 import { Card, ROLE_TYPES, User } from "@app/models";
-import { CardService, EventService, UserService } from "@app/services";
+import { AuthenticationService, BiometricService, CardService, EventService, UserService } from "@app/services";
 import { environment } from "@environments/environment";
 import { finalize, forkJoin } from "rxjs";
 import { UserDeviceRegistrationDialogComponent } from "../user-device-registration/user-device-registration.component";
 import { UserSshKeySetupDialogComponent } from "../user-ssh-key-setup/user-ssh-key-setup.component";
+import { AUTHENTICATION_SERVICE } from "@app/tokens";
 
 
 @Component({
@@ -35,16 +36,24 @@ export class UserCardComponent implements OnInit {
   registeringCard: boolean = false;
   hasSshKey: boolean = false;
   loading: boolean = true;
+  biometricAvailable: boolean = false;
+  useBiometric: boolean = null;
 
   dialog = inject(MatDialog);
 
   constructor(
+    @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
     @Inject('CardService') private cardService: CardService,
     @Inject('EventService') private eventService: EventService,
     @Inject('UserService') private userService: UserService,
+    @Inject('BiometricService') private biometricService: BiometricService,
 
     private snackBar: MatSnackBar,
   ) {
+    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const locationId = localStorage.getItem('selectedLocationId');
+    this.useBiometric = status[locationId];
+
     this.eventService.listen('card_registered')
       .subscribe(result => {
         this.registeringCard = false;
@@ -65,6 +74,14 @@ export class UserCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // biometric login is only available for the current user
+    const userId = this.authenticationService.getUserId();
+    if (this.user.id === userId) {
+        this.biometricService.isAvailable().then((result) => {
+          this.biometricAvailable = result;
+        });
+    }
+
     forkJoin({
       cards: this.cardService.getCards(this.user.id),
       hasSshKey: this.userService.hasSshKey(this.user.id)
@@ -285,5 +302,32 @@ export class UserCardComponent implements OnInit {
         next: _ => this.hasSshKey = false,
         error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration }),
       });
+  }
+
+  biometricEnabled() {
+    return this.useBiometric === true || this.useBiometric === null;
+  }    
+
+  enableBiometricLogin() {
+    this.loading = true;
+    var status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const locationId = localStorage.getItem('selectedLocationId');
+
+    // restore initial state when use can decide at login if biometric should be used
+    status[locationId] = null;
+
+    localStorage.setItem('biometricEnabled', JSON.stringify(status));
+    this.useBiometric = null;
+    this.loading = false;
+  }
+
+  disableBiometricLogin() {
+    this.loading = true;
+    var status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const locationId = localStorage.getItem('selectedLocationId');
+    status[locationId] = false;
+    localStorage.setItem('biometricEnabled', JSON.stringify(status));
+    this.useBiometric = false;
+    this.loading = false;
   }
 }

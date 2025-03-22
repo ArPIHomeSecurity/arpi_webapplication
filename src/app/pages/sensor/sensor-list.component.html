@@ -150,13 +150,16 @@
 </div>
 
 <div *ngIf="userCanEdit()" class="list-actions">
-  <button class="list-action" mat-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()"><mat-icon matListItemIcon>refresh</mat-icon></button>
-  <button class="list-action" mat-fab color="accent" routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY"><mat-icon matListItemIcon>add</mat-icon></button>
-  <button class="list-action" mat-mini-fab color="accent" [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()"><mat-icon matListItemIcon>refresh</mat-icon></button>
-  <button class="list-action" mat-mini-fab color="accent" routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY"><mat-icon
-      matListItemIcon>add</mat-icon></button>
+  <button class="list-action" mat-fab color="accent" [disabled]="monitoringState != monitoringStates.READY" (click)="onResetReferences()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button class="list-action" mat-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != monitoringStates.READY">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button class="list-action" mat-mini-fab color="accent" [disabled]="monitoringState != monitoringStates.READY" (click)="onResetReferences()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button class="list-action" mat-mini-fab color="accent" routerLink="/sensor/add" [disabled]="monitoringState != monitoringStates.READY">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

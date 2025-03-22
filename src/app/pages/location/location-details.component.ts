@@ -68,10 +68,18 @@ export class LocationDetailsComponent {
     this.testResult = new LocationTestResult();
     testLocation(this.location).subscribe(result => {
       this.testResult = result
-      this.locationForm.value.id = result.locationId;
-      this.location.id = result.locationId;
+      if (result.primaryLocationId && result.secondaryLocationId && result.primaryLocationId !== result.secondaryLocationId) {
+        console.error('Primary and secondary location IDs do not match!', result);
+      }
+      else if (result.primaryLocationId) {
+        this.location.id = result.primaryLocationId;
+        this.version = result.primaryVersion;
+      }
+      else if (result.secondaryLocationId) {
+        this.location.id = result.secondaryLocationId;
+        this.version = result.secondaryVersion;
+      }
     });
-    getVersion(this.location).subscribe(version => this.version = version);
   }
 
   isRegistered() {
@@ -113,7 +121,7 @@ export class LocationDetailsComponent {
   prepareLocation(): Location {
     const formModel = this.locationForm.value;
     const location = new Location();
-    location.id = formModel.id || this.testResult?.locationId;
+    location.id = formModel.id || this.location.id;
     location.name = formModel.name;
     location.scheme = formModel.scheme;
     location.primaryDomain = formModel.primaryDomain;
@@ -129,6 +137,11 @@ export class LocationDetailsComponent {
   }
 
   cantSave() {
+    // do not save if location Id is not set
+    if (!this.location.id) {
+      return true;
+    }
+
     // do not save if new location already exists
     if (this.alreadyExists() && this.newLocation) {
       return true;
@@ -143,6 +156,10 @@ export class LocationDetailsComponent {
     if (this.locationForm.controls.primaryDomain.dirty || this.locationForm.controls.secondaryDomain.dirty) {
       if (this.testResult === null) {
         return true;
+      }
+
+      if (this.testResult.primary === null || this.testResult.secondary === null) {
+        return true
       }
     }
 

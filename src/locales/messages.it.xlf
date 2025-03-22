@@ -1526,6 +1526,50 @@
         <source>Secondary URL</source>
         <target state="translated">URL secondario</target>
       </trans-unit>
+      <trans-unit id="user biometric login" datatype="html">
+        <source>Biometric login</source>
+        <target state="translated">Accesso biometrico</target>
+      </trans-unit>
+      <trans-unit id="user biometric enabled" datatype="html">
+        <source>Enabled</source>
+        <target state="translated">Abilitato</target>
+      </trans-unit>
+      <trans-unit id="user biometric disabled" datatype="html">
+        <source>Disabled</source>
+        <target state="translated">Disabilitato</target>
+      </trans-unit>
+      <trans-unit id="user delete" datatype="html">
+        <source>Enable biometric login</source>
+        <target state="translated">Abilita il login biometrico</target>
+      </trans-unit>
+      <trans-unit id="login biometric login" datatype="html">
+        <source>Biometric login</source>
+        <target state="translated">Accesso biometrico</target>
+      </trans-unit>
+      <trans-unit id="biometric description" datatype="html">
+        <source>Do you want to use biometric login?</source>
+        <target state="translated">Volete utilizzare il login biometrico?</target>
+      </trans-unit>
+      <trans-unit id="biometric question" datatype="html">
+        <source>You can use biometric login to access the security system.</source>
+        <target state="translated">È possibile utilizzare il login biometrico per accedere al sistema di sicurezza.</target>
+      </trans-unit>
+      <trans-unit id="biometric yes" datatype="html">
+        <source>Yes</source>
+        <target state="translated">Sì</target>
+      </trans-unit>
+      <trans-unit id="biometric no" datatype="html">
+        <source>No</source>
+        <target state="translated">No</target>
+      </trans-unit>
+      <trans-unit id="biometric login description" datatype="html">
+        <source>Use biometric login to access the security system.</source>
+        <target state="translated">Utilizzare il login biometrico per accedere al sistema di sicurezza.</target>
+      </trans-unit>
+      <trans-unit id="biometric title" datatype="html">
+        <source>Log in to ArPI Home Security</source>
+        <target state="translated">Accedi a ArPI Home Security</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

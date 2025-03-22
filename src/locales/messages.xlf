@@ -1146,6 +1146,39 @@
       <trans-unit id="location secondary url" datatype="html">
         <source>Secondary URL</source>
       </trans-unit>
+      <trans-unit id="biometric description" datatype="html">
+        <source>Do you want to use biometric login?</source>
+      </trans-unit>
+      <trans-unit id="biometric login description" datatype="html">
+        <source>Use biometric login to access the security system.</source>
+      </trans-unit>
+      <trans-unit id="biometric no" datatype="html">
+        <source>No</source>
+      </trans-unit>
+      <trans-unit id="biometric question" datatype="html">
+        <source>You can use biometric login to access the security system.</source>
+      </trans-unit>
+      <trans-unit id="biometric title" datatype="html">
+        <source>Log in to ArPI Home Security</source>
+      </trans-unit>
+      <trans-unit id="biometric yes" datatype="html">
+        <source>Yes</source>
+      </trans-unit>
+      <trans-unit id="login biometric login" datatype="html">
+        <source>Biometric login</source>
+      </trans-unit>
+      <trans-unit id="user biometric disabled" datatype="html">
+        <source>Disabled</source>
+      </trans-unit>
+      <trans-unit id="user biometric enabled" datatype="html">
+        <source>Enabled</source>
+      </trans-unit>
+      <trans-unit id="user biometric login" datatype="html">
+        <source>Biometric login</source>
+      </trans-unit>
+      <trans-unit id="user delete" datatype="html">
+        <source>Enable biometric login</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

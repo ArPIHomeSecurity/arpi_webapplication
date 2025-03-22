@@ -1,5 +1,15 @@
 package com.arpi.webapplication;
 
-import com.getcapacitor.BridgeActivity;
+import android.os.Bundle;
 
-public class MainActivity extends BridgeActivity {}
+import com.getcapacitor.BridgeActivity;
+import ee.forgr.biometric.NativeBiometric;
+
+
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(NativeBiometric.class);
+        super.onCreate(savedInstanceState);
+    }
+}

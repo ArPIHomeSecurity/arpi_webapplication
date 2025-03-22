@@ -139,6 +139,11 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       this.userService.updateUser(user)
         .subscribe({
           next: _ => {
+            // reset biometricEnabled if access code has changed
+            if (user.oldAccessCode && user.newAccessCode && user.oldAccessCode !== user.newAccessCode) {
+              localStorage.setItem('biometricEnabled', JSON.stringify(null));
+            }
+
             if (this.isMyProfile) {
               this.router.navigate(['/my-user']);
             }

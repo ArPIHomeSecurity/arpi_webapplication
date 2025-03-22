@@ -175,12 +175,11 @@ import { LongPressToggleDirective } from './directives';
     LongPressToggleDirective
   ],
   providers: [
-    { provide: 'CapacitorService', useClass: CapacitorService },
-    { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'AlertService', useClass: environment.alertService },
     { provide: 'AreaService', useClass: environment.areaService },
     { provide: 'ArmService', useClass: environment.armService },
-    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
+    { provide: 'BiometricService', useClass: environment.biometricService },
+    { provide: 'CapacitorService', useClass: CapacitorService },
     { provide: 'CardService', useClass: environment.cardService },
     { provide: 'ConfigurationService', useClass: environment.configurationService },
     { provide: 'EventService', useClass: environment.eventService },
@@ -189,8 +188,10 @@ import { LongPressToggleDirective } from './directives';
     { provide: 'MonitoringService', useClass: environment.monitoringService },
     { provide: 'OutputService', useClass: environment.outputService },
     { provide: 'SensorService', useClass: environment.sensorService },
+    { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'UserService', useClass: environment.userService },
     { provide: 'ZoneService', useClass: environment.zoneService },
+    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,

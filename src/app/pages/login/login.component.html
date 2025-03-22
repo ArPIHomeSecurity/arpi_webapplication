@@ -1,5 +1,7 @@
 <div class="container">
-  <mat-card *ngIf="!isRegistered" class="register container-item">
+
+  <!-- register device -->
+  <mat-card *ngIf="canRegister()" class="register container-item">
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title i18n="Register device">Register device</mat-card-title>
@@ -19,7 +21,7 @@
           <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary">
             <span i18n="Register button">Register</span>
             <mat-icon *ngIf="loading">
-              <mat-spinner diameter="18"/>
+              <mat-spinner diameter="18" />
             </mat-icon>
           </button>
         </div>
@@ -28,7 +30,8 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="isRegistered" class="login container-item">
+  <!-- login manually/biometric -->
+  <mat-card *ngIf="canLoginManually()" class="login container-item">
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>
@@ -47,12 +50,14 @@
         </mat-form-field>
 
         <div class="form-group actions">
-          <button mat-raised-button type="submit" (click)="login()" [disabled]="loading || !loginForm.valid"
-            color="primary">
+          <button mat-raised-button type="submit" (click)="loginManually()" [disabled]="loading || !loginForm.valid" color="primary">
             <span i18n="Login button">Login</span>
             <mat-icon *ngIf="loading">
-              <mat-spinner diameter="18"/>
+              <mat-spinner diameter="18" />
             </mat-icon>
+          </button>
+          <button *ngIf="canStartLoginWithBiometric()" mat-raised-button (click)="biometricLogin()" [disabled]="loading" color="primary">
+            <span i18n="@@login biometric login">Biometric login</span>
           </button>
         </div>
 
@@ -75,4 +80,34 @@
       </form>
     </mat-card-content>
   </mat-card>
+
+  <!-- biometric login question -->
+  <mat-card *ngIf="canAskBiometric()" class="biometric container-item">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>fingerprint</mat-icon>
+      <mat-card-title i18n="@@biometric description">Do you want to use biometric login?</mat-card-title>
+      <mat-card-subtitle i18n="@@biometric question">You can use biometric login to access the security system.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions>
+      <button mat-raised-button (click)="allowBiometric(true)" color="primary">
+        <span i18n="@@biometric yes">Yes</span>
+      </button>
+      <button mat-raised-button (click)="allowBiometric(false)" color="warn">
+        <span i18n="@@biometric no">No</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- biometric login -->
+  <mat-card *ngIf="canLoginWithBiometric()" class="biometric container-item">
+    <mat-card-header>
+      <mat-spinner mat-card-avatar diameter="32"></mat-spinner>
+      <mat-card-title>Login with biometric</mat-card-title>
+      <mat-card-subtitle i18n="@@biometric login description">Use biometric login to access the security system.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+  </mat-card>
+
 </div>
