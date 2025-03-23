@@ -310,7 +310,7 @@ export class UserCardComponent implements OnInit {
 
   enableBiometricLogin() {
     this.loading = true;
-    var status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    let status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
 
     // restore initial state when use can decide at login if biometric should be used
@@ -323,7 +323,7 @@ export class UserCardComponent implements OnInit {
 
   disableBiometricLogin() {
     this.loading = true;
-    var status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    let status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
     status[locationId] = false;
     localStorage.setItem('biometricEnabled', JSON.stringify(status));

@@ -324,6 +324,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         });
     }
+    else {
+      this.useBiometric = BiometricStatus.AuthenticationFailed;
+    }
   }
 
   async saveAccessCode() {
@@ -356,7 +359,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   allowBiometric(enable: boolean) {
-    var status: { [key: string]: string } = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    let status: { [key: string]: boolean } = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
 
     if (!locationId) {
@@ -364,12 +367,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    status[locationId] = enable.toString();
+    status[locationId] = enable;
     console.debug('Biometric status:', JSON.stringify(status));
     localStorage.setItem('biometricEnabled', JSON.stringify(status));
 
     if (enable) {
       this.saveAccessCode();
+    }
+    else {
+      this.navigateForward();
     }
   }
 }

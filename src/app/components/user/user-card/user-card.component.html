@@ -105,11 +105,11 @@
         (click)="openSshKeySetupDialog()" i18n="@@user generate ssk key">Setup SSH key</button>
 
       <!-- Biometric login -->
-       <div *ngIf="biometricAvailable">
+      <div *ngIf="biometricAvailable">
         <mat-divider></mat-divider>
-        <button *ngIf="!biometricEnabled()" mat-menu-item color="primary" [disabled]="!canManageUser || disabled"
+        <button *ngIf="!biometricEnabled()" mat-menu-item color="primary" [disabled]="disabled"
           (click)="enableBiometricLogin()"><span i18n="@@user delete">Enable biometric login</span></button>
-        <button *ngIf="biometricEnabled()" mat-menu-item color="warn" [disabled]="!canManageUser || disabled"
+        <button *ngIf="biometricEnabled()" mat-menu-item color="warn" [disabled]="disabled"
           (click)="disableBiometricLogin()"><span i18n="@@user delete">Disable biometric login</span></button>
       </div>
     </mat-menu>

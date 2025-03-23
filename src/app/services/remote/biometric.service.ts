@@ -48,10 +48,9 @@ export class BiometricService {
     const isAvailable = await NativeBiometric.isAvailable();
 
     if (isAvailable) {
-      const verified = await NativeBiometric.verifyIdentity({
+      return await NativeBiometric.verifyIdentity({
         title: $localize`:@@biometric title:Log in to ArPI Home Security`,
-        maxAttempts: 2,
-        useFallback: true,
+        maxAttempts: 2
       }).then(() => {
         console.log("Biometric verified");
         return true;
@@ -59,8 +58,6 @@ export class BiometricService {
         console.error('Biometric verifying failed: ', error);
         return false;
       });
-
-      return verified;
     } else {
       return false;
     }
