@@ -59,7 +59,7 @@ export class AuthenticationService implements AuthenticationService {
       );
   }
 
-  logout(): void {
+  logout(manualAction: boolean = true): void {
     // clear token remove user from local storage to log user out
     const locationId = this.getLocationId();
     const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
@@ -71,7 +71,12 @@ export class AuthenticationService implements AuthenticationService {
     // clear returnUrl to start from home
     localStorage.removeItem('returnUrl');
     this.isSessionValidSubject.next(false);
-    this.router.navigate(['/login'], { queryParams: { isLogout: true } });
+
+    if (manualAction) {
+      this.router.navigate(['/login'], { queryParams: { isLogout: true } });
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   isLoggedIn(): boolean {

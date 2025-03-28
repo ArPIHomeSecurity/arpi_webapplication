@@ -38,7 +38,7 @@ export class AuthenticationService {
     return of(false).pipe(delay(environment.delay));
   }
 
-  logout(): void {
+  logout(manualAction: boolean = true): void {
     this.loggedInAs = null;
     this.updateUserToken(null);
     sessionStorage.removeItem('AuthenticationService.loggedInAs');

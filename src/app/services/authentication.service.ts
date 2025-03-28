@@ -5,7 +5,7 @@ export interface AuthenticationService {
 
   login(accessCode: number): Observable<boolean>;
 
-  logout(): void;
+  logout(manualAction: boolean): void;
 
   isLoggedIn(): boolean;
 

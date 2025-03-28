@@ -131,7 +131,7 @@
           <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@setup menu link">Setup</span>
         </mat-list-item>
 
-        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(true); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>exit_to_app</mat-icon>
           <div mat-line i18n="@@logout menu link">Logout</div>
           <div mat-line>({{ getUserName() }})</div>

@@ -86,7 +86,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                             return throwError(() => error);
                         } else if (error.status === 401) {
                             // Unauthorized => session expired
-                            this.authService.logout();
+                            this.authService.logout(false);
                             console.error('Session expired! Redirecting to login page...');
                             return of(undefined);
                         } else if (error.status === 0 && error.statusText === 'Unknown Error') {

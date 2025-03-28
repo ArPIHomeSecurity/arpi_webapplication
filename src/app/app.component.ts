@@ -179,9 +179,9 @@ export class AppComponent implements OnInit {
     return this.authenticationService.isLoggedIn();
   }
 
-  logout() {
+  logout(manualAction: boolean) {
     this.countdown.stop();
-    this.authenticationService.logout();
+    this.authenticationService.logout(manualAction);
   }
 
   getUserName() {
@@ -262,7 +262,7 @@ export class AppComponent implements OnInit {
       this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, { duration: environment.snackDuration });
     } else if ($event.action === 'done') {
       this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, { duration: environment.snackDuration });
-      this.logout();
+      this.logout(false);
     }
   }
 
