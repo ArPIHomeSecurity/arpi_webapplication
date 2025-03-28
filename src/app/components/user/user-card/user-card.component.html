@@ -42,17 +42,17 @@
         <span i18n="@@user registration">Expires on: </span>
         <span *ngIf="user.registrationExpiry">{{user.registrationExpiry}}</span>
         <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
-        <button mat-icon-button color="warn" [disabled]="!canManageCards || disabled"
+        <button mat-icon-button color="warn" [disabled]="!canManageRegistration || disabled"
           (click)="openDeleteRegistrationCodeDialog()"><mat-icon>delete</mat-icon></button>
       </div>
       <mat-card-subtitle *ngIf="!user.hasRegistrationCode" i18n="@@user no registration code">No registration
         code</mat-card-subtitle>
     </mat-card-content>
 
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="user.role === roleTypes.ADMIN"></mat-divider>
 
     <!-- SSH key -->
-    <mat-card-content>
+    <mat-card-content *ngIf="user.role === roleTypes.ADMIN">
       <mat-card-title i18n="@@user ssh key">SSH key</mat-card-title>
       <div class="ssh" *ngIf="hasSshKey">
         <mat-icon class="entry">terminal</mat-icon>
@@ -98,10 +98,9 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item color="primary" [disabled]="!canManageRegistration || user.hasRegistrationCode || disabled" i18n="@@user register device button"
         (click)="openDeviceRegistrationDialog()">Device registration</button>
-      <button mat-menu-item color="primary" [disabled]="!canManageCards || disabled" (click)="onClickRegisterCard()"
-        i18n="@@user register card button">Register
-        card</button>
-      <button mat-menu-item color="primary" [disabled]="!canManageSshKeys || hasSshKey || disabled"
+      <button *ngIf="user.role === roleTypes.ADMIN"mat-menu-item color="primary" [disabled]="!canManageCards || disabled" (click)="onClickRegisterCard()"
+        i18n="@@user register card button">Register card</button>
+      <button *ngIf="user.role === roleTypes.ADMIN" mat-menu-item color="primary" [disabled]="!canManageSshKeys || hasSshKey || disabled"
         (click)="openSshKeySetupDialog()" i18n="@@user generate ssk key">Setup SSH key</button>
 
       <!-- Biometric login -->

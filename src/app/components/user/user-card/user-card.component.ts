@@ -6,7 +6,7 @@ import { QuestionDialogComponent } from "@app/components/question-dialog/questio
 import { Card, ROLE_TYPES, User } from "@app/models";
 import { AuthenticationService, BiometricService, CardService, EventService, UserService } from "@app/services";
 import { environment } from "@environments/environment";
-import { finalize, forkJoin } from "rxjs";
+import { finalize, forkJoin, Observable } from "rxjs";
 import { UserDeviceRegistrationDialogComponent } from "../user-device-registration/user-device-registration.component";
 import { UserSshKeySetupDialogComponent } from "../user-ssh-key-setup/user-ssh-key-setup.component";
 import { AUTHENTICATION_SERVICE } from "@app/tokens";
@@ -32,10 +32,10 @@ export class UserCardComponent implements OnInit {
 
   readonly roleTypes = ROLE_TYPES;
 
+  loading: boolean = true;
   cards: Card[] = [];
   registeringCard: boolean = false;
   hasSshKey: boolean = false;
-  loading: boolean = true;
   biometricAvailable: boolean = false;
   useBiometric: boolean = null;
 
@@ -82,9 +82,20 @@ export class UserCardComponent implements OnInit {
         });
     }
 
+    let loadHasSshKey: Observable<boolean>;
+    if (this.canManageSshKeys) {
+      loadHasSshKey = this.userService.hasSshKey(this.user.id);
+    }
+    else {
+      loadHasSshKey = new Observable<boolean>(observer => {
+        observer.next(false);
+        observer.complete();
+      });
+    }
+
     forkJoin({
       cards: this.cardService.getCards(this.user.id),
-      hasSshKey: this.userService.hasSshKey(this.user.id)
+      hasSshKey: loadHasSshKey,
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe((result) => {
