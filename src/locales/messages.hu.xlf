@@ -1570,6 +1570,10 @@
         <source>Log in to ArPI Home Security</source>
         <target state="translated">Bejelentkezés az ArPI Home Security rendszerébe</target>
       </trans-unit>
+      <trans-unit id="location no locations" datatype="html">
+        <source>No locations found</source>
+        <target state="translated">Nem található helyszín</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

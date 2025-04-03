@@ -1570,6 +1570,10 @@
         <source>Log in to ArPI Home Security</source>
         <target state="translated">Accedi a ArPI Home Security</target>
       </trans-unit>
+      <trans-unit id="location no locations" datatype="html">
+        <source>No locations found</source>
+        <target state="translated">Nessuna località trovata</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,6 +1,6 @@
 <div class="container">
-  <div *ngIf="locations">
-    <form class="form-group" #locationsForm="ngForm" cdkDropList (cdkDropListDropped)="onDrop($event)"
+  <div *ngIf="locations && locations.length > 0; else no_locations">
+    <div cdkDropList (cdkDropListDropped)="onDrop($event)"
       [cdkDropListDisabled]="!isMultiLocation">
       <mat-card *ngFor="let location of locations; let index = index; trackBy:getLocationKey"
         id="location-{{location.id}}" cdkDrag (cdkDragStarted)="onDragStarted($event)"
@@ -96,9 +96,12 @@
             color="primary"><mat-icon>mode_edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="primary" (click)="executeLocationTest(location)"
-            [disabled]="locationsForm.invalid">
+          <button mat-icon-button color="primary" (click)="executeLocationTest(location)">
             <mat-icon>search</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="onLogin(location.id)">
+            <mat-icon>login</mat-icon>
           </button>
 
           <button *ngIf="locations.length > 1" mat-icon-button color="warn" (click)="openDeleteDialog(location.id)"
@@ -107,15 +110,21 @@
           </button>
         </mat-card-actions>
       </mat-card>
-    </form>
+    </div>
   </div>
+
+  <ng-template #no_locations>
+    <div class="container-item">
+      <h1 i18n="@@location no locations">No locations found</h1>
+    </div>
+  </ng-template>
 </div>
 
 <div class="list-actions">
-  <button *ngIf="isMultiLocation" class="list-action" mat-fab color="accent" routerLink="/location/add">
+  <button *ngIf="isMultiLocation || locations.length === 0" class="list-action" mat-fab color="accent" routerLink="/location/add">
     <mat-icon>add</mat-icon>
   </button>
-  <button *ngIf="isMultiLocation" class="list-action" mat-mini-fab color="accent" routerLink="/location/add">
+  <button *ngIf="isMultiLocation || locations.length === 0" class="list-action" mat-mini-fab color="accent" routerLink="/location/add">
     <mat-icon>add</mat-icon>
   </button>
 </div>

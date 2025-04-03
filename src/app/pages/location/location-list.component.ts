@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
@@ -14,16 +13,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { LocationTestResult, testLocation } from './location';
 
 
-
-
 @Component({
   selector: 'location-list',
   templateUrl: './location-list.component.html',
   styleUrls: ['./location-list.component.scss']
 })
-export class LocationListComponent extends ConfigurationBaseComponent implements OnInit {
-  @ViewChild('locationsForm') locationsForm: NgForm;
-
+export class LocationListComponent extends ConfigurationBaseComponent {
   isMultiLocation = environment.isMultiLocation;
   locations: Location[];
   selectedLocationId: string;
@@ -45,26 +40,6 @@ export class LocationListComponent extends ConfigurationBaseComponent implements
 
     this.locations = JSON.parse(localStorage.getItem('locations')) || [];
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
-  }
-
-  ngOnInit(): void {
-    if (this.locations.length === 0) {
-      this.locationDefaultLocation();
-    }
-  }
-
-  locationDefaultLocation(): void {
-    this.locations = [{
-      id: null,
-      name: 'Default',
-      scheme: 'https',
-      primaryDomain: window.location.hostname,
-      primaryPort: parseInt(window.location.port),
-      secondaryDomain: '',
-      secondaryPort: null,
-      order: 0
-    }];
-    this.selectedLocationId = null;
   }
 
   getLocationKey(index: number): string {
@@ -108,6 +83,12 @@ export class LocationListComponent extends ConfigurationBaseComponent implements
     target.value = target.value.trim();
   }
 
+  onLogin(locationId: string) {
+    localStorage.setItem('selectedLocationId', locationId);
+    window.dispatchEvent(new StorageEvent('storage', { key: 'selectedLocationId', newValue: locationId }));
+    window.location.href = '/login';
+  }
+
   onSave() {
     const locations = JSON.stringify(this.locations);
     localStorage.setItem('locations', locations);
@@ -123,8 +104,6 @@ export class LocationListComponent extends ConfigurationBaseComponent implements
       console.log('Backend configured');
       this.eventService.connect();
     });
-
-    this.locationsForm.form.markAsPristine();
   }
 
   onDragStarted(event: CdkDragStart<string[]>) {

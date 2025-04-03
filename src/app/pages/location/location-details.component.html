@@ -11,6 +11,7 @@
           <div class="row">
             <mat-form-field class="domain">
               <mat-label i18n="@@location primary domain">Primary Domain</mat-label>
+              <span matTextPrefix>https://</span>
               <input matInput type="text" autocapitalize="off" class="form-control" name="primaryDomain"
                 formControlName="primaryDomain" (change)="onFieldChange($event)">
               <mat-hint *ngIf="showApiLink && testResult?.primary === false">
@@ -36,6 +37,7 @@
           <div class="row">
             <mat-form-field class="domain">
               <mat-label i18n="@@location secondary domain">Secondary Domain</mat-label>
+              <span matTextPrefix>https://</span>
               <input matInput type="text" autocapitalize="off" class="form-control" name="secondaryDomain"
                 formControlName="secondaryDomain" (change)="onFieldChange($event)">
               <mat-hint *ngIf="showApiLink && testResult?.secondary === false">
@@ -89,9 +91,9 @@
       </button>
       <button mat-icon-button color="primary" (click)="onSubmit()"
         [disabled]="cantSave()"><mat-icon>save</mat-icon></button>
-      <button mat-icon-button color="warn" type="button" (click)="openDeleteDialog()"
+      <button *ngIf="!newLocation && isMultiLocation" mat-icon-button color="warn" type="button" (click)="openDeleteDialog()"
         [disabled]="selectedLocationId === location.id || location.id == null"><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+      <button *ngIf="!firstLocation" mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
     </mat-card-actions>
 
   </mat-card>

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@app/models';
 import { environment } from '@environments/environment';
-import { getVersion, LocationTestResult, testLocation } from './location';
+import { LocationTestResult, testLocation } from './location';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { AuthenticationService } from '@app/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,14 +18,17 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 export class LocationDetailsComponent {
 
   ALREADY_EXISTS = $localize`:@@location already exists:Location already exists!`
+
   location: Location;
   version: string;
   locationForm: FormGroup;
   newLocation: boolean;
+  firstLocation: boolean;
 
   selectedLocationId: string;
   testResult: LocationTestResult = null;
   showApiLink = environment.showApiLink;
+  isMultiLocation = environment.isMultiLocation;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
@@ -35,8 +38,9 @@ export class LocationDetailsComponent {
     public dialog: MatDialog,
   ) {
     this.route.params.subscribe(params => {
+      const locations = JSON.parse(localStorage.getItem('locations')) || [];
+      this.firstLocation = locations.length === 0;
       if (params.id) {
-        const locations = JSON.parse(localStorage.getItem('locations')) || [];
         this.location = locations.find(location => location.id === params.id);
         this.newLocation = false;
       }
@@ -45,10 +49,27 @@ export class LocationDetailsComponent {
         this.newLocation = true;
       }
 
+      if (this.firstLocation && !this.isMultiLocation) {
+        this.locationDefaultLocation();
+      }
+
       this.updateForm(this.location);
     });
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
+  }
+
+  locationDefaultLocation(): void {
+    this.location = {
+      id: null,
+      name: 'Default',
+      scheme: 'https',
+      primaryDomain: window.location.hostname,
+      primaryPort: parseInt(window.location.port),
+      secondaryDomain: '',
+      secondaryPort: null,
+      order: 0
+    };
   }
 
   updateForm(location: Location) {
@@ -114,7 +135,7 @@ export class LocationDetailsComponent {
       this.router.navigate(['/locations']);
     }
     else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/setup']);
     }
   }
 
@@ -177,14 +198,14 @@ export class LocationDetailsComponent {
       locations.push(location);
     }
 
-    if (locations.length === 1) {
-      localStorage.setItem('selectedLocationId', location.id);
-      window.location.pathname = '/';
-    }
-
     localStorage.setItem('locations', JSON.stringify(locations));
     window.dispatchEvent(new StorageEvent('storage', { key: 'locations', newValue: JSON.stringify(locations) }));
-    this.router.navigate(['/locations']);
+    if (this.isMultiLocation) {
+      this.router.navigate(['/locations']);
+    }
+    else {
+      this.router.navigate(['/setup']);
+    }
   }
 
   openDeleteDialog() {

@@ -1179,6 +1179,9 @@
       <trans-unit id="user delete" datatype="html">
         <source>Enable biometric login</source>
       </trans-unit>
+      <trans-unit id="location no locations" datatype="html">
+        <source>No locations found</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
