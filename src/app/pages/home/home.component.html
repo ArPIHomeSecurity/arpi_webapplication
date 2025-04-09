@@ -10,11 +10,7 @@
     />
   </div>
 
-  <div *ngIf="outputs" class="container-item ">
-    <component-output *ngFor="let output of outputs" [output]="output"/>
-  </div>
-
-  <div *ngIf="alert" class="container-item">
+  <div *ngIf="alert" class="container-item alert">
     <mat-expansion-panel class="alert" color="warn">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -32,7 +28,7 @@
     </mat-expansion-panel>
   </div>
 
-  <div *ngIf="areas.length == 1">
+  <div *ngIf="areas.length == 1" class="container-item areas">
     <component-sensor
       *ngFor="let sensor of sensors"
       [sensor]="sensor"
@@ -40,7 +36,7 @@
     />
   </div>
 
-  <div *ngIf="areas.length > 1">
+  <div *ngIf="areas.length > 1" class="container-item areas">
     <component-area
       *ngFor="let area of areas;
       trackBy: areaIdentify"
@@ -49,6 +45,10 @@
       [delays]="getSensorDelays(area.id)"
       [monitoringState]="monitoringState"
     />
+  </div>
+
+  <div *ngIf="outputs" class="container-item ">
+    <component-output *ngFor="let output of outputs" [output]="output"/>
   </div>
 
 </div>

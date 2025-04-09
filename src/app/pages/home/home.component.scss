@@ -4,6 +4,10 @@
     width: 100%;
   }
 
+  .container-item.controller, .container-item.alert, .container-item.areas {
+    margin-bottom: 50px;
+  }
+
   component-output {
     display: inline-block;
     margin-bottom: 10px;
