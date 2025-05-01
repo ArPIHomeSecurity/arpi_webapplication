@@ -32,11 +32,11 @@ jobs:
       - name: Build application demo version 💪
         run: |
           ng build --configuration=demo --localize
-          # moving the 'en' locale to the root
-          mv dist-demo/en/* dist-demo; rm -r dist-demo/en
+          mv dist-demo/browser/en/* dist-demo/browser
+          rm -r dist-demo/browser/en
 
       - name: Deploy demo application 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
           branch: gh-pages
-          folder: dist-demo
+          folder: dist-demo/browser

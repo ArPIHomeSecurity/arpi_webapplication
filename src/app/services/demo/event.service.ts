@@ -38,6 +38,9 @@ export class EventService {
   private cardRegisteredStateSubject = new Subject<boolean>();
   private cardRegisteredState = this.cardRegisteredStateSubject.asObservable();
 
+  private publicAccessStateSubject = new Subject<boolean>();
+  private publicAccessState = this.publicAccessStateSubject.asObservable();
+
   constructor() {
     this.connectionStateSubject.next(true);
   }
@@ -68,6 +71,8 @@ export class EventService {
       subject = this.cardRegisteredState;
     } else if (['connect', 'disconnect'].includes(event)) {
       subject = this.connectionState;
+    } else if (event === 'public_access_change') {
+      subject = this.publicAccessState;
     } else {
       console.warn('Unknown event: ', event);
     }
@@ -105,5 +110,13 @@ export class EventService {
 
   updateOutputState(output: Output) {
     this.outputStateSubject.next(output);
+  }
+
+  updatePowerState(state: boolean) {
+    this.powerStateSubject.next(state);
+  }
+
+  updatePublicAccessState(state: boolean) {
+    this.publicAccessStateSubject.next(state);
   }
 }

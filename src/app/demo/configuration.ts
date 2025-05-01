@@ -59,6 +59,14 @@ export const DEMO_CONFIGURATION = [
       delay: 0,
       duration: null
     }
+  },
+  {
+    option: 'alert',
+    section: 'sensitivity',
+    value: {
+      monitor_period: 10,
+      monitor_threshold: 10
+    }
   }
 ];
 

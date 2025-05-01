@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { Option } from '@app/models';
 import { DEMO_CONFIGURATION } from '@app/demo/configuration';
+import { Option } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { getSessionValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable()
@@ -50,4 +50,8 @@ export class ConfigurationService {
   sendTestSMS() {}
 
   testSyren(duration?: number) {}
+
+  getPublicAccess(): Observable<boolean> {
+    return of(true);
+  }
 }

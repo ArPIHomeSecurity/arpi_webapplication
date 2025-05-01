@@ -182,6 +182,11 @@ export class MonitoringService {
       network: this.datetime,
       system: this.datetime,
       timezone: this.timeZone
+        // update is seconds since this.datetime
+        uptime: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+        uptime_monitor: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+        uptime_nginx: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+        uptime_server: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
     }).pipe(
       delay(environment.delay),
       map(_ => {
