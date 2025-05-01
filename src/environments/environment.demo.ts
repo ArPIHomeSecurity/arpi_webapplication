@@ -29,14 +29,14 @@ export const environment = {
   channelCount: 3,
   snackDuration: 5000,
 
-  apiPort: 8080,
-  monitoringPort: 8081,
+  isMultiLocation: true,
+  showApiLink: true,
 
   defaultLanguage: 'en',
   languages: 'hu it',
 
-  // authentication toket valid for 15 mins
-  userTokenExpiry: 60*15,
+  // authentication token valid for 15 mins
+  userTokenExpiry: 60 * 15,
 
   // Service types
   alertService: AlertService,

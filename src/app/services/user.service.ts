@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { User } from '@app/models';
+import { User, UserCreate, UserUpdate } from '@app/models';
 
 
 export interface UserService {
@@ -9,9 +9,11 @@ export interface UserService {
 
   getUser(userId: number): Observable<User>;
 
-  createUser(user: User): Observable<User>;
+  getUserName(userId: number): Observable<string>;
 
-  updateUser(user: User): Observable<User>;
+  createUser(user: UserCreate): Observable<User>;
+
+  updateUser(user: UserUpdate): Observable<User>;
 
   deleteUser(userId: number): Observable<boolean>;
 

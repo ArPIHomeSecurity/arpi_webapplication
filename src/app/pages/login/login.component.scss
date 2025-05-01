@@ -1,6 +1,5 @@
-.register, .login {
+.container-item {
   margin: 25px auto 25px auto;
-
   max-width: 450px;
 }
 
@@ -17,13 +16,17 @@
 }
 
 .actions {
+  button {
+    margin: 5px 0px;
+  }
+
   .mat-mdc-progress-spinner {
     margin: 0px;
   }
 }
 
 // Hide input field
-@font-face{
+@font-face {
   font-family: text-security-disc;
   src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
 }
@@ -33,4 +36,19 @@
   text-security: disc;
   -webkit-text-security: disc;
   -moz-text-security: disc;
+}
+
+.biometric {
+  .mat-mdc-card-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+  }
+
+  .mat-mdc-card-actions {
+    button {
+      width: 50%;
+      margin: 10px 10px;
+    }
+  }
 }

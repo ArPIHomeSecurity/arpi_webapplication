@@ -2,6 +2,7 @@
 
 # compiled output
 /dist*
+/capacitor-app/*
 /tmp
 /out-tsc
 
@@ -47,3 +48,6 @@ Thumbs.db
 /server_pyenv/
 /server/__pycache__/
 /migrations
+
+# ssl
+arpi*.*

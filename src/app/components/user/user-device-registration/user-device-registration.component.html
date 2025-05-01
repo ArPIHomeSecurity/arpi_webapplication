@@ -1,0 +1,38 @@
+<h1 mat-dialog-title i18n="@@user device registration">Device registration</h1>
+<div mat-dialog-content>
+  <form [formGroup]="registrationForm">
+    
+    <label i18n="@@user select expiry">Select expiry</label>
+    <mat-radio-group formControlName="mode" (change)="onModeChanged($event)" class="expiry-mode">
+      <mat-radio-button *ngFor="let mode of modes" [value]="mode.value">{{mode.name}}</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="half-width">
+      <input matInput formControlName="counter" type="number" class="counter">
+    </mat-form-field>
+
+    <mat-form-field class="half-width">
+      <mat-select formControlName="unit">
+        <mat-option *ngFor="let unit of units" [value]="unit.value" required>
+          {{unit.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div *ngIf="registrationCode" class="registration">
+  <span i18n="@@user device registration code">Device registration code</span>
+  <div class="code">
+    {{registrationCode}}
+    <!-- https://stackoverflow.com/a/58115714 -->
+    <button mat-icon-button *ngIf="registrationCode" onclick="this.blur()" (click)="copyText(registrationCode)"><mat-icon>file_copy</mat-icon></button>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [disabled]="!registrationForm.valid || registrationCode" (click)="getNewCode()" tabindex="2" color="primary" i18n="@@user get new code">Get new code</button>
+  
+  <button mat-button (click)="onClickClose()" tabindex="-1" i18n="@@close button">Close</button>
+</div>

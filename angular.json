@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "argus": {
+    "app": {
       "i18n": {
         "sourceLocale": {
           "code": "en",
-          "baseHref": "/"
+          "baseHref": "/en/"
         },
         "locales": {
           "hu": "src/locales/messages.hu.xlf",
@@ -33,6 +33,7 @@
             "outputPath": {
               "base": "dist-development"
             },
+            "localize": true,
             "index": "src/index.html",
             "polyfills": [
               "src/polyfills.ts"
@@ -98,7 +99,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.demo.ts"
+                  "with": "src/environments/environment.demo.prod.ts"
                 }
               ],
               "index": {
@@ -128,6 +129,108 @@
                   "maximumWarning": "6kb"
                 }
               ]
+            },
+            "remote-dev": {
+              "baseHref": "/v1-dev/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.remote.ts"
+                }
+              ],
+              "assets": [
+                "src/assets",
+                "src/404.html"
+              ],
+              "index": {
+                "input": "src/index.remote.html",
+                "output": "index.html"
+              },
+              "outputPath": {
+                "base": "dist-remote-dev"
+              }
+            },
+            "remote": {
+              "baseHref": "/v1/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.remote.prod.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.remote.html",
+                "output": "index.html"
+              },
+              "assets": [
+                "src/assets",
+                "src/404.html"
+              ],
+              "outputPath": {
+                "base": "dist-remote"
+              },
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            },
+            "capacitor-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.capacitor.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.capacitor.html",
+                "output": "index.html"
+              },
+              "outputPath": {
+                "base": "dist-capacitor-dev"
+              }
+            },
+            "capacitor": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.capacitor.prod.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.capacitor.html",
+                "output": "index.html"
+              },
+              "outputPath": {
+                "base": "dist-capacitor"
+              },
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": ""
@@ -135,25 +238,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "argus:build"
+            "buildTarget": "app:build"
           },
           "configurations": {
             "development": {
-              "buildTarget": "argus:build:development"
+              "buildTarget": "app:build:development"
             },
             "production": {
-              "buildTarget": "argus:build:production"
+              "buildTarget": "app:build:production"
             },
             "demo": {
               "host": "0.0.0.0",
-              "buildTarget": "argus:build:demo-dev"
+              "buildTarget": "app:build:demo-dev"
             }
           }
         },
         "extract-i18n": {
           "builder": "ng-extract-i18n-merge:ng-extract-i18n-merge",
           "options": {
-            "buildTarget": "argus:build",
+            "buildTarget": "app:build",
             "format": "xlf",
             "outputPath": "src/locales",
             "targetFiles": [
@@ -206,7 +309,7 @@
         }
       }
     },
-    "argus-e2e": {
+    "app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "app-root",
@@ -215,11 +318,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "argus:serve"
+            "devServerTarget": "app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "argus:serve:production"
+              "devServerTarget": "app:serve:production"
             }
           }
         },

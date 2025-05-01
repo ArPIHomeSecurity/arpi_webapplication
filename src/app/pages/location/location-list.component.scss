@@ -1,0 +1,59 @@
+::ng-deep .mat-mdc-card-header {
+  .mat-mdc-card-avatar {
+    .mat-icon{
+      margin: 15px 10px;
+    }
+  }
+
+  .mat-mdc-card-header-text {
+    margin-bottom: 20px;
+  }
+}
+
+::ng-deep .mat-mdc-card-header-text {
+  width: 100%;
+  
+  .mat-mdc-card-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.mat-mdc-card-content {
+  padding-top: 10px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.registered {
+  color: #4caf50;
+}
+
+.not-registered {
+  color: #f44336;
+}
+
+.primary, .secondary {
+  .icon-accessible {
+    color: #4caf50;
+  }
+
+  .icon-inaccessible {
+    color: #f44336;
+  }
+}
+
+
+.test-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  .mat-icon {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+}

@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
+import { StatusBar } from '@capacitor/status-bar';
 
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
 import { environment } from '@environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { UserDeviceUnregisterDialogComponent } from './pages/user';
 import { Router } from '@angular/router';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 
 
 @Component({
@@ -23,7 +24,6 @@ import { ThemeService } from './services/theme.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild('counter') private countdown: CountdownComponent;
 
@@ -32,17 +32,23 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
+  locations: { name: string, id: string }[] = [];
+  selectedLocationId: string;
+
   locales = [
-    {name: 'Magyar', id: 'hu'},
-    {name: 'English', id: 'en'},
-    {name: 'Italiano', id: 'it'}
+    { name: 'Magyar', id: 'hu' },
+    { name: 'English', id: 'en' },
+    { name: 'Italiano', id: 'it' }
   ];
   currentLocale: string;
   versions: {
     serverVersion: string;
     webapplicationVersion: string;
   };
-  environment = environment;
+
+  isMultiLocation = environment.isMultiLocation;
+  demoMode = environment.demo;
+
   countdownConfig = {
     leftTime: environment.userTokenExpiry,
     format: 'mm:ss',
@@ -50,7 +56,7 @@ export class AppComponent implements OnInit {
   };
   isSessionValid: boolean;
   isDeviceRegistered = false;
-  
+
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
 
@@ -69,7 +75,8 @@ export class AppComponent implements OnInit {
     public router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    
+
+    private renderer: Renderer2,
     private host: ElementRef,
     private zone: NgZone
   ) {
@@ -79,11 +86,11 @@ export class AppComponent implements OnInit {
       this.currentLocale = 'en';
     }
 
-    this.versions = {serverVersion: '', webapplicationVersion: VERSION};
+    this.versions = { serverVersion: '', webapplicationVersion: VERSION };
     this.isSessionValid = false;
   }
-  
-  ngOnInit() {
+
+  async ngOnInit() {
     this.darkTheme = this.themeService.load();
 
     this.resizeObserver = new ResizeObserver(entries => {
@@ -129,15 +136,52 @@ export class AppComponent implements OnInit {
       .subscribe(isRegistered => {
         this.isDeviceRegistered = isRegistered;
       });
+
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    this.locations = locations
+      .sort((a, b) => a.order - b.order)
+      .map(i => ({ name: i.name, id: i.id }));
+
+    this.selectedLocationId = localStorage.getItem('selectedLocationId');
+
+    fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
+
+    // update navigation bar for edge-to-edge
+    const isEdgeToEdge = await this.isEdgeToEdgeEnabled();
+    if (isEdgeToEdge) {
+      console.log('Edge-to-edge enabled, update padding');
+      // update the style of the mat-toolbar
+      const toolbar = document.querySelector('mat-toolbar');
+      this.renderer.setStyle(toolbar, 'padding-top', '40px');
+      this.renderer.setStyle(toolbar, 'height', '90px');
+
+      // update the style of the page-wrapper
+      const pageWrapper = document.querySelector('.page-wrapper');
+      this.renderer.setStyle(pageWrapper, 'min-height', 'calc(100vh - 96px)');
+
+      // update the style of the all-wrapper
+      const allWrapper = document.querySelector('.all-wrap');
+      this.renderer.setStyle(allWrapper, 'min-height', 'calc(100vh - 96px)');
+    }
+  }
+
+  async isEdgeToEdgeEnabled(): Promise<boolean> {
+    try {
+      // This checks if the web content extends into the system UI areas
+      const statusBarInfo = await StatusBar.getInfo();
+      return statusBarInfo.overlays;
+    } catch (error) {
+      return false;
+    }
   }
 
   isLoggedIn() {
     return this.authenticationService.isLoggedIn();
   }
 
-  logout() {
+  logout(manualAction: boolean) {
     this.countdown.stop();
-    this.authenticationService.logout();
+    this.authenticationService.logout(manualAction);
   }
 
   getUserName() {
@@ -148,20 +192,63 @@ export class AppComponent implements OnInit {
     return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
   }
 
+  getLocationName() {
+    if (this.selectedLocationId !== null) {
+      const location = this.locations.find(i => i.id === this.selectedLocationId);
+      if (location) {
+        return location.name;
+      }
+    }
+
+    return '';
+  }
+
+  getBackend() {
+    const backendScheme = localStorage.getItem('backend.scheme');
+    const backendDomain = localStorage.getItem('backend.domain');
+    const backendPort = localStorage.getItem('backend.port');
+    return `${backendScheme}://${backendDomain}:${backendPort}`;
+  }
+
+  onConfigurationChanged(event: StorageEvent) {
+    if (event.key === 'locations') {
+      const locations = JSON.parse(event.newValue);
+      this.locations = locations
+        .sort((a, b) => a.order - b.order)
+        .map(i => ({ name: i.name, id: i.id }));
+    }
+    else if (event.key === 'selectedLocationId') {
+      this.selectedLocationId = event.newValue;
+    }
+  }
+
+  onLocationChange(event) {
+    this.selectedLocationId = event.value;
+    localStorage.setItem('selectedLocationId', event.value);
+
+    // navigate to the default page and reload the page
+    localStorage.removeItem('returnUrl');
+    this.router.navigate(['/']).then(() => window.location.reload());
+  }
+
   onLocaleSelected(event) {
     const currentLocale = localStorage.getItem('localeId');
     console.log('Change locale: ', currentLocale, '=>', event.value);
     localStorage.setItem('localeId', event.value);
 
-    const newLocale = event.value === environment.defaultLanguage ? '' : event.value;
-    const languagePattern = new RegExp('^/(' + environment.languages.split(' ').join('|') + ')/');
-    if (languagePattern.test(location.pathname)) {
-      // change the language
-      const newPath = location.pathname.replace('/' + currentLocale, (newLocale ? '/' + newLocale : ''));
-      location.pathname = newPath.replace(/\/$/, '');
-    } else {
-      // if the current language isn't the default, add the language
-      location.pathname = ('/' + newLocale + location.pathname)
+    const newLocale = event.value;
+    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+
+    // replace the language in the path
+    const path = window.location.pathname;
+    const matches = pathParser.exec(path);
+    if (matches !== null) {
+      const newPath = [matches.groups.version, newLocale, matches.groups.path].join('/');
+      console.log('Redirect to ' + newPath);
+      window.location.pathname = newPath;
+    }
+    else {
+      console.error('No match found for path: ', path);
     }
   }
 
@@ -172,10 +259,10 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+      this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, { duration: environment.snackDuration });
     } else if ($event.action === 'done') {
-      this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
-      this.logout();
+      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, { duration: environment.snackDuration });
+      this.logout(false);
     }
   }
 
@@ -184,17 +271,31 @@ export class AppComponent implements OnInit {
     if (!currentLocale) {
       currentLocale = 'en';
     }
-    return this.humanizer.humanize((environment.userTokenExpiry/3)*1000, { language: currentLocale });
+    return this.humanizer.humanize((environment.userTokenExpiry / 3) * 1000, { language: currentLocale });
   }
 
   unregister() {
-    const dialogRef = this.dialog.open(UserDeviceUnregisterDialogComponent, {
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '250px',
-      data: null,
+      data: {
+        title: $localize`:@@unregister device:Unregister device`,
+        message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@unregister:Unregister`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         this.authenticationService.unRegisterDevice();
       }
     });
@@ -202,26 +303,14 @@ export class AppComponent implements OnInit {
 
   openHelp() {
     // get current path
-    const currentPath = window.location.pathname;
-    
-    // remove language from path
-    var currentLocale = localStorage.getItem('localeId');
-    if (currentLocale == environment.defaultLanguage) {
-      currentLocale = '/';
-    }
-    else {
-      currentLocale = '/' + currentLocale + '/';
-    }
+    const currentPath = location.pathname;
 
-    // remove language prefix
-    var pathWithoutLanguage = currentPath.replace(currentLocale, '');
-    // remove leading slash
-    pathWithoutLanguage.replace(/^\/+/g, "");
-
-    // get text before first slash
-    var firstSlash = pathWithoutLanguage.indexOf('/');
-    if (firstSlash > 0) {
-      pathWithoutLanguage = pathWithoutLanguage.substring(0, firstSlash);
+    // remove version and language from the path
+    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+    const matches = pathParser.exec(currentPath);
+    let pathWithoutLanguage = '';
+    if (matches !== null) {
+      pathWithoutLanguage = matches.groups.path;
     }
 
     // mapping of local urls to documentation urls
@@ -229,11 +318,15 @@ export class AppComponent implements OnInit {
       '': 'en/latest/end_users/',
       'login': 'en/latest/end_users/login/',
       'events': 'en/latest/end_users/events/',
-      
+
       'areas': 'en/latest/end_users/areas/',
       'area': 'en/latest/end_users/areas/#edit-area',
+      'outputs': 'en/latest/end_users/outputs/',
+      'output': 'en/latest/end_users/outputs/#edit-output',
       'sensors': 'en/latest/end_users/sensors/',
       'sensor': 'en/latest/end_users/sensors/#edit-area',
+      'users': 'en/latest/end_users/users/',
+      'user': 'en/latest/end_users/users/#edit-user',
       'zones': 'en/latest/end_users/zones/',
       'zone': 'en/latest/end_users/zones/#edit-zone',
 
@@ -242,20 +335,34 @@ export class AppComponent implements OnInit {
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/',
-      
-      'users': 'en/latest/end_users/users/',
-      'user': 'en/latest/end_users/users/#edit-user'
     }
 
-    console.debug("Mapping: "+pathWithoutLanguage+ " => "+urlMap[pathWithoutLanguage])
+    if (environment.isMultiLocation) {
+      urlMap['setup'] = 'en/latest/end_users/locations/';
+    }
+    else {
+      urlMap['setup'] = 'en/latest/end_users/setup/';
+    }
+
+    if (!(pathWithoutLanguage in urlMap)) {
+      console.error("No mapping found for: " + pathWithoutLanguage);
+      pathWithoutLanguage = '';
+    }
+
+    console.debug("Mapping: " + pathWithoutLanguage + " => " + urlMap[pathWithoutLanguage])
     // check if documentation path exists
     const http = new XMLHttpRequest();
     const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
     http.open('HEAD', url, false);
-    http.send();
-    if (http.status === 404) {
-      // fallback to main page
-      pathWithoutLanguage = '';
+
+    try {
+      http.send();
+    }
+    catch (error) {
+      if (http.status === 404) {
+        // fallback to main page
+        pathWithoutLanguage = '';
+      }
     }
 
     // TODO:

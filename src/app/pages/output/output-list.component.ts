@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { OutputDeleteDialogComponent } from './output-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Area, MONITORING_STATE, Output, OutputType, OutputDefinitions, OutputTriggerType } from '@app/models';
 import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, OutputService, ZoneService } from '@app/services';
 
@@ -24,10 +24,8 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   @Input() onlyAlerting = false;
 
-  action: string;
   outputs: Output[] = null;
   areas: Area[] = [];
   outputTypes = OutputType;
@@ -94,25 +92,41 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(outputId: number) {
-    const dialogRef = this.dialog.open(OutputDeleteDialogComponent, {
-      width: '250px',
+    const output = this.outputs.find(x => x.id === outputId);
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      width: '450px',
       data: {
-        name: this.outputs.find(x => x.id === outputId).name,
+        title: $localize`:@@delete output:Delete Output`,
+        message: $localize`:@@delete output message:Are you sure you want to delete the output "${output.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.action = 'delete';
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
           this.outputService.deleteOutput(outputId)
-            .subscribe(_ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
-            );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, { duration: environment.snackDuration });
+                this.updateComponent();
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

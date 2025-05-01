@@ -1,0 +1,10 @@
+{
+  "name": "ArPI",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "hooks": {
+    "build:after": "scripts/after-angular-build.js"
+  }
+}

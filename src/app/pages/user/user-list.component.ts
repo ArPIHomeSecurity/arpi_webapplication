@@ -3,18 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { finalize } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { UserDeleteDialogComponent } from './user-delete.component';
-import { UserDeviceRegistrationDialogComponent } from './user-device-registration.component';
-import { Card, MONITORING_STATE, ROLE_TYPES, User } from '@app/models';
+import { ROLE_TYPES, User } from '@app/models';
 import { AuthenticationService, CardService, EventService, LoaderService, MonitoringService, UserService } from '@app/services';
 
 import { environment } from '@environments/environment';
-import { UserCardDeleteDialogComponent } from '.';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { UserSshKeySetupDialogComponent } from './user-ssh-key-setup.component';
+import { Router } from '@angular/router';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -27,11 +23,9 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   readonly roleTypes = ROLE_TYPES;
   users: User[] = null;
-  cards: Card[] = [];
   has_ssh_key: Map<number, boolean> = new Map<number, boolean>();
 
   registering_card: number = null;
@@ -44,8 +38,10 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
 
     @Inject('UserService') private userService: UserService,
     @Inject('CardService') private cardService: CardService,
+
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -86,14 +82,15 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     super.destroy();
   }
 
+  navigateToUserEdit(userId: number) {
+    this.router.navigate(['/user', userId]);
+  }
+
   updateComponent() {
-    forkJoin({
-      users: this.userService.getUsers(),
-      cards: this.cardService.getCards()
-    })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
-        this.users = results.users;
+    this.userService.getUsers()
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(users => {
+        this.users = users;
 
         // iterate users and ask for has_ssh_key
         this.users.forEach((user) => {
@@ -103,12 +100,6 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
             });
         });
 
-        if (results.cards) {
-          this.cards = results.cards;
-        }
-        else {
-          this.cards = []
-        }
         this.loader.display(false);
         this.loader.disable(false);
       }
@@ -126,128 +117,7 @@ export class UserListComponent extends ConfigurationBaseComponent implements OnI
     )
   }
 
-  openDeleteDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserDeleteDialogComponent, {
-      width: '250px',
-      data: {
-        name: this.users.find(x => x.id === userId).name,
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true);
-          this.userService.deleteUser(userId)
-            .subscribe({
-              next: _ => this.updateComponent(),
-              error: _ => {
-                this.loader.disable(false);
-                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {duration: environment.snackDuration});
-              }
-            });
-        } else {
-          this.snackBar.open($localize`:@@cant delete:Cant delete!`, null, {duration: environment.snackDuration});
-        }
-      }
-    });
-  }
-
-  openDeleteCardDialog(cardId: number) {
-    const dialogRef = this.dialog.open(UserCardDeleteDialogComponent, {
-      width: '250px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true);
-          this.cardService.deleteCard(cardId)
-            .subscribe({
-              next: _ => this.updateComponent(),
-              error: _ => {
-                this.loader.disable(false);
-                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {duration: environment.snackDuration});
-              }
-            });
-        } else {
-          this.snackBar.open($localize`:@@cant delete:Cant delete!`, null, {duration: environment.snackDuration});
-        }
-      }
-    });
-  }
-
-  getCards(userId: number): Card[] {
-    const results: Card[] = [];
-    this.cards.forEach((card) => {
-      if (card.userId === userId) {
-        results.push(card);
-      }
-    });
-
-    return results;
-  }
-
-  toggleCard(cardId: number) {
-    this.cards.forEach((card) => {
-      if (card.id === cardId) {
-        // clone the card, change the state and update
-        let tmpCard = Object.assign({}, card)
-        tmpCard.enabled = !card.enabled;
-
-        this.loader.disable(true);
-        this.cardService.updateCard(tmpCard)
-        .subscribe({
-          next: _ => this.updateComponent(),
-          error: _ => {
-            this.loader.disable(false);
-            this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
-          }
-        });
-      }
-    });
-  }
-
-  onClickRegisterCard(userId: number){
-    this.userService.registerCard(userId)
-      .subscribe(() => {
-        this.registering_card = userId;
-    });
-  }
-
-  openSshKeySetupDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserSshKeySetupDialogComponent, {
-      width: '350px',
-      data: this.users.find(x => x.id === userId),
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loader.disable(true);
-      this.updateComponent();
-    });
-  }
-
-  openDeviceRegistrationDialog(userId: number) {
-    const dialogRef = this.dialog.open(UserDeviceRegistrationDialogComponent, {
-      width: '350px',
-      data: this.users.find(x => x.id === userId),
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.loader.disable(true);
-      this.updateComponent();
-    });
-  }
-
-  removeRegistrationCode(userId: number) {
-    this.loader.disable(true);
-    this.userService.deleteRegistrationCode(userId)
-      .subscribe(_ => this.updateComponent());
-  }
-
-  deleteSSHKey(userId: number) {
-    this.loader.disable(true);
-    this.userService.deleteSshKey(userId)
-      .subscribe(_ => this.updateComponent());
+  onUserDeleted(userId: number) {
+    this.updateComponent();
   }
 }

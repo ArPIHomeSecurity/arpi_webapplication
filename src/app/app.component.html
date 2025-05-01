@@ -1,13 +1,19 @@
 <div class="app-viewport">
 
-  <app-demo *ngIf="environment.demo"></app-demo>
+  <app-demo *ngIf="demoMode"></app-demo>
 
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
       <mat-icon>menu</mat-icon>
     </button>
+
     <button mat-flat-button *ngIf="isLoggedIn()" routerLink="/" (click)="sidenav.close()" class="logo-button">
-      <img src="assets/images/argus-eye-30.png"><span>ArPI</span>
+      <img src="assets/images/argus-eye-30.png">
+      <span class="location">{{getLocationName()}}</span>
+    </button>
+    <button mat-flat-button *ngIf="!isLoggedIn()" class="logo-button">
+      <img src="assets/images/argus-eye-30.png">
+      <span class="location">{{getLocationName()}}</span>
     </button>
 
     <span class="spacer"></span>
@@ -32,12 +38,25 @@
   <mat-sidenav-container class="all-wrap" (backdropClick)="sidenav.close()" autosize>
     <mat-sidenav #sidenav>
       <!-- sidenav content -->
-      <div class="logo">
-        <img src="assets/images/argus-eye-64.png">
-      </div>
+      <mat-list role="list" *ngIf="locations.length > 0">
+        <mat-list-item *ngIf="isMultiLocation && selectedLocationId != null">
+          <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
+          <mat-select [value]="selectedLocationId" (selectionChange)="onLocationChange($event)">
+            <mat-option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</mat-option>
+          </mat-select>
+        </mat-list-item>
+  
+        <mat-list-item *ngIf="!isMultiLocation" role="listitem">
+          <mat-icon matListItemIcon><img src="assets/images/argus-eye-64.png" width="24"></mat-icon>
+          <div matListItemTitle>{{ getLocationName() }}</div>
+        </mat-list-item>
+      </mat-list>
 
       <mat-nav-list>
-        <mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isLoggedIn() && locations.length > 0">
+          <mat-icon matListItemIcon>login</mat-icon><div matListItemTitle i18n="@@login menu link">Login</div>
+        </mat-list-item>
+        <mat-list-item routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>home</mat-icon><div matListItemTitle i18n="@@home menu link">Control</div>
         </mat-list-item>
         <mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
@@ -45,6 +64,9 @@
           <span matListItemTitle i18n="@@events menu link">Events</span>
         </mat-list-item>
         <h3 mat-subheader i18n="Settings menu title" *ngIf="isLoggedIn()">Settings</h3>
+        <mat-list-item routerLink="/locations" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isMultiLocation">
+          <mat-icon matListItemIcon>other_houses</mat-icon><span i18n="@@locations menu link">Locations</span>
+        </mat-list-item>
         <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>crop</mat-icon><span i18n="@@areas menu link">Areas</span>
         </mat-list-item>
@@ -57,7 +79,7 @@
         <mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>output</mat-icon><span i18n="@@outputs menu link">Outputs</span>
         </mat-list-item>
-        <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isAdminUser()">
           <mat-icon matListItemIcon>group</mat-icon><span i18n="@@users menu link">Users</span>
         </mat-list-item>
 
@@ -87,6 +109,9 @@
         </mat-accordion>
 
         <mat-divider *ngIf="isLoggedIn()"></mat-divider>
+        <mat-list-item routerLink="/my-user" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn() && !isAdminUser()">
+          <mat-icon matListItemIcon>person</mat-icon><span i18n="@@my-user menu link">My user</span>
+        </mat-list-item>
         <mat-list-item>
           <mat-icon matListItemIcon>language</mat-icon>
           <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
@@ -97,11 +122,16 @@
           <mat-icon matListItemIcon>invert_colors</mat-icon>
           <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme" i18n="@@dark theme">Dark theme</mat-slide-toggle>
         </mat-list-item>
+
         <mat-list-item *ngIf="!isLoggedIn() && isDeviceRegistered" (click)="unregister()">
           <mat-icon matListItemIcon>disabled_by_default</mat-icon>
           <div mat-line i18n="@@unregister menu link">Unregister device</div>
         </mat-list-item>
-        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
+        <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null" *ngIf="!isMultiLocation">
+          <mat-icon matListItemIcon>settings</mat-icon><span i18n="@@setup menu link">Setup</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/login" routerLinkActive="active" (click)="logout(true); smallScreen ? sidenav.close() : null" *ngIf="isLoggedIn()">
           <mat-icon matListItemIcon>exit_to_app</mat-icon>
           <div mat-line i18n="@@logout menu link">Logout</div>
           <div mat-line>({{ getUserName() }})</div>
@@ -128,25 +158,20 @@
       <!-- footer -->
       <div class="footer">
         <div class="links">
-          <a href="https://www.arpi-security.info/" target="project">
-            <button mat-button color="accent">ArPI Home Security</button>
+          <a mat-button href="https://www.arpi-security.info/" target="project">
+            ArPI Home Security
           </a>
           |
-          <a href="https://docs.arpi-security.info" target="">
-            <button mat-button color="accent">DOCS</button>
+          <a mat-button href="https://docs.arpi-security.info" target="docs">
+            DOCS
           </a>
         </div>
         
         <div class="versions">
           <div class="version"><b>WebApp</b>&nbsp;{{versions.webapplicationVersion}}</div>
-          <div class="version"><b>Server</b>&nbsp;{{versions.serverVersion}}</div>
+          <div class="version"><b>Server</b>&nbsp;{{versions.serverVersion || "-" }}</div>
         </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-
-<ng-template #snackbarTemplate>
-  <div *ngIf="isSessionValid" i18n="@@session expiry">Your session will expire in {{ getSessionDuration() }}!</div>
-  <div *ngIf="!isSessionValid" i18n="@@session expired">Your session expired, logged out!</div>
-</ng-template>

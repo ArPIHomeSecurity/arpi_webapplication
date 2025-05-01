@@ -12,7 +12,7 @@ import { EventService, LoaderService, MonitoringService } from '@app/services';
 import { environment } from '@environments/environment';
 import * as moment from 'moment';
 
-const scheduleMicrotask = Promise.resolve( null );
+const scheduleMicrotask = Promise.resolve(null);
 
 
 export interface TimeZoneGroup {
@@ -26,14 +26,13 @@ export const filter = (opt: string[], value: string): string[] => {
   return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
 };
 
-@Component( {
+@Component({
   templateUrl: 'clock.component.html',
   styleUrls: ['clock.component.scss'],
   providers: []
-} )
+})
 
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
   clockForm: UntypedFormGroup;
   clock: any;
 
@@ -62,7 +61,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
       } else {
         const timezoneGroup = this.timezoneGroups.find(tzGroup => tzGroup.groupName === results[1]);
         if (timezoneGroup == null) {
-          this.timezoneGroups.push({groupName: results[1], zoneNames: [results[2]]});
+          this.timezoneGroups.push({ groupName: results[1], zoneNames: [results[2]] });
         } else {
           timezoneGroup.zoneNames.push(results[2]);
         }
@@ -79,7 +78,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
       this.loader.display(true);
     });
     this.updateComponent();
-    
+
     this.updateForm();
 
     if (this.clockForm.get('timezone')) {
@@ -102,7 +101,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateForm() {
-    this.clockForm = this.fb.group( {
+    this.clockForm = this.fb.group({
       dateTime: new UntypedFormControl('', Validators.required),
       timezone: new UntypedFormControl('', Validators.required)
     });
@@ -120,7 +119,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
+      );
   }
 
   // onSynchronize() {
@@ -135,13 +134,14 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     const formModel = this.clockForm.value;
     const newDate = formModel.dateTime;
     this.monitoringService.changeClock(newDate.toISOString(), formModel.timezone)
-      .subscribe(
-        _ => this.updateComponent(),
-        _ => {
+      .pipe(finalize(() => this.loader.disable(false)))
+      .subscribe({
+        next: _ => this.updateComponent(),
+        error: _ => {
           this.loader.disable(false);
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration });
         }
-    );
+      });
   }
 
   getDuration(uptime) {
@@ -151,7 +151,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   private filterGroup(value: string): TimeZoneGroup[] {
     if (value) {
       return this.timezoneGroups
-        .map(group => ({groupName: group.groupName, zoneNames: filter(group.zoneNames, value)}))
+        .map(group => ({ groupName: group.groupName, zoneNames: filter(group.zoneNames, value) }))
         .filter(group => group.zoneNames.length > 0);
     }
 

@@ -1,11 +1,14 @@
 import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { App as CapacitorApp } from '@capacitor/app';
 
 import { Alert, ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState, SensorType, Sensor, Zone, Area, Output, OutputTriggerType } from '@app/models';
 import { AlertService, AreaService, EventService, LoaderService, MonitoringService, OutputService, SensorService, ZoneService } from '@app/services';
 
 import { environment } from '@environments/environment';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+
+import { CapacitorService } from '@app/services/capacitor.service';
 
 
 @Component({
@@ -15,8 +18,6 @@ import { forkJoin } from 'rxjs';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   alert: Alert;
   armTypes: any = ARM_TYPE;
@@ -30,6 +31,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   areas: Area[] = [];
   outputs: Output[] = [];
 
+  subscriptions: Subscription[] = [];
+  goBackSubscription: Subscription
+
   constructor(
     @Inject('AlertService') private alertService: AlertService,
     @Inject('AreaService') private areaService: AreaService,
@@ -39,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject('OutputService') private outputService: OutputService,
     @Inject('SensorService') private sensorService: SensorService,
     @Inject('ZoneService') private zoneService: ZoneService,
+    @Inject('CapacitorService') private capacitorService: CapacitorService,
 
     private snackBar: MatSnackBar,
   ) {
@@ -46,6 +51,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(() => {
+      console.log('Pressed backButton - on home');
+      CapacitorApp.exitApp();
+    });
+
     this.loadStates();
 
     forkJoin({
@@ -67,80 +77,95 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     // ALERT STATE
-    this.eventService.listen('alert_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('alert_state_change')
       .subscribe(alert => {
         this.alert = alert;
-      });
+      })
+    );
 
     // ARM STATE
-    this.eventService.listen('arm_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('arm_state_change')
       .subscribe(armState => {
         this.armState = string2ArmType(armState);
         this.areaService.getAreas()
-          .subscribe(areas => {
-            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
+        .subscribe(areas => {
+          this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
         this.onStateChanged();
-      });
+      })
+    );
 
     // AREA STATE
-    this.eventService.listen('area_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('area_state_change')
       .subscribe((area: Area) => {
         this.areaService.getAreas()
-          .subscribe(areas => {
-            this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
+        .subscribe(areas => {
+          this.areas = areas.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
         this.onStateChanged();
-      });
+      })
+    );
 
     // SENSORS ALERT STATE
-    this.eventService.listen('sensors_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('sensors_state_change')
       .subscribe(alert => {
         this.sensorAlert = alert;
-      });
+      })
+    );
 
     // SENSOR TYPES: we need only once
-    this.sensorService.getSensorTypes()
+    this.subscriptions.push(
+      this.sensorService.getSensorTypes()
       .subscribe(st => {
-        this.sensorTypes = st
-      });
-
+        this.sensorTypes = st;
+      })
+    );
 
     // MONITORING STATE
-    this.eventService.listen('system_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('system_state_change')
       .subscribe(monitoringState => {
         this.monitoringState = string2MonitoringState(monitoringState);
         this.onStateChanged();
-      });
+      })
+    );
 
-    this.eventService.listen('sensors_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('sensors_state_change')
       .subscribe(_ => {
         this.sensorService.getSensors()
-          .subscribe(sensors => {
-            this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
-          });
-      });
+        .subscribe(sensors => {
+          this.sensors = sensors.sort((a, b) => a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0);
+        });
+      })
+    );
 
-    this.eventService.listen('output_state_change')
+    this.subscriptions.push(
+      this.eventService.listen('output_state_change')
       .subscribe(output => {
-        const tmpOutput = this.outputs.find(o => o.id === output.id)
+        const tmpOutput = this.outputs.find(o => o.id === output.id);
         if (tmpOutput) {
-          tmpOutput.state = output.state
+        tmpOutput.state = output.state;
         }
-      });
+      })
+    );
 
-
-    this.eventService.isConnected()
+    this.subscriptions.push(
+      this.eventService.isConnected()
       .subscribe(connected => {
         if (connected) {
-          this.loadStates();
+        this.loadStates();
+        } else {
+        this.armState = ARM_TYPE.UNDEFINED;
+        this.monitoringState = MONITORING_STATE.UNDEFINED;
+        this.onStateChanged();
         }
-        else {
-          this.armState = ARM_TYPE.UNDEFINED;
-          this.monitoringState = MONITORING_STATE.NOT_READY;
-          this.onStateChanged();
-        }
-      });
+      })
+    );
   }
 
   loadStates() {
@@ -152,16 +177,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // ARM STATE
     this.monitoringService.getArmState()
-      .subscribe(
-        armState => {
+      .subscribe({
+        next: armState => {
           this.armState = armState;
           this.onStateChanged();
         },
-        _ => {
+        error: _ => {
           this.armState = ARM_TYPE.UNDEFINED;
           this.onStateChanged();
         }
-      );
+      });
 
     // SENSORS ALERT STATE
     this.sensorService.getAlert()
@@ -171,24 +196,29 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // MONITORING STATE
     this.monitoringService.getMonitoringState()
-      .subscribe(
-        monitoringState => {
+      .subscribe({
+        next: monitoringState => {
           this.monitoringState = monitoringState;
           this.onStateChanged();
         },
-        _ => {
-          this.monitoringState = MONITORING_STATE.NOT_READY;
+        error: _ => {
+          this.monitoringState = MONITORING_STATE.UNDEFINED;
           this.onStateChanged();
         }
-      );
+      });
   }
 
   ngOnDestroy() {
+    this.subscriptions.forEach(_ => _.unsubscribe());
+
+    if (this.goBackSubscription) {
+      this.goBackSubscription.unsubscribe();
+    }
     this.loader.clearMessage();
   }
 
   onStateChanged() {
-    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.NOT_READY) {
+    if (this.armState === ARM_TYPE.UNDEFINED || this.monitoringState === MONITORING_STATE.UNDEFINED) {
       this.loader.setMessage($localize`:@@message lost connection:Lost connection to the security system!`);
     }
     else {
@@ -198,23 +228,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
-      this.action = 'armed away';
       this.monitoringService.arm(ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home armed away:System armed away`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.STAY) {
-      this.action = 'armed stay';
       this.monitoringService.arm(ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home armed stay:System armed stay`, null, { duration: environment.snackDuration }));
     } else if (armType === ARM_TYPE.DISARMED) {
-      this.action = 'disarmed';
       this.monitoringService.disarm()
-        .subscribe(() => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration }));
+        .subscribe(() => this.snackBar.open($localize`:@@home disarmed:System disarmed`, null, { duration: environment.snackDuration }));
     }
   }
 
   isOutputDisabled(output: Output) {
     const disabledStates = [
-      MONITORING_STATE.NOT_READY,
+      MONITORING_STATE.UNDEFINED,
       MONITORING_STATE.STARTUP,
       MONITORING_STATE.UPDATING_CONFIG,
       MONITORING_STATE.INVALID_CONFIG,

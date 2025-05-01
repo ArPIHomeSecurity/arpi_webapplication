@@ -7,7 +7,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { AreaDeleteDialogComponent } from './area-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
 import { AuthenticationService, EventService, LoaderService, SensorService, AreaService, OutputService } from '@app/services';
 
@@ -24,8 +24,6 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   CONFIG = 0;
   SENSORS = 1;
@@ -77,15 +75,15 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
       outputs: this.outputService.getOutputs(),
       sensors: this.sensorService.getSensors()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
         this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder);
         this.outputs = results.outputs;
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
+      );
   }
 
   getSensors(areaId: number): Sensor[] {
@@ -115,26 +113,41 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   openDeleteDialog(areaId: number) {
-    const dialogRef = this.dialog.open(AreaDeleteDialogComponent, {
-      width: '250px',
+    const area = this.areas.find(x => x.id === areaId);
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      width: '450px',
       data: {
-        name: this.areas.find(x => x.id === areaId).name,
+        title: $localize`:@@delete area:Delete Area`,
+        message: $localize`:@@delete area message:Are you sure you want to delete the area "${area.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
           this.loader.disable(true);
           this.areaService.deleteArea(areaId)
-            .subscribe(
-              _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-            );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, { duration: environment.snackDuration });
+                this.updateComponent();
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

@@ -22,7 +22,7 @@
   $argus-accent: map-get($theme, accent);
 
   .logo {
-    text-align:center;
+    text-align: center;
     margin: 15px 0;
   }
 
@@ -56,13 +56,14 @@
   }
 
   .all-wrap {
-    min-height: calc(100dvh - 56px);
+    min-height: calc(100dvh - 45px);
   }
 
   .page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 56px);
+    min-height: calc(100dvh - 45px);
+    overflow: hidden; /* Prevent scroll bars */
   }
 
   app-root.demo .all-wrap {
@@ -76,17 +77,25 @@
   }
 
   .page {
-    flex: 1;
+    /* Ensure it fills the parent's height */
+    height: 100%;
+    /* Prevent scroll bars on the page itself */
+    overflow: auto;
+    /* Allow its children to take all available space */
+    flex-direction: column;
+    /* Enable flex behavior on its children*/
+    display: flex;
+    flex: auto;
   }
 
   div.page {
     display: flex;
     flex-direction: column;
-  
+
     // Select all direct descendants only of the <main> element
     // that are not <router-outlet> elements:
-    > *:not(router-outlet) {
-  
+    >*:not(router-outlet) {
+
       flex: 1; // child will set to an equal size inside the container
       display: block;
     }
@@ -154,15 +163,19 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
     cursor: wait;
 
     // disable clicks
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
-    user-select: none;          /* Likely future */   
+    -webkit-user-select: none;
+    /* Chrome all / Safari all */
+    -moz-user-select: none;
+    /* Firefox all */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+    /* Likely future */
   }
 }
 
@@ -175,10 +188,15 @@
     display: flex;
     flex-direction: column;
 
-    .links, .versions {
+    .links,
+    .versions {
+      a {
+        color: white;
+      }
+
       margin: auto;
     }
-  
+
     .versions {
       line-height: 2;
     }
@@ -186,7 +204,9 @@
 }
 
 ::ng-deep .large-screen {
-  .menu-button, .logo-button {
+
+  .menu-button,
+  .logo-button {
     display: none;
   }
 
@@ -195,9 +215,13 @@
     flex-direction: row;
 
     .links {
+      a {
+        color: white;
+      }
+
       margin: auto;
     }
-  
+
     .versions {
       line-height: 2;
       margin-right: 60px;

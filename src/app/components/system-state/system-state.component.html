@@ -6,7 +6,7 @@
             monitoringState == monitoringStates.UPDATING_CONFIG ||
             monitoringState == monitoringStates.INVALID_CONFIG ||
             monitoringState == monitoringStates.SABOTAGE ||
-            monitoringState == monitoringStates.NOT_READY">
+            monitoringState == monitoringStates.UNDEFINED">
     <!-- MONITORING STATES -->
     <span [ngSwitch]="monitoringState">
       <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state">Starting up</mat-chip>
@@ -15,7 +15,7 @@
       <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state">Sabotage</mat-chip>
     </span>
     
-    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger" i18n="@@error state">ERROR</mat-chip>
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED" class="danger" i18n="@@error state">ERROR</mat-chip>
   </mat-chip-listbox>
 
   <!-- MOBILE VERSION -->
@@ -24,7 +24,7 @@
             monitoringState == monitoringStates.UPDATING_CONFIG ||
             monitoringState == monitoringStates.INVALID_CONFIG ||
             monitoringState == monitoringStates.SABOTAGE ||
-            monitoringState == monitoringStates.NOT_READY">
+            monitoringState == monitoringStates.UNDEFINED">
     <!-- MONITORING STATES -->
     <span [ngSwitch]="monitoringState">
       <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state short">S</mat-chip>
@@ -32,7 +32,7 @@
       <mat-chip *ngSwitchCase="monitoringStates.INVALID_CONFIG" class="danger" i18n="@@invalid state short">I</mat-chip>
       <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state short">T</mat-chip>
     </span>
-    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.NOT_READY" class="danger">
+    <mat-chip *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED" class="danger">
       <mat-icon matListIcon>error</mat-icon>
     </mat-chip>
   </mat-chip-listbox>
@@ -45,7 +45,7 @@
     *ngIf="monitoringState != monitoringStates.STARTUP &&
           monitoringState != monitoringStates.UPDATING_CONFIG &&
           monitoringState != monitoringStates.INVALID_CONFIG &&
-          monitoringState != monitoringStates.NOT_READY">
+          monitoringState != monitoringStates.UNDEFINED">
 
     <!-- ARM STATES -->
     <span [ngSwitch]="armState">

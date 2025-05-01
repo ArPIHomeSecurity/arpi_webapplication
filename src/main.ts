@@ -8,32 +8,29 @@ import * as moment from 'moment';
 
 let locale = localStorage.getItem('localeId');
 console.log('Selected language: ', locale);
-moment.locale(locale);
 if (locale === null) {
   locale = 'en';
 }
 
-console.log('Current location: ', location.pathname);
-var localeRegex = new RegExp('^/([a-z]{2})/');
-var matches = localeRegex.exec(location.pathname);
+moment.locale(locale);
 
-console.log('Current locale: ', matches === null ? 'en' : matches[1]);
+console.log('Current path: ', location.pathname);
+const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+const matches = pathParser.exec(location.pathname);
 
-if ((matches === null && locale === 'en') || (matches !== null && locale === matches[1])) {
-  console.log('Correct locale, no need to redirect!');
-
+if (matches) {
+  console.log('Path matches: ', matches);
+  const newPath = [matches.groups.version, locale, matches.groups.path].join('/');
+  if (newPath !== location.pathname) {
+    console.log('Redirect to ' + newPath);
+    location.pathname = newPath;
+  }
+  else {
+    console.log('No need to redirect');
+  }
 }
-else if (matches === null && locale != 'en') {
-  // redirect to locale (EN => X)
-  const newPath = locale + location.pathname;
-  console.log('Redirect to ' + newPath);
-  location.pathname = newPath;
-}
-else if (matches !== null && locale == 'en') {
-  // redirect to locale (X => EN)
-  const newPath = location.pathname.replace(matches[0], '/');
-  console.log('Redirect to ' + newPath);
-  location.pathname = newPath;
+else {
+  console.error('Path does not match', location.pathname);
 }
 
 if (environment.production) {

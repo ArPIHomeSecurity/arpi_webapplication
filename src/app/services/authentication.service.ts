@@ -5,13 +5,15 @@ export interface AuthenticationService {
 
   login(accessCode: number): Observable<boolean>;
 
-  logout(): void;
+  logout(manualAction: boolean): void;
 
   isLoggedIn(): boolean;
 
   getRole(): string;
 
   getUsername(): string;
+
+  getUserId(): number;
 
   getToken(): string;
 
@@ -21,11 +23,15 @@ export interface AuthenticationService {
 
   isSessionValid(): Observable<boolean>;
 
-  getDeviceToken();
+  getDeviceToken(locationId?: string): string;
 
   registerDevice(registrationCode: string): Observable<boolean>;
 
   unRegisterDevice();
-
+  
   isDeviceRegistered(): Observable<boolean>;
+
+  getDeviceDomain(): string;
+ 
+  getRegisteredUserId(): number;
 }

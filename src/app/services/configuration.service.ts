@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
-import { Option } from '@app/models';
+import { Location, Option } from '@app/models';
+
 
 export interface ConfigurationService {
 
@@ -21,4 +22,8 @@ export interface ConfigurationService {
   testSyren(duration?: number): Observable<any>;
 
   getPublicAccess(): Observable<boolean>;
+
+  getLocation(): Observable<Location>;
+
+  getLocationId(): Observable<string>;
 }

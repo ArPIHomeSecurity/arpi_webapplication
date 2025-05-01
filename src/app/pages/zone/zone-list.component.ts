@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { ZoneDeleteDialogComponent } from './zone-delete.component';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Zone } from '@app/models';
 import { AuthenticationService, EventService, LoaderService, SensorService, ZoneService } from '@app/services';
 
@@ -24,8 +24,6 @@ const scheduleMicrotask = Promise.resolve(null);
 })
 
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   CONFIG = 0;
   SENSORS = 1;
@@ -75,18 +73,18 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
       zones: this.zoneService.getZones(),
       sensors: this.sensorService.getSensors()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
-      this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
-      this.sensors = results.sensors;
-      this.loader.display(false);
-      this.loader.disable(false);
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
+        this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder);
+        this.sensors = results.sensors;
+        this.loader.display(false);
+        this.loader.disable(false);
 
-      this.zones.forEach((zone, i) => {
-        this.configOpened[zone.id] = JSON.parse(localStorage.getItem('configOpened_'+zone.id));
-        this.sensorOpened[zone.id] = JSON.parse(localStorage.getItem('sensorOpened_'+zone.id));
+        this.zones.forEach((zone, i) => {
+          this.configOpened[zone.id] = JSON.parse(localStorage.getItem('configOpened_' + zone.id));
+          this.sensorOpened[zone.id] = JSON.parse(localStorage.getItem('sensorOpened_' + zone.id));
+        });
       });
-    });
   }
 
   getSensors(zoneId: number): Sensor[] {
@@ -105,26 +103,41 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   openDeleteDialog(zoneId: number) {
-    const dialogRef = this.dialog.open(ZoneDeleteDialogComponent, {
-      width: '250px',
+    const zone = this.zones.find(x => x.id === zoneId);
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      width: '450px',
       data: {
-        name: this.zones.find(x => x.id === zoneId).name,
+        title: $localize`:@@delete zone:Delete Zone`,
+        message: $localize`:@@delete zone message:Are you sure you want to delete the zone "${zone.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
           this.loader.disable(true);
           this.zoneService.deleteZone(zoneId)
-            .subscribe(
-              _ => this.updateComponent(),
-              _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
-            );
+            .pipe(finalize(() => this.loader.disable(false)))
+            .subscribe({
+              next: _ => {
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, '', { duration: environment.snackDuration });
+                this.updateComponent();
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, '', { duration: environment.snackDuration })
+            });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, '', { duration: environment.snackDuration });
         }
       }
     });
@@ -148,21 +161,21 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   onOpenConfig(zoneId: number) {
     this.configOpened[zoneId] = true;
-    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+    localStorage.setItem('configOpened_' + zoneId, this.configOpened[zoneId].toString());
   }
 
   onCloseConfig(zoneId: number) {
     this.configOpened[zoneId] = false;
-    localStorage.setItem('configOpened_'+zoneId, this.configOpened[zoneId].toString());
+    localStorage.setItem('configOpened_' + zoneId, this.configOpened[zoneId].toString());
   }
 
   onOpenSensor(zoneId: number) {
     this.sensorOpened[zoneId] = true;
-    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
+    localStorage.setItem('sensorOpened_' + zoneId, this.sensorOpened[zoneId].toString());
   }
 
   onCloseSensor(zoneId: number) {
     this.sensorOpened[zoneId] = false;
-    localStorage.setItem('sensorOpened_'+zoneId, this.sensorOpened[zoneId].toString());
+    localStorage.setItem('sensorOpened_' + zoneId, this.sensorOpened[zoneId].toString());
   }
 }

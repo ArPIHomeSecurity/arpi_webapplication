@@ -5,8 +5,10 @@
 
 import {
   AlertService,
+  AreaService,
   ArmService,
   AuthenticationService,
+  BiometricService,
   CardService,
   ConfigurationService,
   EventService,
@@ -17,8 +19,8 @@ import {
   SensorService,
   UserService,
   ZoneService,
-  AreaService
 } from '@app/services/remote';
+
 
 export const environment = {
   production: true,
@@ -28,8 +30,8 @@ export const environment = {
   channelCount: 15,
   snackDuration: 5000,
 
-  apiPort: 443,
-  monitoringPort: 443,
+  isMultiLocation: false,
+  showApiLink: true,
 
   defaultLanguage: 'en',
   languages: 'hu it',
@@ -42,6 +44,7 @@ export const environment = {
   areaService: AreaService,
   armService: ArmService,
   authenticationService: AuthenticationService,
+  biometricService: BiometricService,
   cardService: CardService,
   configurationService: ConfigurationService,
   eventService: EventService,

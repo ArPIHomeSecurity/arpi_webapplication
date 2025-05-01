@@ -10,7 +10,6 @@ import { environment } from '@environments/environment';
   styleUrls: ['demo.help.dialog.component.scss']
 })
 export class DemoHelpDialogComponent {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
 
   readonly ADMIN_REGISTRATION_CODE = "ABC-DEF-000-001";
   readonly USER_REGISTRATION_CODE = "ABC-DEF-000-002";
@@ -36,7 +35,7 @@ export class DemoHelpDialogComponent {
   copyToClipboard(text: string) {
     this.clipboard.copy(text);
 
-    this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, { duration: environment.snackDuration });
   }
 
   onClose(): void {

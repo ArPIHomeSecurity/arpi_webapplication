@@ -5,7 +5,7 @@ import { Card } from '@app/models';
 
 export interface CardService {
 
-  getCards(): Observable<Card[]>;
+  getCards(userId: number): Observable<Card[]>;
 
   getCard(cardId: number): Observable<Card>;
 

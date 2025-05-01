@@ -2,7 +2,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { CountdownModule } from 'ngx-countdown';
 
 // application components
+import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 import { LoginComponent } from './pages/login';
 import { HomeComponent } from './pages/home';
 import { ClockComponent } from './pages/config/clock';
@@ -18,19 +19,18 @@ import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/conf
 import { NetworkComponent } from './pages/config/network';
 import { SyrenComponent } from './pages/config/syren';
 import { KeypadComponent } from './pages/config/keypad';
-import { SensorListComponent, SensorDetailComponent, SensorDeleteDialogComponent } from './pages/sensor';
-import { ZoneListComponent, ZoneDetailComponent, ZoneDeleteDialogComponent } from './pages/zone';
-import { AreaListComponent, AreaDetailComponent, AreaDeleteDialogComponent } from './pages/area';
-import {
-  UserListComponent,
-  UserDetailComponent,
-  UserDeleteDialogComponent,
-  UserDeviceRegistrationDialogComponent,
-  UserDeviceUnregisterDialogComponent,
-  UserCardDeleteDialogComponent,
-  UserSshKeySetupDialogComponent
-} from './pages/user';
+import { SensorListComponent, SensorDetailComponent } from './pages/sensor';
+import { ZoneListComponent, ZoneDetailComponent } from './pages/zone';
+import { AreaListComponent, AreaDetailComponent } from './pages/area';
+import { LocationListComponent, LocationDetailsComponent } from './pages/location';
+import { UserListComponent, UserDetailComponent } from './pages/user';
 import { SystemStateComponent } from './components/system-state/system-state.component';
+import { UserCardComponent } from './components/user/user-card/user-card.component';
+import { MyUserComponent } from './pages/my-user/my-user.component';
+import { MessageComponent } from './components/message/message.component';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
+import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
@@ -40,11 +40,12 @@ import { DemoComponent } from './demo/demo.component';
 import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { EventsComponent } from './pages/events/events.component';
-import { OutputDeleteDialogComponent, OutputDetailComponent, OutputListComponent } from './pages/output';
+import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { routing } from './app.routing';
 import { ThemeService } from './services/theme.service';
 
+import { configureBackend } from './utils';
 import { environment } from '@environments/environment';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -75,48 +76,51 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CapacitorService } from './services/capacitor.service';
+import { LongPressToggleDirective } from './directives';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    BackendErrorComponent,
     LoginComponent,
     HomeComponent,
     ControllerComponent,
-
+    QuestionDialogComponent,
+    MessageComponent,
+    
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
-
-    UserCardDeleteDialogComponent,
+    
+    UserCardComponent,
     UserListComponent,
     UserDetailComponent,
-    UserDeleteDialogComponent,
     UserDeviceRegistrationDialogComponent,
-    UserDeviceUnregisterDialogComponent,
     UserSshKeySetupDialogComponent,
-
+    MyUserComponent,
+    
     AreaComponent,
     AreaListComponent,
     AreaDetailComponent,
-    AreaDeleteDialogComponent,
+
+    LocationDetailsComponent,
+    LocationListComponent,
 
     OutputComponent,
     OutputListComponent,
     OutputDetailComponent,
-    OutputDeleteDialogComponent,
 
     SensorComponent,
     SensorListComponent,
     SensorDetailComponent,
-    SensorDeleteDialogComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
-    ZoneDeleteDialogComponent,
 
     SystemStateComponent,
     PageNotFoundComponent,
@@ -166,14 +170,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatToolbarModule,
     MatTooltipModule,
 
-    DragDropModule
+    DragDropModule,
+
+    LongPressToggleDirective
   ],
   providers: [
-    { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'AlertService', useClass: environment.alertService },
     { provide: 'AreaService', useClass: environment.areaService },
     { provide: 'ArmService', useClass: environment.armService },
-    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
+    { provide: 'BiometricService', useClass: environment.biometricService },
+    { provide: 'CapacitorService', useClass: CapacitorService },
     { provide: 'CardService', useClass: environment.cardService },
     { provide: 'ConfigurationService', useClass: environment.configurationService },
     { provide: 'EventService', useClass: environment.eventService },
@@ -182,14 +188,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     { provide: 'MonitoringService', useClass: environment.monitoringService },
     { provide: 'OutputService', useClass: environment.outputService },
     { provide: 'SensorService', useClass: environment.sensorService },
+    { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'UserService', useClass: environment.userService },
     { provide: 'ZoneService', useClass: environment.zoneService },
+    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
       multi: true
     },
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: () => configureBackend,
+    },
   ]
 })
 export class AppModule { }

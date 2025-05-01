@@ -10,8 +10,7 @@ import { forkJoin, throwError } from 'rxjs';
 import { finalize, catchError } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { ZoneDeleteDialogComponent } from './zone-delete.component';
-
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Zone } from '@app/models';
 import { EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
 import { positiveInteger } from '@app/utils';
@@ -27,8 +26,6 @@ const scheduleMicrotask = Promise.resolve(null);
   providers: []
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
-  action: string;
 
   zoneId: number;
   zone: Zone = undefined;
@@ -72,22 +69,22 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         zone: this.zoneService.getZone(this.zoneId),
         sensors: this.sensorService.getSensors()
       })
-      .pipe(
-        catchError((error) => {
-          if (error.status === 404) {
-            this.zone = null;
-          }
-          return throwError(() => error);
-        }),
-        finalize(() => this.loader.display(false))
-      )
-      .subscribe(results => {
+        .pipe(
+          catchError((error) => {
+            if (error.status === 404) {
+              this.zone = null;
+            }
+            return throwError(() => error);
+          }),
+          finalize(() => this.loader.display(false))
+        )
+        .subscribe(results => {
           this.zone = results.zone;
           this.updateForm(this.zone);
           this.sensors = results.sensors;
           this.loader.display(false);
         }
-      );
+        );
     } else {
       this.zone = new Zone();
       this.zone.disarmedDelay = null;
@@ -121,18 +118,16 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const zone = this.prepareZone();
     if (this.zoneId != null) {
-      this.action = 'update';
       this.zoneService.updateZone(zone)
         .subscribe({
           next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
         });
     } else {
-      this.action = 'create';
       this.zoneService.createZone(zone)
         .subscribe({
           next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
         });
     }
   }
@@ -187,25 +182,41 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   }
 
   openDeleteDialog(zoneId: number) {
-    const dialogRef = this.dialog.open(ZoneDeleteDialogComponent, {
-      width: '250px',
+    const zone = this.zone;
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      width: '450px',
       data: {
-        name: this.zone.name,
+        title: $localize`:@@delete zone:Delete Zone`,
+        message: $localize`:@@delete zone message:Are you sure you want to delete the zone "${zone.name}"?`,
+        options: [
+          {
+            id: 'ok',
+            text: $localize`:@@delete:Delete`,
+            color: 'warn',
+          },
+          {
+            id: 'cancel',
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.action = 'delete';
+          this.loader.disable(true)
           this.zoneService.deleteZone(zoneId)
+            .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
-              next: _ => this.router.navigate(['/zones']),
-               error: _ => this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration})
+              next: _ => {
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, null, { duration: environment.snackDuration });
+                this.router.navigate(['/zones'])
+              },
+              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
             });
         } else {
-          this.action = 'cant delete';
-          this.snackBar.openFromTemplate(this.snackbarTemplate, {duration: environment.snackDuration});
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
         }
       }
     });

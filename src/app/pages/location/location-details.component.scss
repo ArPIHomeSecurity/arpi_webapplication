@@ -1,0 +1,45 @@
+.scheme {
+  width: 170px;
+}
+
+.domain {
+  width: 500px;
+}
+
+.port {
+  width: 160px;
+}
+
+.details {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: small;
+
+  dt {
+    float: left;
+    clear: left;
+    margin-right: 5px;
+    width: 10%;
+    font-weight: bold;
+  }
+
+  dd {
+    margin-left: 0px;
+  }
+}
+
+.status {
+  .icon-accessible {
+    margin: 15px 0px;
+    color: #4caf50;
+  }
+
+  .icon-inaccessible {
+    margin: 15px 0px;
+    color: #f44336;
+  }
+
+  .mat-spinner {
+    margin: 15px 0px;
+  }
+}

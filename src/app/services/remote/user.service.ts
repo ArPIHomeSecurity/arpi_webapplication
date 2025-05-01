@@ -24,6 +24,12 @@ export class UserService {
   }
 
 
+  getUserName(userId: number): Observable<string> {
+    // get users from api
+    return this.http.get<string>('/api/user/' + userId + '/name');
+  }
+
+
   createUser(user: User): Observable<User> {
     // set sensor from api
     return this.http.post<User>('/api/users', user);

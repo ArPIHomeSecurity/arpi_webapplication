@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, UntypedFormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { forkJoin } from 'rxjs';
@@ -10,7 +10,6 @@ import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS, DEFAU
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { fork } from 'child_process';
 
 
 const scheduleMicrotask = Promise.resolve(null);
@@ -21,7 +20,7 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['network.component.scss'],
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  @ViewChild('snackbarTemplate') snackbarTemplate: TemplateRef<any>;
+
   @Input() onlyAlerting = false;
   dyndnsForm: FormGroup;
   accessForm: FormGroup;
@@ -34,10 +33,10 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   // values from the noipy python module
   providers = [
-      {value: '', label: '--'},
-      {value: 'noip', label: 'www.noip.com'},
-      {value: 'dyn', label: 'www.dyndns.org'},
-      {value: 'duck', label: 'www.duckdns.org'},
+    { value: '', label: '--' },
+    { value: 'noip', label: 'www.noip.com' },
+    { value: 'dyn', label: 'www.dyndns.org' },
+    { value: 'duck', label: 'www.duckdns.org' },
   ];
 
   constructor(
@@ -67,7 +66,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
         this.publicAccess = publicAccess;
         this.testPublicUrl();
       }
-    );
+      );
   }
 
   ngOnDestroy() {
@@ -116,26 +115,27 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       access: this.configService.getOption('network', 'access'),
       publicAccess: this.configService.getPublicAccess()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
-      this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
-      this.access = getValue(results, 'access', DEFAULT_NOTIFICATION_ACCESS);
-      this.publicAccess = results.publicAccess;
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
+        this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
+        this.access = getValue(results, 'access', DEFAULT_NOTIFICATION_ACCESS);
+        this.publicAccess = results.publicAccess;
 
-      this.updateDyndnsForm(this.dyndns);
-      this.testPublicUrl();
-      this.updateTerminalForm(this.access);
-      this.loader.display(false);
-    });
+        this.updateDyndnsForm(this.dyndns);
+        this.testPublicUrl();
+        this.updateTerminalForm(this.access);
+        this.loader.display(false);
+      });
   }
 
   updateDyndnsForm(dyndns: Option) {
     this.dyndnsForm = this.fb.group({
-      dyndnsUsername: getValue(dyndns.value, 'username'),
-      dyndnsPassword: getValue(dyndns.value, 'password'),
-      dyndnsHostname: getValue(dyndns.value, 'hostname'),
-      dyndnsProvider: getValue(dyndns.value, 'provider'),
-      dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host')
+      dyndnsUsername: [getValue(dyndns.value, 'username'), Validators.required],
+      dyndnsPassword: [getValue(dyndns.value, 'password'), Validators.required],
+      dyndnsHostname: [getValue(dyndns.value, 'hostname'), Validators.required],
+      dyndnsProvider: [getValue(dyndns.value, 'provider'), Validators.required],
+      dyndnsRestrictHost: getValue(dyndns.value, 'restrict_host'),
+      certbotEmail: [getValue(dyndns.value, 'certbot_email'), Validators.required]
     });
   }
 
@@ -152,8 +152,8 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       dyndns: this.configService.getOption('network', 'dyndns'),
       publicAccess: this.configService.getPublicAccess()
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
         this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
         this.publicAccess = results.publicAccess;
 
@@ -162,7 +162,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
+      );
   }
 
   updateAccess() {
@@ -173,7 +173,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
         this.loader.display(false);
         this.loader.disable(false);
       }
-    );
+      );
   }
 
   prepareDyndns(): any {
@@ -182,7 +182,8 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       username: formModel.dyndnsUsername,
       hostname: formModel.dyndnsHostname,
       provider: formModel.dyndnsProvider,
-      restrict_host: formModel.dyndnsRestrictHost
+      restrict_host: formModel.dyndnsRestrictHost,
+      certbot_email: formModel.certbotEmail
     };
 
     if (formModel.dyndnsPassword != DEFAULT_PASSWORD_VALUE) {
@@ -209,10 +210,10 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       passwordControl.setValue("");
     }
   }
-  
+
   onPasswordBlur() {
     const passwordControl = this.dyndnsForm.get('dyndnsPassword');
-  
+
     // Check if the user has changed the password field's value.
     if (!passwordControl.dirty) {
       // If the user didn't change it, restore the initial value.
@@ -223,18 +224,20 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   onSaveDyndns() {
     this.loader.disable(true);
     this.configService.setOption('network', 'dyndns', this.prepareDyndns())
+      .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: () => this.updateDyndns(),
-        error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        error: () => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
       });
   }
 
   onSaveAccess() {
     this.loader.disable(true);
     this.configService.setOption('network', 'access', this.prepareAccess())
+      .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: () => this.updateAccess(),
-        error: () => this.snackBar.openFromTemplate(this.snackbarTemplate, { duration: environment.snackDuration })
+        error: () => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
       });
   }
 }
