@@ -8,6 +8,7 @@
 
   <button mat-raised-button (click)="putCard(1)" color="primary">
     <mat-icon>credit_card</mat-icon>
+    Rfid card 1
   </button>
 
   <button
@@ -16,9 +17,10 @@
     type="button"
     (click)="toogleChannel(i)"
     color="primary"
+    class="channel"
   >
     <span>CH{{ i + 1 | number: '2.0-0' }}</span>
-    <mat-icon *ngIf="channel">my_location</mat-icon>
-    <mat-icon *ngIf="!channel">trip_origin</mat-icon>
+    <mat-icon *ngIf="channel" class="active">my_location</mat-icon>
+    <mat-icon *ngIf="!channel" class="inactive">trip_origin</mat-icon>
   </button>
 </mat-toolbar>

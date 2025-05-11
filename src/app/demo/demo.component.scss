@@ -2,6 +2,15 @@ button {
   margin: 1px 1px;
 }
 
+button.channel {
+  mat-icon.inactive {
+    color: greenyellow;
+  }
+  mat-icon.active {
+    color: red;
+  }
+}
+
 button.help {
   margin: 0px 10px;
 }
