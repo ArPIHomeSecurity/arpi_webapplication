@@ -6,6 +6,7 @@ import { SensorService, CardService } from '@app/services/demo';
 import { getSessionValue, setSessionValue } from '@app/utils';
 
 import { environment } from '@environments/environment';
+import { LOCATIONS } from './configuration';
 
 @Component({
   selector: 'app-demo',
@@ -27,6 +28,9 @@ export class DemoComponent implements OnInit {
     }
 
     this.channels = getSessionValue('DemoComponent.channels', channels);
+    
+    localStorage.setItem('locations', JSON.stringify(LOCATIONS));
+    localStorage.setItem('selectedLocationId', 'test_01');
   }
 
   ngOnInit() {
