@@ -222,6 +222,19 @@ export const AREAS = [
   }
 ];
 
+export const LOCATIONS = [
+    {
+        id: "test_01",
+        name: "Otthon",
+        order: 0,
+        primaryDomain: "arpi.local",
+        primaryPort: 443,
+        scheme: "https",
+        secondaryDomain: '',
+        secondaryPort: null,
+    }
+]
+
 export const ALERTS: Alert[] = [];
 
 export const ARMS: Arm[] = [];

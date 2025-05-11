@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { SensorService, CardService } from '@app/services/demo';
+import { CardService, SensorService } from '@app/services/demo';
 import { getSessionValue, setSessionValue } from '@app/utils';
 
 import { environment } from '@environments/environment';
+import { LOCATIONS } from './configuration';
 import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 
 @Component({
@@ -27,6 +28,9 @@ export class DemoComponent implements OnInit {
     }
 
     this.channels = getSessionValue('DemoComponent.channels', channels);
+
+    localStorage.setItem('locations', JSON.stringify(LOCATIONS));
+    localStorage.setItem('selectedLocationId', 'test_01');
   }
 
   ngOnInit() {
