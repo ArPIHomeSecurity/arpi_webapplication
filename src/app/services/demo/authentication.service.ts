@@ -112,4 +112,8 @@ export class AuthenticationService {
   isDeviceRegistered(): Observable<boolean> {
     return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >=0));
   }
+
+  getRegisteredUserId(): number {
+    return this.registeredUserId;
+  }
 }
