@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
-import { delay, map, startWith } from 'rxjs/operators';
+import { delay, startWith } from 'rxjs/operators';
 
 import { User } from '@app/models';
+import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '@app/utils';
 import { UserService } from './user.service';
 
 @Injectable()
@@ -110,5 +110,9 @@ export class AuthenticationService {
 
   isDeviceRegistered(): Observable<boolean> {
     return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >= 0));
+  }
+
+  getRegisteredUserId(): number {
+    return this.registeredUserId;
   }
 }

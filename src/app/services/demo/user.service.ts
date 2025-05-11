@@ -41,6 +41,16 @@ export class UserService {
     );
   }
 
+  getUserName(userId: number): Observable<string> {
+    return of(this.users.find(u => u.id === userId).name)
+      .pipe(
+        delay(environment.delay),
+        map(_ => {
+          return _;
+        })
+      );
+  }
+
   createUser(user: User): Observable<User> {
     user.id = Math.max.apply(Math.max, this.users.map(u => u.id).concat([0])) + 1;
     this.users.push(Object.assign(new UserDemo(), user));

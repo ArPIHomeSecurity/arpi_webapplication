@@ -2,6 +2,7 @@ export * from './alert.service';
 export * from './area.service';
 export * from './arm.service';
 export * from './authentication.service';
+export * from './biometric.service';
 export * from './card.service';
 export * from './configuration.service';
 export * from './event.service';
