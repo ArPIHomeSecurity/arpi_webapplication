@@ -32,8 +32,10 @@ jobs:
       - name: Build application demo version 💪
         run: |
           ng build --configuration=demo --localize
-          mv dist-demo/browser/en/* dist-demo/browser
-          rm -r dist-demo/browser/en
+          # create an index.html file for the demo redirecting to the english version
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=/en/index.html"></head></html>' > dist-demo/browser/index.html
+          # copy 404 error page
+          cp src/404.demo.html dist-demo/browser/404.html
 
       - name: Deploy demo application 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
