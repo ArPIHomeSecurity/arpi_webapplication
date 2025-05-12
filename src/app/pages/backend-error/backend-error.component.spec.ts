@@ -8,7 +8,8 @@ describe('BackendErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BackendErrorComponent]
+      declarations: [ BackendErrorComponent ],
+      imports: []
     })
     .compileComponents();
 
