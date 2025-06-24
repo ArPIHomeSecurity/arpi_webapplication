@@ -12,9 +12,10 @@ import { CapacitorService } from '@app/services/capacitor.service';
 
 
 @Component({
-  templateUrl: 'home.component.html',
-  styleUrls: ['home.component.scss'],
-  providers: []
+    templateUrl: 'home.component.html',
+    styleUrls: ['home.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class HomeComponent implements OnInit, OnDestroy {

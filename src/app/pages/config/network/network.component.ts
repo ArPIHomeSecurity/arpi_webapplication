@@ -16,8 +16,9 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: 'network.component.html',
-  styleUrls: ['network.component.scss'],
+    templateUrl: 'network.component.html',
+    styleUrls: ['network.component.scss'],
+    standalone: false
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
 

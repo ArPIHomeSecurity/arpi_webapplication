@@ -23,8 +23,9 @@ enum BiometricStatus {
 }
 
 @Component({
-  styleUrls: ['login.component.scss'],
-  templateUrl: 'login.component.html'
+    styleUrls: ['login.component.scss'],
+    templateUrl: 'login.component.html',
+    standalone: false
 })
 
 export class LoginComponent implements OnInit, OnDestroy {

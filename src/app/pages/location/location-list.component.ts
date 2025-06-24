@@ -14,9 +14,10 @@ import { LocationTestResult, testLocation } from './location';
 
 
 @Component({
-  selector: 'location-list',
-  templateUrl: './location-list.component.html',
-  styleUrls: ['./location-list.component.scss']
+    selector: 'location-list',
+    templateUrl: './location-list.component.html',
+    styleUrls: ['./location-list.component.scss'],
+    standalone: false
 })
 export class LocationListComponent extends ConfigurationBaseComponent {
   isMultiLocation = environment.isMultiLocation;

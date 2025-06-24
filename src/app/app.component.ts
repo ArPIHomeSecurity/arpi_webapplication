@@ -19,9 +19,10 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;

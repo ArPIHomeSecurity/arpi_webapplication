@@ -17,8 +17,9 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: 'notifications.component.html',
-  styleUrls: ['notifications.component.scss']
+    templateUrl: 'notifications.component.html',
+    styleUrls: ['notifications.component.scss'],
+    standalone: false
 })
 
 

@@ -21,9 +21,10 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: './zone-detail.component.html',
-  styleUrls: ['zone-detail.component.scss'],
-  providers: []
+    templateUrl: './zone-detail.component.html',
+    styleUrls: ['zone-detail.component.scss'],
+    providers: [],
+    standalone: false
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
 

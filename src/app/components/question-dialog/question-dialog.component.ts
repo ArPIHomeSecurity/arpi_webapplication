@@ -17,8 +17,9 @@ export interface QuestionData {
 
 
 @Component({
-  selector: 'app-question-dialog',
-  templateUrl: 'question-dialog.component.html',
+    selector: 'app-question-dialog',
+    templateUrl: 'question-dialog.component.html',
+    standalone: false
 })
 export class QuestionDialogComponent {
   readonly dialogRef = inject(MatDialogRef<QuestionDialogComponent, string>);

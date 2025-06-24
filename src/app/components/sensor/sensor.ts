@@ -6,7 +6,8 @@ import { Sensor, SensorType } from '@app/models';
     selector: 'component-sensor',
     templateUrl: 'sensor.html',
     styleUrls: ['sensor.scss'],
-    providers: []
+    providers: [],
+    standalone: false
 })
 export class SensorComponent {
   @Input() sensor:Sensor;

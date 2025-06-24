@@ -13,9 +13,10 @@ import { AUTHENTICATION_SERVICE } from "@app/tokens";
 
 
 @Component({
-  selector: 'user-card',
-  templateUrl: './user-card.component.html',
-  styleUrls: ['./user-card.component.scss']
+    selector: 'user-card',
+    templateUrl: './user-card.component.html',
+    styleUrls: ['./user-card.component.scss'],
+    standalone: false
 })
 export class UserCardComponent implements OnInit {
   @Input() user: User;

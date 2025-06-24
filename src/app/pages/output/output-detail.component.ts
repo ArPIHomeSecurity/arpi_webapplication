@@ -28,9 +28,10 @@ class ChannelOption {
 
 
 @Component({
-  templateUrl: './output-detail.component.html',
-  styleUrls: ['output-detail.component.scss'],
-  providers: []
+    templateUrl: './output-detail.component.html',
+    styleUrls: ['output-detail.component.scss'],
+    providers: [],
+    standalone: false
 })
 export class OutputDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
 

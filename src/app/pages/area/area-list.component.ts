@@ -18,9 +18,10 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: 'area-list.component.html',
-  styleUrls: ['area-list.component.scss'],
-  providers: []
+    templateUrl: 'area-list.component.html',
+    styleUrls: ['area-list.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

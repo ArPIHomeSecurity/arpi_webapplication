@@ -11,9 +11,10 @@ import { environment } from '@environments/environment';
 
 
 @Component({
-  selector: 'app-user-device-registration-dialog',
-  templateUrl: 'user-device-registration.component.html',
-  styleUrls: ['user-device-registration.component.scss'],
+    selector: 'app-user-device-registration-dialog',
+    templateUrl: 'user-device-registration.component.html',
+    styleUrls: ['user-device-registration.component.scss'],
+    standalone: false
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
 

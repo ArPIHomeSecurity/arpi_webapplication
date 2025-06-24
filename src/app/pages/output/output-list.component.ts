@@ -18,9 +18,10 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
 const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
-  templateUrl: 'output-list.component.html',
-  styleUrls: ['output-list.component.scss'],
-  providers: []
+    templateUrl: 'output-list.component.html',
+    styleUrls: ['output-list.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

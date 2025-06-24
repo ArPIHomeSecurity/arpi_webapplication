@@ -10,9 +10,10 @@ import { UserService } from '@app/services';
 import { environment } from '@environments/environment';
 
 @Component({
-  selector: 'app-user-ssh-key-setup',
-  templateUrl: './user-ssh-key-setup.component.html',
-  styleUrl: './user-ssh-key-setup.component.scss'
+    selector: 'app-user-ssh-key-setup',
+    templateUrl: './user-ssh-key-setup.component.html',
+    styleUrl: './user-ssh-key-setup.component.scss',
+    standalone: false
 })
 export class UserSshKeySetupDialogComponent implements OnInit {
   setupKeyForm: FormGroup

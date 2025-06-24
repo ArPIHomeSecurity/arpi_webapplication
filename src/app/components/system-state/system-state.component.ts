@@ -6,10 +6,11 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 
 @Component({
-  selector: 'app-system-state',
-  templateUrl: './system-state.component.html',
-  styleUrls: ['./system-state.component.scss'],
-  providers: []
+    selector: 'app-system-state',
+    templateUrl: './system-state.component.html',
+    styleUrls: ['./system-state.component.scss'],
+    providers: [],
+    standalone: false
 })
 export class SystemStateComponent implements OnInit {
   monitoringStates: any = MONITORING_STATE;

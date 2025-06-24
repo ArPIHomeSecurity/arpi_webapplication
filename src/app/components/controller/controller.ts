@@ -7,7 +7,8 @@ import { ARM_TYPE, MONITORING_STATE } from '@app/models';
     selector: 'component-controller',
     templateUrl: 'controller.html',
     styleUrls: ['controller.scss'],
-    providers: []
+    providers: [],
+    standalone: false
 })
 export class ControllerComponent {
   @Input() armState:ARM_TYPE = ARM_TYPE.UNDEFINED;

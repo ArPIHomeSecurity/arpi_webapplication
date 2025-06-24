@@ -5,9 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '@environments/environment';
 
 @Component({
-  selector: 'app-demo-help-dialog',
-  templateUrl: 'demo.help.dialog.component.html',
-  styleUrls: ['demo.help.dialog.component.scss']
+    selector: 'app-demo-help-dialog',
+    templateUrl: 'demo.help.dialog.component.html',
+    styleUrls: ['demo.help.dialog.component.scss'],
+    standalone: false
 })
 export class DemoHelpDialogComponent {
 

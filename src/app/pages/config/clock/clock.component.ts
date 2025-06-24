@@ -27,9 +27,10 @@ export const filter = (opt: string[], value: string): string[] => {
 };
 
 @Component({
-  templateUrl: 'clock.component.html',
-  styleUrls: ['clock.component.scss'],
-  providers: []
+    templateUrl: 'clock.component.html',
+    styleUrls: ['clock.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

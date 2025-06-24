@@ -44,9 +44,10 @@ class SensorInfo {
 
 
 @Component({
-  templateUrl: './sensor-detail.component.html',
-  styleUrls: ['sensor-detail.component.scss'],
-  providers: []
+    templateUrl: './sensor-detail.component.html',
+    styleUrls: ['sensor-detail.component.scss'],
+    providers: [],
+    standalone: false
 })
 export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
 

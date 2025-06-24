@@ -18,9 +18,10 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
 const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
-  templateUrl: 'sensor-list.component.html',
-  styleUrls: ['sensor-list.component.scss'],
-  providers: []
+    templateUrl: 'sensor-list.component.html',
+    styleUrls: ['sensor-list.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

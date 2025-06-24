@@ -4,10 +4,11 @@ import { OutputService } from '@app/services';
 
 
 @Component({
-  selector: 'component-output',
-  templateUrl: 'output.html',
-  styleUrls: ['output.scss'],
-  providers: []
+    selector: 'component-output',
+    templateUrl: 'output.html',
+    styleUrls: ['output.scss'],
+    providers: [],
+    standalone: false
 })
 export class OutputComponent {
   @Input() output: Output;

@@ -11,9 +11,10 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 
 
 @Component({
-  selector: 'app-location-details',
-  templateUrl: './location-details.component.html',
-  styleUrls: ['./location-details.component.scss']
+    selector: 'app-location-details',
+    templateUrl: './location-details.component.html',
+    styleUrls: ['./location-details.component.scss'],
+    standalone: false
 })
 export class LocationDetailsComponent {
 

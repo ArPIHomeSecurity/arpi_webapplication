@@ -4,9 +4,10 @@ import { ConfigurationService } from '@app/services';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'component-sms-messages-dialog',
-  templateUrl: 'sms-messages.component.html',
-  styleUrls: ['sms-messages.component.scss']
+    selector: 'component-sms-messages-dialog',
+    templateUrl: 'sms-messages.component.html',
+    styleUrls: ['sms-messages.component.scss'],
+    standalone: false
 })
 export class SmsMessagesDialogComponent implements OnInit {
 

@@ -17,9 +17,10 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: 'user-list.component.html',
-  styleUrls: ['user-list.component.scss'],
-  providers: []
+    templateUrl: 'user-list.component.html',
+    styleUrls: ['user-list.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

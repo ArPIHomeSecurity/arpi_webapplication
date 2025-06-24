@@ -15,9 +15,10 @@ const scheduleMicrotask = Promise.resolve(null);
 
 
 @Component({
-  templateUrl: 'syren.component.html',
-  styleUrls: ['syren.component.scss'],
-  providers: []
+    templateUrl: 'syren.component.html',
+    styleUrls: ['syren.component.scss'],
+    providers: [],
+    standalone: false
 })
 
 export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {

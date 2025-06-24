@@ -6,9 +6,10 @@ import { AreaService } from '@app/services';
 import { environment } from '@environments/environment';
 
 @Component({
-  selector: 'component-area',
-  templateUrl: './area.html',
-  styleUrls: ['./area.scss']
+    selector: 'component-area',
+    templateUrl: './area.html',
+    styleUrls: ['./area.scss'],
+    standalone: false
 })
 export class AreaComponent implements OnInit {
   @Input() area: Area;
