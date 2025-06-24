@@ -45,7 +45,7 @@
     "@capacitor/preferences": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
     "@capgo/capacitor-native-biometric": "^7.1.7",
-    "@danielmoncada/angular-datetime-picker": "^18.1.0",
+    "@danielmoncada/angular-datetime-picker": "^19.1.2",
     "@ionic/angular": "^8.4.1",
     "@ionic/angular-server": "^8.4.1",
     "@ionic/angular-toolkit": "^11.0.1",
