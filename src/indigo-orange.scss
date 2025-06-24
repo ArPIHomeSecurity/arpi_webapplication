@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 @import 'app/app.component.scss';
 @import 'app/components/system-state/system-state.component.scss';
 @import 'app/components/sensor/sensor.scss';
