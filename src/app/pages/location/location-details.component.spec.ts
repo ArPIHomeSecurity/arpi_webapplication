@@ -1,11 +1,13 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { LocationDetailsComponent } from './location-details.component';
-import { environment } from '@environments/environment';
 import { of } from 'rxjs';
+import { LocationDetailsComponent } from './location-details.component';
+
+import { environment } from '@environments/environment';
+import { MockAuthenticationService } from 'testing';
 
 describe('LocationDetailsComponent', () => {
   let component: LocationDetailsComponent;
@@ -16,7 +18,7 @@ describe('LocationDetailsComponent', () => {
       declarations: [ LocationDetailsComponent ],
       imports: [],
       providers: [
-      { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
+      { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
       { provide: 'EventService', useClass: environment.eventService },
       provideHttpClient(withInterceptorsFromDi()),
       { provide: ActivatedRoute, useValue: { params: of({ id: '123' }) } }

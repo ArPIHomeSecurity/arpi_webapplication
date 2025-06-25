@@ -1,1 +1,22 @@
-{}
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "typescript.preferences.organizeImportsCollation": "ordinal",
+    "typescript.preferences.organizeImportsCollationLocale": "en",
+    "typescript.preferences.organizeImportsNumericCollation": false,
+    "typescript.preferences.organizeImportsAccentCollation": false,
+    "typescript.preferences.organizeImportsCaseFirst": "lower",
+    "eslint.validate": [
+        "typescript",
+        "html"
+    ],
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "html.format.enable": false,
+    "typescript.format.enable": false
+}
