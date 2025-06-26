@@ -3,22 +3,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@app/models';
 import { environment } from '@environments/environment';
-import { LocationTestResult, testLocation } from './location';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { AuthenticationService } from '@app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-
+import { LocationTestResult, testLocation } from './location';
 
 @Component({
-    selector: 'app-location-details',
-    templateUrl: './location-details.component.html',
-    styleUrls: ['./location-details.component.scss'],
-    standalone: false
+  selector: 'app-location-details',
+  templateUrl: './location-details.component.html',
+  styleUrls: ['./location-details.component.scss'],
+  standalone: false
 })
 export class LocationDetailsComponent {
-
-  ALREADY_EXISTS = $localize`:@@location already exists:Location already exists!`
+  ALREADY_EXISTS = $localize`:@@location already exists:Location already exists!`;
 
   location: Location;
   version: string;
@@ -36,7 +34,7 @@ export class LocationDetailsComponent {
 
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.route.params.subscribe(params => {
       const locations = JSON.parse(localStorage.getItem('locations')) || [];
@@ -44,8 +42,7 @@ export class LocationDetailsComponent {
       if (params.id) {
         this.location = locations.find(location => location.id === params.id);
         this.newLocation = false;
-      }
-      else {
+      } else {
         this.location = new Location();
         this.newLocation = true;
       }
@@ -89,15 +86,17 @@ export class LocationDetailsComponent {
     this.location = this.prepareLocation();
     this.testResult = new LocationTestResult();
     testLocation(this.location).subscribe(result => {
-      this.testResult = result
-      if (result.primaryLocationId && result.secondaryLocationId && result.primaryLocationId !== result.secondaryLocationId) {
+      this.testResult = result;
+      if (
+        result.primaryLocationId &&
+        result.secondaryLocationId &&
+        result.primaryLocationId !== result.secondaryLocationId
+      ) {
         console.error('Primary and secondary location IDs do not match!', result);
-      }
-      else if (result.primaryLocationId) {
+      } else if (result.primaryLocationId) {
         this.location.id = result.primaryLocationId;
         this.version = result.primaryVersion;
-      }
-      else if (result.secondaryLocationId) {
+      } else if (result.secondaryLocationId) {
         this.location.id = result.secondaryLocationId;
         this.version = result.secondaryVersion;
       }
@@ -114,13 +113,15 @@ export class LocationDetailsComponent {
 
   onFieldChange($event) {
     // add default port if domain is empty
-    if ($event.target.name === 'primaryDomain' &&
+    if (
+      $event.target.name === 'primaryDomain' &&
       this.location.primaryDomain === '' &&
       this.locationForm.value.primaryPort === null
     ) {
       this.locationForm.controls.primaryPort.setValue(443);
     }
-    if ($event.target.name === 'secondaryDomain' &&
+    if (
+      $event.target.name === 'secondaryDomain' &&
       this.location.secondaryDomain === '' &&
       this.locationForm.value.secondaryPort === null
     ) {
@@ -134,8 +135,7 @@ export class LocationDetailsComponent {
   onCancel() {
     if (environment.isMultiLocation) {
       this.router.navigate(['/locations']);
-    }
-    else {
+    } else {
       this.router.navigate(['/setup']);
     }
   }
@@ -154,7 +154,7 @@ export class LocationDetailsComponent {
   }
 
   alreadyExists() {
-    var locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const locations = JSON.parse(localStorage.getItem('locations')) || [];
     return locations.some(l => l.id === this.location.id);
   }
 
@@ -181,7 +181,7 @@ export class LocationDetailsComponent {
       }
 
       if (this.testResult.primary === null || this.testResult.secondary === null) {
-        return true
+        return true;
       }
     }
 
@@ -190,12 +190,11 @@ export class LocationDetailsComponent {
 
   onSubmit() {
     const location = this.prepareLocation();
-    var locations = JSON.parse(localStorage.getItem('locations') || "[]");
+    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
     const index = locations.findIndex(l => l.id === location.id);
     if (index >= 0) {
       locations[index] = location;
-    }
-    else {
+    } else {
       locations.push(location);
     }
 
@@ -203,14 +202,13 @@ export class LocationDetailsComponent {
     window.dispatchEvent(new StorageEvent('storage', { key: 'locations', newValue: JSON.stringify(locations) }));
     if (this.isMultiLocation) {
       this.router.navigate(['/locations']);
-    }
-    else {
+    } else {
       this.router.navigate(['/setup']);
     }
   }
 
   openDeleteDialog() {
-    var locations = JSON.parse(localStorage.getItem('locations')) || [];
+    let locations = JSON.parse(localStorage.getItem('locations')) || [];
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '450px',
       data: {
@@ -220,7 +218,7 @@ export class LocationDetailsComponent {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',

@@ -17,14 +17,12 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
-    templateUrl: './user-detail.component.html',
-    styleUrls: ['user-detail.component.scss'],
-    standalone: false
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['user-detail.component.scss'],
+  standalone: false
 })
 export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   userId: number = null;
   user: User = null;
   userForm: FormGroup;
@@ -54,12 +52,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       if (id === 'add') {
         this.userId = null;
         this.isMyProfile = false;
-      }
-      else if (id === 'my-user') {
+      } else if (id === 'my-user') {
         this.userId = this.authenticationService.getUserId();
         this.isMyProfile = true;
-      }
-      else if (id != null) {
+      } else if (id != null) {
         this.userId = parseInt(id, 10);
         this.isMyProfile = false;
       }
@@ -81,9 +77,10 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       scheduleMicrotask.then(() => {
         this.loader.display(true);
       });
-      this.userService.getUser(this.userId)
+      this.userService
+        .getUser(this.userId)
         .pipe(
-          catchError((error) => {
+          catchError(error => {
             if (error.status === 404) {
               this.user = null;
             }
@@ -92,12 +89,12 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
           finalize(() => this.loader.display(false))
         )
         .subscribe({
-          next: (user) => {
+          next: user => {
             this.user = user;
             this.updateForm(this.user);
             this.loader.display(false);
           },
-          error: (error) => {
+          error: error => {
             // handle error
           },
           complete: () => {
@@ -130,39 +127,42 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       hasRegistrationCode: user.hasRegistrationCode,
       oldAccessCode: new FormControl('', [Validators.pattern('^\\d{4,12}$')]),
       newAccessCode: new FormControl('', [Validators.pattern('^\\d{4,12}$')]),
-      comment: user.comment,
+      comment: user.comment
     });
   }
 
   onSave() {
     if (this.userId != null) {
       const user = this.prepareUserUpdate();
-      this.userService.updateUser(user)
-        .subscribe({
-          next: _ => {
-            // reset biometricEnabled if access code has changed
-            if (user.oldAccessCode && user.newAccessCode && user.oldAccessCode !== user.newAccessCode) {
-              localStorage.setItem('biometricEnabled', JSON.stringify(null));
-            }
+      this.userService.updateUser(user).subscribe({
+        next: _ => {
+          // reset biometricEnabled if access code has changed
+          if (user.oldAccessCode && user.newAccessCode && user.oldAccessCode !== user.newAccessCode) {
+            localStorage.setItem('biometricEnabled', JSON.stringify(null));
+          }
 
-            if (this.isMyProfile) {
-              this.router.navigate(['/my-user']);
-            }
-            else {
-              this.router.navigate(['/users']);
-            }
-          },
-          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
-        });
+          if (this.isMyProfile) {
+            this.router.navigate(['/my-user']);
+          } else {
+            this.router.navigate(['/users']);
+          }
+        },
+        error: _ =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     } else {
       const user = this.prepareUserCreate();
-      this.userService.createUser(user)
-        .subscribe({
-          next: _ => {
-            this.router.navigate(['/users'])
-          },
-          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
-        });
+      this.userService.createUser(user).subscribe({
+        next: _ => {
+          this.router.navigate(['/users']);
+        },
+        error: _ =>
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     }
   }
 
@@ -205,14 +205,14 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
             text: $localize`:@@cancel:Cancel`
           }
         ],
-        width: '450px',
+        width: '450px'
       }
     });
 
@@ -220,15 +220,20 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.userService.deleteUser(userId)
+          this.userService
+            .deleteUser(userId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => this.router.navigate(['/users']),
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
-        }
-        else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+        } else {
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

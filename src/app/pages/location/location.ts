@@ -1,18 +1,17 @@
-import { forkJoin, Observable } from "rxjs";
-import { Location } from "@app/models";
-
+import { forkJoin, Observable } from 'rxjs';
+import { Location } from '@app/models';
 
 /**
  * Location test result
  *
- * - undefined: no test run 
+ * - undefined: no test run
  * - null: test running
  * - true: test passed
  * - false: test failed
  */
 export class LocationTestResult {
-  primary: boolean = null
-  secondary: boolean = null
+  primary: boolean = null;
+  secondary: boolean = null;
   primaryLocationId: string = null;
   primaryVersion: string = null;
   secondaryLocationId: string = null;
@@ -58,7 +57,7 @@ function loadLocationId(locationIdURL: string): Observable<string> {
           return;
         }
 
-        return response.text()
+        return response.text();
       })
       .then(locationId => {
         // check response format
@@ -138,7 +137,7 @@ export function testLocation(location: Location): Observable<LocationTestResult>
   const testResult = new LocationTestResult();
 
   return new Observable<LocationTestResult>(observer => {
-    var testPrimary: Observable<boolean>;
+    let testPrimary: Observable<boolean>;
     if (location.primaryDomain !== '') {
       if (!location.primaryPort) {
         location.primaryPort = 443;
@@ -150,51 +149,52 @@ export function testLocation(location: Location): Observable<LocationTestResult>
       testPrimary = undefinedObservableBoolean;
     }
 
-    var testSecondary: Observable<boolean>;
+    let testSecondary: Observable<boolean>;
     if (location.secondaryDomain !== '') {
       if (!location.secondaryPort) {
         location.secondaryPort = 443;
       }
       const secondaryURL = `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`;
       testSecondary = testUrl(secondaryURL);
-
     } else {
       testResult.secondary = undefined;
       testSecondary = undefinedObservableBoolean;
     }
 
-    var primaryLocationId: Observable<string>;
+    let primaryLocationId: Observable<string>;
     if (location.primaryDomain !== '') {
-      primaryLocationId = loadLocationId(`${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/config/installation_id`);
-    }
-    else {
+      primaryLocationId = loadLocationId(
+        `${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/config/installation_id`
+      );
+    } else {
       testResult.primaryLocationId = undefined;
       primaryLocationId = undefinedObservableString;
     }
 
-    var secondaryLocationId: Observable<string>;
+    let secondaryLocationId: Observable<string>;
     if (location.secondaryDomain !== '') {
-      secondaryLocationId = loadLocationId(`${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/config/installation_id`);
-    }
-    else {
+      secondaryLocationId = loadLocationId(
+        `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/config/installation_id`
+      );
+    } else {
       testResult.secondaryLocationId = undefined;
       secondaryLocationId = undefinedObservableString;
     }
 
-    var primaryVersion: Observable<string>;
+    let primaryVersion: Observable<string>;
     if (location.primaryDomain !== '') {
       primaryVersion = getVersion(`${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/version`);
-    }
-    else {
+    } else {
       testResult.primaryVersion = undefined;
       primaryVersion = undefinedObservableString;
     }
 
-    var secondaryVersion: Observable<string>;
+    let secondaryVersion: Observable<string>;
     if (location.secondaryDomain !== '') {
-      secondaryVersion = getVersion(`${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`);
-    }
-    else {
+      secondaryVersion = getVersion(
+        `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`
+      );
+    } else {
       testResult.secondaryVersion = undefined;
       secondaryVersion = undefinedObservableString;
     }
@@ -206,8 +206,7 @@ export function testLocation(location: Location): Observable<LocationTestResult>
       primaryVersion: primaryVersion,
       secondaryLocationId: secondaryLocationId,
       secondaryVersion: secondaryVersion
-    })
-    .subscribe((results) => {
+    }).subscribe(results => {
       testResult.primary = results.primaryAvailable;
       testResult.secondary = results.secondaryAvailable;
       testResult.primaryLocationId = results.primaryLocationId;

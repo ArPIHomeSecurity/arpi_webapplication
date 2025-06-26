@@ -4,7 +4,9 @@
     width: 100%;
   }
 
-  .container-item.controller, .container-item.alert, .container-item.areas {
+  .container-item.controller,
+  .container-item.alert,
+  .container-item.areas {
     margin-bottom: 50px;
   }
 
@@ -37,7 +39,7 @@
       mat-icon {
         margin: 0 15px 0 0;
       }
-    
+
       mat-icon.blinking {
         /* blinking*/
         webkit-animation: 2s linear infinite condemed_blink_effect;
@@ -78,7 +80,3 @@
     }
   }
 }
-
-
-
-

@@ -17,9 +17,8 @@ import {
   OutputService,
   SensorService,
   UserService,
-  ZoneService,
+  ZoneService
 } from '@app/services/demo';
-
 
 export const environment = {
   production: false,
@@ -52,5 +51,5 @@ export const environment = {
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
-  zoneService: ZoneService,
+  zoneService: ZoneService
 };

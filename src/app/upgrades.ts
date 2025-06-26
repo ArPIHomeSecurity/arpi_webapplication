@@ -1,22 +1,20 @@
-import { _isNumberValue } from "@angular/cdk/coercion";
-
+import { _isNumberValue } from '@angular/cdk/coercion';
 
 class Installation {
   id: number;
   installationId: string | null;
   version: string;
   name: string;
-  scheme: string = 'https';
-  primaryDomain: string = '';
+  scheme = 'https';
+  primaryDomain = '';
   primaryPort: number = null;
-  secondaryDomain: string = '';
+  secondaryDomain = '';
   secondaryPort: number = null;
-  order: number = 0;
+  order = 0;
 }
 
-
 export function upgradeInstallationsToLocations() {
-  var locations = JSON.parse(localStorage.getItem('locations')) || [];
+  const locations = JSON.parse(localStorage.getItem('locations')) || [];
 
   if (locations.length > 0) {
     console.log('Already upgraded from installations to locations');
@@ -35,12 +33,11 @@ export function upgradeInstallationsToLocations() {
       secondaryPort: installation.secondaryPort,
       order: installation.order
     });
-
   });
 
   localStorage.setItem('locations', JSON.stringify(locations));
 
-  var selectedInstallationId = localStorage.getItem('selectedInstallationId');
+  const selectedInstallationId = localStorage.getItem('selectedInstallationId');
   if (selectedInstallationId !== null) {
     const selectedLocation = installations[parseInt(selectedInstallationId)];
     localStorage.setItem('selectedLocationId', selectedLocation.installationId);

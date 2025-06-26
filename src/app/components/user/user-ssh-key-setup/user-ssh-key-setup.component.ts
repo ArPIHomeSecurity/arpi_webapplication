@@ -10,33 +10,34 @@ import { UserService } from '@app/services';
 import { environment } from '@environments/environment';
 
 @Component({
-    selector: 'app-user-ssh-key-setup',
-    templateUrl: './user-ssh-key-setup.component.html',
-    styleUrl: './user-ssh-key-setup.component.scss',
-    standalone: false
+  selector: 'app-user-ssh-key-setup',
+  templateUrl: './user-ssh-key-setup.component.html',
+  styleUrl: './user-ssh-key-setup.component.scss',
+  standalone: false
 })
 export class UserSshKeySetupDialogComponent implements OnInit {
-  setupKeyForm: FormGroup
-  keyTypes: any[]
-  setupMethods: any[]
-  privateKey: string = null
-  loading: boolean
+  setupKeyForm: FormGroup;
+  keyTypes: any[];
+  setupMethods: any[];
+  privateKey: string = null;
+  loading: boolean;
 
   constructor(
     @Inject('UserService') public userService: UserService,
-    public dialogRef: MatDialogRef<UserSshKeySetupDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
+    public dialogRef: MatDialogRef<UserSshKeySetupDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private clipboard: Clipboard
   ) {
     this.keyTypes = [
       { value: 'rsa', viewValue: 'RSA' },
-      { value: 'ed25519', viewValue: 'ED25519' },
+      { value: 'ed25519', viewValue: 'ED25519' }
     ];
 
     this.setupMethods = [
       { value: 'custom', viewValue: 'Custom' },
-      { value: 'generate', viewValue: 'Generate' },
+      { value: 'generate', viewValue: 'Generate' }
     ];
   }
 
@@ -64,7 +65,8 @@ export class UserSshKeySetupDialogComponent implements OnInit {
 
   generateKey() {
     this.loading = true;
-    this.userService.generateSshKey(this.user.id, this.setupKeyForm.value.keyType, this.setupKeyForm.value.passphrase)
+    this.userService
+      .generateSshKey(this.user.id, this.setupKeyForm.value.keyType, this.setupKeyForm.value.passphrase)
       .subscribe((key: string) => {
         this.privateKey = key;
         this.loading = false;
@@ -73,17 +75,18 @@ export class UserSshKeySetupDialogComponent implements OnInit {
 
   setPublicKey() {
     this.loading = true;
-    this.userService.setPublicKey(this.user.id, this.setupKeyForm.value.publicKey)
-      .subscribe(() => {
-        this.loading = false;
-        this.dialogRef.close();
-      });
+    this.userService.setPublicKey(this.user.id, this.setupKeyForm.value.publicKey).subscribe(() => {
+      this.loading = false;
+      this.dialogRef.close();
+    });
   }
 
   onCopyKey(value: string) {
     this.clipboard.copy(value);
 
-    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, { duration: environment.snackDuration });
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    });
   }
 
   onClickClose() {

@@ -9,7 +9,6 @@ const PRESS_THRESHOLD = 1;
   standalone: true
 })
 export class LongPressToggleDirective {
-
   @Output() longPressAvailable = new EventEmitter<boolean>(); // Long press available
   @Output() longPressed = new EventEmitter<void>(); // Long press
 

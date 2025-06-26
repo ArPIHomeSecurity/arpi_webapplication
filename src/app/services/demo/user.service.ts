@@ -12,37 +12,32 @@ export class UserDemo extends User {
   registeringCards: boolean;
 }
 
-
 @Injectable()
 export class UserService {
-
   public users: UserDemo[];
 
-  constructor(
-  ) {
+  constructor() {
     this.users = getSessionValue('UserService.users', USERS);
   }
 
   getUsers(): Observable<UserDemo[]> {
-    return of(this.users)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          // this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.users).pipe(
+      delay(environment.delay),
+      map(_ => {
+        // this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   getUser(userId: number): Observable<UserDemo> {
-    return of(this.users.find(u => u.id === userId))
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          // this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.users.find(u => u.id === userId)).pipe(
+      delay(environment.delay),
+      map(_ => {
+        // this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   createUser(user: User): Observable<User> {
@@ -80,12 +75,11 @@ export class UserService {
       const t = new Date();
       t.setSeconds(t.getSeconds() + expiry);
       this.users[index].registrationExpiry = t.toLocaleString();
-    }
-    else {
+    } else {
       this.users[index].registrationExpiry = '';
     }
     setSessionValue('UserService.users', this.users);
-    return of({code});
+    return of({ code });
   }
 
   deleteRegistrationCode(userId: number): Observable<boolean> {

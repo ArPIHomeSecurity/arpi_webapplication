@@ -1,4 +1,3 @@
-
 .system-states {
   display: flex;
   gap: 3px;
@@ -20,7 +19,6 @@
   }
 }
 
-
 @mixin system-state-indicator-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   /* states */
   .mat-icon.normal {
@@ -36,11 +34,11 @@
   }
 
   .mat-mdc-chip.normal {
-    background-color: mat.m2-get-color-from-palette($argus-ok),
+    background-color: mat.m2-get-color-from-palette($argus-ok);
   }
 
   .mat-mdc-chip.warning {
-    background-color: mat.m2-get-color-from-palette($argus-warn),
+    background-color: mat.m2-get-color-from-palette($argus-warn);
   }
 
   .mat-mdc-chip.danger {

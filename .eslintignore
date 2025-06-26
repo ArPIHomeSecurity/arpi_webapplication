@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-*/
+coverage/
+*.min.js
+*.bundle.js
+capacitor/
+android/
+ios/
+.angular/

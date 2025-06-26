@@ -2,38 +2,30 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
-import { AuthenticationService } from './authentication.service';
-
 import { Option } from '@app/models';
 import { DEMO_CONFIGURATION } from '@app/demo/configuration';
 import { getSessionValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class ConfigurationService {
-
   configuration: Option[];
 
-  constructor(
-    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
-  ) {
+  constructor(@Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService) {
     this.configuration = getSessionValue('ConfigurationService.configuration', DEMO_CONFIGURATION);
   }
 
-
   getOption(option: string, section: string): Observable<Option> {
-    return of(this.configuration.find(o => o.option === option && o.section === section))
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.configuration.find(o => o.option === option && o.section === section)).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
-
 
   setOption(option: string, section: string, value: any): Observable<boolean> {
     const tmpOption = this.configuration.find(o => o.option === option && o.section === section);
@@ -44,25 +36,18 @@ export class ConfigurationService {
     }
 
     setSessionValue('ConfigurationService.configuration', this.configuration);
-    return of(true)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(true).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
-  sendTestEmail() {
+  sendTestEmail() {}
 
-  }
+  sendTestSMS() {}
 
-  sendTestSMS() {
-
-  }
-
-  testSyren(duration?: number) {
-    
-  }
+  testSyren(duration?: number) {}
 }

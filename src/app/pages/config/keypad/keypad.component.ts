@@ -8,17 +8,14 @@ import { ConfigurationBaseComponent } from '@app/configuration-base/configuratio
 import { Keypad, KeypadType } from '@app/models';
 import { EventService, KeypadService, LoaderService, MonitoringService } from '@app/services';
 
-const scheduleMicrotask = Promise.resolve( null );
+const scheduleMicrotask = Promise.resolve(null);
 
-
-@Component( {
-    templateUrl: 'keypad.component.html',
-    styleUrls: ['keypad.component.scss'],
-    providers: [],
-    standalone: false
-} )
-
-
+@Component({
+  templateUrl: 'keypad.component.html',
+  styleUrls: ['keypad.component.scss'],
+  providers: [],
+  standalone: false
+})
 export class KeypadComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   keypadForm: UntypedFormGroup;
   keypad: Keypad = null;
@@ -30,7 +27,7 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
     @Inject('KeypadService') private keypadService: KeypadService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
-    private fb: UntypedFormBuilder,
+    private fb: UntypedFormBuilder
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -52,9 +49,9 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
 
   updateForm() {
     if (this.keypad) {
-      this.keypadForm = this.fb.group( {
+      this.keypadForm = this.fb.group({
         keypadEnabled: this.keypad.enabled,
-        keypadType: new UntypedFormControl(this.keypad.typeId, Validators.required),
+        keypadType: new UntypedFormControl(this.keypad.typeId, Validators.required)
       });
     }
   }
@@ -66,18 +63,17 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
           keypad: this.keypadService.getKeypad(keypads[0].id),
           keypadTypes: this.keypadService.getKeypadTypes()
         })
-        .pipe(finalize(() => this.loader.display(false)))
-        .subscribe(results =>{
-          this.keypad = results.keypad;
-          this.keypadTypes = results.keypadTypes;
-          this.updateForm();
-          this.loader.display(false);
-          this.loader.disable(false);
-        });
+          .pipe(finalize(() => this.loader.display(false)))
+          .subscribe(results => {
+            this.keypad = results.keypad;
+            this.keypadTypes = results.keypadTypes;
+            this.updateForm();
+            this.loader.display(false);
+            this.loader.disable(false);
+          });
       },
       _ => this.loader.display(false)
     );
-
   }
 
   prepareKeypad(): Keypad {
@@ -95,8 +91,6 @@ export class KeypadComponent extends ConfigurationBaseComponent implements OnIni
 
   onSubmit() {
     this.loader.disable(true);
-    this.keypadService.updateKeypad(this.prepareKeypad())
-      .subscribe(_ => this.updateComponent());
+    this.keypadService.updateKeypad(this.prepareKeypad()).subscribe(_ => this.updateComponent());
   }
 }
-

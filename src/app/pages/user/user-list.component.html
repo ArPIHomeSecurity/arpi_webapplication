@@ -1,6 +1,8 @@
 <div *ngIf="users !== null" class="container">
   <div *ngIf="users && users.length > 0; else no_users">
-    <user-card *ngFor="let user of users" class="user-card container-item"
+    <user-card
+      *ngFor="let user of users"
+      class="user-card container-item"
       [user]="user"
       [disabled]="monitoringState != monitoringStates.READY"
       [canManageCards]="userCanEdit"
@@ -8,9 +10,8 @@
       [canManageUser]="userCanEdit"
       [canManageRegistration]="userCanEdit"
       (onUserDeleted)="onUserDeleted($event)"
-      (onNavigateToUserEdit)="navigateToUserEdit(user.id)">
-
-    </user-card>
+      (onNavigateToUserEdit)="navigateToUserEdit(user.id)"
+    ></user-card>
   </div>
 
   <ng-template #no_users>
@@ -21,10 +22,22 @@
 </div>
 
 <div class="list-actions">
-  <button class="list-action" mat-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != monitoringStates.READY">
+  <button
+    class="list-action"
+    mat-fab
+    color="accent"
+    routerLink="/user/add"
+    [disabled]="monitoringState != monitoringStates.READY"
+  >
     <mat-icon>add</mat-icon>
   </button>
-  <button class="list-action" mat-mini-fab color="accent" routerLink="/user/add" [disabled]="monitoringState != monitoringStates.READY">
+  <button
+    class="list-action"
+    mat-mini-fab
+    color="accent"
+    routerLink="/user/add"
+    [disabled]="monitoringState != monitoringStates.READY"
+  >
     <mat-icon>add</mat-icon>
   </button>
 </div>

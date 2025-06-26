@@ -16,21 +16,16 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+import { environment } from '@environments/environment';
 import { AppComponent } from './app.component';
 import { SystemStateComponent } from './components/system-state/system-state.component';
 import { ThemeService } from './services';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
-import { environment } from '@environments/environment';
-
-
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        SystemStateComponent
-      ],
+      declarations: [AppComponent, SystemStateComponent],
       imports: [
         BrowserAnimationsModule,
         MatIconModule,
@@ -60,7 +55,7 @@ describe('AppComponent', () => {
         { provide: 'SensorService', useClass: environment.sensorService },
         { provide: 'ThemeService', useClass: ThemeService },
         { provide: 'UserService', useClass: MockUserService },
-        { provide: 'ZoneService', useClass: environment.zoneService },
+        { provide: 'ZoneService', useClass: environment.zoneService }
       ]
     }).compileComponents();
   }));

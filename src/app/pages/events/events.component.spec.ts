@@ -17,9 +17,8 @@ import { MatFormField, MatHint, MatLabel, MatSelectModule } from '@angular/mater
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MockUserService } from 'testing';
-import { EventsComponent } from './events.component';
-
 import { environment } from '@environments/environment';
+import { EventsComponent } from './events.component';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -56,8 +55,7 @@ describe('EventsComponent', () => {
         { provide: 'LoaderService', useClass: environment.loaderService },
         { provide: 'UserService', useClass: MockUserService }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventsComponent);
     component = fixture.componentInstance;

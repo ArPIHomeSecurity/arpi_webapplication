@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="container-item controller">
     <component-controller
       [armState]="armState"
@@ -15,16 +14,19 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
-          <mat-icon matListIcon *ngIf="alert.silent" class="material-icons-outlined">volume_mute</mat-icon>
-          <mat-icon matListIcon *ngIf="!alert.silent" class="material-icons-outlined">volume_up</mat-icon>
-          <div>{{alert.startTime}}</div>
+          <mat-icon matListIcon *ngIf="alert.silent" class="material-icons-outlined">
+            volume_mute
+          </mat-icon>
+          <mat-icon matListIcon *ngIf="!alert.silent" class="material-icons-outlined">
+            volume_up
+          </mat-icon>
+          <div>{{ alert.startTime }}</div>
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div class="column">
-        <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor"/>
+        <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor" />
       </div>
-
     </mat-expansion-panel>
   </div>
 
@@ -38,8 +40,7 @@
 
   <div *ngIf="areas.length > 1" class="container-item areas">
     <component-area
-      *ngFor="let area of areas;
-      trackBy: areaIdentify"
+      *ngFor="let area of areas; trackBy: areaIdentify"
       [area]="area"
       [sensors]="getSensors(area.id)"
       [delays]="getSensorDelays(area.id)"
@@ -47,8 +48,7 @@
     />
   </div>
 
-  <div *ngIf="outputs" class="container-item ">
-    <component-output *ngFor="let output of outputs" [output]="output"/>
+  <div *ngIf="outputs" class="container-item">
+    <component-output *ngFor="let output of outputs" [output]="output" />
   </div>
-
 </div>

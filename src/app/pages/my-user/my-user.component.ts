@@ -12,7 +12,6 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
   styleUrl: './my-user.component.scss'
 })
 export class MyUserComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   user: User = null;
 
   constructor(
@@ -21,7 +20,7 @@ export class MyUserComponent extends ConfigurationBaseComponent implements OnIni
     @Inject('UserService') private userService,
     @Inject('LoaderService') public loader,
     @Inject('MonitoringService') public monitoringService,
-    public router: Router,
+    public router: Router
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -30,11 +29,10 @@ export class MyUserComponent extends ConfigurationBaseComponent implements OnIni
     super.initialize();
 
     const userId = this.authenticationService.getUserId();
-    this.userService.getUser(userId)
-      .subscribe({
-        next: user => this.user = user,
-        error: error => console.error(error)
-      });
+    this.userService.getUser(userId).subscribe({
+      next: user => (this.user = user),
+      error: error => console.error(error)
+    });
   }
 
   ngOnDestroy(): void {

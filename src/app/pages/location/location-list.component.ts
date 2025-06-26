@@ -1,7 +1,13 @@
 import { Component, Inject } from '@angular/core';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { AuthenticationService, ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
+import {
+  AuthenticationService,
+  ConfigurationService,
+  EventService,
+  LoaderService,
+  MonitoringService
+} from '@app/services';
 
 import { Location } from '@app/models';
 import { environment } from '@environments/environment';
@@ -12,12 +18,11 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 import { MatDialog } from '@angular/material/dialog';
 import { LocationTestResult, testLocation } from './location';
 
-
 @Component({
-    selector: 'location-list',
-    templateUrl: './location-list.component.html',
-    styleUrls: ['./location-list.component.scss'],
-    standalone: false
+  selector: 'location-list',
+  templateUrl: './location-list.component.html',
+  styleUrls: ['./location-list.component.scss'],
+  standalone: false
 })
 export class LocationListComponent extends ConfigurationBaseComponent {
   isMultiLocation = environment.isMultiLocation;
@@ -35,7 +40,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('ConfigurationService') private configService: ConfigurationService,
 
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     super(eventService, loader, monitoringService);
 
@@ -98,7 +103,9 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     if (this.locations.length === 1) {
       this.selectedLocationId = this.locations[0].id;
       localStorage.setItem('selectedLocationId', this.selectedLocationId.toString());
-      window.dispatchEvent(new StorageEvent('storage', { key: 'selectedLocationId', newValue: this.selectedLocationId.toString() }));
+      window.dispatchEvent(
+        new StorageEvent('storage', { key: 'selectedLocationId', newValue: this.selectedLocationId.toString() })
+      );
     }
 
     configureBackend().then(() => {
@@ -122,7 +129,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
       location.order = index;
     });
     setTimeout(() => {
-      this.locations = locations
+      this.locations = locations;
       this.onSave();
     }, 0);
   }
@@ -138,7 +145,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',

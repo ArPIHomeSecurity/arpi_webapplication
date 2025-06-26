@@ -2,10 +2,22 @@ import { Observable } from 'rxjs';
 
 import { Arm, ArmEvent, ARM_TYPE } from '@app/models';
 
-
 export interface ArmService {
+  getArms(
+    armType: ARM_TYPE,
+    userId: number,
+    startDate: Date,
+    endDate: Date,
+    hasAlert: boolean,
+    offset: number,
+    size: number
+  ): Observable<ArmEvent[]>;
 
-  getArms(armType: ARM_TYPE, userId: number, startDate: Date, endDate: Date, hasAlert: boolean, offset: number, size: number): Observable<ArmEvent[]>;
-
-  getArmsCount(armType: ARM_TYPE, userId: number, startDate: Date, endDate: Date, hasAlert: boolean): Observable<number>;
+  getArmsCount(
+    armType: ARM_TYPE,
+    userId: number,
+    startDate: Date,
+    endDate: Date,
+    hasAlert: boolean
+  ): Observable<number>;
 }

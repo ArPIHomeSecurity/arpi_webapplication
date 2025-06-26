@@ -12,11 +12,10 @@
 
   // remove checked state effect
   .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
-    background-color:  var(--mat-standard-button-toggle-background-color);
+    background-color: var(--mat-standard-button-toggle-background-color);
   }
 
   .long-press-active {
-    box-shadow: 0 0 3px 3px mat.m2-get-color-from-palette($argus-ok) !important
+    box-shadow: 0 0 3px 3px mat.m2-get-color-from-palette($argus-ok) !important;
   }
 }
-

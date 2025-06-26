@@ -2,9 +2,7 @@ import { Observable } from 'rxjs';
 
 import { User, UserCreate, UserUpdate } from '@app/models';
 
-
 export interface UserService {
-
   getUsers(): Observable<User[]>;
 
   getUser(userId: number): Observable<User>;

@@ -7,19 +7,18 @@ import { Observable, of } from 'rxjs';
  */
 @Injectable()
 export class MockUserService {
-
   getUsers(): Observable<User[]> {
     return of([
-        { id: 1, name: 'Test User 1', email: 'user1@test.com' } as User,
-        { id: 2, name: 'Test User 2', email: 'user2@test.com' } as User
+      { id: 1, name: 'Test User 1', email: 'user1@test.com' } as User,
+      { id: 2, name: 'Test User 2', email: 'user2@test.com' } as User
     ]);
   }
 
   getUser(userId: number): Observable<User> {
     return of({
-        id: userId,
-        name: `Test User ${userId}`,
-        email: `user${userId}@test.com`
+      id: userId,
+      name: `Test User ${userId}`,
+      email: `user${userId}@test.com`
     } as User);
   }
 

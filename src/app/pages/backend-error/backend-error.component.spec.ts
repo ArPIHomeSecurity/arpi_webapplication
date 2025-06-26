@@ -13,19 +13,9 @@ describe('BackendErrorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [BackendErrorComponent],
-      imports: [
-        MatDivider,
-        MatCardModule,
-        MatIconModule,
-        MatButtonModule,
-        RouterOutlet,
-        RouterLink
-      ],
-      providers: [
-        provideRouter([])
-      ]
-    })
-      .compileComponents();
+      imports: [MatDivider, MatCardModule, MatIconModule, MatButtonModule, RouterOutlet, RouterLink],
+      providers: [provideRouter([])]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BackendErrorComponent);
     component = fixture.componentInstance;

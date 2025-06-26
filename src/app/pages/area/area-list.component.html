@@ -1,29 +1,51 @@
 <div *ngIf="areas != null && sensors != null" class="container">
-  
-  <div cdkDropList *ngIf="areas.length > 0; else no_areas" class="area-list" (cdkDropListDropped)="onDrop($event)">
-
+  <div
+    cdkDropList
+    *ngIf="areas.length > 0; else no_areas"
+    class="area-list"
+    (cdkDropListDropped)="onDrop($event)"
+  >
     <mat-card
-      id="area-{{area.id}}"
+      id="area-{{ area.id }}"
       *ngFor="let area of areas"
       cdkDrag
       (cdkDragStarted)="onDragStarted($event)"
       [cdkDragDisabled]="!userCanEdit()"
-      ngClass="area-card container-item">
+      ngClass="area-card container-item"
+    >
       <mat-card-content>
-  
-        <mat-card-title>{{area.name}}</mat-card-title>
-        <mat-card-subtitle *ngIf="area.name != area.description">{{area.description}}</mat-card-subtitle>
-  
-        <mat-expansion-panel class="sensors" (opened)="sensorListOpened[area.id] = true" (closed)="sensorListOpened[area.id] = false">
+        <mat-card-title>{{ area.name }}</mat-card-title>
+        <mat-card-subtitle *ngIf="area.name != area.description">
+          {{ area.description }}
+        </mat-card-subtitle>
+
+        <mat-expansion-panel
+          class="sensors"
+          (opened)="sensorListOpened[area.id] = true"
+          (closed)="sensorListOpened[area.id] = false"
+        >
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
-            <mat-panel-description *ngIf="!sensorListOpened[area.id]" i18n="@@area number of sensors">{{getSensors(area.id).length}} sensor(s)</mat-panel-description>
+            <mat-panel-description
+              *ngIf="!sensorListOpened[area.id]"
+              i18n="@@area number of sensors"
+            >
+              {{ getSensors(area.id).length }} sensor(s)
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getSensors(area.id).length > 0; else no_sensors">
             <ul class="sensor-list">
               <li *ngFor="let sensor of getSensors(area.id)">
-                {{sensor.description}}
-                <button mat-button *ngIf="userCanEdit()" [routerLink]="['/sensor', sensor.id]" routerLinkActive="active" color="accent"><mat-icon matListIcon>mode_edit</mat-icon></button>
+                {{ sensor.description }}
+                <button
+                  mat-button
+                  *ngIf="userCanEdit()"
+                  [routerLink]="['/sensor', sensor.id]"
+                  routerLinkActive="active"
+                  color="accent"
+                >
+                  <mat-icon matListIcon>mode_edit</mat-icon>
+                </button>
               </li>
             </ul>
           </div>
@@ -31,17 +53,34 @@
             <h3 i18n="@@area no sensors">No sensors</h3>
           </ng-template>
         </mat-expansion-panel>
-        
-        <mat-expansion-panel class="outputs" (opened)="outputListOpened[area.id] = true" (closed)="outputListOpened[area.id] = false">
+
+        <mat-expansion-panel
+          class="outputs"
+          (opened)="outputListOpened[area.id] = true"
+          (closed)="outputListOpened[area.id] = false"
+        >
           <mat-expansion-panel-header>
             <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
-            <mat-panel-description *ngIf="!outputListOpened[area.id]" i18n="@@area number of outputs">{{getOutputs(area.id).length}} output(s)</mat-panel-description>
+            <mat-panel-description
+              *ngIf="!outputListOpened[area.id]"
+              i18n="@@area number of outputs"
+            >
+              {{ getOutputs(area.id).length }} output(s)
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div *ngIf="getOutputs(area.id).length > 0; else no_outputs">
             <ul class="output-list">
               <li *ngFor="let output of getOutputs(area.id)">
-                {{output.description}}
-                <button mat-button *ngIf="userCanEdit()" [routerLink]="['/output', output.id]" routerLinkActive="active" color="accent"><mat-icon matListIcon>mode_edit</mat-icon></button>
+                {{ output.description }}
+                <button
+                  mat-button
+                  *ngIf="userCanEdit()"
+                  [routerLink]="['/output', output.id]"
+                  routerLinkActive="active"
+                  color="accent"
+                >
+                  <mat-icon matListIcon>mode_edit</mat-icon>
+                </button>
               </li>
             </ul>
           </div>
@@ -49,21 +88,46 @@
             <h3 i18n="@@area no outputs">No outputs</h3>
           </ng-template>
         </mat-expansion-panel>
-
       </mat-card-content>
 
       <mat-divider *ngIf="userCanEdit()"></mat-divider>
-  
+
       <mat-card-actions *ngIf="userCanEdit()">
         <!-- drag and drop icon button-->
-        <button mat-icon-button cdkDragHandle class="drag-handle" [disabled]="! [monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"><mat-icon>drag_indicator</mat-icon></button>
-        <button mat-icon-button [routerLink]="['/area', area.id]" color="primary" [disabled]="monitoringState != monitoringStates.READY"><mat-icon>mode_edit</mat-icon></button>
-        <button mat-icon-button (click)="openDeleteDialog(area.id)" color="warn" [disabled]="getSensors(area.id).length > 0 || getOutputs(area.id).length > 0 || monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
+        <button
+          mat-icon-button
+          cdkDragHandle
+          class="drag-handle"
+          [disabled]="
+            ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
+          "
+        >
+          <mat-icon>drag_indicator</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          [routerLink]="['/area', area.id]"
+          color="primary"
+          [disabled]="monitoringState != monitoringStates.READY"
+        >
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="openDeleteDialog(area.id)"
+          color="warn"
+          [disabled]="
+            getSensors(area.id).length > 0 ||
+            getOutputs(area.id).length > 0 ||
+            monitoringState != monitoringStates.READY
+          "
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card-actions>
-  
     </mat-card>
   </div>
-  
+
   <ng-template #no_areas>
     <div class="container-item">
       <h1 class="empty" i18n="@@area none">No areas found</h1>
@@ -72,10 +136,24 @@
 </div>
 
 <div *ngIf="userCanEdit()" class="list-actions">
-  <button class="list-action" mat-fab color="accent" routerLink="/area/add" [disabled]="monitoringState != monitoringStates.READY" ngClass="false">
+  <button
+    class="list-action"
+    mat-fab
+    color="accent"
+    routerLink="/area/add"
+    [disabled]="monitoringState != monitoringStates.READY"
+    ngClass="false"
+  >
     <mat-icon>add</mat-icon>
   </button>
-  <button class="list-action" mat-mini-fab color="accent" routerLink="/area/add" [disabled]="monitoringState != monitoringStates.READY" ngClass="false">
+  <button
+    class="list-action"
+    mat-mini-fab
+    color="accent"
+    routerLink="/area/add"
+    [disabled]="monitoringState != monitoringStates.READY"
+    ngClass="false"
+  >
     <mat-icon>add</mat-icon>
   </button>
 </div>

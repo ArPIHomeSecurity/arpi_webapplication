@@ -5,8 +5,6 @@ const angular = require('@angular-eslint/eslint-plugin');
 const angularTemplate = require('@angular-eslint/eslint-plugin-template');
 const angularParser = require('@angular-eslint/template-parser');
 const importPlugin = require('eslint-plugin-import');
-const jsdocPlugin = require('eslint-plugin-jsdoc');
-const preferArrowPlugin = require('eslint-plugin-prefer-arrow');
 const prettierPlugin = require('eslint-plugin-prettier');
 
 module.exports = [
@@ -33,16 +31,14 @@ module.exports = [
             parser: tsparser,
             parserOptions: {
                 ecmaVersion: 2022,
-                sourceType: 'module',
-                project: './tsconfig.json'
+                sourceType: 'module'
+                // Remove project: './tsconfig.json' to avoid memory issues
             }
         },
         plugins: {
             '@typescript-eslint': tseslint,
             '@angular-eslint': angular,
             'import': importPlugin,
-            'jsdoc': jsdocPlugin,
-            'prefer-arrow': preferArrowPlugin,
             'prettier': prettierPlugin
         },
         rules: {
@@ -56,7 +52,7 @@ module.exports = [
             '@typescript-eslint/explicit-module-boundary-types': 'off',
             '@typescript-eslint/no-inferrable-types': 'error',
 
-            // Angular ESLint rules - only basic ones that exist
+            // Angular ESLint rules
             '@angular-eslint/directive-selector': [
                 'error',
                 {
@@ -76,7 +72,7 @@ module.exports = [
             '@angular-eslint/no-empty-lifecycle-method': 'error',
             '@angular-eslint/use-lifecycle-interface': 'error',
 
-            // Import rules
+            // Import rules - only logical organization, not formatting
             'import/no-unresolved': 'off',
             'import/order': [
                 'error',
@@ -88,26 +84,11 @@ module.exports = [
                         'parent',
                         'sibling',
                         'index'
-                    ],
-                    'newlines-between': 'always'
+                    ]
                 }
             ],
 
-            // JSDoc rules
-            'jsdoc/check-alignment': 'error',
-            'jsdoc/check-indentation': 'error',
-
-            // Prefer arrow functions
-            'prefer-arrow/prefer-arrow-functions': [
-                'warn',
-                {
-                    disallowPrototype: true,
-                    singleReturnOnly: false,
-                    classPropertiesAllowed: false
-                }
-            ],
-
-            // General rules
+            // Code quality rules
             'no-console': 'warn',
             'no-debugger': 'error',
             'no-var': 'error',

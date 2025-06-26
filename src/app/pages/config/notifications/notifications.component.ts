@@ -6,23 +6,27 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_SMTP, DEFAULT_NOTIFICATION_GSM, DEFAULT_NOTIFICATION_SUBSCRIPTIONS, DEFAULT_PASSWORD_VALUE, MONITORING_STATE } from '@app/models';
+import {
+  Option,
+  DEFAULT_NOTIFICATION_SMTP,
+  DEFAULT_NOTIFICATION_GSM,
+  DEFAULT_NOTIFICATION_SUBSCRIPTIONS,
+  DEFAULT_PASSWORD_VALUE,
+  MONITORING_STATE
+} from '@app/models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { SmsMessagesDialogComponent } from './sms-messages.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SmsMessagesDialogComponent } from './sms-messages.component';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
-    templateUrl: 'notifications.component.html',
-    styleUrls: ['notifications.component.scss'],
-    standalone: false
+  templateUrl: 'notifications.component.html',
+  styleUrls: ['notifications.component.scss'],
+  standalone: false
 })
-
-
 export class NotificationsComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @ViewChild('snackbarTemplateEmail') snackbarTemplateEmail: TemplateRef<any>;
   @ViewChild('snackbarTemplateSms') snackbarTemplateSms: TemplateRef<any>;
@@ -33,11 +37,11 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   gsmForm: FormGroup;
   subscriptionsForm: FormGroup;
 
-  testEmailResult: any = {}
+  testEmailResult: any = {};
   testingEmail = false;
-  testSmsResult: any = {}
+  testSmsResult: any = {};
   testingSms = false;
-  testCallResult: any = {}
+  testCallResult: any = {};
   testingCall = false;
 
   constructor(
@@ -70,9 +74,9 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   updateForm(smtp: Option, gsm: Option, subscriptions: Option) {
-//    console.log('Email', this.email);
-//    console.log('GSM', this.gsm);
-//    console.log('Subscriptions', this.subscriptions);
+    //    console.log('Email', this.email);
+    //    console.log('GSM', this.gsm);
+    //    console.log('Subscriptions', this.subscriptions);
 
     this.smtpForm = this.fb.group({
       smtpUsername: getValue(smtp.value, 'smtp_username'),
@@ -83,14 +87,14 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       emailAddress2: getValue(smtp.value, 'email_address_2'),
       smtpEnabled: getValue(smtp.value, 'enabled')
     });
-      
+
     this.gsmForm = this.fb.group({
       pinCode: getValue(gsm.value, 'pin_code'),
       phoneNumber1: getValue(gsm.value, 'phone_number_1'),
       phoneNumber2: getValue(gsm.value, 'phone_number_2'),
       gsmEnabled: getValue(gsm.value, 'enabled')
     });
-      
+
     this.subscriptionsForm = this.fb.group({
       alertStartedCall1: getValue(getValue(subscriptions.value, 'call1'), 'alert_started'),
       alertStartedCall2: getValue(getValue(subscriptions.value, 'call2'), 'alert_started'),
@@ -123,8 +127,8 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
       gsm: this.configService.getOption('notifications', 'gsm'),
       subscriptions: this.configService.getOption('notifications', 'subscriptions')
     })
-    .pipe(finalize(() => this.loader.display(false)))
-    .subscribe(results => {
+      .pipe(finalize(() => this.loader.display(false)))
+      .subscribe(results => {
         this.updateForm(
           getValue(results, 'smtp', DEFAULT_NOTIFICATION_SMTP),
           getValue(results, 'gsm', DEFAULT_NOTIFICATION_GSM),
@@ -132,8 +136,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
         );
         this.loader.display(false);
         this.loader.disable(false);
-      }
-    );
+      });
   }
 
   prepareSmtp(): any {
@@ -201,24 +204,24 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   }
 
   canSaveSmtp() {
-    return (
-      this.monitoringState == MONITORING_STATE.READY &&
-      this.smtpForm.valid && !this.smtpForm.pristine
-    );
+    return this.monitoringState == MONITORING_STATE.READY && this.smtpForm.valid && !this.smtpForm.pristine;
   }
 
   canTestSmtp() {
     return (
       this.monitoringState == MONITORING_STATE.READY &&
-      this.smtpForm.valid && !this.smtpForm.touched &&
-      this.smtpForm.value.smtpHostname && this.smtpForm.value.smtpPort &&
-      this.smtpForm.value.smtpUsername && this.smtpForm.value.smtpPassword &&
+      this.smtpForm.valid &&
+      !this.smtpForm.touched &&
+      this.smtpForm.value.smtpHostname &&
+      this.smtpForm.value.smtpPort &&
+      this.smtpForm.value.smtpUsername &&
+      this.smtpForm.value.smtpPassword &&
       (this.smtpForm.value.emailAddress1 || this.smtpForm.value.emailAddress2) &&
       this.smtpForm.value.smtpEnabled
     );
   }
 
-  onSendTestEmail(){
+  onSendTestEmail() {
     this.testingEmail = true;
 
     this.gsmForm.disable();
@@ -229,39 +232,42 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     this.testSmsResult = {};
     this.testCallResult = {};
 
-    this.configService.sendTestEmail()
-      .pipe(finalize(() => {
-        this.testingEmail = false;
-        this.gsmForm.enable();
-        this.smtpForm.enable();
-        this.subscriptionsForm.enable();
-      }))
+    this.configService
+      .sendTestEmail()
+      .pipe(
+        finalize(() => {
+          this.testingEmail = false;
+          this.gsmForm.enable();
+          this.smtpForm.enable();
+          this.subscriptionsForm.enable();
+        })
+      )
       .subscribe({
         next: response => {
           this.testEmailResult = response;
-          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, { duration: environment.snackDuration });
         },
         error: error => {
           this.testEmailResult = error.error;
-          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, {duration: environment.snackDuration});
+          this.snackBar.openFromTemplate(this.snackbarTemplateEmail, { duration: environment.snackDuration });
         }
       });
   }
 
   canSaveGsm() {
-    return (
-      this.monitoringState == MONITORING_STATE.READY &&
-      this.gsmForm.valid && !this.gsmForm.pristine
-    );
+    return this.monitoringState == MONITORING_STATE.READY && this.gsmForm.valid && !this.gsmForm.pristine;
   }
 
   canTestGsm() {
-    return this.gsmForm.valid &&
-      this.gsmForm.value.pinCode && (this.gsmForm.value.phoneNumber1 || this.gsmForm.value.phoneNumber2) &&
-      this.gsmForm.value.gsmEnabled;
+    return (
+      this.gsmForm.valid &&
+      this.gsmForm.value.pinCode &&
+      (this.gsmForm.value.phoneNumber1 || this.gsmForm.value.phoneNumber2) &&
+      this.gsmForm.value.gsmEnabled
+    );
   }
 
-  onSendTestSMS(){
+  onSendTestSMS() {
     this.testingSms = true;
 
     this.gsmForm.disable();
@@ -272,28 +278,31 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     this.testSmsResult = {};
     this.testCallResult = {};
 
-    this.configService.sendTestSMS()
-      .pipe(finalize(() => {
-        this.testingSms = false;
-        this.gsmForm.enable();
-        this.smtpForm.enable();
-        this.subscriptionsForm.enable();
-      }))
+    this.configService
+      .sendTestSMS()
+      .pipe(
+        finalize(() => {
+          this.testingSms = false;
+          this.gsmForm.enable();
+          this.smtpForm.enable();
+          this.subscriptionsForm.enable();
+        })
+      )
       .subscribe({
         next: response => {
           this.testSmsResult = response;
-          this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+          this.snackBar.openFromTemplate(this.snackbarTemplateSms, { duration: environment.snackDuration });
         },
         error: error => {
           this.testSmsResult = error.error;
-          this.snackBar.openFromTemplate(this.snackbarTemplateSms, {duration: environment.snackDuration});
+          this.snackBar.openFromTemplate(this.snackbarTemplateSms, { duration: environment.snackDuration });
         }
       });
   }
 
   onTestCall() {
     this.testingCall = true;
-    
+
     this.gsmForm.disable();
     this.smtpForm.disable();
     this.subscriptionsForm.disable();
@@ -302,13 +311,16 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
     this.testSmsResult = {};
     this.testCallResult = {};
 
-    this.configService.doTestCall()
-      .pipe(finalize(() => {
-        this.testingCall = false;
-        this.gsmForm.enable();
-        this.smtpForm.enable();
-        this.subscriptionsForm.enable();
-      }))
+    this.configService
+      .doTestCall()
+      .pipe(
+        finalize(() => {
+          this.testingCall = false;
+          this.gsmForm.enable();
+          this.smtpForm.enable();
+          this.subscriptionsForm.enable();
+        })
+      )
       .subscribe({
         next: response => {
           this.testCallResult = response;
@@ -323,7 +335,7 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
   onShowSmsMessages() {
     this.dialog.open(SmsMessagesDialogComponent, {
-      width: '500px',
+      width: '500px'
     });
   }
 
@@ -332,13 +344,13 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
 
     if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
       passwordControl.markAsTouched();
-      passwordControl.setValue("");
+      passwordControl.setValue('');
     }
   }
-  
+
   onPasswordBlur() {
     const passwordControl = this.smtpForm.get('smtpPassword');
-  
+
     // Check if the user has changed the password field's value.
     if (!passwordControl.dirty) {
       // If the user didn't change it, restore the initial value.
@@ -349,21 +361,20 @@ export class NotificationsComponent extends ConfigurationBaseComponent implement
   onSubmitSmtp() {
     const smtp = this.prepareSmtp();
     this.loader.disable(true);
-    this.configService.setOption('notifications', 'smtp', smtp)
-      .subscribe(_ => this.updateComponent());
+    this.configService.setOption('notifications', 'smtp', smtp).subscribe(_ => this.updateComponent());
   }
 
   onSubmitGsm() {
     const gsm = this.prepareGsm();
     this.loader.disable(true);
-    this.configService.setOption('notifications', 'gsm', gsm)
-      .subscribe(_ => this.updateComponent());
+    this.configService.setOption('notifications', 'gsm', gsm).subscribe(_ => this.updateComponent());
   }
 
   onSubmitSubscriptions() {
     const subscriptions = this.prepareSubscriptions();
     this.loader.disable(true);
-    this.configService.setOption('notifications', 'subscriptions', subscriptions)
+    this.configService
+      .setOption('notifications', 'subscriptions', subscriptions)
       .subscribe(_ => this.updateComponent());
   }
 }

@@ -1,43 +1,42 @@
-import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component";
+import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 
-import { Card, ROLE_TYPES, User } from "@app/models";
-import { AuthenticationService, BiometricService, CardService, EventService, UserService } from "@app/services";
-import { environment } from "@environments/environment";
-import { finalize, forkJoin, Observable } from "rxjs";
-import { UserDeviceRegistrationDialogComponent } from "../user-device-registration/user-device-registration.component";
-import { UserSshKeySetupDialogComponent } from "../user-ssh-key-setup/user-ssh-key-setup.component";
-import { AUTHENTICATION_SERVICE } from "@app/tokens";
-
+import { Card, ROLE_TYPES, User } from '@app/models';
+import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
+import { environment } from '@environments/environment';
+import { finalize, forkJoin, Observable } from 'rxjs';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { UserDeviceRegistrationDialogComponent } from '../user-device-registration/user-device-registration.component';
+import { UserSshKeySetupDialogComponent } from '../user-ssh-key-setup/user-ssh-key-setup.component';
 
 @Component({
-    selector: 'user-card',
-    templateUrl: './user-card.component.html',
-    styleUrls: ['./user-card.component.scss'],
-    standalone: false
+  selector: 'user-card',
+  templateUrl: './user-card.component.html',
+  styleUrls: ['./user-card.component.scss'],
+  standalone: false
 })
 export class UserCardComponent implements OnInit {
   @Input() user: User;
 
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
 
-  @Input() canManageUser: boolean = false;
-  @Input() canManageCards: boolean = false;
-  @Input() canManageSshKeys: boolean = false;
-  @Input() canManageRegistration: boolean = false;
+  @Input() canManageUser = false;
+  @Input() canManageCards = false;
+  @Input() canManageSshKeys = false;
+  @Input() canManageRegistration = false;
 
   @Output() onUserDeleted = new EventEmitter<number>();
   @Output() onNavigateToUserEdit = new EventEmitter<void>();
 
   readonly roleTypes = ROLE_TYPES;
 
-  loading: boolean = true;
+  loading = true;
   cards: Card[] = [];
-  registeringCard: boolean = false;
-  hasSshKey: boolean = false;
-  biometricAvailable: boolean = false;
+  registeringCard = false;
+  hasSshKey = false;
+  biometricAvailable = false;
   useBiometric: boolean = null;
 
   dialog = inject(MatDialog);
@@ -49,45 +48,47 @@ export class UserCardComponent implements OnInit {
     @Inject('UserService') private userService: UserService,
     @Inject('BiometricService') private biometricService: BiometricService,
 
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
     this.useBiometric = status[locationId];
 
-    this.eventService.listen('card_registered')
-      .subscribe(result => {
-        this.registeringCard = false;
-        this.snackBar.dismiss();
-        if (result) {
-          // registered
-          this.snackBar.open($localize`:@@card registered:Card registered!`, null, { duration: environment.snackDuration });
-        }
-        else if (result === false) {
-          // not registered
-          this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, { duration: environment.snackDuration });
-        }
-        else if (result === null) {
-          // time expired
-          this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, { duration: environment.snackDuration });
-        }
-      })
+    this.eventService.listen('card_registered').subscribe(result => {
+      this.registeringCard = false;
+      this.snackBar.dismiss();
+      if (result) {
+        // registered
+        this.snackBar.open($localize`:@@card registered:Card registered!`, null, {
+          duration: environment.snackDuration
+        });
+      } else if (result === false) {
+        // not registered
+        this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+          duration: environment.snackDuration
+        });
+      } else if (result === null) {
+        // time expired
+        this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+          duration: environment.snackDuration
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
     // biometric login is only available for the current user
     const userId = this.authenticationService.getUserId();
     if (this.user.id === userId) {
-        this.biometricService.isAvailable().then((result) => {
-          this.biometricAvailable = result;
-        });
+      this.biometricService.isAvailable().then(result => {
+        this.biometricAvailable = result;
+      });
     }
 
     let loadHasSshKey: Observable<boolean>;
     if (this.canManageSshKeys) {
       loadHasSshKey = this.userService.hasSshKey(this.user.id);
-    }
-    else {
+    } else {
       loadHasSshKey = new Observable<boolean>(observer => {
         observer.next(false);
         observer.complete();
@@ -96,10 +97,10 @@ export class UserCardComponent implements OnInit {
 
     forkJoin({
       cards: this.cardService.getCards(this.user.id),
-      hasSshKey: loadHasSshKey,
+      hasSshKey: loadHasSshKey
     })
-      .pipe(finalize(() => this.loading = false))
-      .subscribe((result) => {
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(result => {
         this.cards = result.cards;
         this.hasSshKey = result.hasSshKey;
       });
@@ -118,7 +119,7 @@ export class UserCardComponent implements OnInit {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -138,14 +139,18 @@ export class UserCardComponent implements OnInit {
 
   deleteUser() {
     this.loading = true;
-    this.userService.deleteUser(this.user.id)
-      .pipe(finalize(() => this.loading = false))
+    this.userService
+      .deleteUser(this.user.id)
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
           this.snackBar.open($localize`:@@user deleted:User deleted!`, null, { duration: environment.snackDuration });
           this.onUserDeleted.emit(this.user.id);
         },
-        error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+        error: _ =>
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 
@@ -155,18 +160,22 @@ export class UserCardComponent implements OnInit {
   }
 
   toggleCardEnabled(cardId: number) {
-    this.cards.forEach((card) => {
+    this.cards.forEach(card => {
       if (card.id === cardId) {
         // clone the card, change the state and update
-        let tmpCard = Object.assign({}, card)
+        const tmpCard = Object.assign({}, card);
         tmpCard.enabled = !card.enabled;
 
         this.loading = true;
-        this.cardService.updateCard(tmpCard)
-          .pipe(finalize(() => this.loading = false))
+        this.cardService
+          .updateCard(tmpCard)
+          .pipe(finalize(() => (this.loading = false)))
           .subscribe({
-            next: _ => this.cardService.getCards(this.user.id).subscribe(cards => this.cards = cards),
-            error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+            next: _ => this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards)),
+            error: _ =>
+              this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+                duration: environment.snackDuration
+              })
           });
       }
     });
@@ -181,7 +190,7 @@ export class UserCardComponent implements OnInit {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -201,30 +210,33 @@ export class UserCardComponent implements OnInit {
 
   removeCard(cardId: number) {
     this.loading = true;
-    this.cardService.deleteCard(cardId)
-      .pipe(finalize(() => this.loading = false))
+    this.cardService
+      .deleteCard(cardId)
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
           this.snackBar.open($localize`:@@card deleted:Card deleted!`, null, { duration: environment.snackDuration });
-          this.cardService.getCards(this.user.id).subscribe(cards => this.cards = cards);
+          this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards));
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
-
 
   openDeviceRegistrationDialog() {
     const dialogRef = this.dialog.open(UserDeviceRegistrationDialogComponent, {
       width: '350px',
-      data: this.user,
+      data: this.user
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.loading = true;
-      this.userService.getUser(this.user.id)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(user => this.user = user);
+      this.userService
+        .getUser(this.user.id)
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe(user => (this.user = user));
     });
   }
 
@@ -237,7 +249,7 @@ export class UserCardComponent implements OnInit {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -257,25 +269,30 @@ export class UserCardComponent implements OnInit {
 
   removeRegistrationCode() {
     this.loading = true;
-    this.userService.deleteRegistrationCode(this.user.id)
-      .pipe(finalize(() => this.loading = false))
+    this.userService
+      .deleteRegistrationCode(this.user.id)
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: _ => this.user.hasRegistrationCode = false,
-        error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration }),
+        next: _ => (this.user.hasRegistrationCode = false),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 
   openSshKeySetupDialog() {
     const dialogRef = this.dialog.open(UserSshKeySetupDialogComponent, {
       width: '350px',
-      data: this.user,
+      data: this.user
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.loading = true;
-      this.userService.hasSshKey(this.user.id)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(hasSshKey => this.hasSshKey = hasSshKey);
+      this.userService
+        .hasSshKey(this.user.id)
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe(hasSshKey => (this.hasSshKey = hasSshKey));
     });
   }
 
@@ -288,7 +305,7 @@ export class UserCardComponent implements OnInit {
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -308,21 +325,25 @@ export class UserCardComponent implements OnInit {
 
   removeSSHKey() {
     this.loading = true;
-    this.userService.deleteSshKey(this.user.id)
-      .pipe(finalize(() => this.loading = false))
+    this.userService
+      .deleteSshKey(this.user.id)
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: _ => this.hasSshKey = false,
-        error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration }),
+        next: _ => (this.hasSshKey = false),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 
   biometricEnabled() {
     return this.useBiometric === true || this.useBiometric === null;
-  }    
+  }
 
   enableBiometricLogin() {
     this.loading = true;
-    let status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
 
     // restore initial state when use can decide at login if biometric should be used
@@ -335,7 +356,7 @@ export class UserCardComponent implements OnInit {
 
   disableBiometricLogin() {
     this.loading = true;
-    let status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
     status[locationId] = false;
     localStorage.setItem('biometricEnabled', JSON.stringify(status));

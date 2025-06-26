@@ -1,4 +1,3 @@
-
 export enum ALERT_TYPE {
   UNDEFINED = 0,
   SABOTAGE = 1,
@@ -34,14 +33,16 @@ export class AlertSensor {
   monitorThreshold: number;
 }
 
-export const string2AlertType = (alertType: string): ALERT_TYPE => ({
-  [ALERT_SABOTAGE]: ALERT_TYPE.SABOTAGE,
-  [ALERT_AWAY]: ALERT_TYPE.AWAY,
-  [ALERT_STAY]: ALERT_TYPE.STAY,
-})[alertType as keyof typeof string2AlertType];
+export const string2AlertType = (alertType: string): ALERT_TYPE =>
+  ({
+    [ALERT_SABOTAGE]: ALERT_TYPE.SABOTAGE,
+    [ALERT_AWAY]: ALERT_TYPE.AWAY,
+    [ALERT_STAY]: ALERT_TYPE.STAY
+  })[alertType as keyof typeof string2AlertType];
 
-export const alertType2String = (alertType: ALERT_TYPE): string => ({
-  [ALERT_TYPE.AWAY]: ALERT_AWAY,
-  [ALERT_TYPE.STAY]: ALERT_STAY,
-  [ALERT_TYPE.SABOTAGE]: ALERT_SABOTAGE
-})[alertType];
+export const alertType2String = (alertType: ALERT_TYPE): string =>
+  ({
+    [ALERT_TYPE.AWAY]: ALERT_AWAY,
+    [ALERT_TYPE.STAY]: ALERT_STAY,
+    [ALERT_TYPE.SABOTAGE]: ALERT_SABOTAGE
+  })[alertType];

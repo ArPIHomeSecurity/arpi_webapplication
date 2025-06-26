@@ -1,14 +1,17 @@
 <mat-button-toggle
-  class="output-button" [ngClass]="{active: output.state, 'long-press-active': longPressActive && !disabled}"
+  class="output-button"
+  [ngClass]="{active: output.state, 'long-press-active': longPressActive && !disabled}"
   [checked]="output.state"
   [disabled]="disabled"
-
   (longPressed)="onLongPressed()"
   (longPressAvailable)="onLongPressAvailable($event)"
   long-press-toggle
 >
   {{output.name}}
-  <mat-progress-spinner *ngIf="output.duration !== ENDLESS_DURATION && output.state"
-    diameter="25" color="primary" mode="indeterminate">
-  </mat-progress-spinner>
+  <mat-progress-spinner
+    *ngIf="output.duration !== ENDLESS_DURATION && output.state"
+    diameter="25"
+    color="primary"
+    mode="indeterminate"
+  ></mat-progress-spinner>
 </mat-button-toggle>

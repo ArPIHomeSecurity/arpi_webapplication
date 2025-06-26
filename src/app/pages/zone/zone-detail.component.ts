@@ -19,15 +19,13 @@ import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
-    templateUrl: './zone-detail.component.html',
-    styleUrls: ['zone-detail.component.scss'],
-    providers: [],
-    standalone: false
+  templateUrl: './zone-detail.component.html',
+  styleUrls: ['zone-detail.component.scss'],
+  providers: [],
+  standalone: false
 })
 export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   zoneId: number;
   zone: Zone = undefined;
   sensors: Sensor[];
@@ -71,7 +69,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         sensors: this.sensorService.getSensors()
       })
         .pipe(
-          catchError((error) => {
+          catchError(error => {
             if (error.status === 404) {
               this.zone = null;
             }
@@ -84,8 +82,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
           this.updateForm(this.zone);
           this.sensors = results.sensors;
           this.loader.display(false);
-        }
-        );
+        });
     } else {
       this.zone = new Zone();
       this.zone.disarmedDelay = null;
@@ -105,13 +102,28 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     this.zoneForm = this.fb.group({
       name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
       disarmedAlert: zone.disarmedDelay !== null,
-      disarmedDelay: new FormControl(zone.disarmedDelay, zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null),
+      disarmedDelay: new FormControl(
+        zone.disarmedDelay,
+        zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null
+      ),
       awayArmedAlert: zone.awayAlertDelay !== null,
-      awayAlertDelay: new FormControl(zone.awayAlertDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      awayArmDelay: new FormControl(zone.awayArmDelay, zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      awayAlertDelay: new FormControl(
+        zone.awayAlertDelay,
+        zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null
+      ),
+      awayArmDelay: new FormControl(
+        zone.awayArmDelay,
+        zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null
+      ),
       stayArmedAlert: zone.stayAlertDelay !== null,
-      stayAlertDelay: new FormControl(zone.stayAlertDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
-      stayArmDelay: new FormControl(zone.stayArmDelay, zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null),
+      stayAlertDelay: new FormControl(
+        zone.stayAlertDelay,
+        zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null
+      ),
+      stayArmDelay: new FormControl(
+        zone.stayArmDelay,
+        zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null
+      ),
       description: new FormControl(zone.description, [Validators.required, Validators.maxLength(128)])
     });
   }
@@ -119,17 +131,21 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   onSubmit() {
     const zone = this.prepareZone();
     if (this.zoneId != null) {
-      this.zoneService.updateZone(zone)
-        .subscribe({
-          next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
-        });
+      this.zoneService.updateZone(zone).subscribe({
+        next: _ => this.router.navigate(['/zones']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     } else {
-      this.zoneService.createZone(zone)
-        .subscribe({
-          next: _ => this.router.navigate(['/zones']),
-          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
-        });
+      this.zoneService.createZone(zone).subscribe({
+        next: _ => this.router.navigate(['/zones']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     }
   }
 
@@ -140,7 +156,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   getSensors(): Sensor[] {
     const results: Sensor[] = [];
     if (this.zone) {
-      this.sensors.forEach((sensor) => {
+      this.sensors.forEach(sensor => {
         if (sensor.zoneId === this.zone.id) {
           results.push(sensor);
         }
@@ -193,7 +209,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -206,18 +222,26 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true)
-          this.zoneService.deleteZone(zoneId)
+          this.loader.disable(true);
+          this.zoneService
+            .deleteZone(zoneId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, null, { duration: environment.snackDuration });
-                this.router.navigate(['/zones'])
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, null, {
+                  duration: environment.snackDuration
+                });
+                this.router.navigate(['/zones']);
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

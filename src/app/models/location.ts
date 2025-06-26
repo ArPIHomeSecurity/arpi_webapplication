@@ -1,11 +1,10 @@
-
 export class Location {
   id: string | null;
   name: string;
-  scheme: string = 'https';
-  primaryDomain: string = '';
+  scheme = 'https';
+  primaryDomain = '';
   primaryPort: number = null;
-  secondaryDomain: string = '';
+  secondaryDomain = '';
   secondaryPort: number = null;
-  order: number = 0;
+  order = 0;
 }

@@ -4,25 +4,25 @@ import { ConfigurationService } from '@app/services';
 import { forkJoin } from 'rxjs';
 
 @Component({
-    selector: 'component-sms-messages-dialog',
-    templateUrl: 'sms-messages.component.html',
-    styleUrls: ['sms-messages.component.scss'],
-    standalone: false
+  selector: 'component-sms-messages-dialog',
+  templateUrl: 'sms-messages.component.html',
+  styleUrls: ['sms-messages.component.scss'],
+  standalone: false
 })
 export class SmsMessagesDialogComponent implements OnInit {
-
   loading = false;
   smsMessages: any = null;
 
   constructor(
     @Inject('ConfigurationService') private configService: ConfigurationService,
 
-    public dialogRef: MatDialogRef<SmsMessagesDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    public dialogRef: MatDialogRef<SmsMessagesDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.configService.getSmsMessages().subscribe((smsMessages) => {
+    this.configService.getSmsMessages().subscribe(smsMessages => {
       this.smsMessages = smsMessages;
       this.loading = false;
     });
@@ -31,18 +31,17 @@ export class SmsMessagesDialogComponent implements OnInit {
   onDeleteMessage(smsMessage: any): void {
     this.loading = true;
     this.configService.deleteSmsMessage(smsMessage.idx).subscribe(() => {
-      this.smsMessages = this.smsMessages.filter((message) => message !== smsMessage);
+      this.smsMessages = this.smsMessages.filter(message => message !== smsMessage);
       this.loading = false;
     });
   }
 
   onDeleteAllMessages(): void {
     this.loading = true;
-    forkJoin(this.smsMessages.map((smsMessage) => this.configService.deleteSmsMessage(smsMessage.idx)))
-      .subscribe(() => {
-        this.dialogRef.close();
-        this.loading = false;
-      });
+    forkJoin(this.smsMessages.map(smsMessage => this.configService.deleteSmsMessage(smsMessage.idx))).subscribe(() => {
+      this.dialogRef.close();
+      this.loading = false;
+    });
   }
 
   onClose(): void {

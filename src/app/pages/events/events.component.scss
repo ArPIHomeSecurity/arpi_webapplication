@@ -10,11 +10,9 @@
   margin: 20px;
 }
 
-
-
 mat-expansion-panel.alerting {
   background-color: #ed1010;
-  
+
   ::ng-deep .mat-expansion-panel-header .mat-expansion-indicator::after {
     color: #ffffff;
   }
@@ -133,7 +131,7 @@ mat-expansion-panel.alerting {
   flex: 1;
   overflow: hidden;
   word-wrap: normal;
-  text-align: center;  
+  text-align: center;
   max-width: 25%;
   border-right: black 1px solid;
   text-overflow: ellipsis;

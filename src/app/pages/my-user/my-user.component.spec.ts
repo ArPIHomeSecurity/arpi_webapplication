@@ -4,7 +4,6 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { UserCardComponent } from '@app/components/user/user-card/user-card.component';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { MyUserComponent } from './my-user.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -12,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '@environments/environment';
 import { MockAuthenticationService, MockMonitoringService, MockUserService } from 'testing';
-
+import { MyUserComponent } from './my-user.component';
 
 describe('MyUserComponent', () => {
   let component: MyUserComponent;
@@ -20,17 +19,8 @@ describe('MyUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        MyUserComponent,
-        UserCardComponent
-      ],
-      imports: [
-        MatCardModule,
-        MatDividerModule,
-        MatIconModule,
-        MatMenuModule,
-        MatProgressSpinnerModule
-      ],
+      declarations: [MyUserComponent, UserCardComponent],
+      imports: [MatCardModule, MatDividerModule, MatIconModule, MatMenuModule, MatProgressSpinnerModule],
       providers: [
         { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
         { provide: 'BiometricService', useClass: environment.biometricService },
@@ -39,10 +29,9 @@ describe('MyUserComponent', () => {
         { provide: 'UserService', useClass: MockUserService },
         { provide: 'LoaderService', useClass: environment.loaderService },
         { provide: 'MonitoringService', useClass: MockMonitoringService },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptorsFromDi())
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MyUserComponent);
     component = fixture.componentInstance;

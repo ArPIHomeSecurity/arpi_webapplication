@@ -1,38 +1,40 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @include mat.elevation-classes();
 @include mat.app-background();
-@import 'app/app.component.scss';
-@import 'app/components/system-state/system-state.component.scss';
-@import 'app/components/sensor/sensor.scss';
-@import 'app/components/controller/controller.scss';
-@import 'app/components/output/output.scss';
-@import 'app/pages/home/home.component.scss';
-@import 'app/pages/area/area-list.component.scss';
-@import 'app/pages/sensor/sensor-list.component.scss';
-@import 'app/pages/output/output-list.component.scss';
+@import "app/app.component.scss";
+@import "app/components/system-state/system-state.component.scss";
+@import "app/components/sensor/sensor.scss";
+@import "app/components/controller/controller.scss";
+@import "app/components/output/output.scss";
+@import "app/pages/home/home.component.scss";
+@import "app/pages/area/area-list.component.scss";
+@import "app/pages/sensor/sensor-list.component.scss";
+@import "app/pages/output/output-list.component.scss";
 
+$argus-light-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 100, 800),
+      accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+      warn: mat.m2-define-palette(mat.$m2-red-palette)
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0
+  )
+);
 
-$argus-light-theme: mat.m2-define-light-theme((
-  color: (
-    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 100, 800),
-    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
-    warn: mat.m2-define-palette(mat.$m2-red-palette),
-  ),
-  typography: mat.m2-define-typography-config(),
-  density: 0,
-));
-
-$argus-dark-theme: mat.m2-define-dark-theme((
-  color: (
-    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 300),
-    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
-    warn: mat.m2-define-palette(mat.$m2-red-palette, 400),
-  ),
-  typography: mat.m2-define-typography-config(),
-  density: 0,
-));
-
+$argus-dark-theme: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: mat.m2-define-palette(mat.$m2-indigo-palette, 300),
+      accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+      warn: mat.m2-define-palette(mat.$m2-red-palette, 400)
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0
+  )
+);
 
 .argus-light-theme {
   $argus-ok: mat.m2-define-palette(mat.$m2-green-palette);
@@ -49,8 +51,9 @@ $argus-dark-theme: mat.m2-define-dark-theme((
   @include area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  
-  button.drag-handle.cdk-focused, button.drag-handle:hover {
+
+  button.drag-handle.cdk-focused,
+  button.drag-handle:hover {
     color: mat.m2-get-color-from-palette(map-get($argus-light-theme, accent));
   }
 }
@@ -71,9 +74,9 @@ $argus-dark-theme: mat.m2-define-dark-theme((
   @include area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  
-  button.drag-handle.cdk-focused, button.drag-handle:hover {
+
+  button.drag-handle.cdk-focused,
+  button.drag-handle:hover {
     color: mat.m2-get-color-from-palette(map-get($argus-dark-theme, accent));
   }
 }
-

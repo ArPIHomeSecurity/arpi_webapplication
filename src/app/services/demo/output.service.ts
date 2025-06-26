@@ -3,44 +3,43 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import { getSessionValue, setSessionValue } from '@app/utils';
-import { AuthenticationService } from './authentication.service';
-import { EventService } from './event.service';
 import { Output } from '@app/models';
 import { OUTPUTS } from '@app/demo/configuration';
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-
+import { EventService } from './event.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class OutputService {
-
   outputs: Output[] = [];
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService,
-    @Inject('EventService') private eventService: EventService,
+    @Inject('EventService') private eventService: EventService
   ) {
     this.outputs = getSessionValue('OutputService.outputs', OUTPUTS);
   }
 
-
   getOutputs(): Observable<Output[]> {
-    return of(Object.assign([], this.outputs))
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(Object.assign([], this.outputs)).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
-
 
   getOutput(outputId: number): Observable<Output> {
-    return of(Object.assign({}, this.outputs.find(s => s.id === outputId)));
+    return of(
+      Object.assign(
+        {},
+        this.outputs.find(s => s.id === outputId)
+      )
+    );
   }
-
 
   createOutput(output: Output): Observable<Output> {
     // get the maximum id and increment it
@@ -51,7 +50,6 @@ export class OutputService {
     return of(output);
   }
 
-
   updateOutput(output: Output): Observable<Output> {
     const tmpOutput = this.outputs.find(o => o.id === output.id);
     const index = this.outputs.indexOf(tmpOutput);
@@ -59,7 +57,6 @@ export class OutputService {
     setSessionValue('OutputService.outputs', this.outputs);
     return of(output);
   }
-
 
   deleteOutput(outputId: number): Observable<boolean> {
     this.outputs = this.outputs.filter(o => o.id !== outputId);
@@ -72,10 +69,13 @@ export class OutputService {
     if (tmpOutput) {
       tmpOutput.state = !tmpOutput.defaultState;
       this.eventService.updateOutputState(tmpOutput);
-      setTimeout(() => {
-        tmpOutput.state = tmpOutput.defaultState;
-        this.eventService.updateOutputState(tmpOutput);
-      }, tmpOutput.delay * 1000 + tmpOutput.duration * 1000);
+      setTimeout(
+        () => {
+          tmpOutput.state = tmpOutput.defaultState;
+          this.eventService.updateOutputState(tmpOutput);
+        },
+        tmpOutput.delay * 1000 + tmpOutput.duration * 1000
+      );
     }
 
     return of(true);

@@ -1,18 +1,15 @@
-
 import { Observable } from 'rxjs';
 
 import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '@app/models';
 
-
 export interface MonitoringService {
-
   isAlert(): Observable<boolean>;
 
   getArmState(): Observable<ARM_TYPE>;
 
-  arm(armtype: ARM_TYPE) : Observable<Object>;
+  arm(armtype: ARM_TYPE): Observable<Object>;
 
-  disarm() : Observable<Object>;
+  disarm(): Observable<Object>;
 
   getMonitoringState(): Observable<MONITORING_STATE>;
 

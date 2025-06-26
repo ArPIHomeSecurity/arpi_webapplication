@@ -13,7 +13,7 @@ export class MockAuthenticationService {
     return of(true);
   }
 
-  logout(manualAction: boolean = true): void {
+  logout(manualAction = true): void {
     this.isSessionValidSubject.next(false);
     // Mock logout behavior
   }

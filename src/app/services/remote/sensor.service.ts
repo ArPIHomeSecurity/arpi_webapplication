@@ -4,60 +4,50 @@ import { Observable } from 'rxjs';
 
 import { Sensor, SensorType } from '@app/models';
 
-
 @Injectable()
 export class SensorService {
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
-
-  getSensors( onlyAlerting: boolean = false ): Observable<Sensor[]> {
+  getSensors(onlyAlerting = false): Observable<Sensor[]> {
     const params = new HttpParams();
-    if ( onlyAlerting ) {
-      params.set( 'alerting', 'true' );
+    if (onlyAlerting) {
+      params.set('alerting', 'true');
     }
 
     // get sensors from api
-    return this.http.get<Sensor[]>('/api/sensors/', {params});
+    return this.http.get<Sensor[]>('/api/sensors/', { params });
   }
 
-
-  getSensor( sensorId: number ): Observable<Sensor> {
+  getSensor(sensorId: number): Observable<Sensor> {
     // get sensors from api
     return this.http.get<Sensor>('/api/sensor/' + sensorId);
   }
 
-
-  createSensor( sensor: Sensor ): Observable<Sensor> {
+  createSensor(sensor: Sensor): Observable<Sensor> {
     // set sensor from api
     return this.http.post<Sensor>('/api/sensors/', sensor);
   }
 
-
-  updateSensor( sensor: Sensor ): Observable<Sensor> {
+  updateSensor(sensor: Sensor): Observable<Sensor> {
     // set sensor from api
     return this.http.put<Sensor>('/api/sensor/' + sensor.id, sensor);
   }
 
-
-  deleteSensor( sensorId: number ): Observable<boolean> {
+  deleteSensor(sensorId: number): Observable<boolean> {
     // set sensor from api
     return this.http.delete<boolean>('/api/sensor/' + sensorId);
   }
 
-
-  getAlert( sensorId: number = null ): Observable<boolean> {
+  getAlert(sensorId: number = null): Observable<boolean> {
     // get sensors from api
-    if ( sensorId ) {
+    if (sensorId) {
       const params: URLSearchParams = new URLSearchParams();
-      params.set( 'sensor_id', sensorId.toString() );
+      params.set('sensor_id', sensorId.toString());
       return this.http.get<boolean>('/api/sensor/alert' + sensorId);
     } else {
       return this.http.get<boolean>('/api/sensor/alert');
     }
   }
-
 
   getSensorTypes(): Observable<SensorType[]> {
     // get sensor types from api
@@ -69,14 +59,12 @@ export class SensorService {
     return this.http.put('/api/sensors/reset-references', null).subscribe();
   }
 
-  resetReference( sensorId ) {
+  resetReference(sensorId) {
     // set sensor from api
     return this.http.put('/api/sensor/' + sensorId + '/reset-reference', null).subscribe();
   }
 
-  reorder( sensors: Sensor[] ) {
+  reorder(sensors: Sensor[]) {
     return this.http.put('/api/sensor/reorder', sensors).subscribe();
   }
 }
-
-

@@ -4,19 +4,14 @@ import { Observable } from 'rxjs';
 
 import { Location, Option } from '@app/models';
 
-
 @Injectable()
 export class ConfigurationService implements ConfigurationService {
-  constructor(
-    private http: HttpClient
-  ) { }
-
+  constructor(private http: HttpClient) {}
 
   getOption(option: string, section: string): Observable<Option> {
     // get configuration option from api
     return this.http.get<Option>('/api/config/' + option + '/' + section);
   }
-
 
   setOption(option: string, section: string, value: any): Observable<any> {
     // get configuration option from api
@@ -44,10 +39,7 @@ export class ConfigurationService implements ConfigurationService {
   }
 
   testSyren(duration?: number) {
-    const params = duration ?
-      new HttpParams().set('duration', duration)
-      :
-      null;
+    const params = duration ? new HttpParams().set('duration', duration) : null;
     return this.http.get('/api/config/test_syren', { params });
   }
 
@@ -55,11 +47,11 @@ export class ConfigurationService implements ConfigurationService {
     return this.http.get<boolean>('/api/config/public_access');
   }
 
-  getLocation() : Observable<Location> {
+  getLocation(): Observable<Location> {
     return this.http.get<Location>('/api/config/installation');
   }
 
-  getLocationId() : Observable<string> {
+  getLocationId(): Observable<string> {
     return this.http.get<string>('/api/config/installation_id');
   }
 }

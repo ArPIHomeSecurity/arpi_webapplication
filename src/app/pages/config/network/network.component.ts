@@ -11,25 +11,22 @@ import { ConfigurationService, EventService, LoaderService, MonitoringService } 
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
 
-
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
-    templateUrl: 'network.component.html',
-    styleUrls: ['network.component.scss'],
-    standalone: false
+  templateUrl: 'network.component.html',
+  styleUrls: ['network.component.scss'],
+  standalone: false
 })
 export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   @Input() onlyAlerting = false;
   dyndnsForm: FormGroup;
   accessForm: FormGroup;
   dyndns: Option = null;
   access: Option = null;
 
-  publicAccess: boolean = false;
-  publicUrl: string = "";
+  publicAccess = false;
+  publicUrl = '';
   publicUrlAccessible: boolean = null;
 
   // values from the noipy python module
@@ -37,7 +34,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     { value: '', label: '--' },
     { value: 'noip', label: 'www.noip.com' },
     { value: 'dyn', label: 'www.dyndns.org' },
-    { value: 'duck', label: 'www.duckdns.org' },
+    { value: 'duck', label: 'www.duckdns.org' }
   ];
 
   constructor(
@@ -62,12 +59,10 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     });
     this.updateComponent();
 
-    this.eventService.listen('public_access_change')
-      .subscribe((publicAccess) => {
-        this.publicAccess = publicAccess;
-        this.testPublicUrl();
-      }
-      );
+    this.eventService.listen('public_access_change').subscribe(publicAccess => {
+      this.publicAccess = publicAccess;
+      this.testPublicUrl();
+    });
   }
 
   ngOnDestroy() {
@@ -79,7 +74,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     if (this.publicAccess && hostname) {
       // current hostname equals to the public hostname
       if (window.location.hostname != hostname) {
-        return "https://" + hostname;
+        return 'https://' + hostname;
       }
     }
     return null;
@@ -87,7 +82,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   testPublicUrl() {
     // test if public hostname is reachable
-    const publicUrl = this.getPublicUrl() + "/api/version";
+    const publicUrl = this.getPublicUrl() + '/api/version';
     if (publicUrl) {
       // test https access from the browser with ajax
       const xhr = new XMLHttpRequest();
@@ -99,10 +94,10 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
             this.publicUrlAccessible = false;
           }
         }
-      }
+      };
       xhr.onerror = () => {
         this.publicUrlAccessible = false;
-      }
+      };
       xhr.open('GET', publicUrl, true);
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -162,19 +157,16 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
         this.testPublicUrl();
         this.loader.display(false);
         this.loader.disable(false);
-      }
-      );
+      });
   }
 
   updateAccess() {
-    this.configService.getOption('network', 'access')
-      .subscribe(access => {
-        this.access = getValue(access, 'access', DEFAULT_NOTIFICATION_ACCESS);
-        this.updateTerminalForm(this.access);
-        this.loader.display(false);
-        this.loader.disable(false);
-      }
-      );
+    this.configService.getOption('network', 'access').subscribe(access => {
+      this.access = getValue(access, 'access', DEFAULT_NOTIFICATION_ACCESS);
+      this.updateTerminalForm(this.access);
+      this.loader.display(false);
+      this.loader.disable(false);
+    });
   }
 
   prepareDyndns(): any {
@@ -208,7 +200,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
     if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
       passwordControl.markAsTouched();
-      passwordControl.setValue("");
+      passwordControl.setValue('');
     }
   }
 
@@ -224,22 +216,29 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   onSaveDyndns() {
     this.loader.disable(true);
-    this.configService.setOption('network', 'dyndns', this.prepareDyndns())
+    this.configService
+      .setOption('network', 'dyndns', this.prepareDyndns())
       .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: () => this.updateDyndns(),
-        error: () => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+        error: () =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 
   onSaveAccess() {
     this.loader.disable(true);
-    this.configService.setOption('network', 'access', this.prepareAccess())
+    this.configService
+      .setOption('network', 'access', this.prepareAccess())
       .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: () => this.updateAccess(),
-        error: () => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+        error: () =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 }
-

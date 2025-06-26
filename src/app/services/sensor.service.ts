@@ -2,9 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Sensor, SensorType } from '@app/models';
 
-
 export interface SensorService {
-
   getSensors(onlyAlerting?: boolean): Observable<Sensor[]>;
 
   getSensor(sensorId: number): Observable<Sensor>;

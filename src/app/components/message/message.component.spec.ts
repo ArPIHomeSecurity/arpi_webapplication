@@ -10,11 +10,8 @@ describe('MessageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MessageComponent],
-      imports: [
-        MatCardModule
-      ]
-    })
-      .compileComponents();
+      imports: [MatCardModule]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MessageComponent);
     component = fixture.componentInstance;

@@ -1,8 +1,6 @@
 import { Observable } from 'rxjs';
 
-
 export interface AuthenticationService {
-
   login(accessCode: number): Observable<boolean>;
 
   logout(manualAction: boolean): void;
@@ -28,10 +26,10 @@ export interface AuthenticationService {
   registerDevice(registrationCode: string): Observable<boolean>;
 
   unRegisterDevice();
-  
+
   isDeviceRegistered(): Observable<boolean>;
 
   getDeviceDomain(): string;
- 
+
   getRegisteredUserId(): number;
 }

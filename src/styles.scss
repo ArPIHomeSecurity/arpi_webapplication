@@ -1,21 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import "indigo-orange.scss";
 
-
 /* Datetime picker*/
 @import "@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
 
 /* change design */
 span.selection :focus {
   outline: chocolate;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow:
+    0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
 body {
-  font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  font-family: Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-html, body, material-app, .my-content {
+html,
+body,
+material-app,
+.my-content {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -58,7 +63,8 @@ html, body, material-app, .my-content {
   gap: 10px;
 }
 
-.column-item, .row-item {
+.column-item,
+.row-item {
   flex-grow: 1;
 }
 

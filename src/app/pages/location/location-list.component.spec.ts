@@ -4,10 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { LocationListComponent } from './location-list.component';
 
 import { environment } from '@environments/environment';
 import { MockAuthenticationService, MockMonitoringService } from 'testing';
+import { LocationListComponent } from './location-list.component';
 
 describe('LocationListComponent', () => {
   let component: LocationListComponent;
@@ -16,19 +16,16 @@ describe('LocationListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LocationListComponent],
-      imports: [
-        MatIconModule
-      ],
+      imports: [MatIconModule],
       providers: [
         { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
         { provide: 'EventService', useClass: environment.eventService },
         { provide: 'LoaderService', useClass: environment.loaderService },
         { provide: 'MonitoringService', useClass: MockMonitoringService },
         { provide: 'ConfigurationService', useClass: environment.configurationService },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptorsFromDi())
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LocationListComponent);
     component = fixture.componentInstance;

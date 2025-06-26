@@ -10,7 +10,15 @@ import { finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Area, MONITORING_STATE, Output, OutputType, OutputDefinitions, OutputTriggerType } from '@app/models';
-import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, OutputService, ZoneService } from '@app/services';
+import {
+  AreaService,
+  AuthenticationService,
+  EventService,
+  LoaderService,
+  MonitoringService,
+  OutputService,
+  ZoneService
+} from '@app/services';
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
@@ -18,12 +26,11 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
 const scheduleMicrotask = Promise.resolve(null);
 
 @Component({
-    templateUrl: 'output-list.component.html',
-    styleUrls: ['output-list.component.scss'],
-    providers: [],
-    standalone: false
+  templateUrl: 'output-list.component.html',
+  styleUrls: ['output-list.component.scss'],
+  providers: [],
+  standalone: false
 })
-
 export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
 
@@ -61,8 +68,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
 
     // TODO: update only one output instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService.listen('outputs_state_change')
-        .subscribe(_ => this.updateComponent())
+      this.eventService.listen('outputs_state_change').subscribe(_ => this.updateComponent())
     );
   }
 
@@ -71,8 +77,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
   }
 
   updateComponent() {
-    if (this.isDragging)
-      return;
+    if (this.isDragging) return;
 
     forkJoin({
       outputs: this.outputService.getOutputs(),
@@ -84,8 +89,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
         this.areas = results.areas;
         this.loader.display(false);
         this.loader.disable(false);
-      }
-      );
+      });
   }
 
   userCanEdit() {
@@ -103,7 +107,7 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -117,17 +121,25 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.outputService.deleteOutput(outputId)
+          this.outputService
+            .deleteOutput(outputId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, {
+                  duration: environment.snackDuration
+                });
                 this.updateComponent();
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

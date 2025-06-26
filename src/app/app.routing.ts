@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
+import { environment } from '@environments/environment';
 import { AuthGuard, AdminGuard } from './guards';
 
 import { LoginComponent } from './pages/login';
@@ -18,7 +19,6 @@ import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { LocationDetailsComponent, LocationListComponent } from './pages/location';
 import { setupGuard } from './guards/setup.guard';
 import { MyUserComponent } from './pages/my-user/my-user.component';
-import { environment } from '@environments/environment';
 import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 
 const appRoutes: Routes = [
@@ -30,19 +30,19 @@ const appRoutes: Routes = [
   },
   {
     path: 'backend-error',
-    component: BackendErrorComponent,
+    component: BackendErrorComponent
   },
   {
-    path: environment.isMultiLocation ? 'locations' : 'setup', 
-    component: LocationListComponent,
+    path: environment.isMultiLocation ? 'locations' : 'setup',
+    component: LocationListComponent
   },
   {
     path: 'location/add',
-    component: LocationDetailsComponent,
+    component: LocationDetailsComponent
   },
   {
     path: 'location/:id',
-    component: LocationDetailsComponent,
+    component: LocationDetailsComponent
   },
   {
     path: 'login',
@@ -160,7 +160,7 @@ const appRoutes: Routes = [
     canActivate: [AdminGuard, setupGuard]
   },
   // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  { path: '**', redirectTo: '' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes, {});
