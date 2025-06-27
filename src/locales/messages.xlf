@@ -64,13 +64,13 @@
         <source>Timezone</source>
       </trans-unit>
       <trans-unit id="save button" datatype="html">
-        <source>Save</source>
+        <source> Save </source>
       </trans-unit>
       <trans-unit id="network dns" datatype="html">
         <source>Dynamic DNS</source>
       </trans-unit>
       <trans-unit id="network remote access" datatype="html">
-        <source>Remote access by hostname</source>
+        <source> Remote access by hostname </source>
       </trans-unit>
       <trans-unit id="network provider" datatype="html">
         <source>Provider</source>
@@ -85,13 +85,13 @@
         <source>Password</source>
       </trans-unit>
       <trans-unit id="network restrict host" datatype="html">
-        <source>Restrict access to host</source>
+        <source> Restrict access to host </source>
       </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
-        <source>Enable SSH connection</source>
+        <source> Enable SSH connection </source>
       </trans-unit>
       <trans-unit id="notifications smtp settings" datatype="html">
-        <source>SMTP settings for sending notifications</source>
+        <source> SMTP settings for sending notifications </source>
       </trans-unit>
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
@@ -115,7 +115,7 @@
         <source>GSM</source>
       </trans-unit>
       <trans-unit id="notifications gsm settings" datatype="html">
-        <source>Mobil settings for sending notifications</source>
+        <source> Mobil settings for sending notifications </source>
       </trans-unit>
       <trans-unit id="notifications sim card pin" datatype="html">
         <source>SIM card PIN code</source>
@@ -127,7 +127,7 @@
         <source>Subscriptions</source>
       </trans-unit>
       <trans-unit id="notifications subscriptions settings" datatype="html">
-        <source>Configure subscriptions</source>
+        <source> Configure subscriptions </source>
       </trans-unit>
       <trans-unit id="notifications source" datatype="html">
         <source>Event</source>
@@ -148,10 +148,10 @@
         <source>Alert stopped</source>
       </trans-unit>
       <trans-unit id="notifications power outage started" datatype="html">
-        <source>Power outage started</source>
+        <source> Power outage started </source>
       </trans-unit>
       <trans-unit id="notifications power outage stopped" datatype="html">
-        <source>Power outage stopped</source>
+        <source> Power outage stopped </source>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
@@ -187,37 +187,37 @@
         <source>System disarmed</source>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
-        <source>Starting up</source>
+        <source> Starting up </source>
       </trans-unit>
       <trans-unit id="updating state" datatype="html">
-        <source>Updating configuration</source>
+        <source> Updating configuration </source>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
-        <source>Invalid configuration</source>
+        <source> Invalid configuration </source>
       </trans-unit>
       <trans-unit id="sabotage state" datatype="html">
-        <source>Sabotage</source>
+        <source> Sabotage </source>
       </trans-unit>
       <trans-unit id="error state" datatype="html">
-        <source>ERROR</source>
+        <source> ERROR </source>
       </trans-unit>
       <trans-unit id="starting state short" datatype="html">
-        <source>S</source>
+        <source> S </source>
       </trans-unit>
       <trans-unit id="updating state short" datatype="html">
-        <source>U</source>
+        <source> U </source>
       </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
-        <source>I</source>
+        <source> I </source>
       </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
-        <source>T</source>
+        <source> T </source>
       </trans-unit>
       <trans-unit id="keypad settings" datatype="html">
         <source>Keypad settings</source>
       </trans-unit>
       <trans-unit id="keypad enabled" datatype="html">
-        <source>Enabled</source>
+        <source> Enabled </source>
       </trans-unit>
       <trans-unit id="keypad type" datatype="html">
         <source>Keypad type</source>
@@ -241,28 +241,28 @@
         <source>Access code</source>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
-        <source>Host not allowed!</source>
+        <source> Host not allowed! </source>
       </trans-unit>
       <trans-unit id="login missing device token" datatype="html">
-        <source>Missing device token! Register your device!</source>
+        <source> Missing device token! Register your device! </source>
       </trans-unit>
       <trans-unit id="login invalid device token" datatype="html">
-        <source>Invalid device token! Update your device registration!</source>
+        <source> Invalid device token! Update your device registration! </source>
       </trans-unit>
       <trans-unit id="login expired registration code" datatype="html">
-        <source>Expired device registration code!</source>
+        <source> Expired device registration code! </source>
       </trans-unit>
       <trans-unit id="login invalid user id" datatype="html">
-        <source>Invalid user id! Update your device registration!</source>
+        <source> Invalid user id! Update your device registration! </source>
       </trans-unit>
       <trans-unit id="login invalid registration code" datatype="html">
-        <source>Invalid registration code!</source>
+        <source> Invalid registration code! </source>
       </trans-unit>
       <trans-unit id="login invalid access code" datatype="html">
-        <source>Invalid access code!</source>
+        <source> Invalid access code! </source>
       </trans-unit>
       <trans-unit id="login no connedtion" datatype="html">
-        <source>No connection to the security system!</source>
+        <source> No connection to the security system! </source>
       </trans-unit>
       <trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source>
@@ -298,13 +298,13 @@
         <source>Zone name</source>
       </trans-unit>
       <trans-unit id="sensor alert disarmed" datatype="html">
-        <source>Alert when disarmed</source>
+        <source> Alert when disarmed </source>
       </trans-unit>
       <trans-unit id="zone disarmed delay" datatype="html">
         <source>Delay alert when not armed</source>
       </trans-unit>
       <trans-unit id="sensor alert away" datatype="html">
-        <source>Alert when away armed</source>
+        <source> Alert when away armed </source>
       </trans-unit>
       <trans-unit id="zone away alert delay" datatype="html">
         <source>Delay alert when armed away</source>
@@ -313,7 +313,7 @@
         <source>Delay arm when arming away</source>
       </trans-unit>
       <trans-unit id="sensor alert stay" datatype="html">
-        <source>Alert when stay armed</source>
+        <source> Alert when stay armed </source>
       </trans-unit>
       <trans-unit id="zone stay alert delay" datatype="html">
         <source>Delay alert when armed stay</source>
@@ -376,10 +376,10 @@
         <source>Select expiry</source>
       </trans-unit>
       <trans-unit id="user device registration code" datatype="html">
-        <source>Device registration code</source>
+        <source> Device registration code </source>
       </trans-unit>
       <trans-unit id="user get new code" datatype="html">
-        <source>Get new code</source>
+        <source> Get new code </source>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
         <source>Close</source>
@@ -403,25 +403,25 @@
         <source>Are you sure you want to unregister this device?</source>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
-        <source>Administrator</source>
+        <source> Administrator </source>
       </trans-unit>
       <trans-unit id="user type user" datatype="html">
-        <source>User</source>
+        <source> User </source>
       </trans-unit>
       <trans-unit id="user cards" datatype="html">
         <source>Cards</source>
       </trans-unit>
       <trans-unit id="user registration" datatype="html">
-        <source>Expires on: </source>
+        <source>Expires on:</source>
       </trans-unit>
       <trans-unit id="user expiry never" datatype="html">
         <source>never</source>
       </trans-unit>
       <trans-unit id="user register device button" datatype="html">
-        <source>Device registration</source>
+        <source> Device registration </source>
       </trans-unit>
       <trans-unit id="user register card button" datatype="html">
-        <source>Register card</source>
+        <source> Register card </source>
       </trans-unit>
       <trans-unit id="user no users" datatype="html">
         <source>No users found</source>
@@ -433,13 +433,13 @@
         <source>Name</source>
       </trans-unit>
       <trans-unit id="zone alert when disarmed" datatype="html">
-        <source>Alert when disarmed</source>
+        <source> Alert when disarmed </source>
       </trans-unit>
       <trans-unit id="zone alert when away" datatype="html">
-        <source>Alert when away armed</source>
+        <source> Alert when away armed </source>
       </trans-unit>
       <trans-unit id="zone alert when stay" datatype="html">
-        <source>Alert when stay armed</source>
+        <source> Alert when stay armed </source>
       </trans-unit>
       <trans-unit id="zone stay delay" datatype="html">
         <source>Delay alert when armed stay</source>
@@ -484,16 +484,16 @@
         <source>Failed to send to email address 1!</source>
       </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
-        <source>Email sent successfully to email address 1!</source>
+        <source> Email sent successfully to email address 1! </source>
       </trans-unit>
       <trans-unit id="notifications email2 failed" datatype="html">
-        <source>Failed to send to email address 2!</source>
+        <source> Failed to send to email address 2! </source>
       </trans-unit>
       <trans-unit id="notifications email2 success" datatype="html">
-        <source>Email sent successfully to email address 2!</source>
+        <source> Email sent successfully to email address 2! </source>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
-        <source>SMS sent successfully to phone 1!</source>
+        <source> SMS sent successfully to phone 1! </source>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
@@ -505,7 +505,7 @@
         <source>SMTP</source>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Please check logs for more information!</source>
+        <source> Failed to connect to SMTP server! <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Please check logs for more information! </source>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -529,7 +529,7 @@
         <source>End <x id="PH" equiv-text="sensor.name"/></source>
       </trans-unit>
       <trans-unit id="events alert" datatype="html">
-        <source>Alert event</source>
+        <source> Alert event </source>
       </trans-unit>
       <trans-unit id="events alert no" datatype="html">
         <source>No</source>
@@ -541,7 +541,7 @@
         <source>Yes</source>
       </trans-unit>
       <trans-unit id="events arm" datatype="html">
-        <source>Arm event</source>
+        <source> Arm event </source>
       </trans-unit>
       <trans-unit id="events arm away" datatype="html">
         <source>AWAY</source>
@@ -553,7 +553,7 @@
         <source>STAY</source>
       </trans-unit>
       <trans-unit id="events arm undefined" datatype="html">
-        <source>Undefined</source>
+        <source> Undefined </source>
       </trans-unit>
       <trans-unit id="events armed" datatype="html">
         <source>Armed</source>
@@ -562,25 +562,25 @@
         <source>Armed by</source>
       </trans-unit>
       <trans-unit id="events armed keypad" datatype="html">
-        <source>Armed with keypad</source>
+        <source> Armed with keypad </source>
       </trans-unit>
       <trans-unit id="events undefined" datatype="html">
         <source>Undefined</source>
       </trans-unit>
       <trans-unit id="events clear filters" datatype="html">
-        <source>Clear filters </source>
+        <source> Clear filters </source>
       </trans-unit>
       <trans-unit id="events filter date" datatype="html">
         <source>Enter a date range</source>
       </trans-unit>
       <trans-unit id="events delay" datatype="html">
-        <source>delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
+        <source>delay: <x id="INTERPOLATION" equiv-text="{{ sensor.delay }}"/></source>
       </trans-unit>
       <trans-unit id="events disarmed" datatype="html">
         <source>Disarmed</source>
       </trans-unit>
       <trans-unit id="events disarmed keypad" datatype="html">
-        <source>Disarmed with keypad</source>
+        <source> Disarmed with keypad </source>
       </trans-unit>
       <trans-unit id="events disarmed system" datatype="html">
         <source> Disarmed by system </source>
@@ -589,7 +589,7 @@
         <source>No arms/alerts found</source>
       </trans-unit>
       <trans-unit id="events sabotage" datatype="html">
-        <source>Sabotage event</source>
+        <source> Sabotage event </source>
       </trans-unit>
       <trans-unit id="events sensors" datatype="html">
         <source>Alerting sensor(s)</source>
@@ -613,7 +613,7 @@
         <source>STAY</source>
       </trans-unit>
       <trans-unit id="events disarmed by" datatype="html">
-        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
+        <source> Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/> </source>
       </trans-unit>
       <trans-unit id="events properties" datatype="html">
         <source>Properties</source>
@@ -667,13 +667,13 @@
         <source>New</source>
       </trans-unit>
       <trans-unit id="area number of sensors" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(area.id).length }}"/> sensor(s) </source>
       </trans-unit>
       <trans-unit id="sensor none" datatype="html">
         <source>No sensors found</source>
       </trans-unit>
       <trans-unit id="zone no sensor" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(zone.id).length }}"/> sensor(s) </source>
       </trans-unit>
       <trans-unit id="events silent" datatype="html">
         <source>silent</source>
@@ -697,22 +697,22 @@
         <source>Unregister device</source>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
-        <source>Hidden</source>
+        <source> Hidden </source>
       </trans-unit>
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
       </trans-unit>
       <trans-unit id="output area" datatype="html">
-        <source>Area</source>
+        <source> Area </source>
       </trans-unit>
       <trans-unit id="output button" datatype="html">
-        <source>Button</source>
+        <source> Button </source>
       </trans-unit>
       <trans-unit id="output channel" datatype="html">
         <source>Channel</source>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
-        <source>Active default</source>
+        <source> Active default </source>
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
@@ -727,7 +727,7 @@
         <source>Duration [s]</source>
       </trans-unit>
       <trans-unit id="output enabled" datatype="html">
-        <source>Enabled</source>
+        <source> Enabled </source>
       </trans-unit>
       <trans-unit id="output none" datatype="html">
         <source>No outputs found</source>
@@ -736,7 +736,7 @@
         <source>The output was not found!</source>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
-        <source>System</source>
+        <source> System </source>
       </trans-unit>
       <trans-unit id="output trigger" datatype="html">
         <source>Trigger</source>
@@ -751,7 +751,7 @@
         <source>Zone</source>
       </trans-unit>
       <trans-unit id="network restrict local" datatype="html">
-        <source>Restrict SSH connection to local network</source>
+        <source> Restrict SSH connection to local network </source>
       </trans-unit>
       <trans-unit id="admin menu title" datatype="html">
         <source>Admin</source>
@@ -766,13 +766,13 @@
         <source>loud</source>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
+        <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &apos;s&apos; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
-        <source>sensitivity: instant alert</source>
+        <source> sensitivity: instant alert </source>
       </trans-unit>
       <trans-unit id="sensor instant" datatype="html">
-        <source>Instant alert</source>
+        <source> Instant alert </source>
       </trans-unit>
       <trans-unit id="sensor monitor period" datatype="html">
         <source>Monitoring period [s]</source>
@@ -805,7 +805,7 @@
         <source>Syren config</source>
       </trans-unit>
       <trans-unit id="syren sensitivity custom" datatype="html">
-        <source>Custom sensitivity</source>
+        <source> Custom sensitivity </source>
       </trans-unit>
       <trans-unit id="syren silent" datatype="html">
         <source>Silent alert</source>
@@ -823,7 +823,7 @@
         <source>Silent alert</source>
       </trans-unit>
       <trans-unit id="sensor silent syren" datatype="html">
-        <source>Alarm with syren</source>
+        <source> Alarm with syren </source>
       </trans-unit>
       <trans-unit id="syren silent loud" datatype="html">
         <source>Loud alarm (forced)</source>
@@ -874,13 +874,13 @@
         <source>System</source>
       </trans-unit>
       <trans-unit id="dark theme" datatype="html">
-        <source>Dark theme</source>
+        <source> Dark theme </source>
       </trans-unit>
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
       </trans-unit>
       <trans-unit id="network password authentication" datatype="html">
-        <source>Enable SSH password authentication</source>
+        <source> Enable SSH password authentication </source>
       </trans-unit>
       <trans-unit id="network ssh settings" datatype="html">
         <source>SSH settings</source>
@@ -889,16 +889,16 @@
         <source>Terminal access</source>
       </trans-unit>
       <trans-unit id="user copy ssh key" datatype="html">
-        <source>Copy key</source>
+        <source> Copy key </source>
       </trans-unit>
       <trans-unit id="user generate ssh key" datatype="html">
-        <source>Generate SSH key</source>
+        <source> Generate SSH key </source>
       </trans-unit>
       <trans-unit id="user generate ssk key" datatype="html">
-        <source>Setup SSH key</source>
+        <source> Setup SSH key </source>
       </trans-unit>
       <trans-unit id="user setup ssh key" datatype="html">
-        <source>Setup SSH key</source>
+        <source> Setup SSH key </source>
       </trans-unit>
       <trans-unit id="user ssh key" datatype="html">
         <source>SSH key</source>
@@ -931,16 +931,16 @@
         <source>Failed to call phone 1!</source>
       </trans-unit>
       <trans-unit id="notifications call1 success" datatype="html">
-        <source>Successfully called phone 1!</source>
+        <source> Successfully called phone 1! </source>
       </trans-unit>
       <trans-unit id="notifications delete all" datatype="html">
         <source>Delete all</source>
       </trans-unit>
       <trans-unit id="notifications gsm connection failed" datatype="html">
-        <source>Failed to connect to GSM module!</source>
+        <source> Failed to connect to GSM module! </source>
       </trans-unit>
       <trans-unit id="notifications gsm enabled" datatype="html">
-        <source>GSM enabled</source>
+        <source> GSM enabled </source>
       </trans-unit>
       <trans-unit id="notifications loading sms" datatype="html">
         <source>Loading SMS messages...</source>
@@ -949,31 +949,31 @@
         <source>No SMS messages</source>
       </trans-unit>
       <trans-unit id="notifications sms1 failed" datatype="html">
-        <source>Failed to send SMS to phone 1!</source>
+        <source> Failed to send SMS to phone 1! </source>
       </trans-unit>
       <trans-unit id="notifications sms2 failed" datatype="html">
-        <source>Failed to send SMS to phone 2!</source>
+        <source> Failed to send SMS to phone 2! </source>
       </trans-unit>
       <trans-unit id="notifications sms2 success" datatype="html">
-        <source>SMS sent successfully to phone 2!</source>
+        <source> SMS sent successfully to phone 2! </source>
       </trans-unit>
       <trans-unit id="notifications smtp enabled" datatype="html">
-        <source>SMTP enabled</source>
+        <source> SMTP enabled </source>
       </trans-unit>
       <trans-unit id="notifications test call" datatype="html">
         <source>Test call</source>
       </trans-unit>
       <trans-unit id="notifications test failed" datatype="html">
-        <source>Please check logs for more information!</source>
+        <source> Please check logs for more information! </source>
       </trans-unit>
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
       </trans-unit>
       <trans-unit id="notifications call2 success" datatype="html">
-        <source>Successfully called phone 2!</source>
+        <source> Successfully called phone 2! </source>
       </trans-unit>
       <trans-unit id="area number of outputs" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </source>
       </trans-unit>
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
@@ -988,10 +988,10 @@
         <source>Card registered!</source>
       </trans-unit>
       <trans-unit id="network certbot email" datatype="html">
-        <source>Certificate email</source>
+        <source>Certbot email</source>
       </trans-unit>
       <trans-unit id="location check" datatype="html">
-        <source>Check API version and certificate</source>
+        <source> Check API version and certificate </source>
       </trans-unit>
       <trans-unit id="location device registered" datatype="html">
         <source>Device registered</source>
@@ -1075,10 +1075,10 @@
         <source>New access code</source>
       </trans-unit>
       <trans-unit id="user no cards" datatype="html">
-        <source>No cards registered</source>
+        <source> No cards registered </source>
       </trans-unit>
       <trans-unit id="user no registration code" datatype="html">
-        <source>No registration code</source>
+        <source> No registration code </source>
       </trans-unit>
       <trans-unit id="user no ssh key" datatype="html">
         <source>No SSH key</source>
@@ -1093,13 +1093,13 @@
         <source>Failed to create!</source>
       </trans-unit>
       <trans-unit id="backend error locations" datatype="html">
-        <source>Edit locations</source>
+        <source> Edit locations </source>
       </trans-unit>
       <trans-unit id="backend error message" datatype="html">
         <source>Connecting to the backend failed!</source>
       </trans-unit>
       <trans-unit id="backend error reload" datatype="html">
-        <source>Try to reconnect</source>
+        <source> Try to reconnect </source>
       </trans-unit>
       <trans-unit id="backend error suggestion" datatype="html">
         <source>Check the followings:</source>
@@ -1129,7 +1129,7 @@
         <source>Device NOT registered</source>
       </trans-unit>
       <trans-unit id="location location" datatype="html">
-        <source>Location: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></source>
+        <source>Location: <x id="INTERPOLATION" equiv-text="{{ location.name }}"/></source>
       </trans-unit>
       <trans-unit id="location not found" datatype="html">
         <source>The location was not found!</source>
@@ -1147,16 +1147,16 @@
         <source>Secondary URL</source>
       </trans-unit>
       <trans-unit id="biometric description" datatype="html">
-        <source>Do you want to use biometric login?</source>
+        <source> Do you want to use biometric login? </source>
       </trans-unit>
       <trans-unit id="biometric login description" datatype="html">
-        <source>Use biometric login to access the security system.</source>
+        <source> Use biometric login to access the security system. </source>
       </trans-unit>
       <trans-unit id="biometric no" datatype="html">
         <source>No</source>
       </trans-unit>
       <trans-unit id="biometric question" datatype="html">
-        <source>You can use biometric login to access the security system.</source>
+        <source> You can use biometric login to access the security system. </source>
       </trans-unit>
       <trans-unit id="biometric title" datatype="html">
         <source>Log in to ArPI Home Security</source>
