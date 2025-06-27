@@ -1,3 +1,5 @@
+@use "@angular/material" as mat;
+
 @mixin output-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .output-button {
     .mat-mdc-progress-spinner {

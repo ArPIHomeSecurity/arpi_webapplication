@@ -1,3 +1,5 @@
+@use "@angular/material" as mat;
+
 @mixin home-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   component-controller {
     display: inline-block;

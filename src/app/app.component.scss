@@ -1,3 +1,6 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+
 ::ng-deep app-root {
   display: block;
   width: 100%;
@@ -19,7 +22,7 @@
 }
 
 @mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
-  $argus-accent: map-get($theme, accent);
+  $argus-accent: map.get($theme, accent);
 
   .logo {
     text-align: center;

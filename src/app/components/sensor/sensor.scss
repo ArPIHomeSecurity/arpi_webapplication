@@ -1,3 +1,5 @@
+@use "@angular/material" as mat;
+
 @mixin sensor-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .mat-mdc-card.sensor-component {
     .mat-mdc-card-header {
