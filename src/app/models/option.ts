@@ -6,11 +6,16 @@ export class Option {
 
 export const DEFAULT_PASSWORD_VALUE = '******';
 
-// use string as constant instead of complex type to avoid changing it through a reference
 export const DEFAULT_NOTIFICATION_SMTP = {
   option: 'notifications',
   section: 'smtp',
-  value: '{"enabled": false, "smtp_username":"", "smtp_password":"", "email1_address": "", "email2_address": ""}'
+  value: {
+    enabled: false,
+    smtp_username: '',
+    smtp_password: '',
+    email1_address: '',
+    email2_address: ''
+  }
 };
 
 export const DEFAULT_NOTIFICATION_GSM = {
@@ -53,8 +58,7 @@ export const DEFAULT_NOTIFICATION_SUBSCRIPTIONS = {
   }
 };
 
-// use string as constant instead of complex type to avoid changing it through a reference
-export const DEFAULT_NOTIFICATION_DYNDNS = {
+export const DEFAULT_NETWORK_DYNDNS = {
   option: 'network',
   section: 'dyndns',
   value: {
@@ -62,14 +66,16 @@ export const DEFAULT_NOTIFICATION_DYNDNS = {
     password: '',
     hostname: '',
     provider: '',
-    restrict_host: ''
+    restrict_host: false
   }
 };
 
-export const DEFAULT_NOTIFICATION_ACCESS = {
+export const DEFAULT_NETWORK_ACCESS = {
   option: 'network',
   section: 'access',
   value: {
-    ssh: false
+    service_enabled: true,
+    restrict_local_network: false,
+    password_authentication_enabled: true
   }
 };

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { Option, DEFAULT_NOTIFICATION_DYNDNS, DEFAULT_NOTIFICATION_ACCESS, DEFAULT_PASSWORD_VALUE } from '@app/models';
+import { DEFAULT_NETWORK_ACCESS, DEFAULT_NETWORK_DYNDNS, DEFAULT_PASSWORD_VALUE, Option } from '@app/models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
@@ -113,8 +113,8 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
-        this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
-        this.access = getValue(results, 'access', DEFAULT_NOTIFICATION_ACCESS);
+        this.dyndns = getValue(results, 'dyndns', DEFAULT_NETWORK_DYNDNS);
+        this.access = getValue(results, 'access', DEFAULT_NETWORK_ACCESS);
         this.publicAccess = results.publicAccess;
 
         this.updateDyndnsForm(this.dyndns);
@@ -150,7 +150,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
-        this.dyndns = getValue(results, 'dyndns', DEFAULT_NOTIFICATION_DYNDNS);
+        this.dyndns = getValue(results, 'dyndns', DEFAULT_NETWORK_DYNDNS);
         this.publicAccess = results.publicAccess;
 
         this.updateDyndnsForm(this.dyndns);
@@ -162,7 +162,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   updateAccess() {
     this.configService.getOption('network', 'access').subscribe(access => {
-      this.access = getValue(access, 'access', DEFAULT_NOTIFICATION_ACCESS);
+      this.access = access;
       this.updateTerminalForm(this.access);
       this.loader.display(false);
       this.loader.disable(false);
@@ -187,11 +187,11 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   }
 
   prepareAccess(): any {
-    const formModel = this.dyndnsForm.value;
+    const formModel = this.accessForm.value;
     return {
-      service_enabled: formModel.accessSshService,
-      restrict_local_network: formModel.accessSshRestrictLocalNetwork,
-      password_authentication_enabled: formModel.accessSshPasswordAuthentication
+      service_enabled: formModel.accessSshService || false,
+      restrict_local_network: formModel.accessSshRestrictLocalNetwork || false,
+      password_authentication_enabled: formModel.accessSshPasswordAuthentication || false
     };
   }
 

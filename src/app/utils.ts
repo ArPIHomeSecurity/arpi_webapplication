@@ -1,9 +1,8 @@
-import { ValidatorFn, ValidationErrors } from '@angular/forms';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { Dialog } from '@capacitor/dialog';
-import { upgradeInstallationsToLocations } from './upgrades';
 import { Location } from './models';
+import { upgradeInstallationsToLocations } from './upgrades';
 
 const showAlert = async (title: string, message: string) => {
   await Dialog.alert({
@@ -51,11 +50,18 @@ export function setLocalValue(name: string, value: any) {
 
 export function getValue(value: any, attribute: string, defaultValue: any = '') {
   // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
-  if (value) {
-    return value[attribute] !== null ? value[attribute] : defaultValue;
+
+  // clone the default value to avoid changing it through a reference
+  let clonedDefaultValue = '';
+  if (defaultValue && typeof defaultValue === 'object') {
+    clonedDefaultValue = JSON.parse(JSON.stringify(defaultValue));
   }
 
-  return defaultValue;
+  if (value) {
+    return value[attribute] !== null ? value[attribute] : clonedDefaultValue;
+  }
+
+  return clonedDefaultValue;
 }
 
 export const checkUrl = async (url: string): Promise<boolean> => {
