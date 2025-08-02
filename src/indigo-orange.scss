@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@use 'sass:map';
+@use "sass:map";
 @use "app/app.component.scss" as app;
 @use "app/components/system-state/system-state.component.scss" as system-state;
 @use "app/components/sensor/sensor.scss" as sensor;
@@ -37,13 +37,23 @@ $argus-dark-theme: mat.m2-define-dark-theme(
   )
 );
 
+// Include the common styles for Angular Material (typography and density only)
+@include mat.all-component-typographies($argus-light-theme);
+@include mat.all-component-densities($argus-light-theme);
+
 .argus-light-theme {
   $argus-ok: mat.m2-define-palette(mat.$m2-green-palette);
   $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
   $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
-  @include mat.all-component-themes($argus-light-theme);
-  @include app.app-theme($argus-light-theme, map.get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
+  @include mat.all-component-colors($argus-light-theme);
+  @include app.app-theme(
+    $argus-light-theme,
+    map.get($argus-light-theme, primary),
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
   @include system-state.system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include sensor.sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include home.home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
@@ -64,7 +74,7 @@ $argus-dark-theme: mat.m2-define-dark-theme(
   $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
   $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
-  @include mat.all-component-themes($argus-dark-theme);
+  @include mat.all-component-colors($argus-dark-theme);
   @include mat.toolbar-color($argus-light-theme);
   @include app.app-theme($argus-dark-theme, map.get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
   @include system-state.system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
