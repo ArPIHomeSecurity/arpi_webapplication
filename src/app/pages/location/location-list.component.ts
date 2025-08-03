@@ -1,4 +1,7 @@
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import {
@@ -9,13 +12,11 @@ import {
   MonitoringService
 } from '@app/services';
 
-import { Location } from '@app/models';
-import { environment } from '@environments/environment';
-import { configureBackend } from '@app/utils';
-import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { configureBackend } from '@app/utils';
+import { environment } from '@environments/environment';
 import { LocationTestResult, testLocation } from './location';
 
 @Component({
@@ -40,7 +41,8 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     @Inject('MonitoringService') public monitoringService: MonitoringService,
     @Inject('ConfigurationService') private configService: ConfigurationService,
 
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
     super(eventService, loader, monitoringService);
 
@@ -92,7 +94,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
   onLogin(locationId: string) {
     localStorage.setItem('selectedLocationId', locationId);
     window.dispatchEvent(new StorageEvent('storage', { key: 'selectedLocationId', newValue: locationId }));
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
   onSave() {
