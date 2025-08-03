@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class BiometricService {
-  constructor() { }
+  constructor() {}
 
   isAvailable(): Promise<boolean> {
     return Promise.resolve(false);

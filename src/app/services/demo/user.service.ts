@@ -42,13 +42,12 @@ export class UserService {
   }
 
   getUserName(userId: number): Observable<string> {
-    return of(this.users.find(u => u.id === userId).name)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          return _;
-        })
-      );
+    return of(this.users.find(u => u.id === userId).name).pipe(
+      delay(environment.delay),
+      map(_ => {
+        return _;
+      })
+    );
   }
 
   createUser(user: User): Observable<User> {
