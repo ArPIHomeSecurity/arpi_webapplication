@@ -6,23 +6,25 @@ on:
       - demo
 
 jobs:
-  deploy-demo:
+  build-demo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
 
       - name: Cache node modules 💽
         uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-
 
       - name: Install dependencies 🔧
         run: |
@@ -37,8 +39,21 @@ jobs:
           # copy 404 error page
           cp src/404.demo.html dist-demo/browser/404.html
 
-      - name: Deploy demo application 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.7
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: dist-demo/browser
+          path: dist-demo/browser
+
+  deploy-pages:
+    needs: build-demo
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
