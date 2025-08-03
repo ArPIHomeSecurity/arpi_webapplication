@@ -7,10 +7,7 @@ import { Card } from '@app/models';
   providedIn: 'root'
 })
 export class CardService {
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   getCards(userId: number = null): Observable<Card[]> {
     if (userId) {

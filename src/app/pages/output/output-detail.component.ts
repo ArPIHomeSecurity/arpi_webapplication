@@ -19,21 +19,19 @@ import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 class ChannelOption {
   channel: number;
   label: string;
   output_name: string;
 }
 
-
 @Component({
   templateUrl: './output-detail.component.html',
   styleUrls: ['output-detail.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
 export class OutputDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   outputId: number;
   output: Output = undefined;
   outputs: Output[];
@@ -41,7 +39,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   channelOptions: ChannelOption[] = [];
   outputForm: FormGroup;
   outputTriggerTypes: any = OutputTriggerType;
-  SYREN_CHANNEL = SYREN_CHANNEL
+  SYREN_CHANNEL = SYREN_CHANNEL;
 
   constructor(
     @Inject('LoaderService') public loader: LoaderService,
@@ -75,14 +73,13 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     });
 
     if (this.outputId != null) {
-
       forkJoin({
         output: this.outputService.getOutput(this.outputId),
         outputs: this.outputService.getOutputs(),
         areas: this.areaService.getAreas()
       })
         .pipe(
-          catchError((error) => {
+          catchError(error => {
             if (error.status === 404) {
               this.output = null;
             }
@@ -99,8 +96,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
           this.channelOptions = this.generateChannels();
           this.updateForm(this.output);
           this.loader.display(false);
-        }
-        );
+        });
     } else {
       forkJoin({
         outputs: this.outputService.getOutputs(),
@@ -123,11 +119,13 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   }
 
   generateChannels(): ChannelOption[] {
-    const channels: ChannelOption[] = [{
-      channel: -1,
-      label: "",
-      output_name: ""
-    }];
+    const channels: ChannelOption[] = [
+      {
+        channel: -1,
+        label: '',
+        output_name: ''
+      }
+    ];
 
     OutputDefinitions.forEach((outputDefinition, channel) => {
       const option = new ChannelOption();
@@ -151,7 +149,10 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
       triggerType: [output.triggerType, Validators.required],
       areaId: [output.areaId],
       delay: [output.delay, [Validators.required, positiveInteger()]],
-      duration: new FormControl({ value: output.duration, disabled: output.triggerType !== OutputTriggerType.BUTTON }, [Validators.required, Validators.min(0)]),
+      duration: new FormControl({ value: output.duration, disabled: output.triggerType !== OutputTriggerType.BUTTON }, [
+        Validators.required,
+        Validators.min(0)
+      ]),
       defaultState: [output.defaultState],
       enabled: [output.enabled]
     });
@@ -160,18 +161,22 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
   onSubmit() {
     const output = this.prepareOutput();
     if (this.outputId != null) {
-      this.outputService.updateOutput(output)
-        .subscribe({
-          next: _ => this.router.navigate(['/outputs']),
-          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
-        });
+      this.outputService.updateOutput(output).subscribe({
+        next: _ => this.router.navigate(['/outputs']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     } else {
       output.state = output.defaultState;
-      this.outputService.createOutput(output)
-        .subscribe({
-          next: _ => this.router.navigate(['/outputs']),
-          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
-        });
+      this.outputService.createOutput(output).subscribe({
+        next: _ => this.router.navigate(['/outputs']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     }
   }
 
@@ -183,14 +188,12 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
       controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
       controls.duration.enable();
-    }
-    else if (value === OutputTriggerType.SYSTEM) {
+    } else if (value === OutputTriggerType.SYSTEM) {
       controls.areaId.setValue(null);
       controls.areaId.setValidators(null);
       controls.duration.setValue(0);
       controls.duration.disable();
-    }
-    else if (value === OutputTriggerType.AREA) {
+    } else if (value === OutputTriggerType.AREA) {
       controls.areaId.setValidators([Validators.required]);
       controls.duration.setValue(0);
       controls.duration.disable();
@@ -231,7 +234,7 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -244,18 +247,26 @@ export class OutputDetailComponent extends ConfigurationBaseComponent implements
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true)
-          this.outputService.deleteOutput(outputId)
+          this.loader.disable(true);
+          this.outputService
+            .deleteOutput(outputId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, {
+                  duration: environment.snackDuration
+                });
                 this.router.navigate(['/outputs']);
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

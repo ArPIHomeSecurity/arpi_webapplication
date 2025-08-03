@@ -1,3 +1,6 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+
 ::ng-deep app-root {
   display: block;
   width: 100%;
@@ -19,7 +22,7 @@
 }
 
 @mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
-  $argus-accent: map-get($theme, accent);
+  $argus-accent: map.get($theme, accent);
 
   .logo {
     text-align: center;
@@ -94,8 +97,7 @@
 
     // Select all direct descendants only of the <main> element
     // that are not <router-outlet> elements:
-    >*:not(router-outlet) {
-
+    > *:not(router-outlet) {
       flex: 1; // child will set to an equal size inside the container
       display: block;
     }
@@ -204,7 +206,6 @@
 }
 
 ::ng-deep .large-screen {
-
   .menu-button,
   .logo-button {
     display: none;

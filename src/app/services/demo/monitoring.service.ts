@@ -3,25 +3,31 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
+import {
+  ALERT_TYPE,
+  ARM_TYPE,
+  armType2String,
+  Clocks,
+  Sensor,
+  MONITORING_STATE,
+  monitoringState2String,
+  POWER_STATE
+} from '@app/models';
+import { environment } from '@environments/environment';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { AlertService } from './alert.service';
 import { AreaService } from './area.service';
 import { ArmService } from './arm.service';
 import { AuthenticationService } from './authentication.service';
 import { EventService } from './event.service';
 import { ZoneService } from './zone.service';
-import { ALERT_TYPE, ARM_TYPE, armType2String, Clocks, Sensor, MONITORING_STATE, monitoringState2String, POWER_STATE } from '@app/models';
-
-import { environment } from '@environments/environment';
-import { getSessionValue, setSessionValue } from '@app/utils';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MonitoringService {
-
-  delayArm: boolean = false;
+  delayArm = false;
   monitoringState: MONITORING_STATE;
   armState: ARM_TYPE;
   alert: boolean;
@@ -40,14 +46,19 @@ export class MonitoringService {
     this.monitoringState = getSessionValue('MonitoringService.monitoringState', MONITORING_STATE.STARTUP);
     this.armState = getSessionValue('MonitoringService.armState', ARM_TYPE.DISARMED);
     this.alert = getSessionValue('MonitoringService.alert', false);
-    this.datetime = getSessionValue('MonitoringService.datetime', new Date().toISOString().split(".")[0].replace("T", " "));
+    this.datetime = getSessionValue(
+      'MonitoringService.datetime',
+      new Date().toISOString().split('.')[0].replace('T', ' ')
+    );
     this.timeZone = getSessionValue('MonitoringService.timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-    if (this.monitoringState !== MONITORING_STATE.READY &&
-        this.monitoringState !== MONITORING_STATE.ARM_DELAY &&
-        this.monitoringState !== MONITORING_STATE.ALERT_DELAY &&
-        this.monitoringState !== MONITORING_STATE.ARMED &&
-        this.monitoringState !== MONITORING_STATE.SABOTAGE) {
+    if (
+      this.monitoringState !== MONITORING_STATE.READY &&
+      this.monitoringState !== MONITORING_STATE.ARM_DELAY &&
+      this.monitoringState !== MONITORING_STATE.ALERT_DELAY &&
+      this.monitoringState !== MONITORING_STATE.ARMED &&
+      this.monitoringState !== MONITORING_STATE.SABOTAGE
+    ) {
       this.monitoringState = MONITORING_STATE.STARTUP;
     }
 
@@ -66,33 +77,30 @@ export class MonitoringService {
   }
 
   isAlert(): Observable<boolean> {
-    return of(this.alert)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.alert).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   getArmState(): Observable<ARM_TYPE> {
-    return of(this.armState)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.armState).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
-  arm(armType: ARM_TYPE) : Observable<Object> {
-    var delay = 0;
+  arm(armType: ARM_TYPE): Observable<Object> {
+    let delay = 0;
     if (armType === ARM_TYPE.AWAY) {
       delay = Math.max(...this.zoneService.zones.map(z => z.awayArmDelay));
-    }
-    else if (armType === ARM_TYPE.STAY) {
+    } else if (armType === ARM_TYPE.STAY) {
       delay = Math.max(...this.zoneService.zones.map(z => z.stayArmDelay));
     }
 
@@ -106,16 +114,14 @@ export class MonitoringService {
           this.delayArm = false;
         }
       }, 1000 * delay);
-    }
-    else {
+    } else {
       this.setArm(armType, MONITORING_STATE.ARMED);
     }
 
     return of(true);
   }
 
-  setArm(armType: ARM_TYPE, monitoringState: MONITORING_STATE, updateAreas: boolean = true) {
-
+  setArm(armType: ARM_TYPE, monitoringState: MONITORING_STATE, updateAreas = true) {
     if (this.monitoringState === MONITORING_STATE.ARMED && this.armState !== armType) {
       armType = ARM_TYPE.MIXED;
     }
@@ -136,7 +142,7 @@ export class MonitoringService {
     armService.startArm(armType, this.authService.getUser()?.id);
   }
 
-  disarm(updateAreas: boolean = true) : Observable<Object> {
+  disarm(updateAreas = true): Observable<Object> {
     this.delayArm = false;
     this.armState = ARM_TYPE.DISARMED;
     this.monitoringState = MONITORING_STATE.READY;
@@ -150,21 +156,20 @@ export class MonitoringService {
     this.eventService.updateArmState(armType2String(this.armState));
     this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState));
     this.authService.updateUserToken('user.token');
-    
+
     const armService = this.injector.get(ArmService);
     armService.stopArm(this.authService.getUser()?.id);
     return of(true);
   }
 
   getMonitoringState(): Observable<MONITORING_STATE> {
-    return of(this.monitoringState)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(this.monitoringState).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   getVersion(): Observable<string> {
@@ -173,29 +178,27 @@ export class MonitoringService {
 
   getClock(): Observable<Clocks> {
     return of({
-        hw: this.datetime,
-        network: this.datetime,
-        system: this.datetime,
-        timezone: this.timeZone,
-    })
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+      hw: this.datetime,
+      network: this.datetime,
+      system: this.datetime,
+      timezone: this.timeZone
+    }).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   synchronizeClock() {
-    return of(true)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(true).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   changeClock(dateTime: string, timeZone: string) {
@@ -203,21 +206,17 @@ export class MonitoringService {
     this.timeZone = timeZone;
     setSessionValue('MonitoringService.datetime', this.datetime);
     setSessionValue('MonitoringService.timeZone', this.timeZone);
-    return of(true)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(true).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
 
   getPowerState(): Observable<POWER_STATE> {
-    return of(POWER_STATE.NETWORK)
-      .pipe(
-        delay(environment.delay)
-      );
+    return of(POWER_STATE.NETWORK).pipe(delay(environment.delay));
   }
 
   startAlert(sensor: Sensor) {
@@ -259,7 +258,7 @@ export class MonitoringService {
         this.alertService.createAlert([sensor], ALERT_TYPE.SABOTAGE);
       }, 1000 * zone.disarmedDelay);
     } else if (area.armState !== ARM_TYPE.DISARMED) {
-      console.error('Can\'t alert system!!!');
+      console.error("Can't alert system!!!");
     }
   }
 

@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-
 export class QuestionOptions {
   id: string;
   text: string;
-  color: string = 'primary';
-  tabIndex: number = 0;
+  color = 'primary';
+  tabIndex = 0;
 }
 
 export interface QuestionData {
@@ -15,14 +14,14 @@ export interface QuestionData {
   options: QuestionOptions[];
 }
 
-
 @Component({
   selector: 'app-question-dialog',
   templateUrl: 'question-dialog.component.html',
+  standalone: false
 })
 export class QuestionDialogComponent {
   readonly dialogRef = inject(MatDialogRef<QuestionDialogComponent, string>);
-  
+
   readonly title = inject(MAT_DIALOG_DATA).title;
   readonly message = inject(MAT_DIALOG_DATA).message;
   readonly options = inject(MAT_DIALOG_DATA).options;

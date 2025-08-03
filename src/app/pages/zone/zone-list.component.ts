@@ -16,15 +16,13 @@ import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
   templateUrl: 'zone-list.component.html',
   styleUrls: ['zone-list.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
-
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   CONFIG = 0;
   SENSORS = 1;
 
@@ -66,8 +64,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
-    if (this.isDragging)
-      return;
+    if (this.isDragging) return;
 
     forkJoin({
       zones: this.zoneService.getZones(),
@@ -89,7 +86,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
   getSensors(zoneId: number): Sensor[] {
     const results: Sensor[] = [];
-    this.sensors.forEach((sensor) => {
+    this.sensors.forEach(sensor => {
       if (sensor.zoneId === zoneId) {
         results.push(sensor);
       }
@@ -113,7 +110,7 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -127,17 +124,25 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.zoneService.deleteZone(zoneId)
+          this.zoneService
+            .deleteZone(zoneId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, '', { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, '', {
+                  duration: environment.snackDuration
+                });
                 this.updateComponent();
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, '', { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, '', {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, '', { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, '', {
+            duration: environment.snackDuration
+          });
         }
       }
     });

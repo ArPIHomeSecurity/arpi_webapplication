@@ -2,21 +2,19 @@ import { Inject, Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 
-import { AuthenticationService } from './authentication.service';
-import { ArmService } from './arm.service';
 import { ConfigurationService } from '@app/services/configuration.service';
-import { EventService } from './event.service';
 
 import { ALERT_TYPE, Alert, Sensor, AlertSensor, Option } from '@app/models';
 import { ALERTS } from '@app/demo/configuration';
 import { getSessionValue, getValue, setSessionValue } from '@app/utils';
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
-
+import { EventService } from './event.service';
+import { ArmService } from './arm.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AlertService {
-
   alerts: Alert[];
 
   // true=syren / false=syren muted / null=no syren
@@ -36,13 +34,12 @@ export class AlertService {
     this.alertIsRunning = getSessionValue('AlertService.alertIsRunning', false);
     this.syrenIsOn = getSessionValue('AlertService.syrenIsOn', false);
 
-    this.configurationService.getOption('alert', 'syren')
-      .subscribe(config => {
-        this.syrenConfig = config;
-        if (this.alertIsRunning) {
-          this.startSyren();
-        }
-      });
+    this.configurationService.getOption('alert', 'syren').subscribe(config => {
+      this.syrenConfig = config;
+      if (this.alertIsRunning) {
+        this.startSyren();
+      }
+    });
   }
 
   getAlerts(): Observable<Alert[]> {
@@ -55,16 +52,14 @@ export class AlertService {
       }
       return 0;
     });
-    return of(sortedAlerts)
-      .pipe(
-        delay(environment.delay),
-        map(_ => {
-          this.authService.updateUserToken('user.session');
-          return _;
-        })
-      );
+    return of(sortedAlerts).pipe(
+      delay(environment.delay),
+      map(_ => {
+        this.authService.updateUserToken('user.session');
+        return _;
+      })
+    );
   }
-
 
   getAlert(): Observable<Alert> {
     // get sensors from api
@@ -73,19 +68,19 @@ export class AlertService {
 
   createAlert(sensors: Sensor[], alertType: ALERT_TYPE) {
     const alertSensors: AlertSensor[] = [];
-    
+
     let currentAlert: Alert = this.alerts.find(a => a.endTime == null);
     if (!currentAlert) {
       currentAlert = {
         id: this.alerts.length + 1,
-        startTime: new Date().toISOString().split(".")[0].replace("T", " "),
+        startTime: new Date().toISOString().split('.')[0].replace('T', ' '),
         endTime: null,
         alertType,
         silent: false,
         sensors: alertSensors
       };
     }
-    
+
     sensors.forEach(sensor => {
       if (currentAlert.sensors.find(s => s.sensorId === sensor.id) == null) {
         currentAlert.sensors.push({
@@ -94,7 +89,7 @@ export class AlertService {
           channel: sensor.channel,
           name: sensor.name,
           description: sensor.description,
-          startTime: new Date().toISOString().split(".")[0].replace("T", " "),
+          startTime: new Date().toISOString().split('.')[0].replace('T', ' '),
           endTime: null,
           delay: 0,
           silent: sensor.silentAlert,
@@ -126,7 +121,8 @@ export class AlertService {
     this.eventService.updateSyrenState(this.syrenIsOn);
 
     // suspend syren
-    setTimeout(() => {
+    setTimeout(
+      () => {
         // restart the loop if alert is running
         if (this.alertIsRunning) {
           this.syrenIsOn = false;
@@ -134,7 +130,8 @@ export class AlertService {
           setSessionValue('AlertService.syrenId', this.syrenIsOn);
 
           // restart syren loop
-          setTimeout(() => {
+          setTimeout(
+            () => {
               // restart the loop if alert is running
               if (this.alertIsRunning) {
                 this.startSyren();
@@ -151,7 +148,7 @@ export class AlertService {
   stopAlert() {
     const alert = this.alerts.find(a => a.endTime == null);
     if (alert != null) {
-      alert.endTime = new Date().toISOString().split(".")[0].replace("T", " ");
+      alert.endTime = new Date().toISOString().split('.')[0].replace('T', ' ');
       this.alertIsRunning = false;
       this.syrenIsOn = null;
       setSessionValue('AlertService.alerts', this.alerts);

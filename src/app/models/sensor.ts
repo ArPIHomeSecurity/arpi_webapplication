@@ -1,4 +1,3 @@
-
 export class Sensor {
   id: number;
   name: string;
@@ -7,7 +6,7 @@ export class Sensor {
   typeId: number;
   areaId: number;
   zoneId: number;
-  
+
   alert: boolean;
   enabled: boolean;
   silentAlert: boolean;

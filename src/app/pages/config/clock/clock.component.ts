@@ -6,14 +6,13 @@ import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { Observable } from 'rxjs';
 import { startWith, map, finalize } from 'rxjs/operators';
 
-import { TIME_ZONES } from './timezones';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { EventService, LoaderService, MonitoringService } from '@app/services';
 import { environment } from '@environments/environment';
 import * as moment from 'moment';
+import { TIME_ZONES } from './timezones';
 
 const scheduleMicrotask = Promise.resolve(null);
-
 
 export interface TimeZoneGroup {
   groupName: string;
@@ -29,9 +28,9 @@ export const filter = (opt: string[], value: string): string[] => {
 @Component({
   templateUrl: 'clock.component.html',
   styleUrls: ['clock.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
-
 export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   clockForm: UntypedFormGroup;
   clock: any;
@@ -82,17 +81,15 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     this.updateForm();
 
     if (this.clockForm.get('timezone')) {
-      this.timezoneGroupOptions = this.clockForm.get('timezone').valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this.filterGroup(value))
-        );
+      this.timezoneGroupOptions = this.clockForm.get('timezone').valueChanges.pipe(
+        startWith(''),
+        map(value => this.filterGroup(value))
+      );
 
-      this.timezoneUngrouppedOptions = this.clockForm.get('timezone').valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this.filterUngroupped(value))
-        );
+      this.timezoneUngrouppedOptions = this.clockForm.get('timezone').valueChanges.pipe(
+        startWith(''),
+        map(value => this.filterUngroupped(value))
+      );
     }
   }
 
@@ -108,7 +105,8 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   }
 
   updateComponent() {
-    this.monitoringService.getClock()
+    this.monitoringService
+      .getClock()
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(clock => {
         this.clock = clock;
@@ -118,8 +116,7 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
 
         this.loader.display(false);
         this.loader.disable(false);
-      }
-      );
+      });
   }
 
   // onSynchronize() {
@@ -128,18 +125,20 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   //   );
   // }
 
-
   onSubmit() {
     this.loader.disable(true);
     const formModel = this.clockForm.value;
     const newDate = formModel.dateTime;
-    this.monitoringService.changeClock(newDate.toISOString(), formModel.timezone)
+    this.monitoringService
+      .changeClock(newDate.toISOString(), formModel.timezone)
       .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: _ => this.updateComponent(),
         error: _ => {
           this.loader.disable(false);
-          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          });
         }
       });
   }
@@ -166,4 +165,3 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
     return this.timezoneUngroupped;
   }
 }
-

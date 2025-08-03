@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable , Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { Alert, Area, Output } from '@app/models';
 import { environment } from '@environments/environment';
 
-
 @Injectable()
 export class EventService {
-
   alertDelayed: boolean;
   private alertStateSubject = new Subject<Alert>();
   private alertState = this.alertStateSubject.asObservable().pipe(delay(environment.delay));
@@ -101,7 +99,7 @@ export class EventService {
     this.syrenStateSubject.next(state);
   }
 
-  updateCardState(state: boolean = true) {
+  updateCardState(state = true) {
     this.cardRegisteredStateSubject.next(state);
   }
 

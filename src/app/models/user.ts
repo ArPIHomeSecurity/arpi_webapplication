@@ -1,7 +1,7 @@
 export enum ROLE_TYPES {
   ADMIN = 'admin',
   USER = 'user'
-};
+}
 
 export class User {
   id: number;
@@ -21,7 +21,6 @@ export class UserCreate {
   accessCode: number;
   comment: string;
 }
-
 
 export class UserUpdate {
   id: number;

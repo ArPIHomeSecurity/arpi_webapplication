@@ -84,16 +84,16 @@
         <target>Fuso orario</target>
       </trans-unit>
       <trans-unit id="save button" datatype="html">
-        <source>Save</source>
-        <target state="translated">Salvare</target>
+        <source> Save </source>
+        <target state="translated"> Salvare </target>
       </trans-unit>
       <trans-unit id="network dns" datatype="html">
         <source>Dynamic DNS</source>
         <target>DNS dinamico</target>
       </trans-unit>
       <trans-unit id="network remote access" datatype="html">
-        <source>Remote access by hostname</source>
-        <target state="translated">Accesso remoto attraverso il nome dell'host</target>
+        <source> Remote access by hostname </source>
+        <target state="translated"> Accesso remoto attraverso il nome dell&apos;host </target>
       </trans-unit>
       <trans-unit id="network provider" datatype="html">
         <source>Provider</source>
@@ -112,16 +112,16 @@
         <target>Password</target>
       </trans-unit>
       <trans-unit id="network restrict host" datatype="html">
-        <source>Restrict access to host</source>
-        <target>Limitare l'accesso all'host</target>
+        <source> Restrict access to host </source>
+        <target> Limitare l&apos;accesso all&apos;host </target>
       </trans-unit>
       <trans-unit id="network enable ssh" datatype="html">
-        <source>Enable SSH connection</source>
-        <target>Abilita la connessione SSH</target>
+        <source> Enable SSH connection </source>
+        <target> Abilita la connessione SSH </target>
       </trans-unit>
       <trans-unit id="notifications smtp settings" datatype="html">
-        <source>SMTP settings for sending notifications</source>
-        <target>Impostazioni SMTP per l'invio di notifiche</target>
+        <source> SMTP settings for sending notifications </source>
+        <target> Impostazioni SMTP per l&apos;invio di notifiche </target>
       </trans-unit>
       <trans-unit id="notifications smtp username" datatype="html">
         <source>SMTP username</source>
@@ -152,8 +152,8 @@
         <target>GSM</target>
       </trans-unit>
       <trans-unit id="notifications gsm settings" datatype="html">
-        <source>Mobil settings for sending notifications</source>
-        <target state="translated">Impostazioni per l'invio di notifiche su dispositivo mobile</target>
+        <source> Mobil settings for sending notifications </source>
+        <target state="translated"> Impostazioni per l&apos;invio di notifiche su dispositivo mobile </target>
       </trans-unit>
       <trans-unit id="notifications sim card pin" datatype="html">
         <source>SIM card PIN code</source>
@@ -168,8 +168,8 @@
         <target>Abbonamenti</target>
       </trans-unit>
       <trans-unit id="notifications subscriptions settings" datatype="html">
-        <source>Configure subscriptions</source>
-        <target>Configurare le sottoscrizioni</target>
+        <source> Configure subscriptions </source>
+        <target> Configurare le sottoscrizioni </target>
       </trans-unit>
       <trans-unit id="notifications source" datatype="html">
         <source>Event</source>
@@ -196,19 +196,19 @@
         <target>Allarme interrotto</target>
       </trans-unit>
       <trans-unit id="notifications power outage started" datatype="html">
-        <source>Power outage started</source>
-        <target state="translated">Inizio interruzione di corrente</target>
+        <source> Power outage started </source>
+        <target state="translated"> Inizio interruzione di corrente </target>
       </trans-unit>
       <trans-unit id="notifications power outage stopped" datatype="html">
-        <source>Power outage stopped</source>
-        <target state="translated">Fine interruzione di corrente</target>
+        <source> Power outage stopped </source>
+        <target state="translated"> Fine interruzione di corrente </target>
       </trans-unit>
       <trans-unit id="syren sources" datatype="html">
         <source>Syren</source>
         <target state="translated">Sirena</target>
       </trans-unit>
       <trans-unit id="message system error" datatype="html">
-        <source>The system is not working correctly, you can't make changes in the configuration!</source>
+        <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <target>Il sistema non funziona correttamente, non è possibile apportare modifiche alla configurazione!</target>
       </trans-unit>
       <trans-unit id="message lost connection" datatype="html">
@@ -216,7 +216,7 @@
         <target>Persa la connessione al sistema di sicurezza!</target>
       </trans-unit>
       <trans-unit id="message system not ready" datatype="html">
-        <source>The system is not ready, you can't make changes in the configuration!</source>
+        <source>The system is not ready, you can&apos;t make changes in the configuration!</source>
         <target>Il sistema non è pronto, non è possibile apportare modifiche alla configurazione!</target>
       </trans-unit>
       <trans-unit id="copied to clipboard" datatype="html">
@@ -248,48 +248,48 @@
         <target>Sistema disarmato</target>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
-        <source>Starting up</source>
-        <target>Avvio</target>
+        <source> Starting up </source>
+        <target> Avvio </target>
       </trans-unit>
       <trans-unit id="updating state" datatype="html">
-        <source>Updating configuration</source>
-        <target>Aggiornamento della configurazione</target>
+        <source> Updating configuration </source>
+        <target> Aggiornamento della configurazione </target>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
-        <source>Invalid configuration</source>
-        <target>Configurazione non valida</target>
+        <source> Invalid configuration </source>
+        <target> Configurazione non valida </target>
       </trans-unit>
       <trans-unit id="sabotage state" datatype="html">
-        <source>Sabotage</source>
-        <target>Sabotaggio</target>
+        <source> Sabotage </source>
+        <target> Sabotaggio </target>
       </trans-unit>
       <trans-unit id="error state" datatype="html">
-        <source>ERROR</source>
-        <target>ERRORE</target>
+        <source> ERROR </source>
+        <target> ERRORE </target>
       </trans-unit>
       <trans-unit id="starting state short" datatype="html">
-        <source>S</source>
-        <target>S</target>
+        <source> S </source>
+        <target> S </target>
       </trans-unit>
       <trans-unit id="updating state short" datatype="html">
-        <source>U</source>
-        <target>U</target>
+        <source> U </source>
+        <target> U </target>
       </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
-        <source>I</source>
-        <target>I</target>
+        <source> I </source>
+        <target> I </target>
       </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
-        <source>T</source>
-        <target>T</target>
+        <source> T </source>
+        <target> T </target>
       </trans-unit>
       <trans-unit id="keypad settings" datatype="html">
         <source>Keypad settings</source>
         <target state="translated">Impostazioni del tastierino</target>
       </trans-unit>
       <trans-unit id="keypad enabled" datatype="html">
-        <source>Enabled</source>
-        <target>Abilitato</target>
+        <source> Enabled </source>
+        <target> Abilitato </target>
       </trans-unit>
       <trans-unit id="keypad type" datatype="html">
         <source>Keypad type</source>
@@ -319,36 +319,36 @@
         <target>Codice di accesso</target>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
-        <source>Host not allowed!</source>
-        <target state="translated">Host non è ammesso!</target>
+        <source> Host not allowed! </source>
+        <target state="translated"> Host non è ammesso! </target>
       </trans-unit>
       <trans-unit id="login missing device token" datatype="html">
-        <source>Missing device token! Register your device!</source>
-        <target>Manca il token del dispositivo! Registra il tuo dispositivo!</target>
+        <source> Missing device token! Register your device! </source>
+        <target> Manca il token del dispositivo! Registra il tuo dispositivo! </target>
       </trans-unit>
       <trans-unit id="login invalid device token" datatype="html">
-        <source>Invalid device token! Update your device registration!</source>
-        <target>Token dispositivo non valido! Aggiornare la registrazione del dispositivo!</target>
+        <source> Invalid device token! Update your device registration! </source>
+        <target> Token dispositivo non valido! Aggiornare la registrazione del dispositivo! </target>
       </trans-unit>
       <trans-unit id="login expired registration code" datatype="html">
-        <source>Expired device registration code!</source>
-        <target>Codice di registrazione del dispositivo scaduto!</target>
+        <source> Expired device registration code! </source>
+        <target> Codice di registrazione del dispositivo scaduto! </target>
       </trans-unit>
       <trans-unit id="login invalid user id" datatype="html">
-        <source>Invalid user id! Update your device registration!</source>
-        <target>ID utente non valido! Aggiornare la registrazione del dispositivo!</target>
+        <source> Invalid user id! Update your device registration! </source>
+        <target> ID utente non valido! Aggiornare la registrazione del dispositivo! </target>
       </trans-unit>
       <trans-unit id="login invalid registration code" datatype="html">
-        <source>Invalid registration code!</source>
-        <target>Codice di registrazione non valido!</target>
+        <source> Invalid registration code! </source>
+        <target> Codice di registrazione non valido! </target>
       </trans-unit>
       <trans-unit id="login invalid access code" datatype="html">
-        <source>Invalid access code!</source>
-        <target>Codice di accesso non valido!</target>
+        <source> Invalid access code! </source>
+        <target> Codice di accesso non valido! </target>
       </trans-unit>
       <trans-unit id="login no connedtion" datatype="html">
-        <source>No connection to the security system!</source>
-        <target state="translated">Mancanza collegamento al sistema di sicurezza!</target>
+        <source> No connection to the security system! </source>
+        <target state="translated"> Mancanza collegamento al sistema di sicurezza! </target>
       </trans-unit>
       <trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source>
@@ -395,16 +395,16 @@
         <target>Nome della zona</target>
       </trans-unit>
       <trans-unit id="sensor alert disarmed" datatype="html">
-        <source>Alert when disarmed</source>
-        <target>Allarme quando è disarmato</target>
+        <source> Alert when disarmed </source>
+        <target> Allarme quando è disarmato </target>
       </trans-unit>
       <trans-unit id="zone disarmed delay" datatype="html">
         <source>Delay alert when not armed</source>
         <target>Allarme ritardato quando non è armato</target>
       </trans-unit>
       <trans-unit id="sensor alert away" datatype="html">
-        <source>Alert when away armed</source>
-        <target state="translated">Allarme quando si è assenti</target>
+        <source> Alert when away armed </source>
+        <target state="translated"> Allarme quando si è assenti </target>
       </trans-unit>
       <trans-unit id="zone away alert delay" datatype="html">
         <source>Delay alert when armed away</source>
@@ -415,8 +415,8 @@
         <target state="translated">Ritardo in attivazione</target>
       </trans-unit>
       <trans-unit id="sensor alert stay" datatype="html">
-        <source>Alert when stay armed</source>
-        <target state="translated">Allarme quando attivo/armato</target>
+        <source> Alert when stay armed </source>
+        <target state="translated"> Allarme quando attivo/armato </target>
       </trans-unit>
       <trans-unit id="zone stay alert delay" datatype="html">
         <source>Delay alert when armed stay</source>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="delete user" datatype="html">
         <source>Delete user</source>
-        <target>Eliminare l'utente</target>
+        <target>Eliminare l&apos;utente</target>
       </trans-unit>
       <trans-unit id="user name" datatype="html">
         <source>Name</source>
@@ -499,12 +499,12 @@
         <target>Selezionare la scadenza</target>
       </trans-unit>
       <trans-unit id="user device registration code" datatype="html">
-        <source>Device registration code</source>
-        <target>Codice di registrazione del dispositivo</target>
+        <source> Device registration code </source>
+        <target> Codice di registrazione del dispositivo </target>
       </trans-unit>
       <trans-unit id="user get new code" datatype="html">
-        <source>Get new code</source>
-        <target>Ottieni un nuovo codice</target>
+        <source> Get new code </source>
+        <target> Ottieni un nuovo codice </target>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
         <source>Close</source>
@@ -535,32 +535,32 @@
         <target state="translated">Siete sicuri di voler disregistrare questo dispositivo?</target>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
-        <source>Administrator</source>
-        <target>Amministratore</target>
+        <source> Administrator </source>
+        <target> Amministratore </target>
       </trans-unit>
       <trans-unit id="user type user" datatype="html">
-        <source>User</source>
-        <target>Utente</target>
+        <source> User </source>
+        <target> Utente </target>
       </trans-unit>
       <trans-unit id="user cards" datatype="html">
         <source>Cards</source>
         <target>Carte</target>
       </trans-unit>
       <trans-unit id="user registration" datatype="html">
-        <source>Expires on: </source>
-        <target>Scade il: </target>
+        <source>Expires on:</source>
+        <target>Scade il:</target>
       </trans-unit>
       <trans-unit id="user expiry never" datatype="html">
         <source>never</source>
         <target>mai</target>
       </trans-unit>
       <trans-unit id="user register device button" datatype="html">
-        <source>Device registration</source>
-        <target>Registrazione del dispositivo</target>
+        <source> Device registration </source>
+        <target> Registrazione del dispositivo </target>
       </trans-unit>
       <trans-unit id="user register card button" datatype="html">
-        <source>Register card</source>
-        <target>Scheda registro</target>
+        <source> Register card </source>
+        <target> Scheda registro </target>
       </trans-unit>
       <trans-unit id="user no users" datatype="html">
         <source>No users found</source>
@@ -575,16 +575,16 @@
         <target>Nome</target>
       </trans-unit>
       <trans-unit id="zone alert when disarmed" datatype="html">
-        <source>Alert when disarmed</source>
-        <target>Allarme quando è disarmato</target>
+        <source> Alert when disarmed </source>
+        <target> Allarme quando è disarmato </target>
       </trans-unit>
       <trans-unit id="zone alert when away" datatype="html">
-        <source>Alert when away armed</source>
-        <target state="translated">Allarme quando si è assenti</target>
+        <source> Alert when away armed </source>
+        <target state="translated"> Allarme quando si è assenti </target>
       </trans-unit>
       <trans-unit id="zone alert when stay" datatype="html">
-        <source>Alert when stay armed</source>
-        <target state="translated">Allarme quando si presenti con sistema armato</target>
+        <source> Alert when stay armed </source>
+        <target state="translated"> Allarme quando si presenti con sistema armato </target>
       </trans-unit>
       <trans-unit id="zone stay delay" datatype="html">
         <source>Delay alert when armed stay</source>
@@ -608,11 +608,11 @@
       </trans-unit>
       <trans-unit id="zone arm delay" datatype="html">
         <source>Arm delay</source>
-        <target state="translated">Ritardo all'attivazione</target>
+        <target state="translated">Ritardo all&apos;attivazione</target>
       </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
-        <target>Ritardo dell'avviso</target>
+        <target>Ritardo dell&apos;avviso</target>
       </trans-unit>
       <trans-unit id="zone arm away" datatype="html">
         <source>Away</source>
@@ -640,23 +640,23 @@
       </trans-unit>
       <trans-unit id="email1 failed" datatype="html">
         <source>Failed to send to email address 1!</source>
-        <target>Invio fallito all'indirizzo e-mail 1!</target>
+        <target>Invio fallito all&apos;indirizzo e-mail 1!</target>
       </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
-        <source>Email sent successfully to email address 1!</source>
-        <target>Email inviata con successo all'indirizzo email 1!</target>
+        <source> Email sent successfully to email address 1! </source>
+        <target> Email inviata con successo all&apos;indirizzo email 1! </target>
       </trans-unit>
       <trans-unit id="notifications email2 failed" datatype="html">
-        <source>Failed to send to email address 2!</source>
-        <target>Invio fallito all'indirizzo e-mail 2!</target>
+        <source> Failed to send to email address 2! </source>
+        <target> Invio fallito all&apos;indirizzo e-mail 2! </target>
       </trans-unit>
       <trans-unit id="notifications email2 success" datatype="html">
-        <source>Email sent successfully to email address 2!</source>
-        <target>Email inviata con successo all'indirizzo email 2!</target>
+        <source> Email sent successfully to email address 2! </source>
+        <target> Email inviata con successo all&apos;indirizzo email 2! </target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
-        <source>SMS sent successfully to phone 1!</source>
-        <target state="translated">SMS inviato con successo al telefono 1!</target>
+        <source> SMS sent successfully to phone 1! </source>
+        <target state="translated"> SMS inviato con successo al telefono 1! </target>
       </trans-unit>
       <trans-unit id="notifications send test email" datatype="html">
         <source>Send test email</source>
@@ -671,8 +671,8 @@
         <target>SMTP</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
-        <source>Failed to connect to SMTP server!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Please check logs for more information!</source>
-        <target state="translated">Impossibile connettersi al server SMTP!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/>Controllare i log per maggiori informazioni!</target>
+        <source> Failed to connect to SMTP server! <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Please check logs for more information! </source>
+        <target state="new">Impossibile connettersi al server SMTP!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Controllare i log per maggiori informazioni!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -703,8 +703,8 @@
         <target state="translated">Fine <x id="PH" equiv-text="sensor.name"/></target>
       </trans-unit>
       <trans-unit id="events alert" datatype="html">
-        <source>Alert event</source>
-        <target>Evento di allarme</target>
+        <source> Alert event </source>
+        <target> Evento di allarme </target>
       </trans-unit>
       <trans-unit id="events alert no" datatype="html">
         <source>No</source>
@@ -719,8 +719,8 @@
         <target>Sì</target>
       </trans-unit>
       <trans-unit id="events arm" datatype="html">
-        <source>Arm event</source>
-        <target>Evento braccio</target>
+        <source> Arm event </source>
+        <target> Evento braccio </target>
       </trans-unit>
       <trans-unit id="events arm away" datatype="html">
         <source>AWAY</source>
@@ -735,8 +735,8 @@
         <target state="translated">PRESENTI</target>
       </trans-unit>
       <trans-unit id="events arm undefined" datatype="html">
-        <source>Undefined</source>
-        <target>Non definito</target>
+        <source> Undefined </source>
+        <target> Non definito </target>
       </trans-unit>
       <trans-unit id="events armed" datatype="html">
         <source>Armed</source>
@@ -747,32 +747,32 @@
         <target>Armato da</target>
       </trans-unit>
       <trans-unit id="events armed keypad" datatype="html">
-        <source>Armed with keypad</source>
-        <target state="translated">Armato da tastierino</target>
+        <source> Armed with keypad </source>
+        <target state="translated"> Armato da tastierino </target>
       </trans-unit>
       <trans-unit id="events undefined" datatype="html">
         <source>Undefined</source>
         <target>Non definito</target>
       </trans-unit>
       <trans-unit id="events clear filters" datatype="html">
-        <source>Clear filters </source>
-        <target>Cancella i filtri </target>
+        <source> Clear filters </source>
+        <target> Cancella i filtri </target>
       </trans-unit>
       <trans-unit id="events filter date" datatype="html">
         <source>Enter a date range</source>
         <target>Inserire un intervallo di date</target>
       </trans-unit>
       <trans-unit id="events delay" datatype="html">
-        <source>delay: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></source>
-        <target state="translated">ritardo: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></target>
+        <source>delay: <x id="INTERPOLATION" equiv-text="{{ sensor.delay }}"/></source>
+        <target state="new">ritardo: <x id="INTERPOLATION" equiv-text="{{sensor.delay}}"/></target>
       </trans-unit>
       <trans-unit id="events disarmed" datatype="html">
         <source>Disarmed</source>
         <target>Disarmato</target>
       </trans-unit>
       <trans-unit id="events disarmed keypad" datatype="html">
-        <source>Disarmed with keypad</source>
-        <target state="translated">Disarmato da tastierino</target>
+        <source> Disarmed with keypad </source>
+        <target state="translated"> Disarmato da tastierino </target>
       </trans-unit>
       <trans-unit id="events disarmed system" datatype="html">
         <source> Disarmed by system </source>
@@ -783,8 +783,8 @@
         <target>Non sono state trovate armi/avvisi</target>
       </trans-unit>
       <trans-unit id="events sabotage" datatype="html">
-        <source>Sabotage event</source>
-        <target>Evento di sabotaggio</target>
+        <source> Sabotage event </source>
+        <target> Evento di sabotaggio </target>
       </trans-unit>
       <trans-unit id="events sensors" datatype="html">
         <source>Alerting sensor(s)</source>
@@ -815,8 +815,8 @@
         <target state="translated">PRESENTI</target>
       </trans-unit>
       <trans-unit id="events disarmed by" datatype="html">
-        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
-        <target>Disarmato da <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></target>
+        <source> Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/> </source>
+        <target> Disarmato da <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/> </target>
       </trans-unit>
       <trans-unit id="events properties" datatype="html">
         <source>Properties</source>
@@ -828,11 +828,11 @@
       </trans-unit>
       <trans-unit id="area armed away" datatype="html">
         <source>Area armed away</source>
-        <target state="translated">Area armata "assenti"</target>
+        <target state="translated">Area armata &quot;assenti&quot;</target>
       </trans-unit>
       <trans-unit id="area armed stay" datatype="html">
         <source>Area armed stay</source>
-        <target state="translated">Area armata "presenti"</target>
+        <target state="translated">Area armata &quot;presenti&quot;</target>
       </trans-unit>
       <trans-unit id="delete area" datatype="html">
         <source>Delete Area</source>
@@ -844,7 +844,7 @@
       </trans-unit>
       <trans-unit id="area name" datatype="html">
         <source>Area name</source>
-        <target>Nome dell'area</target>
+        <target>Nome dell&apos;area</target>
       </trans-unit>
       <trans-unit id="area no sensors" datatype="html">
         <source>No sensors</source>
@@ -887,16 +887,16 @@
         <target>Nuovo</target>
       </trans-unit>
       <trans-unit id="area number of sensors" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensor(s)</source>
-        <target><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensore/i</target>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(area.id).length }}"/> sensor(s) </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{getSensors(area.id).length}}"/> sensore/i</target>
       </trans-unit>
       <trans-unit id="sensor none" datatype="html">
         <source>No sensors found</source>
         <target>Nessun sensore trovato</target>
       </trans-unit>
       <trans-unit id="zone no sensor" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensor(s)</source>
-        <target><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensore/i</target>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(zone.id).length }}"/> sensor(s) </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{getSensors(zone.id).length}}"/> sensore/i</target>
       </trans-unit>
       <trans-unit id="events silent" datatype="html">
         <source>silent</source>
@@ -927,28 +927,28 @@
         <target state="translated">Disregistrare il dispositivo</target>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
-        <source>Hidden</source>
-        <target>Nascosto</target>
+        <source> Hidden </source>
+        <target> Nascosto </target>
       </trans-unit>
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
         <target>Visibile</target>
       </trans-unit>
       <trans-unit id="output area" datatype="html">
-        <source>Area</source>
-        <target>Area</target>
+        <source> Area </source>
+        <target> Area </target>
       </trans-unit>
       <trans-unit id="output button" datatype="html">
-        <source>Button</source>
-        <target>Pulsante</target>
+        <source> Button </source>
+        <target> Pulsante </target>
       </trans-unit>
       <trans-unit id="output channel" datatype="html">
         <source>Channel</source>
         <target>Canale</target>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
-        <source>Active default</source>
-        <target state="translated">Attivo predefinito</target>
+        <source> Active default </source>
+        <target state="translated"> Attivo predefinito </target>
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
@@ -956,7 +956,7 @@
       </trans-unit>
       <trans-unit id="delete output" datatype="html">
         <source>Delete Output</source>
-        <target state="translated">Cancellare l'uscita</target>
+        <target state="translated">Cancellare l&apos;uscita</target>
       </trans-unit>
       <trans-unit id="output disconnected" datatype="html">
         <source>Disconnected</source>
@@ -967,8 +967,8 @@
         <target state="translated">Durata [s]</target>
       </trans-unit>
       <trans-unit id="output enabled" datatype="html">
-        <source>Enabled</source>
-        <target>Abilitato</target>
+        <source> Enabled </source>
+        <target> Abilitato </target>
       </trans-unit>
       <trans-unit id="output none" datatype="html">
         <source>No outputs found</source>
@@ -979,8 +979,8 @@
         <target state="translated">Uscita non trovata!</target>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
-        <source>System</source>
-        <target>Sistema</target>
+        <source> System </source>
+        <target> Sistema </target>
       </trans-unit>
       <trans-unit id="output trigger" datatype="html">
         <source>Trigger</source>
@@ -999,8 +999,8 @@
         <target state="translated">Zona</target>
       </trans-unit>
       <trans-unit id="network restrict local" datatype="html">
-        <source>Restrict SSH connection to local network</source>
-        <target state="translated">Limita la connessione SSH alla rete locale</target>
+        <source> Restrict SSH connection to local network </source>
+        <target state="translated"> Limita la connessione SSH alla rete locale </target>
       </trans-unit>
       <trans-unit id="admin menu title" datatype="html">
         <source>Admin</source>
@@ -1023,8 +1023,8 @@
         <target state="translated">Tempismo della sirena</target>
       </trans-unit>
       <trans-unit id="syren sensitivity custom" datatype="html">
-        <source>Custom sensitivity</source>
-        <target state="translated">Sensibilità personalizzata</target>
+        <source> Custom sensitivity </source>
+        <target state="translated"> Sensibilità personalizzata </target>
       </trans-unit>
       <trans-unit id="sensor sensitivity" datatype="html">
         <source>Sensor sensitivity</source>
@@ -1039,12 +1039,12 @@
         <target state="translated">Soglia di monitoraggio [%]</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source>sensitivity: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</source>
-        <target state="translated">sensibilità: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + 's'}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
+        <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &apos;s&apos; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
+        <target state="new">sensibilità: <x id="INTERPOLATION" equiv-text="{{sensor.monitorPeriod + &apos;s&apos;}}"/>/<x id="INTERPOLATION_1" equiv-text="{{sensor.monitorThreshold}}"/>%</target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
-        <source>sensitivity: instant alert</source>
-        <target state="translated">sensibilità: allarme immediato</target>
+        <source> sensitivity: instant alert </source>
+        <target state="translated"> sensibilità: allarme immediato </target>
       </trans-unit>
       <trans-unit id="events loud" datatype="html">
         <source>loud</source>
@@ -1079,8 +1079,8 @@
         <target state="translated">Soglia di monitoraggio [%]</target>
       </trans-unit>
       <trans-unit id="sensor instant" datatype="html">
-        <source>Instant alert</source>
-        <target state="translated">Allarme istantaneo</target>
+        <source> Instant alert </source>
+        <target state="translated"> Allarme istantaneo </target>
       </trans-unit>
       <trans-unit id="events silent alert" datatype="html">
         <source>Silent alert</source>
@@ -1095,8 +1095,8 @@
         <target state="translated">Allarme silenzioso</target>
       </trans-unit>
       <trans-unit id="sensor silent syren" datatype="html">
-        <source>Alarm with syren</source>
-        <target state="translated">Allarme con sirene</target>
+        <source> Alarm with syren </source>
+        <target state="translated"> Allarme con sirene </target>
       </trans-unit>
       <trans-unit id="syren silent undefined" datatype="html">
         <source>Normal</source>
@@ -1112,7 +1112,7 @@
       </trans-unit>
       <trans-unit id="syren sensitivity alert" datatype="html">
         <source>Alert sensitivity</source>
-        <target state="translated">Sensibilità all'allarme</target>
+        <target state="translated">Sensibilità all&apos;allarme</target>
       </trans-unit>
       <trans-unit id="area" datatype="html">
         <source>Area</source>
@@ -1128,7 +1128,7 @@
       </trans-unit>
       <trans-unit id="zone away alert delay field" datatype="html">
         <source>Away alert delay</source>
-        <target state="translated">Ritardo dell'avviso di allontanamento</target>
+        <target state="translated">Ritardo dell&apos;avviso di allontanamento</target>
       </trans-unit>
       <trans-unit id="zone away arm delay field" datatype="html">
         <source>Away arm delay</source>
@@ -1136,7 +1136,7 @@
       </trans-unit>
       <trans-unit id="zone stay delay field" datatype="html">
         <source>Stay alert delay</source>
-        <target state="translated">Ritardo nell'allerta</target>
+        <target state="translated">Ritardo nell&apos;allerta</target>
       </trans-unit>
       <trans-unit id="zone stay arm delay field" datatype="html">
         <source>Stay arm delay</source>
@@ -1163,8 +1163,8 @@
         <target state="translated">Nginx</target>
       </trans-unit>
       <trans-unit id="dark theme" datatype="html">
-        <source>Dark theme</source>
-        <target state="translated">Tema scuro</target>
+        <source> Dark theme </source>
+        <target state="translated"> Tema scuro </target>
       </trans-unit>
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
@@ -1179,16 +1179,16 @@
         <target state="translated">Impostazioni SSH</target>
       </trans-unit>
       <trans-unit id="network password authentication" datatype="html">
-        <source>Enable SSH password authentication</source>
-        <target state="translated">Abilita l'autenticazione con password SSH</target>
+        <source> Enable SSH password authentication </source>
+        <target state="translated"> Abilita l&apos;autenticazione con password SSH </target>
       </trans-unit>
       <trans-unit id="user ssh key" datatype="html">
         <source>SSH key</source>
         <target state="translated">Chiave SSH</target>
       </trans-unit>
       <trans-unit id="user generate ssk key" datatype="html">
-        <source>Setup SSH key</source>
-        <target state="translated">Impostazione della chiave SSH</target>
+        <source> Setup SSH key </source>
+        <target state="translated"> Impostazione della chiave SSH </target>
       </trans-unit>
       <trans-unit id="user ssh key setup" datatype="html">
         <source>Setup ssh key</source>
@@ -1211,24 +1211,24 @@
         <target state="translated">Chiave pubblica SSh</target>
       </trans-unit>
       <trans-unit id="user generate ssh key" datatype="html">
-        <source>Generate SSH key</source>
-        <target state="translated">Generare la chiave SSH</target>
+        <source> Generate SSH key </source>
+        <target state="translated"> Generare la chiave SSH </target>
       </trans-unit>
       <trans-unit id="user setup ssh key" datatype="html">
-        <source>Setup SSH key</source>
-        <target state="translated">Impostazione della chiave SSH</target>
+        <source> Setup SSH key </source>
+        <target state="translated"> Impostazione della chiave SSH </target>
       </trans-unit>
       <trans-unit id="user copy ssh key" datatype="html">
-        <source>Copy key</source>
-        <target state="translated">Tasto copia</target>
+        <source> Copy key </source>
+        <target state="translated"> Tasto copia </target>
       </trans-unit>
       <trans-unit id="notifications smtp enabled" datatype="html">
-        <source>SMTP enabled</source>
-        <target state="translated">SMTP abilitato</target>
+        <source> SMTP enabled </source>
+        <target state="translated"> SMTP abilitato </target>
       </trans-unit>
       <trans-unit id="notifications gsm enabled" datatype="html">
-        <source>GSM enabled</source>
-        <target state="translated">GSM abilitato</target>
+        <source> GSM enabled </source>
+        <target state="translated"> GSM abilitato </target>
       </trans-unit>
       <trans-unit id="notifications test call" datatype="html">
         <source>Test call</source>
@@ -1243,28 +1243,28 @@
         <target state="translated">Chiamata 1</target>
       </trans-unit>
       <trans-unit id="notifications test failed" datatype="html">
-        <source>Please check logs for more information!</source>
-        <target state="translated">Per ulteriori informazioni, consultare i log!</target>
+        <source> Please check logs for more information! </source>
+        <target state="translated"> Per ulteriori informazioni, consultare i log! </target>
       </trans-unit>
       <trans-unit id="notifications sms1 failed" datatype="html">
-        <source>Failed to send SMS to phone 1!</source>
-        <target state="translated">Fallito l'invio di SMS al telefono 1!</target>
+        <source> Failed to send SMS to phone 1! </source>
+        <target state="translated"> Fallito l&apos;invio di SMS al telefono 1! </target>
       </trans-unit>
       <trans-unit id="notifications sms2 success" datatype="html">
-        <source>SMS sent successfully to phone 2!</source>
-        <target state="translated">SMS inviato con successo al telefono 2!</target>
+        <source> SMS sent successfully to phone 2! </source>
+        <target state="translated"> SMS inviato con successo al telefono 2! </target>
       </trans-unit>
       <trans-unit id="notifications sms2 failed" datatype="html">
-        <source>Failed to send SMS to phone 2!</source>
-        <target state="translated">Fallito l'invio di SMS al telefono 2!</target>
+        <source> Failed to send SMS to phone 2! </source>
+        <target state="translated"> Fallito l&apos;invio di SMS al telefono 2! </target>
       </trans-unit>
       <trans-unit id="notifications gsm connection failed" datatype="html">
-        <source>Failed to connect to GSM module!</source>
-        <target state="translated">Impossibile connettersi al modulo GSM!</target>
+        <source> Failed to connect to GSM module! </source>
+        <target state="translated"> Impossibile connettersi al modulo GSM! </target>
       </trans-unit>
       <trans-unit id="notifications call1 success" datatype="html">
-        <source>Successfully called phone 1!</source>
-        <target state="translated">Chiamato con successo il telefono 1!</target>
+        <source> Successfully called phone 1! </source>
+        <target state="translated"> Chiamato con successo il telefono 1! </target>
       </trans-unit>
       <trans-unit id="notifications call1 failed" datatype="html">
         <source>Failed to call phone 1!</source>
@@ -1287,8 +1287,8 @@
         <target state="translated">Cancella tutto</target>
       </trans-unit>
       <trans-unit id="notifications call2 success" datatype="html">
-        <source>Successfully called phone 2!</source>
-        <target state="translated">Chiamato con successo il telefono 2!</target>
+        <source> Successfully called phone 2! </source>
+        <target state="translated"> Chiamato con successo il telefono 2! </target>
       </trans-unit>
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
@@ -1299,8 +1299,8 @@
         <target state="translated">Uscite</target>
       </trans-unit>
       <trans-unit id="area number of outputs" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> output(s)</source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> uscita(i)</target>
+        <source> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </source>
+        <target state="new"><x id="INTERPOLATION" equiv-text="{{getOutputs(area.id).length}}"/> uscita(i)</target>
       </trans-unit>
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
@@ -1319,8 +1319,8 @@
         <target state="translated">Setup</target>
       </trans-unit>
       <trans-unit id="network certbot email" datatype="html">
-        <source>Certificate email</source>
-        <target state="translated">Email di certificazione</target>
+        <source>Certbot email</source>
+        <target state="new">Email di certificazione</target>
       </trans-unit>
       <trans-unit id="location device registered" datatype="html">
         <source>Device registered</source>
@@ -1335,8 +1335,8 @@
         <target state="translated">Dominio primario</target>
       </trans-unit>
       <trans-unit id="location check" datatype="html">
-        <source>Check API version and certificate</source>
-        <target state="translated">Controllare la versione e il certificato API</target>
+        <source> Check API version and certificate </source>
+        <target state="translated"> Controllare la versione e il certificato API </target>
       </trans-unit>
       <trans-unit id="location port" datatype="html">
         <source>Port</source>
@@ -1359,20 +1359,20 @@
         <target state="translated">Disregistrare il dispositivo</target>
       </trans-unit>
       <trans-unit id="user no cards" datatype="html">
-        <source>No cards registered</source>
-        <target state="translated">Nessuna carta registrata</target>
+        <source> No cards registered </source>
+        <target state="translated"> Nessuna carta registrata </target>
       </trans-unit>
       <trans-unit id="user no registration code" datatype="html">
-        <source>No registration code</source>
-        <target state="translated">Nessun codice di registrazione</target>
+        <source> No registration code </source>
+        <target state="translated"> Nessun codice di registrazione </target>
       </trans-unit>
       <trans-unit id="user no ssh key" datatype="html">
         <source>No SSH key</source>
         <target state="translated">Nessuna chiave SSH</target>
       </trans-unit>
       <trans-unit id="delete user message" datatype="html">
-        <source>Are you sure you want to delete the user "<x id="PH" equiv-text="this.user.name"/>"?</source>
-        <target state="translated">Si è sicuri di voler eliminare l'utente "<x id="PH" equiv-text="this.user.name"/>"?</target>
+        <source>Are you sure you want to delete the user &quot;<x id="PH" equiv-text="this.user.name"/>&quot;?</source>
+        <target state="translated">Si è sicuri di voler eliminare l&apos;utente &quot;<x id="PH" equiv-text="this.user.name"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
         <source>Delete</source>
@@ -1407,8 +1407,8 @@
         <target state="translated">Siete sicuri di voler eliminare la chiave SSH?</target>
       </trans-unit>
       <trans-unit id="delete area message" datatype="html">
-        <source>Are you sure you want to delete the area "<x id="PH" equiv-text="area.name"/>"?</source>
-        <target state="translated">È sicuro di voler eliminare l'area "<x id="PH" equiv-text="area.name"/>"?</target>
+        <source>Are you sure you want to delete the area &quot;<x id="PH" equiv-text="area.name"/>&quot;?</source>
+        <target state="translated">È sicuro di voler eliminare l&apos;area &quot;<x id="PH" equiv-text="area.name"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="area deleted" datatype="html">
         <source>Area deleted!</source>
@@ -1419,16 +1419,16 @@
         <target state="translated">Impossibile cancellare quando non si è in stato di PRONTO!</target>
       </trans-unit>
       <trans-unit id="delete output message" datatype="html">
-        <source>Are you sure you want to delete the output "<x id="PH" equiv-text="this.output.name"/>"?</source>
-        <target state="translated">È sicuro di voler eliminare l'uscita "<x id="PH" equiv-text="this.output.name"/>"?</target>
+        <source>Are you sure you want to delete the output &quot;<x id="PH" equiv-text="this.output.name"/>&quot;?</source>
+        <target state="translated">È sicuro di voler eliminare l&apos;uscita &quot;<x id="PH" equiv-text="this.output.name"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="output deleted" datatype="html">
         <source>Output deleted!</source>
         <target state="translated">Uscita cancellata!</target>
       </trans-unit>
       <trans-unit id="delete sensor message" datatype="html">
-        <source>Are you sure you want to delete the sensor "<x id="PH" equiv-text="sensor.description"/>"?</source>
-        <target state="translated">È sicuro di voler eliminare il sensore "<x id="PH" equiv-text="sensor.description"/>"?</target>
+        <source>Are you sure you want to delete the sensor &quot;<x id="PH" equiv-text="sensor.description"/>&quot;?</source>
+        <target state="translated">È sicuro di voler eliminare il sensore &quot;<x id="PH" equiv-text="sensor.description"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="sensor deleted" datatype="html">
         <source>Sensor deleted!</source>
@@ -1443,8 +1443,8 @@
         <target state="translated">Nuovo codice di accesso</target>
       </trans-unit>
       <trans-unit id="delete zone message" datatype="html">
-        <source>Are you sure you want to delete the zone "<x id="PH" equiv-text="zone.name"/>"?</source>
-        <target state="translated">È sicuro di voler eliminare la zona "<x id="PH" equiv-text="zone.name"/>"?</target>
+        <source>Are you sure you want to delete the zone &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</source>
+        <target state="translated">È sicuro di voler eliminare la zona &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="zone deleted" datatype="html">
         <source>Zone deleted!</source>
@@ -1479,12 +1479,12 @@
         <target state="translated">Il backend non è bloccato da un firewall</target>
       </trans-unit>
       <trans-unit id="backend error reload" datatype="html">
-        <source>Try to reconnect</source>
-        <target state="translated">Prova a riconnetterti</target>
+        <source> Try to reconnect </source>
+        <target state="translated"> Prova a riconnetterti </target>
       </trans-unit>
       <trans-unit id="backend error locations" datatype="html">
-        <source>Edit locations</source>
-        <target state="translated">Modifica location</target>
+        <source> Edit locations </source>
+        <target state="translated"> Modifica location </target>
       </trans-unit>
       <trans-unit id="location version" datatype="html">
         <source>Version:</source>
@@ -1507,16 +1507,16 @@
         <target state="translated">Elimina localizzazione</target>
       </trans-unit>
       <trans-unit id="delete location message" datatype="html">
-        <source>Are you sure you want to delete the location "<x id="PH" equiv-text="this.location.name"/>"?</source>
-        <target state="translated">Siete sicuri di voler eliminare la posizione "<x id="PH" equiv-text="this.location.name"/>"?</target>
+        <source>Are you sure you want to delete the location &quot;<x id="PH" equiv-text="this.location.name"/>&quot;?</source>
+        <target state="translated">Siete sicuri di voler eliminare la posizione &quot;<x id="PH" equiv-text="this.location.name"/>&quot;?</target>
       </trans-unit>
       <trans-unit id="location backend" datatype="html">
         <source>Location backend</source>
         <target state="translated">Posizione backend</target>
       </trans-unit>
       <trans-unit id="location location" datatype="html">
-        <source>Location: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></source>
-        <target state="translated">Posizione: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></target>
+        <source>Location: <x id="INTERPOLATION" equiv-text="{{ location.name }}"/></source>
+        <target state="new">Posizione: <x id="INTERPOLATION" equiv-text="{{location.name}}"/></target>
       </trans-unit>
       <trans-unit id="location primary url" datatype="html">
         <source>Primary URL</source>
@@ -1547,12 +1547,12 @@
         <target state="translated">Accesso biometrico</target>
       </trans-unit>
       <trans-unit id="biometric description" datatype="html">
-        <source>Do you want to use biometric login?</source>
-        <target state="translated">Volete utilizzare il login biometrico?</target>
+        <source> Do you want to use biometric login? </source>
+        <target state="translated"> Volete utilizzare il login biometrico? </target>
       </trans-unit>
       <trans-unit id="biometric question" datatype="html">
-        <source>You can use biometric login to access the security system.</source>
-        <target state="translated">È possibile utilizzare il login biometrico per accedere al sistema di sicurezza.</target>
+        <source> You can use biometric login to access the security system. </source>
+        <target state="translated"> È possibile utilizzare il login biometrico per accedere al sistema di sicurezza. </target>
       </trans-unit>
       <trans-unit id="biometric yes" datatype="html">
         <source>Yes</source>
@@ -1563,8 +1563,8 @@
         <target state="translated">No</target>
       </trans-unit>
       <trans-unit id="biometric login description" datatype="html">
-        <source>Use biometric login to access the security system.</source>
-        <target state="translated">Utilizzare il login biometrico per accedere al sistema di sicurezza.</target>
+        <source> Use biometric login to access the security system. </source>
+        <target state="translated"> Utilizzare il login biometrico per accedere al sistema di sicurezza. </target>
       </trans-unit>
       <trans-unit id="biometric title" datatype="html">
         <source>Log in to ArPI Home Security</source>

@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CapacitorService {
-
   goBack = new Subject<void>();
 
   constructor() {

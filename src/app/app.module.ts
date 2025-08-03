@@ -1,62 +1,63 @@
 // animation for material design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { CountdownModule } from 'ngx-countdown';
-
-// application components
-import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
-import { LoginComponent } from './pages/login';
-import { HomeComponent } from './pages/home';
-import { ClockComponent } from './pages/config/clock';
-import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
-import { NetworkComponent } from './pages/config/network';
-import { SyrenComponent } from './pages/config/syren';
-import { KeypadComponent } from './pages/config/keypad';
-import { SensorListComponent, SensorDetailComponent } from './pages/sensor';
-import { ZoneListComponent, ZoneDetailComponent } from './pages/zone';
-import { AreaListComponent, AreaDetailComponent } from './pages/area';
-import { LocationListComponent, LocationDetailsComponent } from './pages/location';
-import { UserListComponent, UserDetailComponent } from './pages/user';
-import { SystemStateComponent } from './components/system-state/system-state.component';
-import { UserCardComponent } from './components/user/user-card/user-card.component';
-import { MyUserComponent } from './pages/my-user/my-user.component';
-import { MessageComponent } from './components/message/message.component';
-import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
-import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
-import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
-
-import { AppHttpInterceptor } from './app.http.interceptor';
-import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
-import { AUTHENTICATION_SERVICE } from './tokens';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { DemoComponent } from './demo/demo.component';
-import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { EventsComponent } from './pages/events/events.component';
-import { OutputDetailComponent, OutputListComponent } from './pages/output';
-import { PageNotFoundComponent } from './page-not-found.component';
-import { routing } from './app.routing';
-import { ThemeService } from './services/theme.service';
-
-import { configureBackend } from './utils';
 import { environment } from '@environments/environment';
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
-// material components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { AppComponent } from './app.component';
+
+
+// application components
+import { MessageComponent } from './components/message/message.component';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { SystemStateComponent } from './components/system-state/system-state.component';
+import { UserCardComponent } from './components/user/user-card/user-card.component';
+import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
+import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
+import { AreaDetailComponent, AreaListComponent } from './pages/area';
+import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
+import { ClockComponent } from './pages/config/clock';
+import { KeypadComponent } from './pages/config/keypad';
+import { NetworkComponent } from './pages/config/network';
+import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
+import { SyrenComponent } from './pages/config/syren';
+import { HomeComponent } from './pages/home';
+import { LocationDetailsComponent, LocationListComponent } from './pages/location';
+import { LoginComponent } from './pages/login';
+import { MyUserComponent } from './pages/my-user/my-user.component';
+import { SensorDetailComponent, SensorListComponent } from './pages/sensor';
+import { UserDetailComponent, UserListComponent } from './pages/user';
+import { ZoneDetailComponent, ZoneListComponent } from './pages/zone';
+
+import { AppHttpInterceptor } from './app.http.interceptor';
+import { routing } from './app.routing';
+import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from './components';
+import { DemoComponent } from './demo/demo.component';
+import { DemoHelpDialogComponent } from './demo/demo.help.dialog.component';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { EventsComponent } from './pages/events/events.component';
+import { OutputDetailComponent, OutputListComponent } from './pages/output';
+import { ThemeService } from './services/theme.service';
+import { AUTHENTICATION_SERVICE } from './tokens';
+
+import { configureBackend } from './utils';
+
+
+// material components
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -64,7 +65,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -76,9 +76,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CapacitorService } from './services/capacitor.service';
 import { LongPressToggleDirective } from './directives';
-
+import { CapacitorService } from './services/capacitor.service';
 
 @NgModule({
   declarations: [
@@ -89,21 +88,21 @@ import { LongPressToggleDirective } from './directives';
     ControllerComponent,
     QuestionDialogComponent,
     MessageComponent,
-    
+
     KeypadComponent,
     ClockComponent,
     NotificationsComponent,
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
-    
+
     UserCardComponent,
     UserListComponent,
     UserDetailComponent,
     UserDeviceRegistrationDialogComponent,
     UserSshKeySetupDialogComponent,
     MyUserComponent,
-    
+
     AreaComponent,
     AreaListComponent,
     AreaDetailComponent,
@@ -175,6 +174,7 @@ import { LongPressToggleDirective } from './directives';
     LongPressToggleDirective
   ],
   providers: [
+    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
     { provide: 'AlertService', useClass: environment.alertService },
     { provide: 'AreaService', useClass: environment.areaService },
     { provide: 'ArmService', useClass: environment.armService },
@@ -191,7 +191,6 @@ import { LongPressToggleDirective } from './directives';
     { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'UserService', useClass: environment.userService },
     { provide: 'ZoneService', useClass: environment.zoneService },
-    { provide: AUTHENTICATION_SERVICE, useClass: environment.authenticationService },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
@@ -201,8 +200,8 @@ import { LongPressToggleDirective } from './directives';
     {
       provide: APP_INITIALIZER,
       multi: true,
-      useFactory: () => configureBackend,
-    },
+      useFactory: () => configureBackend
+    }
   ]
 })
-export class AppModule { }
+export class AppModule {}

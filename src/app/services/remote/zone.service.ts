@@ -4,33 +4,29 @@ import { Observable } from 'rxjs';
 
 import { Zone } from '@app/models';
 
-
 @Injectable()
 export class ZoneService {
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   getZones(): Observable<Zone[]> {
     // get zones from api
     return this.http.get<Zone[]>('/api/zones/');
   }
 
-  getZone( zoneId: number ): Observable<Zone> {
+  getZone(zoneId: number): Observable<Zone> {
     // get sensors from api
     return this.http.get<Zone>('/api/zone/' + zoneId);
   }
 
-  createZone( zone: Zone ): Observable<Zone> {
+  createZone(zone: Zone): Observable<Zone> {
     return this.http.post<Zone>('/api/zones/', zone);
   }
 
-  updateZone( zone: Zone ): Observable<Zone> {
+  updateZone(zone: Zone): Observable<Zone> {
     return this.http.put<Zone>('/api/zone/' + zone.id, zone);
   }
 
-  deleteZone( zoneId: number ): Observable<boolean> {
+  deleteZone(zoneId: number): Observable<boolean> {
     return this.http.delete<boolean>('/api/zone/' + zoneId);
   }
 

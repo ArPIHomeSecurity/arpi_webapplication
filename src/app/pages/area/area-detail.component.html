@@ -4,7 +4,14 @@
       <form [formGroup]="areaForm" (ngSubmit)="onSubmit()" novalidate>
         <mat-form-field>
           <mat-label i18n="@@name">Name</mat-label>
-          <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required maxlength="32">
+          <input
+            matInput
+            i18n-placeholder="@@name"
+            placeholder="Name"
+            formControlName="name"
+            required
+            maxlength="32"
+          />
         </mat-form-field>
       </form>
     </mat-card-content>
@@ -12,12 +19,26 @@
     <mat-divider></mat-divider>
 
     <mat-card-actions align="end">
-      <button mat-icon-button color="primary" [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSubmit()">
+      <button
+        mat-icon-button
+        color="primary"
+        [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY"
+        (click)="onSubmit()"
+      >
         <mat-icon>save</mat-icon>
       </button>
-      <button *ngIf="areaId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(area.id)"
-        [disabled]="getSensors().length > 0  || getOutputs().length > 0|| monitoringState != monitoringStates.READY">
+      <button
+        *ngIf="areaId > 0"
+        mat-icon-button
+        color="warn"
+        type="button"
+        (click)="openDeleteDialog(area.id)"
+        [disabled]="
+          getSensors().length > 0 ||
+          getOutputs().length > 0 ||
+          monitoringState != monitoringStates.READY
+        "
+      >
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-icon-button color="accent" type="button" (click)="onCancel()">

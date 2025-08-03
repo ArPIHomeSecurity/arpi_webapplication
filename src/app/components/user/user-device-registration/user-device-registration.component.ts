@@ -9,14 +9,13 @@ import { UserService } from '@app/services';
 
 import { environment } from '@environments/environment';
 
-
 @Component({
   selector: 'app-user-device-registration-dialog',
   templateUrl: 'user-device-registration.component.html',
   styleUrls: ['user-device-registration.component.scss'],
+  standalone: false
 })
 export class UserDeviceRegistrationDialogComponent implements OnInit {
-
   registrationForm: UntypedFormGroup;
   modes: any[];
   units: any[];
@@ -24,18 +23,19 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   constructor(
     @Inject('UserService') public userService: UserService,
-    public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>, @Inject(MAT_DIALOG_DATA) public user: User,
+    public dialogRef: MatDialogRef<UserDeviceRegistrationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private clipboard: Clipboard
   ) {
     this.modes = [
-      {name: $localize`:@@device code no expiry:Unlimited time`, value: 'no_expiry'},
-      {name: $localize`:@@device code with expiry:With expiry`, value: 'expiry'}
+      { name: $localize`:@@device code no expiry:Unlimited time`, value: 'no_expiry' },
+      { name: $localize`:@@device code with expiry:With expiry`, value: 'expiry' }
     ];
     this.units = [
-      {value: 'hours', viewValue: $localize`:@@expiry hours:Hours`},
-      {value: 'days', viewValue: $localize`:@@expiry days:Days`},
+      { value: 'hours', viewValue: $localize`:@@expiry hours:Hours` },
+      { value: 'days', viewValue: $localize`:@@expiry days:Days` }
     ];
   }
 
@@ -58,15 +58,13 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
         console.error('Unknown time unit: ', this.registrationForm.controls.unit.value);
       }
     } else if (this.registrationForm.controls.mode.value === 'no_expiry') {
-
     } else {
       console.error('Unknown expiry mode: ', this.registrationForm.controls.mode.value);
     }
 
-    this.userService.generateRegistrationCode(this.user.id, expiry)
-      .subscribe(code => {
-        this.registrationCode = code.code.match(/.{1,3}/g).join('-');
-      });
+    this.userService.generateRegistrationCode(this.user.id, expiry).subscribe(code => {
+      this.registrationCode = code.code.match(/.{1,3}/g).join('-');
+    });
   }
 
   onClickClose(): void {
@@ -88,6 +86,8 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   copyText(val: string) {
     this.clipboard.copy(val);
-    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, { duration: environment.snackDuration });
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    });
   }
 }

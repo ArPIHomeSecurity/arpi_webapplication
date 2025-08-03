@@ -1,33 +1,38 @@
 <h1 mat-dialog-title i18n="@@user ssh key setup">Setup ssh key</h1>
 <div mat-dialog-content>
-  
   <form [formGroup]="setupKeyForm" class="container" [hidden]="privateKey != null">
     <mat-form-field>
       <label i18n="@@user ssh setup method">Setup method</label>
       <mat-select formControlName="setupMethod" (selectionChange)="onChangeSetupMethod($event)">
         <mat-option *ngFor="let method of setupMethods" [value]="method.value" required>
-          {{method.viewValue}}
+          {{ method.viewValue }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'">
+    <mat-form-field
+      [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'"
+    >
       <label i18n="@@user ssh key type">SSH key type</label>
       <mat-select formControlName="keyType">
         <mat-option *ngFor="let keyType of keyTypes" [value]="keyType.value" required>
-          {{keyType.viewValue}}
+          {{ keyType.viewValue }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'">
+    <mat-form-field
+      [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'"
+    >
       <label i18n="@@user ssh key passphrase">SSH key passphrase</label>
-      <input matInput formControlName="passphrase" type="text" placeholder="Passphrase">
+      <input matInput formControlName="passphrase" type="text" placeholder="Passphrase" />
     </mat-form-field>
 
-    <mat-form-field [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'generate'">
+    <mat-form-field
+      [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'generate'"
+    >
       <label i18n="@@user ssh key public key">SSh public key</label>
-      <input matInput formControlName="publicKey" type="text" placeholder="Public key">
+      <input matInput formControlName="publicKey" type="text" placeholder="Public key" />
     </mat-form-field>
   </form>
 
@@ -36,28 +41,41 @@
   </mat-form-field>
 </div>
 
-
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary"
+  <button
+    mat-raised-button
+    color="primary"
     [disabled]="!setupKeyForm.valid || loading"
     [hidden]="setupKeyForm.controls.setupMethod.value === 'custom' || privateKey != null"
     (click)="generateKey()"
     tabindex="2"
-    i18n="@@user generate ssh key">Generate SSH key</button>
-    
-  <button mat-raised-button color="primary"
+    i18n="@@user generate ssh key"
+  >
+    Generate SSH key
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
     [disabled]="!setupKeyForm.valid || privateKey || loading"
     [hidden]="setupKeyForm.controls.setupMethod.value === 'generate' || privateKey != null"
     (click)="setPublicKey()"
     tabindex="2"
-    i18n="@@user setup ssh key">Setup SSH key</button>
+    i18n="@@user setup ssh key"
+  >
+    Setup SSH key
+  </button>
 
-  <button mat-button
+  <button
+    mat-button
     (click)="onCopyKey(privateKey)"
     [hidden]="privateKey == null"
     tabindex="2"
     color="primary"
-    i18n="@@user copy ssh key">Copy key</button>
+    i18n="@@user copy ssh key"
+  >
+    Copy key
+  </button>
 
   <button mat-button (click)="onClickClose()" tabindex="-1" i18n="@@close button">Close</button>
 </div>

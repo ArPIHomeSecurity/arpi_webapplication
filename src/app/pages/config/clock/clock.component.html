@@ -1,6 +1,5 @@
 <div *ngIf="clock != null" class="container">
   <form [formGroup]="clockForm" (ngSubmit)="onSubmit()" class="clock-form">
-
     <mat-accordion class="full-width">
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
@@ -8,19 +7,28 @@
         </mat-expansion-panel-header>
         <mat-list>
           <mat-list-item class="clock">
-            <span i18n="@@clock timezone">Timezone</span> <span class="spacer"></span> {{clock.timezone}}
+            <span i18n="@@clock timezone">Timezone</span>
+            <span class="spacer"></span>
+            {{ clock.timezone }}
           </mat-list-item>
 
           <mat-list-item class="clock">
-            <span i18n="@@clock network time">Network time</span> <span class="spacer"></span> {{clock.network === null ? " - - - " : clock.network}}
+            <span i18n="@@clock network time">Network time</span>
+            <span class="spacer"></span>
+            {{ clock.network === null ? ' - - - ' : clock.network }}
           </mat-list-item>
-            
+
           <mat-list-item class="clock">
-            <span i18n="@@clock system time">System time</span><span class="spacer"></span> {{clock.system === null ? " - - - " : clock.system}}
+            <span i18n="@@clock system time">System time</span>
+            <span class="spacer"></span>
+            {{ clock.system === null ? ' - - - ' : clock.system }}
           </mat-list-item>
-      
+
           <mat-list-item class="clock">
-            <span i18n="@@clock hardware time">Hardware time</span>&nbsp;(UTC)<span class="spacer"></span> {{clock.hw === null ? " - - - " : clock.hw}}
+            <span i18n="@@clock hardware time">Hardware time</span>
+            &nbsp;(UTC)
+            <span class="spacer"></span>
+            {{ clock.hw === null ? ' - - - ' : clock.hw }}
           </mat-list-item>
         </mat-list>
 
@@ -35,37 +43,57 @@
         </mat-expansion-panel-header>
         <div class="full-width">
           <mat-form-field class="half-width">
-            <input matInput 
-              i18n-placeholder="@@clock new date time"placeholder="New date time"
+            <input
+              matInput
+              i18n-placeholder="@@clock new date time"
+              placeholder="New date time"
               formControlName="dateTime"
               [owlDateTimeTrigger]="dt"
               [owlDateTime]="dt"
-              firstDayOfWeek="2">
-              <mat-icon matSuffix>calendar_today</mat-icon>
+              firstDayOfWeek="2"
+            />
+            <mat-icon matSuffix>calendar_today</mat-icon>
             <owl-date-time #dt></owl-date-time>
           </mat-form-field>
-      
+
           <mat-form-field>
-            <input type="text"
-                   matInput
-                   i18n-placeholder="@@clock timezone" placeholder="Timezone"
-                   formControlName="timezone"
-                   required
-                   [matAutocomplete]="autoGroup">
+            <input
+              type="text"
+              matInput
+              i18n-placeholder="@@clock timezone"
+              placeholder="Timezone"
+              formControlName="timezone"
+              required
+              [matAutocomplete]="autoGroup"
+            />
             <mat-autocomplete #autoGroup="matAutocomplete">
-              <mat-optgroup *ngFor="let group of timezoneGroupOptions | async" [label]="group.groupName">
-                <mat-option *ngFor="let name of group.zoneNames" [value]="group.groupName+'/'+name">
-                  {{group.groupName}}/{{name}}
+              <mat-optgroup
+                *ngFor="let group of timezoneGroupOptions | async"
+                [label]="group.groupName"
+              >
+                <mat-option
+                  *ngFor="let name of group.zoneNames"
+                  [value]="group.groupName + '/' + name"
+                >
+                  {{ group.groupName }}/{{ name }}
                 </mat-option>
               </mat-optgroup>
               <mat-option *ngFor="let name of timezoneUngrouppedOptions | async" [value]="name">
-                {{name}}
+                {{ name }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
-    
-        <button mat-raised-button color="primary" type="submit" [disabled]="clockForm.invalid || monitoringState != monitoringStates.READY" i18n="@@save button">Save</button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="clockForm.invalid || monitoringState != monitoringStates.READY"
+          i18n="@@save button"
+        >
+          Save
+        </button>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -74,19 +102,43 @@
         </mat-expansion-panel-header>
         <mat-list>
           <mat-list-item class="clock">
-            <span i18n="@@clock uptime system">System</span> <span class="spacer"></span> {{clock.uptime === null ? " - - - " : getDuration(clock.uptime) + " (" + clock.uptime + " s)"}}
+            <span i18n="@@clock uptime system">System</span>
+            <span class="spacer"></span>
+            {{
+              clock.uptime === null
+                ? ' - - - '
+                : getDuration(clock.uptime) + ' (' + clock.uptime + ' s)'
+            }}
           </mat-list-item>
 
           <mat-list-item class="clock">
-            <span i18n="@@clock uptime server">Server</span> <span class="spacer"></span> {{clock.uptime_server === null ? " - - - " : getDuration(clock.uptime_server) + " (" + clock.uptime_server + " s)"}}
+            <span i18n="@@clock uptime server">Server</span>
+            <span class="spacer"></span>
+            {{
+              clock.uptime_server === null
+                ? ' - - - '
+                : getDuration(clock.uptime_server) + ' (' + clock.uptime_server + ' s)'
+            }}
           </mat-list-item>
 
           <mat-list-item class="clock">
-            <span i18n="@@clock uptime monitor">Monitor</span> <span class="spacer"></span> {{clock.uptime_monitor === null ? " - - - " : getDuration(clock.uptime_monitor) + " (" + clock.uptime_monitor + " s)"}}
+            <span i18n="@@clock uptime monitor">Monitor</span>
+            <span class="spacer"></span>
+            {{
+              clock.uptime_monitor === null
+                ? ' - - - '
+                : getDuration(clock.uptime_monitor) + ' (' + clock.uptime_monitor + ' s)'
+            }}
           </mat-list-item>
 
           <mat-list-item class="clock">
-            <span i18n="@@clock uptime nginx">Nginx</span> <span class="spacer"></span> {{clock.uptime_nginx === null ? " - - - " : getDuration(clock.uptime_nginx) + " (" + clock.uptime_nginx + " s)"}}
+            <span i18n="@@clock uptime nginx">Nginx</span>
+            <span class="spacer"></span>
+            {{
+              clock.uptime_nginx === null
+                ? ' - - - '
+                : getDuration(clock.uptime_nginx) + ' (' + clock.uptime_nginx + ' s)'
+            }}
           </mat-list-item>
         </mat-list>
       </mat-expansion-panel>

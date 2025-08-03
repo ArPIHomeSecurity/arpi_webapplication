@@ -1,23 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 import { SensorService, CardService } from '@app/services/demo';
 import { getSessionValue, setSessionValue } from '@app/utils';
 
 import { environment } from '@environments/environment';
+import { DemoHelpDialogComponent } from './demo.help.dialog.component';
 
 @Component({
   selector: 'app-demo',
   templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.scss']
+  styleUrls: ['./demo.component.scss'],
+  standalone: false
 })
 export class DemoComponent implements OnInit {
-
   channels: boolean[] = [];
   constructor(
     public dialog: MatDialog,
-    @Inject('SensorService')private sensorService: SensorService,
+    @Inject('SensorService') private sensorService: SensorService,
     @Inject('CardService') private cardService: CardService
   ) {
     const channels: boolean[] = [];

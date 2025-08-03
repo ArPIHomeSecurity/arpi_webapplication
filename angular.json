@@ -27,24 +27,16 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "moment"
-            ],
+            "allowedCommonJsDependencies": ["moment"],
             "outputPath": {
               "base": "dist-development"
             },
             "localize": true,
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts", "@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,
@@ -71,7 +63,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "2.5mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -106,10 +98,7 @@
                 "input": "src/index.demo.html",
                 "output": "index.html"
               },
-              "assets": [
-                "src/assets",
-                "src/404.html"
-              ],
+              "assets": ["src/assets", "src/404.html"],
               "outputPath": {
                 "base": "dist-demo"
               },
@@ -138,10 +127,7 @@
                   "with": "src/environments/environment.remote.ts"
                 }
               ],
-              "assets": [
-                "src/assets",
-                "src/404.html"
-              ],
+              "assets": ["src/assets", "src/404.html"],
               "index": {
                 "input": "src/index.remote.html",
                 "output": "index.html"
@@ -162,10 +148,7 @@
                 "input": "src/index.remote.html",
                 "output": "index.html"
               },
-              "assets": [
-                "src/assets",
-                "src/404.html"
-              ],
+              "assets": ["src/assets", "src/404.html"],
               "outputPath": {
                 "base": "dist-remote"
               },
@@ -259,10 +242,7 @@
             "buildTarget": "app:build",
             "format": "xlf",
             "outputPath": "src/locales",
-            "targetFiles": [
-              "messages.hu.xlf",
-              "messages.it.xlf"
-            ]
+            "targetFiles": ["messages.hu.xlf", "messages.it.xlf"]
           }
         },
         "test": {
@@ -272,23 +252,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
-            "assets": [
-              "src/assets",
-              "src/404.html"
-            ]
+            "assets": ["src/assets", "src/404.html"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "xliffmerge": {
@@ -299,11 +271,7 @@
               "srcDir": "src/locales",
               "genDir": "src/locales",
               "defaultLanguage": "en",
-              "languages": [
-                "en",
-                "hu",
-                "it"
-              ]
+              "languages": ["en", "hu", "it"]
             }
           }
         }
@@ -329,10 +297,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

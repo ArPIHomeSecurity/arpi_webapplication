@@ -2,9 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Output } from '@app/models';
 
-
 export interface OutputService {
-
   getOutputs(): Observable<Output[]>;
 
   getOutput(outputId: number): Observable<Output>;

@@ -7,9 +7,7 @@ export class LoaderService {
   public disabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor() {
-
-  }
+  constructor() {}
 
   display(value: boolean) {
     this.displayed.next(value);

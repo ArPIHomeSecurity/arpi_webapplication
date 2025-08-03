@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable ,  Subject } from 'rxjs';
+import { fromEvent, Observable, Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
 
-
 @Injectable()
 export class EventService {
-
   socket: any;
   socketConnected$ = new Subject<boolean>();
 
@@ -15,14 +13,13 @@ export class EventService {
   constructor() {
     this.connect();
 
-    window.onbeforeunload= () => {
+    window.onbeforeunload = () => {
       this.unloading = true;
     };
 
-    fromEvent(window, 'storage')
-      .subscribe((event: StorageEvent) => {
-        this.connect();
-      })
+    fromEvent(window, 'storage').subscribe((event: StorageEvent) => {
+      this.connect();
+    });
   }
 
   isConnected() {
@@ -51,15 +48,14 @@ export class EventService {
     const backendDomain = localStorage.getItem('backend.domain');
     const backendPort = localStorage.getItem('backend.port');
 
-    var backendUrl = '';
+    let backendUrl = '';
     if (backendScheme && backendDomain && backendPort) {
       backendUrl = backendScheme + '://' + backendDomain + ':' + backendPort;
-    }
-    else {
+    } else {
       console.warn('No URL configured for backend events!', backendScheme, backendDomain, backendPort);
     }
 
-    this.socket = io(backendUrl, { query: {token: deviceToken }});
+    this.socket = io(backendUrl, { query: { token: deviceToken } });
     this.socket.connect();
 
     this.socketConnected$.next(this.socket.connected);
@@ -71,11 +67,9 @@ export class EventService {
       }
     });
 
-    this.socketConnected$.asObservable().subscribe(
-      connected => {
-        // console.log('Socket connected: ', connected);
-      }
-    );
+    this.socketConnected$.asObservable().subscribe(connected => {
+      // console.log('Socket connected: ', connected);
+    });
   }
 
   listen(event: string): Observable<any> {

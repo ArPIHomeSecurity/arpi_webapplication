@@ -1,6 +1,6 @@
 ::ng-deep .mat-mdc-card-header {
   .mat-mdc-card-avatar {
-    .mat-icon{
+    .mat-icon {
       margin: 15px 10px;
     }
   }
@@ -12,7 +12,7 @@
 
 ::ng-deep .mat-mdc-card-header-text {
   width: 100%;
-  
+
   .mat-mdc-card-subtitle {
     white-space: nowrap;
     overflow: hidden;
@@ -36,7 +36,8 @@
   color: #f44336;
 }
 
-.primary, .secondary {
+.primary,
+.secondary {
   .icon-accessible {
     color: #4caf50;
   }
@@ -46,12 +47,11 @@
   }
 }
 
-
 .test-link {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
+
   .mat-icon {
     font-size: 18px;
     vertical-align: middle;

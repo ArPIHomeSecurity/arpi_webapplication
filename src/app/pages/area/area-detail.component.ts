@@ -11,21 +11,27 @@ import { catchError, finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
-import { EventService, LoaderService, MonitoringService, SensorService, AreaService, OutputService } from '@app/services';
+import {
+  EventService,
+  LoaderService,
+  MonitoringService,
+  SensorService,
+  AreaService,
+  OutputService
+} from '@app/services';
 import { positiveInteger } from '@app/utils';
 
 import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
   templateUrl: './area-detail.component.html',
   styleUrls: ['area-detail.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
 export class AreaDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   areaId: number;
   area: Area = undefined;
   sensors: Sensor[];
@@ -71,9 +77,9 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
         sensors: this.sensorService.getSensors()
       })
         .pipe(
-          catchError((error) => {
+          catchError(error => {
             if (error.status === 404) {
-              this.area = null
+              this.area = null;
             }
             return throwError(() => error);
           }),
@@ -85,8 +91,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
           this.outputs = results.outputs;
           this.sensors = results.sensors;
           this.loader.display(false);
-        }
-        );
+        });
     } else {
       this.area = new Area();
       this.area.name = null;
@@ -100,24 +105,28 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
 
   updateForm(area: Area) {
     this.areaForm = this.fb.group({
-      name: new UntypedFormControl(area.name, [Validators.required, Validators.maxLength(32)]),
+      name: new UntypedFormControl(area.name, [Validators.required, Validators.maxLength(32)])
     });
   }
 
   onSubmit() {
     const area = this.prepareArea();
     if (this.areaId != null) {
-      this.areaService.updateArea(area)
-        .subscribe({
-          next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
-        });
+      this.areaService.updateArea(area).subscribe({
+        next: _ => this.router.navigate(['/areas']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     } else {
-      this.areaService.createArea(area)
-        .subscribe({
-          next: _ => this.router.navigate(['/areas']),
-          error: _ => this.snackBar.open($localize`:@@failed create:Failed to create!`, null, { duration: environment.snackDuration })
-        });
+      this.areaService.createArea(area).subscribe({
+        next: _ => this.router.navigate(['/areas']),
+        error: _ =>
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
+      });
     }
   }
 
@@ -128,7 +137,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   getSensors(): Sensor[] {
     const results: Sensor[] = [];
     if (this.area) {
-      this.sensors.forEach((sensor) => {
+      this.sensors.forEach(sensor => {
         if (sensor.areaId === this.area.id) {
           results.push(sensor);
         }
@@ -141,7 +150,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
   getOutputs(): Output[] {
     const results: Output[] = [];
     if (this.area) {
-      this.outputs.forEach((output) => {
+      this.outputs.forEach(output => {
         if (output.areaId === this.area.id) {
           results.push(output);
         }
@@ -171,7 +180,7 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -184,18 +193,26 @@ export class AreaDetailComponent extends ConfigurationBaseComponent implements O
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true)
-          this.areaService.deleteArea(areaId)
+          this.loader.disable(true);
+          this.areaService
+            .deleteArea(areaId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, {
+                  duration: environment.snackDuration
+                });
                 this.router.navigate(['/areas']);
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

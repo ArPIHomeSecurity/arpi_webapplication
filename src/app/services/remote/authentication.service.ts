@@ -1,4 +1,3 @@
-
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -6,11 +5,10 @@ import { Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { jwtDecode } from "jwt-decode";
-
-import { EventService } from './event.service';
+import { jwtDecode } from 'jwt-decode';
 
 import { environment } from '@environments/environment';
+import { EventService } from './event.service';
 
 @Injectable()
 export class AuthenticationService implements AuthenticationService {
@@ -21,16 +19,17 @@ export class AuthenticationService implements AuthenticationService {
     @Inject('EventService') private eventService: EventService,
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {}
 
   login(accessCode: number): Observable<boolean> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const locationId = this.getLocationId();
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-    return this.http.post(
+    return this.http
+      .post(
         '/api/user/authenticate',
-        JSON.stringify({device_token: deviceTokens[locationId], access_code: accessCode}),
-        {headers}
+        JSON.stringify({ device_token: deviceTokens[locationId], access_code: accessCode }),
+        { headers }
       )
       .pipe(
         map((response: any) => {
@@ -59,7 +58,7 @@ export class AuthenticationService implements AuthenticationService {
       );
   }
 
-  logout(manualAction: boolean = true): void {
+  logout(manualAction = true): void {
     // clear token remove user from local storage to log user out
     const locationId = this.getLocationId();
     const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
@@ -84,7 +83,7 @@ export class AuthenticationService implements AuthenticationService {
       const userToken = this.getUserToken();
       return !!userToken;
     } catch (error) {
-        // console.error('Invalid token');
+      // console.error('Invalid token');
     }
     return false;
   }
@@ -94,9 +93,7 @@ export class AuthenticationService implements AuthenticationService {
     if (userToken) {
       try {
         return (jwtDecode(userToken) as any).role;
-      } catch (error) {
-
-      }
+      } catch (error) {}
       return '';
     }
   }
@@ -106,8 +103,7 @@ export class AuthenticationService implements AuthenticationService {
     if (userToken) {
       try {
         return (jwtDecode(userToken) as any).name;
-      } catch (error) {
-      }
+      } catch (error) {}
       return '';
     }
   }
@@ -117,8 +113,7 @@ export class AuthenticationService implements AuthenticationService {
     if (userToken) {
       try {
         return (jwtDecode(userToken) as any).id;
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   }
 
@@ -161,17 +156,16 @@ export class AuthenticationService implements AuthenticationService {
     localStorage.removeItem(`${locationId}:userToken`);
 
     // parse token
-    var userData;
+    let userData;
     try {
       userData = jwtDecode(userToken);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Invalid token');
       return;
     }
 
     // check expiry
-    if (Date.now()/1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
+    if (Date.now() / 1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
       // remove token
       const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
       if (locationId in userTokens) {
@@ -190,7 +184,7 @@ export class AuthenticationService implements AuthenticationService {
     if (!locationId) {
       return;
     }
-    
+
     try {
       // check if token is valid
       jwtDecode(token);
@@ -215,7 +209,7 @@ export class AuthenticationService implements AuthenticationService {
   /**
    * Retrieves the device token for the given location or the current.
    * @param locationId Optional location id.
-   * @returns 
+   * @returns
    */
   getDeviceToken(locationId?: string): string {
     if (!locationId) {
@@ -249,24 +243,27 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   registerDevice(registrationCode: string): Observable<boolean> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const locationId = this.getLocationId();
-    return this.http.post('/api/user/register_device', JSON.stringify({registration_code: registrationCode}), {headers}).pipe(
-      map((response: any) => {
-        // login successful if there's a jwt token in the response
-        if (response.device_token) {
-          // save in new format
-          const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
-          deviceTokens[locationId] = response.device_token;
-          localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+    return this.http
+      .post('/api/user/register_device', JSON.stringify({ registration_code: registrationCode }), { headers })
+      .pipe(
+        map((response: any) => {
+          // login successful if there's a jwt token in the response
+          if (response.device_token) {
+            // save in new format
+            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+            deviceTokens[locationId] = response.device_token;
+            localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
-          this.eventService.connect();
-          this.isDeviceRegisteredSubject.next(true);
-          return true;
-        }
+            this.eventService.connect();
+            this.isDeviceRegisteredSubject.next(true);
+            return true;
+          }
 
-        return false;
-      }));
+          return false;
+        })
+      );
   }
 
   unRegisterDevice() {
@@ -295,9 +292,7 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this.isDeviceRegisteredSubject.pipe(
-      startWith(!!this.getDeviceToken()) 
-    );
+    return this.isDeviceRegisteredSubject.pipe(startWith(!!this.getDeviceToken()));
   }
 
   getRegisteredUserId(): number {
@@ -305,8 +300,7 @@ export class AuthenticationService implements AuthenticationService {
     if (deviceToken) {
       try {
         return (jwtDecode(deviceToken) as any).user_id;
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   }
 

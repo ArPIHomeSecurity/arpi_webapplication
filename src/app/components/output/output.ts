@@ -2,12 +2,12 @@ import { Component, Inject, Input } from '@angular/core';
 import { Output } from '@app/models';
 import { OutputService } from '@app/services';
 
-
 @Component({
   selector: 'component-output',
   templateUrl: 'output.html',
   styleUrls: ['output.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
 export class OutputComponent {
   @Input() output: Output;
@@ -15,17 +15,14 @@ export class OutputComponent {
 
   ENDLESS_DURATION = 0;
 
-  longPressActive: boolean = false;
+  longPressActive = false;
 
-  constructor(
-    @Inject('OutputService') private outputService: OutputService,
-  ) { }
+  constructor(@Inject('OutputService') private outputService: OutputService) {}
 
   onLongPressed() {
     if (this.output.state) {
       this.outputService.deactivateOutput(this.output.id);
-    }
-    else {
+    } else {
       this.outputService.activateOutput(this.output.id);
     }
   }

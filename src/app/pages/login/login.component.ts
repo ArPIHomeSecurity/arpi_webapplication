@@ -11,7 +11,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CapacitorService } from '@app/services/capacitor.service';
 import { Subscription } from 'rxjs';
 
-
 enum BiometricStatus {
   Undefined, // not yet checked
   NotAvailable, // not available on the device
@@ -24,9 +23,9 @@ enum BiometricStatus {
 
 @Component({
   styleUrls: ['login.component.scss'],
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
+  standalone: false
 })
-
 export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('registration_code_field') registrationCodeField: ElementRef;
   @ViewChild('access_code_field') accessCodeField: ElementRef;
@@ -45,10 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   goBackSubscription: Subscription;
 
-
   /**
    * Use biometric authentication
-  */
+   */
   BIOMETRIC_STATUSES = BiometricStatus;
   useBiometric: BiometricStatus = BiometricStatus.Undefined;
   isBiometricAvailable = false;
@@ -71,58 +69,56 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     if (this.authenticationService.isLoggedIn()) {
-      this.router.navigate(["/"]);
+      this.router.navigate(['/']);
     }
 
-    this.authenticationService.isDeviceRegistered()
-      .subscribe(isRegistered => {
-        this.isRegistered = isRegistered;
+    this.authenticationService.isDeviceRegistered().subscribe(isRegistered => {
+      this.isRegistered = isRegistered;
 
+      if (isRegistered) {
+        this.userService
+          .getUserName(this.authenticationService.getRegisteredUserId())
+          .subscribe(userName => (this.userName = userName));
+      }
+
+      setTimeout(async () => {
         if (isRegistered) {
-          this.userService.getUserName(this.authenticationService.getRegisteredUserId())
-            .subscribe(userName => this.userName = userName);
-        }
+          this.accessCodeField?.nativeElement.focus();
 
-        setTimeout(async () => {
-          if (isRegistered) {
-            this.accessCodeField?.nativeElement.focus();
+          this.biometricService.isAvailable().then(isAvailable => {
+            if (isAvailable) {
+              this.isBiometricAvailable = true;
+              const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+              const locationId = localStorage.getItem('selectedLocationId');
+              const useBiometric = status[locationId];
+              console.debug('Biometric status:', JSON.stringify(status), locationId, useBiometric, typeof useBiometric);
 
-            this.biometricService.isAvailable().then((isAvailable) => {
-              if (isAvailable) {
-                this.isBiometricAvailable = true;
-                const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
-                const locationId = localStorage.getItem('selectedLocationId');
-                const useBiometric = status[locationId];
-                console.debug('Biometric status:', JSON.stringify(status), locationId, useBiometric, typeof useBiometric);
+              if (useBiometric === true) {
+                // allowed
+                this.useBiometric = BiometricStatus.Enabled;
 
-                if (useBiometric === true) {
-                  // allowed
-                  this.useBiometric = BiometricStatus.Enabled;
-
-                  // start biometric login only if not logout
-                  if (!this.isLogout) {
-                    this.biometricLogin();
-                  }
+                // start biometric login only if not logout
+                if (!this.isLogout) {
+                  this.biometricLogin();
                 }
-                else if (useBiometric === false) {
-                  // not allowed so use the manual login
-                  this.useBiometric = BiometricStatus.Disabled;
-                }
-                else {
-                  // available so ask the user to allow it after successful login
-                  this.useBiometric = BiometricStatus.Available;
-                }
+              } else if (useBiometric === false) {
+                // not allowed so use the manual login
+                this.useBiometric = BiometricStatus.Disabled;
               } else {
-                // not available so normal login
-                this.useBiometric = BiometricStatus.NotAvailable;
+                // available so ask the user to allow it after successful login
+                this.useBiometric = BiometricStatus.Available;
               }
-            });
-          } else {
-            // not registered so do the registration
-            this.registrationCodeField?.nativeElement.focus();
-          }
-        }, 0.5);
-      });
+            } else {
+              // not available so normal login
+              this.useBiometric = BiometricStatus.NotAvailable;
+            }
+          });
+        } else {
+          // not registered so do the registration
+          this.registrationCodeField?.nativeElement.focus();
+        }
+      }, 0.5);
+    });
 
     this.updateForms();
   }
@@ -141,10 +137,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   updateForms() {
     this.registerForm = new FormGroup({
-      registerCode: this.registerCode = new FormControl('', Validators.required)
+      registerCode: (this.registerCode = new FormControl('', Validators.required))
     });
     this.loginForm = new FormGroup({
-      accessCode: this.accessCode = new FormControl('', Validators.required)
+      accessCode: (this.accessCode = new FormControl('', Validators.required))
     });
   }
 
@@ -158,8 +154,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (this.registerCode.value) {
       const re = /-/gi;
-      this.authenticationService.registerDevice(this.registerCode.value.replace(re, ''))
-        .pipe(finalize(() => this.loading = false))
+      this.authenticationService
+        .registerDevice(this.registerCode.value.replace(re, ''))
+        .pipe(finalize(() => (this.loading = false)))
         .subscribe({
           next: result => {
             this.registerCode.setValue(null);
@@ -177,11 +174,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.error('Failed to register device', error);
             if (error instanceof HttpErrorResponse && error.status === 0) {
               this.error = 'no connection';
-            }
-            else if (error && 'error' in error && 'error' in error.error) {
+            } else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
-            }
-            else {
+            } else {
               this.error = 'no connection';
             }
             this.loading = false;
@@ -194,12 +189,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   canLoginManually() {
-    return this.isRegistered && (
-      this.useBiometric === BiometricStatus.Disabled ||
-      this.useBiometric === BiometricStatus.Available ||
-      this.useBiometric === BiometricStatus.NotAvailable ||
-      this.useBiometric === BiometricStatus.AuthenticationFailed ||
-      this.isLogout
+    return (
+      this.isRegistered &&
+      (this.useBiometric === BiometricStatus.Disabled ||
+        this.useBiometric === BiometricStatus.Available ||
+        this.useBiometric === BiometricStatus.NotAvailable ||
+        this.useBiometric === BiometricStatus.AuthenticationFailed ||
+        this.isLogout)
     );
   }
 
@@ -208,12 +204,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.error = '';
 
     if (this.accessCode.value) {
-      this.authenticationService.login(this.accessCode.value)
-        .pipe(finalize(() => this.loading = false))
+      this.authenticationService
+        .login(this.accessCode.value)
+        .pipe(finalize(() => (this.loading = false)))
         .subscribe({
           next: result => {
             if (result) {
-              if (this.useBiometric === BiometricStatus.Enabled ||
+              if (
+                this.useBiometric === BiometricStatus.Enabled ||
                 this.useBiometric === BiometricStatus.NotAvailable ||
                 this.useBiometric === BiometricStatus.Disabled ||
                 this.useBiometric === BiometricStatus.AuthenticationFailed ||
@@ -221,8 +219,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               ) {
                 // already allowed or not available so just navigate forward
                 this.navigateForward();
-              }
-              else if (this.useBiometric === BiometricStatus.Available) {
+              } else if (this.useBiometric === BiometricStatus.Available) {
                 // ask the user to allow biometric
                 this.useBiometric = BiometricStatus.PendingApproval;
               }
@@ -236,11 +233,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.error('Failed to login', error);
             if (error instanceof HttpErrorResponse && error.status === 0) {
               this.error = 'no connection';
-            }
-            else if (error && 'error' in error && 'error' in error.error) {
+            } else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
-            }
-            else {
+            } else {
               this.error = 'no connection';
             }
             this.loading = false;
@@ -264,17 +259,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   canAskBiometric() {
-    return (
-      this.useBiometric === BiometricStatus.PendingApproval &&
-      !this.isLogout
-    );
+    return this.useBiometric === BiometricStatus.PendingApproval && !this.isLogout;
   }
 
   canStartLoginWithBiometric() {
-    return (
-      this.isBiometricAvailable &&
-      this.useBiometric === BiometricStatus.Enabled
-    );
+    return this.isBiometricAvailable && this.useBiometric === BiometricStatus.Enabled;
   }
 
   canLoginWithBiometric() {
@@ -284,7 +273,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   async biometricLogin() {
     console.debug('start biometric login');
     this.loading = true;
-    const verified = await this.biometricService.verifyIdentity()
+    const verified = await this.biometricService.verifyIdentity();
     if (!verified) {
       this.useBiometric = BiometricStatus.AuthenticationFailed;
       this.loading = false;
@@ -299,8 +288,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const accessCode = await this.biometricService.getAccessCode(locationId);
     if (accessCode) {
-      this.authenticationService.login(accessCode)
-        .pipe(finalize(() => this.loading = false))
+      this.authenticationService
+        .login(accessCode)
+        .pipe(finalize(() => (this.loading = false)))
         .subscribe({
           next: result => {
             console.debug('Biometric login result:', result);
@@ -314,17 +304,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.error('Failed to login', error);
             if (error instanceof HttpErrorResponse && error.status === 0) {
               this.error = 'no connection';
-            }
-            else if (error && 'error' in error && 'error' in error.error) {
+            } else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
-            }
-            else {
+            } else {
               this.error = 'no connection';
             }
           }
         });
-    }
-    else {
+    } else {
       this.useBiometric = BiometricStatus.AuthenticationFailed;
     }
   }
@@ -335,13 +322,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       const verified = await this.biometricService.verifyIdentity();
       if (!verified) {
         this.useBiometric = BiometricStatus.AuthenticationFailed;
-        return
+        return;
       }
 
       const locationId = localStorage.getItem('selectedLocationId');
       if (!locationId) {
         console.error('Location ID is not set');
-        return
+        return;
       }
 
       console.debug('Saving access code', accessCode, 'for location', locationId);
@@ -353,13 +340,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
       status[locationId] = true;
       localStorage.setItem('biometricEnabled', JSON.stringify(status));
-      
+
       this.navigateForward();
     }
   }
 
   allowBiometric(enable: boolean) {
-    let status: { [key: string]: boolean } = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+    const status: { [key: string]: boolean } = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
 
     if (!locationId) {
@@ -373,8 +360,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (enable) {
       this.saveAccessCode();
-    }
-    else {
+    } else {
       this.navigateForward();
     }
   }

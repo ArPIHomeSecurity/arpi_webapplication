@@ -8,20 +8,20 @@ import { CountdownComponent } from 'ngx-countdown';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import { StatusBar } from '@capacitor/status-bar';
 
+import { environment } from '@environments/environment';
+import { Router } from '@angular/router';
 import { VERSION } from './version';
 import { ROLE_TYPES } from './models';
-import { environment } from '@environments/environment';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { Router } from '@angular/router';
 import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  standalone: false
 })
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   disablePage = false;
   message: string = null;
 
-  locations: { name: string, id: string }[] = [];
+  locations: { name: string; id: string }[] = [];
   selectedLocationId: string;
 
   locales = [
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   countdownConfig = {
     leftTime: environment.userTokenExpiry,
     format: 'mm:ss',
-    notify: [environment.userTokenExpiry / 3],
+    notify: [environment.userTokenExpiry / 3]
   };
   isSessionValid: boolean;
   isDeviceRegistered = false;
@@ -118,29 +118,25 @@ export class AppComponent implements OnInit {
           this.sidenav.disableClose = false;
         }
       }
-    })
+    });
 
-    this.loader.displayed.subscribe(value => this.displayLoader = value);
-    this.loader.disabled.subscribe(value => this.disablePage = value);
-    this.loader.message.subscribe(message => this.message = message);
-    this.monitoring.getVersion().subscribe(version => this.versions.serverVersion = version);
-    this.authenticationService.isSessionValid()
-      .subscribe(isSessionValid => {
-        this.isSessionValid = isSessionValid;
-        if (this.isSessionValid && this.countdown) {
-          this.countdown.restart();
-        }
-      });
+    this.loader.displayed.subscribe(value => (this.displayLoader = value));
+    this.loader.disabled.subscribe(value => (this.disablePage = value));
+    this.loader.message.subscribe(message => (this.message = message));
+    this.monitoring.getVersion().subscribe(version => (this.versions.serverVersion = version));
+    this.authenticationService.isSessionValid().subscribe(isSessionValid => {
+      this.isSessionValid = isSessionValid;
+      if (this.isSessionValid && this.countdown) {
+        this.countdown.restart();
+      }
+    });
 
-    this.authenticationService.isDeviceRegistered()
-      .subscribe(isRegistered => {
-        this.isDeviceRegistered = isRegistered;
-      });
+    this.authenticationService.isDeviceRegistered().subscribe(isRegistered => {
+      this.isDeviceRegistered = isRegistered;
+    });
 
     const locations = JSON.parse(localStorage.getItem('locations')) || [];
-    this.locations = locations
-      .sort((a, b) => a.order - b.order)
-      .map(i => ({ name: i.name, id: i.id }));
+    this.locations = locations.sort((a, b) => a.order - b.order).map(i => ({ name: i.name, id: i.id }));
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
 
@@ -213,11 +209,8 @@ export class AppComponent implements OnInit {
   onConfigurationChanged(event: StorageEvent) {
     if (event.key === 'locations') {
       const locations = JSON.parse(event.newValue);
-      this.locations = locations
-        .sort((a, b) => a.order - b.order)
-        .map(i => ({ name: i.name, id: i.id }));
-    }
-    else if (event.key === 'selectedLocationId') {
+      this.locations = locations.sort((a, b) => a.order - b.order).map(i => ({ name: i.name, id: i.id }));
+    } else if (event.key === 'selectedLocationId') {
       this.selectedLocationId = event.newValue;
     }
   }
@@ -246,8 +239,7 @@ export class AppComponent implements OnInit {
       const newPath = [matches.groups.version, newLocale, matches.groups.path].join('/');
       console.log('Redirect to ' + newPath);
       window.location.pathname = newPath;
-    }
-    else {
+    } else {
       console.error('No match found for path: ', path);
     }
   }
@@ -259,9 +251,13 @@ export class AppComponent implements OnInit {
 
   handleCountdown($event) {
     if ($event.action === 'notify') {
-      this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, { duration: environment.snackDuration });
+      this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, {
+        duration: environment.snackDuration
+      });
     } else if ($event.action === 'done') {
-      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, { duration: environment.snackDuration });
+      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, {
+        duration: environment.snackDuration
+      });
       this.logout(false);
     }
   }
@@ -284,7 +280,7 @@ export class AppComponent implements OnInit {
           {
             id: 'ok',
             text: $localize`:@@unregister:Unregister`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -316,40 +312,39 @@ export class AppComponent implements OnInit {
     // mapping of local urls to documentation urls
     const urlMap = {
       '': 'en/latest/end_users/',
-      'login': 'en/latest/end_users/login/',
-      'events': 'en/latest/end_users/events/',
+      login: 'en/latest/end_users/login/',
+      events: 'en/latest/end_users/events/',
 
-      'areas': 'en/latest/end_users/areas/',
-      'area': 'en/latest/end_users/areas/#edit-area',
-      'outputs': 'en/latest/end_users/outputs/',
-      'output': 'en/latest/end_users/outputs/#edit-output',
-      'sensors': 'en/latest/end_users/sensors/',
-      'sensor': 'en/latest/end_users/sensors/#edit-area',
-      'users': 'en/latest/end_users/users/',
-      'user': 'en/latest/end_users/users/#edit-user',
-      'zones': 'en/latest/end_users/zones/',
-      'zone': 'en/latest/end_users/zones/#edit-zone',
+      areas: 'en/latest/end_users/areas/',
+      area: 'en/latest/end_users/areas/#edit-area',
+      outputs: 'en/latest/end_users/outputs/',
+      output: 'en/latest/end_users/outputs/#edit-output',
+      sensors: 'en/latest/end_users/sensors/',
+      sensor: 'en/latest/end_users/sensors/#edit-area',
+      users: 'en/latest/end_users/users/',
+      user: 'en/latest/end_users/users/#edit-user',
+      zones: 'en/latest/end_users/zones/',
+      zone: 'en/latest/end_users/zones/#edit-zone',
 
       'config/syren': 'en/latest/end_users/syren/',
       'config/keypad': 'en/latest/end_users/keypad/',
       'config/notifications/': 'en/latest/end_users/notifications/',
       'config/network': 'en/latest/end_users/network/',
-      'config/clock': 'en/latest/end_users/clock/',
-    }
+      'config/clock': 'en/latest/end_users/clock/'
+    };
 
     if (environment.isMultiLocation) {
       urlMap['setup'] = 'en/latest/end_users/locations/';
-    }
-    else {
+    } else {
       urlMap['setup'] = 'en/latest/end_users/setup/';
     }
 
     if (!(pathWithoutLanguage in urlMap)) {
-      console.error("No mapping found for: " + pathWithoutLanguage);
+      console.error('No mapping found for: ' + pathWithoutLanguage);
       pathWithoutLanguage = '';
     }
 
-    console.debug("Mapping: " + pathWithoutLanguage + " => " + urlMap[pathWithoutLanguage])
+    console.debug('Mapping: ' + pathWithoutLanguage + ' => ' + urlMap[pathWithoutLanguage]);
     // check if documentation path exists
     const http = new XMLHttpRequest();
     const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
@@ -357,8 +352,7 @@ export class AppComponent implements OnInit {
 
     try {
       http.send();
-    }
-    catch (error) {
+    } catch (error) {
       if (http.status === 404) {
         // fallback to main page
         pathWithoutLanguage = '';
@@ -370,7 +364,7 @@ export class AppComponent implements OnInit {
     // * select documentation version
 
     // open the documentation in a new window
-    const documentationUrl = 'https://docs.arpi-security.info/'
+    const documentationUrl = 'https://docs.arpi-security.info/';
     window.open(documentationUrl + urlMap[pathWithoutLanguage], 'arpi-docs');
   }
 }

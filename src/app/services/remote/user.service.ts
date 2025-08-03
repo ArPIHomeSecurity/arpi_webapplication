@@ -4,31 +4,24 @@ import { Observable, map } from 'rxjs';
 
 import { User } from '@app/models';
 
-
 @Injectable()
 export class UserService {
-  constructor(
-    private http: HttpClient
-  ) { }
-
+  constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
     // get users from api
     return this.http.get<User[]>('/api/users');
   }
 
-
   getUser(userId: number): Observable<User> {
     // get users from api
     return this.http.get<User>('/api/user/' + userId);
   }
 
-
   getUserName(userId: number): Observable<string> {
     // get users from api
     return this.http.get<string>('/api/user/' + userId + '/name');
   }
-
 
   createUser(user: User): Observable<User> {
     // set sensor from api
@@ -63,22 +56,18 @@ export class UserService {
   }
 
   generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string> {
-    return this.http.post('/api/user/' + userId + '/ssh_key', { keyType, passphrase })
-      .pipe(map((res: any) => res));
+    return this.http.post('/api/user/' + userId + '/ssh_key', { keyType, passphrase }).pipe(map((res: any) => res));
   }
 
   setPublicKey(userId: number, publicKey: string): Observable<boolean> {
-    return this.http.put('/api/user/' + userId + '/ssh_key', { publicKey })
-      .pipe(map((res: any) => res));
+    return this.http.put('/api/user/' + userId + '/ssh_key', { publicKey }).pipe(map((res: any) => res));
   }
 
   hasSshKey(userId: number): Observable<boolean> {
-    return this.http.get('/api/user/' + userId + '/has_ssh_key')
-      .pipe(map((res: any) => res));
+    return this.http.get('/api/user/' + userId + '/has_ssh_key').pipe(map((res: any) => res));
   }
 
   deleteSshKey(userId: number): Observable<boolean> {
-    return this.http.delete('/api/user/' + userId + '/ssh_key')
-      .pipe(map((res: any) => res));
+    return this.http.delete('/api/user/' + userId + '/ssh_key').pipe(map((res: any) => res));
   }
 }

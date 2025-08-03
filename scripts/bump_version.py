@@ -11,17 +11,27 @@ from logging import INFO, basicConfig, info
 VERSION_FILE = "src/app/version.ts"
 
 VERSION_TEMPLATE = 'export const VERSION = "v%s.%s.%s%s:%s"\n'
-VERSION_PARSER = re.compile(r"v(\d+)\.(\d+)\.(\d+)_(.*):([a-z0-9]{7})")
+VERSION_PARSER = re.compile(r"v(\d+)\.(\d+)\.(\d+)(?:_(.+))?:([a-z0-9]{7})")
 
 
 def load_version() -> tuple:
     """Load the current version from the version file"""
     with open(VERSION_FILE, "r", encoding="utf-8") as f:
         raw_text = f.read()
-        raw_version = raw_text.replace("export const VERSION = ", "").replace('"', "")
+        raw_version = (
+            raw_text.replace("export const VERSION = ", "")
+            .replace('"', "")
+            .replace("'", "")
+            .replace(";", "")
+            .strip()
+        )
         info("Previous raw version: %s", raw_version)
 
-        major, minor, patch, pre_release, commit = VERSION_PARSER.match(raw_version).groups()
+        match = VERSION_PARSER.match(raw_version)
+        info("Parsed raw version: %s", match)
+
+        major, minor, patch, pre_release, commit = match.groups()
+        pre_release = pre_release or ""
         info(
             "Parsed version: Major: %s, Minor: %s, Patch: %s, Pre-release: %s, Commit: %s",
             major,
@@ -88,10 +98,10 @@ def bump_version(version_type: str, pre_release: str = None):
                 # parse the versionCode
                 version_code = int(line.split()[1].strip('"'))
                 version_code += 1
-                lines[i] = f'{line[:line.index("versionCode")]}versionCode {version_code}\n'
+                lines[i] = f"{line[: line.index('versionCode')]}versionCode {version_code}\n"
             if "versionName" in line:
                 lines[i] = (
-                    f'{line[:line.index("versionName")]}versionName "v{major}.{minor}.{patch}{f"_{pre_release}" if pre_release else ""}"\n'
+                    f'{line[: line.index("versionName")]}versionName "v{major}.{minor}.{patch}{f"_{pre_release}" if pre_release else ""}"\n'
                 )
 
     with open("android/app/build.gradle", "w", encoding="utf-8") as f:

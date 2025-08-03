@@ -1,3 +1,5 @@
+@use "@angular/material" as mat;
+
 @mixin controller-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   mat-button-toggle-group {
     width: 100%;

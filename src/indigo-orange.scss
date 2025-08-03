@@ -1,56 +1,71 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
+@use "sass:map";
+@use "app/app.component.scss" as app;
+@use "app/components/system-state/system-state.component.scss" as system-state;
+@use "app/components/sensor/sensor.scss" as sensor;
+@use "app/components/controller/controller.scss" as controller;
+@use "app/components/output/output.scss" as output;
+@use "app/pages/home/home.component.scss" as home;
+@use "app/pages/area/area-list.component.scss" as area-list;
+@use "app/pages/sensor/sensor-list.component.scss" as sensor-list;
+@use "app/pages/output/output-list.component.scss" as output-list;
 
-@include mat.core();
-@import 'app/app.component.scss';
-@import 'app/components/system-state/system-state.component.scss';
-@import 'app/components/sensor/sensor.scss';
-@import 'app/components/controller/controller.scss';
-@import 'app/components/output/output.scss';
-@import 'app/pages/home/home.component.scss';
-@import 'app/pages/area/area-list.component.scss';
-@import 'app/pages/sensor/sensor-list.component.scss';
-@import 'app/pages/output/output-list.component.scss';
+@include mat.elevation-classes();
+@include mat.app-background();
 
+$argus-light-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 100, 800),
+      accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+      warn: mat.m2-define-palette(mat.$m2-red-palette)
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0
+  )
+);
 
-$argus-light-theme: mat.m2-define-light-theme((
-  color: (
-    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 100, 800),
-    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
-    warn: mat.m2-define-palette(mat.$m2-red-palette),
-  ),
-  typography: mat.m2-define-typography-config(),
-  density: 0,
-));
+$argus-dark-theme: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: mat.m2-define-palette(mat.$m2-indigo-palette, 300),
+      accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
+      warn: mat.m2-define-palette(mat.$m2-red-palette, 400)
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0
+  )
+);
 
-$argus-dark-theme: mat.m2-define-dark-theme((
-  color: (
-    primary: mat.m2-define-palette(mat.$m2-indigo-palette, 300),
-    accent: mat.m2-define-palette(mat.$m2-orange-palette, A400, A100, A700),
-    warn: mat.m2-define-palette(mat.$m2-red-palette, 400),
-  ),
-  typography: mat.m2-define-typography-config(),
-  density: 0,
-));
-
+// Include the common styles for Angular Material (typography and density only)
+@include mat.all-component-typographies($argus-light-theme);
+@include mat.all-component-densities($argus-light-theme);
 
 .argus-light-theme {
   $argus-ok: mat.m2-define-palette(mat.$m2-green-palette);
   $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
   $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
-  @include mat.all-component-themes($argus-light-theme);
-  @include app-theme($argus-light-theme, map-get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
-  @include system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  
-  button.drag-handle.cdk-focused, button.drag-handle:hover {
-    color: mat.m2-get-color-from-palette(map-get($argus-light-theme, accent));
+  @include mat.all-component-colors($argus-light-theme);
+  @include app.app-theme(
+    $argus-light-theme,
+    map.get($argus-light-theme, primary),
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include system-state.system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor.sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home.home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller.controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output.output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include area-list.area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list.output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+
+  button.drag-handle.cdk-focused,
+  button.drag-handle:hover {
+    color: mat.m2-get-color-from-palette(map.get($argus-light-theme, accent));
   }
 }
 
@@ -59,20 +74,20 @@ $argus-dark-theme: mat.m2-define-dark-theme((
   $argus-alert: mat.m2-define-palette(mat.$m2-red-palette);
   $argus-warn: mat.m2-define-palette(mat.$m2-orange-palette);
 
-  @include mat.all-component-themes($argus-dark-theme);
+  @include mat.all-component-colors($argus-dark-theme);
   @include mat.toolbar-color($argus-light-theme);
-  @include app-theme($argus-dark-theme, map-get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
-  @include system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  
-  button.drag-handle.cdk-focused, button.drag-handle:hover {
-    color: mat.m2-get-color-from-palette(map-get($argus-dark-theme, accent));
+  @include app.app-theme($argus-dark-theme, map.get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
+  @include system-state.system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor.sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home.home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller.controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output.output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include area-list.area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list.output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+
+  button.drag-handle.cdk-focused,
+  button.drag-handle:hover {
+    color: mat.m2-get-color-from-palette(map.get($argus-dark-theme, accent));
   }
 }
-

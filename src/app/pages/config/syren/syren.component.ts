@@ -13,15 +13,13 @@ import { forkJoin } from 'rxjs';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
   templateUrl: 'syren.component.html',
   styleUrls: ['syren.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
-
 export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   syrenForm: FormGroup;
   syren: Option;
   sensitivity: Option;
@@ -35,7 +33,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     @Inject('ConfigurationService') public configurationService: ConfigurationService,
 
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);
   }
@@ -57,14 +55,12 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   updateForm() {
     const silentAlertValue = getValue(this.syren.value, 'silent', null);
-    var silentAlert = null;
+    let silentAlert = null;
     if (silentAlertValue === null) {
       silentAlert = 'undefined';
-    }
-    else if (silentAlertValue === true) {
+    } else if (silentAlertValue === true) {
       silentAlert = 'silent';
-    }
-    else if (silentAlertValue === false) {
+    } else if (silentAlertValue === false) {
       silentAlert = 'loud';
     }
 
@@ -75,17 +71,19 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
       sensitivity: new FormControl(),
       monitorPeriod: new FormControl(getValue(this.sensitivity.value, 'monitor_period', null)),
-      monitorThreshold: new FormControl(getValue(this.sensitivity.value, 'monitor_threshold', null)),
+      monitorThreshold: new FormControl(getValue(this.sensitivity.value, 'monitor_threshold', null))
     });
 
-    if (getValue(this.sensitivity.value, 'monitor_period', null) != null && getValue(this.sensitivity.value, 'monitor_threshold', null) != null) {
+    if (
+      getValue(this.sensitivity.value, 'monitor_period', null) != null &&
+      getValue(this.sensitivity.value, 'monitor_threshold', null) != null
+    ) {
       this.syrenForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
       this.syrenForm.controls.monitorPeriod.enable();
       this.syrenForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
       this.syrenForm.controls.monitorThreshold.enable();
       this.syrenForm.controls.sensitivity.setValue(true);
-    }
-    else {
+    } else {
       this.syrenForm.controls.monitorPeriod.clearValidators();
       this.syrenForm.controls.monitorPeriod.disable();
       this.syrenForm.controls.monitorThreshold.clearValidators();
@@ -110,14 +108,12 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
 
   prepareSyren(): any {
     const formModel = this.syrenForm.value;
-    var silentAlert = null;
+    let silentAlert = null;
     if (formModel.silentAlert === 'undefined') {
       silentAlert = null;
-    }
-    else if (formModel.silentAlert === 'silent') {
+    } else if (formModel.silentAlert === 'silent') {
       silentAlert = true;
-    }
-    else if (formModel.silentAlert === 'loud') {
+    } else if (formModel.silentAlert === 'loud') {
       silentAlert = false;
     }
 
@@ -142,8 +138,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
       this.syrenForm.controls.monitorPeriod.enable();
       this.syrenForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
       this.syrenForm.controls.monitorThreshold.enable();
-    }
-    else {
+    } else {
       this.syrenForm.controls.monitorPeriod.clearValidators();
       this.syrenForm.controls.monitorPeriod.setValue(null);
       this.syrenForm.controls.monitorPeriod.disable();
@@ -157,7 +152,7 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
     const duration = 5;
     this.configurationService.testSyren(duration).subscribe();
     this.testInProgress = true;
-    setTimeout(() => this.testInProgress = false, duration * 1000);
+    setTimeout(() => (this.testInProgress = false), duration * 1000);
   }
 
   onSubmit() {
@@ -170,7 +165,10 @@ export class SyrenComponent extends ConfigurationBaseComponent implements OnInit
       .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: _ => this.updateComponent(),
-        error: _ => this.snackBar.open($localize`:@@failed update:Failed to update!`, null, { duration: environment.snackDuration })
+        error: _ =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       });
   }
 }

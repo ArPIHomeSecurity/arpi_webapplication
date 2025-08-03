@@ -8,13 +8,14 @@ import { environment } from '@environments/environment';
 @Component({
   selector: 'component-area',
   templateUrl: './area.html',
-  styleUrls: ['./area.scss']
+  styleUrls: ['./area.scss'],
+  standalone: false
 })
 export class AreaComponent implements OnInit {
   @Input() area: Area;
   @Input() delays: number[];
   @Input() sensors: Sensor[];
-  @Input("data") sensorTypes: SensorType[];
+  @Input('data') sensorTypes: SensorType[];
   @Input() monitoringState: MONITORING_STATE;
 
   armTypes: any = ARM_TYPE;
@@ -24,10 +25,8 @@ export class AreaComponent implements OnInit {
   constructor(
     @Inject('AreaService') private areaService: AreaService,
 
-    private snackBar: MatSnackBar,
-  ) {
-
-  }
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.expanded = localStorage.getItem('expanded_' + this.area.id) === 'true';
@@ -35,14 +34,23 @@ export class AreaComponent implements OnInit {
 
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
-      this.areaService.arm(this.area.id, ARM_TYPE.AWAY)
-        .subscribe(() => this.snackBar.open($localize`:@@area armed away:Area armed away`, null, { duration: environment.snackDuration }));
+      this.areaService.arm(this.area.id, ARM_TYPE.AWAY).subscribe(() =>
+        this.snackBar.open($localize`:@@area armed away:Area armed away`, null, {
+          duration: environment.snackDuration
+        })
+      );
     } else if (armType === ARM_TYPE.STAY) {
-      this.areaService.arm(this.area.id, ARM_TYPE.STAY)
-        .subscribe(() => this.snackBar.open($localize`:@@area armed stay:Area armed stay`, null, { duration: environment.snackDuration }));
+      this.areaService.arm(this.area.id, ARM_TYPE.STAY).subscribe(() =>
+        this.snackBar.open($localize`:@@area armed stay:Area armed stay`, null, {
+          duration: environment.snackDuration
+        })
+      );
     } else if (armType === ARM_TYPE.DISARMED) {
-      this.areaService.disarm(this.area.id)
-        .subscribe(() => this.snackBar.open($localize`:@@area disarmed:Area disarmed`, null, { duration: environment.snackDuration }));
+      this.areaService
+        .disarm(this.area.id)
+        .subscribe(() =>
+          this.snackBar.open($localize`:@@area disarmed:Area disarmed`, null, { duration: environment.snackDuration })
+        );
     }
   }
 
@@ -56,9 +64,6 @@ export class AreaComponent implements OnInit {
   }
 
   canBeArmed(): boolean {
-    return (
-      this.area.armState === ARM_TYPE.DISARMED &&
-      this.monitoringState === MONITORING_STATE.READY
-    )
+    return this.area.armState === ARM_TYPE.DISARMED && this.monitoringState === MONITORING_STATE.READY;
   }
 }

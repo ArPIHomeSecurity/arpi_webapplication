@@ -9,22 +9,27 @@ import { finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
-import { AuthenticationService, EventService, LoaderService, SensorService, AreaService, OutputService } from '@app/services';
+import {
+  AuthenticationService,
+  EventService,
+  LoaderService,
+  SensorService,
+  AreaService,
+  OutputService
+} from '@app/services';
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 
 const scheduleMicrotask = Promise.resolve(null);
 
-
 @Component({
   templateUrl: 'area-list.component.html',
   styleUrls: ['area-list.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
-
 export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-
   CONFIG = 0;
   SENSORS = 1;
 
@@ -67,8 +72,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
-    if (this.isDragging)
-      return;
+    if (this.isDragging) return;
 
     forkJoin({
       areas: this.areaService.getAreas(),
@@ -82,13 +86,12 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
         this.sensors = results.sensors;
         this.loader.display(false);
         this.loader.disable(false);
-      }
-      );
+      });
   }
 
   getSensors(areaId: number): Sensor[] {
     const results: Sensor[] = [];
-    this.sensors.forEach((sensor) => {
+    this.sensors.forEach(sensor => {
       if (sensor.areaId === areaId) {
         results.push(sensor);
       }
@@ -99,7 +102,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
 
   getOutputs(areaId: number): Output[] {
     const results: Output[] = [];
-    this.outputs.forEach((output) => {
+    this.outputs.forEach(output => {
       if (output.areaId === areaId) {
         results.push(output);
       }
@@ -123,7 +126,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -137,17 +140,25 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.areaService.deleteArea(areaId)
+          this.areaService
+            .deleteArea(areaId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, {
+                  duration: environment.snackDuration
+                });
                 this.updateComponent();
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });

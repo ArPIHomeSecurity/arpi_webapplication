@@ -10,7 +10,15 @@ import { finalize } from 'rxjs/operators';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '@app/models';
-import { AreaService, AuthenticationService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
+import {
+  AreaService,
+  AuthenticationService,
+  EventService,
+  LoaderService,
+  MonitoringService,
+  SensorService,
+  ZoneService
+} from '@app/services';
 
 import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
@@ -20,9 +28,9 @@ const scheduleMicrotask = Promise.resolve(null);
 @Component({
   templateUrl: 'sensor-list.component.html',
   styleUrls: ['sensor-list.component.scss'],
-  providers: []
+  providers: [],
+  standalone: false
 })
-
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false;
 
@@ -60,8 +68,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
     // TODO: update only one sensor instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService.listen('sensors_state_change')
-        .subscribe(_ => this.updateComponent())
+      this.eventService.listen('sensors_state_change').subscribe(_ => this.updateComponent())
     );
   }
 
@@ -70,8 +77,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   updateComponent() {
-    if (this.isDragging)
-      return;
+    if (this.isDragging) return;
 
     forkJoin({
       sensors: this.sensorService.getSensors(this.onlyAlerting),
@@ -87,8 +93,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.areas = results.areas;
         this.loader.display(false);
         this.loader.disable(false);
-      }
-      );
+      });
   }
 
   getZoneName(zoneId: number) {
@@ -130,7 +135,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
           {
             id: 'ok',
             text: $localize`:@@delete:Delete`,
-            color: 'warn',
+            color: 'warn'
           },
           {
             id: 'cancel',
@@ -144,17 +149,25 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       if (result === 'ok') {
         if (this.monitoringState === MONITORING_STATE.READY) {
           this.loader.disable(true);
-          this.sensorService.deleteSensor(sensorId)
+          this.sensorService
+            .deleteSensor(sensorId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, { duration: environment.snackDuration });
+                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, {
+                  duration: environment.snackDuration
+                });
                 this.updateComponent();
               },
-              error: _ => this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, { duration: environment.snackDuration })
+              error: _ =>
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             });
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
+            duration: environment.snackDuration
+          });
         }
       }
     });
@@ -163,8 +176,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   onResetReferences(sensorId: number = null) {
     if (sensorId) {
       this.sensorService.resetReference(sensorId);
-    }
-    else {
+    } else {
       this.sensorService.resetReferences();
     }
   }
@@ -185,4 +197,3 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     setTimeout(() => this.updateComponent(), 500);
   }
 }
-

@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { delay, map, startWith } from 'rxjs/operators';
 
-import { UserService } from './user.service';
 import { User } from '@app/models';
 import { environment } from '@environments/environment';
 import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from '@app/utils';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthenticationService {
-
   loggedInAs: User;
   registeredUserId: number;
 
@@ -38,7 +37,7 @@ export class AuthenticationService {
     return of(false).pipe(delay(environment.delay));
   }
 
-  logout(manualAction: boolean = true): void {
+  logout(manualAction = true): void {
     this.loggedInAs = null;
     this.updateUserToken(null);
     sessionStorage.removeItem('AuthenticationService.loggedInAs');
@@ -100,16 +99,16 @@ export class AuthenticationService {
       this.isDeviceRegisteredSubject.next(true);
     }
 
-    return of( !!tmpUser ).pipe(delay(environment.delay));
+    return of(!!tmpUser).pipe(delay(environment.delay));
   }
 
-  unRegisterDevice(){
+  unRegisterDevice() {
     this.registeredUserId = -1;
     setLocalValue('AuthenticationService.registeredForUser', this.registeredUserId);
     this.isDeviceRegisteredSubject.next(false);
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >=0));
+    return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >= 0));
   }
 }

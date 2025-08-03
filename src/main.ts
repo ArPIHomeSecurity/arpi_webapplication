@@ -1,10 +1,9 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import * as moment from 'moment';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import * as moment from 'moment';
-
 
 let locale = localStorage.getItem('localeId');
 console.log('Selected language: ', locale);
@@ -24,12 +23,10 @@ if (matches) {
   if (newPath !== location.pathname) {
     console.log('Redirect to ' + newPath);
     location.pathname = newPath;
-  }
-  else {
+  } else {
     console.log('No need to redirect');
   }
-}
-else {
+} else {
   console.error('Path does not match', location.pathname);
 }
 

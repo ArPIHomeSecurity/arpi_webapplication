@@ -1,17 +1,29 @@
 <mat-card class="sensor-component">
   <mat-card-header>
-    <div mat-card-avatar [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{'alerting': sensor.alert && sensor.enabled === true , 'disabled': sensor.enabled === false}">
+    <div
+      mat-card-avatar
+      [ngSwitch]="sensor.typeId"
+      class="sensor-image"
+      [ngClass]="{'alerting': sensor.alert && sensor.enabled === true , 'disabled': sensor.enabled === false}"
+    >
       <img *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
       <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
       <img *ngSwitchCase="3" src="assets/images/sensor_open.png" />
       <img *ngSwitchCase="4" src="assets/images/sensor_break.png" />
-      <img *ngSwitchDefault src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}" />
+      <img
+        *ngSwitchDefault
+        src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"
+      />
     </div>
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
       <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
-      
-      <div *ngIf="sensor.enabled === true && delay != null" class="sensor-state" [ngClass]="{'enabled': sensor.enabled}">
+
+      <div
+        *ngIf="sensor.enabled === true && delay != null"
+        class="sensor-state"
+        [ngClass]="{'enabled': sensor.enabled}"
+      >
         <span *ngIf="sensor.enabled && delay > 0" class="delay">{{delay}}</span>
       </div>
     </mat-card-title-group>

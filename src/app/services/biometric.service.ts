@@ -1,6 +1,4 @@
-
 export interface BiometricService {
-
   isAvailable(): Promise<boolean>;
 
   getAccessCode(server: string): Promise<number | undefined>;

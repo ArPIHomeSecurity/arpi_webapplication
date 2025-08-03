@@ -5,13 +5,9 @@ import { map } from 'rxjs/operators';
 
 import { ARM_TYPE, Area, armType2String, string2ArmType } from '@app/models';
 
-
 @Injectable()
 export class AreaService {
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   getAreas(): Observable<Area[]> {
     // get areas from api
@@ -21,7 +17,8 @@ export class AreaService {
           rawArea.armState = string2ArmType(rawArea.armState);
         }
         return rawAreas as Area[];
-      }));
+      })
+    );
   }
 
   getArea(areaId: number): Observable<Area> {
@@ -32,7 +29,7 @@ export class AreaService {
   createArea(area: Area): Observable<Area> {
     // convert arm state to string
     const data: Object = area;
-    data["armState"] = armType2String(area.armState);
+    data['armState'] = armType2String(area.armState);
     return this.http.post<Area>('/api/areas/', data);
   }
 
@@ -47,16 +44,13 @@ export class AreaService {
   }
 
   arm(areaId: number, armtype: ARM_TYPE): Observable<Object> {
-    let params = new HttpParams()
-      .set('type', armType2String(armtype))
-      .set('area_id', areaId)
+    const params = new HttpParams().set('type', armType2String(armtype)).set('area_id', areaId);
 
     return this.http.put<Area[]>('/api/area/arm', null, { params });
   }
 
   disarm(areaId: number): Observable<Object> {
-    let params = new HttpParams()
-      .set('area_id', areaId)
+    const params = new HttpParams().set('area_id', areaId);
 
     return this.http.put('/api/area/disarm', null, { params });
   }

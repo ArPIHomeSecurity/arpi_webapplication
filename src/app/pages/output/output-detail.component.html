@@ -4,81 +4,152 @@
       <form [formGroup]="outputForm" (ngSubmit)="onSubmit()" novalidate class="column">
         <mat-form-field>
           <mat-label i18n="@@name">Name</mat-label>
-          <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required>
+          <input
+            matInput
+            i18n-placeholder="@@name"
+            placeholder="Name"
+            formControlName="name"
+            required
+          />
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label i18n="@@description">Description</mat-label>
-          <textarea matInput i18n-placeholder="@@description" placeholder="Description" formControlName="description"
-            required></textarea>
+          <textarea
+            matInput
+            i18n-placeholder="@@description"
+            placeholder="Description"
+            formControlName="description"
+            required
+          ></textarea>
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label i18n="@@output channel">Channel</mat-label>
-          <mat-select formControlName="channel" i18n-placeholder="@@output channel" placeholder="Channel">
-            <mat-option *ngFor="let option of this.channelOptions" [value]="option.channel"
-              [disabled]="option.output_name || option.channel == SYREN_CHANNEL">
+          <mat-select
+            formControlName="channel"
+            i18n-placeholder="@@output channel"
+            placeholder="Channel"
+          >
+            <mat-option
+              *ngFor="let option of this.channelOptions"
+              [value]="option.channel"
+              [disabled]="option.output_name || option.channel == SYREN_CHANNEL"
+            >
               <span *ngIf="option.channel === -1" i18n="@@output disconnected">Disconnected</span>
               <span *ngIf="option.label !== ''">
                 <span>{{ option.label }}</span>
-                <span *ngIf="option.output_name"> - {{option.output_name}}</span>
+                <span *ngIf="option.output_name">- {{ option.output_name }}</span>
               </span>
             </mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <mat-form-field>
           <mat-label i18n="@@output trigger">Trigger</mat-label>
-          <mat-select formControlName="triggerType" i18n-placeholder="@@output trigger" placeholder="Trigger"
-            (selectionChange)="onSelectTriggerType($event.value)">
-            <mat-option *ngFor="let triggerType of outputTriggerTypes | keyvalue" [value]="triggerType.value">
-              <span *ngIf="triggerType.value === outputTriggerTypes.AREA" i18n="@@output area">Area</span>
-              <span *ngIf="triggerType.value === outputTriggerTypes.SYSTEM" i18n="@@output system">System</span>
-              <span *ngIf="triggerType.value === outputTriggerTypes.BUTTON" i18n="@@output button">Button</span>
+          <mat-select
+            formControlName="triggerType"
+            i18n-placeholder="@@output trigger"
+            placeholder="Trigger"
+            (selectionChange)="onSelectTriggerType($event.value)"
+          >
+            <mat-option
+              *ngFor="let triggerType of outputTriggerTypes | keyvalue"
+              [value]="triggerType.value"
+            >
+              <span *ngIf="triggerType.value === outputTriggerTypes.AREA" i18n="@@output area">
+                Area
+              </span>
+              <span *ngIf="triggerType.value === outputTriggerTypes.SYSTEM" i18n="@@output system">
+                System
+              </span>
+              <span *ngIf="triggerType.value === outputTriggerTypes.BUTTON" i18n="@@output button">
+                Button
+              </span>
             </mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <mat-form-field id="areaId" *ngIf="output.triggerType == outputTriggerTypes.AREA">
           <mat-label i18n="@@area">Area</mat-label>
           <mat-select formControlName="areaId" i18n-placeholder="@@area" placeholder="Area">
-            <mat-option *ngFor="let area of areas" [value]="area.id">{{area.name}}</mat-option>
+            <mat-option *ngFor="let area of areas" [value]="area.id">{{ area.name }}</mat-option>
           </mat-select>
         </mat-form-field>
-  
+
         <div class="row">
           <mat-form-field>
             <mat-label i18n="@@output delay">Delay [s]</mat-label>
-            <input matInput type="number" i18n-placeholder="@@output delay" placeholder="Delay [s]" formControlName="delay" required>
-            <mat-error *ngIf="outputForm.get('delay').invalid">{{outputForm.get('delay').getError('invalid')}}</mat-error>
+            <input
+              matInput
+              type="number"
+              i18n-placeholder="@@output delay"
+              placeholder="Delay [s]"
+              formControlName="delay"
+              required
+            />
+            <mat-error *ngIf="outputForm.get('delay').invalid">
+              {{ outputForm.get('delay').getError('invalid') }}
+            </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label i18n="@@output duration">Duration [s]</mat-label>
-            <input matInput type="number" i18n-placeholder="@@output duration" placeholder="Duration [s]" formControlName="duration" required>
-            <mat-error *ngIf="outputForm.get('duration').invalid">{{outputForm.get('duration').getError('invalid')}}</mat-error>
+            <input
+              matInput
+              type="number"
+              i18n-placeholder="@@output duration"
+              placeholder="Duration [s]"
+              formControlName="duration"
+              required
+            />
+            <mat-error *ngIf="outputForm.get('duration').invalid">
+              {{ outputForm.get('duration').getError('invalid') }}
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="row">
-          <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">Enabled</mat-checkbox>
-          
-          <mat-checkbox formControlName="defaultState" color="primary" i18n="@@output default state">Active default</mat-checkbox>
+          <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">
+            Enabled
+          </mat-checkbox>
+
+          <mat-checkbox
+            formControlName="defaultState"
+            color="primary"
+            i18n="@@output default state"
+          >
+            Active default
+          </mat-checkbox>
         </div>
-  
       </form>
     </mat-card-content>
 
     <mat-divider></mat-divider>
 
     <mat-card-actions align="end">
-      <button mat-icon-button color="primary" [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSubmit()"><mat-icon>save</mat-icon></button>
-      <button *ngIf="outputId > 0" mat-icon-button color="warn" type="button" (click)="openDeleteDialog(output.id)"
-        [disabled]="monitoringState != monitoringStates.READY"><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()"><mat-icon>cancel</mat-icon></button>
+      <button
+        mat-icon-button
+        color="primary"
+        [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
+        (click)="onSubmit()"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <button
+        *ngIf="outputId > 0"
+        mat-icon-button
+        color="warn"
+        type="button"
+        (click)="openDeleteDialog(output.id)"
+        [disabled]="monitoringState != monitoringStates.READY"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" type="button" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+      </button>
     </mat-card-actions>
-  
   </mat-card>
 
   <div *ngIf="output === null">

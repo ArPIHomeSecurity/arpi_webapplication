@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@use "@angular/material" as mat;
 
 @mixin sensor-list-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .sensor-card {
