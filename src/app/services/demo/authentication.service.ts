@@ -73,6 +73,10 @@ export class AuthenticationService {
     return this.loggedInAs;
   }
 
+  getUserId(): number {
+    return this.loggedInAs?.id;
+  }
+
   updateUserToken(token: string) {
     this.sessionValidSubject.next(!!this.loggedInAs);
   }

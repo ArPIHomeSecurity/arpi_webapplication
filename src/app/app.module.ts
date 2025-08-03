@@ -1,22 +1,21 @@
 // animation for material design
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-import { CountdownModule } from 'ngx-countdown';
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { DigitOnlyModule } from '@uiowa/digit-only';
-import { environment } from '@environments/environment';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { BrowserModule } from '@angular/platform-browser';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { environment } from '@environments/environment';
+import { DigitOnlyModule } from '@uiowa/digit-only';
+import { CountdownModule } from 'ngx-countdown';
 import { AppComponent } from './app.component';
-
 
 // application components
 import { MessageComponent } from './components/message/message.component';
@@ -52,7 +51,6 @@ import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
 import { configureBackend } from './utils';
-
 
 // material components
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -197,11 +195,16 @@ import { CapacitorService } from './services/capacitor.service';
       multi: true
     },
     provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: () => configureBackend
-    }
+    // initialize backend configuration if not in demo mode
+    ...(environment.demo
+      ? []
+      : [
+          {
+            provide: APP_INITIALIZER,
+            multi: true,
+            useFactory: () => configureBackend
+          }
+        ])
   ]
 })
 export class AppModule {}

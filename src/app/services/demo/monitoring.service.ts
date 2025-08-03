@@ -8,14 +8,14 @@ import {
   ARM_TYPE,
   armType2String,
   Clocks,
-  Sensor,
   MONITORING_STATE,
   monitoringState2String,
-  POWER_STATE
+  POWER_STATE,
+  Sensor
 } from '@app/models';
-import { environment } from '@environments/environment';
-import { getSessionValue, setSessionValue } from '@app/utils';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { getSessionValue, setSessionValue } from '@app/utils';
+import { environment } from '@environments/environment';
 import { AlertService } from './alert.service';
 import { AreaService } from './area.service';
 import { ArmService } from './arm.service';
@@ -181,12 +181,13 @@ export class MonitoringService {
       hw: this.datetime,
       network: this.datetime,
       system: this.datetime,
-      timezone: this.timeZone
-        // update is seconds since this.datetime
-        uptime: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
-        uptime_monitor: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
-        uptime_nginx: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
-        uptime_server: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+      timezone: this.timeZone,
+
+      // update is seconds since this.datetime
+      uptime: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+      uptime_monitor: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+      uptime_nginx: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000,
+      uptime_server: (new Date().getTime() - new Date(this.datetime).getTime()) / 1000
     }).pipe(
       delay(environment.delay),
       map(_ => {
