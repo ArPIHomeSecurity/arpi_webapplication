@@ -158,10 +158,10 @@
         Device registration
       </button>
       <button
-        *ngIf="user.role === roleTypes.ADMIN"
+        *ngIf="canManageCards"
         mat-menu-item
         color="primary"
-        [disabled]="!canManageCards || disabled"
+        [disabled]="disabled"
         (click)="onClickRegisterCard()"
         i18n="@@user register card button"
       >
@@ -188,7 +188,7 @@
           [disabled]="disabled"
           (click)="enableBiometricLogin()"
         >
-          <span i18n="@@user delete">Enable biometric login</span>
+          <span i18n="@@user enable biometric">Enable biometric login</span>
         </button>
         <button
           *ngIf="biometricEnabled()"
@@ -197,7 +197,7 @@
           [disabled]="disabled"
           (click)="disableBiometricLogin()"
         >
-          <span i18n="@@user delete">Disable biometric login</span>
+          <span i18n="@@user disable biometric">Disable biometric login</span>
         </button>
       </div>
     </mat-menu>
