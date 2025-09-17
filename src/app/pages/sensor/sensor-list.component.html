@@ -13,27 +13,30 @@
       class="sensor-card container-item"
       [ngClass]="{ disabled: !sensor.enabled }"
     >
-      <mat-card-content class="row">
-        <div [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{ alerting: sensor.alert }">
-          <img *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
-          <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
-          <img *ngSwitchCase="3" src="assets/images/sensor_open.png" />
-          <img *ngSwitchCase="4" src="assets/images/sensor_break.png" />
-          <img
-            *ngSwitchDefault
-            src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
-          />
-        </div>
-
-        <div class="attributes">
-          <mat-card-title-group>
-            <mat-card-title>
-              {{ sensor.name }}
-            </mat-card-title>
+      <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title>{{ sensor.name }}</mat-card-title>
+            <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
           </mat-card-title-group>
+          <div [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{ alerting: sensor.alert }">
+            <img mat-card-sm-image *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
+            <img mat-card-sm-image *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
+            <img mat-card-sm-image *ngSwitchCase="3" src="assets/images/sensor_open.png" />
+            <img mat-card-sm-image *ngSwitchCase="4" src="assets/images/sensor_break.png" />
+            <img
+              mat-card-sm-image
+              *ngSwitchDefault
+              src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
+            />
+          </div>
+      </mat-card-header>
 
-          <div class="row">
-            <mat-list class="attribute-list column first">
+      <mat-divider></mat-divider>
+
+      <mat-card-content class="row">
+        <div class="attributes">
+          <div class="attributes-row">
+            <mat-list class="attribute-list first">
               <mat-list-item>
                 <mat-icon matListItemIcon [ngSwitch]="sensor.typeId">
                   <img
@@ -122,7 +125,7 @@
               </mat-list-item>
             </mat-list>
 
-            <mat-list class="attribute-list column second">
+            <mat-list class="attribute-list second">
               <mat-list-item>
                 <mat-icon matListItemIcon class="material-icons-outlined">crop</mat-icon>
                 <span class="long-field">{{ getAreaName(sensor.areaId) }}</span>
@@ -183,15 +186,8 @@
         </div>
       </mat-card-content>
 
-      <mat-card-content *ngIf="sensor.description">
-        <mat-card-title-group>
-          <mat-card-subtitle>
-            {{ sensor.description }}
-          </mat-card-subtitle>
-        </mat-card-title-group>
-      </mat-card-content>
-
       <mat-divider *ngIf="userCanEdit()"></mat-divider>
+
       <mat-card-actions *ngIf="userCanEdit()">
         <!-- drag and drop icon button-->
         <button

@@ -8,9 +8,21 @@
 
     .attributes {
       width: 100%;
+      overflow: hidden;
 
-      .row {
+      .mdc-list {
+        padding: 0 !important;
+      }
+
+      .attributes-row {
+        display: flex;
+        flex-direction: column;
         gap: 0px;
+
+        // Responsive breakpoint for mobile (< 768px)
+        @media (min-width: 768px) {
+          flex-direction: row;
+        }
       }
     }
 
@@ -19,14 +31,7 @@
     }
 
     .sensor-image {
-      max-width: 130px;
-      margin: auto 10px !important;
       border-radius: 5px;
-
-      img {
-        width: 100%;
-        min-width: 50px;
-      }
     }
 
     .sensor-image.alerting {
@@ -64,16 +69,21 @@
         }
       }
 
-      &.first {
-        width: 40%;
-        margin-top: 0px;
-        margin-bottom: auto;
-      }
+      margin-top: 0px;
+      margin-bottom: auto;
 
-      &.second {
-        width: 60%;
-        margin-top: 0px;
-        margin-bottom: auto;
+      // Mobile: full width for both columns
+      flex: 1 1 100%;
+
+      // Desktop: 40% and 60% split
+      @media (min-width: 768px) {
+        &.first {
+          flex: 0 0 40%;
+        }
+
+        &.second {
+          flex: 0 0 60%;
+        }
       }
     }
   }
