@@ -15,6 +15,8 @@ export interface MonitoringService {
 
   getVersion(): Observable<string>;
 
+  getBoardVersion(): Observable<number>;
+
   getClock(): Observable<Clocks>;
 
   synchronizeClock();

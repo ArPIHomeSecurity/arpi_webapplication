@@ -1,6 +1,12 @@
 .sensor-form {
   margin: 15px auto;
   max-width: 600px;
+
+  .sensor-settings {
+    .mat-mdc-form-field {
+      width: 180px;
+    }
+  }
 }
 
 #zoneId {
@@ -46,4 +52,8 @@ mat-expansion-panel-header .title {
 
 .sensitivity {
   margin: 0px;
+}
+
+mat-accordion {
+  margin-bottom: 15px;
 }
