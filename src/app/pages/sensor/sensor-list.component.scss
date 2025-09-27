@@ -6,31 +6,63 @@
       margin-left: 16px;
     }
 
-    .attributes {
-      width: 100%;
-
-      .row {
-        gap: 0px;
-      }
-    }
-
     .mat-card-subtitle {
       text-align: justify;
     }
 
-    .sensor-image {
-      max-width: 130px;
-      margin: auto 10px !important;
-      border-radius: 5px;
+    .attributes {
+      width: 100%;
+      overflow: hidden;
 
-      img {
-        width: 100%;
-        min-width: 50px;
+      .attributes-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .mdc-list {
+        padding: 0;
+      }
+
+      .attribute-list {
+        margin: 0 0 auto;
+
+        .mat-mdc-list-item {
+          height: 30px;
+
+          .mat-icon {
+            margin-right: 16px;
+          }
+
+          .mat-list-item-content {
+            padding-left: 16px;
+          }
+
+          .long-field {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
       }
     }
 
-    .sensor-image.alerting {
-      background-color: mat.m2-get-color-from-palette($argus-alert);
+    .sensor-image {
+      border-radius: 5px;
+
+      &.alerting {
+        background-color: mat.m2-get-color-from-palette($argus-alert);
+      }
+
+      img {
+        .argus-dark-theme & {
+          filter: invert(1);
+        }
+      }
     }
 
     .sensor-icon {
@@ -42,54 +74,12 @@
       color: mat.m2-get-color-from-palette($argus-ok);
     }
 
-    /*
-      *list of attributes in the sensor card
-      */
-    .mat-mdc-list.attribute-list {
-      .long-field {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      & .mat-mdc-list-item {
-        height: 30px !important;
-
-        .mat-icon {
-          margin-right: 16px !important;
-        }
-
-        & .mat-list-item-content {
-          padding: 0 0 0 16px !important;
-        }
-      }
-
-      &.first {
-        width: 40%;
-        margin-top: 0px;
-        margin-bottom: auto;
-      }
-
-      &.second {
-        width: 60%;
-        margin-top: 0px;
-        margin-bottom: auto;
-      }
+    &.disabled {
+      background-color: rgb(160, 160, 160);
     }
-  }
-
-  .sensor-card.disabled {
-    background-color: rgb(160, 160, 160);
   }
 
   .empty {
     text-align: center;
-  }
-}
-
-.argus-dark-theme {
-  .sensor-list .sensor-card .sensor-image img {
-    -webkit-filter: invert(1);
-    filter: invert(1);
   }
 }

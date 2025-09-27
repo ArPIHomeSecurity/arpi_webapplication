@@ -376,7 +376,7 @@
         <source>Select expiry</source>
       </trans-unit>
       <trans-unit id="user device registration code" datatype="html">
-        <source> Device registration code </source>
+        <source>Device registration code</source>
       </trans-unit>
       <trans-unit id="user get new code" datatype="html">
         <source> Get new code </source>
@@ -697,7 +697,7 @@
         <source>Unregister device</source>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
-        <source> Hidden </source>
+        <source>Hidden</source>
       </trans-unit>
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
@@ -823,7 +823,7 @@
         <source>Silent alert</source>
       </trans-unit>
       <trans-unit id="sensor silent syren" datatype="html">
-        <source> Alarm with syren </source>
+        <source>Alarm with syren</source>
       </trans-unit>
       <trans-unit id="syren silent loud" datatype="html">
         <source>Loud alarm (forced)</source>
@@ -991,7 +991,7 @@
         <source>Certbot email</source>
       </trans-unit>
       <trans-unit id="location check" datatype="html">
-        <source> Check API version and certificate </source>
+        <source>Check API version and certificate</source>
       </trans-unit>
       <trans-unit id="location device registered" datatype="html">
         <source>Device registered</source>
@@ -1176,11 +1176,17 @@
       <trans-unit id="user biometric login" datatype="html">
         <source>Biometric login</source>
       </trans-unit>
-      <trans-unit id="user delete" datatype="html">
+      <trans-unit id="user enable biometric" datatype="html">
         <source>Enable biometric login</source>
       </trans-unit>
       <trans-unit id="location no locations" datatype="html">
         <source>No locations found</source>
+      </trans-unit>
+      <trans-unit id="failed register" datatype="html">
+        <source>Failed to register card!</source>
+      </trans-unit>
+      <trans-unit id="user disable biometric" datatype="html">
+        <source>Disable biometric login</source>
       </trans-unit>
     </body>
   </file>

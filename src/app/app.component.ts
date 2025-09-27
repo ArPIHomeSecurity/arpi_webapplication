@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, NgZone, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Inject, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 
-import { CountdownComponent } from 'ngx-countdown';
-import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import { StatusBar } from '@capacitor/status-bar';
+import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
+import { CountdownComponent } from 'ngx-countdown';
 
-import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
-import { VERSION } from './version';
+import { environment } from '@environments/environment';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 import { ROLE_TYPES } from './models';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { AUTHENTICATION_SERVICE } from './tokens';
 import { ThemeService } from './services/theme.service';
-import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { AUTHENTICATION_SERVICE } from './tokens';
+import { VERSION } from './version';
 
 @Component({
   selector: 'app-root',
@@ -315,6 +315,9 @@ export class AppComponent implements OnInit {
       login: 'en/latest/end_users/login/',
       events: 'en/latest/end_users/events/',
 
+      locations: 'en/latest/end_users/locations/',
+      setup: 'en/latest/end_users/locations/',
+
       areas: 'en/latest/end_users/areas/',
       area: 'en/latest/end_users/areas/#edit-area',
       outputs: 'en/latest/end_users/outputs/',
@@ -332,12 +335,6 @@ export class AppComponent implements OnInit {
       'config/network': 'en/latest/end_users/network/',
       'config/clock': 'en/latest/end_users/clock/'
     };
-
-    if (environment.isMultiLocation) {
-      urlMap['setup'] = 'en/latest/end_users/locations/';
-    } else {
-      urlMap['setup'] = 'en/latest/end_users/setup/';
-    }
 
     if (!(pathWithoutLanguage in urlMap)) {
       console.error('No mapping found for: ' + pathWithoutLanguage);

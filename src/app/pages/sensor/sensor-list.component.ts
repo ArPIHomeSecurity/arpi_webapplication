@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,9 +7,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { Area, MONITORING_STATE, Sensor, SensorType, Zone } from '@app/models';
+import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
+import {
+  Area,
+  ChannelTypes,
+  MONITORING_STATE,
+  Sensor,
+  SensorContactTypes,
+  SensorEOLCount,
+  SensorType,
+  Zone
+} from '@app/models';
 import {
   AreaService,
   AuthenticationService,
@@ -20,8 +29,8 @@ import {
   ZoneService
 } from '@app/services';
 
-import { environment } from '@environments/environment';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -39,6 +48,11 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   zones: Zone[] = [];
   areas: Area[] = [];
   isDragging = false;
+  boardVersion: number;
+
+  channelTypes = ChannelTypes;
+  sensorContactTypes = SensorContactTypes;
+  sensorEOLCount = SensorEOLCount;
 
   constructor(
     @Inject('AreaService') public areaService: AreaService,
@@ -83,7 +97,8 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       sensors: this.sensorService.getSensors(this.onlyAlerting),
       sensorTypes: this.sensorService.getSensorTypes(),
       zones: this.zoneService.getZones(),
-      areas: this.areaService.getAreas()
+      areas: this.areaService.getAreas(),
+      boardVersion: this.monitoringService.getBoardVersion()
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
@@ -91,6 +106,8 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.sensorTypes = results.sensorTypes;
         this.zones = results.zones;
         this.areas = results.areas;
+        this.boardVersion = results.boardVersion;
+
         this.loader.display(false);
         this.loader.disable(false);
       });
@@ -118,6 +135,169 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     }
 
     return '';
+  }
+
+  getSensorAttributes(sensor: Sensor) {
+    const attributes = [];
+
+    // Sensor type
+    attributes.push({
+      icon: 'sensor_icon',
+      iconType: 'image',
+      iconSwitch: sensor.typeId,
+      content: this.getSensorTypeLabel(sensor.typeId)
+    });
+
+    // Channel
+    attributes.push({
+      icon: 'label',
+      iconType: 'material',
+      content: sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, '0')}` : '-'
+    });
+
+    // Channel type (only for board version >= 3)
+    if (this.boardVersion >= 3) {
+      attributes.push({
+        icon: 'device_hub',
+        iconType: 'material',
+        content: this.getChannelTypeLabel(sensor.channelType)
+      });
+
+      // Contact type
+      attributes.push({
+        icon: 'toggle_on',
+        iconType: 'material',
+        content: this.getContactTypeLabel(sensor.sensorContactType)
+      });
+
+      // EOL count
+      attributes.push({
+        icon: 'square',
+        iconType: 'material',
+        content: this.getEOLCountLabel(sensor.sensorEolCount)
+      });
+    }
+
+    // Area
+    attributes.push({
+      icon: 'crop',
+      iconType: 'material',
+      content: this.getAreaName(sensor.areaId)
+    });
+
+    // Zone
+    attributes.push({
+      icon: 'rectangle',
+      iconType: 'material',
+      content: sensor.channel !== -1 ? this.getZoneName(sensor.zoneId) : '-'
+    });
+
+    // Silent alert
+    attributes.push({
+      icon: sensor.silentAlert ? 'volume_mute' : 'volume_up',
+      iconType: 'material',
+      content: this.getSilentAlertLabel(sensor.silentAlert)
+    });
+
+    // Monitor settings
+    attributes.push({
+      icon: 'tune',
+      iconType: 'material',
+      content: this.getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
+    });
+
+    // Enabled status
+    attributes.push({
+      icon: sensor.enabled ? 'check_circle' : 'circle',
+      iconType: 'material',
+      iconClass: sensor.enabled ? 'sensor-status-icon-enabled' : '',
+      content: sensor.enabled ? $localize`:@@sensor enabled:Enabled` : $localize`:@@sensor disable:Disabled`
+    });
+
+    // Visibility
+    attributes.push({
+      icon: sensor.uiHidden ? 'visibility_off' : 'visibility',
+      iconType: 'material',
+      iconClass: sensor.uiHidden ? 'sensor-status-icon-hide' : 'sensor-status-icon-show',
+      content: sensor.uiHidden ? $localize`:@@sensor hidden:Hidden` : $localize`:@@sensor visible:Visible`
+    });
+
+    return attributes;
+  }
+
+  getSensorAttributeGroups(sensor: Sensor) {
+    const attributes = this.getSensorAttributes(sensor);
+    const groupSize = Math.ceil(attributes.length / 2);
+
+    return [attributes.slice(0, groupSize), attributes.slice(groupSize)];
+  }
+
+  private getSensorTypeLabel(typeId: number): string {
+    switch (typeId) {
+      case 1:
+        return $localize`:@@sensor motion:Motion`;
+      case 2:
+        return $localize`:@@sensor tamper:Tamper`;
+      case 3:
+        return $localize`:@@sensor open:Open`;
+      case 4:
+        return $localize`:@@sensor break:Break`;
+      default:
+        return $localize`:@@sensor unknown:Unknown`;
+    }
+  }
+
+  private getChannelTypeLabel(channelType: ChannelTypes): string {
+    switch (channelType) {
+      case ChannelTypes.BASIC:
+        return $localize`:@@sensor channel basic:Basic`;
+      case ChannelTypes.NORMAL:
+        return $localize`:@@sensor channel normal:Normal`;
+      case ChannelTypes.CHANNEL_A:
+        return $localize`:@@sensor channel a:Channel A`;
+      case ChannelTypes.CHANNEL_B:
+        return $localize`:@@sensor channel b:Channel B`;
+      default:
+        return '';
+    }
+  }
+
+  private getContactTypeLabel(contactType: SensorContactTypes): string {
+    switch (contactType) {
+      case SensorContactTypes.NC:
+        return $localize`:@@sensor contact nc:Normally Closed`;
+      case SensorContactTypes.NO:
+        return $localize`:@@sensor contact no:Normally Open`;
+      default:
+        return '';
+    }
+  }
+
+  private getEOLCountLabel(eolCount: SensorEOLCount): string {
+    switch (eolCount) {
+      case SensorEOLCount.SINGLE:
+        return $localize`:@@sensor eol single:Single EOL`;
+      case SensorEOLCount.DOUBLE:
+        return $localize`:@@sensor eol double:Double EOL`;
+      default:
+        return '';
+    }
+  }
+
+  private getSilentAlertLabel(silentAlert: boolean | null): string {
+    if (silentAlert === false) return $localize`:@@sensor silent syren:Alarm with syren`;
+    if (silentAlert === true) return $localize`:@@sensor silent alert:Silent alert`;
+    return '-';
+  }
+
+  private getMonitorSettingsLabel(monitorPeriod: number | null, monitorThreshold: number | null): string {
+    if (monitorPeriod != null) {
+      return `${monitorPeriod !== null ? monitorPeriod + 's' : '-'}/${monitorThreshold}%`;
+    }
+    if (monitorPeriod === null && monitorThreshold != null) {
+      return $localize`:@@sensor instant:Instant alert`;
+    }
+    return '-';
   }
 
   userCanEdit() {

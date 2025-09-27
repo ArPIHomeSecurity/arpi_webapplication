@@ -57,6 +57,14 @@ material-app,
   gap: 10px;
 }
 
+.row-wrap {
+  display: flex !important;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .column {
   display: flex;
   flex-direction: column;

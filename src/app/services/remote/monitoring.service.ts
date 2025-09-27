@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, throwError as of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import {
@@ -9,9 +9,9 @@ import {
   armType2String,
   Clocks,
   MONITORING_STATE,
-  string2MonitoringState,
-  string2ArmType,
   POWER_STATE,
+  string2ArmType,
+  string2MonitoringState,
   string2PowerState
 } from '@app/models';
 
@@ -49,6 +49,19 @@ export class MonitoringService {
 
   getVersion(): Observable<string> {
     return this.http.get('/api/version', { responseType: 'text' });
+  }
+
+  getBoardVersion(): Observable<number> {
+    return this.http.get('/api/board_version', { responseType: 'text' }).pipe(
+      map((response: string) => {
+        const version = Number(response);
+        if (isNaN(version)) {
+          return -1;
+        }
+        return version;
+      }),
+      catchError(() => of(2))
+    );
   }
 
   getClock(): Observable<Clocks> {

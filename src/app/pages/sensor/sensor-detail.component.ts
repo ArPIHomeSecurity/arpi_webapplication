@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { UntypedFormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -8,9 +8,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType, Zone, string2MonitoringState } from '@app/models';
+import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
+import {
+  ARM_TYPE,
+  Area,
+  ChannelTypes,
+  MONITORING_STATE,
+  Sensor,
+  SensorContactTypes,
+  SensorEOLCount,
+  SensorType,
+  Zone,
+  string2MonitoringState
+} from '@app/models';
 import { AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
 import { positiveInteger } from '@app/utils';
 
@@ -24,22 +35,6 @@ const scheduleMicrotask = Promise.resolve(null);
 class Channel {
   channel: number;
   sensor: Sensor;
-}
-
-/**
- * Helper class for storing sensor and zone information.
- */
-class SensorInfo {
-  channel: number;
-  typeId: number;
-  zoneId: number;
-  enabled: boolean;
-  description: string;
-
-  zoneName: string;
-  disarmedDelay: number;
-  awayAlertDelay: number;
-  stayAlertDelay: number;
 }
 
 @Component({
@@ -60,7 +55,12 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   zoneForm: FormGroup;
   areaForm: FormGroup;
   newZone = false;
+  boardVersion: number;
+
   monitoringStates = MONITORING_STATE;
+  channelTypes = ChannelTypes;
+  sensorContactTypes = SensorContactTypes;
+  eolCounts = SensorEOLCount;
 
   constructor(
     @Inject('EventService') public eventService: EventService,
@@ -108,7 +108,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensors: this.sensorService.getSensors(),
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
-        sensorTypes: this.sensorService.getSensorTypes()
+        sensorTypes: this.sensorService.getSensorTypes(),
+        boardVersion: this.monitoringService.getBoardVersion()
       })
         .pipe(
           catchError(error => {
@@ -126,6 +127,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.areas = results.areas;
           this.sensorTypes = results.sensorTypes.sort((st1, st2) => (st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0));
           this.channels = this.generateChannels(this.sensors);
+          this.boardVersion = results.boardVersion;
 
           this.updateForm(this.sensor);
           this.onZoneSelected(this.sensor.zoneId);
@@ -137,7 +139,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensors: this.sensorService.getSensors(),
         sensorTypes: this.sensorService.getSensorTypes(),
         zones: this.zoneService.getZones(),
-        areas: this.areaService.getAreas()
+        areas: this.areaService.getAreas(),
+        boardVersion: this.monitoringService.getBoardVersion()
       })
         .pipe(finalize(() => this.loader.display(false)))
         .subscribe(results => {
@@ -146,11 +149,15 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.zones = results.zones;
           this.areas = results.areas;
           this.channels = this.generateChannels(this.sensors);
+          this.boardVersion = results.boardVersion;
 
           this.sensor = new Sensor();
           this.sensor.enabled = true;
           const firstFreeChannel = this.channels.find(ch => ch.sensor == null && ch.channel >= 0);
           this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
+          this.sensor.channelType = this.boardVersion >= 3 ? ChannelTypes.NORMAL : null;
+          this.sensor.sensorContactType = this.boardVersion >= 3 ? SensorContactTypes.NC : null;
+          this.sensor.sensorEolCount = this.boardVersion >= 3 ? SensorEOLCount.SINGLE : null;
           this.sensor.zoneId = -1;
           this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1;
           this.sensor.typeId = this.sensorTypes[0].id;
@@ -188,9 +195,14 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.sensorForm = this.fb.group({
       channel: new FormControl(sensor.channel),
+      channelType: new FormControl(sensor.channelType, Validators.required),
+      sensorContactType: new FormControl(sensor.sensorContactType, Validators.required),
+      eolCount: new FormControl(sensor.sensorEolCount, Validators.required),
+      typeId: new FormControl(sensor.typeId, Validators.required),
+
       zoneId: new FormControl(sensor.zoneId, Validators.required),
       areaId: new FormControl(sensor.areaId, Validators.required),
-      typeId: new FormControl(sensor.typeId, Validators.required),
+
       enabled: sensor.enabled,
       silentAlert: new FormControl(),
       sensitivity: new FormControl(),
@@ -242,6 +254,23 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     } else {
       this.sensorForm.controls.sensitivity.enable();
     }
+
+    if (this.boardVersion >= 3) {
+      this.sensorForm.controls.channelType.setValidators(Validators.required);
+      this.sensorForm.controls.sensorContactType.setValidators(Validators.required);
+      this.sensorForm.controls.eolCount.setValidators(Validators.required);
+    } else {
+      this.sensorForm.controls.channelType.clearValidators();
+      this.sensorForm.controls.sensorContactType.clearValidators();
+      this.sensorForm.controls.eolCount.clearValidators();
+    }
+
+    if (sensor.channelType === ChannelTypes.CHANNEL_A || sensor.channelType === ChannelTypes.CHANNEL_B) {
+      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE);
+      this.sensorForm.controls.eolCount.disable();
+    } else {
+      this.sensorForm.controls.eolCount.enable();
+    }
   }
 
   onSensorTypeChanged(event) {
@@ -250,6 +279,15 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.sensitivity.disable();
     } else {
       this.sensorForm.controls.sensitivity.enable();
+    }
+  }
+
+  onChannelTypeChanged(event) {
+    if (event.value === ChannelTypes.CHANNEL_A || event.value === ChannelTypes.CHANNEL_B) {
+      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE);
+      this.sensorForm.controls.eolCount.disable();
+    } else {
+      this.sensorForm.controls.eolCount.enable();
     }
   }
 
@@ -357,11 +395,18 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       id: this.sensor.id,
       name: formModel.name,
       description: formModel.description,
+
       channel: formModel.channel,
+      channelType: formModel.channelType,
+      sensorContactType: formModel.sensorContactType,
+      sensorEolCount: formModel.eolCount,
+      typeId: formModel.typeId,
+
       areaId: formModel.areaId,
       zoneId: formModel.zoneId,
-      typeId: formModel.typeId,
+
       alert: false,
+      error: false,
       enabled: formModel.enabled,
       silentAlert: silentAlert,
       monitorPeriod: formModel.monitorPeriod,

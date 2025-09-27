@@ -5,9 +5,9 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 
 import { Card, ROLE_TYPES, User } from '@app/models';
 import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
 import { finalize, forkJoin, Observable } from 'rxjs';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { UserDeviceRegistrationDialogComponent } from '../user-device-registration/user-device-registration.component';
 import { UserSshKeySetupDialogComponent } from '../user-ssh-key-setup/user-ssh-key-setup.component';
 
@@ -62,6 +62,7 @@ export class UserCardComponent implements OnInit {
         this.snackBar.open($localize`:@@card registered:Card registered!`, null, {
           duration: environment.snackDuration
         });
+        this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards));
       } else if (result === false) {
         // not registered
         this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
@@ -156,29 +157,35 @@ export class UserCardComponent implements OnInit {
 
   onClickRegisterCard() {
     this.registeringCard = true;
-    this.userService.registerCard(this.user.id).subscribe();
+    this.userService.registerCard(this.user.id).subscribe({
+      error: () => {
+        this.registeringCard = false;
+        this.snackBar.open($localize`:@@failed register:Failed to register card!`, null, {
+          duration: environment.snackDuration
+        });
+      }
+    });
   }
 
   toggleCardEnabled(cardId: number) {
-    this.cards.forEach(card => {
-      if (card.id === cardId) {
-        // clone the card, change the state and update
-        const tmpCard = Object.assign({}, card);
-        tmpCard.enabled = !card.enabled;
+    const card = this.cards.find(c => c.id === cardId);
+    if (card) {
+      // clone the card, change the state and update
+      const tmpCard = Object.assign({}, card);
+      tmpCard.enabled = !card.enabled;
 
-        this.loading = true;
-        this.cardService
-          .updateCard(tmpCard)
-          .pipe(finalize(() => (this.loading = false)))
-          .subscribe({
-            next: _ => this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards)),
-            error: _ =>
-              this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
-                duration: environment.snackDuration
-              })
-          });
-      }
-    });
+      this.loading = true;
+      this.cardService
+        .updateCard(tmpCard)
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe({
+          next: updatedCard => (this.cards = this.cards.map(c => (c.id === updatedCard.id ? updatedCard : c))),
+          error: _ =>
+            this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+              duration: environment.snackDuration
+            })
+        });
+    }
   }
 
   openDeleteCardDialog(cardId: number) {
@@ -216,7 +223,7 @@ export class UserCardComponent implements OnInit {
       .subscribe({
         next: _ => {
           this.snackBar.open($localize`:@@card deleted:Card deleted!`, null, { duration: environment.snackDuration });
-          this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards));
+          this.cards = this.cards.filter(c => c.id !== cardId);
         },
         error: _ =>
           this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
