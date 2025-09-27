@@ -168,7 +168,7 @@ export class UserCardComponent implements OnInit {
   }
 
   toggleCardEnabled(cardId: number) {
-    let card = this.cards.find(c => c.id === cardId);
+    const card = this.cards.find(c => c.id === cardId);
     if (card) {
       // clone the card, change the state and update
       const tmpCard = Object.assign({}, card);
