@@ -1,3 +1,7 @@
+# Release Production Workflow
+# This workflow automates the release process for the production build which is
+# used in the live environment on the raspberry pi.
+# The workflow will bump the version, and create a new release with the build artifacts.
 name: Release Production
 
 on:
@@ -12,6 +16,7 @@ on:
           - major
           - minor
           - patch
+          - pre-release
       pre_release:
         description: 'Pre-release identifier (optional, e.g., "beta", "rc1")'
         required: false
@@ -23,6 +28,7 @@ on:
 
 jobs:
   release:
+    name: Release application
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -51,6 +57,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies 📦
         run: |
           npm ci
@@ -58,8 +72,8 @@ jobs:
 
       - name: Bump version 🏷️
         run: |
-          if [ -n "${{ inputs.pre_release }}" ]; then
-            python scripts/bump_version.py -t ${{ inputs.version_type }} -p "${{ inputs.pre_release }}" -v
+          if [ "${{ inputs.version_type }}" = "pre-release" ]; then
+            python scripts/bump_version.py -p "${{ inputs.pre_release }}" -v
           else
             python scripts/bump_version.py -t ${{ inputs.version_type }} -v
           fi
@@ -68,8 +82,11 @@ jobs:
         id: get_version
         run: |
           VERSION=$(grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+[^"]*' src/app/version.ts | head -1)
+          VERSION_SIMPLE=$(echo "$VERSION" | sed 's/:.*//')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "simple_version=$VERSION_SIMPLE" >> $GITHUB_OUTPUT
           echo "New version: $VERSION"
+          echo "Base version: $VERSION_SIMPLE"
 
       - name: Update package.json version 📝
         run: |
@@ -79,16 +96,16 @@ jobs:
       - name: Commit version changes 💾
         run: |
           git add src/app/version.ts package.json android/app/build.gradle
-          git commit -m "chore: bump version to ${{ steps.get_version.outputs.version }}"
+          git commit -m "Github Actions: bump version to ${{ steps.get_version.outputs.version }}"
 
       - name: Create Git tag 🏷️
         run: |
-          git tag ${{ steps.get_version.outputs.version }}
+          git tag $(echo '${{ steps.get_version.outputs.simple_version }}') -m "Release ${{ steps.get_version.outputs.version }}"
 
       - name: Build production application 🏗️
         run: |
           ng build --configuration=production --localize
-          tar -czf arpi-webapplication-${{ steps.get_version.outputs.version }}.tar.gz --directory=dist-production/browser .
+          tar -czf arpi-webapplication-$(echo "${{ steps.get_version.outputs.simple_version }}").tar.gz --directory=dist-production/browser .
 
       - name: Run tests 🧪
         run: |
@@ -97,18 +114,18 @@ jobs:
       - name: Push changes and tags 🚀
         run: |
           git push origin master
-          git push origin ${{ steps.get_version.outputs.version }}
+          git push origin ${{ steps.get_version.outputs.simple_version }}
 
       - name: Create GitHub Release 📦
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.get_version.outputs.version }}
-          name: Release ${{ steps.get_version.outputs.version }}
+          tag_name: ${{ steps.get_version.outputs.simple_version }}
+          name: Release ${{ steps.get_version.outputs.simple_version }}
           draft: false
-          prerelease: ${{ contains(steps.get_version.outputs.version, '_') }}
+          prerelease: ${{ inputs.version_type == 'pre-release' }}
           generate_release_notes: true
           files: |
-            arpi-webapplication-${{ steps.get_version.outputs.version }}.tar.gz
+            arpi-webapplication-${{ steps.get_version.outputs.simple_version }}.tar.gz
           body: |
             ## What's Changed
 
@@ -120,16 +137,7 @@ jobs:
 
             ### Build Information
             - **Version**: ${{ steps.get_version.outputs.version }}
-            - **Branch**: master
+            - **Branch**: ${{ github.ref_name }}
             - **Build Date**: ${{ github.run_started_at }}
             - **Commit**: ${{ github.sha }}
             - **Workflow Run**: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-      - name: Upload build artifacts 📤
-        uses: actions/upload-artifact@v4
-        with:
-          name: production-build-${{ steps.get_version.outputs.version }}
-          path: |
-            dist-production/
-            arpi-webapplication-${{ steps.get_version.outputs.version }}.tar.gz
-          retention-days: 30
