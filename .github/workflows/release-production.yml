@@ -113,7 +113,7 @@ jobs:
 
       - name: Push changes and tags 🚀
         run: |
-          git push origin master
+          git push origin main
           git push origin ${{ steps.get_version.outputs.simple_version }}
 
       - name: Create GitHub Release 📦
@@ -129,7 +129,7 @@ jobs:
           body: |
             ## What's Changed
 
-            ${{ inputs.release_notes || 'This release includes the latest changes from the master branch.' }}
+            ${{ inputs.release_notes || 'This release includes the latest changes from the main branch.' }}
 
             ### Installation
 
