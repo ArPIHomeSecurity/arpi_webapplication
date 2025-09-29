@@ -133,7 +133,7 @@ jobs:
 
             ### Installation
 
-            Download the `arpi-webapplication-${{ steps.get_version.outputs.version }}.tar.gz` file and extract it to your web server directory.
+            Download the `arpi-webapplication-${{ steps.get_version.outputs.simple_version }}.tar.gz` file and extract it to your web server directory.
 
             ### Build Information
             - **Version**: ${{ steps.get_version.outputs.version }}
