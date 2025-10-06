@@ -53,12 +53,8 @@
         </mat-form-field>
 
         <div class="row">
-          <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">
-            Enabled
-          </mat-checkbox>
-          <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">
-            Hidden
-          </mat-checkbox>
+          <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
+          <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
         </div>
 
         <!-- START split divider and label for using the gaps of the parent flex layout -->
@@ -81,18 +77,10 @@
                 placeholder="Channel type"
                 (selectionChange)="onChannelTypeChanged($event)"
               >
-              <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">
-                Basic
-              </mat-option>
-              <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">
-                Normal
-              </mat-option>
-                <mat-option [value]="channelTypes.CHANNEL_A" i18n="@@sensor channel a">
-                  Channel A
-                </mat-option>
-                <mat-option [value]="channelTypes.CHANNEL_B" i18n="@@sensor channel b">
-                  Channel B
-                </mat-option>
+              <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">Basic</mat-option>
+              <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">Normal</mat-option>
+                <mat-option [value]="channelTypes.CHANNEL_A" i18n="@@sensor channel a">Channel A</mat-option>
+                <mat-option [value]="channelTypes.CHANNEL_B" i18n="@@sensor channel b">Channel B</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -103,12 +91,8 @@
                 i18n-placeholder="@@sensor contact type"
                 placeholder="Contact type"
               >
-                <mat-option [value]="sensorContactTypes.NC" i18n="@@sensor contact nc">
-                  Normally closed (NC)
-                </mat-option>
-                <mat-option [value]="sensorContactTypes.NO" i18n="@@sensor contact no">
-                  Normally open (NO)
-                </mat-option>
+                <mat-option [value]="sensorContactTypes.NC" i18n="@@sensor contact nc">Normally Closed (NC)</mat-option>
+                <mat-option [value]="sensorContactTypes.NO" i18n="@@sensor contact no">Normally Open (NO)</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -119,12 +103,8 @@
                 i18n-placeholder="@@sensor eol count"
                 placeholder="EOL count"
               >
-                <mat-option [value]="eolCounts.SINGLE" i18n="@@sensor eol single">
-                  Single
-                </mat-option>
-                <mat-option [value]="eolCounts.DOUBLE" i18n="@@sensor eol double">
-                  Double
-                </mat-option>
+                <mat-option [value]="eolCounts.SINGLE" i18n="@@sensor eol single">Single EOL</mat-option>
+                <mat-option [value]="eolCounts.DOUBLE" i18n="@@sensor eol double">Double EOL</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

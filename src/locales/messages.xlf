@@ -772,7 +772,7 @@
         <source> sensitivity: instant alert </source>
       </trans-unit>
       <trans-unit id="sensor instant" datatype="html">
-        <source> Instant alert </source>
+        <source>Instant alert</source>
       </trans-unit>
       <trans-unit id="sensor monitor period" datatype="html">
         <source>Monitoring period [s]</source>
@@ -1187,6 +1187,42 @@
       </trans-unit>
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
+      </trans-unit>
+      <trans-unit id="sensor channel a" datatype="html">
+        <source>Channel A</source>
+      </trans-unit>
+      <trans-unit id="sensor channel b" datatype="html">
+        <source>Channel B</source>
+      </trans-unit>
+      <trans-unit id="sensor channel basic" datatype="html">
+        <source>Basic</source>
+      </trans-unit>
+      <trans-unit id="sensor channel normal" datatype="html">
+        <source>Normal</source>
+      </trans-unit>
+      <trans-unit id="sensor channel type" datatype="html">
+        <source>Channel type</source>
+      </trans-unit>
+      <trans-unit id="sensor contact nc" datatype="html">
+        <source>Normally Closed (NC)</source>
+      </trans-unit>
+      <trans-unit id="sensor contact no" datatype="html">
+        <source>Normally Open (NO)</source>
+      </trans-unit>
+      <trans-unit id="sensor contact type" datatype="html">
+        <source>Contact type</source>
+      </trans-unit>
+      <trans-unit id="sensor eol count" datatype="html">
+        <source>EOL count</source>
+      </trans-unit>
+      <trans-unit id="sensor eol double" datatype="html">
+        <source>Double EOL</source>
+      </trans-unit>
+      <trans-unit id="sensor eol single" datatype="html">
+        <source>Single EOL</source>
+      </trans-unit>
+      <trans-unit id="sensor settings" datatype="html">
+        <source>Sensor settings</source>
       </trans-unit>
     </body>
   </file>

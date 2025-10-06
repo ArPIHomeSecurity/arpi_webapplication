@@ -1079,8 +1079,8 @@
         <target state="translated">Monitor küszöbérték [%]</target>
       </trans-unit>
       <trans-unit id="sensor instant" datatype="html">
-        <source> Instant alert </source>
-        <target state="translated"> Azonnali riasztás </target>
+        <source>Instant alert</source>
+        <target state="translated">Azonnali riasztás</target>
       </trans-unit>
       <trans-unit id="events silent alert" datatype="html">
         <source>Silent alert</source>
@@ -1581,6 +1581,54 @@
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
         <target state="translated">Biometrikus bejelentkezés letiltása</target>
+      </trans-unit>
+      <trans-unit id="sensor settings" datatype="html">
+        <source>Sensor settings</source>
+        <target state="translated">Érzékelő beállítás</target>
+      </trans-unit>
+      <trans-unit id="sensor channel type" datatype="html">
+        <source>Channel type</source>
+        <target state="translated">Csatorna típus</target>
+      </trans-unit>
+      <trans-unit id="sensor channel basic" datatype="html">
+        <source>Basic</source>
+        <target state="translated">Alap</target>
+      </trans-unit>
+      <trans-unit id="sensor channel normal" datatype="html">
+        <source>Normal</source>
+        <target state="translated">Normál</target>
+      </trans-unit>
+      <trans-unit id="sensor channel a" datatype="html">
+        <source>Channel A</source>
+        <target state="translated">Csatorna A</target>
+      </trans-unit>
+      <trans-unit id="sensor channel b" datatype="html">
+        <source>Channel B</source>
+        <target state="translated">Csatorna B</target>
+      </trans-unit>
+      <trans-unit id="sensor contact type" datatype="html">
+        <source>Contact type</source>
+        <target state="translated">Kapcsoló típus</target>
+      </trans-unit>
+      <trans-unit id="sensor contact nc" datatype="html">
+        <source>Normally Closed (NC)</source>
+        <target state="translated">Normally Closed (NC)</target>
+      </trans-unit>
+      <trans-unit id="sensor contact no" datatype="html">
+        <source>Normally Open (NO)</source>
+        <target state="translated">Normally Open (NO)</target>
+      </trans-unit>
+      <trans-unit id="sensor eol count" datatype="html">
+        <source>EOL count</source>
+        <target state="translated">EOL szám</target>
+      </trans-unit>
+      <trans-unit id="sensor eol single" datatype="html">
+        <source>Single EOL</source>
+        <target state="translated">Egy EOL</target>
+      </trans-unit>
+      <trans-unit id="sensor eol double" datatype="html">
+        <source>Double EOL</source>
+        <target state="translated">Két EOL</target>
       </trans-unit>
     </body>
   </file>
