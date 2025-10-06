@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -189,17 +189,9 @@ import { CapacitorService } from './services/capacitor.service';
     { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'UserService', useClass: environment.userService },
     { provide: 'ZoneService', useClass: environment.zoneService },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AppHttpInterceptor,
-      multi: true
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: () => configureBackend
-    }
+    provideAppInitializer(configureBackend),
   ]
 })
 export class AppModule {}

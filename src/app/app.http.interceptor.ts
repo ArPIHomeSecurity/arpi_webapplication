@@ -50,6 +50,12 @@ export class AppHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (originalRequest.url.endsWith("assets/version.json")) {
+      // special handling of webapplication version.json
+      // we need to load it from the application host not from the backend
+      return next.handle(originalRequest)
+    }
+
     if (this.backendUrl == '') {
       console.warn('No URL configured for backend requests!', this.backendUrl);
       const locations = JSON.parse(localStorage.getItem('locations') || '[]');

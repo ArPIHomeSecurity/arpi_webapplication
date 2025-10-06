@@ -7,6 +7,7 @@ import { BehaviorSubject, fromEvent } from 'rxjs';
 import { StatusBar } from '@capacitor/status-bar';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import { CountdownComponent } from 'ngx-countdown';
+import { HttpClient } from '@angular/common/http';
 
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
@@ -15,7 +16,6 @@ import { ROLE_TYPES } from './models';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
-import { VERSION } from './version';
 
 @Component({
   selector: 'app-root',
@@ -78,7 +78,8 @@ export class AppComponent implements OnInit {
 
     private renderer: Renderer2,
     private host: ElementRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private http: HttpClient
   ) {
     this.currentLocale = localStorage.getItem('localeId');
 
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
       this.currentLocale = 'en';
     }
 
-    this.versions = { serverVersion: '', webapplicationVersion: VERSION };
+    this.versions = { serverVersion: '', webapplicationVersion: ''};
     this.isSessionValid = false;
   }
 
@@ -159,6 +160,25 @@ export class AppComponent implements OnInit {
       const allWrapper = document.querySelector('.all-wrap');
       this.renderer.setStyle(allWrapper, 'min-height', 'calc(100vh - 96px)');
     }
+
+    // Load version from assets/version.json (new format)
+    this.http.get<{
+      version: string;
+      major: number;
+      minor: number;
+      patch: number;
+      prerelease: string | null;
+      prerelease_num: number | null;
+      commit_id: string;
+    }>('assets/version.json').subscribe({
+      next: (data) => {
+        // use the version string directly
+        this.versions.webapplicationVersion = data.version;
+      },
+      error: (error) => {
+        this.versions.webapplicationVersion = 'unknown';
+      }
+    });
   }
 
   async isEdgeToEdgeEnabled(): Promise<boolean> {
