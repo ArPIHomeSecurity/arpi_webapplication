@@ -35,6 +35,10 @@ jobs:
       packages: write
 
     steps:
+      - name: Display context 📝
+        run: |
+          echo "GitHub Context: ${{ toJson(github) }}"
+          echo "Workflow inputs: ${{ toJson(inputs) }}"
       - name: Checkout repository 🛎️
         uses: actions/checkout@v4
         with:
@@ -81,7 +85,7 @@ jobs:
       - name: Get new version 📋
         id: get_version
         run: |
-          VERSION=$(grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+[^"]*' src/app/version.ts | head -1)
+          VERSION=$(jq -r '.version' version.json)
           VERSION_SIMPLE=$(echo "$VERSION" | sed 's/:.*//')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "simple_version=$VERSION_SIMPLE" >> $GITHUB_OUTPUT
@@ -95,7 +99,7 @@ jobs:
 
       - name: Commit version changes 💾
         run: |
-          git add src/app/version.ts package.json android/app/build.gradle
+          git add src/assets/version.json package.json android/app/build.gradle
           git commit -m "Github Actions: bump version to ${{ steps.get_version.outputs.version }}"
 
       - name: Create Git tag 🏷️

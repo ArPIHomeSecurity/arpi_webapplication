@@ -1,8 +1,9 @@
 {
-    "recommendations": [
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "angular.ng-template",
-        "ms-vscode.vscode-typescript-next"
-    ]
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "angular.ng-template",
+    "ms-vscode.vscode-typescript-next",
+    "Webnative.webnative"
+  ]
 }
