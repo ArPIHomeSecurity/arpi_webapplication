@@ -21,7 +21,7 @@
           <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
           <mat-card-subtitle *ngIf="location.version != null">
             <span i18n="@@location version">Version:</span>
-            {{ location.version }}
+            {{ location.version.version_tag }}
           </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">
@@ -47,7 +47,7 @@
           <mat-card-subtitle *ngIf="location.id != null">ID: {{ location.id }}</mat-card-subtitle>
           <mat-card-subtitle *ngIf="location.version != null">
             <span i18n="@@location version">Version:</span>
-            {{ location.version }}
+            {{ location.version.version_tag }}
           </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">
@@ -175,6 +175,14 @@
                   <span i18n="@@location check">Check API version and certificate</span>
                   <mat-icon>open_in_new</mat-icon>
                 </a>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item *ngIf="upgradeAvailable(location)" class="next-version">
+              <mat-icon matListItemIcon>update</mat-icon>
+              <div matListItemTitle i18n="@@location next version">Next Version</div>
+              <div matListItemLine>
+                {{ serverLatestVersion.version_tag }}
               </div>
             </mat-list-item>
           </mat-list>

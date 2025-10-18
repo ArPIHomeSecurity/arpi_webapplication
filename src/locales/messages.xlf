@@ -1224,6 +1224,9 @@
       <trans-unit id="sensor settings" datatype="html">
         <source>Sensor settings</source>
       </trans-unit>
+      <trans-unit id="location next version" datatype="html">
+        <source>Next Version</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

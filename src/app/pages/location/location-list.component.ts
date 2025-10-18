@@ -9,13 +9,14 @@ import {
   MonitoringService
 } from '@app/services';
 
-import { Location } from '@app/models';
-import { environment } from '@environments/environment';
-import { configureBackend } from '@app/utils';
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
+import { Location } from '@app/models';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { configureBackend } from '@app/utils';
+import { environment } from '@environments/environment';
+import { compareVersions, LocationVersion, parseVersion } from '../../models/version';
 import { LocationTestResult, testLocation } from './location';
 
 @Component({
@@ -27,6 +28,7 @@ import { LocationTestResult, testLocation } from './location';
 export class LocationListComponent extends ConfigurationBaseComponent {
   isMultiLocation = environment.isMultiLocation;
   locations: Location[];
+  serverLatestVersion: LocationVersion = null;
   selectedLocationId: string;
   testResults: Map<string, LocationTestResult> = new Map();
   showApiLink = environment.showApiLink;
@@ -46,6 +48,8 @@ export class LocationListComponent extends ConfigurationBaseComponent {
 
     this.locations = JSON.parse(localStorage.getItem('locations')) || [];
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
+
+    this.serverLatestVersion = this.getServerLatestVersion(false);
   }
 
   getLocationKey(index: number): string {
@@ -60,6 +64,32 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     }
 
     return this.authenticationService.getDeviceToken(locationId) != null;
+  }
+
+  getServerLatestVersion(prerelease: boolean): LocationVersion {
+    // GitHub API for arpi_server releases
+    const apiUrl = 'https://api.github.com/repos/ArPIHomeSecurity/arpi_server/releases';
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', apiUrl, false); // synchronous request for simplicity
+    xhr.send();
+    if (xhr.status !== 200) {
+      console.warn('Failed to fetch server version');
+      return null;
+    }
+    const releases = JSON.parse(xhr.responseText);
+    for (const release of releases) {
+      if ((prerelease && release.prerelease) || (!prerelease && !release.prerelease)) {
+        return parseVersion(release.tag_name);
+      }
+    }
+    return null;
+  }
+
+  upgradeAvailable(location: Location): boolean {
+    if (location.version && this.serverLatestVersion) {
+      return compareVersions(location.version, this.serverLatestVersion) < 0;
+    }
+    return false;
   }
 
   isActive(index: number): boolean {

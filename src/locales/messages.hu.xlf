@@ -668,7 +668,7 @@
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
         <source> Failed to connect to SMTP server! <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/> Please check logs for more information! </source>
-        <target state="translated">Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
+        <target state="translated"> Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
         <source> SMS sent successfully to phone 1! </source>
@@ -888,7 +888,7 @@
       </trans-unit>
       <trans-unit id="area number of sensors" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(area.id).length }}"/> sensor(s) </source>
-        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getSensors(area.id).length }}"/> érzékelő(k)</target>
+        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getSensors(area.id).length }}"/> érzékelő(k) </target>
       </trans-unit>
       <trans-unit id="sensor none" datatype="html">
         <source>No sensors found</source>
@@ -896,7 +896,7 @@
       </trans-unit>
       <trans-unit id="zone no sensor" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ getSensors(zone.id).length }}"/> sensor(s) </source>
-        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getSensors(zone.id).length }}"/> érzékelő(k)</target>
+        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getSensors(zone.id).length }}"/> érzékelő(k) </target>
       </trans-unit>
       <trans-unit id="syren delay" datatype="html">
         <source>Delay</source>
@@ -1040,7 +1040,7 @@
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
         <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + 's' }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
-        <target state="translated">érzékenység: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + 's' }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </target>
+        <target state="translated"> érzékenység: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + 's' }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
         <source> sensitivity: instant alert </source>
@@ -1300,7 +1300,7 @@
       </trans-unit>
       <trans-unit id="area number of outputs" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </source>
-        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s)</target>
+        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </target>
       </trans-unit>
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
@@ -1629,6 +1629,10 @@
       <trans-unit id="sensor eol double" datatype="html">
         <source>Double EOL</source>
         <target state="translated">Két EOL</target>
+      </trans-unit>
+      <trans-unit id="location next version" datatype="html">
+        <source>Next Version</source>
+        <target state="translated">Következő verzió</target>
       </trans-unit>
     </body>
   </file>

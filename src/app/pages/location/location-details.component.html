@@ -120,7 +120,7 @@
         <dt *ngIf="location.id">ID:</dt>
         <dd *ngIf="location.id">{{ location.id }}</dd>
         <dt *ngIf="version" i18n="@@location version">Version:</dt>
-        <dd *ngIf="version">{{ version }}</dd>
+        <dd *ngIf="version">{{ version.version_tag }}</dd>
       </dl>
       <div *ngIf="location.id != null">
         <span *ngIf="isRegistered() === true">
