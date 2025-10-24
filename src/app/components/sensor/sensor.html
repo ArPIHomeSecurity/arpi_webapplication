@@ -1,4 +1,4 @@
-<mat-card class="sensor-component">
+<mat-card class="sensor-component" [ngClass]="{'error': sensor.error}">
   <mat-card-header>
     <div
       mat-card-avatar
@@ -19,8 +19,12 @@
       <mat-card-title>{{sensor.name}}</mat-card-title>
       <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
 
+      <div *ngIf="sensor.error" class="sensor-state error-state">
+        <mat-icon class="error-icon">error</mat-icon>
+      </div>
+
       <div
-        *ngIf="sensor.enabled === true && delay != null"
+        *ngIf="sensor.enabled === true && delay != null && sensor.error !== true"
         class="sensor-state"
         [ngClass]="{'enabled': sensor.enabled}"
       >

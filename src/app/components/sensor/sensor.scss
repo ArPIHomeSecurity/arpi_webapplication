@@ -20,6 +20,9 @@
       line-height: 40px;
       margin: auto 10px;
       text-align: center;
+
+      /* Ensure the icon is centered within the circle */
+      position: relative;
     }
 
     .sensor-state.enabled {
@@ -28,6 +31,20 @@
 
     .sensor-state.disabled {
       background-color: rgb(160, 160, 160);
+    }
+
+    .sensor-state.error-state {
+      background-color: mat.m2-get-color-from-palette($argus-alert);
+
+      .error-icon {
+        color: white;
+
+        /* Center the icon within the circle */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     .sensor-image {
@@ -54,6 +71,10 @@
       border-radius: 22px;
       background-color: mat.m2-get-color-from-palette($argus-alert);
     }
+  }
+
+  .mat-mdc-card.sensor-component.error {
+
   }
 }
 

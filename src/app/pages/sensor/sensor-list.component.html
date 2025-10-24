@@ -16,9 +16,13 @@
       <mat-card-header>
         <mat-card-title-group>
             <mat-card-title>{{ sensor.name }}</mat-card-title>
+            <mat-card-subtitle *ngIf="sensor.error" class="error-text">
+              <mat-icon class="error-icon">error</mat-icon>
+              <span i18n="@@sensor error">Error on input channel</span>
+            </mat-card-subtitle>
             <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
           </mat-card-title-group>
-          <div [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{ alerting: sensor.alert }">
+          <div [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{ alerting: sensor.alert, error: sensor.error }">
             <img mat-card-sm-image *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
             <img mat-card-sm-image *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
             <img mat-card-sm-image *ngSwitchCase="3" src="assets/images/sensor_open.png" />
@@ -31,8 +35,8 @@
           </div>
       </mat-card-header>
 
-      <mat-divider></mat-divider>
 
+      <mat-divider></mat-divider>
       <mat-card-content class="row">
         <div class="attributes">
           <div class="attributes-container">

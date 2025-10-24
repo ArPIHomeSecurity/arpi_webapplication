@@ -3,9 +3,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {
   ARM_TYPE,
   MONITORING_STATE,
-  string2MonitoringState,
-  string2ArmType,
   POWER_STATE,
+  string2ArmType,
+  string2MonitoringState,
   string2PowerState
 } from '@app/models';
 import { AlertService, AuthenticationService, EventService, MonitoringService, SensorService } from '@app/services';
@@ -26,6 +26,7 @@ export class SystemStateComponent implements OnInit {
   powerStates: any = POWER_STATE;
   powerState: POWER_STATE = POWER_STATE.UNDEFINED;
   sensorAlert: boolean;
+  sensorError: boolean;
 
   // true=syren / false=syren muted / null=no syren
   syrenAlert: boolean;
@@ -58,6 +59,7 @@ export class SystemStateComponent implements OnInit {
       error: _ => (this.armState = ARM_TYPE.UNDEFINED)
     });
     this.sensorService.getAlert().subscribe(alert => (this.sensorAlert = alert));
+    this.sensorService.getError().subscribe(error => (this.sensorError = error));
     this.alertService.getAlert().subscribe(alert => (this.syrenAlert = alert != null ? !alert.silent : null));
     this.monitoringService.getMonitoringState().subscribe({
       next: monitoringState => (this.monitoringState = monitoringState),
@@ -67,6 +69,7 @@ export class SystemStateComponent implements OnInit {
 
     this.eventService.listen('arm_state_change').subscribe(armState => (this.armState = string2ArmType(armState)));
     this.eventService.listen('sensors_state_change').subscribe(alert => (this.sensorAlert = alert));
+    this.eventService.listen('sensors_error_change').subscribe(error => (this.sensorError = error));
     this.eventService
       .listen('system_state_change')
       .subscribe(monitoringState => (this.monitoringState = string2MonitoringState(monitoringState)));
