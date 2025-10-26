@@ -49,7 +49,7 @@ import { AreaDetailComponent, AreaListComponent } from './pages/area';
 import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 import { ClockComponent } from './pages/config/clock';
 import { KeypadComponent } from './pages/config/keypad';
-import { NetworkComponent } from './pages/config/network';
+import { MqttComponent, NetworkComponent } from './pages/config/network';
 import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { SyrenComponent } from './pages/config/syren';
 import { HomeComponent } from './pages/home';
@@ -141,6 +141,9 @@ import { CapacitorService } from './services/capacitor.service';
 
     routing,
 
+    // Standalone components
+    MqttComponent,
+
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -191,7 +194,7 @@ import { CapacitorService } from './services/capacitor.service';
     { provide: 'ZoneService', useClass: environment.zoneService },
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
-    provideAppInitializer(configureBackend),
+    provideAppInitializer(configureBackend)
   ]
 })
 export class AppModule {}

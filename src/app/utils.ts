@@ -55,6 +55,8 @@ export function getValue(value: any, attribute: string, defaultValue: any = '') 
   let clonedDefaultValue = '';
   if (defaultValue && typeof defaultValue === 'object') {
     clonedDefaultValue = JSON.parse(JSON.stringify(defaultValue));
+  } else {
+    clonedDefaultValue = defaultValue;
   }
 
   if (value) {
