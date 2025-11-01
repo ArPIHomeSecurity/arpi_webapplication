@@ -8,6 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { finalize } from 'rxjs/operators';
 
@@ -18,6 +19,7 @@ import { ConfigurationService, EventService, LoaderService, MonitoringService } 
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
 import { forkJoin } from 'rxjs';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -35,7 +37,8 @@ const scheduleMicrotask = Promise.resolve(null);
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatIconModule
   ]
 })
 export class MqttComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
@@ -51,6 +54,7 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
 
     private fb: UntypedFormBuilder,
+    private clipboard: Clipboard,
     private snackBar: MatSnackBar
   ) {
     super(eventService, loader, monitoringService);
@@ -91,17 +95,17 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
 
   updateMqttForm(mqttConnection: Option, mqttExternalPublish: Option) {
     this.mqttForm = this.fb.group({
-      mqttEnabled: getValue(mqttConnection.value, 'enabled'),
-      mqttExternal: getValue(mqttConnection.value, 'external'),
-      mqttHostname: [getValue(mqttExternalPublish.value, 'hostname'), Validators.required],
+      mqttEnabled: getValue(mqttConnection?.value, 'enabled'),
+      mqttExternal: getValue(mqttConnection?.value, 'external'),
+      mqttHostname: [getValue(mqttExternalPublish?.value, 'hostname'), Validators.required],
       mqttPort: [
-        getValue(mqttExternalPublish.value, 'port'),
+        getValue(mqttExternalPublish?.value, 'port'),
         [Validators.required, Validators.min(1), Validators.max(65535)]
       ],
-      mqttUsername: getValue(mqttExternalPublish.value, 'username'),
-      mqttPassword: getValue(mqttExternalPublish.value, 'password'),
-      mqttTlsEnabled: getValue(mqttExternalPublish.value, 'tls_enabled', true),
-      mqttTlsInsecure: getValue(mqttExternalPublish.value, 'tls_insecure', false)
+      mqttUsername: getValue(mqttExternalPublish?.value, 'username'),
+      mqttPassword: getValue(mqttExternalPublish?.value, 'password'),
+      mqttTlsEnabled: getValue(mqttExternalPublish?.value, 'tls_enabled', true),
+      mqttTlsInsecure: getValue(mqttExternalPublish?.value, 'tls_insecure', false)
     });
 
     if (this.mqttForm.get('mqttEnabled').value && this.mqttForm.get('mqttExternal').value) {
@@ -115,6 +119,14 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
       this.mqttForm.get('mqttUsername').clearValidators();
       this.mqttForm.get('mqttPassword').clearValidators();
     }
+  }
+
+  copyToClipboard(text: string) {
+    this.clipboard.copy(text);
+
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    });
   }
 
   getMqttUrl() {
