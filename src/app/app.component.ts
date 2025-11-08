@@ -342,17 +342,23 @@ export class AppComponent implements OnInit {
       events: 'en/latest/end_users/events/',
 
       locations: 'en/latest/end_users/locations/',
+      'location/add': 'en/latest/end_users/locations/#edit-location',
       setup: 'en/latest/end_users/locations/',
 
       areas: 'en/latest/end_users/areas/',
+      'area/add': 'en/latest/end_users/areas/#edit-area',
       area: 'en/latest/end_users/areas/#edit-area',
       outputs: 'en/latest/end_users/outputs/',
+      'output/add': 'en/latest/end_users/outputs/#edit-output',
       output: 'en/latest/end_users/outputs/#edit-output',
       sensors: 'en/latest/end_users/sensors/',
+      'sensor/add': 'en/latest/end_users/sensors/#edit-area',
       sensor: 'en/latest/end_users/sensors/#edit-area',
       users: 'en/latest/end_users/users/',
+      'user/add': 'en/latest/end_users/users/#edit-user',
       user: 'en/latest/end_users/users/#edit-user',
       zones: 'en/latest/end_users/zones/',
+      'zone/add': 'en/latest/end_users/zones/#edit-zone',
       zone: 'en/latest/end_users/zones/#edit-zone',
 
       'config/syren': 'en/latest/end_users/syren/',
