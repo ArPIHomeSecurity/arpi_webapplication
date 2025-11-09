@@ -84,7 +84,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
     // test if public hostname is reachable
     this.publicUrl = this.getPublicUrl();
     if (this.publicUrl) {
-      const testURL = this.publicUrl  + '/api/version';
+      const testURL = this.publicUrl + '/api/version';
       // test https access from the browser with ajax
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {
