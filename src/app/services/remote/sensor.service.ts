@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Sensor, SensorType } from '@app/models';
@@ -46,6 +46,17 @@ export class SensorService {
       return this.http.get<boolean>('/api/sensor/alert' + sensorId);
     } else {
       return this.http.get<boolean>('/api/sensor/alert');
+    }
+  }
+
+  getError(sensorId: number = null): Observable<boolean> {
+    // get sensors from api
+    if (sensorId) {
+      const params: URLSearchParams = new URLSearchParams();
+      params.set('sensor_id', sensorId.toString());
+      return this.http.get<boolean>('/api/sensor/error' + sensorId);
+    } else {
+      return this.http.get<boolean>('/api/sensor/error');
     }
   }
 

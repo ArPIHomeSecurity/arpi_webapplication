@@ -2,6 +2,12 @@ export class Option {
   option: string;
   section: string;
   value: any;
+
+  constructor(option = '', section = '', value: any = {}) {
+    this.option = option;
+    this.section = section;
+    this.value = value;
+  }
 }
 
 export const DEFAULT_PASSWORD_VALUE = '******';

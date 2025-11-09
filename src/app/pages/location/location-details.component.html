@@ -15,7 +15,7 @@
           </mat-form-field>
 
           <div class="row">
-            <mat-form-field class="domain">
+            <mat-form-field class="domain" floatLabel="always">
               <mat-label i18n="@@location primary domain">Primary Domain</mat-label>
               <span matTextPrefix>https://</span>
               <input
@@ -32,9 +32,7 @@
                   href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
                   target="_blank"
                 >
-                  <span i18n="@@location check" class="no-wrap">
-                    Check API version and certificate
-                  </span>
+                  <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
                   <mat-icon>open_in_new</mat-icon>
                 </a>
               </mat-hint>
@@ -83,9 +81,7 @@
                   }}/api/version"
                   target="_blank"
                 >
-                  <span i18n="@@location check" class="no-wrap">
-                    Check API version and certificate
-                  </span>
+                  <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
                   <mat-icon>open_in_new</mat-icon>
                 </a>
               </mat-hint>
@@ -117,29 +113,31 @@
       </form>
     </mat-card-content>
 
-    <mat-divider></mat-divider>
+    @if (location.id) {
+      <mat-divider></mat-divider>
 
-    <mat-card-content class="details">
-      <dl>
-        <dt *ngIf="location.id">ID:</dt>
-        <dd *ngIf="location.id">{{ location.id }}</dd>
-        <dt *ngIf="version" i18n="@@location version">Version:</dt>
-        <dd *ngIf="version">{{ version }}</dd>
-      </dl>
-      <div *ngIf="location.id != null">
-        <span *ngIf="isRegistered() === true">
-          <span i18n="@@location device registered">Device registered</span>
-        </span>
-        <span *ngIf="isRegistered() === false">
-          <span i18n="@@location device not registered">Device NOT registered</span>
-        </span>
-      </div>
-      <app-message
-        *ngIf="alreadyExists() && newLocation"
-        type="warning"
-        [message]="ALREADY_EXISTS"
-      ></app-message>
-    </mat-card-content>
+      <mat-card-content class="details">
+        <dl>
+          <dt *ngIf="location.id">ID:</dt>
+          <dd *ngIf="location.id">{{ location.id }}</dd>
+          <dt *ngIf="version" i18n="@@location version">Version:</dt>
+          <dd *ngIf="version">{{ version.version_tag }}</dd>
+        </dl>
+        <div *ngIf="location.id != null">
+          <span *ngIf="isRegistered() === true">
+            <span i18n="@@location device registered">Device registered</span>
+          </span>
+          <span *ngIf="isRegistered() === false">
+            <span i18n="@@location device not registered">Device NOT registered</span>
+          </span>
+        </div>
+        <app-message
+          *ngIf="alreadyExists() && newLocation"
+          type="warning"
+          [message]="ALREADY_EXISTS"
+        ></app-message>
+      </mat-card-content>
+    }
 
     <mat-divider></mat-divider>
 

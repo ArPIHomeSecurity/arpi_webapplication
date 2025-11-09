@@ -1,17 +1,18 @@
-import { Inject, Injectable } from '@angular/core';
 import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpErrorResponse,
-  HttpHandler,
-  HttpEvent,
   HttpResponse
 } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 
-import { Observable, throwError, of, fromEvent } from 'rxjs';
+import { fromEvent, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 import { AuthenticationService, LoaderService } from './services';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
@@ -50,13 +51,19 @@ export class AppHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (originalRequest.url.endsWith('assets/version.json')) {
+      // special handling of webapplication version.json
+      // we need to load it from the application host not from the backend
+      return next.handle(originalRequest);
+    }
+
     if (this.backendUrl == '') {
       console.warn('No URL configured for backend requests!', this.backendUrl);
       const locations = JSON.parse(localStorage.getItem('locations') || '[]');
       if (locations.length > 0) {
         this.router.navigate(['/backend-error']);
       } else {
-        this.router.navigate(['/location/add']);
+        this.router.navigate([environment.isMultiLocation ? 'locations' : 'location/add']);
       }
       return throwError(
         () => new HttpErrorResponse({ status: 0, statusText: 'No URL configured for backend requests!' })

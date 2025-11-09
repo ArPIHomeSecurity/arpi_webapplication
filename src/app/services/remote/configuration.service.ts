@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 import { Location, Option } from '@app/models';
 
@@ -10,7 +10,9 @@ export class ConfigurationService implements ConfigurationService {
 
   getOption(option: string, section: string): Observable<Option> {
     // get configuration option from api
-    return this.http.get<Option>('/api/config/' + option + '/' + section);
+    return this.http.get<Option>('/api/config/' + option + '/' + section).pipe(
+      catchError(err => err.status === 404 ? of(null) : throwError(() => err))
+    );
   }
 
   setOption(option: string, section: string, value: any): Observable<any> {

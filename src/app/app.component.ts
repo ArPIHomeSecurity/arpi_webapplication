@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 
+import { HttpClient } from '@angular/common/http';
 import { StatusBar } from '@capacitor/status-bar';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import { CountdownComponent } from 'ngx-countdown';
@@ -15,7 +16,6 @@ import { ROLE_TYPES } from './models';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
-import { VERSION } from './version';
 
 @Component({
   selector: 'app-root',
@@ -78,7 +78,8 @@ export class AppComponent implements OnInit {
 
     private renderer: Renderer2,
     private host: ElementRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private http: HttpClient
   ) {
     this.currentLocale = localStorage.getItem('localeId');
 
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
       this.currentLocale = 'en';
     }
 
-    this.versions = { serverVersion: '', webapplicationVersion: VERSION };
+    this.versions = { serverVersion: '', webapplicationVersion: '' };
     this.isSessionValid = false;
   }
 
@@ -159,6 +160,27 @@ export class AppComponent implements OnInit {
       const allWrapper = document.querySelector('.all-wrap');
       this.renderer.setStyle(allWrapper, 'min-height', 'calc(100vh - 96px)');
     }
+
+    // Load version from assets/version.json (new format)
+    this.http
+      .get<{
+        version: string;
+        major: number;
+        minor: number;
+        patch: number;
+        prerelease: string | null;
+        prerelease_num: number | null;
+        commit_id: string;
+      }>('assets/version.json')
+      .subscribe({
+        next: data => {
+          // use the version string directly
+          this.versions.webapplicationVersion = data.version;
+        },
+        error: error => {
+          this.versions.webapplicationVersion = 'unknown';
+        }
+      });
   }
 
   async isEdgeToEdgeEnabled(): Promise<boolean> {
@@ -309,6 +331,10 @@ export class AppComponent implements OnInit {
       pathWithoutLanguage = matches.groups.path;
     }
 
+    // remove trailing ids from the path
+    // example sensor/123 => sensor
+    let basePath = pathWithoutLanguage.replace(/\/[0-9]+$/, '');
+
     // mapping of local urls to documentation urls
     const urlMap = {
       '': 'en/latest/end_users/',
@@ -316,17 +342,23 @@ export class AppComponent implements OnInit {
       events: 'en/latest/end_users/events/',
 
       locations: 'en/latest/end_users/locations/',
+      'location/add': 'en/latest/end_users/locations/#edit-location',
       setup: 'en/latest/end_users/locations/',
 
       areas: 'en/latest/end_users/areas/',
+      'area/add': 'en/latest/end_users/areas/#edit-area',
       area: 'en/latest/end_users/areas/#edit-area',
       outputs: 'en/latest/end_users/outputs/',
+      'output/add': 'en/latest/end_users/outputs/#edit-output',
       output: 'en/latest/end_users/outputs/#edit-output',
       sensors: 'en/latest/end_users/sensors/',
+      'sensor/add': 'en/latest/end_users/sensors/#edit-area',
       sensor: 'en/latest/end_users/sensors/#edit-area',
       users: 'en/latest/end_users/users/',
+      'user/add': 'en/latest/end_users/users/#edit-user',
       user: 'en/latest/end_users/users/#edit-user',
       zones: 'en/latest/end_users/zones/',
+      'zone/add': 'en/latest/end_users/zones/#edit-zone',
       zone: 'en/latest/end_users/zones/#edit-zone',
 
       'config/syren': 'en/latest/end_users/syren/',
@@ -336,15 +368,15 @@ export class AppComponent implements OnInit {
       'config/clock': 'en/latest/end_users/clock/'
     };
 
-    if (!(pathWithoutLanguage in urlMap)) {
-      console.error('No mapping found for: ' + pathWithoutLanguage);
-      pathWithoutLanguage = '';
+    if (!(basePath in urlMap)) {
+      console.error('No mapping found for: ' + basePath);
+      basePath = '';
     }
 
-    console.debug('Mapping: ' + pathWithoutLanguage + ' => ' + urlMap[pathWithoutLanguage]);
+    console.debug('Mapping: ' + basePath + ' => ' + urlMap[basePath]);
     // check if documentation path exists
     const http = new XMLHttpRequest();
-    const url = 'https://docs.arpi-security.info/' + urlMap[pathWithoutLanguage];
+    const url = 'https://docs.arpi-security.info/' + urlMap[basePath];
     http.open('HEAD', url, false);
 
     try {
@@ -352,7 +384,7 @@ export class AppComponent implements OnInit {
     } catch (error) {
       if (http.status === 404) {
         // fallback to main page
-        pathWithoutLanguage = '';
+        basePath = '';
       }
     }
 
@@ -362,6 +394,6 @@ export class AppComponent implements OnInit {
 
     // open the documentation in a new window
     const documentationUrl = 'https://docs.arpi-security.info/';
-    window.open(documentationUrl + urlMap[pathWithoutLanguage], 'arpi-docs');
+    window.open(documentationUrl + urlMap[basePath], 'arpi-docs');
   }
 }

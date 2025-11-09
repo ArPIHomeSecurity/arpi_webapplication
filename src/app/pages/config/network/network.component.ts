@@ -26,7 +26,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
   access: Option = null;
 
   publicAccess = false;
-  publicUrl = '';
+  publicUrl = null;
   publicUrlAccessible: boolean = null;
 
   // values from the noipy python module
@@ -82,8 +82,9 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
 
   testPublicUrl() {
     // test if public hostname is reachable
-    const publicUrl = this.getPublicUrl() + '/api/version';
-    if (publicUrl) {
+    this.publicUrl = this.getPublicUrl();
+    if (this.publicUrl) {
+      const testURL = this.publicUrl  + '/api/version';
       // test https access from the browser with ajax
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {
@@ -98,7 +99,7 @@ export class NetworkComponent extends ConfigurationBaseComponent implements OnIn
       xhr.onerror = () => {
         this.publicUrlAccessible = false;
       };
-      xhr.open('GET', publicUrl, true);
+      xhr.open('GET', testURL, true);
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
       setTimeout(() => xhr.send(), 1000);

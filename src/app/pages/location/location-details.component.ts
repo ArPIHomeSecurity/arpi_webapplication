@@ -1,12 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@app/models';
-import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { AuthenticationService } from '@app/services';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
+import { Location } from '@app/models';
+import { AuthenticationService } from '@app/services';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { environment } from '@environments/environment';
+import { LocationVersion, parseVersion } from '../../models/version';
 import { LocationTestResult, testLocation } from './location';
 
 @Component({
@@ -19,7 +20,7 @@ export class LocationDetailsComponent {
   ALREADY_EXISTS = $localize`:@@location already exists:Location already exists!`;
 
   location: Location;
-  version: string;
+  version: LocationVersion = null;
   locationForm: FormGroup;
   newLocation: boolean;
   firstLocation: boolean;
@@ -47,10 +48,7 @@ export class LocationDetailsComponent {
         this.newLocation = true;
       }
 
-      if (this.firstLocation && !this.isMultiLocation) {
-        this.locationDefaultLocation();
-      }
-
+      this.locationDefaultLocation();
       this.updateForm(this.location);
     });
 
@@ -60,12 +58,13 @@ export class LocationDetailsComponent {
   locationDefaultLocation(): void {
     this.location = {
       id: null,
-      name: 'Default',
+      name: this.firstLocation ? 'Default' : '',
       scheme: 'https',
-      primaryDomain: window.location.hostname,
-      primaryPort: parseInt(window.location.port),
+      primaryDomain: !this.isMultiLocation ? window.location.hostname : '',
+      primaryPort: !this.isMultiLocation ? parseInt(window.location.port) : null,
       secondaryDomain: '',
       secondaryPort: null,
+      version: null,
       order: 0
     };
   }
@@ -95,10 +94,10 @@ export class LocationDetailsComponent {
         console.error('Primary and secondary location IDs do not match!', result);
       } else if (result.primaryLocationId) {
         this.location.id = result.primaryLocationId;
-        this.version = result.primaryVersion;
+        this.version = parseVersion(result.primaryVersion);
       } else if (result.secondaryLocationId) {
         this.location.id = result.secondaryLocationId;
-        this.version = result.secondaryVersion;
+        this.version = parseVersion(result.secondaryVersion);
       }
     });
   }
@@ -112,7 +111,7 @@ export class LocationDetailsComponent {
   }
 
   onFieldChange($event) {
-    // add default port if domain is empty
+    // add default port if domain was empty
     if (
       $event.target.name === 'primaryDomain' &&
       this.location.primaryDomain === '' &&
@@ -150,6 +149,8 @@ export class LocationDetailsComponent {
     location.primaryPort = formModel.primaryPort;
     location.secondaryDomain = formModel.secondaryDomain;
     location.secondaryPort = formModel.secondaryPort;
+    location.version = this.version ? this.version : this.location.version;
+    location.order = this.location.order;
     return location;
   }
 

@@ -118,6 +118,7 @@
     </span>
 
     <!-- SENSOR STATES -->
+    <span *ngIf="sensorError"><mat-icon class="danger">warning</mat-icon></span>
     <span
       *ngIf="
         monitoringState === monitoringStates.ARMED ||

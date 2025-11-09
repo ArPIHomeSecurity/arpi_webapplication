@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -49,7 +49,7 @@ import { AreaDetailComponent, AreaListComponent } from './pages/area';
 import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 import { ClockComponent } from './pages/config/clock';
 import { KeypadComponent } from './pages/config/keypad';
-import { NetworkComponent } from './pages/config/network';
+import { MqttComponent, NetworkComponent } from './pages/config/network';
 import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { SyrenComponent } from './pages/config/syren';
 import { HomeComponent } from './pages/home';
@@ -141,6 +141,9 @@ import { CapacitorService } from './services/capacitor.service';
 
     routing,
 
+    // Standalone components
+    MqttComponent,
+
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -189,17 +192,9 @@ import { CapacitorService } from './services/capacitor.service';
     { provide: 'ThemeService', useClass: ThemeService },
     { provide: 'UserService', useClass: environment.userService },
     { provide: 'ZoneService', useClass: environment.zoneService },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AppHttpInterceptor,
-      multi: true
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: () => configureBackend
-    }
+    provideAppInitializer(configureBackend)
   ]
 })
 export class AppModule {}

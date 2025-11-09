@@ -15,6 +15,8 @@ export interface SensorService {
 
   getAlert(sensorId?: number): Observable<boolean>;
 
+  getError(sensorId?: number): Observable<boolean>;
+
   getSensorTypes(): Observable<SensorType[]>;
 
   resetReferences();

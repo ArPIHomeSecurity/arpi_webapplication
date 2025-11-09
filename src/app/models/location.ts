@@ -1,3 +1,5 @@
+import { LocationVersion } from './version';
+
 export class Location {
   id: string | null;
   name: string;
@@ -6,5 +8,6 @@ export class Location {
   primaryPort: number = null;
   secondaryDomain = '';
   secondaryPort: number = null;
+  version: LocationVersion | null;
   order = 0;
 }

@@ -1,1 +1,1 @@
-export const VERSION = "v1.4.1:aa92d1d"
+// (File removed or left empty, as version is now in assets/version.json)

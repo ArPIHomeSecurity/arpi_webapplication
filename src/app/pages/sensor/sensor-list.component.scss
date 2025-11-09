@@ -2,12 +2,14 @@
 
 @mixin sensor-list-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .sensor-card {
-    .mat-card-title {
-      margin-left: 16px;
-    }
+    .mat-mdc-card-subtitle.error-text {
+      display: flex;
+      align-items: center;
 
-    .mat-card-subtitle {
-      text-align: justify;
+      .error-icon {
+        margin-right: 8px;
+        color: mat.m2-get-color-from-palette($argus-alert);
+      }
     }
 
     .attributes {
@@ -52,10 +54,17 @@
     }
 
     .sensor-image {
-      border-radius: 5px;
+      height: fit-content;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      border: 1px solid black;
 
       &.alerting {
         background-color: mat.m2-get-color-from-palette($argus-alert);
+      }
+
+      &.error {
+        background-color: mat.m2-get-color-from-palette($argus-warn);
       }
 
       img {
