@@ -9,7 +9,7 @@
     "test:debug": "ng test --browsers=ChromeDebug",
     "test:ci": "ng test --watch=false",
     "prepare": "husky",
-    "lint": "eslint .",
+    "lint": "eslint",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",

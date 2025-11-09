@@ -1,4 +1,5 @@
 const js = require('@eslint/js');
+const globals = require('globals');
 const tseslint = require('@typescript-eslint/eslint-plugin');
 const tsparser = require('@typescript-eslint/parser');
 const angular = require('@angular-eslint/eslint-plugin');
@@ -33,6 +34,34 @@ module.exports = [
                 ecmaVersion: 2022,
                 sourceType: 'module'
                 // Remove project: './tsconfig.json' to avoid memory issues
+            },
+            globals: {
+                window: 'readonly',
+                document: 'readonly',
+                location: 'readonly',
+                localStorage: 'readonly',
+                sessionStorage: 'readonly',
+                console: 'readonly',
+                setTimeout: 'readonly',
+                clearTimeout: 'readonly',
+                setInterval: 'readonly',
+                clearInterval: 'readonly',
+                fetch: 'readonly',
+                AbortSignal: 'readonly',
+                TextEncoder: 'readonly',
+                crypto: 'readonly',
+                XMLHttpRequest: 'readonly',
+                StorageEvent: 'readonly',
+                ResizeObserver: 'readonly',
+                MouseEvent: 'readonly',
+                TouchEvent: 'readonly',
+                describe: 'readonly',
+                it: 'readonly',
+                expect: 'readonly',
+                beforeEach: 'readonly',
+                afterEach: 'readonly',
+                jest: 'readonly',
+                $localize: 'readonly'
             }
         },
         plugins: {
@@ -44,9 +73,18 @@ module.exports = [
         rules: {
             // Base ESLint rules
             ...js.configs.recommended.rules,
+            'no-unused-vars': 'off',
 
             // TypeScript ESLint rules
-            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                    ignoreRestSiblings: true,
+                    args: 'after-used'
+                }
+            ],
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/explicit-function-return-type': 'off',
             '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -89,7 +127,7 @@ module.exports = [
             ],
 
             // Code quality rules
-            'no-console': 'warn',
+            'no-console': 'off', // until we clean up existing usages
             'no-debugger': 'error',
             'no-var': 'error',
             'prefer-const': 'error',
@@ -102,7 +140,15 @@ module.exports = [
         // Configuration for HTML template files - minimal safe rules
         files: ['**/*.html'],
         languageOptions: {
-            parser: angularParser
+            parser: angularParser,
+            globals: {
+                window: 'readonly',
+                document: 'readonly',
+                localStorage: 'readonly',
+                sessionStorage: 'readonly',
+                console: 'readonly',
+                $localize: 'readonly'
+            }
         },
         plugins: {
             '@angular-eslint/template': angularTemplate

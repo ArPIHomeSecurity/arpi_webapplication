@@ -41,7 +41,7 @@ export class SensorService {
   getAlert(sensorId: number = null): Observable<boolean> {
     // get sensors from api
     if (sensorId) {
-      const params: URLSearchParams = new URLSearchParams();
+      const params = new URLSearchParams();
       params.set('sensor_id', sensorId.toString());
       return this.http.get<boolean>('/api/sensor/alert' + sensorId);
     } else {
@@ -52,7 +52,7 @@ export class SensorService {
   getError(sensorId: number = null): Observable<boolean> {
     // get sensors from api
     if (sensorId) {
-      const params: URLSearchParams = new URLSearchParams();
+      const params = new URLSearchParams();
       params.set('sensor_id', sensorId.toString());
       return this.http.get<boolean>('/api/sensor/error' + sensorId);
     } else {
