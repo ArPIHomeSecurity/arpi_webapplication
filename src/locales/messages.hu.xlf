@@ -668,7 +668,7 @@
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
         <source> Failed to connect to SMTP server! <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br />"/> Please check logs for more information! </source>
-        <target state="translated"> Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat!</target>
+        <target state="translated"> Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat! </target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
         <source> SMS sent successfully to phone 1! </source>
@@ -1570,10 +1570,6 @@
         <source>Log in to ArPI Home Security</source>
         <target state="translated">Bejelentkezés az ArPI Home Security rendszerébe</target>
       </trans-unit>
-      <trans-unit id="location no locations" datatype="html">
-        <source>No locations found</source>
-        <target state="translated">Nem található helyszín</target>
-      </trans-unit>
       <trans-unit id="failed register" datatype="html">
         <source>Failed to register card!</source>
         <target state="translated">Nem sikerült regisztrálni a kártyát!</target>
@@ -1633,6 +1629,110 @@
       <trans-unit id="location next version" datatype="html">
         <source>Next Version</source>
         <target state="translated">Következő verzió</target>
+      </trans-unit>
+      <trans-unit id="network mqtt settings" datatype="html">
+        <source>MQTT Settings</source>
+        <target state="translated">MQTT beállítások</target>
+      </trans-unit>
+      <trans-unit id="network mqtt description" datatype="html">
+        <source> Configure MQTT broker connection </source>
+        <target state="translated"> MQTT broker kapcsolat beállítása </target>
+      </trans-unit>
+      <trans-unit id="network mqtt enable" datatype="html">
+        <source> Enable MQTT connection </source>
+        <target state="translated"> MQTT kapcsolat engdeélyezése </target>
+      </trans-unit>
+      <trans-unit id="network mqtt external" datatype="html">
+        <source> Use external MQTT broker </source>
+        <target state="translated"> Külső MQTT broker </target>
+      </trans-unit>
+      <trans-unit id="network mqtt hostname" datatype="html">
+        <source>Hostname</source>
+        <target state="translated">Hosztnév</target>
+      </trans-unit>
+      <trans-unit id="network mqtt port" datatype="html">
+        <source>Port</source>
+        <target state="translated">Port</target>
+      </trans-unit>
+      <trans-unit id="network mqtt username" datatype="html">
+        <source>Username</source>
+        <target state="translated">Felhasználónév</target>
+      </trans-unit>
+      <trans-unit id="network mqtt password" datatype="html">
+        <source>Password</source>
+        <target state="translated">Jelszó</target>
+      </trans-unit>
+      <trans-unit id="network mqtt enable tls" datatype="html">
+        <source> Enable TLS </source>
+        <target state="translated"> TLS engedélyezése </target>
+      </trans-unit>
+      <trans-unit id="network mqtt insecure tls" datatype="html">
+        <source> Allow insecure TLS connection </source>
+        <target state="translated"> Nem biztonságos TLS kapcsolat engedélyezése </target>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker info" datatype="html">
+        <source>Internal MQTT Broker read</source>
+        <target state="translated">Belső MQTT Broker olvasás</target>
+      </trans-unit>
+      <trans-unit id="network mqtt url" datatype="html">
+        <source>MQTT URL</source>
+        <target state="translated">MQTT URL</target>
+      </trans-unit>
+      <trans-unit id="location welcome title" datatype="html">
+        <source> Welcome to ArPI Home Security </source>
+        <target state="translated"> Üdvözlünk az ArPI Home Security-nél </target>
+      </trans-unit>
+      <trans-unit id="location welcome subtitle" datatype="html">
+        <source> Your smart security system starts here </source>
+        <target state="translated"> Itt kezdődik az okos otthoni riasztó rendszered </target>
+      </trans-unit>
+      <trans-unit id="location getting started" datatype="html">
+        <source>Getting Started</source>
+        <target state="translated">Kezdés</target>
+      </trans-unit>
+      <trans-unit id="location getting started subtitle" datatype="html">
+        <source> Follow these steps to set up your system </source>
+        <target state="translated"> Kövesse az alábbi lépéseket a rendszer beállításához </target>
+      </trans-unit>
+      <trans-unit id="location step install" datatype="html">
+        <source> Install your ArPI Home Security device and connect it to your network. </source>
+        <target state="translated"> Telepítsd az ArPI otthoni biztonsági rendszered és csatlakoztasd a hálózatra. </target>
+      </trans-unit>
+      <trans-unit id="location step add location" datatype="html">
+        <source> Return here and click <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Add Location<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> to register your device. </source>
+        <target state="translated"> Térj vissza és kattints <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Hely hozzáadása<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> gombra, hogy regisztráld eszközöd. </target>
+      </trans-unit>
+      <trans-unit id="location support" datatype="html">
+        <source>Community Support</source>
+        <target state="translated">Közösségi támogatás</target>
+      </trans-unit>
+      <trans-unit id="location support subtitle" datatype="html">
+        <source> Join our Slack workspace for help and discussion </source>
+        <target state="translated"> Lépj velünk kapcsolatba Slack-en </target>
+      </trans-unit>
+      <trans-unit id="location support link" datatype="html">
+        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></source>
+        <target state="translated"> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon>"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon>"/></target>
+      </trans-unit>
+      <trans-unit id="location get started" datatype="html">
+        <source> Get Started: Add Location </source>
+        <target state="translated"> Kezdés: hely hozzáadása </target>
+      </trans-unit>
+      <trans-unit id="location docs button" datatype="html">
+        <source> View Documentation </source>
+        <target state="translated"> Dokumentáció </target>
+      </trans-unit>
+      <trans-unit id="location demo button" datatype="html">
+        <source> Try Demo </source>
+        <target state="translated"> Demo kipróbálása </target>
+      </trans-unit>
+      <trans-unit id="sensor error" datatype="html">
+        <source>Error on input channel</source>
+        <target state="translated">Bementei csatorna hiba</target>
+      </trans-unit>
+      <trans-unit id="location software installation guide" datatype="html">
+        <source> Software installation guide </source>
+        <target state="translated"> Szoftver telepítési útmutató </target>
       </trans-unit>
     </body>
   </file>

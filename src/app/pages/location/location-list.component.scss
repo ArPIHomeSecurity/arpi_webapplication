@@ -1,7 +1,42 @@
+.getting-started-card {
+  border-left: 4px solid #43a047 !important;
+  border: 1px solid var(--mat-divider-color, #e0e0e0);
+}
+
+.support-card {
+  border-left: 4px solid #1976d2 !important;
+  border: 1px solid var(--mat-divider-color, #e0e0e0);
+}
+
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.welcome-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+.support-content {
+  text-align: center;
+}
+
+
 ::ng-deep .mat-mdc-card-header {
   .mat-mdc-card-avatar {
     .mat-icon {
       margin: 15px 10px;
+    }
+
+    .avatar-icon {
+      font-size: 32px;
+      margin: 5px 5px;
+      width: 32px;
+      height: 32px;
     }
   }
 

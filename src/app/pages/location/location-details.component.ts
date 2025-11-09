@@ -48,10 +48,7 @@ export class LocationDetailsComponent {
         this.newLocation = true;
       }
 
-      if (this.firstLocation && !this.isMultiLocation) {
-        this.locationDefaultLocation();
-      }
-
+      this.locationDefaultLocation();
       this.updateForm(this.location);
     });
 
@@ -61,10 +58,10 @@ export class LocationDetailsComponent {
   locationDefaultLocation(): void {
     this.location = {
       id: null,
-      name: 'Default',
+      name: this.firstLocation ? 'Default' : '',
       scheme: 'https',
-      primaryDomain: window.location.hostname,
-      primaryPort: parseInt(window.location.port),
+      primaryDomain: !this.isMultiLocation ? window.location.hostname : '',
+      primaryPort: !this.isMultiLocation ? parseInt(window.location.port) : null,
       secondaryDomain: '',
       secondaryPort: null,
       version: null,
@@ -114,7 +111,7 @@ export class LocationDetailsComponent {
   }
 
   onFieldChange($event) {
-    // add default port if domain is empty
+    // add default port if domain was empty
     if (
       $event.target.name === 'primaryDomain' &&
       this.location.primaryDomain === '' &&

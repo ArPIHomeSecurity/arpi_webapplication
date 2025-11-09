@@ -1179,9 +1179,6 @@
       <trans-unit id="user enable biometric" datatype="html">
         <source>Enable biometric login</source>
       </trans-unit>
-      <trans-unit id="location no locations" datatype="html">
-        <source>No locations found</source>
-      </trans-unit>
       <trans-unit id="failed register" datatype="html">
         <source>Failed to register card!</source>
       </trans-unit>
@@ -1226,6 +1223,84 @@
       </trans-unit>
       <trans-unit id="location next version" datatype="html">
         <source>Next Version</source>
+      </trans-unit>
+      <trans-unit id="location demo button" datatype="html">
+        <source> Try Demo </source>
+      </trans-unit>
+      <trans-unit id="location docs button" datatype="html">
+        <source> View Documentation </source>
+      </trans-unit>
+      <trans-unit id="location get started" datatype="html">
+        <source> Get Started: Add Location </source>
+      </trans-unit>
+      <trans-unit id="location getting started" datatype="html">
+        <source>Getting Started</source>
+      </trans-unit>
+      <trans-unit id="location getting started subtitle" datatype="html">
+        <source> Follow these steps to set up your system </source>
+      </trans-unit>
+      <trans-unit id="location step add location" datatype="html">
+        <source> Return here and click <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Add Location<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> to register your device. </source>
+      </trans-unit>
+      <trans-unit id="location step install" datatype="html">
+        <source> Install your ArPI Home Security device and connect it to your network. </source>
+      </trans-unit>
+      <trans-unit id="location support" datatype="html">
+        <source>Community Support</source>
+      </trans-unit>
+      <trans-unit id="location support link" datatype="html">
+        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+      </trans-unit>
+      <trans-unit id="location support subtitle" datatype="html">
+        <source> Join our Slack workspace for help and discussion </source>
+      </trans-unit>
+      <trans-unit id="location welcome subtitle" datatype="html">
+        <source> Your smart security system starts here </source>
+      </trans-unit>
+      <trans-unit id="location welcome title" datatype="html">
+        <source> Welcome to ArPI Home Security </source>
+      </trans-unit>
+      <trans-unit id="network mqtt description" datatype="html">
+        <source> Configure MQTT broker connection </source>
+      </trans-unit>
+      <trans-unit id="network mqtt enable" datatype="html">
+        <source> Enable MQTT connection </source>
+      </trans-unit>
+      <trans-unit id="network mqtt enable tls" datatype="html">
+        <source> Enable TLS </source>
+      </trans-unit>
+      <trans-unit id="network mqtt external" datatype="html">
+        <source> Use external MQTT broker </source>
+      </trans-unit>
+      <trans-unit id="network mqtt hostname" datatype="html">
+        <source>Hostname</source>
+      </trans-unit>
+      <trans-unit id="network mqtt insecure tls" datatype="html">
+        <source> Allow insecure TLS connection </source>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker info" datatype="html">
+        <source>Internal MQTT Broker read</source>
+      </trans-unit>
+      <trans-unit id="network mqtt password" datatype="html">
+        <source>Password</source>
+      </trans-unit>
+      <trans-unit id="network mqtt port" datatype="html">
+        <source>Port</source>
+      </trans-unit>
+      <trans-unit id="network mqtt settings" datatype="html">
+        <source>MQTT Settings</source>
+      </trans-unit>
+      <trans-unit id="network mqtt url" datatype="html">
+        <source>MQTT URL</source>
+      </trans-unit>
+      <trans-unit id="network mqtt username" datatype="html">
+        <source>Username</source>
+      </trans-unit>
+      <trans-unit id="sensor error" datatype="html">
+        <source>Error on input channel</source>
+      </trans-unit>
+      <trans-unit id="location software installation guide" datatype="html">
+        <source> Software installation guide </source>
       </trans-unit>
     </body>
   </file>

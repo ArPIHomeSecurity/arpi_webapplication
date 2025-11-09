@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="locations && locations.length > 0; else no_locations">
+  <div *ngIf="locations && locations.length > 0">
     <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListDisabled]="!isMultiLocation">
       <mat-card
         *ngFor="let location of locations; let index = index; trackBy: getLocationKey"
@@ -221,11 +221,116 @@
     </div>
   </div>
 
-  <ng-template #no_locations>
-    <div class="container-item">
-      <h1 i18n="@@location no locations">No locations found</h1>
-    </div>
-  </ng-template>
+  <div *ngIf="(!locations || locations.length === 0) && isMultiLocation" class="container-item">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon color="primary" class="avatar-icon">home</mat-icon>
+        </div>
+        <mat-card-title i18n="@@location welcome title">
+          Welcome to ArPI Home Security
+        </mat-card-title>
+        <mat-card-subtitle i18n="@@location welcome subtitle">
+          Your smart security system starts here
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="welcome-content">
+        <mat-card class="getting-started-card">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" class="avatar-icon">play_circle</mat-icon>
+            </div>
+            <mat-card-title i18n="@@location getting started">Getting Started</mat-card-title>
+            <mat-card-subtitle i18n="@@location getting started subtitle">
+              Follow these steps to set up your system
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <ol class="welcome-steps">
+              <li>
+                <span i18n="@@location step install">
+                  Install your ArPI Home Security device and connect it to your network.
+                </span>
+                <a
+                  mat-button
+                  color="primary"
+                  href="https://docs.arpi-security.info/en/latest/security_engineers/installation-sw/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span i18n="@@location software installation guide">
+                    Software installation guide
+                  </span>
+                  <mat-icon>open_in_new</mat-icon>
+                </a>
+              </li>
+              <li i18n="@@location step add location">
+                Return here and click
+                <b>Add Location</b>
+                to register your device.
+              </li>
+            </ol>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="support-card">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" class="avatar-icon">support_agent</mat-icon>
+            </div>
+            <mat-card-title i18n="@@location support">Community Support</mat-card-title>
+            <mat-card-subtitle i18n="@@location support subtitle">
+              Join our Slack workspace for help and discussion
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="support-content">
+            <a
+              mat-button
+              color="primary"
+              href="https://arpi-security.slack.com/"
+              target="_blank"
+              rel="noopener"
+              i18n="@@location support link"
+            >
+              ArPI Home Security Slack
+              <mat-icon>open_in_new</mat-icon>
+            </a>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+      <mat-card-actions style="gap: 10px">
+        <button
+          mat-raised-button
+          color="accent"
+          routerLink="/location/add"
+          i18n="@@location get started"
+        >
+          Get Started: Add Location
+        </button>
+        <a
+          mat-stroked-button
+          color="primary"
+          href="https://docs.arpi-security.info"
+          target="_blank"
+          rel="noopener"
+          i18n="@@location docs button"
+          tabindex="0"
+        >
+          View Documentation
+        </a>
+        <a
+          mat-stroked-button
+          color="primary"
+          href="https://demo.arpi-security.info"
+          target="_blank"
+          rel="noopener"
+          i18n="@@location demo button"
+          tabindex="0"
+        >
+          Try Demo
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
 
 <div class="list-actions">
