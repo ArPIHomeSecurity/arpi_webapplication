@@ -85,7 +85,7 @@ jobs:
       - name: Get new version 📋
         id: get_version
         run: |
-          VERSION=$(jq -r '.version' version.json)
+          VERSION=$(jq -r '.version' src/assets/version.json)
           VERSION_SIMPLE=$(echo "$VERSION" | sed 's/:.*//')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "simple_version=$VERSION_SIMPLE" >> $GITHUB_OUTPUT
