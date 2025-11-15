@@ -12,13 +12,22 @@
             <mat-option
               *ngFor="let channel of orderedChannels()"
               [value]="channel.channel"
-              [disabled]="channel.sensor != null"
+              [disabled]="isChannelDisabled(channel)"
             >
-              <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
-              <span *ngIf="channel.channel !== -1">
-                <span>CH{{ channel.channel + 1 | number: '2.0-0' }}</span>
-                <span *ngIf="channel.sensor != null">- {{ channel.sensor.description }}</span>
-              </span>
+                <span *ngIf="channel.channel === -1" i18n="@@sensor disconnected">Disconnected</span>
+                <span *ngIf="channel.channel !== -1">
+                  CH{{ channel.channel + 1 | number: '2.0-0' }}
+                </span>
+                <ng-container *ngIf="(channel.sensor && channel.sensor.id !== sensor.id || channel.sensorB && channel.sensorB?.id !== sensor.id)">
+                  -
+                  <ng-container *ngIf="channel.sensor && !channel.sensorB && sensor.id !== channel.sensor.id">{{ channel.sensor.name }}</ng-container>
+                  <ng-container *ngIf="channel.sensor && channel.sensorB">
+                    <ng-container *ngIf="sensor.id !== channel.sensor.id">A: {{ channel.sensor.name }}</ng-container>
+                    <ng-container *ngIf="channel.sensorB && sensor.id !== channel.sensorB.id">
+                      <ng-container *ngIf="sensor.id !== channel.sensor.id"> / </ng-container>B: {{ channel.sensorB.name }}
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -39,7 +48,7 @@
 
         <mat-form-field>
           <mat-label i18n="@@sensor name">Name</mat-label>
-          <input matInput formControlName="name" required maxlength="16" />
+          <input matInput formControlName="name" required maxlength="16"/>
         </mat-form-field>
 
         <mat-form-field>
@@ -57,18 +66,12 @@
           <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
         </div>
 
-        <!-- START split divider and label for using the gaps of the parent flex layout -->
-        <div *ngIf="boardVersion >= 2">
-          <mat-divider></mat-divider>
-        </div>
+        <mat-divider *ngIf="boardVersion > 2"></mat-divider>
 
-        <div *ngIf="boardVersion >= 2">
-          <mat-label i18n="@@sensor settings">Sensor settings</mat-label>
-        </div>
-        <!-- END split divider and label for using the gaps of the parent flex layout -->
+        <mat-label *ngIf="boardVersion > 2" i18n="@@sensor settings">Sensor settings</mat-label>
 
-        <div *ngIf="boardVersion >= 2">
-          <div class="row-wrap sensor-settings">
+        <div *ngIf="boardVersion > 2">
+          <div class="row sensor-settings">
             <mat-form-field>
               <mat-label i18n="@@sensor channel type">Channel type</mat-label>
               <mat-select
@@ -77,8 +80,8 @@
                 placeholder="Channel type"
                 (selectionChange)="onChannelTypeChanged($event)"
               >
-              <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">Basic</mat-option>
-              <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">Normal</mat-option>
+                <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">Basic</mat-option>
+                <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">Normal</mat-option>
                 <mat-option [value]="channelTypes.CHANNEL_A" i18n="@@sensor channel a">Channel A</mat-option>
                 <mat-option [value]="channelTypes.CHANNEL_B" i18n="@@sensor channel b">Channel B</mat-option>
               </mat-select>

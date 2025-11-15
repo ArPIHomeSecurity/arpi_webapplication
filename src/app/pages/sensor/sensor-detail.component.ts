@@ -1,5 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  UntypedFormBuilder,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +43,7 @@ const scheduleMicrotask = Promise.resolve(null);
 class Channel {
   channel: number;
   sensor: Sensor;
+  sensorB: Sensor;
 }
 
 @Component({
@@ -193,32 +202,35 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       areaName: new FormControl('', [Validators.required, Validators.maxLength(32)])
     });
 
-    this.sensorForm = this.fb.group({
-      channel: new FormControl(sensor.channel),
-      channelType: new FormControl(sensor.channelType, Validators.required),
-      sensorContactType: new FormControl(sensor.sensorContactType, Validators.required),
-      eolCount: new FormControl(sensor.sensorEolCount, Validators.required),
-      typeId: new FormControl(sensor.typeId, Validators.required),
+    this.sensorForm = this.fb.group(
+      {
+        channel: new FormControl(sensor.channel),
+        channelType: new FormControl(sensor.channelType, Validators.required),
+        sensorContactType: new FormControl(sensor.sensorContactType, Validators.required),
+        eolCount: new FormControl(sensor.sensorEolCount, Validators.required),
+        typeId: new FormControl(sensor.typeId, Validators.required),
 
-      zoneId: new FormControl(sensor.zoneId, Validators.required),
-      areaId: new FormControl(sensor.areaId, Validators.required),
+        zoneId: new FormControl(sensor.zoneId, Validators.required),
+        areaId: new FormControl(sensor.areaId, Validators.required),
 
-      enabled: sensor.enabled,
-      silentAlert: new FormControl(),
-      sensitivity: new FormControl(),
-      monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
-      monitorThreshold: new FormControl(sensor.monitorThreshold, [
-        Validators.required,
-        Validators.min(0),
-        Validators.max(100),
-        Validators.pattern(/^\d+$/)
-      ]),
-      name: new FormControl(sensor.name, [Validators.required, Validators.maxLength(16)]),
-      description: new FormControl(sensor.description),
-      zoneForm: this.zoneForm,
-      areaForm: this.areaForm,
-      hidden: sensor.uiHidden
-    });
+        enabled: sensor.enabled,
+        silentAlert: new FormControl(),
+        sensitivity: new FormControl(),
+        monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
+        monitorThreshold: new FormControl(sensor.monitorThreshold, [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(100),
+          Validators.pattern(/^\d+$/)
+        ]),
+        name: new FormControl(sensor.name, [Validators.required, Validators.maxLength(16)]),
+        description: new FormControl(sensor.description),
+        zoneForm: this.zoneForm,
+        areaForm: this.areaForm,
+        hidden: sensor.uiHidden
+      },
+      { validators: this.validateChannel() }
+    );
 
     if (sensor.silentAlert == null) {
       this.sensorForm.controls.silentAlert.setValue('undefined');
@@ -271,6 +283,71 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     } else {
       this.sensorForm.controls.eolCount.enable();
     }
+  }
+
+  validateChannel(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (this.sensorForm == null) {
+        return null;
+      }
+
+      const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel);
+      const selectedChannelType = this.sensorForm.value.channelType;
+
+      // if selected channel type is A or B, allow only opposite type channels
+      if (
+        (selectedChannelType !== ChannelTypes.CHANNEL_B &&
+          selectedChannel.sensor &&
+          selectedChannel.sensor.id !== this.sensor.id) ||
+        (selectedChannelType !== ChannelTypes.CHANNEL_A &&
+          selectedChannel.sensorB &&
+          selectedChannel.sensorB.id !== this.sensor.id)
+      ) {
+        // assign errors to both controls to force error display
+        this.sensorForm.controls.channel.setErrors({ channelInUse: true });
+        this.sensorForm.controls.channel.markAsTouched();
+        this.sensorForm.controls.channelType.setErrors({ channelInUse: true });
+        this.sensorForm.controls.channelType.markAsTouched();
+        return { channelInUse: true };
+      }
+
+      this.sensorForm.controls.channel.setErrors(null);
+      this.sensorForm.controls.channel.markAsTouched();
+      this.sensorForm.controls.channelType.setErrors(null);
+      this.sensorForm.controls.channelType.markAsTouched();
+      return null;
+    };
+  }
+
+  isChannelDisabled(channel: Channel): boolean {
+    if (this.sensorForm == null) {
+      return false;
+    }
+
+    // if channel is disconnected, always enable
+    if (!channel.sensor && !channel.sensorB) {
+      return false;
+    }
+
+    // if it is the originally selected channel, enable
+    if (this.sensor.channel === channel.channel) {
+      return false;
+    }
+
+    // if selected channel type is A or B, disable opposite type channels
+    const selectedChannelType = this.sensorForm.value.channelType;
+    if (
+      (selectedChannelType === ChannelTypes.CHANNEL_A &&
+        (!channel.sensor || channel.sensor?.id === this.sensor.id) &&
+        channel.sensorB?.channelType === ChannelTypes.CHANNEL_B) ||
+      (selectedChannelType === ChannelTypes.CHANNEL_B &&
+        (!channel.sensorB || channel.sensorB?.id === this.sensor.id) &&
+        channel.sensor?.channelType === ChannelTypes.CHANNEL_A)
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
   onSensorTypeChanged(event) {
@@ -560,17 +637,20 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   generateChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
     const channels: Channel[] = [];
-    for (let channel = 0; channel < environment.channelCount; channel++) {
-      const sensor = sensors.find(s => s.channel === channel);
+    for (let channelId = 0; channelId < environment.channelCount; channelId++) {
+      const sensor = sensors.find(s => s.channel === channelId && s.channelType !== ChannelTypes.CHANNEL_B);
+      const sensorB = sensors.find(s => s.channel === channelId && sensor?.id !== s.id);
       channels.push({
-        channel,
-        sensor
+        channel: channelId,
+        sensor: sensor,
+        sensorB: sensorB
       });
     }
 
     channels.push({
       channel: -1,
-      sensor: null
+      sensor: null,
+      sensorB: null
     });
 
     return channels;
