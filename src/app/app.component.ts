@@ -335,6 +335,9 @@ export class AppComponent implements OnInit {
     // example sensor/123 => sensor
     let basePath = pathWithoutLanguage.replace(/\/[0-9]+$/, '');
 
+    // remove location id like "60f10270003f4530e2ba6c09190bf87b731c96185983c8b43147a863ac730ca8"
+    basePath = basePath.replace(/\/[a-f0-9]{64}$/, '');
+
     // mapping of local urls to documentation urls
     const urlMap = {
       '': 'en/latest/end_users/',
@@ -343,6 +346,7 @@ export class AppComponent implements OnInit {
 
       locations: 'en/latest/end_users/locations/',
       'location/add': 'en/latest/end_users/locations/#edit-location',
+      location: 'en/latest/end_users/locations/#edit-location',
       setup: 'en/latest/end_users/locations/',
 
       areas: 'en/latest/end_users/areas/',
