@@ -10,6 +10,25 @@
   width: 160px;
 }
 
+.icon-accessible {
+  color: #4caf50;
+}
+
+.icon-inaccessible {
+  color: #f44336;
+}
+
+.status {
+  .mat-icon {
+    margin: 15px 0px;
+  }
+
+
+  .mat-spinner {
+    margin: 15px 0px;
+  }
+}
+
 .details {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -19,27 +38,25 @@
     float: left;
     clear: left;
     margin-right: 5px;
-    width: 10%;
+    width: 100px;
     font-weight: bold;
+    text-align: right;
   }
 
   dd {
-    margin-left: 0px;
-  }
-}
-
-.status {
-  .icon-accessible {
-    margin: 15px 0px;
-    color: #4caf50;
+    margin-left: 10px;
   }
 
-  .icon-inaccessible {
-    margin: 15px 0px;
-    color: #f44336;
-  }
+  .register {
+    .mat-icon {
+      vertical-align: middle;
+      margin-top: -3px;
+    }
 
-  .mat-spinner {
-    margin: 15px 0px;
+    .text {
+      display: inline-block;
+      margin-top: 20px;
+      margin-left: 10px;
+    }
   }
 }

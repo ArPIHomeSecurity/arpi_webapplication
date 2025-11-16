@@ -102,7 +102,20 @@ export class LocationListComponent extends ConfigurationBaseComponent {
 
   executeLocationTest(location: Location): void {
     this.testResults.set(location.id, new LocationTestResult());
-    testLocation(location).subscribe(result => this.testResults.set(location.id, result));
+    testLocation(location).subscribe(result => {
+      this.testResults.set(location.id, result);
+
+      location.version = result.primaryVersion || result.secondaryVersion || location.version;
+      location.boardVersion = result.primaryBoardVersion || result.secondaryBoardVersion || location.boardVersion;
+
+      // update location in the list
+      const index = this.locations.findIndex(x => x.id === location.id);
+      if (index >= 0) {
+        this.locations[index] = location;
+      }
+
+      this.onSave();
+    });
   }
 
   getTestResult(locationId: string): LocationTestResult {

@@ -23,6 +23,10 @@
             <span i18n="@@location version">Version:</span>
             {{ location.version.version_tag }}
           </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="location.boardVersion != null">
+            <span i18n="@@location board version">Board version:</span>
+            {{ location.boardVersion }}
+          </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">
               <span i18n="@@location device registered">Device registered</span>
@@ -48,6 +52,10 @@
           <mat-card-subtitle *ngIf="location.version != null">
             <span i18n="@@location version">Version:</span>
             {{ location.version.version_tag }}
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="location.boardVersion != null">
+            <span i18n="@@location board version">Board version:</span>
+            {{ location.boardVersion }}
           </mat-card-subtitle>
           <mat-card-subtitle>
             <span *ngIf="isRegistered(location.id) === true">

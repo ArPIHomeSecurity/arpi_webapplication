@@ -1,5 +1,7 @@
 import { forkJoin, Observable } from 'rxjs';
+
 import { Location } from '@app/models';
+import { LocationVersion, parseVersion } from '@app/models/version';
 
 /**
  * Location test result
@@ -13,9 +15,11 @@ export class LocationTestResult {
   primary: boolean = null;
   secondary: boolean = null;
   primaryLocationId: string = null;
-  primaryVersion: string = null;
+  primaryVersion: LocationVersion = null;
+  primaryBoardVersion: string = null;
   secondaryLocationId: string = null;
-  secondaryVersion: string = null;
+  secondaryVersion: LocationVersion = null;
+  secondaryBoardVersion: string = null;
 }
 
 function testUrl(url: string): Observable<boolean> {
@@ -82,12 +86,12 @@ function loadLocationId(locationIdURL: string): Observable<string> {
   });
 }
 
-export function getVersion(versionUrl: string): Observable<string> {
+export function getVersion(versionUrl: string): Observable<LocationVersion> {
   if (!versionUrl) {
     return;
   }
 
-  return new Observable<string>(observer => {
+  return new Observable<LocationVersion>(observer => {
     fetch(versionUrl)
       .then(response => {
         if (!response.ok) {
@@ -99,7 +103,7 @@ export function getVersion(versionUrl: string): Observable<string> {
         return response.text();
       })
       .then(version => {
-        observer.next(version);
+        observer.next(parseVersion(version));
         observer.complete();
       })
       .catch(error => {
@@ -107,6 +111,41 @@ export function getVersion(versionUrl: string): Observable<string> {
           message: error.message,
           stack: error.stack,
           url: versionUrl
+        });
+        observer.next(undefined);
+        observer.complete();
+      });
+  });
+}
+
+export function getBoardVersion(boardVersionUrl: string): Observable<string> {
+  const DEFAULT_BOARD_VERSION = '2';
+  if (!boardVersionUrl) {
+    return;
+  }
+
+  return new Observable<string>(observer => {
+    fetch(boardVersionUrl)
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 404) {
+            return DEFAULT_BOARD_VERSION;
+          }
+
+          return '-';
+        }
+
+        return response.text();
+      })
+      .then(boardVersion => {
+        observer.next(boardVersion);
+        observer.complete();
+      })
+      .catch(error => {
+        console.warn('Error loading board version', {
+          message: error.message,
+          stack: error.stack,
+          url: boardVersionUrl
         });
         observer.next(undefined);
         observer.complete();
@@ -181,22 +220,40 @@ export function testLocation(location: Location): Observable<LocationTestResult>
       secondaryLocationId = undefinedObservableString;
     }
 
-    let primaryVersion: Observable<string>;
+    let primaryVersion: Observable<LocationVersion>;
     if (location.primaryDomain !== '') {
       primaryVersion = getVersion(`${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/version`);
     } else {
       testResult.primaryVersion = undefined;
-      primaryVersion = undefinedObservableString;
+      primaryVersion = undefinedObservableAny;
     }
 
-    let secondaryVersion: Observable<string>;
+    let secondaryVersion: Observable<LocationVersion>;
     if (location.secondaryDomain !== '') {
       secondaryVersion = getVersion(
         `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/version`
       );
     } else {
       testResult.secondaryVersion = undefined;
-      secondaryVersion = undefinedObservableString;
+      secondaryVersion = undefinedObservableAny;
+    }
+
+    let primaryBoardVersion: Observable<string>;
+    if (location.primaryDomain !== '') {
+      primaryBoardVersion = getBoardVersion(
+        `${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/board_version`
+      );
+    } else {
+      primaryBoardVersion = undefinedObservableString;
+    }
+
+    let secondaryBoardVersion: Observable<string>;
+    if (location.secondaryDomain !== '') {
+      secondaryBoardVersion = getBoardVersion(
+        `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/board_version`
+      );
+    } else {
+      secondaryBoardVersion = undefinedObservableString;
     }
 
     forkJoin({
@@ -204,15 +261,19 @@ export function testLocation(location: Location): Observable<LocationTestResult>
       secondaryAvailable: testSecondary,
       primaryLocationId: primaryLocationId,
       primaryVersion: primaryVersion,
+      primaryBoardVersion: primaryBoardVersion,
       secondaryLocationId: secondaryLocationId,
-      secondaryVersion: secondaryVersion
+      secondaryVersion: secondaryVersion,
+      secondaryBoardVersion: secondaryBoardVersion
     }).subscribe(results => {
       testResult.primary = results.primaryAvailable;
       testResult.secondary = results.secondaryAvailable;
       testResult.primaryLocationId = results.primaryLocationId;
       testResult.primaryVersion = results.primaryVersion;
+      testResult.primaryBoardVersion = results.primaryBoardVersion;
       testResult.secondaryLocationId = results.secondaryLocationId;
       testResult.secondaryVersion = results.secondaryVersion;
+      testResult.secondaryBoardVersion = results.secondaryBoardVersion;
       observer.next(testResult);
       observer.complete();
     });

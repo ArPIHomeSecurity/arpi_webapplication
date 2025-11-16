@@ -7,7 +7,7 @@ import { Location } from '@app/models';
 import { AuthenticationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
-import { LocationVersion, parseVersion } from '../../models/version';
+import { LocationVersion } from '../../models/version';
 import { LocationTestResult, testLocation } from './location';
 
 @Component({
@@ -21,6 +21,7 @@ export class LocationDetailsComponent {
 
   location: Location;
   version: LocationVersion = null;
+  boardVersion: string = null;
   locationForm: FormGroup;
   newLocation: boolean;
   firstLocation: boolean;
@@ -64,6 +65,7 @@ export class LocationDetailsComponent {
       secondaryDomain: '',
       secondaryPort: null,
       version: null,
+      boardVersion: null,
       order: 0
     };
   }
@@ -93,10 +95,12 @@ export class LocationDetailsComponent {
         console.error('Primary and secondary location IDs do not match!', result);
       } else if (result.primaryLocationId) {
         this.location.id = result.primaryLocationId;
-        this.version = parseVersion(result.primaryVersion);
+        this.version = result.primaryVersion;
+        this.boardVersion = result.primaryBoardVersion;
       } else if (result.secondaryLocationId) {
         this.location.id = result.secondaryLocationId;
-        this.version = parseVersion(result.secondaryVersion);
+        this.version = result.secondaryVersion;
+        this.boardVersion = result.secondaryBoardVersion;
       }
     });
   }
@@ -148,8 +152,10 @@ export class LocationDetailsComponent {
     location.primaryPort = formModel.primaryPort;
     location.secondaryDomain = formModel.secondaryDomain;
     location.secondaryPort = formModel.secondaryPort;
-    location.version = this.version ? this.version : this.location.version;
     location.order = this.location.order;
+    // use the version loaded from the test or keep the existing one
+    location.version = this.version ? this.version : this.location.version;
+    location.boardVersion = this.boardVersion ? this.boardVersion : this.location.boardVersion;
     return location;
   }
 

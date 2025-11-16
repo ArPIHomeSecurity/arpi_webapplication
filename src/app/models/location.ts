@@ -9,5 +9,6 @@ export class Location {
   secondaryDomain = '';
   secondaryPort: number = null;
   version: LocationVersion | null;
+  boardVersion: string = null;
   order = 0;
 }
