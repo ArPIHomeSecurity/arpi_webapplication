@@ -44,19 +44,18 @@ export class LocationDetailsComponent {
         this.location = locations.find(location => location.id === params.id);
         this.newLocation = false;
       } else {
-        this.location = new Location();
+        this.location = this.defaultLocation();
         this.newLocation = true;
       }
 
-      this.locationDefaultLocation();
       this.updateForm(this.location);
     });
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
   }
 
-  locationDefaultLocation(): void {
-    this.location = {
+  defaultLocation(): Location {
+    return {
       id: null,
       name: this.firstLocation ? 'Default' : '',
       scheme: 'https',
