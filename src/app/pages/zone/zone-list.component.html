@@ -103,8 +103,7 @@
           <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
             <ul class="sensor-list">
               <li *ngFor="let sensor of getSensors(zone.id)">
-                <!-- button mat-button [routerLink]="['/sensors']" fragment="sensor-{{sensor.id}}" color="primary">{{sensor.description}}</button-->
-                {{ sensor.description }}
+                {{ sensor.name }}
                 <button
                   mat-button
                   *ngIf="userCanEdit()"

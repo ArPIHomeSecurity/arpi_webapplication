@@ -3,7 +3,6 @@ import { Component, Inject } from '@angular/core';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import {
   AuthenticationService,
-  ConfigurationService,
   EventService,
   LoaderService,
   MonitoringService
@@ -40,7 +39,6 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
-    @Inject('ConfigurationService') private configService: ConfigurationService,
 
     public dialog: MatDialog
   ) {

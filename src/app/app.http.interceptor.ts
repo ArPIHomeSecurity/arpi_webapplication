@@ -71,9 +71,10 @@ export class AppHttpInterceptor implements HttpInterceptor {
     }
 
     let newRequest = originalRequest.clone({ url: this.backendUrl + originalRequest.url });
-    if (this.authService.getToken()) {
+    const token = this.authService.getToken();
+    if (token) {
       newRequest = originalRequest.clone({
-        headers: originalRequest.headers.set('Authorization', 'Bearer ' + this.authService.getToken()),
+        headers: originalRequest.headers.set('Authorization', 'Bearer ' + token),
         url: this.backendUrl + originalRequest.url
       });
     }
