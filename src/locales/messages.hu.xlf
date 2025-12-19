@@ -1487,8 +1487,8 @@
         <target state="translated"> Helyszínek szerkesztése </target>
       </trans-unit>
       <trans-unit id="location version" datatype="html">
-        <source>Version:</source>
-        <target state="translated">Verzió:</target>
+        <source>Version</source>
+        <target state="translated">Verzió</target>
       </trans-unit>
       <trans-unit id="location device not registered" datatype="html">
         <source>Device NOT registered</source>
@@ -1733,6 +1733,10 @@
       <trans-unit id="location software installation guide" datatype="html">
         <source> Software installation guide </source>
         <target state="translated"> Szoftver telepítési útmutató </target>
+      </trans-unit>
+      <trans-unit id="location board version" datatype="html">
+        <source>Board version</source>
+        <target state="translated">Panel verzió</target>
       </trans-unit>
     </body>
   </file>

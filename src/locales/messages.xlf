@@ -1135,7 +1135,7 @@
         <source>The location was not found!</source>
       </trans-unit>
       <trans-unit id="location version" datatype="html">
-        <source>Version:</source>
+        <source>Version</source>
       </trans-unit>
       <trans-unit id="locations menu link" datatype="html">
         <source>Locations</source>
@@ -1301,6 +1301,9 @@
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source> Software installation guide </source>
+      </trans-unit>
+      <trans-unit id="location board version" datatype="html">
+        <source>Board version</source>
       </trans-unit>
     </body>
   </file>
