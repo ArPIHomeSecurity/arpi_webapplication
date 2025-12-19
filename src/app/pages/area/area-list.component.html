@@ -15,80 +15,82 @@
     >
       <mat-card-content>
         <mat-card-title>{{ area.name }}</mat-card-title>
-        <mat-card-subtitle *ngIf="area.name != area.description">
-          {{ area.description }}
-        </mat-card-subtitle>
 
-        <mat-expansion-panel
-          class="sensors"
-          (opened)="sensorListOpened[area.id] = true"
-          (closed)="sensorListOpened[area.id] = false"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
-            <mat-panel-description
-              *ngIf="!sensorListOpened[area.id]"
-              i18n="@@area number of sensors"
-            >
-              {{ getSensors(area.id).length }} sensor(s)
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div *ngIf="getSensors(area.id).length > 0; else no_sensors">
-            <ul class="sensor-list">
-              <li *ngFor="let sensor of getSensors(area.id)">
-                {{ sensor.description }}
-                <button
-                  mat-button
-                  *ngIf="userCanEdit()"
-                  [routerLink]="['/sensor', sensor.id]"
-                  routerLinkActive="active"
-                  color="accent"
-                >
-                  <mat-icon matListIcon>mode_edit</mat-icon>
-                </button>
-              </li>
-            </ul>
-          </div>
-          <ng-template #no_sensors>
-            <h3 i18n="@@area no sensors">No sensors</h3>
-          </ng-template>
-        </mat-expansion-panel>
+        <mat-accordion multi>
+          <mat-expansion-panel
+            class="sensors"
+            (opened)="sensorListOpened[area.id] = true"
+            (closed)="sensorListOpened[area.id] = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
+              <mat-panel-description
+                *ngIf="!sensorListOpened[area.id]"
+                i18n="@@area number of sensors"
+              >
+                {{ getSensors(area.id).length }} sensor(s)
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="getSensors(area.id).length > 0; else no_sensors">
+              <ul class="sensor-list">
+                <li *ngFor="let sensor of getSensors(area.id)">
+                  {{ sensor.name }}
+                  <button
+                    mat-button
+                    *ngIf="userCanEdit()"
+                    [routerLink]="['/sensor', sensor.id]"
+                    routerLinkActive="active"
+                    color="accent"
+                  >
+                    <mat-icon matListIcon>mode_edit</mat-icon>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <ng-template #no_sensors>
+              <h3 i18n="@@area no sensors">No sensors</h3>
+            </ng-template>
+          </mat-expansion-panel>
 
-        <mat-expansion-panel
-          class="outputs"
-          (opened)="outputListOpened[area.id] = true"
-          (closed)="outputListOpened[area.id] = false"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
-            <mat-panel-description
-              *ngIf="!outputListOpened[area.id]"
-              i18n="@@area number of outputs"
-            >
-              {{ getOutputs(area.id).length }} output(s)
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div *ngIf="getOutputs(area.id).length > 0; else no_outputs">
-            <ul class="output-list">
-              <li *ngFor="let output of getOutputs(area.id)">
-                {{ output.description }}
-                <button
-                  mat-button
-                  *ngIf="userCanEdit()"
-                  [routerLink]="['/output', output.id]"
-                  routerLinkActive="active"
-                  color="accent"
-                >
-                  <mat-icon matListIcon>mode_edit</mat-icon>
-                </button>
-              </li>
-            </ul>
-          </div>
-          <ng-template #no_outputs>
-            <h3 i18n="@@area no outputs">No outputs</h3>
-          </ng-template>
-        </mat-expansion-panel>
+          <mat-expansion-panel
+            class="outputs"
+            (opened)="outputListOpened[area.id] = true"
+            (closed)="outputListOpened[area.id] = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
+              <mat-panel-description
+                *ngIf="!outputListOpened[area.id]"
+                i18n="@@area number of outputs"
+              >
+                {{ getOutputs(area.id).length }} output(s)
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="getOutputs(area.id).length > 0; else no_outputs">
+              <ul class="output-list">
+                <li *ngFor="let output of getOutputs(area.id)">
+                  {{ output.name }}
+                  <button
+                    mat-button
+                    *ngIf="userCanEdit()"
+                    [routerLink]="['/output', output.id]"
+                    routerLinkActive="active"
+                    color="accent"
+                  >
+                    <mat-icon matListIcon>mode_edit</mat-icon>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <ng-template #no_outputs>
+              <h3 i18n="@@area no outputs">No outputs</h3>
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
       </mat-card-content>
+
+      <!-- spacer -->
+      <mat-card-content><p></p></mat-card-content>
 
       <mat-divider *ngIf="userCanEdit()"></mat-divider>
 
