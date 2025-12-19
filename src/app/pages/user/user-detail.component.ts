@@ -26,7 +26,8 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
   userId: number = null;
   user: User = null;
   userForm: FormGroup;
-  roles: any = [];
+
+  roles: Array<{ name: string; value: string }> = [];
   hideOld = true;
   hideNew = true;
   isMyProfile = false;
@@ -59,17 +60,16 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
         this.userId = parseInt(id, 10);
         this.isMyProfile = false;
       }
+
+      // populate roles for select
+      Object.keys(ROLE_TYPES).forEach(role => {
+        this.roles.push({ name: role, value: ROLE_TYPES[role] });
+      });
     });
   }
 
   ngOnInit() {
     super.initialize();
-
-    for (const role in ROLE_TYPES) {
-      if (ROLE_TYPES.hasOwnProperty(role)) {
-        this.roles.push({ name: role, value: ROLE_TYPES[role] });
-      }
-    }
 
     if (this.userId != null) {
       // avoid ExpressionChangedAfterItHasBeenCheckedError
@@ -112,6 +112,14 @@ export class UserDetailComponent extends ConfigurationBaseComponent implements O
 
   ngOnDestroy() {
     super.destroy();
+  }
+
+  hasAdminRole(): boolean {
+    return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
+  }
+
+  editOwnProfile() {
+    return this.userId === this.authenticationService.getUserId();
   }
 
   updateForm(user: User) {

@@ -14,7 +14,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field [ngClass]="{ hidden: isMyProfile }">
+        <mat-form-field *ngIf="!isMyProfile">
           <mat-label i18n="@@user role">Role</mat-label>
           <mat-select
             i18n-placeholder="@@user select role"
@@ -26,7 +26,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="isMyProfile">
+        <mat-form-field *ngIf="editOwnProfile()">
           <mat-label i18n="@@user old access code">Old access code</mat-label>
           <input
             matInput
