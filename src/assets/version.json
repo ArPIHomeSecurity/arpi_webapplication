@@ -1,9 +1,9 @@
 {
-  "version": "v1.6.2:716043a",
+  "version": "v1.6.3:b6e9d03",
   "major": 1,
   "minor": 6,
-  "patch": 2,
+  "patch": 3,
   "prerelease": null,
   "prerelease_num": null,
-  "commit_id": "716043a"
+  "commit_id": "b6e9d03"
 }
