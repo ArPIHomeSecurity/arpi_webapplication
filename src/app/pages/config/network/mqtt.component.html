@@ -53,23 +53,23 @@
       class="row"
     >
       <mat-form-field class="container-item">
-        <mat-label i18n="@@network mqtt username">Username</mat-label>
+        <mat-label i18n="@@network mqtt username">MQTT Username</mat-label>
         <input
           matInput
           formControlName="mqttUsername"
           i18n-placeholder="@@network mqtt username"
-          placeholder="Username"
+          placeholder="MQTT Username"
         />
       </mat-form-field>
 
       <mat-form-field class="container-item">
-        <mat-label i18n="@@network mqtt password">Password</mat-label>
+        <mat-label i18n="@@network mqtt password">MQTT Password</mat-label>
         <input
           type="password"
           matInput
           formControlName="mqttPassword"
           i18n-placeholder="@@network mqtt password"
-          placeholder="Password"
+          placeholder="MQTT Password"
         />
       </mat-form-field>
     </div>
@@ -110,7 +110,7 @@
           </button>
         </mat-list-item>
         <mat-list-item>
-          <span matListItemTitle i18n="@@network mqtt password">Password</span>
+          <span matListItemTitle i18n="@@network mqtt password">MQTT Password</span>
           {{ getMqttPassword() || 'No password set' }}
           <button
             type="button"

@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label i18n="@@mcp token">MCP token</mat-label>
+    <textarea matInput [value]="data.token" rows="7" readonly></textarea>
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="copyToken()"
+      onclick="this.blur()"
+      i18n-aria-label="@@copy token"
+      aria-label="Copy token"
+    >
+      <mat-icon>file_copy</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onClickClose()" tabindex="-1" i18n="@@close button">Close</button>
+</div>

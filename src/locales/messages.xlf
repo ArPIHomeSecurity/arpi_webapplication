@@ -1282,7 +1282,7 @@
         <source>Internal MQTT Broker read</source>
       </trans-unit>
       <trans-unit id="network mqtt password" datatype="html">
-        <source>Password</source>
+        <source>MQTT Password</source>
       </trans-unit>
       <trans-unit id="network mqtt port" datatype="html">
         <source>Port</source>
@@ -1294,7 +1294,7 @@
         <source>MQTT URL</source>
       </trans-unit>
       <trans-unit id="network mqtt username" datatype="html">
-        <source>Username</source>
+        <source>MQTT Username</source>
       </trans-unit>
       <trans-unit id="sensor error" datatype="html">
         <source>Error on input channel</source>
@@ -1304,6 +1304,27 @@
       </trans-unit>
       <trans-unit id="location board version" datatype="html">
         <source>Board version</source>
+      </trans-unit>
+      <trans-unit id="copy token" datatype="html">
+        <source>Copy token</source>
+      </trans-unit>
+      <trans-unit id="failed delete mcp token" datatype="html">
+        <source>Failed to delete MCP token!</source>
+      </trans-unit>
+      <trans-unit id="failed get mcp token" datatype="html">
+        <source>Failed to get MCP token!</source>
+      </trans-unit>
+      <trans-unit id="mcp token" datatype="html">
+        <source>MCP token</source>
+      </trans-unit>
+      <trans-unit id="mcp token deleted" datatype="html">
+        <source>MCP token deleted!</source>
+      </trans-unit>
+      <trans-unit id="user get mcp token" datatype="html">
+        <source> Get MCP token </source>
+      </trans-unit>
+      <trans-unit id="user no mcp token" datatype="html">
+        <source> No MCP token </source>
       </trans-unit>
     </body>
   </file>

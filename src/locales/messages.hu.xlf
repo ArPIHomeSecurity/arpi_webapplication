@@ -1655,12 +1655,12 @@
         <target state="translated">Port</target>
       </trans-unit>
       <trans-unit id="network mqtt username" datatype="html">
-        <source>Username</source>
-        <target state="translated">Felhasználónév</target>
+        <source>MQTT Username</source>
+        <target state="translated">MQTT Felhasználónév</target>
       </trans-unit>
       <trans-unit id="network mqtt password" datatype="html">
-        <source>Password</source>
-        <target state="translated">Jelszó</target>
+        <source>MQTT Password</source>
+        <target state="translated">MQTT Jelszó</target>
       </trans-unit>
       <trans-unit id="network mqtt enable tls" datatype="html">
         <source> Enable TLS </source>
@@ -1737,6 +1737,34 @@
       <trans-unit id="location board version" datatype="html">
         <source>Board version</source>
         <target state="translated">Panel verzió</target>
+      </trans-unit>
+      <trans-unit id="mcp token" datatype="html">
+        <source>MCP token</source>
+        <target state="translated">MCP token</target>
+      </trans-unit>
+      <trans-unit id="copy token" datatype="html">
+        <source>Copy token</source>
+        <target state="translated">Token másolása</target>
+      </trans-unit>
+      <trans-unit id="user no mcp token" datatype="html">
+        <source> No MCP token </source>
+        <target state="translated"> Nincs MCP token </target>
+      </trans-unit>
+      <trans-unit id="user get mcp token" datatype="html">
+        <source> Get MCP token </source>
+        <target state="translated"> MCP token kérés </target>
+      </trans-unit>
+      <trans-unit id="failed get mcp token" datatype="html">
+        <source>Failed to get MCP token!</source>
+        <target state="translated">Sikertelen MCP token kérés!</target>
+      </trans-unit>
+      <trans-unit id="mcp token deleted" datatype="html">
+        <source>MCP token deleted!</source>
+        <target state="translated">MCP token törölve!</target>
+      </trans-unit>
+      <trans-unit id="failed delete mcp token" datatype="html">
+        <source>Failed to delete MCP token!</source>
+        <target state="translated">Sikertelen MCP token törlés!</target>
       </trans-unit>
     </body>
   </file>

@@ -1652,15 +1652,15 @@
       </trans-unit>
       <trans-unit id="network mqtt port" datatype="html">
         <source>Port</source>
-        <target state="new">Port</target>
+        <target state="translated">Port</target>
       </trans-unit>
       <trans-unit id="network mqtt username" datatype="html">
-        <source>Username</source>
-        <target state="new">Username</target>
+        <source>MQTT Username</source>
+        <target state="new">MQTT Username</target>
       </trans-unit>
       <trans-unit id="network mqtt password" datatype="html">
-        <source>Password</source>
-        <target state="new">Password</target>
+        <source>MQTT Password</source>
+        <target state="new">MQTT Password</target>
       </trans-unit>
       <trans-unit id="network mqtt enable tls" datatype="html">
         <source> Enable TLS </source>
@@ -1676,7 +1676,7 @@
       </trans-unit>
       <trans-unit id="network mqtt url" datatype="html">
         <source>MQTT URL</source>
-        <target state="new">MQTT URL</target>
+        <target state="translated">MQTT URL</target>
       </trans-unit>
       <trans-unit id="location welcome title" datatype="html">
         <source> Welcome to ArPI Home Security </source>
@@ -1737,6 +1737,34 @@
       <trans-unit id="location board version" datatype="html">
         <source>Board version</source>
         <target state="new">Board version</target>
+      </trans-unit>
+      <trans-unit id="mcp token" datatype="html">
+        <source>MCP token</source>
+        <target state="new">MCP token</target>
+      </trans-unit>
+      <trans-unit id="copy token" datatype="html">
+        <source>Copy token</source>
+        <target state="new">Copy token</target>
+      </trans-unit>
+      <trans-unit id="user no mcp token" datatype="html">
+        <source> No MCP token </source>
+        <target state="new"> No MCP token </target>
+      </trans-unit>
+      <trans-unit id="user get mcp token" datatype="html">
+        <source> Get MCP token </source>
+        <target state="new"> Get MCP token </target>
+      </trans-unit>
+      <trans-unit id="failed get mcp token" datatype="html">
+        <source>Failed to get MCP token!</source>
+        <target state="new">Failed to get MCP token!</target>
+      </trans-unit>
+      <trans-unit id="mcp token deleted" datatype="html">
+        <source>MCP token deleted!</source>
+        <target state="new">MCP token deleted!</target>
+      </trans-unit>
+      <trans-unit id="failed delete mcp token" datatype="html">
+        <source>Failed to delete MCP token!</source>
+        <target state="new">Failed to delete MCP token!</target>
       </trans-unit>
     </body>
   </file>

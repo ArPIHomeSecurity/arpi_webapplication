@@ -7,7 +7,8 @@ import { Card, ROLE_TYPES, User } from '@app/models';
 import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
-import { finalize, forkJoin, Observable } from 'rxjs';
+import { catchError, finalize, forkJoin, Observable, of, throwError } from 'rxjs';
+import { MCPTokenDialogComponent } from '../mcp-token-dialog/mcp-token-dialog.component';
 import { UserDeviceRegistrationDialogComponent } from '../user-device-registration/user-device-registration.component';
 import { UserSshKeySetupDialogComponent } from '../user-ssh-key-setup/user-ssh-key-setup.component';
 
@@ -26,6 +27,7 @@ export class UserCardComponent implements OnInit {
   @Input() canManageCards = false;
   @Input() canManageSshKeys = false;
   @Input() canManageRegistration = false;
+  @Input() canManageMCP = false;
 
   @Output() onUserDeleted = new EventEmitter<number>();
   @Output() onNavigateToUserEdit = new EventEmitter<void>();
@@ -36,6 +38,7 @@ export class UserCardComponent implements OnInit {
   cards: Card[] = [];
   registeringCard = false;
   hasSshKey = false;
+  hasMCPToken: boolean | null = null;
   biometricAvailable = false;
   useBiometric: boolean = null;
 
@@ -90,20 +93,33 @@ export class UserCardComponent implements OnInit {
     if (this.canManageSshKeys) {
       loadHasSshKey = this.userService.hasSshKey(this.user.id);
     } else {
-      loadHasSshKey = new Observable<boolean>(observer => {
-        observer.next(false);
-        observer.complete();
-      });
+      loadHasSshKey = of(false);
+    }
+
+    let loadHasMCPToken: Observable<boolean | null>;
+    if (this.canManageMCP) {
+      loadHasMCPToken = this.userService.hasMCPToken(this.user.id).pipe(
+        catchError(error => {
+          if (error?.status === 404) {
+            return of(null);
+          }
+          return throwError(() => error);
+        })
+      );
+    } else {
+      loadHasMCPToken = of(null);
     }
 
     forkJoin({
       cards: this.cardService.getCards(this.user.id),
-      hasSshKey: loadHasSshKey
+      hasSshKey: loadHasSshKey,
+      hasMCPToken: loadHasMCPToken
     })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(result => {
         this.cards = result.cards;
         this.hasSshKey = result.hasSshKey;
+        this.hasMCPToken = result.hasMCPToken;
       });
   }
 
@@ -369,5 +385,44 @@ export class UserCardComponent implements OnInit {
     localStorage.setItem('biometricEnabled', JSON.stringify(status));
     this.useBiometric = false;
     this.loading = false;
+  }
+
+  getMCPToken() {
+    this.loading = true;
+    this.userService
+      .getMCPToken(this.user.id)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: token => {
+          // display the token in a dialog
+          this.hasMCPToken = true;
+          this.dialog.open(MCPTokenDialogComponent, {
+            data: {
+              title: $localize`:@@mcp token:MCP token`,
+              token
+            },
+            width: '500px'
+          });
+        },
+        error: _ =>
+          this.snackBar.open($localize`:@@failed get mcp token:Failed to get MCP token!`, null, {
+            duration: environment.snackDuration
+          })
+      });
+  }
+
+  removeMCPToken() {
+    this.userService.removeMCPToken(this.user.id).subscribe({
+      next: _ => {
+        this.hasMCPToken = false;
+        this.snackBar.open($localize`:@@mcp token deleted:MCP token deleted!`, null, {
+          duration: environment.snackDuration
+        });
+      },
+      error: _ =>
+        this.snackBar.open($localize`:@@failed delete mcp token:Failed to delete MCP token!`, null, {
+          duration: environment.snackDuration
+        })
+    });
   }
 }

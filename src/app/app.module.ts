@@ -42,6 +42,7 @@ import { AppComponent } from './app.component';
 import { MessageComponent } from './components/message/message.component';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 import { SystemStateComponent } from './components/system-state/system-state.component';
+import { MCPTokenDialogComponent } from './components/user/mcp-token-dialog/mcp-token-dialog.component';
 import { UserCardComponent } from './components/user/user-card/user-card.component';
 import { UserDeviceRegistrationDialogComponent } from './components/user/user-device-registration/user-device-registration.component';
 import { UserSshKeySetupDialogComponent } from './components/user/user-ssh-key-setup/user-ssh-key-setup.component';
@@ -99,6 +100,7 @@ import { CapacitorService } from './services/capacitor.service';
     UserDetailComponent,
     UserDeviceRegistrationDialogComponent,
     UserSshKeySetupDialogComponent,
+    MCPTokenDialogComponent,
     MyUserComponent,
 
     AreaComponent,

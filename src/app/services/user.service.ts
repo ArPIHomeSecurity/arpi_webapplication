@@ -28,4 +28,10 @@ export interface UserService {
   hasSshKey(userId: number): Observable<boolean>;
 
   deleteSshKey(userId: number): Observable<boolean>;
+
+  getMCPToken(userId: number): Observable<string>;
+
+  hasMCPToken(userId: number): Observable<boolean>;
+
+  removeMCPToken(userId: number): Observable<boolean>;
 }

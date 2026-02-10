@@ -106,9 +106,30 @@
       <mat-card-subtitle *ngIf="!hasSshKey" i18n="@@user no ssh key">No SSH key</mat-card-subtitle>
     </mat-card-content>
 
-    <mat-divider *ngIf="user.comment"></mat-divider>
+
+    <!-- MCP token -->
+    <mat-divider *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null"></mat-divider>
+    <mat-card-content *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null">
+      <mat-card-title i18n="@@mcp token">MCP token</mat-card-title>
+      <div *ngIf="hasMCPToken === true">
+        <mat-icon class="entry">vpn_key</mat-icon>
+        <button
+          mat-icon-button
+          color="warn"
+          [disabled]="!canManageMCP || disabled"
+          (click)="removeMCPToken()"
+          >
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <mat-card-subtitle *ngIf="hasMCPToken === false" i18n="@@user no mcp token">
+        No MCP token
+      </mat-card-subtitle>
+    </mat-card-content>
+
 
     <!-- Comment -->
+    <mat-divider *ngIf="user.comment"></mat-divider>
     <mat-card-content *ngIf="user.comment">
       <p>{{ user.comment }}</p>
     </mat-card-content>
@@ -174,6 +195,16 @@
         i18n="@@user generate ssk key"
       >
         Setup SSH key
+      </button>
+      <button
+        *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null"
+        mat-menu-item
+        color="primary"
+        [disabled]="!canManageMCP || disabled || hasMCPToken === true"
+        (click)="getMCPToken()"
+        i18n="@@user get mcp token"
+      >
+        Get MCP token
       </button>
 
       <!-- Biometric login -->

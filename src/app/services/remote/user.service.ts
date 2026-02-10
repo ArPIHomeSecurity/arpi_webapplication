@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { User } from '@app/models';
@@ -69,5 +69,17 @@ export class UserService {
 
   deleteSshKey(userId: number): Observable<boolean> {
     return this.http.delete('/api/user/' + userId + '/ssh_key').pipe(map((res: any) => res));
+  }
+
+  getMCPToken(userId: number): Observable<string> {
+    return this.http.post('/api/user/' + userId + '/mcp_token', {}).pipe(map((res: any) => res));
+  }
+
+  hasMCPToken(userId: number): Observable<boolean> {
+    return this.http.get('/api/user/' + userId + '/mcp_token').pipe(map((res: any) => res.has_mcp_token));
+  }
+
+  removeMCPToken(userId: number): Observable<boolean> {
+    return this.http.delete('/api/user/' + userId + '/mcp_token').pipe(map((res: any) => res));
   }
 }
