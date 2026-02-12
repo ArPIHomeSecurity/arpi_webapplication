@@ -1,131 +1,120 @@
-<div *ngIf="dyndns != null && access != null" class="container">
-  <mat-accordion multi="true">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title i18n="@@network dns">Dynamic DNS</mat-panel-title>
-        <mat-panel-description i18n="@@network remote access">
+@if (dyndns != null && access != null) {
+  <div class="container">
+    <mat-accordion multi="true">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="@@network dns">Dynamic DNS</mat-panel-title>
+          <mat-panel-description i18n="@@network remote access">
           Remote access by hostname
         </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <form [formGroup]="dyndnsForm" (ngSubmit)="onSaveDyndns()" class="network-form">
-        <div class="row">
-          <mat-form-field class="container-item">
-            <mat-label i18n="@@network provider">Provider</mat-label>
-            <mat-select
-              formControlName="dyndnsProvider"
-              i18n-placeholder="@@network provider"
-              placeholder="Provider"
-            >
-              <mat-option *ngFor="let provider of providers" [value]="provider.value">
-                {{ provider.label }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="container-item">
-            <mat-label i18n="@@network hostname">Hostname</mat-label>
-            <input
-              matInput
-              formControlName="dyndnsHostname"
-              i18n-placeholder="@@network hostname"
-              placeholder="Hostname"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field class="container-item">
-            <mat-label i18n="@@network username">Username</mat-label>
-            <input
-              matInput
-              formControlName="dyndnsUsername"
-              i18n-placeholder="@@network username"
-              placeholder="Username"
-            />
-          </mat-form-field>
-
-          <mat-form-field class="container-item">
-            <mat-label i18n="@@network password">Password</mat-label>
-            <input
-              type="password"
-              matInput
-              formControlName="dyndnsPassword"
-              (focus)="onPasswordFocus()"
-              (blur)="onPasswordBlur()"
-              i18n-placeholder="@@network password"
-              placeholder="Password"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field class="container-item">
-            <mat-label i18n="@@network certbot email">Certbot email</mat-label>
-            <input
-              type="email"
-              matInput
-              formControlName="certbotEmail"
-              i18n-placeholder="@@network certbot email"
-              placeholder="Certbot email"
-            />
-          </mat-form-field>
-        </div>
-
-        <mat-checkbox formControlName="dyndnsRestrictHost" i18n="@@network restrict host">
+        </mat-expansion-panel-header>
+        <form [formGroup]="dyndnsForm" (ngSubmit)="onSaveDyndns()" class="network-form">
+          <div class="row">
+            <mat-form-field class="container-item">
+              <mat-label i18n="@@network provider">Provider</mat-label>
+              <mat-select
+                formControlName="dyndnsProvider"
+                i18n-placeholder="@@network provider"
+                placeholder="Provider"
+                >
+                @for (provider of providers; track provider) {
+                  <mat-option [value]="provider.value">
+                    {{ provider.label }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="container-item">
+              <mat-label i18n="@@network hostname">Hostname</mat-label>
+              <input
+                matInput
+                formControlName="dyndnsHostname"
+                i18n-placeholder="@@network hostname"
+                placeholder="Hostname"
+                />
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="container-item">
+              <mat-label i18n="@@network username">Username</mat-label>
+              <input
+                matInput
+                formControlName="dyndnsUsername"
+                i18n-placeholder="@@network username"
+                placeholder="Username"
+                />
+            </mat-form-field>
+            <mat-form-field class="container-item">
+              <mat-label i18n="@@network password">Password</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="dyndnsPassword"
+                (focus)="onPasswordFocus()"
+                (blur)="onPasswordBlur()"
+                i18n-placeholder="@@network password"
+                placeholder="Password"
+                />
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="container-item">
+              <mat-label i18n="@@network certbot email">Certbot email</mat-label>
+              <input
+                type="email"
+                matInput
+                formControlName="certbotEmail"
+                i18n-placeholder="@@network certbot email"
+                placeholder="Certbot email"
+                />
+            </mat-form-field>
+          </div>
+          <mat-checkbox formControlName="dyndnsRestrictHost" i18n="@@network restrict host">
           Restrict access to host
         </mat-checkbox>
-
-        <div class="form-actions">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
+          <div class="form-actions">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
             [disabled]="
               monitoringState != monitoringStates.READY || dyndnsForm.invalid || dyndnsForm.pristine
             "
-            i18n="@@save button"
-          >
+              i18n="@@save button"
+              >
             Save
           </button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title i18n="@@network terminal access">Terminal access</mat-panel-title>
-        <mat-panel-description i18n="@@network ssh settings">SSH settings</mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <form [formGroup]="accessForm" (ngSubmit)="onSaveAccess()" class="network-form">
-        <mat-checkbox formControlName="accessSshService" i18n="@@network enable ssh">
+          </div>
+        </form>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="@@network terminal access">Terminal access</mat-panel-title>
+          <mat-panel-description i18n="@@network ssh settings">SSH settings</mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="accessForm" (ngSubmit)="onSaveAccess()" class="network-form">
+          <mat-checkbox formControlName="accessSshService" i18n="@@network enable ssh">
           Enable SSH connection
         </mat-checkbox>
-
-        <br />
-
-        <mat-checkbox
-          formControlName="accessSshRestrictLocalNetwork"
-          i18n="@@network restrict local"
-        >
+          <br />
+          <mat-checkbox
+            formControlName="accessSshRestrictLocalNetwork"
+            i18n="@@network restrict local"
+            >
           Restrict SSH connection to local network
         </mat-checkbox>
-
-        <br />
-
-        <mat-checkbox
-          formControlName="accessSshPasswordAuthentication"
-          i18n="@@network password authentication"
-        >
+          <br />
+          <mat-checkbox
+            formControlName="accessSshPasswordAuthentication"
+            i18n="@@network password authentication"
+            >
           Enable SSH password authentication
         </mat-checkbox>
-
-        <div class="form-actions">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
+          <div class="form-actions">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
             [disabled]="
               !(
                 monitoringState == monitoringStates.READY ||
@@ -134,28 +123,35 @@
               accessForm.invalid ||
               accessForm.pristine
             "
-            i18n="@@save button"
-          >
+              i18n="@@save button"
+              >
             Save
           </button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-
-    <app-mqtt></app-mqtt>
-  </mat-accordion>
-
-  <div *ngIf="publicUrl !== null" class="status">
-    <mat-icon *ngIf="publicUrlAccessible === true" class="icon-accessible link-icon">
-      check
-    </mat-icon>
-    <mat-icon *ngIf="publicUrlAccessible === false" class="icon-inaccessible link-icon">
-      error
-    </mat-icon>
-    <mat-spinner *ngIf="publicUrlAccessible === null" diameter="16"></mat-spinner>
-    <a mat-button color="primary" href="{{ publicUrl }}" target="_blank">
-      {{ publicUrl }}
-      <mat-icon class="link-icon" iconPositionEnd>open_in_new</mat-icon>
-    </a>
+          </div>
+        </form>
+      </mat-expansion-panel>
+      <app-mqtt></app-mqtt>
+    </mat-accordion>
+    @if (publicUrl !== null) {
+      <div class="status">
+        @if (publicUrlAccessible === true) {
+          <mat-icon class="icon-accessible link-icon">
+            check
+          </mat-icon>
+        }
+        @if (publicUrlAccessible === false) {
+          <mat-icon class="icon-inaccessible link-icon">
+            error
+          </mat-icon>
+        }
+        @if (publicUrlAccessible === null) {
+          <mat-spinner diameter="16"></mat-spinner>
+        }
+        <a mat-button color="primary" href="{{ publicUrl }}" target="_blank">
+          {{ publicUrl }}
+          <mat-icon class="link-icon" iconPositionEnd>open_in_new</mat-icon>
+        </a>
+      </div>
+    }
   </div>
-</div>
+}

@@ -6,49 +6,66 @@
       [sensorAlert]="sensorAlert"
       [systemAlert]="alert != null"
       (armChanged)="armChanged($event)"
-    />
+      />
   </div>
 
-  <div *ngIf="alert" class="container-item alert">
-    <mat-expansion-panel class="alert" color="warn">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
-          <mat-icon matListIcon *ngIf="alert.silent" class="material-icons-outlined">
-            volume_mute
-          </mat-icon>
-          <mat-icon matListIcon *ngIf="!alert.silent" class="material-icons-outlined">
-            volume_up
-          </mat-icon>
-          <div>{{ alert.startTime }}</div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+  @if (alert) {
+    <div class="container-item alert">
+      <mat-expansion-panel class="alert" color="warn">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
+            @if (alert.silent) {
+              <mat-icon matListIcon class="material-icons-outlined">
+                volume_mute
+              </mat-icon>
+            }
+            @if (!alert.silent) {
+              <mat-icon matListIcon class="material-icons-outlined">
+                volume_up
+              </mat-icon>
+            }
+            <div>{{ alert.startTime }}</div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="column">
+          @for (sensor of alert.sensors; track sensor) {
+            <component-sensor [sensor]="sensor" />
+          }
+        </div>
+      </mat-expansion-panel>
+    </div>
+  }
 
-      <div class="column">
-        <component-sensor *ngFor="let sensor of alert.sensors" [sensor]="sensor" />
-      </div>
-    </mat-expansion-panel>
-  </div>
+  @if (areas.length == 1) {
+    <div class="container-item areas">
+      @for (sensor of sensors; track sensor) {
+        <component-sensor
+          [sensor]="sensor"
+          [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
+          />
+      }
+    </div>
+  }
 
-  <div *ngIf="areas.length == 1" class="container-item areas">
-    <component-sensor
-      *ngFor="let sensor of sensors"
-      [sensor]="sensor"
-      [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
-    />
-  </div>
+  @if (areas.length > 1) {
+    <div class="container-item areas">
+      @for (area of areas; track areaIdentify($index, area)) {
+        <component-area
+          [area]="area"
+          [sensors]="getSensors(area.id)"
+          [delays]="getSensorDelays(area.id)"
+          [monitoringState]="monitoringState"
+          />
+      }
+    </div>
+  }
 
-  <div *ngIf="areas.length > 1" class="container-item areas">
-    <component-area
-      *ngFor="let area of areas; trackBy: areaIdentify"
-      [area]="area"
-      [sensors]="getSensors(area.id)"
-      [delays]="getSensorDelays(area.id)"
-      [monitoringState]="monitoringState"
-    />
-  </div>
-
-  <div *ngIf="outputs" class="container-item">
-    <component-output *ngFor="let output of outputs" [output]="output" />
-  </div>
+  @if (outputs) {
+    <div class="container-item">
+      @for (output of outputs; track output) {
+        <component-output [output]="output" />
+      }
+    </div>
+  }
 </div>

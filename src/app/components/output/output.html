@@ -6,12 +6,13 @@
   (longPressed)="onLongPressed()"
   (longPressAvailable)="onLongPressAvailable($event)"
   long-press-toggle
->
+  >
   {{output.name}}
-  <mat-progress-spinner
-    *ngIf="output.duration !== ENDLESS_DURATION && output.state"
-    diameter="25"
-    color="primary"
-    mode="indeterminate"
-  ></mat-progress-spinner>
+  @if (output.duration !== ENDLESS_DURATION && output.state) {
+    <mat-progress-spinner
+      diameter="25"
+      color="primary"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  }
 </mat-button-toggle>

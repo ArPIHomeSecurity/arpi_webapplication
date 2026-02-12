@@ -1,171 +1,201 @@
-<div *ngIf="sensors != null" class="container sensor-list">
-  <div
-    cdkDropList
-    *ngIf="sensors.length > 0; else no_sensors"
-    (cdkDropListDropped)="onDrop($event)"
-  >
-    <mat-card
-      id="sensor-{{ sensor.id }}"
-      *ngFor="let sensor of sensors"
-      cdkDrag
-      (cdkDragStarted)="onDragStarted($event)"
-      [cdkDragDisabled]="!userCanEdit()"
-      class="sensor-card container-item"
-      [ngClass]="{ disabled: !sensor.enabled }"
-    >
-      <mat-card-header>
-        <mat-card-title-group>
-            <mat-card-title>{{ sensor.name }}</mat-card-title>
-            <mat-card-subtitle *ngIf="sensor.error" class="error-text">
-              <mat-icon class="error-icon">error</mat-icon>
-              <span i18n="@@sensor error">Error on input channel</span>
-            </mat-card-subtitle>
-            <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
-          </mat-card-title-group>
-          <div [ngSwitch]="sensor.typeId" class="sensor-image" [ngClass]="{ alerting: sensor.alert, error: sensor.error }">
-            <img mat-card-sm-image *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
-            <img mat-card-sm-image *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
-            <img mat-card-sm-image *ngSwitchCase="3" src="assets/images/sensor_open.png" />
-            <img mat-card-sm-image *ngSwitchCase="4" src="assets/images/sensor_break.png" />
-            <img
-              mat-card-sm-image
-              *ngSwitchDefault
-              src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
-            />
-          </div>
-      </mat-card-header>
-
-
-      <mat-divider></mat-divider>
-      <mat-card-content class="row">
-        <div class="attributes">
-          <div class="attributes-container">
-            <mat-list class="attribute-list"
-                      *ngFor="let attributeGroup of getSensorAttributeGroups(sensor); let i = index">
-              <mat-list-item *ngFor="let attribute of attributeGroup">
-                <mat-icon matListItemIcon
-                         [ngClass]="attribute.iconClass"
-                         [ngSwitch]="attribute.iconType">
-                  <!-- Material icons -->
-                  <ng-container *ngSwitchCase="'material'">
-                    <span class="material-icons-outlined">{{ attribute.icon }}</span>
-                  </ng-container>
-                  <!-- Image icons for sensor types -->
-                  <ng-container *ngSwitchCase="'image'" [ngSwitch]="attribute.iconSwitch">
-                    <img ngClass="sensor-icon"
-                         *ngSwitchCase="1"
-                         src="assets/images/sensor_motion.png" />
-                    <img ngClass="sensor-icon"
-                         *ngSwitchCase="2"
-                         src="assets/images/sensor_tamper.png" />
-                    <img ngClass="sensor-icon"
-                         *ngSwitchCase="3"
-                         src="assets/images/sensor_open.png" />
-                    <img ngClass="sensor-icon"
-                         *ngSwitchCase="4"
-                         src="assets/images/sensor_break.png" />
-                    <img ngClass="sensor-icon"
-                         *ngSwitchDefault
-                         src="https://via.placeholder.com/100?text={{ getSensorTypeName(attribute.iconSwitch) }}" />
-                  </ng-container>
-                </mat-icon>
-                <span class="long-field" [innerHTML]="attribute.content"></span>
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </div>
-      </mat-card-content>
-
-      <mat-divider *ngIf="userCanEdit()"></mat-divider>
-
-      <mat-card-actions *ngIf="userCanEdit()">
-        <!-- drag and drop icon button-->
-        <button
-          mat-icon-button
-          cdkDragHandle
-          class="drag-handle"
+@if (sensors != null) {
+  <div class="container sensor-list">
+    @if (sensors.length > 0) {
+      <div
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+        >
+        @for (sensor of sensors; track sensor) {
+          <mat-card
+            id="sensor-{{ sensor.id }}"
+            cdkDrag
+            (cdkDragStarted)="onDragStarted($event)"
+            [cdkDragDisabled]="!userCanEdit()"
+            class="sensor-card container-item"
+            [ngClass]="{ disabled: !sensor.enabled }"
+            >
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ sensor.name }}</mat-card-title>
+                @if (sensor.error) {
+                  <mat-card-subtitle class="error-text">
+                    <mat-icon class="error-icon">error</mat-icon>
+                    <span i18n="@@sensor error">Error on input channel</span>
+                  </mat-card-subtitle>
+                }
+                <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
+              </mat-card-title-group>
+              <div class="sensor-image" [ngClass]="{ alerting: sensor.alert, error: sensor.error }">
+                @switch (sensor.typeId) {
+                  @case (1) {
+                    <img mat-card-sm-image src="assets/images/sensor_motion.png" />
+                  }
+                  @case (2) {
+                    <img mat-card-sm-image src="assets/images/sensor_tamper.png" />
+                  }
+                  @case (3) {
+                    <img mat-card-sm-image src="assets/images/sensor_open.png" />
+                  }
+                  @case (4) {
+                    <img mat-card-sm-image src="assets/images/sensor_break.png" />
+                  }
+                  @default {
+                    <img
+                      mat-card-sm-image
+                      src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
+                      />
+                  }
+                }
+              </div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="row">
+              <div class="attributes">
+                <div class="attributes-container">
+                  @for (attributeGroup of getSensorAttributeGroups(sensor); track attributeGroup; let i = $index) {
+                    <mat-list class="attribute-list"
+                      >
+                      @for (attribute of attributeGroup; track attribute) {
+                        <mat-list-item>
+                          <mat-icon matListItemIcon
+                            [ngClass]="attribute.iconClass"
+                            >
+                            @switch (attribute.iconType) {
+                              <!-- Material icons -->
+                              @case ('material') {
+                                <span class="material-icons-outlined">{{ attribute.icon }}</span>
+                              }
+                              <!-- Image icons for sensor types -->
+                              @case ('image') {
+                                @switch (attribute.iconSwitch) {
+                                  @case (1) {
+                                    <img ngClass="sensor-icon"
+                                      src="assets/images/sensor_motion.png" />
+                                  }
+                                  @case (2) {
+                                    <img ngClass="sensor-icon"
+                                      src="assets/images/sensor_tamper.png" />
+                                  }
+                                  @case (3) {
+                                    <img ngClass="sensor-icon"
+                                      src="assets/images/sensor_open.png" />
+                                  }
+                                  @case (4) {
+                                    <img ngClass="sensor-icon"
+                                      src="assets/images/sensor_break.png" />
+                                  }
+                                  @default {
+                                    <img ngClass="sensor-icon"
+                                      src="https://via.placeholder.com/100?text={{ getSensorTypeName(attribute.iconSwitch) }}" />
+                                  }
+                                }
+                              }
+                            }
+                          </mat-icon>
+                          <span class="long-field" [innerHTML]="attribute.content"></span>
+                        </mat-list-item>
+                      }
+                    </mat-list>
+                  }
+                </div>
+              </div>
+            </mat-card-content>
+            @if (userCanEdit()) {
+              <mat-divider></mat-divider>
+            }
+            @if (userCanEdit()) {
+              <mat-card-actions>
+                <!-- drag and drop icon button-->
+                <button
+                  mat-icon-button
+                  cdkDragHandle
+                  class="drag-handle"
           [disabled]="
             ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
           "
-        >
-          <mat-icon>drag_indicator</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          [routerLink]="['/sensor', sensor.id]"
-          color="primary"
+                  >
+                  <mat-icon>drag_indicator</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  [routerLink]="['/sensor', sensor.id]"
+                  color="primary"
           [disabled]="
             ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
           "
-        >
-          <mat-icon>mode_edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="onResetReferences(sensor.id)"
-          color="accent"
+                  >
+                  <mat-icon>mode_edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="onResetReferences(sensor.id)"
+                  color="accent"
           [disabled]="
             ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
           "
-        >
-          <mat-icon>refresh</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="openDeleteDialog(sensor.id)"
-          color="warn"
+                  >
+                  <mat-icon>refresh</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="openDeleteDialog(sensor.id)"
+                  color="warn"
           [disabled]="
             ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
           "
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+                  >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            }
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <div class="sensor-list">
+        <h1 class="empty" i18n="@@sensor none">No sensors found</h1>
+      </div>
+    }
   </div>
+}
 
-  <ng-template #no_sensors>
-    <div class="sensor-list">
-      <h1 class="empty" i18n="@@sensor none">No sensors found</h1>
-    </div>
-  </ng-template>
-</div>
-
-<div *ngIf="userCanEdit()" class="list-actions">
-  <button
-    class="list-action"
-    mat-fab
-    color="accent"
-    [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()"
-  >
-    <mat-icon>refresh</mat-icon>
-  </button>
-  <button
-    class="list-action"
-    mat-fab
-    color="accent"
-    routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-  <button
-    class="list-action"
-    mat-mini-fab
-    color="accent"
-    [disabled]="monitoringState != monitoringStates.READY"
-    (click)="onResetReferences()"
-  >
-    <mat-icon>refresh</mat-icon>
-  </button>
-  <button
-    class="list-action"
-    mat-mini-fab
-    color="accent"
-    routerLink="/sensor/add"
-    [disabled]="monitoringState != monitoringStates.READY"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-</div>
+@if (userCanEdit()) {
+  <div class="list-actions">
+    <button
+      class="list-action"
+      mat-fab
+      color="accent"
+      [disabled]="monitoringState != monitoringStates.READY"
+      (click)="onResetReferences()"
+      >
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button
+      class="list-action"
+      mat-fab
+      color="accent"
+      routerLink="/sensor/add"
+      [disabled]="monitoringState != monitoringStates.READY"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+    <button
+      class="list-action"
+      mat-mini-fab
+      color="accent"
+      [disabled]="monitoringState != monitoringStates.READY"
+      (click)="onResetReferences()"
+      >
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button
+      class="list-action"
+      mat-mini-fab
+      color="accent"
+      routerLink="/sensor/add"
+      [disabled]="monitoringState != monitoringStates.READY"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+}

@@ -1,363 +1,402 @@
 <div class="container">
-  <div *ngIf="locations && locations.length > 0">
-    <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListDisabled]="!isMultiLocation">
-      <mat-card
-        *ngFor="let location of locations; let index = index; trackBy: getLocationKey"
-        id="location-{{ location.id }}"
-        cdkDrag
-        (cdkDragStarted)="onDragStarted($event)"
-        class="container-item location-form"
-      >
-        <mat-card-header *ngIf="!isMultiLocation">
-          <div
-            mat-card-avatar
+  @if (locations && locations.length > 0) {
+    <div>
+      <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListDisabled]="!isMultiLocation">
+        @for (location of locations; track getLocationKey(index); let index = $index) {
+          <mat-card
+            id="location-{{ location.id }}"
+            cdkDrag
+            (cdkDragStarted)="onDragStarted($event)"
+            class="container-item location-form"
+            >
+            @if (!isMultiLocation) {
+              <mat-card-header>
+                <div
+                  mat-card-avatar
             [ngClass]="{
               registered: isRegistered(location.id),
               'not-registered': !isRegistered(location.id)
             }"
-          >
-            <mat-icon>location_on</mat-icon>
-          </div>
-          <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
-          <mat-card-subtitle *ngIf="location.version != null">
-            <span i18n="@@location version">Version</span>:
-            {{ location.version.version_tag }}
-          </mat-card-subtitle>
-          <mat-card-subtitle *ngIf="location.boardVersion != null">
-            <span i18n="@@location board version">Board version</span>:
-            {{ location.boardVersion }}
-          </mat-card-subtitle>
-          <mat-card-subtitle>
-            <span *ngIf="isRegistered(location.id) === true">
-              <span i18n="@@location device registered">Device registered</span>
-            </span>
-            <span *ngIf="isRegistered(location.id) === false">
-              <span i18n="@@location device not registered">Device NOT registered</span>
-            </span>
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-header *ngIf="isMultiLocation">
-          <div
-            mat-card-avatar
+                  >
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
+                @if (location.version != null) {
+                  <mat-card-subtitle>
+                    <span i18n="@@location version">Version</span>:
+                    {{ location.version.version_tag }}
+                  </mat-card-subtitle>
+                }
+                @if (location.boardVersion != null) {
+                  <mat-card-subtitle>
+                    <span i18n="@@location board version">Board version</span>:
+                    {{ location.boardVersion }}
+                  </mat-card-subtitle>
+                }
+                <mat-card-subtitle>
+                  @if (isRegistered(location.id) === true) {
+                    <span>
+                      <span i18n="@@location device registered">Device registered</span>
+                    </span>
+                  }
+                  @if (isRegistered(location.id) === false) {
+                    <span>
+                      <span i18n="@@location device not registered">Device NOT registered</span>
+                    </span>
+                  }
+                </mat-card-subtitle>
+              </mat-card-header>
+            }
+            @if (isMultiLocation) {
+              <mat-card-header>
+                <div
+                  mat-card-avatar
             [ngClass]="{
               registered: isRegistered(location.id),
               'not-registered': !isRegistered(location.id)
             }"
-          >
-            <mat-icon>location_on</mat-icon>
-          </div>
-          <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
-          <mat-card-subtitle *ngIf="location.id != null">ID: {{ location.id }}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="location.version != null">
-            <span i18n="@@location version">Version</span>:
-            {{ location.version.version_tag }}
-          </mat-card-subtitle>
-          <mat-card-subtitle *ngIf="location.boardVersion != null">
-            <span i18n="@@location board version">Board version</span>:
-            {{ location.boardVersion }}
-          </mat-card-subtitle>
-          <mat-card-subtitle>
-            <span *ngIf="isRegistered(location.id) === true">
-              <span i18n="@@location device registered">Device registered</span>
-            </span>
-            <span *ngIf="isRegistered(location.id) === false">
-              <span i18n="@@location device not registered">Device NOT registered</span>
-            </span>
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-divider></mat-divider>
-
-        <mat-card-content>
-          <mat-list>
-            <mat-list-item class="primary">
-              <mat-icon
-                *ngIf="
-                  getTestResult(location.id) === null ||
-                  getTestResult(location.id).primary === undefined
-                "
-                matListItemIcon
-              >
-                link
-              </mat-icon>
-              <mat-spinner
-                matListItemIcon
-                *ngIf="
-                  getTestResult(location.id) !== null && getTestResult(location.id).primary === null
-                "
-                diameter="16"
-              />
-              <mat-icon
-                *ngIf="getTestResult(location.id)?.primary === true"
-                matListItemIcon
-                class="icon-accessible"
-              >
-                check_circle
-              </mat-icon>
-              <mat-icon
-                *ngIf="getTestResult(location.id)?.primary === false"
-                matListItemIcon
-                class="icon-inaccessible"
-              >
-                error
-              </mat-icon>
-
-              <div matListItemTitle i18n="@@location primary url">Primary URL</div>
-              <div matListItemLine *ngIf="location.primaryDomain">
-                {{ 'https://' + location.primaryDomain + ':' + location.primaryPort }}
-              </div>
-              <div matListItemLine *ngIf="!location.primaryDomain">-</div>
-              <div
-                matListItemLine
-                *ngIf="
-                  showApiLink &&
-                  getTestResult(location.id) !== null &&
-                  getTestResult(location.id).primary === false
-                "
-              >
-                <a
-                  href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
-                  target="_blank"
-                  class="test-link"
-                >
-                  <span i18n="@@location check">Check API version and certificate</span>
-                  <mat-icon>open_in_new</mat-icon>
-                </a>
-              </div>
-            </mat-list-item>
-
-            <mat-list-item class="secondary">
-              <mat-icon
-                *ngIf="
-                  getTestResult(location.id) === null ||
-                  getTestResult(location.id).secondary === undefined
-                "
-                matListItemIcon
-              >
-                link
-              </mat-icon>
-              <mat-spinner
-                matListItemIcon
-                *ngIf="
-                  getTestResult(location.id) !== null &&
-                  getTestResult(location.id)?.secondary === null
-                "
-                diameter="16"
-              />
-              <mat-icon
-                *ngIf="getTestResult(location.id)?.secondary === true"
-                matListItemIcon
-                class="icon-accessible"
-              >
-                check_circle
-              </mat-icon>
-              <mat-icon
-                *ngIf="getTestResult(location.id)?.secondary === false"
-                matListItemIcon
-                class="icon-inaccessible"
-              >
-                error
-              </mat-icon>
-
-              <div matListItemTitle i18n="@@location secondary url">Secondary URL</div>
-              <div matListItemLine *ngIf="location.secondaryDomain">
-                {{ 'https://' + location.secondaryDomain + ':' + location.secondaryPort }}
-              </div>
-              <div matListItemLine *ngIf="!location.secondaryDomain">-</div>
-              <div
-                matListItemLine
-                *ngIf="
-                  showApiLink &&
-                  getTestResult(location.id) !== null &&
-                  getTestResult(location.id).secondary === false
-                "
-              >
-                <a
+                  >
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
+                @if (location.id != null) {
+                  <mat-card-subtitle>ID: {{ location.id }}</mat-card-subtitle>
+                }
+                @if (location.version != null) {
+                  <mat-card-subtitle>
+                    <span i18n="@@location version">Version</span>:
+                    {{ location.version.version_tag }}
+                  </mat-card-subtitle>
+                }
+                @if (location.boardVersion != null) {
+                  <mat-card-subtitle>
+                    <span i18n="@@location board version">Board version</span>:
+                    {{ location.boardVersion }}
+                  </mat-card-subtitle>
+                }
+                <mat-card-subtitle>
+                  @if (isRegistered(location.id) === true) {
+                    <span>
+                      <span i18n="@@location device registered">Device registered</span>
+                    </span>
+                  }
+                  @if (isRegistered(location.id) === false) {
+                    <span>
+                      <span i18n="@@location device not registered">Device NOT registered</span>
+                    </span>
+                  }
+                </mat-card-subtitle>
+              </mat-card-header>
+            }
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item class="primary">
+                  @if (
+                    getTestResult(location.id) === null ||
+                    getTestResult(location.id).primary === undefined
+                    ) {
+                    <mat-icon
+                      matListItemIcon
+                      >
+                      link
+                    </mat-icon>
+                  }
+                  @if (
+                    getTestResult(location.id) !== null && getTestResult(location.id).primary === null
+                    ) {
+                    <mat-spinner
+                      matListItemIcon
+                      diameter="16"
+                      />
+                  }
+                  @if (getTestResult(location.id)?.primary === true) {
+                    <mat-icon
+                      matListItemIcon
+                      class="icon-accessible"
+                      >
+                      check_circle
+                    </mat-icon>
+                  }
+                  @if (getTestResult(location.id)?.primary === false) {
+                    <mat-icon
+                      matListItemIcon
+                      class="icon-inaccessible"
+                      >
+                      error
+                    </mat-icon>
+                  }
+                  <div matListItemTitle i18n="@@location primary url">Primary URL</div>
+                  @if (location.primaryDomain) {
+                    <div matListItemLine>
+                      {{ 'https://' + location.primaryDomain + ':' + location.primaryPort }}
+                    </div>
+                  }
+                  @if (!location.primaryDomain) {
+                    <div matListItemLine>-</div>
+                  }
+                  @if (
+                    showApiLink &&
+                    getTestResult(location.id) !== null &&
+                    getTestResult(location.id).primary === false
+                    ) {
+                    <div
+                      matListItemLine
+                      >
+                      <a
+                        href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
+                        target="_blank"
+                        class="test-link"
+                        >
+                        <span i18n="@@location check">Check API version and certificate</span>
+                        <mat-icon>open_in_new</mat-icon>
+                      </a>
+                    </div>
+                  }
+                </mat-list-item>
+                <mat-list-item class="secondary">
+                  @if (
+                    getTestResult(location.id) === null ||
+                    getTestResult(location.id).secondary === undefined
+                    ) {
+                    <mat-icon
+                      matListItemIcon
+                      >
+                      link
+                    </mat-icon>
+                  }
+                  @if (
+                    getTestResult(location.id) !== null &&
+                    getTestResult(location.id)?.secondary === null
+                    ) {
+                    <mat-spinner
+                      matListItemIcon
+                      diameter="16"
+                      />
+                  }
+                  @if (getTestResult(location.id)?.secondary === true) {
+                    <mat-icon
+                      matListItemIcon
+                      class="icon-accessible"
+                      >
+                      check_circle
+                    </mat-icon>
+                  }
+                  @if (getTestResult(location.id)?.secondary === false) {
+                    <mat-icon
+                      matListItemIcon
+                      class="icon-inaccessible"
+                      >
+                      error
+                    </mat-icon>
+                  }
+                  <div matListItemTitle i18n="@@location secondary url">Secondary URL</div>
+                  @if (location.secondaryDomain) {
+                    <div matListItemLine>
+                      {{ 'https://' + location.secondaryDomain + ':' + location.secondaryPort }}
+                    </div>
+                  }
+                  @if (!location.secondaryDomain) {
+                    <div matListItemLine>-</div>
+                  }
+                  @if (
+                    showApiLink &&
+                    getTestResult(location.id) !== null &&
+                    getTestResult(location.id).secondary === false
+                    ) {
+                    <div
+                      matListItemLine
+                      >
+                      <a
                   href="https://{{ location.secondaryDomain }}:{{
                     location.secondaryPort
                   }}/api/version"
-                  target="_blank"
-                  class="test-link"
-                >
-                  <span i18n="@@location check">Check API version and certificate</span>
-                  <mat-icon>open_in_new</mat-icon>
-                </a>
-              </div>
-            </mat-list-item>
-
-            <mat-list-item *ngIf="upgradeAvailable(location)" class="next-version">
-              <mat-icon matListItemIcon>update</mat-icon>
-              <div matListItemTitle i18n="@@location next version">Next Version</div>
-              <div matListItemLine>
-                {{ serverLatestVersion.version_tag }}
-              </div>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-
-        <mat-divider></mat-divider>
-
-        <mat-card-actions>
-          <button *ngIf="isMultiLocation" mat-icon-button cdkDragHandle class="drag-handle">
-            <mat-icon>drag_indicator</mat-icon>
-          </button>
-
-          <button mat-icon-button [routerLink]="['/location', location.id]" color="primary">
-            <mat-icon>mode_edit</mat-icon>
-          </button>
-
-          <button mat-icon-button color="primary" (click)="executeLocationTest(location)">
-            <mat-icon>search</mat-icon>
-          </button>
-
-          <button mat-icon-button color="primary" (click)="onLogin(location.id)">
-            <mat-icon>login</mat-icon>
-          </button>
-
-          <button
-            *ngIf="locations.length > 1"
-            mat-icon-button
-            color="warn"
-            (click)="openDeleteDialog(location.id)"
-            [disabled]="selectedLocationId === location.id"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+                        target="_blank"
+                        class="test-link"
+                        >
+                        <span i18n="@@location check">Check API version and certificate</span>
+                        <mat-icon>open_in_new</mat-icon>
+                      </a>
+                    </div>
+                  }
+                </mat-list-item>
+                @if (upgradeAvailable(location)) {
+                  <mat-list-item class="next-version">
+                    <mat-icon matListItemIcon>update</mat-icon>
+                    <div matListItemTitle i18n="@@location next version">Next Version</div>
+                    <div matListItemLine>
+                      {{ serverLatestVersion.version_tag }}
+                    </div>
+                  </mat-list-item>
+                }
+              </mat-list>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              @if (isMultiLocation) {
+                <button mat-icon-button cdkDragHandle class="drag-handle">
+                  <mat-icon>drag_indicator</mat-icon>
+                </button>
+              }
+              <button mat-icon-button [routerLink]="['/location', location.id]" color="primary">
+                <mat-icon>mode_edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" (click)="executeLocationTest(location)">
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" (click)="onLogin(location.id)">
+                <mat-icon>login</mat-icon>
+              </button>
+              @if (locations.length > 1) {
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openDeleteDialog(location.id)"
+                  [disabled]="selectedLocationId === location.id"
+                  >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              }
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
     </div>
-  </div>
+  }
 
-  <div *ngIf="(!locations || locations.length === 0) && isMultiLocation" class="container-item">
-    <mat-card class="welcome-card">
-      <mat-card-header>
-        <div mat-card-avatar>
-          <mat-icon color="primary" class="avatar-icon">home</mat-icon>
-        </div>
-        <mat-card-title i18n="@@location welcome title">
+  @if ((!locations || locations.length === 0) && isMultiLocation) {
+    <div class="container-item">
+      <mat-card class="welcome-card">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon color="primary" class="avatar-icon">home</mat-icon>
+          </div>
+          <mat-card-title i18n="@@location welcome title">
           Welcome to ArPI Home Security
         </mat-card-title>
-        <mat-card-subtitle i18n="@@location welcome subtitle">
+          <mat-card-subtitle i18n="@@location welcome subtitle">
           Your smart security system starts here
         </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content class="welcome-content">
-        <mat-card class="getting-started-card">
-          <mat-card-header>
-            <div mat-card-avatar>
-              <mat-icon color="primary" class="avatar-icon">play_circle</mat-icon>
-            </div>
-            <mat-card-title i18n="@@location getting started">Getting Started</mat-card-title>
-            <mat-card-subtitle i18n="@@location getting started subtitle">
+        </mat-card-header>
+        <mat-card-content class="welcome-content">
+          <mat-card class="getting-started-card">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon color="primary" class="avatar-icon">play_circle</mat-icon>
+              </div>
+              <mat-card-title i18n="@@location getting started">Getting Started</mat-card-title>
+              <mat-card-subtitle i18n="@@location getting started subtitle">
               Follow these steps to set up your system
             </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <ol class="welcome-steps">
-              <li>
-                <span i18n="@@location step install">
+            </mat-card-header>
+            <mat-card-content>
+              <ol class="welcome-steps">
+                <li>
+                  <span i18n="@@location step install">
                   Install your ArPI Home Security device and connect it to your network.
                 </span>
-                <a
-                  mat-button
-                  color="primary"
-                  href="https://docs.arpi-security.info/en/latest/security_engineers/installation-sw/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <span i18n="@@location software installation guide">
+                  <a
+                    mat-button
+                    color="primary"
+                    href="https://docs.arpi-security.info/en/latest/security_engineers/installation-sw/"
+                    target="_blank"
+                    rel="noopener"
+                    >
+                    <span i18n="@@location software installation guide">
                     Software installation guide
                   </span>
-                  <mat-icon>open_in_new</mat-icon>
-                </a>
-              </li>
-              <li i18n="@@location step add location">
+                    <mat-icon>open_in_new</mat-icon>
+                  </a>
+                </li>
+                <li i18n="@@location step add location">
                 Return here and click
                 <b>Add Location</b>
                 to register your device.
               </li>
-            </ol>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="support-card">
-          <mat-card-header>
-            <div mat-card-avatar>
-              <mat-icon color="primary" class="avatar-icon">support_agent</mat-icon>
-            </div>
-            <mat-card-title i18n="@@location support">Community Support</mat-card-title>
-            <mat-card-subtitle i18n="@@location support subtitle">
+              </ol>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="support-card">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon color="primary" class="avatar-icon">support_agent</mat-icon>
+              </div>
+              <mat-card-title i18n="@@location support">Community Support</mat-card-title>
+              <mat-card-subtitle i18n="@@location support subtitle">
               Join our Slack workspace for help and discussion
             </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content class="support-content">
-            <a
-              mat-button
-              color="primary"
-              href="https://arpi-security.slack.com/"
-              target="_blank"
-              rel="noopener"
-              i18n="@@location support link"
-            >
+            </mat-card-header>
+            <mat-card-content class="support-content">
+              <a
+                mat-button
+                color="primary"
+                href="https://arpi-security.slack.com/"
+                target="_blank"
+                rel="noopener"
+                i18n="@@location support link"
+                >
               ArPI Home Security Slack
               <mat-icon>open_in_new</mat-icon>
             </a>
-          </mat-card-content>
-        </mat-card>
-      </mat-card-content>
-      <mat-card-actions style="gap: 10px">
-        <button
-          mat-raised-button
-          color="accent"
-          routerLink="/location/add"
-          i18n="@@location get started"
-        >
+            </mat-card-content>
+          </mat-card>
+        </mat-card-content>
+        <mat-card-actions style="gap: 10px">
+          <button
+            mat-raised-button
+            color="accent"
+            routerLink="/location/add"
+            i18n="@@location get started"
+            >
           Get Started: Add Location
         </button>
-        <a
-          mat-stroked-button
-          color="primary"
-          href="https://docs.arpi-security.info"
-          target="_blank"
-          rel="noopener"
-          i18n="@@location docs button"
-          tabindex="0"
-        >
+          <a
+            mat-stroked-button
+            color="primary"
+            href="https://docs.arpi-security.info"
+            target="_blank"
+            rel="noopener"
+            i18n="@@location docs button"
+            tabindex="0"
+            >
           View Documentation
         </a>
-        <a
-          mat-stroked-button
-          color="primary"
-          href="https://demo.arpi-security.info"
-          target="_blank"
-          rel="noopener"
-          i18n="@@location demo button"
-          tabindex="0"
-        >
+          <a
+            mat-stroked-button
+            color="primary"
+            href="https://demo.arpi-security.info"
+            target="_blank"
+            rel="noopener"
+            i18n="@@location demo button"
+            tabindex="0"
+            >
           Try Demo
         </a>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
 </div>
 
 <div class="list-actions">
-  <button
-    *ngIf="isMultiLocation || locations.length === 0"
-    class="list-action"
-    mat-fab
-    color="accent"
-    routerLink="/location/add"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-  <button
-    *ngIf="isMultiLocation || locations.length === 0"
-    class="list-action"
-    mat-mini-fab
-    color="accent"
-    routerLink="/location/add"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
+  @if (isMultiLocation || locations.length === 0) {
+    <button
+      class="list-action"
+      mat-fab
+      color="accent"
+      routerLink="/location/add"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+  }
+  @if (isMultiLocation || locations.length === 0) {
+    <button
+      class="list-action"
+      mat-mini-fab
+      color="accent"
+      routerLink="/location/add"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+  }
 </div>

@@ -1,47 +1,49 @@
-<div *ngIf="keypad != null" class="container">
-  <form [formGroup]="keypadForm" (ngSubmit)="onSubmit()" class="keypad-form">
-    <mat-accordion class="full-width">
-      <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title i18n="@@keypad settings">Keypad settings</mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="row">
-          <mat-checkbox
-            *ngIf="keypadTypes"
-            formControlName="keypadEnabled"
-            color="primary"
-            i18n="@@keypad enabled"
-          >
+@if (keypad != null) {
+  <div class="container">
+    <form [formGroup]="keypadForm" (ngSubmit)="onSubmit()" class="keypad-form">
+      <mat-accordion class="full-width">
+        <mat-expansion-panel expanded="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title i18n="@@keypad settings">Keypad settings</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            @if (keypadTypes) {
+              <mat-checkbox
+                formControlName="keypadEnabled"
+                color="primary"
+                i18n="@@keypad enabled"
+                >
             Enabled
           </mat-checkbox>
-
-          <mat-form-field>
-            <mat-label i18n="@@keypad type">Keypad type</mat-label>
-            <mat-select
-              formControlName="keypadType"
-              i18n-placeholder="@@keypad type"
-              placeholder="Keypad type"
-            >
-              <mat-option *ngFor="let type of keypadTypes" [value]="type.id">
-                {{ type.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <div class="form-actions">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="keypadForm.invalid || monitoringState != monitoringStates.READY"
-        i18n="@@save button"
-      >
+            }
+            <mat-form-field>
+              <mat-label i18n="@@keypad type">Keypad type</mat-label>
+              <mat-select
+                formControlName="keypadType"
+                i18n-placeholder="@@keypad type"
+                placeholder="Keypad type"
+                >
+                @for (type of keypadTypes; track type) {
+                  <mat-option [value]="type.id">
+                    {{ type.name }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="form-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="keypadForm.invalid || monitoringState != monitoringStates.READY"
+          i18n="@@save button"
+          >
         Save
       </button>
-    </div>
-  </form>
-</div>
+      </div>
+    </form>
+  </div>
+}

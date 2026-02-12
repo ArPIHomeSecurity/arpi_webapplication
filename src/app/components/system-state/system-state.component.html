@@ -1,150 +1,201 @@
 <div class="system-states">
   <!-- DESKTOP VERSION-->
-  <mat-chip-listbox
-    class="system-state-desktop"
-    *ngIf="
-      monitoringState == monitoringStates.STARTUP ||
-      monitoringState == monitoringStates.UPDATING_CONFIG ||
-      monitoringState == monitoringStates.INVALID_CONFIG ||
-      monitoringState == monitoringStates.SABOTAGE ||
-      monitoringState == monitoringStates.UNDEFINED
-    "
-  >
-    <!-- MONITORING STATES -->
-    <span [ngSwitch]="monitoringState">
-      <mat-chip *ngSwitchCase="monitoringStates.STARTUP" class="warning" i18n="@@starting state">
+  @if (
+    monitoringState == monitoringStates.STARTUP ||
+    monitoringState == monitoringStates.UPDATING_CONFIG ||
+    monitoringState == monitoringStates.INVALID_CONFIG ||
+    monitoringState == monitoringStates.SABOTAGE ||
+    monitoringState == monitoringStates.UNDEFINED
+    ) {
+    <mat-chip-listbox
+      class="system-state-desktop"
+      >
+      <!-- MONITORING STATES -->
+      <span>
+        @switch (monitoringState) {
+          @case (monitoringStates.STARTUP) {
+            <mat-chip class="warning" i18n="@@starting state">
         Starting up
       </mat-chip>
-      <mat-chip
-        *ngSwitchCase="monitoringStates.UPDATING_CONFIG"
-        class="warning"
-        i18n="@@updating state"
-      >
+          }
+          @case (monitoringStates.UPDATING_CONFIG) {
+            <mat-chip
+              class="warning"
+              i18n="@@updating state"
+              >
         Updating configuration
       </mat-chip>
-      <mat-chip
-        *ngSwitchCase="monitoringStates.INVALID_CONFIG"
-        class="danger"
-        i18n="@@invalid state"
-      >
+          }
+          @case (monitoringStates.INVALID_CONFIG) {
+            <mat-chip
+              class="danger"
+              i18n="@@invalid state"
+              >
         Invalid configuration
       </mat-chip>
-      <mat-chip *ngSwitchCase="monitoringStates.SABOTAGE" class="danger" i18n="@@sabotage state">
+          }
+          @case (monitoringStates.SABOTAGE) {
+            <mat-chip class="danger" i18n="@@sabotage state">
         Sabotage
       </mat-chip>
-    </span>
-
-    <mat-chip
-      *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED"
-      class="danger"
-      i18n="@@error state"
-    >
+          }
+        }
+      </span>
+      @if (armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED) {
+        <mat-chip
+          class="danger"
+          i18n="@@error state"
+          >
       ERROR
     </mat-chip>
-  </mat-chip-listbox>
+      }
+    </mat-chip-listbox>
+  }
 
   <!-- MOBILE VERSION -->
-  <mat-chip-listbox
-    class="system-state-mobile"
-    *ngIf="
-      monitoringState == monitoringStates.STARTUP ||
-      monitoringState == monitoringStates.UPDATING_CONFIG ||
-      monitoringState == monitoringStates.INVALID_CONFIG ||
-      monitoringState == monitoringStates.SABOTAGE ||
-      monitoringState == monitoringStates.UNDEFINED
-    "
-  >
-    <!-- MONITORING STATES -->
-    <span [ngSwitch]="monitoringState">
-      <mat-chip
-        *ngSwitchCase="monitoringStates.STARTUP"
-        class="warning"
-        i18n="@@starting state short"
+  @if (
+    monitoringState == monitoringStates.STARTUP ||
+    monitoringState == monitoringStates.UPDATING_CONFIG ||
+    monitoringState == monitoringStates.INVALID_CONFIG ||
+    monitoringState == monitoringStates.SABOTAGE ||
+    monitoringState == monitoringStates.UNDEFINED
+    ) {
+    <mat-chip-listbox
+      class="system-state-mobile"
       >
+      <!-- MONITORING STATES -->
+      <span>
+        @switch (monitoringState) {
+          @case (monitoringStates.STARTUP) {
+            <mat-chip
+              class="warning"
+              i18n="@@starting state short"
+              >
         S
       </mat-chip>
-      <mat-chip
-        *ngSwitchCase="monitoringStates.UPDATING_CONFIG"
-        class="warning"
-        i18n="@@updating state short"
-      >
+          }
+          @case (monitoringStates.UPDATING_CONFIG) {
+            <mat-chip
+              class="warning"
+              i18n="@@updating state short"
+              >
         U
       </mat-chip>
-      <mat-chip
-        *ngSwitchCase="monitoringStates.INVALID_CONFIG"
-        class="danger"
-        i18n="@@invalid state short"
-      >
+          }
+          @case (monitoringStates.INVALID_CONFIG) {
+            <mat-chip
+              class="danger"
+              i18n="@@invalid state short"
+              >
         I
       </mat-chip>
-      <mat-chip
-        *ngSwitchCase="monitoringStates.SABOTAGE"
-        class="danger"
-        i18n="@@sabotage state short"
-      >
+          }
+          @case (monitoringStates.SABOTAGE) {
+            <mat-chip
+              class="danger"
+              i18n="@@sabotage state short"
+              >
         T
       </mat-chip>
-    </span>
-    <mat-chip
-      *ngIf="armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED"
-      class="danger"
-    >
-      <mat-icon matListIcon>error</mat-icon>
-    </mat-chip>
-  </mat-chip-listbox>
+          }
+        }
+      </span>
+      @if (armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED) {
+        <mat-chip
+          class="danger"
+          >
+          <mat-icon matListIcon>error</mat-icon>
+        </mat-chip>
+      }
+    </mat-chip-listbox>
+  }
 
   <!-- ALL SIZE-->
 
   <!-- ARM STATES -->
-  <div
-    class="states"
-    *ngIf="
-      monitoringState != monitoringStates.STARTUP &&
-      monitoringState != monitoringStates.UPDATING_CONFIG &&
-      monitoringState != monitoringStates.INVALID_CONFIG &&
-      monitoringState != monitoringStates.UNDEFINED
-    "
-  >
-    <!-- ARM STATES -->
-    <span [ngSwitch]="armState">
-      <mat-icon *ngSwitchCase="armTypes.MIXED" [ngClass]="getArmClass()">directions_walk</mat-icon>
-      <mat-icon *ngSwitchCase="armTypes.MIXED" [ngClass]="getArmClass()" class="icon_margin">
-        hotel
-      </mat-icon>
-      <mat-icon *ngSwitchCase="armTypes.AWAY" [ngClass]="getArmClass()">directions_walk</mat-icon>
-      <mat-icon *ngSwitchCase="armTypes.STAY" [ngClass]="getArmClass()" class="icon_margin">
-        hotel
-      </mat-icon>
-    </span>
-
-    <!-- SENSOR STATES -->
-    <span *ngIf="sensorError"><mat-icon class="danger">warning</mat-icon></span>
-    <span
-      *ngIf="
+  @if (
+    monitoringState != monitoringStates.STARTUP &&
+    monitoringState != monitoringStates.UPDATING_CONFIG &&
+    monitoringState != monitoringStates.INVALID_CONFIG &&
+    monitoringState != monitoringStates.UNDEFINED
+    ) {
+    <div
+      class="states"
+      >
+      <!-- ARM STATES -->
+      <span>
+        @switch (armState) {
+          @case (armTypes.MIXED) {
+            <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
+          }
+          @case (armTypes.MIXED) {
+            <mat-icon [ngClass]="getArmClass()" class="icon_margin">
+              hotel
+            </mat-icon>
+          }
+          @case (armTypes.AWAY) {
+            <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
+          }
+          @case (armTypes.STAY) {
+            <mat-icon [ngClass]="getArmClass()" class="icon_margin">
+              hotel
+            </mat-icon>
+          }
+        }
+      </span>
+      <!-- SENSOR STATES -->
+      @if (sensorError) {
+        <span><mat-icon class="danger">warning</mat-icon></span>
+      }
+      @if (
         monitoringState === monitoringStates.ARMED ||
         monitoringState === monitoringStates.READY ||
         monitoringState === monitoringStates.ARM_DELAY ||
         monitoringState === monitoringStates.SABOTAGE ||
         monitoringState === monitoringStates.ALERT
-      "
-      [ngSwitch]="sensorAlert"
-    >
-      <mat-icon *ngSwitchCase="false" class="normal icon_margin">sensors</mat-icon>
-      <mat-icon *ngSwitchCase="true" class="danger icon_margin">sensors</mat-icon>
-    </span>
-    <span *ngIf="monitoringState === monitoringStates.ALERT_DELAY" [ngSwitch]="sensorAlert">
-      <mat-icon *ngSwitchCase="false" class="normal icon_margin">sensors</mat-icon>
-      <mat-icon *ngSwitchCase="true" class="warning icon_margin">sensors</mat-icon>
-    </span>
-
-    <!-- SYREN -->
-    <mat-icon *ngIf="syrenAlert === true" class="danger">volume_up</mat-icon>
-    <mat-icon *ngIf="syrenAlert === false" class="warning">volume_mute</mat-icon>
-
-    <!-- POWER -->
-    <span [ngSwitch]="powerState">
-      <mat-icon *ngSwitchCase="powerStates.NETWORK" class="normal">power</mat-icon>
-      <mat-icon *ngSwitchCase="powerStates.BATTERY" class="danger">battery_alert</mat-icon>
-    </span>
-  </div>
+        ) {
+        <span
+          >
+          @switch (sensorAlert) {
+            @case (false) {
+              <mat-icon class="normal icon_margin">sensors</mat-icon>
+            }
+            @case (true) {
+              <mat-icon class="danger icon_margin">sensors</mat-icon>
+            }
+          }
+        </span>
+      }
+      @if (monitoringState === monitoringStates.ALERT_DELAY) {
+        <span>
+          @switch (sensorAlert) {
+            @case (false) {
+              <mat-icon class="normal icon_margin">sensors</mat-icon>
+            }
+            @case (true) {
+              <mat-icon class="warning icon_margin">sensors</mat-icon>
+            }
+          }
+        </span>
+      }
+      <!-- SYREN -->
+      @if (syrenAlert === true) {
+        <mat-icon class="danger">volume_up</mat-icon>
+      }
+      @if (syrenAlert === false) {
+        <mat-icon class="warning">volume_mute</mat-icon>
+      }
+      <!-- POWER -->
+      <span>
+        @switch (powerState) {
+          @case (powerStates.NETWORK) {
+            <mat-icon class="normal">power</mat-icon>
+          }
+          @case (powerStates.BATTERY) {
+            <mat-icon class="danger">battery_alert</mat-icon>
+          }
+        }
+      </span>
+    </div>
+  }
 </div>

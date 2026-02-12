@@ -1,198 +1,215 @@
-<div *ngIf="zones != null && sensors != null" class="container">
-  <div
-    cdkDropList
-    *ngIf="zones.length > 0; else no_zones"
-    class="zone-list"
-    (cdkDropListDropped)="onDrop($event)"
-  >
-    <mat-card
-      id="zone-{{ zone.id }}"
-      *ngFor="let zone of zones"
-      cdkDrag
-      (cdkDragStarted)="onDragStarted($event)"
-      [cdkDragDisabled]="!userCanEdit()"
-      class="zone-card container-item"
-    >
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>{{ zone.name }}</mat-card-title>
-          <mat-card-subtitle *ngIf="zone.description && zone.name != zone.description">
-            {{ zone.description }}
-          </mat-card-subtitle>
-        </mat-card-title-group>
-      </mat-card-header>
-
-      <!-- spacer -->
-      <mat-card-content><p></p></mat-card-content>
-
-      <mat-card-content>
-        <mat-accordion multi>
-          <mat-expansion-panel
-            class="configs"
-            (opened)="onOpenConfig(zone.id)"
-            (closed)="onCloseConfig(zone.id)"
-            [expanded]="configOpened[zone.id]"
-          >
-            <mat-expansion-panel-header>
-              <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
-              <mat-panel-description *ngIf="!configOpened[zone.id]">
-                <mat-icon>directions_walk</mat-icon>
-                {{ zone.awayArmDelay !== null ? zone.awayArmDelay : '-' }}/{{
-                  zone.awayAlertDelay !== null ? zone.awayAlertDelay : '-'
-                }}
-
-                <span class="divider">|</span>
-
-                <mat-icon class="icon_margin">hotel</mat-icon>
-                {{ zone.stayArmDelay !== null ? zone.stayArmDelay : '-' }}/{{
-                  zone.stayAlertDelay !== null ? zone.stayAlertDelay : '-'
-                }}
-
-                <span class="divider">|</span>
-
-                <mat-icon>clear</mat-icon>
-                {{ zone.disarmedDelay !== null ? zone.disarmedDelay : '-' }}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="mat-table">
-              <div class="mat-header-row">
-                <div class="mat-header-cell" i18n="@@zone alert type">Alert type</div>
-                <div class="mat-header-cell" i18n="@@zone alert enabled">Alert enabled</div>
-                <div class="mat-header-cell" i18n="@@zone arm delay">Arm delay</div>
-                <div class="mat-header-cell" i18n="@@zone alert delay">Alert delay</div>
-              </div>
-              <div class="mat-row">
-                <div class="mat-cell" i18n="@@zone arm away">Away</div>
-                <div class="mat-cell" *ngIf="zone.awayAlertDelay !== null; else disabled">
-                  <mat-icon matListIcon>done</mat-icon>
-                </div>
-                <div class="mat-cell">{{ zone.awayArmDelay !== null ? zone.awayArmDelay : '-' }}</div>
-                <div class="mat-cell">
-                  {{ zone.awayAlertDelay !== null ? zone.awayAlertDelay : '-' }}
-                </div>
-              </div>
-              <div class="mat-row">
-                <div class="mat-cell" i18n="@@zone arm stay">Stay</div>
-                <div class="mat-cell" *ngIf="zone.stayAlertDelay !== null; else disabled">
-                  <mat-icon matListIcon>done</mat-icon>
-                </div>
-                <div class="mat-cell">{{ zone.stayArmDelay !== null ? zone.stayArmDelay : '-' }}</div>
-                <div class="mat-cell">
-                  {{ zone.stayAlertDelay !== null ? zone.stayAlertDelay : '-' }}
-                </div>
-              </div>
-              <div class="mat-row">
-                <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div>
-                <div class="mat-cell" *ngIf="zone.disarmedDelay !== null; else disabled">
-                  <mat-icon matListIcon>done</mat-icon>
-                </div>
-                <div class="mat-cell">{{ zone.disarmedDelay !== null ? '0' : '-' }}</div>
-                <div class="mat-cell">
-                  {{ zone.disarmedDelay !== null ? zone.disarmedDelay : '-' }}
-                </div>
-              </div>
-            </div>
-            <ng-template #disabled>
-              <div class="mat-cell"><mat-icon matListIcon>clear</mat-icon></div>
-            </ng-template>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel
-            class="sensors"
-            (opened)="onOpenSensor(zone.id)"
-            (closed)="onCloseSensor(zone.id)"
-            [expanded]="sensorOpened[zone.id]"
-          >
-            <mat-expansion-panel-header>
-              <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
-              <mat-panel-description *ngIf="!sensorOpened[zone.id]" i18n="@@zone no sensor">
+@if (zones != null && sensors != null) {
+  <div class="container">
+    @if (zones.length > 0) {
+      <div
+        cdkDropList
+        class="zone-list"
+        (cdkDropListDropped)="onDrop($event)"
+        >
+        @for (zone of zones; track zone) {
+          <mat-card
+            id="zone-{{ zone.id }}"
+            cdkDrag
+            (cdkDragStarted)="onDragStarted($event)"
+            [cdkDragDisabled]="!userCanEdit()"
+            class="zone-card container-item"
+            >
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ zone.name }}</mat-card-title>
+                @if (zone.description && zone.name != zone.description) {
+                  <mat-card-subtitle>
+                    {{ zone.description }}
+                  </mat-card-subtitle>
+                }
+              </mat-card-title-group>
+            </mat-card-header>
+            <!-- spacer -->
+            <mat-card-content><p></p></mat-card-content>
+            <mat-card-content>
+              <mat-accordion multi>
+                <mat-expansion-panel
+                  class="configs"
+                  (opened)="onOpenConfig(zone.id)"
+                  (closed)="onCloseConfig(zone.id)"
+                  [expanded]="configOpened[zone.id]"
+                  >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title i18n="@@zone configuration">Configuration</mat-panel-title>
+                    @if (!configOpened[zone.id]) {
+                      <mat-panel-description>
+                        <mat-icon>directions_walk</mat-icon>
+                        {{ zone.awayArmDelay !== null ? zone.awayArmDelay : '-' }}/{{
+                        zone.awayAlertDelay !== null ? zone.awayAlertDelay : '-'
+                        }}
+                        <span class="divider">|</span>
+                        <mat-icon class="icon_margin">hotel</mat-icon>
+                        {{ zone.stayArmDelay !== null ? zone.stayArmDelay : '-' }}/{{
+                        zone.stayAlertDelay !== null ? zone.stayAlertDelay : '-'
+                        }}
+                        <span class="divider">|</span>
+                        <mat-icon>clear</mat-icon>
+                        {{ zone.disarmedDelay !== null ? zone.disarmedDelay : '-' }}
+                      </mat-panel-description>
+                    }
+                  </mat-expansion-panel-header>
+                  <div class="mat-table">
+                    <div class="mat-header-row">
+                      <div class="mat-header-cell" i18n="@@zone alert type">Alert type</div>
+                      <div class="mat-header-cell" i18n="@@zone alert enabled">Alert enabled</div>
+                      <div class="mat-header-cell" i18n="@@zone arm delay">Arm delay</div>
+                      <div class="mat-header-cell" i18n="@@zone alert delay">Alert delay</div>
+                    </div>
+                    <div class="mat-row">
+                      <div class="mat-cell" i18n="@@zone arm away">Away</div>
+                      @if (zone.awayAlertDelay !== null) {
+                        <div class="mat-cell">
+                          <mat-icon matListIcon>done</mat-icon>
+                        </div>
+                      } @else {
+                        <div class="mat-cell"><mat-icon matListIcon>clear</mat-icon></div>
+                      }
+                      <div class="mat-cell">{{ zone.awayArmDelay !== null ? zone.awayArmDelay : '-' }}</div>
+                      <div class="mat-cell">
+                        {{ zone.awayAlertDelay !== null ? zone.awayAlertDelay : '-' }}
+                      </div>
+                    </div>
+                    <div class="mat-row">
+                      <div class="mat-cell" i18n="@@zone arm stay">Stay</div>
+                      @if (zone.stayAlertDelay !== null) {
+                        <div class="mat-cell">
+                          <mat-icon matListIcon>done</mat-icon>
+                        </div>
+                      } @else {
+                        <div class="mat-cell"><mat-icon matListIcon>clear</mat-icon></div>
+                      }
+                      <div class="mat-cell">{{ zone.stayArmDelay !== null ? zone.stayArmDelay : '-' }}</div>
+                      <div class="mat-cell">
+                        {{ zone.stayAlertDelay !== null ? zone.stayAlertDelay : '-' }}
+                      </div>
+                    </div>
+                    <div class="mat-row">
+                      <div class="mat-cell" i18n="@@zone disarmed">Disarmed</div>
+                      @if (zone.disarmedDelay !== null) {
+                        <div class="mat-cell">
+                          <mat-icon matListIcon>done</mat-icon>
+                        </div>
+                      } @else {
+                        <div class="mat-cell"><mat-icon matListIcon>clear</mat-icon></div>
+                      }
+                      <div class="mat-cell">{{ zone.disarmedDelay !== null ? '0' : '-' }}</div>
+                      <div class="mat-cell">
+                        {{ zone.disarmedDelay !== null ? zone.disarmedDelay : '-' }}
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel
+                  class="sensors"
+                  (opened)="onOpenSensor(zone.id)"
+                  (closed)="onCloseSensor(zone.id)"
+                  [expanded]="sensorOpened[zone.id]"
+                  >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title i18n="@@zone sensors">Sensors</mat-panel-title>
+                    @if (!sensorOpened[zone.id]) {
+                      <mat-panel-description i18n="@@zone no sensor">
                 {{ getSensors(zone.id).length }} sensor(s)
               </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div *ngIf="getSensors(zone.id).length > 0; else no_sensors">
-              <ul class="sensor-list">
-                <li *ngFor="let sensor of getSensors(zone.id)">
-                  {{ sensor.name }}
-                  <button
-                    mat-button
-                    *ngIf="userCanEdit()"
-                    [routerLink]="['/sensor', sensor.id]"
-                    routerLinkActive="active"
-                    color="accent"
-                  >
-                    <mat-icon matListIcon>mode_edit</mat-icon>
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <ng-template #no_sensors>
-              <h3 i18n="@@zone no sensors">No sensors</h3>
-            </ng-template>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </mat-card-content>
-
-      <!-- spacer -->
-      <mat-card-content><p></p></mat-card-content>
-
-      <mat-divider *ngIf="userCanEdit()"></mat-divider>
-
-      <mat-card-actions *ngIf="userCanEdit()">
-        <!-- drag and drop icon button-->
-        <button
-          mat-icon-button
-          cdkDragHandle
-          class="drag-handle"
+                    }
+                  </mat-expansion-panel-header>
+                  @if (getSensors(zone.id).length > 0) {
+                    <div>
+                      <ul class="sensor-list">
+                        @for (sensor of getSensors(zone.id); track sensor) {
+                          <li>
+                            {{ sensor.name }}
+                            @if (userCanEdit()) {
+                              <button
+                                mat-button
+                                [routerLink]="['/sensor', sensor.id]"
+                                routerLinkActive="active"
+                                color="accent"
+                                >
+                                <mat-icon matListIcon>mode_edit</mat-icon>
+                              </button>
+                            }
+                          </li>
+                        }
+                      </ul>
+                    </div>
+                  } @else {
+                    <h3 i18n="@@zone no sensors">No sensors</h3>
+                  }
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-card-content>
+            <!-- spacer -->
+            <mat-card-content><p></p></mat-card-content>
+            @if (userCanEdit()) {
+              <mat-divider></mat-divider>
+            }
+            @if (userCanEdit()) {
+              <mat-card-actions>
+                <!-- drag and drop icon button-->
+                <button
+                  mat-icon-button
+                  cdkDragHandle
+                  class="drag-handle"
           [disabled]="
             ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
           "
-        >
-          <mat-icon>drag_indicator</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          [routerLink]="['/zone', zone.id]"
-          color="primary"
-          [disabled]="monitoringState != monitoringStates.READY"
-        >
-          <mat-icon>mode_edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="openDeleteDialog(zone.id)"
-          color="warn"
-          [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+                  >
+                  <mat-icon>drag_indicator</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  [routerLink]="['/zone', zone.id]"
+                  color="primary"
+                  [disabled]="monitoringState != monitoringStates.READY"
+                  >
+                  <mat-icon>mode_edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="openDeleteDialog(zone.id)"
+                  color="warn"
+                  [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"
+                  >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            }
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <div class="zone-list">
+        <h1 class="empty" i18n="@@zone none">No zones found</h1>
+      </div>
+    }
   </div>
+}
 
-  <ng-template #no_zones>
-    <div class="zone-list">
-      <h1 class="empty" i18n="@@zone none">No zones found</h1>
-    </div>
-  </ng-template>
-</div>
-
-<div *ngIf="userCanEdit()" class="list-actions">
-  <button
-    class="list-action"
-    mat-fab
-    color="accent"
-    routerLink="/zone/add"
-    [disabled]="monitoringState != monitoringStates.READY"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-  <button
-    class="list-action"
-    mat-mini-fab
-    color="accent"
-    routerLink="/zone/add"
-    [disabled]="monitoringState != monitoringStates.READY"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-</div>
+@if (userCanEdit()) {
+  <div class="list-actions">
+    <button
+      class="list-action"
+      mat-fab
+      color="accent"
+      routerLink="/zone/add"
+      [disabled]="monitoringState != monitoringStates.READY"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+    <button
+      class="list-action"
+      mat-mini-fab
+      color="accent"
+      routerLink="/zone/add"
+      [disabled]="monitoringState != monitoringStates.READY"
+      >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+}

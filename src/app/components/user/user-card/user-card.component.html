@@ -1,154 +1,195 @@
 <mat-card class="user-card container-item">
   <mat-card-header>
-    <mat-icon
-      mat-card-avatar
-      *ngIf="user.role === roleTypes.ADMIN"
-      matListIcon
-      mat-card-avatar
-      class="avatar"
-    >
-      person
-    </mat-icon>
-    <mat-icon *ngIf="user.role === roleTypes.USER" matListIcon mat-card-avatar class="avatar">
-      person_outline
-    </mat-icon>
+    @if (user.role === roleTypes.ADMIN) {
+      <mat-icon
+        mat-card-avatar
+        matListIcon
+        mat-card-avatar
+        class="avatar"
+        >
+        person
+      </mat-icon>
+    }
+    @if (user.role === roleTypes.USER) {
+      <mat-icon matListIcon mat-card-avatar class="avatar">
+        person_outline
+      </mat-icon>
+    }
     <mat-card-title>{{ user.name }}</mat-card-title>
-    <mat-card-subtitle *ngIf="user.role === roleTypes.ADMIN" i18n="@@user type administrator">
+    @if (user.role === roleTypes.ADMIN) {
+      <mat-card-subtitle i18n="@@user type administrator">
       Administrator
     </mat-card-subtitle>
-    <mat-card-subtitle *ngIf="user.role === roleTypes.USER" i18n="@@user type user">
+    }
+    @if (user.role === roleTypes.USER) {
+      <mat-card-subtitle i18n="@@user type user">
       User
     </mat-card-subtitle>
+    }
   </mat-card-header>
 
-  <mat-spinner *ngIf="loading" color="primary" diameter="40"></mat-spinner>
+  @if (loading) {
+    <mat-spinner color="primary" diameter="40"></mat-spinner>
+  }
 
-  <span *ngIf="!loading">
-    <mat-divider></mat-divider>
-
-    <!-- Cards -->
-    <mat-card-content>
-      <mat-card-title i18n="@@user cards">Cards</mat-card-title>
-      <mat-list role="list" *ngFor="let card of cards">
-        <mat-checkbox
-          color="primary"
-          [checked]="card.enabled"
-          [disabled]="!canManageCards || disabled"
-          (change)="toggleCardEnabled(card.id)"
-        >
-          <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">
-            credit_card
-          </mat-icon>
-          <span [className]="!card.enabled ? 'card-description-disabled' : ''">
-            {{ card.description }}
-          </span>
-        </mat-checkbox>
-        <button
-          mat-icon-button
-          color="warn"
-          [disabled]="!canManageCards || disabled"
-          (click)="openDeleteCardDialog(card.id)"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-list>
-      <mat-card-subtitle *ngIf="cards.length === 0 && !registeringCard" i18n="@@user no cards">
+  @if (!loading) {
+    <span>
+      <mat-divider></mat-divider>
+      <!-- Cards -->
+      <mat-card-content>
+        <mat-card-title i18n="@@user cards">Cards</mat-card-title>
+        @for (card of cards; track card) {
+          <mat-list role="list">
+            <mat-checkbox
+              color="primary"
+              [checked]="card.enabled"
+              [disabled]="!canManageCards || disabled"
+              (change)="toggleCardEnabled(card.id)"
+              >
+              <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">
+                credit_card
+              </mat-icon>
+              <span [className]="!card.enabled ? 'card-description-disabled' : ''">
+                {{ card.description }}
+              </span>
+            </mat-checkbox>
+            <button
+              mat-icon-button
+              color="warn"
+              [disabled]="!canManageCards || disabled"
+              (click)="openDeleteCardDialog(card.id)"
+              >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list>
+        }
+        @if (cards.length === 0 && !registeringCard) {
+          <mat-card-subtitle i18n="@@user no cards">
         No cards registered
       </mat-card-subtitle>
-      <mat-progress-spinner
-        *ngIf="registeringCard"
-        color="primary"
-        mode="indeterminate"
-        diameter="20"
-      ></mat-progress-spinner>
-    </mat-card-content>
-
-    <mat-divider></mat-divider>
-
-    <!-- Registration code -->
-    <mat-card-content>
-      <mat-card-title i18n="@@user device registration code">Device registration code</mat-card-title>
-      <div class="registration" *ngIf="user.hasRegistrationCode">
-        <mat-icon class="entry">key</mat-icon>
-        <span i18n="@@user registration">Expires on:</span>
-        <span *ngIf="user.registrationExpiry">{{ user.registrationExpiry }}</span>
-        <span *ngIf="!user.registrationExpiry" i18n="@@user expiry never">never</span>
-        <button
-          mat-icon-button
-          color="warn"
-          [disabled]="!canManageRegistration || disabled"
-          (click)="openDeleteRegistrationCodeDialog()"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <mat-card-subtitle *ngIf="!user.hasRegistrationCode" i18n="@@user no registration code">
+        }
+        @if (registeringCard) {
+          <mat-progress-spinner
+            color="primary"
+            mode="indeterminate"
+            diameter="20"
+          ></mat-progress-spinner>
+        }
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <!-- Registration code -->
+      <mat-card-content>
+        <mat-card-title i18n="@@user device registration code">Device registration code</mat-card-title>
+        @if (user.hasRegistrationCode) {
+          <div class="registration">
+            <mat-icon class="entry">key</mat-icon>
+            <span i18n="@@user registration">Expires on:</span>
+            @if (user.registrationExpiry) {
+              <span>{{ user.registrationExpiry }}</span>
+            }
+            @if (!user.registrationExpiry) {
+              <span i18n="@@user expiry never">never</span>
+            }
+            <button
+              mat-icon-button
+              color="warn"
+              [disabled]="!canManageRegistration || disabled"
+              (click)="openDeleteRegistrationCodeDialog()"
+              >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+        @if (!user.hasRegistrationCode) {
+          <mat-card-subtitle i18n="@@user no registration code">
         No registration code
       </mat-card-subtitle>
-    </mat-card-content>
-
-    <mat-divider *ngIf="user.role === roleTypes.ADMIN"></mat-divider>
-
-    <!-- SSH key -->
-    <mat-card-content *ngIf="user.role === roleTypes.ADMIN">
-      <mat-card-title i18n="@@user ssh key">SSH key</mat-card-title>
-      <div class="ssh" *ngIf="hasSshKey">
-        <mat-icon class="entry">terminal</mat-icon>
-        <button
-          mat-icon-button
-          color="warn"
-          [disabled]="!canManageSshKeys || disabled"
-          (click)="openDeleteSshKeyDialog()"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <mat-card-subtitle *ngIf="!hasSshKey" i18n="@@user no ssh key">No SSH key</mat-card-subtitle>
-    </mat-card-content>
-
-
-    <!-- MCP token -->
-    <mat-divider *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null"></mat-divider>
-    <mat-card-content *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null">
-      <mat-card-title i18n="@@mcp token">MCP token</mat-card-title>
-      <div *ngIf="hasMCPToken === true">
-        <mat-icon class="entry">vpn_key</mat-icon>
-        <button
-          mat-icon-button
-          color="warn"
-          [disabled]="!canManageMCP || disabled"
-          (click)="removeMCPToken()"
-          >
-            <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-      <mat-card-subtitle *ngIf="hasMCPToken === false" i18n="@@user no mcp token">
+        }
+      </mat-card-content>
+      @if (user.role === roleTypes.ADMIN) {
+        <mat-divider></mat-divider>
+      }
+      <!-- SSH key -->
+      @if (user.role === roleTypes.ADMIN) {
+        <mat-card-content>
+          <mat-card-title i18n="@@user ssh key">SSH key</mat-card-title>
+          @if (hasSshKey) {
+            <div class="ssh">
+              <mat-icon class="entry">terminal</mat-icon>
+              <button
+                mat-icon-button
+                color="warn"
+                [disabled]="!canManageSshKeys || disabled"
+                (click)="openDeleteSshKeyDialog()"
+                >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+          @if (!hasSshKey) {
+            <mat-card-subtitle i18n="@@user no ssh key">No SSH key</mat-card-subtitle>
+          }
+        </mat-card-content>
+      }
+      <!-- MCP token -->
+      @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
+        <mat-divider></mat-divider>
+      }
+      @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
+        <mat-card-content>
+          <mat-card-title i18n="@@mcp token">MCP token</mat-card-title>
+          @if (hasMCPToken === true) {
+            <div>
+              <mat-icon class="entry">vpn_key</mat-icon>
+              <button
+                mat-icon-button
+                color="warn"
+                [disabled]="!canManageMCP || disabled"
+                (click)="removeMCPToken()"
+                >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+          @if (hasMCPToken === false) {
+            <mat-card-subtitle i18n="@@user no mcp token">
         No MCP token
       </mat-card-subtitle>
-    </mat-card-content>
-
-
-    <!-- Comment -->
-    <mat-divider *ngIf="user.comment"></mat-divider>
-    <mat-card-content *ngIf="user.comment">
-      <p>{{ user.comment }}</p>
-    </mat-card-content>
-
-    <mat-divider *ngIf="biometricAvailable"></mat-divider>
-
-    <!-- Biometric login -->
-    <mat-card-content *ngIf="biometricAvailable">
-      <mat-card-title i18n="@@user biometric login">Biometric login</mat-card-title>
-      <div *ngIf="biometricEnabled()" class="biometric">
-        <mat-icon class="entry">fingerprint</mat-icon>
-        <span i18n="@@user biometric enabled">Enabled</span>
-      </div>
-      <div *ngIf="!biometricEnabled()" class="biometric">
-        <mat-icon class="entry">fingerprint</mat-icon>
-        <span i18n="@@user biometric disabled">Disabled</span>
-      </div>
-    </mat-card-content>
-  </span>
+          }
+        </mat-card-content>
+      }
+      <!-- Comment -->
+      @if (user.comment) {
+        <mat-divider></mat-divider>
+      }
+      @if (user.comment) {
+        <mat-card-content>
+          <p>{{ user.comment }}</p>
+        </mat-card-content>
+      }
+      @if (biometricAvailable) {
+        <mat-divider></mat-divider>
+      }
+      <!-- Biometric login -->
+      @if (biometricAvailable) {
+        <mat-card-content>
+          <mat-card-title i18n="@@user biometric login">Biometric login</mat-card-title>
+          @if (biometricEnabled()) {
+            <div class="biometric">
+              <mat-icon class="entry">fingerprint</mat-icon>
+              <span i18n="@@user biometric enabled">Enabled</span>
+            </div>
+          }
+          @if (!biometricEnabled()) {
+            <div class="biometric">
+              <mat-icon class="entry">fingerprint</mat-icon>
+              <span i18n="@@user biometric disabled">Disabled</span>
+            </div>
+          }
+        </mat-card-content>
+      }
+    </span>
+  }
 
   <mat-divider></mat-divider>
 
@@ -161,7 +202,7 @@
       color="warn"
       [disabled]="!canManageUser || disabled"
       (click)="openDeleteUserDialog()"
-    >
+      >
       <mat-icon>delete</mat-icon>
     </button>
 
@@ -173,62 +214,69 @@
         [disabled]="!canManageRegistration || user.hasRegistrationCode || disabled"
         i18n="@@user register device button"
         (click)="openDeviceRegistrationDialog()"
-      >
+        >
         Device registration
       </button>
-      <button
-        *ngIf="canManageCards"
-        mat-menu-item
-        color="primary"
-        [disabled]="disabled"
-        (click)="onClickRegisterCard()"
-        i18n="@@user register card button"
-      >
-        Register card
-      </button>
-      <button
-        *ngIf="user.role === roleTypes.ADMIN"
-        mat-menu-item
-        color="primary"
-        [disabled]="!canManageSshKeys || hasSshKey || disabled"
-        (click)="openSshKeySetupDialog()"
-        i18n="@@user generate ssk key"
-      >
-        Setup SSH key
-      </button>
-      <button
-        *ngIf="user.role === roleTypes.ADMIN && hasMCPToken !== null"
-        mat-menu-item
-        color="primary"
-        [disabled]="!canManageMCP || disabled || hasMCPToken === true"
-        (click)="getMCPToken()"
-        i18n="@@user get mcp token"
-      >
-        Get MCP token
-      </button>
-
-      <!-- Biometric login -->
-      <div *ngIf="biometricAvailable">
-        <mat-divider></mat-divider>
+      @if (canManageCards) {
         <button
-          *ngIf="!biometricEnabled()"
           mat-menu-item
           color="primary"
           [disabled]="disabled"
-          (click)="enableBiometricLogin()"
-        >
-          <span i18n="@@user enable biometric">Enable biometric login</span>
-        </button>
+          (click)="onClickRegisterCard()"
+          i18n="@@user register card button"
+          >
+        Register card
+      </button>
+      }
+      @if (user.role === roleTypes.ADMIN) {
         <button
-          *ngIf="biometricEnabled()"
           mat-menu-item
-          color="warn"
-          [disabled]="disabled"
-          (click)="disableBiometricLogin()"
-        >
-          <span i18n="@@user disable biometric">Disable biometric login</span>
-        </button>
-      </div>
+          color="primary"
+          [disabled]="!canManageSshKeys || hasSshKey || disabled"
+          (click)="openSshKeySetupDialog()"
+          i18n="@@user generate ssk key"
+          >
+        Setup SSH key
+      </button>
+      }
+      @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
+        <button
+          mat-menu-item
+          color="primary"
+          [disabled]="!canManageMCP || disabled || hasMCPToken === true"
+          (click)="getMCPToken()"
+          i18n="@@user get mcp token"
+          >
+        Get MCP token
+      </button>
+      }
+
+      <!-- Biometric login -->
+      @if (biometricAvailable) {
+        <div>
+          <mat-divider></mat-divider>
+          @if (!biometricEnabled()) {
+            <button
+              mat-menu-item
+              color="primary"
+              [disabled]="disabled"
+              (click)="enableBiometricLogin()"
+              >
+              <span i18n="@@user enable biometric">Enable biometric login</span>
+            </button>
+          }
+          @if (biometricEnabled()) {
+            <button
+              mat-menu-item
+              color="warn"
+              [disabled]="disabled"
+              (click)="disableBiometricLogin()"
+              >
+              <span i18n="@@user disable biometric">Disable biometric login</span>
+            </button>
+          }
+        </div>
+      }
     </mat-menu>
   </mat-card-actions>
 </mat-card>

@@ -1,53 +1,56 @@
 <div class="container">
-  <mat-card *ngIf="area" class="container-item area-form">
-    <mat-card-content>
-      <form [formGroup]="areaForm" (ngSubmit)="onSubmit()" novalidate>
-        <mat-form-field>
-          <mat-label i18n="@@name">Name</mat-label>
-          <input
-            matInput
-            i18n-placeholder="@@name"
-            placeholder="Name"
-            formControlName="name"
-            required
-            maxlength="32"
-          />
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-
-    <mat-divider></mat-divider>
-
-    <mat-card-actions align="end">
-      <button
-        mat-icon-button
-        color="primary"
-        [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSubmit()"
-      >
-        <mat-icon>save</mat-icon>
-      </button>
-      <button
-        *ngIf="areaId > 0"
-        mat-icon-button
-        color="warn"
-        type="button"
-        (click)="openDeleteDialog(area.id)"
+  @if (area) {
+    <mat-card class="container-item area-form">
+      <mat-card-content>
+        <form [formGroup]="areaForm" (ngSubmit)="onSubmit()" novalidate>
+          <mat-form-field>
+            <mat-label i18n="@@name">Name</mat-label>
+            <input
+              matInput
+              i18n-placeholder="@@name"
+              placeholder="Name"
+              formControlName="name"
+              required
+              maxlength="32"
+              />
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY"
+          (click)="onSubmit()"
+          >
+          <mat-icon>save</mat-icon>
+        </button>
+        @if (areaId > 0) {
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="openDeleteDialog(area.id)"
         [disabled]="
           getSensors().length > 0 ||
           getOutputs().length > 0 ||
           monitoringState != monitoringStates.READY
         "
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+            >
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+        <button mat-icon-button color="accent" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
 
-  <div *ngIf="area === null">
-    <h1 i18n="@@area not found">The area was not found!</h1>
-  </div>
+  @if (area === null) {
+    <div>
+      <h1 i18n="@@area not found">The area was not found!</h1>
+    </div>
+  }
 </div>

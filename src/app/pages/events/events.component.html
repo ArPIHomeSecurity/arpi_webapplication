@@ -25,7 +25,9 @@
         <mat-select [(ngModel)]="armedBy" (ngModelChange)="filterArms()">
           <mat-option [value]="0" i18n="@@events undefined">Undefined</mat-option>
           <mat-option [value]="-1" i18n="@@events keypad">Keypad</mat-option>
-          <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+          @for (user of users; track user) {
+            <mat-option [value]="user.id">{{ user.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
@@ -37,13 +39,13 @@
             placeholder="Start date"
             [(ngModel)]="startDate"
             (ngModelChange)="filterArms()"
-          />
+            />
           <input
             matEndDate
             placeholder="End date"
             [(ngModel)]="endDate"
             (ngModelChange)="filterArms()"
-          />
+            />
         </mat-date-range-input>
         <mat-hint>YYYY-MM-DD – YYYY-MM-DD</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -66,7 +68,7 @@
         [disabled]="isClearDisabled()"
         (click)="filterArms()"
         i18n="@@events clear filters"
-      >
+        >
         Clear filters
       </button>
     </div>
@@ -81,187 +83,240 @@
     (page)="paginate()"
   ></mat-paginator>
 
-  <div *ngIf="events; else loading" class="container-item">
-    <div *ngIf="events && events.length > 0; else no_arms" class="container-item">
-      <mat-accordion *ngFor="let event of events">
-        <mat-expansion-panel [ngClass]="{ alerting: event.alert && !event.alert.endTime }">
-          <mat-expansion-panel-header>
-            <mat-panel-title [ngClass]="{ warn: event.disarm?.time == null }">
-              <div class="arm-icon">
-                <mat-icon *ngIf="event.arm?.type == armTypes.AWAY" matListIcon>
-                  directions_walk
-                </mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.STAY" matListIcon>hotel</mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" matListIcon>
-                  directions_walk
-                </mat-icon>
-                <mat-icon *ngIf="event.arm?.type == armTypes.MIXED" matListIcon>hotel</mat-icon>
-                <mat-icon *ngIf="!event.arm?.type" matListIcon>verified_user</mat-icon>
-              </div>
-              <span *ngIf="event.arm">{{ event.arm?.time | date: 'longDate' }}</span>
-              <span *ngIf="!event.arm">{{ event.disarm?.time | date: 'longDate' }}</span>
-              <span *ngIf="!event.arm && !event.disarm">
-                {{ event.alert?.startTime | date: 'longDate' }}
-              </span>
-              <mat-icon
-                *ngIf="event.alert"
-                [ngStyle]="{ color: event.disarm?.time == null ? 'white' : 'red', margin: '10px' }"
-              >
-                warning
-              </mat-icon>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="event-panel-content">
-            <div class="panel basis-12/25" fxFlex.lt-md="100">
-              <span class="title" i18n="@@events properties">Properties</span>
-              <mat-divider></mat-divider>
-              <div class="content">
-                <ul>
-                  <li *ngIf="!event.arm && event.disarm" i18n="@@events sabotage">
+  @if (events) {
+    <div class="container-item">
+      @if (events && events.length > 0) {
+        <div class="container-item">
+          @for (event of events; track event) {
+            <mat-accordion>
+              <mat-expansion-panel [ngClass]="{ alerting: event.alert && !event.alert.endTime }">
+                <mat-expansion-panel-header>
+                  <mat-panel-title [ngClass]="{ warn: event.disarm?.time == null }">
+                    <div class="arm-icon">
+                      @if (event.arm?.type == armTypes.AWAY) {
+                        <mat-icon matListIcon>
+                          directions_walk
+                        </mat-icon>
+                      }
+                      @if (event.arm?.type == armTypes.STAY) {
+                        <mat-icon matListIcon>hotel</mat-icon>
+                      }
+                      @if (event.arm?.type == armTypes.MIXED) {
+                        <mat-icon matListIcon>
+                          directions_walk
+                        </mat-icon>
+                      }
+                      @if (event.arm?.type == armTypes.MIXED) {
+                        <mat-icon matListIcon>hotel</mat-icon>
+                      }
+                      @if (!event.arm?.type) {
+                        <mat-icon matListIcon>verified_user</mat-icon>
+                      }
+                    </div>
+                    @if (event.arm) {
+                      <span>{{ event.arm?.time | date: 'longDate' }}</span>
+                    }
+                    @if (!event.arm) {
+                      <span>{{ event.disarm?.time | date: 'longDate' }}</span>
+                    }
+                    @if (!event.arm && !event.disarm) {
+                      <span>
+                        {{ event.alert?.startTime | date: 'longDate' }}
+                      </span>
+                    }
+                    @if (event.alert) {
+                      <mat-icon
+                        [ngStyle]="{ color: event.disarm?.time == null ? 'white' : 'red', margin: '10px' }"
+                        >
+                        warning
+                      </mat-icon>
+                    }
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="event-panel-content">
+                  <div class="panel basis-12/25" fxFlex.lt-md="100">
+                    <span class="title" i18n="@@events properties">Properties</span>
+                    <mat-divider></mat-divider>
+                    <div class="content">
+                      <ul>
+                        @if (!event.arm && event.disarm) {
+                          <li i18n="@@events sabotage">
                     Sabotage event
                   </li>
-                  <li *ngIf="event.arm && event.disarm && !event.alert" i18n="@@events arm">
+                        }
+                        @if (event.arm && event.disarm && !event.alert) {
+                          <li i18n="@@events arm">
                     Arm event
                   </li>
-                  <li *ngIf="event.arm && event.disarm && event.alert" i18n="@@events alert">
+                        }
+                        @if (event.arm && event.disarm && event.alert) {
+                          <li i18n="@@events alert">
                     Alert event
                   </li>
-
-                  <li *ngIf="event.arm?.userId">
-                    <span i18n="@@events armed by">Armed by</span>
-                    {{ getUsername(event.arm?.userId) }}
-                    <span *ngIf="event.arm?.type == armTypes.AWAY" i18n="@@events away">AWAY</span>
-                    <span *ngIf="event.arm?.type == armTypes.STAY" i18n="@@events stay">STAY</span>
-                  </li>
-                  <li *ngIf="event.arm?.keypadId" i18n="@@events armed keypad">
+                        }
+                        @if (event.arm?.userId) {
+                          <li>
+                            <span i18n="@@events armed by">Armed by</span>
+                            {{ getUsername(event.arm?.userId) }}
+                            @if (event.arm?.type == armTypes.AWAY) {
+                              <span i18n="@@events away">AWAY</span>
+                            }
+                            @if (event.arm?.type == armTypes.STAY) {
+                              <span i18n="@@events stay">STAY</span>
+                            }
+                          </li>
+                        }
+                        @if (event.arm?.keypadId) {
+                          <li i18n="@@events armed keypad">
                     Armed with keypad
                   </li>
-
-                  <li *ngIf="event.alert?.sensors" i18n="@@events sensors">Alerting sensor(s)</li>
-                  <ul>
-                    <li *ngFor="let sensor of event.alert?.sensors">
-                      {{ sensor.name }}
-                      <span>(CH{{ sensor.channel + 1 | number: '2.0-0' }})</span>
-                      <span>&semi;&nbsp;</span>
-                      <span i18n="@@events delay">delay: {{ sensor.delay }}</span>
-                      <span>&semi;&nbsp;</span>
-                      <span *ngIf="sensor.monitorPeriod != null" i18n="@@events sensitivity">
+                        }
+                        @if (event.alert?.sensors) {
+                          <li i18n="@@events sensors">Alerting sensor(s)</li>
+                        }
+                        <ul>
+                          @for (sensor of event.alert?.sensors; track sensor) {
+                            <li>
+                              {{ sensor.name }}
+                              <span>(CH{{ sensor.channel + 1 | number: '2.0-0' }})</span>
+                              <span>&semi;&nbsp;</span>
+                              <span i18n="@@events delay">delay: {{ sensor.delay }}</span>
+                              <span>&semi;&nbsp;</span>
+                              @if (sensor.monitorPeriod != null) {
+                                <span i18n="@@events sensitivity">
                         sensitivity: {{ sensor.monitorPeriod + 's' }}/{{ sensor.monitorThreshold }}%
                       </span>
-                      <span
-                        *ngIf="sensor.monitorPeriod == null"
-                        i18n="@@events sensitivity instant"
-                      >
+                              }
+                              @if (sensor.monitorPeriod == null) {
+                                <span
+                                  i18n="@@events sensitivity instant"
+                                  >
                         sensitivity: instant alert
                       </span>
-                      <span>&semi;&nbsp;</span>
-                      <span *ngIf="sensor.silent === true" i18n="@@events silent">silent</span>
-                      <span *ngIf="sensor.silent === false" i18n="@@events loud">loud</span>
-                    </li>
-                  </ul>
-
-                  <li *ngIf="event.disarm?.userId" i18n="@@events disarmed by">
+                              }
+                              <span>&semi;&nbsp;</span>
+                              @if (sensor.silent === true) {
+                                <span i18n="@@events silent">silent</span>
+                              }
+                              @if (sensor.silent === false) {
+                                <span i18n="@@events loud">loud</span>
+                              }
+                            </li>
+                          }
+                        </ul>
+                        @if (event.disarm?.userId) {
+                          <li i18n="@@events disarmed by">
                     Disarmed by {{ getUsername(event.disarm?.userId) }}
                   </li>
-                  <li *ngIf="event.disarm?.keypadId" i18n="@@events disarmed keypad">
+                        }
+                        @if (event.disarm?.keypadId) {
+                          <li i18n="@@events disarmed keypad">
                     Disarmed with keypad
                   </li>
-                  <li
-                    *ngIf="
-                      !event.disarm?.userId &&
-                      !event.disarm?.keypadId &&
-                      event.disarm?.time === '2000-01-01 01:00:00'
-                    "
-                    [ngClass]="{ warn: event.disarm?.time == null }"
-                    i18n="@@events disarmed system"
-                  >
+                        }
+                        @if (
+                          !event.disarm?.userId &&
+                          !event.disarm?.keypadId &&
+                          event.disarm?.time === '2000-01-01 01:00:00'
+                          ) {
+                          <li
+                            [ngClass]="{ warn: event.disarm?.time == null }"
+                            i18n="@@events disarmed system"
+                            >
                     Disarmed by system
                   </li>
-                  <li *ngIf="event.alert?.silent" i18n="@@events silent alert">Silent alert</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="panel basis-12/25" fxFlex.lt-md="100">
-              <span class="title" i18n="@@events timeline">Timeline</span>
-              <mat-divider></mat-divider>
-              <div class="content">
-                <p
-                  *ngFor="let step of getTimeline(event)"
+                        }
+                        @if (event.alert?.silent) {
+                          <li i18n="@@events silent alert">Silent alert</li>
+                        }
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="panel basis-12/25" fxFlex.lt-md="100">
+                    <span class="title" i18n="@@events timeline">Timeline</span>
+                    <mat-divider></mat-divider>
+                    <div class="content">
+                      @for (step of getTimeline(event); track step) {
+                        <p
                   [ngClass]="{
                     warn: !environment.production && step.isDefaultDate,
                     hidden: environment.production && step.isDefaultDate
                   }"
-                >
-                  {{ step.time }}: {{ step.description }}
-                </p>
-              </div>
-            </div>
-
-            <!--div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">->
-              <span class="title" i18n="@@events sensor states">Sensor states VERTICAL</span>
-              <mat-divider></mat-divider>
-              <div class="content">
-                <div class="mat-table">
-                  <div class="mat-header-row">
-                    <div class="mat-header-cell" i18n="@@events timestamp">Timestamp</div>
-                    <div *ngFor="let sensor of event.sensorChanges[0].sensors" class="mat-header-cell">{{sensor.description}}</div>
+                          >
+                          {{ step.time }}: {{ step.description }}
+                        </p>
+                      }
+                    </div>
                   </div>
-                  <div class="mat-row" *ngFor="let armSensor of event.sensorChanges">
-                    <div class="mat-cell">{{armSensor.timestamp}}</div>
-                    <div class="mat-cell" *ngFor="let sensor of armSensor.sensors">{{sensor.delay !== null ? sensor.delay : '-'}}</div>
+                  <!--div class="panel" fxFlex="100" *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0">->
+                  <span class="title" i18n="@@events sensor states">Sensor states VERTICAL</span>
+                  <mat-divider></mat-divider>
+                  <div class="content">
+                    <div class="mat-table">
+                      <div class="mat-header-row">
+                        <div class="mat-header-cell" i18n="@@events timestamp">Timestamp</div>
+                        <div *ngFor="let sensor of event.sensorChanges[0].sensors" class="mat-header-cell">{{sensor.description}}</div>
+                      </div>
+                      <div class="mat-row" *ngFor="let armSensor of event.sensorChanges">
+                        <div class="mat-cell">{{armSensor.timestamp}}</div>
+                        <div class="mat-cell" *ngFor="let sensor of armSensor.sensors">{{sensor.delay !== null ? sensor.delay : '-'}}</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div-->
-
-            <div
-              class="panel basis-full"
-              *ngIf="event['sensorChanges'] && event.sensorChanges.length > 0"
-            >
-              <span class="title" i18n="@@events sensor states">Sensor states</span>
-              <mat-divider></mat-divider>
-              <div class="content">
-                <div class="mat-table">
-                  <div class="mat-header-row">
-                    <div class="mat-header-cell"></div>
-                    <div
-                      *ngFor="let timestamp of getEventTimestamps(event)"
-                      class="mat-header-cell"
-                      [matTooltip]="timestamp"
+                </div-->
+                @if (event['sensorChanges'] && event.sensorChanges.length > 0) {
+                  <div
+                    class="panel basis-full"
                     >
-                      {{ timestamp }}
+                    <span class="title" i18n="@@events sensor states">Sensor states</span>
+                    <mat-divider></mat-divider>
+                    <div class="content">
+                      <div class="mat-table">
+                        <div class="mat-header-row">
+                          <div class="mat-header-cell"></div>
+                          @for (timestamp of getEventTimestamps(event); track timestamp) {
+                            <div
+                              class="mat-header-cell"
+                              [matTooltip]="timestamp"
+                              >
+                              {{ timestamp }}
+                            </div>
+                          }
+                        </div>
+                        @for (index of getEventSensorRange(event); track index) {
+                          <div class="mat-row">
+                            <div class="mat-cell sensor-name">
+                              {{ event.sensorChanges[0].sensors[index].description }}
+                              <br />
+                              CH{{ event.sensorChanges[0].sensors[index].channel + 1 | number: '2.0-0' }}
+                            </div>
+                            @for (sensor of getEventSensorStates(event, index); track sensor) {
+                              <div class="mat-cell">
+                                {{ sensor.enabled && sensor.delay !== null ? sensor.delay : '-' }}
+                              </div>
+                            }
+                          </div>
+                        }
+                      </div>
                     </div>
                   </div>
-                  <div class="mat-row" *ngFor="let index of getEventSensorRange(event)">
-                    <div class="mat-cell sensor-name">
-                      {{ event.sensorChanges[0].sensors[index].name }}
-                      <br />
-                      CH{{ event.sensorChanges[0].sensors[index].channel + 1 | number: '2.0-0' }}
-                    </div>
-                    <div class="mat-cell" *ngFor="let sensor of getEventSensorStates(event, index)">
-                      {{ sensor.enabled && sensor.delay !== null ? sensor.delay : '-' }}
-                    </div>
-                  </div>
-                </div>
+                }
               </div>
-            </div>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        }
+      </div>
+    } @else {
+      <div class="event-list-xs sm:event-list">
+        <h1 class="empty" i18n="@@events empty">No arms/alerts found</h1>
+      </div>
+    }
   </div>
-</div>
-
-<ng-template #no_arms>
-  <div class="event-list-xs sm:event-list">
-    <h1 class="empty" i18n="@@events empty">No arms/alerts found</h1>
-  </div>
-</ng-template>
-
-<ng-template #loading>
+} @else {
   <div class="loader">
     <mat-spinner></mat-spinner>
   </div>
-</ng-template>
+}
+</div>
+
+

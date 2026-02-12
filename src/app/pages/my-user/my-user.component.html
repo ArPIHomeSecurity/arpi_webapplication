@@ -1,11 +1,12 @@
 <div class="container">
-  <user-card
-    *ngIf="user"
-    [user]="user"
-    class="container-item"
-    [canManageRegistration]="true"
-    [canManageCards]="true"
-    [disabled]="monitoringState != monitoringStates.READY"
-    (onNavigateToUserEdit)="onNavigateToUserEdit()"
-  />
+  @if (user) {
+    <user-card
+      [user]="user"
+      class="container-item"
+      [canManageRegistration]="true"
+      [canManageCards]="true"
+      [disabled]="monitoringState != monitoringStates.READY"
+      (onNavigateToUserEdit)="onNavigateToUserEdit()"
+      />
+  }
 </div>

@@ -1,121 +1,131 @@
 <div class="container">
-  <mat-card *ngIf="user" class="conteiner-item user-form">
-    <mat-card-content>
-      <form [formGroup]="userForm" novalidate>
-        <mat-form-field>
-          <mat-label i18n="@@name">Name</mat-label>
-          <input
-            matInput
-            i18n-placeholder="@@user name"
-            placeholder="Name"
-            formControlName="name"
-            required
-            maxlength="32"
-          />
-        </mat-form-field>
-
-        <mat-form-field *ngIf="!isMyProfile">
-          <mat-label i18n="@@user role">Role</mat-label>
-          <mat-select
-            i18n-placeholder="@@user select role"
-            placeholder="Select a role"
-            formControlName="role"
-            required
+  @if (user) {
+    <mat-card class="conteiner-item user-form">
+      <mat-card-content>
+        <form [formGroup]="userForm" novalidate>
+          <mat-form-field>
+            <mat-label i18n="@@name">Name</mat-label>
+            <input
+              matInput
+              i18n-placeholder="@@user name"
+              placeholder="Name"
+              formControlName="name"
+              required
+              maxlength="32"
+              />
+          </mat-form-field>
+          @if (!isMyProfile) {
+            <mat-form-field>
+              <mat-label i18n="@@user role">Role</mat-label>
+              <mat-select
+                i18n-placeholder="@@user select role"
+                placeholder="Select a role"
+                formControlName="role"
+                required
+                >
+                @for (role of roles; track role) {
+                  <mat-option [value]="role.value">{{ role.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+          @if (editOwnProfile()) {
+            <mat-form-field>
+              <mat-label i18n="@@user old access code">Old access code</mat-label>
+              <input
+                matInput
+                inputmode="numeric"
+                pattern="[0-9]*"
+                maxlength="10"
+                digitOnly
+                i18n-placeholder="@@user old access code"
+                placeholder="Old access code"
+                formControlName="oldAccessCode"
+                [type]="hideOld ? 'password' : 'text'"
+                />
+              <mat-icon matSuffix (click)="hideOld = !hideOld">
+                {{ hideOld ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+              @if (userForm.get('oldAccessCode').invalid) {
+                <mat-error>
+                  {{ userForm.get('oldAccessCode').getError('invalid') }}
+                </mat-error>
+              }
+            </mat-form-field>
+          }
+          <mat-form-field>
+            <mat-label i18n="@@user new access code">New access code</mat-label>
+            <input
+              matInput
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="10"
+              digitOnly
+              i18n-placeholder="@@user new code"
+              placeholder="New access code"
+              formControlName="newAccessCode"
+              [autocomplete]="isMyProfile ? 'on' : 'off'"
+              [type]="hideNew ? 'password' : 'text'"
+              />
+            <mat-icon matSuffix (click)="hideNew = !hideNew">
+              {{ hideNew ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+            @if (userForm.get('newAccessCode').invalid) {
+              <mat-error>
+                {{ userForm.get('newAccessCode').getError('invalid') }}
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label i18n="@@user comment">Comment</mat-label>
+            <textarea
+              matInput
+              i18n-placeholder="@@user comment"
+              placeholder="Comment"
+              formControlName="comment"
+              type="text"
+            ></textarea>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
+          (click)="onSave()"
           >
-            <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-icon>save</mat-icon>
+        </button>
+        @if (!isMyProfile) {
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="openDeleteDialog(user.id)"
+            [disabled]="monitoringState != monitoringStates.READY"
+            >
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+        @if (!isMyProfile) {
+          <button
+            mat-icon-button
+            color="accent"
+            type="button"
+            (click)="onCancel()"
+            >
+            <mat-icon>cancel</mat-icon>
+          </button>
+        }
+      </mat-card-actions>
+    </mat-card>
+  }
 
-        <mat-form-field *ngIf="editOwnProfile()">
-          <mat-label i18n="@@user old access code">Old access code</mat-label>
-          <input
-            matInput
-            inputmode="numeric"
-            pattern="[0-9]*"
-            maxlength="10"
-            digitOnly
-            i18n-placeholder="@@user old access code"
-            placeholder="Old access code"
-            formControlName="oldAccessCode"
-            [type]="hideOld ? 'password' : 'text'"
-          />
-          <mat-icon matSuffix (click)="hideOld = !hideOld">
-            {{ hideOld ? 'visibility_off' : 'visibility' }}
-          </mat-icon>
-          <mat-error *ngIf="userForm.get('oldAccessCode').invalid">
-            {{ userForm.get('oldAccessCode').getError('invalid') }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@user new access code">New access code</mat-label>
-          <input
-            matInput
-            inputmode="numeric"
-            pattern="[0-9]*"
-            maxlength="10"
-            digitOnly
-            i18n-placeholder="@@user new code"
-            placeholder="New access code"
-            formControlName="newAccessCode"
-            [autocomplete]="isMyProfile ? 'on' : 'off'"
-            [type]="hideNew ? 'password' : 'text'"
-          />
-          <mat-icon matSuffix (click)="hideNew = !hideNew">
-            {{ hideNew ? 'visibility_off' : 'visibility' }}
-          </mat-icon>
-          <mat-error *ngIf="userForm.get('newAccessCode').invalid">
-            {{ userForm.get('newAccessCode').getError('invalid') }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@user comment">Comment</mat-label>
-          <textarea
-            matInput
-            i18n-placeholder="@@user comment"
-            placeholder="Comment"
-            formControlName="comment"
-            type="text"
-          ></textarea>
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-
-    <mat-divider></mat-divider>
-
-    <mat-card-actions align="end">
-      <button
-        mat-icon-button
-        color="primary"
-        [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSave()"
-      >
-        <mat-icon>save</mat-icon>
-      </button>
-      <button
-        *ngIf="!isMyProfile"
-        mat-icon-button
-        color="warn"
-        type="button"
-        (click)="openDeleteDialog(user.id)"
-        [disabled]="monitoringState != monitoringStates.READY"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button
-        *ngIf="!isMyProfile"
-        mat-icon-button
-        color="accent"
-        type="button"
-        (click)="onCancel()"
-      >
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <div *ngIf="user === null" class="container-item">
-    <h1 i18n="@@user not found">The user was not found!</h1>
-  </div>
+  @if (user === null) {
+    <div class="container-item">
+      <h1 i18n="@@user not found">The user was not found!</h1>
+    </div>
+  }
 </div>

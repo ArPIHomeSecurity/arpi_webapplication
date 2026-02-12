@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,6 @@ const scheduleMicrotask = Promise.resolve(null);
   styleUrls: ['mqtt.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatExpansionModule,
     MatCheckboxModule,
@@ -39,7 +38,7 @@ const scheduleMicrotask = Promise.resolve(null);
     MatDividerModule,
     MatListModule,
     MatIconModule
-  ]
+]
 })
 export class MqttComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   mqttForm: FormGroup;

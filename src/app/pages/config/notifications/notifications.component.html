@@ -1,430 +1,472 @@
-<div *ngIf="!loader.displayed.value" class="container">
-  <mat-accordion multi="true" class="notifications">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title i18n="@@notifications smtp">SMTP</mat-panel-title>
-        <mat-panel-description i18n="@@notifications smtp settings">
+@if (!loader.displayed.value) {
+  <div class="container">
+    <mat-accordion multi="true" class="notifications">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="@@notifications smtp">SMTP</mat-panel-title>
+          <mat-panel-description i18n="@@notifications smtp settings">
           SMTP settings for sending notifications
         </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <form [formGroup]="smtpForm" (ngSubmit)="onSubmitSmtp()">
-        <div class="row">
+        </mat-expansion-panel-header>
+        <form [formGroup]="smtpForm" (ngSubmit)="onSubmitSmtp()">
+          <div class="row">
+            <mat-form-field>
+              <mat-label i18n="@@notifications smtp username">SMTP username</mat-label>
+              <input
+                matInput
+                formControlName="smtpUsername"
+                i18n-placeholder="@@notifications smtp username"
+                placeholder="SMTP username"
+                />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label i18n="@@notifications smtp password">SMTP password</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="smtpPassword"
+                (focus)="onPasswordFocus()"
+                (blur)="onPasswordBlur()"
+                i18n-placeholder="@@notifications smtp password"
+                placeholder="SMTP password"
+                />
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label i18n="@@notifications smtp hostname">SMTP hostname</mat-label>
+              <input
+                matInput
+                formControlName="smtpHostname"
+                i18n-placeholder="@@notifications smtp hostname"
+                placeholder="SMTP hostname"
+                />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label i18n="@@notifications smtp port">SMTP port</mat-label>
+              <input
+                matInput
+                formControlName="smtpPort"
+                i18n-placeholder="@@notifications smtp port"
+                placeholder="SMTP port"
+                />
+            </mat-form-field>
+          </div>
           <mat-form-field>
-            <mat-label i18n="@@notifications smtp username">SMTP username</mat-label>
+            <mat-label i18n="@@notifications smtp email1">Email address 1</mat-label>
             <input
               matInput
-              formControlName="smtpUsername"
-              i18n-placeholder="@@notifications smtp username"
-              placeholder="SMTP username"
-            />
+              formControlName="emailAddress1"
+              i18n-placeholder="@@notifications smtp email1"
+              placeholder="Email address 1"
+              />
           </mat-form-field>
-
           <mat-form-field>
-            <mat-label i18n="@@notifications smtp password">SMTP password</mat-label>
-            <input
-              type="password"
-              matInput
-              formControlName="smtpPassword"
-              (focus)="onPasswordFocus()"
-              (blur)="onPasswordBlur()"
-              i18n-placeholder="@@notifications smtp password"
-              placeholder="SMTP password"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field>
-            <mat-label i18n="@@notifications smtp hostname">SMTP hostname</mat-label>
+            <mat-label i18n="@@notifications smtp email2">Email address 2</mat-label>
             <input
               matInput
-              formControlName="smtpHostname"
-              i18n-placeholder="@@notifications smtp hostname"
-              placeholder="SMTP hostname"
-            />
+              formControlName="emailAddress2"
+              i18n-placeholder="@@notifications smtp email2"
+              placeholder="Email address 2"
+              />
           </mat-form-field>
-
-          <mat-form-field>
-            <mat-label i18n="@@notifications smtp port">SMTP port</mat-label>
-            <input
-              matInput
-              formControlName="smtpPort"
-              i18n-placeholder="@@notifications smtp port"
-              placeholder="SMTP port"
-            />
-          </mat-form-field>
-        </div>
-
-        <mat-form-field>
-          <mat-label i18n="@@notifications smtp email1">Email address 1</mat-label>
-          <input
-            matInput
-            formControlName="emailAddress1"
-            i18n-placeholder="@@notifications smtp email1"
-            placeholder="Email address 1"
-          />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@notifications smtp email2">Email address 2</mat-label>
-          <input
-            matInput
-            formControlName="emailAddress2"
-            i18n-placeholder="@@notifications smtp email2"
-            placeholder="Email address 2"
-          />
-        </mat-form-field>
-
-        <mat-checkbox formControlName="smtpEnabled" i18n="@@notifications smtp enabled">
+          <mat-checkbox formControlName="smtpEnabled" i18n="@@notifications smtp enabled">
           SMTP enabled
         </mat-checkbox>
-
-        <div class="row">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!canSaveSmtp()"
-            i18n="@@save button"
-          >
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!canSaveSmtp()"
+              i18n="@@save button"
+              >
             Save
           </button>
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="onSendTestEmail()"
-            [disabled]="!canTestSmtp()"
-          >
-            <span i18n="@@notifications send test email">Send test email</span>
-            <mat-icon *ngIf="testingEmail">
-              <mat-spinner diameter="18" />
-            </mat-icon>
-          </button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title i18n="@@notifications gsm">GSM</mat-panel-title>
-        <mat-panel-description i18n="@@notifications gsm settings">
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onSendTestEmail()"
+              [disabled]="!canTestSmtp()"
+              >
+              <span i18n="@@notifications send test email">Send test email</span>
+              @if (testingEmail) {
+                <mat-icon>
+                  <mat-spinner diameter="18" />
+                </mat-icon>
+              }
+            </button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="@@notifications gsm">GSM</mat-panel-title>
+          <mat-panel-description i18n="@@notifications gsm settings">
           Mobil settings for sending notifications
         </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <form [formGroup]="gsmForm" (ngSubmit)="onSubmitGsm()">
-        <mat-form-field class="pin-code">
-          <mat-label i18n="@@notifications sim card pin">SIM card PIN code</mat-label>
-          <input
-            matInput
-            formControlName="pinCode"
-            i18n-placeholder="@@notifications sim card pin"
-            placeholder="SIM card PIN code"
-          />
-        </mat-form-field>
-
-        <mat-form-field class="phone-number">
-          <mat-label i18n="@@notifications target phone1">Target phone number 1</mat-label>
-          <input
-            matInput
-            formControlName="phoneNumber1"
-            i18n-placeholder="@@notifications target phone1"
-            placeholder="Target phone number 1"
-          />
-        </mat-form-field>
-
-        <mat-form-field class="phone-number">
-          <mat-label i18n="@@notifications target phone2">Target phone number 2</mat-label>
-          <input
-            matInput
-            formControlName="phoneNumber2"
-            i18n-placeholder="@@notifications target phone2"
-            placeholder="Target phone number 2"
-          />
-        </mat-form-field>
-
-        <mat-checkbox formControlName="gsmEnabled" i18n="@@notifications gsm enabled">
+        </mat-expansion-panel-header>
+        <form [formGroup]="gsmForm" (ngSubmit)="onSubmitGsm()">
+          <mat-form-field class="pin-code">
+            <mat-label i18n="@@notifications sim card pin">SIM card PIN code</mat-label>
+            <input
+              matInput
+              formControlName="pinCode"
+              i18n-placeholder="@@notifications sim card pin"
+              placeholder="SIM card PIN code"
+              />
+          </mat-form-field>
+          <mat-form-field class="phone-number">
+            <mat-label i18n="@@notifications target phone1">Target phone number 1</mat-label>
+            <input
+              matInput
+              formControlName="phoneNumber1"
+              i18n-placeholder="@@notifications target phone1"
+              placeholder="Target phone number 1"
+              />
+          </mat-form-field>
+          <mat-form-field class="phone-number">
+            <mat-label i18n="@@notifications target phone2">Target phone number 2</mat-label>
+            <input
+              matInput
+              formControlName="phoneNumber2"
+              i18n-placeholder="@@notifications target phone2"
+              placeholder="Target phone number 2"
+              />
+          </mat-form-field>
+          <mat-checkbox formControlName="gsmEnabled" i18n="@@notifications gsm enabled">
           GSM enabled
         </mat-checkbox>
-
-        <div class="row">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!canSaveGsm()"
-            i18n="@@save button"
-          >
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!canSaveGsm()"
+              i18n="@@save button"
+              >
             Save
           </button>
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="onSendTestSMS()"
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onSendTestSMS()"
             [disabled]="
               monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
             "
-          >
-            <span i18n="@@notifications send test sms">Send test SMS</span>
-            <mat-icon *ngIf="testingSms">
-              <mat-spinner diameter="18" />
-            </mat-icon>
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="onTestCall()"
+              >
+              <span i18n="@@notifications send test sms">Send test SMS</span>
+              @if (testingSms) {
+                <mat-icon>
+                  <mat-spinner diameter="18" />
+                </mat-icon>
+              }
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onTestCall()"
             [disabled]="
               monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
             "
-          >
-            <span i18n="@@notifications test call">Test call</span>
-            <mat-icon *ngIf="testingCall">
-              <mat-spinner diameter="18" />
-            </mat-icon>
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="onShowSmsMessages()"
+              >
+              <span i18n="@@notifications test call">Test call</span>
+              @if (testingCall) {
+                <mat-icon>
+                  <mat-spinner diameter="18" />
+                </mat-icon>
+              }
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onShowSmsMessages()"
             [disabled]="
               monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
             "
-          >
-            <span i18n="@@notification sms">SMS messages</span>
-          </button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title i18n="@@notifications subscriptions">Subscriptions</mat-panel-title>
-        <mat-panel-description i18n="@@notifications subscriptions settings">
+              >
+              <span i18n="@@notification sms">SMS messages</span>
+            </button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="@@notifications subscriptions">Subscriptions</mat-panel-title>
+          <mat-panel-description i18n="@@notifications subscriptions settings">
           Configure subscriptions
         </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <form [formGroup]="subscriptionsForm" (ngSubmit)="onSubmitSubscriptions()">
-        <div class="mat-table">
-          <div class="mat-header-row">
-            <div class="mat-header-cell" i18n="@@notifications source">Event</div>
-            <div class="mat-header-cell" i18n="@@notifications send email1">Send Email 1</div>
-            <div class="mat-header-cell" i18n="@@notifications send email2">Send Email 2</div>
-            <div class="mat-header-cell" i18n="@@notifications send sms1">Send SMS 1</div>
-            <div class="mat-header-cell" i18n="@@notifications send sms2">Send SMS 2</div>
-            <div class="mat-header-cell" i18n="@@notifications call 1">Call 1</div>
-            <div class="mat-header-cell" i18n="@@notifications call 2">Call 2</div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell" i18n="@@notifications alert started">Alert started</div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedEmail1"></mat-checkbox>
+        </mat-expansion-panel-header>
+        <form [formGroup]="subscriptionsForm" (ngSubmit)="onSubmitSubscriptions()">
+          <div class="mat-table">
+            <div class="mat-header-row">
+              <div class="mat-header-cell" i18n="@@notifications source">Event</div>
+              <div class="mat-header-cell" i18n="@@notifications send email1">Send Email 1</div>
+              <div class="mat-header-cell" i18n="@@notifications send email2">Send Email 2</div>
+              <div class="mat-header-cell" i18n="@@notifications send sms1">Send SMS 1</div>
+              <div class="mat-header-cell" i18n="@@notifications send sms2">Send SMS 2</div>
+              <div class="mat-header-cell" i18n="@@notifications call 1">Call 1</div>
+              <div class="mat-header-cell" i18n="@@notifications call 2">Call 2</div>
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedEmail2"></mat-checkbox>
+            <div class="mat-row">
+              <div class="mat-cell" i18n="@@notifications alert started">Alert started</div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedEmail1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedEmail2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedSms1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedSms2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedCall1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStartedCall2"></mat-checkbox>
+              </div>
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedSms1"></mat-checkbox>
+            <div class="mat-row">
+              <div class="mat-cell" i18n="@@notifications alert stopped">Alert stopped</div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStoppedEmail1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStoppedEmail2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStoppedSms1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="alertStoppedSms2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedSms2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedCall1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStartedCall2"></mat-checkbox>
-            </div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell" i18n="@@notifications alert stopped">Alert stopped</div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStoppedEmail1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStoppedEmail2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStoppedSms1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="alertStoppedSms2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
-            </div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell" i18n="@@notifications power outage started">
+            <div class="mat-row">
+              <div class="mat-cell" i18n="@@notifications power outage started">
               Power outage started
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStartedEmail1"></mat-checkbox>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStartedEmail1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStartedEmail2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStartedSms1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStartedSms2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStartedEmail2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStartedSms1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStartedSms2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
-            </div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell" i18n="@@notifications power outage stopped">
+            <div class="mat-row">
+              <div class="mat-cell" i18n="@@notifications power outage stopped">
               Power outage stopped
             </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStoppedEmail1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStoppedEmail2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStoppedSms1"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox formControlName="powerOutageStoppedSms2"></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
-            </div>
-            <div class="mat-cell">
-              <mat-checkbox disabled></mat-checkbox>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStoppedEmail1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStoppedEmail2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStoppedSms1"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox formControlName="powerOutageStoppedSms2"></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
+              <div class="mat-cell">
+                <mat-checkbox disabled></mat-checkbox>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="form-actions">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
+          <div class="form-actions">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
             [disabled]="
               monitoringState != monitoringStates.READY ||
               !subscriptionsForm.valid ||
               subscriptionsForm.pristine
             "
-            i18n="@@save button"
-          >
+              i18n="@@save button"
+              >
             Save
           </button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+}
 
 <ng-template #snackbarTemplateEmail>
-  <div *ngIf="testEmailResult">
-    <div [ngSwitch]="testEmailResult['email1']">
-      <div *ngSwitchCase="true" i18n="@@notifications email1 success">
+  @if (testEmailResult) {
+    <div>
+      <div>
+        @switch (testEmailResult['email1']) {
+          @case (true) {
+            <div i18n="@@notifications email1 success">
         Email sent successfully to email address 1!
       </div>
-      <div *ngSwitchCase="false" i18n="@@email1 failed">Failed to send to email address 1!</div>
-    </div>
-    <div [ngSwitch]="testEmailResult['email2']">
-      <div *ngSwitchCase="true" i18n="@@notifications email2 success">
+          }
+          @case (false) {
+            <div i18n="@@email1 failed">Failed to send to email address 1!</div>
+          }
+        }
+      </div>
+      <div>
+        @switch (testEmailResult['email2']) {
+          @case (true) {
+            <div i18n="@@notifications email2 success">
         Email sent successfully to email address 2!
       </div>
-      <div *ngSwitchCase="false" i18n="@@notifications email2 failed">
+          }
+          @case (false) {
+            <div i18n="@@notifications email2 failed">
         Failed to send to email address 2!
       </div>
+          }
+        }
+      </div>
     </div>
-  </div>
-  <div *ngIf="testEmailResult['connection'] == false" i18n="@@notifications smtp connection failed">
+  }
+  @if (testEmailResult['connection'] == false) {
+    <div i18n="@@notifications smtp connection failed">
     Failed to connect to SMTP server!
     <br />
     Please check logs for more information!
   </div>
-  <div
-    *ngIf="
-      testEmailResult['email1'] == false ||
-      testEmailResult['email2'] == false ||
-      testEmailResult['connection'] == false
-    "
-    i18n="@@notifications test failed"
-  >
+  }
+  @if (
+    testEmailResult['email1'] == false ||
+    testEmailResult['email2'] == false ||
+    testEmailResult['connection'] == false
+    ) {
+    <div
+      i18n="@@notifications test failed"
+      >
     Please check logs for more information!
   </div>
+  }
 </ng-template>
 
 <ng-template #snackbarTemplateSms>
-  <div *ngIf="testSmsResult">
-    <div [ngSwitch]="testSmsResult['phone1']">
-      <div *ngSwitchCase="true" i18n="@@notifications sms1 success">
+  @if (testSmsResult) {
+    <div>
+      <div>
+        @switch (testSmsResult['phone1']) {
+          @case (true) {
+            <div i18n="@@notifications sms1 success">
         SMS sent successfully to phone 1!
       </div>
-      <div *ngSwitchCase="false" i18n="@@notifications sms1 failed">
+          }
+          @case (false) {
+            <div i18n="@@notifications sms1 failed">
         Failed to send SMS to phone 1!
       </div>
-    </div>
-    <div [ngSwitch]="testSmsResult['phone2']">
-      <div *ngSwitchCase="true" i18n="@@notifications sms2 success">
+          }
+        }
+      </div>
+      <div>
+        @switch (testSmsResult['phone2']) {
+          @case (true) {
+            <div i18n="@@notifications sms2 success">
         SMS sent successfully to phone 2!
       </div>
-      <div *ngSwitchCase="false" i18n="@@notifications sms2 failed">
+          }
+          @case (false) {
+            <div i18n="@@notifications sms2 failed">
         Failed to send SMS to phone 2!
       </div>
+          }
+        }
+      </div>
     </div>
-  </div>
-  <div *ngIf="testSmsResult['connection'] == false" i18n="@@notifications gsm connection failed">
+  }
+  @if (testSmsResult['connection'] == false) {
+    <div i18n="@@notifications gsm connection failed">
     Failed to connect to GSM module!
   </div>
-  <div
-    *ngIf="
-      testSmsResult['phone1'] == false ||
-      testSmsResult['phone2'] == false ||
-      testSmsResult['connection'] == false
-    "
-    i18n="@@notifications test failed"
-  >
+  }
+  @if (
+    testSmsResult['phone1'] == false ||
+    testSmsResult['phone2'] == false ||
+    testSmsResult['connection'] == false
+    ) {
+    <div
+      i18n="@@notifications test failed"
+      >
     Please check logs for more information!
   </div>
+  }
 </ng-template>
 
 <ng-template #snackbarTemplateCall>
-  <div *ngIf="testCallResult">
-    <div [ngSwitch]="testCallResult['phone1']">
-      <div *ngSwitchCase="true" i18n="@@notifications call1 success">
+  @if (testCallResult) {
+    <div>
+      <div>
+        @switch (testCallResult['phone1']) {
+          @case (true) {
+            <div i18n="@@notifications call1 success">
         Successfully called phone 1!
       </div>
-      <div *ngSwitchCase="false" i18n="@@notifications call1 failed">Failed to call phone 1!</div>
-    </div>
-    <div [ngSwitch]="testCallResult['phone2']">
-      <div *ngSwitchCase="true" i18n="@@notifications call2 success">
+          }
+          @case (false) {
+            <div i18n="@@notifications call1 failed">Failed to call phone 1!</div>
+          }
+        }
+      </div>
+      <div>
+        @switch (testCallResult['phone2']) {
+          @case (true) {
+            <div i18n="@@notifications call2 success">
         Successfully called phone 2!
       </div>
-      <div *ngSwitchCase="false" i18n="@@notifications call2 failed">Failed to call phone 2!</div>
+          }
+          @case (false) {
+            <div i18n="@@notifications call2 failed">Failed to call phone 2!</div>
+          }
+        }
+      </div>
     </div>
-  </div>
-  <div *ngIf="testCallResult['connection'] == false" i18n="@@notifications gsm connection failed">
+  }
+  @if (testCallResult['connection'] == false) {
+    <div i18n="@@notifications gsm connection failed">
     Failed to connect to GSM module!
   </div>
-  <div
-    *ngIf="
-      testCallResult['phone1'] == false ||
-      testCallResult['phone2'] == false ||
-      testCallResult['connection'] == false
-    "
-    i18n="@@notifications test failed"
-  >
+  }
+  @if (
+    testCallResult['phone1'] == false ||
+    testCallResult['phone2'] == false ||
+    testCallResult['connection'] == false
+    ) {
+    <div
+      i18n="@@notifications test failed"
+      >
     Please check logs for more information!
   </div>
+  }
 </ng-template>

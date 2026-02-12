@@ -1,10 +1,18 @@
 <mat-card class="{{ type }} message-card">
   <mat-card-header>
     <div mat-card-avatar>
-      <mat-icon *ngIf="type === 'error'" color="warn">error</mat-icon>
-      <mat-icon *ngIf="type === 'warning'" color="warn">error</mat-icon>
-      <mat-icon *ngIf="type === 'info'" color="primary">info</mat-icon>
-      <mat-icon *ngIf="type === 'success'" color="accent">check_circle</mat-icon>
+      @if (type === 'error') {
+        <mat-icon color="warn">error</mat-icon>
+      }
+      @if (type === 'warning') {
+        <mat-icon color="warn">error</mat-icon>
+      }
+      @if (type === 'info') {
+        <mat-icon color="primary">info</mat-icon>
+      }
+      @if (type === 'success') {
+        <mat-icon color="accent">check_circle</mat-icon>
+      }
     </div>
     <mat-card-title>
       {{ message }}

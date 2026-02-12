@@ -10,15 +10,20 @@
     <mat-icon>credit_card</mat-icon>
   </button>
 
-  <button
-    mat-raised-button
-    *ngFor="let channel of channels; let i = index"
-    type="button"
-    (click)="toogleChannel(i)"
-    color="primary"
-  >
-    <span>CH{{ i + 1 | number: '2.0-0' }}</span>
-    <mat-icon *ngIf="channel">my_location</mat-icon>
-    <mat-icon *ngIf="!channel">trip_origin</mat-icon>
-  </button>
+  @for (channel of channels; track channel; let i = $index) {
+    <button
+      mat-raised-button
+      type="button"
+      (click)="toogleChannel(i)"
+      color="primary"
+      >
+      <span>CH{{ i + 1 | number: '2.0-0' }}</span>
+      @if (channel) {
+        <mat-icon>my_location</mat-icon>
+      }
+      @if (!channel) {
+        <mat-icon>trip_origin</mat-icon>
+      }
+    </button>
+  }
 </mat-toolbar>

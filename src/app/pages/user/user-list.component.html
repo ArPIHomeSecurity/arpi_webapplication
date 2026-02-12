@@ -1,26 +1,29 @@
-<div *ngIf="users !== null" class="container">
-  <div *ngIf="users && users.length > 0; else no_users">
-    <user-card
-      *ngFor="let user of users"
-      class="user-card container-item"
-      [user]="user"
-      [disabled]="monitoringState != monitoringStates.READY"
-      [canManageCards]="userCanEdit"
-      [canManageSshKeys]="userCanEdit"
-      [canManageUser]="userCanEdit"
-      [canManageMCP]="userCanEdit"
-      [canManageRegistration]="userCanEdit"
-      (onUserDeleted)="onUserDeleted($event)"
-      (onNavigateToUserEdit)="navigateToUserEdit(user.id)"
-    ></user-card>
+@if (users !== null) {
+  <div class="container">
+    @if (users && users.length > 0) {
+      <div>
+        @for (user of users; track user) {
+          <user-card
+            class="user-card container-item"
+            [user]="user"
+            [disabled]="monitoringState != monitoringStates.READY"
+            [canManageCards]="userCanEdit"
+            [canManageSshKeys]="userCanEdit"
+            [canManageUser]="userCanEdit"
+            [canManageMCP]="userCanEdit"
+            [canManageRegistration]="userCanEdit"
+            (onUserDeleted)="onUserDeleted($event)"
+            (onNavigateToUserEdit)="navigateToUserEdit(user.id)"
+          ></user-card>
+        }
+      </div>
+    } @else {
+      <div class="container-item">
+        <h1 i18n="@@user no users">No users found</h1>
+      </div>
+    }
   </div>
-
-  <ng-template #no_users>
-    <div class="container-item">
-      <h1 i18n="@@user no users">No users found</h1>
-    </div>
-  </ng-template>
-</div>
+}
 
 <div class="list-actions">
   <button
@@ -29,7 +32,7 @@
     color="accent"
     routerLink="/user/add"
     [disabled]="monitoringState != monitoringStates.READY"
-  >
+    >
     <mat-icon>add</mat-icon>
   </button>
   <button
@@ -38,11 +41,13 @@
     color="accent"
     routerLink="/user/add"
     [disabled]="monitoringState != monitoringStates.READY"
-  >
+    >
     <mat-icon>add</mat-icon>
   </button>
 </div>
 
 <ng-template #snackbarTemplate>
-  <mat-progress-bar *ngIf="registering_card" mode="indeterminate"></mat-progress-bar>
+  @if (registering_card) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
 </ng-template>

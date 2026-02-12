@@ -2,34 +2,49 @@
   <mat-card-header>
     <div
       mat-card-avatar
-      [ngSwitch]="sensor.typeId"
       class="sensor-image"
       [ngClass]="{'alerting': sensor.alert && sensor.enabled === true , 'disabled': sensor.enabled === false}"
-    >
-      <img *ngSwitchCase="1" src="assets/images/sensor_motion.png" />
-      <img *ngSwitchCase="2" src="assets/images/sensor_tamper.png" />
-      <img *ngSwitchCase="3" src="assets/images/sensor_open.png" />
-      <img *ngSwitchCase="4" src="assets/images/sensor_break.png" />
-      <img
-        *ngSwitchDefault
-        src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"
-      />
+      >
+      @switch (sensor.typeId) {
+        @case (1) {
+          <img src="assets/images/sensor_motion.png" />
+        }
+        @case (2) {
+          <img src="assets/images/sensor_tamper.png" />
+        }
+        @case (3) {
+          <img src="assets/images/sensor_open.png" />
+        }
+        @case (4) {
+          <img src="assets/images/sensor_break.png" />
+        }
+        @default {
+          <img
+            src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}"
+            />
+        }
+      }
     </div>
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
       <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
 
-      <div *ngIf="sensor.error" class="sensor-state error-state">
-        <mat-icon class="error-icon">error</mat-icon>
-      </div>
+      @if (sensor.error) {
+        <div class="sensor-state error-state">
+          <mat-icon class="error-icon">error</mat-icon>
+        </div>
+      }
 
-      <div
-        *ngIf="sensor.enabled === true && delay != null && sensor.error !== true"
-        class="sensor-state"
-        [ngClass]="{'enabled': sensor.enabled}"
-      >
-        <span *ngIf="sensor.enabled && delay > 0" class="delay">{{delay}}</span>
-      </div>
+      @if (sensor.enabled === true && delay != null && sensor.error !== true) {
+        <div
+          class="sensor-state"
+          [ngClass]="{'enabled': sensor.enabled}"
+          >
+          @if (sensor.enabled && delay > 0) {
+            <span class="delay">{{delay}}</span>
+          }
+        </div>
+      }
     </mat-card-title-group>
   </mat-card-header>
 </mat-card>

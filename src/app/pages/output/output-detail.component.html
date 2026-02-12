@@ -1,158 +1,175 @@
 <div class="container">
-  <mat-card *ngIf="output" class="output-form container-item">
-    <mat-card-content>
-      <form [formGroup]="outputForm" (ngSubmit)="onSubmit()" novalidate class="column">
-        <mat-form-field>
-          <mat-label i18n="@@name">Name</mat-label>
-          <input
-            matInput
-            i18n-placeholder="@@name"
-            placeholder="Name"
-            formControlName="name"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@description">Description</mat-label>
-          <textarea
-            matInput
-            i18n-placeholder="@@description"
-            placeholder="Description"
-            formControlName="description"
-            required
-          ></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@output channel">Channel</mat-label>
-          <mat-select
-            formControlName="channel"
-            i18n-placeholder="@@output channel"
-            placeholder="Channel"
-          >
-            <mat-option
-              *ngFor="let option of this.channelOptions"
-              [value]="option.channel"
-              [disabled]="option.output_name || option.channel == SYREN_CHANNEL"
-            >
-              <span *ngIf="option.channel === -1" i18n="@@output disconnected">Disconnected</span>
-              <span *ngIf="option.label !== ''">
-                <span>{{ option.label }}</span>
-                <span *ngIf="option.output_name">- {{ option.output_name }}</span>
-              </span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label i18n="@@output trigger">Trigger</mat-label>
-          <mat-select
-            formControlName="triggerType"
-            i18n-placeholder="@@output trigger"
-            placeholder="Trigger"
-            (selectionChange)="onSelectTriggerType($event.value)"
-          >
-            <mat-option
-              *ngFor="let triggerType of outputTriggerTypes | keyvalue"
-              [value]="triggerType.value"
-            >
-              <span *ngIf="triggerType.value === outputTriggerTypes.AREA" i18n="@@output area">
+  @if (output) {
+    <mat-card class="output-form container-item">
+      <mat-card-content>
+        <form [formGroup]="outputForm" (ngSubmit)="onSubmit()" novalidate class="column">
+          <mat-form-field>
+            <mat-label i18n="@@name">Name</mat-label>
+            <input
+              matInput
+              i18n-placeholder="@@name"
+              placeholder="Name"
+              formControlName="name"
+              required
+              />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label i18n="@@description">Description</mat-label>
+            <textarea
+              matInput
+              i18n-placeholder="@@description"
+              placeholder="Description"
+              formControlName="description"
+              required
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label i18n="@@output channel">Channel</mat-label>
+            <mat-select
+              formControlName="channel"
+              i18n-placeholder="@@output channel"
+              placeholder="Channel"
+              >
+              @for (option of this.channelOptions; track option) {
+                <mat-option
+                  [value]="option.channel"
+                  [disabled]="option.output_name || option.channel == SYREN_CHANNEL"
+                  >
+                  @if (option.channel === -1) {
+                    <span i18n="@@output disconnected">Disconnected</span>
+                  }
+                  @if (option.label !== '') {
+                    <span>
+                      <span>{{ option.label }}</span>
+                      @if (option.output_name) {
+                        <span>- {{ option.output_name }}</span>
+                      }
+                    </span>
+                  }
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label i18n="@@output trigger">Trigger</mat-label>
+            <mat-select
+              formControlName="triggerType"
+              i18n-placeholder="@@output trigger"
+              placeholder="Trigger"
+              (selectionChange)="onSelectTriggerType($event.value)"
+              >
+              @for (triggerType of outputTriggerTypes | keyvalue; track triggerType) {
+                <mat-option
+                  [value]="triggerType.value"
+                  >
+                  @if (triggerType.value === outputTriggerTypes.AREA) {
+                    <span i18n="@@output area">
                 Area
               </span>
-              <span *ngIf="triggerType.value === outputTriggerTypes.SYSTEM" i18n="@@output system">
+                  }
+                  @if (triggerType.value === outputTriggerTypes.SYSTEM) {
+                    <span i18n="@@output system">
                 System
               </span>
-              <span *ngIf="triggerType.value === outputTriggerTypes.BUTTON" i18n="@@output button">
+                  }
+                  @if (triggerType.value === outputTriggerTypes.BUTTON) {
+                    <span i18n="@@output button">
                 Button
               </span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field id="areaId" *ngIf="output.triggerType == outputTriggerTypes.AREA">
-          <mat-label i18n="@@area">Area</mat-label>
-          <mat-select formControlName="areaId" i18n-placeholder="@@area" placeholder="Area">
-            <mat-option *ngFor="let area of areas" [value]="area.id">{{ area.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div class="row">
-          <mat-form-field>
-            <mat-label i18n="@@output delay">Delay [s]</mat-label>
-            <input
-              matInput
-              type="number"
-              i18n-placeholder="@@output delay"
-              placeholder="Delay [s]"
-              formControlName="delay"
-              required
-            />
-            <mat-error *ngIf="outputForm.get('delay').invalid">
-              {{ outputForm.get('delay').getError('invalid') }}
-            </mat-error>
+                  }
+                </mat-option>
+              }
+            </mat-select>
           </mat-form-field>
-
-          <mat-form-field>
-            <mat-label i18n="@@output duration">Duration [s]</mat-label>
-            <input
-              matInput
-              type="number"
-              i18n-placeholder="@@output duration"
-              placeholder="Duration [s]"
-              formControlName="duration"
-              required
-            />
-            <mat-error *ngIf="outputForm.get('duration').invalid">
-              {{ outputForm.get('duration').getError('invalid') }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">
+          @if (output.triggerType == outputTriggerTypes.AREA) {
+            <mat-form-field id="areaId">
+              <mat-label i18n="@@area">Area</mat-label>
+              <mat-select formControlName="areaId" i18n-placeholder="@@area" placeholder="Area">
+                @for (area of areas; track area) {
+                  <mat-option [value]="area.id">{{ area.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+          <div class="row">
+            <mat-form-field>
+              <mat-label i18n="@@output delay">Delay [s]</mat-label>
+              <input
+                matInput
+                type="number"
+                i18n-placeholder="@@output delay"
+                placeholder="Delay [s]"
+                formControlName="delay"
+                required
+                />
+              @if (outputForm.get('delay').invalid) {
+                <mat-error>
+                  {{ outputForm.get('delay').getError('invalid') }}
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label i18n="@@output duration">Duration [s]</mat-label>
+              <input
+                matInput
+                type="number"
+                i18n-placeholder="@@output duration"
+                placeholder="Duration [s]"
+                formControlName="duration"
+                required
+                />
+              @if (outputForm.get('duration').invalid) {
+                <mat-error>
+                  {{ outputForm.get('duration').getError('invalid') }}
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">
             Enabled
           </mat-checkbox>
-
-          <mat-checkbox
-            formControlName="defaultState"
-            color="primary"
-            i18n="@@output default state"
-          >
+            <mat-checkbox
+              formControlName="defaultState"
+              color="primary"
+              i18n="@@output default state"
+              >
             Active default
           </mat-checkbox>
-        </div>
-      </form>
-    </mat-card-content>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions align="end">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
+          (click)="onSubmit()"
+          >
+          <mat-icon>save</mat-icon>
+        </button>
+        @if (outputId > 0) {
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="openDeleteDialog(output.id)"
+            [disabled]="monitoringState != monitoringStates.READY"
+            >
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+        <button mat-icon-button color="accent" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
 
-    <mat-divider></mat-divider>
-
-    <mat-card-actions align="end">
-      <button
-        mat-icon-button
-        color="primary"
-        [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
-        (click)="onSubmit()"
-      >
-        <mat-icon>save</mat-icon>
-      </button>
-      <button
-        *ngIf="outputId > 0"
-        mat-icon-button
-        color="warn"
-        type="button"
-        (click)="openDeleteDialog(output.id)"
-        [disabled]="monitoringState != monitoringStates.READY"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <div *ngIf="output === null">
-    <h1 i18n="@@output not found">The output was not found!</h1>
-  </div>
+  @if (output === null) {
+    <div>
+      <h1 i18n="@@output not found">The output was not found!</h1>
+    </div>
+  }
 </div>

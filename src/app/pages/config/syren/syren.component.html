@@ -1,114 +1,109 @@
-<div *ngIf="syren != null" class="container">
-  <form [formGroup]="syrenForm" (ngSubmit)="onSubmit()" class="syren-form">
-    <mat-accordion class="container-item">
-      <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title i18n="@@syren sources">Syren</mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="silent">
-          <h4 i18n="@@syren volume">Syren volume</h4>
-          <mat-radio-group class="silent" formControlName="silentAlert">
-            <mat-radio-button value="undefined">
-              <span i18n="@@syren silent undefined">Normal</span>
-            </mat-radio-button>
-            <mat-radio-button value="silent">
-              <span i18n="@@syren silent">Silent alert</span>
-            </mat-radio-button>
-            <mat-radio-button value="loud">
-              <span i18n="@@syren silent loud">Loud alarm (forced)</span>
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <mat-divider></mat-divider>
-
-        <h4 i18n="@@syren timing">Syren timing</h4>
-        <div class="timing row">
-          <mat-form-field>
-            <input
-              matInput
-              type="number"
-              min="0"
-              i18n-placeholder="@@syren delay"
-              placeholder="Delay"
-              formControlName="delay"
-              required
-            />
-            <mat-hint i18n="@@syren delay hint">Delay the syren in seconds</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input
-              matInput
-              type="number"
-              min="0"
-              i18n-placeholder="@@syren duration"
-              placeholder="Duration"
-              formControlName="duration"
-              required
-            />
-            <mat-hint i18n="@@syren duration hint">Stop the syren in seconds</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <mat-divider></mat-divider>
-
-        <h4 i18n="@@syren sensitivity alert">Alert sensitivity</h4>
-        <div class="sensitivity row">
-          <mat-checkbox
-            formControlName="sensitivity"
-            color="primary"
-            i18n="@@syren sensitivity custom"
-            (change)="onSensitivityChanged($event)"
-          >
+@if (syren != null) {
+  <div class="container">
+    <form [formGroup]="syrenForm" (ngSubmit)="onSubmit()" class="syren-form">
+      <mat-accordion class="container-item">
+        <mat-expansion-panel expanded="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title i18n="@@syren sources">Syren</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="silent">
+            <h4 i18n="@@syren volume">Syren volume</h4>
+            <mat-radio-group class="silent" formControlName="silentAlert">
+              <mat-radio-button value="undefined">
+                <span i18n="@@syren silent undefined">Normal</span>
+              </mat-radio-button>
+              <mat-radio-button value="silent">
+                <span i18n="@@syren silent">Silent alert</span>
+              </mat-radio-button>
+              <mat-radio-button value="loud">
+                <span i18n="@@syren silent loud">Loud alarm (forced)</span>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <mat-divider></mat-divider>
+          <h4 i18n="@@syren timing">Syren timing</h4>
+          <div class="timing row">
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                min="0"
+                i18n-placeholder="@@syren delay"
+                placeholder="Delay"
+                formControlName="delay"
+                required
+                />
+              <mat-hint i18n="@@syren delay hint">Delay the syren in seconds</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                min="0"
+                i18n-placeholder="@@syren duration"
+                placeholder="Duration"
+                formControlName="duration"
+                required
+                />
+              <mat-hint i18n="@@syren duration hint">Stop the syren in seconds</mat-hint>
+            </mat-form-field>
+          </div>
+          <mat-divider></mat-divider>
+          <h4 i18n="@@syren sensitivity alert">Alert sensitivity</h4>
+          <div class="sensitivity row">
+            <mat-checkbox
+              formControlName="sensitivity"
+              color="primary"
+              i18n="@@syren sensitivity custom"
+              (change)="onSensitivityChanged($event)"
+              >
             Custom sensitivity
           </mat-checkbox>
-
-          <mat-form-field>
-            <mat-label i18n="@@alert monitor period">Monitoring period [s]</mat-label>
-            <input matInput formControlName="monitorPeriod" type="number" min="1" required />
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label i18n="@@alert monitor threshold">Monitoring threshold [%]</mat-label>
-            <input
-              matInput
-              formControlName="monitorThreshold"
-              type="number"
-              min="0"
-              max="100"
-              required
-            />
-          </mat-form-field>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <div class="form-actions row">
-      <button
-        mat-raised-button
-        type="submit"
-        color="primary"
-        [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY"
-        i18n="@@save button"
-      >
+            <mat-form-field>
+              <mat-label i18n="@@alert monitor period">Monitoring period [s]</mat-label>
+              <input matInput formControlName="monitorPeriod" type="number" min="1" required />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label i18n="@@alert monitor threshold">Monitoring threshold [%]</mat-label>
+              <input
+                matInput
+                formControlName="monitorThreshold"
+                type="number"
+                min="0"
+                max="100"
+                required
+                />
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="form-actions row">
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY"
+          i18n="@@save button"
+          >
         Save
       </button>
-      <button
-        mat-raised-button
-        type="button"
-        color="primary"
+        <button
+          mat-raised-button
+          type="button"
+          color="primary"
         [disabled]="
           syrenForm.invalid || monitoringState != monitoringStates.READY || testInProgress
         "
-        (click)="onTestSyren()"
-      >
-        <span i18n="@@syren test">Test</span>
-        <mat-icon *ngIf="testInProgress">
-          <mat-progress-spinner class="test-spinner" diameter="18" />
-        </mat-icon>
-      </button>
-    </div>
-  </form>
-</div>
+          (click)="onTestSyren()"
+          >
+          <span i18n="@@syren test">Test</span>
+          @if (testInProgress) {
+            <mat-icon>
+              <mat-progress-spinner class="test-spinner" diameter="18" />
+            </mat-icon>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+}

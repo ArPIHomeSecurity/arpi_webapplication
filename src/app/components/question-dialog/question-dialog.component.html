@@ -4,13 +4,14 @@
 </div>
 
 <div mat-dialog-actions>
-  <button
-    *ngFor="let option of options"
-    mat-raised-button
-    (click)="onOptionClick(option.id)"
-    color="{{ option.color }}"
-    tabindex="{{ option.tabIndex }}"
-  >
-    {{ option.text }}
-  </button>
+  @for (option of options; track option) {
+    <button
+      mat-raised-button
+      (click)="onOptionClick(option.id)"
+      color="{{ option.color }}"
+      tabindex="{{ option.tabIndex }}"
+      >
+      {{ option.text }}
+    </button>
+  }
 </div>
