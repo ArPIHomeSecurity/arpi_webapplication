@@ -1,12 +1,7 @@
 import { Component, Inject } from '@angular/core';
 
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import {
-  AuthenticationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from '@app/services';
+import { AuthenticationService, EventService, LoaderService, MonitoringService } from '@app/services';
 
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
