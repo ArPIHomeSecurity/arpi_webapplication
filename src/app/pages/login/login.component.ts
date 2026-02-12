@@ -1,14 +1,14 @@
-import { Component, OnInit, ElementRef, ViewChild, Inject, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { App as CapacitorApp } from '@capacitor/app';
 
 import { finalize } from 'rxjs/operators';
 
-import { AuthenticationService, BiometricService, UserService } from '@app/services';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationService, BiometricService, UserService } from '@app/services';
 import { CapacitorService } from '@app/services/capacitor.service';
+import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { Subscription } from 'rxjs';
 
 enum BiometricStatus {

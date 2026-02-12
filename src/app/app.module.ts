@@ -1,6 +1,4 @@
 // animation for material design
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -33,8 +31,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-import { environment } from '@environments/environment';
-import { DigitOnlyModule } from '@uiowa/digit-only';
+import { DigitOnlyDirective } from '@uiowa/digit-only';
 import { CountdownModule } from 'ngx-countdown';
 import { AppComponent } from './app.component';
 
@@ -72,6 +69,7 @@ import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
+import { environment } from '@environments/environment';
 import { configureBackend } from './utils';
 
 // material components
@@ -130,11 +128,10 @@ import { CapacitorService } from './services/capacitor.service';
   ],
   bootstrap: [AppComponent],
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
     ClipboardModule,
     CountdownModule,
-    DigitOnlyModule,
+    DigitOnlyDirective,
     FormsModule,
 
     ReactiveFormsModule,
