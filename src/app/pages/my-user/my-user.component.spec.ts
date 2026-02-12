@@ -10,7 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '@environments/environment';
-import { MockAuthenticationService, MockMonitoringService, MockUserService } from 'testing';
+import { MockAuthenticationService, MockCardService, MockMonitoringService, MockUserService } from 'testing';
 import { MyUserComponent } from './my-user.component';
 
 describe('MyUserComponent', () => {
@@ -24,7 +24,7 @@ describe('MyUserComponent', () => {
       providers: [
         { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
         { provide: 'BiometricService', useClass: environment.biometricService },
-        { provide: 'CardService', useClass: environment.cardService },
+        { provide: 'CardService', useClass: MockCardService },
         { provide: 'EventService', useClass: environment.eventService },
         { provide: 'UserService', useClass: MockUserService },
         { provide: 'LoaderService', useClass: environment.loaderService },

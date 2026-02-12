@@ -71,15 +71,17 @@ export class LocationDetailsComponent {
   }
 
   updateForm(location: Location) {
-    this.locationForm = new FormGroup({
-      id: new FormControl(location.id),
-      name: new FormControl(location.name, Validators.required),
-      scheme: new FormControl(location.scheme),
-      primaryDomain: new FormControl(location.primaryDomain),
-      primaryPort: new FormControl(location.primaryPort),
-      secondaryDomain: new FormControl(location.secondaryDomain),
-      secondaryPort: new FormControl(location.secondaryPort)
-    });
+    if (location) {
+      this.locationForm = new FormGroup({
+        id: new FormControl(location.id),
+        name: new FormControl(location.name, Validators.required),
+        scheme: new FormControl(location.scheme),
+        primaryDomain: new FormControl(location.primaryDomain),
+        primaryPort: new FormControl(location.primaryPort),
+        secondaryDomain: new FormControl(location.secondaryDomain),
+        secondaryPort: new FormControl(location.secondaryPort)
+      });
+    }
   }
 
   executeLocationTest() {
