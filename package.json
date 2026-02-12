@@ -57,7 +57,7 @@
     "@ionic/angular": "^8.4.1",
     "@ionic/angular-server": "^8.4.1",
     "@ionic/angular-toolkit": "^11.0.1",
-    "@uiowa/digit-only": "^3.2.1",
+    "@uiowa/digit-only": "^4.1.0",
     "humanize-duration-ts": "^2.1.1",
     "jwt-decode": "^4.0.0",
     "material-design-icons": "^3.0.1",
