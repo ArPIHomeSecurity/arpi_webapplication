@@ -2,14 +2,19 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { forkJoin } from 'rxjs';
 
-import { ALERT_TYPE, ArmEvent, SensorState, SensorsChange, ARM_TYPE, Sensor, User } from '@app/models';
-import { ArmService } from '@app/services';
-import { SensorService, LoaderService, UserService } from '@app/services';
+import { ALERT_TYPE, ARM_TYPE, ArmEvent, Sensor, SensorState, SensorsChange, User } from '@app/models';
+import { ArmService, LoaderService, SensorService, UserService } from '@app/services';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
+
+interface TimelineStep {
+  time: string;
+  description: string;
+  isDefaultDate: boolean;
+}
 
 @Component({
   selector: 'app-events',
@@ -30,6 +35,10 @@ export class EventsComponent implements OnInit {
   displayedColumns = ['armType', 'startTime', 'endTime', 'alert'];
   sensors: Sensor[];
   users: User[];
+  eventTimelineByEvent = new Map<ArmEvent, TimelineStep[]>();
+  eventTimestampsByEvent = new Map<ArmEvent, string[]>();
+  eventSensorRangeByEvent = new Map<ArmEvent, number[]>();
+  eventSensorStatesByEvent = new Map<ArmEvent, Map<number, SensorState[]>>();
 
   // filter conditions
   startDate: Date;
@@ -68,6 +77,7 @@ export class EventsComponent implements OnInit {
     }).subscribe(results => {
       this.events = results.arms;
       this.sortArms();
+      this.buildEventCaches(this.events);
       this.armsCount = results.arms_count;
       this.sensors = results.sensors;
       this.users = results.users;
@@ -140,6 +150,7 @@ export class EventsComponent implements OnInit {
       .subscribe(results => {
         this.events = results.arms;
         this.sortArms();
+        this.buildEventCaches(this.events);
         this.armsCount = results.arms_count;
       });
   }
@@ -155,8 +166,24 @@ export class EventsComponent implements OnInit {
     return '-';
   }
 
-  getTimeline(event: ArmEvent) {
-    const timeline = [];
+  getTimeline(event: ArmEvent): TimelineStep[] {
+    return this.eventTimelineByEvent.get(event) ?? [];
+  }
+
+  getEventTimestamps(event: ArmEvent): string[] {
+    return this.eventTimestampsByEvent.get(event) ?? [];
+  }
+
+  getEventSensorRange(event: ArmEvent): number[] {
+    return this.eventSensorRangeByEvent.get(event) ?? [];
+  }
+
+  getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] {
+    return this.eventSensorStatesByEvent.get(event)?.get(sensorIndex) ?? [];
+  }
+
+  private buildTimeline(event: ArmEvent): TimelineStep[] {
+    const timeline: TimelineStep[] = [];
     if (event.arm) {
       timeline.push({
         time: event.arm.time,
@@ -219,24 +246,51 @@ export class EventsComponent implements OnInit {
     return timeline;
   }
 
-  getEventTimestamps(event: ArmEvent) {
-    return event.sensorChanges.map(a => a.timestamp);
-  }
+  private buildEventCaches(events: ArmEvent[]) {
+    const timelineByEvent = new Map<ArmEvent, TimelineStep[]>();
+    const timestampsByEvent = new Map<ArmEvent, string[]>();
+    const rangeByEvent = new Map<ArmEvent, number[]>();
+    const statesByEvent = new Map<ArmEvent, Map<number, SensorState[]>>();
 
-  getEventSensorRange(event: ArmEvent): number[] {
-    return Array(event.sensorChanges[0].sensors.length)
-      .fill(0)
-      .map((x, i) => i);
-  }
+    events.forEach(event => {
+      timelineByEvent.set(event, this.buildTimeline(event));
 
-  getEventSensorStates(event: ArmEvent, sensorIndex: number): SensorState[] | [] {
-    return event.sensorChanges
-      .map(a => {
-        if (a.sensors.length <= sensorIndex) {
-          return null;
-        }
-        return a.sensors[sensorIndex];
-      })
-      .filter(sensorState => sensorState !== null) as SensorState[];
+      if (!event.sensorChanges || event.sensorChanges.length === 0) {
+        timestampsByEvent.set(event, []);
+        rangeByEvent.set(event, []);
+        statesByEvent.set(event, new Map());
+        return;
+      }
+
+      timestampsByEvent.set(
+        event,
+        event.sensorChanges.map(change => change.timestamp)
+      );
+
+      const sensorCount = event.sensorChanges[0].sensors.length;
+      const range = Array(sensorCount)
+        .fill(0)
+        .map((_, index) => index);
+      rangeByEvent.set(event, range);
+
+      const sensorStatesByIndex = new Map<number, SensorState[]>();
+      range.forEach(sensorIndex => {
+        const states = event.sensorChanges
+          .map(change => {
+            if (change.sensors.length <= sensorIndex) {
+              return null;
+            }
+            return change.sensors[sensorIndex];
+          })
+          .filter(sensorState => sensorState !== null) as SensorState[];
+        sensorStatesByIndex.set(sensorIndex, states);
+      });
+      statesByEvent.set(event, sensorStatesByIndex);
+    });
+
+    this.eventTimelineByEvent = timelineByEvent;
+    this.eventTimestampsByEvent = timestampsByEvent;
+    this.eventSensorRangeByEvent = rangeByEvent;
+    this.eventSensorStatesByEvent = statesByEvent;
   }
 }

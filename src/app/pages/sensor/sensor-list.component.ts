@@ -34,6 +34,16 @@ import { environment } from '@environments/environment';
 
 const scheduleMicrotask = Promise.resolve(null);
 
+type SensorAttributeIconType = 'material' | 'image';
+
+interface SensorAttribute {
+  icon: string;
+  iconType: SensorAttributeIconType;
+  iconSwitch?: number;
+  iconClass?: string;
+  content: string;
+}
+
 @Component({
   templateUrl: 'sensor-list.component.html',
   styleUrls: ['sensor-list.component.scss'],
@@ -49,6 +59,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   areas: Area[] = [];
   isDragging = false;
   boardVersion: number;
+  sensorAttributeGroupsById = new Map<number, SensorAttribute[][]>();
 
   channelTypes = ChannelTypes;
   sensorContactTypes = SensorContactTypes;
@@ -107,6 +118,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
         this.zones = results.zones;
         this.areas = results.areas;
         this.boardVersion = results.boardVersion;
+        this.sensorAttributeGroupsById = this.buildSensorAttributeGroups(this.sensors);
 
         this.loader.display(false);
         this.loader.disable(false);
@@ -138,7 +150,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   getSensorAttributes(sensor: Sensor) {
-    const attributes = [];
+    const attributes: SensorAttribute[] = [];
 
     // Sensor type
     attributes.push({
@@ -230,6 +242,18 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     const groupSize = Math.ceil(attributes.length / 2);
 
     return [attributes.slice(0, groupSize), attributes.slice(groupSize)];
+  }
+
+  getSensorAttributeGroupsById(sensorId: number): SensorAttribute[][] {
+    return this.sensorAttributeGroupsById.get(sensorId) ?? [];
+  }
+
+  private buildSensorAttributeGroups(sensors: Sensor[]): Map<number, SensorAttribute[][]> {
+    const groupsById = new Map<number, SensorAttribute[][]>();
+    sensors.forEach(sensor => {
+      groupsById.set(sensor.id, this.getSensorAttributeGroups(sensor));
+    });
+    return groupsById;
   }
 
   private getSensorTypeLabel(typeId: number): string {

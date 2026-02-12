@@ -52,7 +52,7 @@
             <mat-card-content class="row">
               <div class="attributes">
                 <div class="attributes-container">
-                  @for (attributeGroup of getSensorAttributeGroups(sensor); track attributeGroup; let i = $index) {
+                  @for (attributeGroup of getSensorAttributeGroupsById(sensor.id); track attributeGroup; let i = $index) {
                     <mat-list class="attribute-list"
                       >
                       @for (attribute of attributeGroup; track attribute) {
