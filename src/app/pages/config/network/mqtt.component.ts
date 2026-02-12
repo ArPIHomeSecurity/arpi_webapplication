@@ -6,20 +6,20 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
 
 import { finalize } from 'rxjs/operators';
 
+import { Clipboard } from '@angular/cdk/clipboard';
 import { MatListModule } from '@angular/material/list';
 import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
 import { Option } from '@app/models';
 import { ConfigurationService, EventService, LoaderService, MonitoringService } from '@app/services';
 import { getValue } from '@app/utils';
 import { environment } from '@environments/environment';
-import { forkJoin } from 'rxjs';
-import { Clipboard } from '@angular/cdk/clipboard';
+import { forkJoin, Subscription } from 'rxjs';
 
 const scheduleMicrotask = Promise.resolve(null);
 
@@ -38,13 +38,14 @@ const scheduleMicrotask = Promise.resolve(null);
     MatDividerModule,
     MatListModule,
     MatIconModule
-]
+  ]
 })
 export class MqttComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   mqttForm: FormGroup;
   mqttConnection: Option = null;
   mqttInternalRead: Option = null;
   mqttExternalPublish: Option = null;
+  private mqttFormSubscriptions: Subscription[] = [];
 
   constructor(
     @Inject('ConfigurationService') private configService: ConfigurationService,
@@ -71,6 +72,7 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
   }
 
   ngOnDestroy() {
+    this.resetMqttFormSubscriptions();
     super.destroy();
   }
 
@@ -93,9 +95,14 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
   }
 
   updateMqttForm(mqttConnection: Option, mqttExternalPublish: Option) {
+    this.resetMqttFormSubscriptions();
+
+    const mqttEnabled = getValue(mqttConnection?.value, 'enabled');
+    const mqttExternal = getValue(mqttConnection?.value, 'external');
+
     this.mqttForm = this.fb.group({
-      mqttEnabled: getValue(mqttConnection?.value, 'enabled'),
-      mqttExternal: getValue(mqttConnection?.value, 'external'),
+      mqttEnabled: mqttEnabled,
+      mqttExternal: [{ value: mqttExternal, disabled: !mqttEnabled }],
       mqttHostname: [getValue(mqttExternalPublish?.value, 'hostname'), Validators.required],
       mqttPort: [
         getValue(mqttExternalPublish?.value, 'port'),
@@ -118,6 +125,23 @@ export class MqttComponent extends ConfigurationBaseComponent implements OnInit,
       this.mqttForm.get('mqttUsername').clearValidators();
       this.mqttForm.get('mqttPassword').clearValidators();
     }
+
+    const mqttEnabledControl = this.mqttForm.get('mqttEnabled');
+    const mqttExternalControl = this.mqttForm.get('mqttExternal');
+    this.mqttFormSubscriptions.push(
+      mqttEnabledControl.valueChanges.subscribe(enabled => {
+        if (enabled) {
+          mqttExternalControl.enable({ emitEvent: false });
+        } else {
+          mqttExternalControl.disable({ emitEvent: false });
+        }
+      })
+    );
+  }
+
+  private resetMqttFormSubscriptions() {
+    this.mqttFormSubscriptions.forEach(subscription => subscription.unsubscribe());
+    this.mqttFormSubscriptions = [];
   }
 
   copyToClipboard(text: string) {
