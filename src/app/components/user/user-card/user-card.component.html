@@ -33,26 +33,63 @@
   }
 
   @if (!loading) {
-    <span>
+    <mat-divider></mat-divider>
+
+    <mat-list>
+            <!-- Registration code -->
+      <h3 matSubheader i18n="@@user device registration code">Device registration code</h3>
+      @if (user.hasRegistrationCode) {
+        <mat-list-item>
+          <mat-icon matListItemIcon>key</mat-icon>
+          <span matListItemTitle i18n="@@user registration">Expires on:</span>
+          @if (user.registrationExpiry) {
+            <span matListItemLine>{{ user.registrationExpiry }}</span>
+          }
+          @if (!user.registrationExpiry) {
+            <span matListItemLine i18n="@@user expiry never">never</span>
+          }
+          <button
+            mat-icon-button
+            matListItemMeta
+            color="warn"
+            [disabled]="!canManageRegistration || disabled"
+            (click)="openDeleteRegistrationCodeDialog()"
+            >
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+      @if (!user.hasRegistrationCode) {
+        <mat-list-item>
+          <span matListItemTitle i18n="@@user no registration code">No registration code</span>
+          <button
+            mat-icon-button
+            matListItemMeta
+            color="primary"
+            [disabled]="!canManageRegistration || disabled"
+            (click)="openDeviceRegistrationDialog()"
+            >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+
       <mat-divider></mat-divider>
+
       <!-- Cards -->
-      <mat-card-content>
-        <mat-card-title i18n="@@user cards">Cards</mat-card-title>
-        @for (card of cards; track card) {
-          <mat-list role="list">
-            <mat-checkbox
+      <h3 matSubheader i18n="@@user cards">Cards</h3>
+      @for (card of cards; track card) {
+        <mat-list-item>
+          <mat-icon matListItemIcon>credit_card</mat-icon>
+          <mat-checkbox
               color="primary"
               [checked]="card.enabled"
               [disabled]="!canManageCards || disabled"
               (change)="toggleCardEnabled(card.id)"
               >
-              <mat-icon [className]="card.enabled ? 'card-enabled' : 'card-disabled'">
-                credit_card
-              </mat-icon>
-              <span [className]="!card.enabled ? 'card-description-disabled' : ''">
-                {{ card.description }}
-              </span>
-            </mat-checkbox>
+          </mat-checkbox>
+          <span matListItemTitle>{{ card.description }}</span>
+          <div matListItemMeta>
             <button
               mat-icon-button
               color="warn"
@@ -61,134 +98,124 @@
               >
               <mat-icon>delete</mat-icon>
             </button>
-          </mat-list>
-        }
-        @if (cards.length === 0 && !registeringCard) {
-          <mat-card-subtitle i18n="@@user no cards">
-        No cards registered
-      </mat-card-subtitle>
-        }
-        @if (registeringCard) {
-          <mat-progress-spinner
-            color="primary"
-            mode="indeterminate"
-            diameter="20"
-          ></mat-progress-spinner>
-        }
-      </mat-card-content>
-      <mat-divider></mat-divider>
-      <!-- Registration code -->
-      <mat-card-content>
-        <mat-card-title i18n="@@user device registration code">Device registration code</mat-card-title>
-        @if (user.hasRegistrationCode) {
-          <div class="registration">
-            <mat-icon class="entry">key</mat-icon>
-            <span i18n="@@user registration">Expires on:</span>
-            @if (user.registrationExpiry) {
-              <span>{{ user.registrationExpiry }}</span>
-            }
-            @if (!user.registrationExpiry) {
-              <span i18n="@@user expiry never">never</span>
-            }
-            <button
-              mat-icon-button
-              color="warn"
-              [disabled]="!canManageRegistration || disabled"
-              (click)="openDeleteRegistrationCodeDialog()"
-              >
-              <mat-icon>delete</mat-icon>
-            </button>
           </div>
-        }
-        @if (!user.hasRegistrationCode) {
-          <mat-card-subtitle i18n="@@user no registration code">
-        No registration code
-      </mat-card-subtitle>
-        }
-      </mat-card-content>
-      @if (user.role === roleTypes.ADMIN) {
-        <mat-divider></mat-divider>
+        </mat-list-item>
       }
+      @if (cards.length === 0 && !registeringCard) {
+        <mat-list-item>
+          <span matListItemTitle i18n="@@user no cards">No cards registered</span>
+          <button
+            mat-icon-button
+            matListItemMeta
+            color="primary"
+            [disabled]="!canManageCards || disabled"
+            (click)="onClickRegisterCard()"
+            >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+      @if (registeringCard) {
+        <mat-list-item>
+          <mat-progress-spinner matListItemIcon color="primary" mode="indeterminate" diameter="20">
+          </mat-progress-spinner>
+          <span matListItemTitle i18n="@@user registering card">Registering card</span>
+        </mat-list-item>
+      }
+
+
       <!-- SSH key -->
       @if (user.role === roleTypes.ADMIN) {
-        <mat-card-content>
-          <mat-card-title i18n="@@user ssh key">SSH key</mat-card-title>
-          @if (hasSshKey) {
-            <div class="ssh">
-              <mat-icon class="entry">terminal</mat-icon>
-              <button
-                mat-icon-button
-                color="warn"
-                [disabled]="!canManageSshKeys || disabled"
-                (click)="openDeleteSshKeyDialog()"
-                >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          }
-          @if (!hasSshKey) {
-            <mat-card-subtitle i18n="@@user no ssh key">No SSH key</mat-card-subtitle>
-          }
-        </mat-card-content>
+        <mat-divider></mat-divider>
+        @if (hasSshKey) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>terminal</mat-icon>
+            <span matListItemTitle i18n="@@user ssh key">SSH key</span>
+            <button
+              mat-icon-button
+              matListItemMeta
+              color="warn"
+              [disabled]="!canManageSshKeys || disabled"
+              (click)="openDeleteSshKeyDialog()"
+              >
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+        @if (!hasSshKey) {
+          <mat-list-item>
+            <span matListItemTitle i18n="@@user no ssh key">No SSH key</span>
+            <button
+              mat-icon-button
+              matListItemMeta
+              color="primary"
+              [disabled]="!canManageSshKeys || disabled"
+              (click)="openSshKeySetupDialog()"
+              >
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-list-item>
+        }
       }
+
       <!-- MCP token -->
       @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
-        <mat-divider></mat-divider>
+        @if (hasMCPToken === true) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>vpn_key</mat-icon>
+            <span matListItemTitle i18n="@@mcp token">MCP token</span>
+            <button
+              mat-icon-button
+              matListItemMeta
+              color="warn"
+              [disabled]="!canManageMCP || disabled"
+              (click)="removeMCPToken()"
+              >
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </mat-list-item>
+        }
+        @if (hasMCPToken === false) {
+          <mat-list-item>
+            <span matListItemTitle i18n="@@user no mcp token">No MCP token</span>
+            <button
+              mat-icon-button
+              matListItemMeta
+              color="primary"
+              [disabled]="!canManageMCP || disabled"
+              (click)="getMCPToken()"
+              >
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-list-item>
+        }
       }
-      @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
-        <mat-card-content>
-          <mat-card-title i18n="@@mcp token">MCP token</mat-card-title>
-          @if (hasMCPToken === true) {
-            <div>
-              <mat-icon class="entry">vpn_key</mat-icon>
-              <button
-                mat-icon-button
-                color="warn"
-                [disabled]="!canManageMCP || disabled"
-                (click)="removeMCPToken()"
-                >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          }
-          @if (hasMCPToken === false) {
-            <mat-card-subtitle i18n="@@user no mcp token">
-        No MCP token
-      </mat-card-subtitle>
-          }
-        </mat-card-content>
-      }
+
       <!-- Comment -->
       @if (user.comment) {
         <mat-divider></mat-divider>
+        <h3 matSubheader i18n="@@user comment">Comment</h3>
+        <mat-list-item>
+          <mat-icon matListItemIcon>notes</mat-icon>
+          <span matListItemTitle>{{ user.comment }}</span>
+        </mat-list-item>
       }
-      @if (user.comment) {
-        <mat-card-content>
-          <p>{{ user.comment }}</p>
-        </mat-card-content>
-      }
-      @if (biometricAvailable) {
-        <mat-divider></mat-divider>
-      }
+
       <!-- Biometric login -->
       @if (biometricAvailable) {
-        <mat-card-content>
-          <mat-card-title i18n="@@user biometric login">Biometric login</mat-card-title>
+        <mat-divider></mat-divider>
+        <h3 matSubheader i18n="@@user biometric login">Biometric login</h3>
+        <mat-list-item>
+          <mat-icon matListItemIcon>fingerprint</mat-icon>
           @if (biometricEnabled()) {
-            <div class="biometric">
-              <mat-icon class="entry">fingerprint</mat-icon>
-              <span i18n="@@user biometric enabled">Enabled</span>
-            </div>
+            <span matListItemTitle i18n="@@user biometric enabled">Enabled</span>
           }
           @if (!biometricEnabled()) {
-            <div class="biometric">
-              <mat-icon class="entry">fingerprint</mat-icon>
-              <span i18n="@@user biometric disabled">Disabled</span>
-            </div>
+            <span matListItemTitle i18n="@@user biometric disabled">Disabled</span>
           }
-        </mat-card-content>
+        </mat-list-item>
       }
-    </span>
+    </mat-list>
   }
 
   <mat-divider></mat-divider>
