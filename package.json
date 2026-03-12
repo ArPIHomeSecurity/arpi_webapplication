@@ -52,7 +52,7 @@
     "@capacitor/keyboard": "^7.0.0",
     "@capacitor/preferences": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
-    "@capgo/capacitor-native-biometric": "^7.1.7",
+    "@capgo/capacitor-native-biometric": "^8.3.6",
     "@danielmoncada/angular-datetime-picker": "^21.0.0",
     "@ionic/angular": "^8.4.1",
     "@ionic/angular-server": "^8.4.1",
