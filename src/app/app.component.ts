@@ -243,7 +243,7 @@ export class AppComponent implements OnInit {
 
     // navigate to the default page and reload the page
     localStorage.removeItem('returnUrl');
-    this.router.navigate(['/']).then(() => window.location.reload());
+    window.location.href = '/';
   }
 
   onLocaleSelected(event) {

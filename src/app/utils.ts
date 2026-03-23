@@ -4,6 +4,9 @@ import { Dialog } from '@capacitor/dialog';
 import { Location } from './models';
 import { upgradeInstallationsToLocations } from './upgrades';
 
+// Global AbortController for backend configuration
+let configurationAbortController: AbortController | null = null;
+
 const showAlert = async (title: string, message: string) => {
   await Dialog.alert({
     title: title,
@@ -66,9 +69,11 @@ export function getValue(value: any, attribute: string, defaultValue: any = '') 
   return clonedDefaultValue;
 }
 
-export const checkUrl = async (url: string): Promise<boolean> => {
+export const checkUrl = async (url: string, controller?: AbortController): Promise<boolean> => {
+  const timeoutId = setTimeout(() => controller?.abort(), 15000);
+
   try {
-    const response = await fetch(url, { method: 'OPTIONS', signal: AbortSignal.timeout(15000) });
+    const response = await fetch(url, { method: 'OPTIONS', signal: controller?.signal });
     if (!response.ok) {
       console.error('No connection to the security system: ', url);
       return false;
@@ -76,8 +81,13 @@ export const checkUrl = async (url: string): Promise<boolean> => {
     console.log('Connected to the security system: ', url);
     return true;
   } catch (error) {
-    console.error('Failed to connect to the security system: ', url, 'Error: ', error);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw error; // Propagate abort errors up
+    }
+    console.error('Failed to connect to the security system: ', url, 'Error:', error);
     return false;
+  } finally {
+    clearTimeout(timeoutId);
   }
 };
 
@@ -103,11 +113,12 @@ async function checkAndSetDomain(
   scheme: string,
   domain: string,
   port: string,
-  backendDomain: string
+  backendDomain: string,
+  controller?: AbortController
 ): Promise<boolean> {
   if (scheme && domain && port) {
     const url = `${scheme}://${domain}:${port}/api/version`;
-    const available = await checkUrl(url);
+    const available = await checkUrl(url, controller);
 
     if (available && backendDomain !== domain) {
       // if the backend and the domain are different, set the domain
@@ -146,6 +157,9 @@ export async function configureBackend(): Promise<void> {
     upgradeInstallationsToLocations();
 
     try {
+      // Create abort controller for this configuration attempt
+      configurationAbortController = new AbortController();
+
       const locations: [Location] = JSON.parse(localStorage.getItem('locations')) || [];
       const selectedLocationId = localStorage.getItem('selectedLocationId');
       const backendDomain = localStorage.getItem('backend.domain');
@@ -157,12 +171,14 @@ export async function configureBackend(): Promise<void> {
             location.scheme,
             location.primaryDomain,
             location.primaryPort?.toString(),
-            backendDomain
+            backendDomain,
+            configurationAbortController
           );
           if (primaryAvailable) {
             localStorage.setItem('backend.scheme', location.scheme);
             localStorage.setItem('backend.domain', location.primaryDomain);
             localStorage.setItem('backend.port', location.primaryPort.toString());
+            configurationAbortController = null;
             resolve();
             return;
           }
@@ -171,12 +187,14 @@ export async function configureBackend(): Promise<void> {
             location.scheme,
             location.secondaryDomain,
             location.secondaryPort?.toString(),
-            backendDomain
+            backendDomain,
+            configurationAbortController
           );
           if (secondaryAvailable) {
             localStorage.setItem('backend.scheme', location.scheme);
             localStorage.setItem('backend.domain', location.secondaryDomain);
             localStorage.setItem('backend.port', location.secondaryPort.toString());
+            configurationAbortController = null;
             resolve();
             return;
           }
@@ -187,11 +205,36 @@ export async function configureBackend(): Promise<void> {
       localStorage.removeItem('backend.scheme');
       localStorage.removeItem('backend.domain');
       localStorage.removeItem('backend.port');
+      configurationAbortController = null;
       resolve();
     } catch (error) {
-      console.error('Failed to configure the backend: ', error);
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('Backend configuration was cancelled by user');
+      } else {
+        console.error('Failed to configure the backend: ', error);
+      }
+
+      localStorage.removeItem('backend.scheme');
+      localStorage.removeItem('backend.domain');
+      localStorage.removeItem('backend.port');
+      configurationAbortController = null;
       resolve();
       return;
     }
   });
 }
+
+/**
+ * Cancel the running backend configuration.
+ * This aborts all pending HTTP requests made by configureBackend().
+ */
+export function abortBackendConfiguration(): void {
+  if (configurationAbortController) {
+    configurationAbortController.abort();
+    configurationAbortController = null;
+    console.log('Backend configuration cancelled');
+  }
+}
+
+// Expose abort function globally for HTML scripts
+(window as any).abortBackendConfiguration = abortBackendConfiguration;

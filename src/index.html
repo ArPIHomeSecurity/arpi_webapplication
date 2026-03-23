@@ -28,7 +28,18 @@
           <div style="left: 80px; top: 122px; animation-delay: 0.625s"></div>
           <div style="left: 122px; top: 122px; animation-delay: 0.5s"></div>
         </div>
+        <button id="cancel-spinner">
+          Cancel
+        </button>
       </div>
     </app-root>
+    <script>
+      document.getElementById('cancel-spinner').onclick = function() {
+        // Cancel the running backend configuration
+        if (window.abortBackendConfiguration) {
+          window.abortBackendConfiguration();
+        }
+      };
+    </script>
   </body>
 </html>
