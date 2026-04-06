@@ -1,9 +1,9 @@
 {
-  "version": "v1.8.1:c20488d",
+  "version": "v1.9.0:29f547e",
   "major": 1,
-  "minor": 8,
-  "patch": 1,
+  "minor": 9,
+  "patch": 0,
   "prerelease": null,
   "prerelease_num": null,
-  "commit_id": "c20488d"
+  "commit_id": "29f547e"
 }
