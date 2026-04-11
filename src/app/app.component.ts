@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
   versions: {
     serverVersion: string;
     webapplicationVersion: string;
+    boardVersion: string;
   };
 
   isMultiLocation = environment.isMultiLocation;
@@ -63,9 +64,8 @@ export class AppComponent implements OnInit {
   // theming
   width$ = new BehaviorSubject<number>(1000);
   resizeObserver!: ResizeObserver;
-  smallScreen: boolean;
-
-  darkTheme;
+  smallScreen: boolean = false;
+  darkTheme: boolean = false;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
@@ -81,13 +81,13 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private http: HttpClient
   ) {
-    this.currentLocale = localStorage.getItem('localeId');
+    this.currentLocale = localStorage.getItem('localeId') || 'en';
 
     if (!this.currentLocale) {
       this.currentLocale = 'en';
     }
 
-    this.versions = { serverVersion: '', webapplicationVersion: '' };
+    this.versions = { serverVersion: '', webapplicationVersion: '', boardVersion: '' };
     this.isSessionValid = false;
   }
 
@@ -125,6 +125,7 @@ export class AppComponent implements OnInit {
     this.loader.disabled.subscribe(value => (this.disablePage = value));
     this.loader.message.subscribe(message => (this.message = message));
     this.monitoring.getVersion().subscribe(version => (this.versions.serverVersion = version));
+    this.monitoring.getBoardVersion().subscribe(version => (this.versions.boardVersion = version.toString()));
     this.authenticationService.isSessionValid().subscribe(isSessionValid => {
       this.isSessionValid = isSessionValid;
       if (this.isSessionValid && this.countdown) {
@@ -136,7 +137,7 @@ export class AppComponent implements OnInit {
       this.isDeviceRegistered = isRegistered;
     });
 
-    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
     this.locations = locations.sort((a, b) => a.order - b.order).map(i => ({ name: i.name, id: i.id }));
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');

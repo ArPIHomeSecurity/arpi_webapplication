@@ -103,26 +103,6 @@
     }
   }
 
-  .footer {
-    color: white;
-    background-color: mat.m2-get-color-from-palette($argus-toolbar-primary);
-  }
-
-  .versions {
-    .version {
-      b {
-        display: table-cell;
-        text-align: right;
-      }
-
-      display: table-row;
-      font-size: 10px;
-      margin: 0px 15px;
-    }
-
-    display: table;
-  }
-
   .mat-mdc-card.message {
     margin: 5px;
     background-color: #f8d7da;
@@ -179,6 +159,33 @@
     user-select: none;
     /* Likely future */
   }
+
+  .footer {
+    display: flex;
+    color: white;
+    background-color: mat.m2-get-color-from-palette($argus-toolbar-primary);
+
+    .links {
+      display: flex;
+      margin: 5px auto;
+      white-space: nowrap;
+
+      a {
+        color: white;
+        height: 20px;
+      }
+    }
+
+    .versions {
+      display: flex;
+      margin: 5px auto;
+
+      .version {
+        font-size: 12px;
+        margin: 0px 10px;
+      }
+    }
+  }
 }
 
 ::ng-deep .small-screen {
@@ -187,20 +194,19 @@
   }
 
   .footer {
-    display: flex;
     flex-direction: column;
 
-    .links,
-    .versions {
-      a {
-        color: white;
-      }
+    .links {
+      flex-direction: column;
 
-      margin: auto;
+      .separator {
+        display: none;
+      }
     }
 
     .versions {
-      line-height: 2;
+      flex-direction: row;
+      margin: 10px auto;
     }
   }
 }
@@ -212,20 +218,28 @@
   }
 
   .footer {
-    display: flex;
     flex-direction: row;
 
     .links {
-      a {
-        color: white;
-      }
-
-      margin: auto;
+      flex-direction: row;
+      padding: 10px;
     }
 
     .versions {
-      line-height: 2;
-      margin-right: 60px;
+      flex-direction: column;
+      margin: 5px;
+
+      .version {
+        display: flex;
+        font-size: 12px;
+        margin: 0px 10px;
+
+        b {
+          display: inline-block;
+          width: 55px; /* fixed width covers "WebApp" */
+          text-align: right;
+        }
+      }
     }
   }
 }

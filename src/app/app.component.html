@@ -327,7 +327,7 @@
           <a mat-button href="https://www.arpi-security.info/" target="project">
             ArPI Home Security
           </a>
-          |
+          <span class="separator">&nbsp;|&nbsp;</span>
           <a mat-button href="https://docs.arpi-security.info" target="docs">DOCS</a>
         </div>
 
@@ -339,6 +339,10 @@
           <div class="version">
             <b>Server</b>
             &nbsp;{{ versions.serverVersion || '-' }}
+          </div>
+          <div class="version">
+            <b>Board</b>
+            &nbsp;v{{ versions.boardVersion || '-' }}
           </div>
         </div>
       </div>
