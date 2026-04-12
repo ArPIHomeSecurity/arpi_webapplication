@@ -1,4 +1,4 @@
-@if (!loader.displayed.value) {
+@if (smtpForm != null && gsmForm != null && subscriptionsForm != null) {
   <div class="container">
     <mat-accordion multi="true" class="notifications">
       <mat-expansion-panel>
@@ -318,6 +318,7 @@
           </div>
         </form>
       </mat-expansion-panel>
+      <app-location></app-location>
     </mat-accordion>
   </div>
 }

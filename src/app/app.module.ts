@@ -48,7 +48,7 @@ import { BackendErrorComponent } from './pages/backend-error/backend-error.compo
 import { ClockComponent } from './pages/config/clock';
 import { KeypadComponent } from './pages/config/keypad';
 import { MqttComponent, NetworkComponent } from './pages/config/network';
-import { NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
+import { LocationComponent, NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { SyrenComponent } from './pages/config/syren';
 import { HomeComponent } from './pages/home';
 import { LocationDetailsComponent, LocationListComponent } from './pages/location';
@@ -142,6 +142,7 @@ import { CapacitorService } from './services/capacitor.service';
 
     // Standalone components
     MqttComponent,
+    LocationComponent,
 
     MatAutocompleteModule,
     MatButtonModule,

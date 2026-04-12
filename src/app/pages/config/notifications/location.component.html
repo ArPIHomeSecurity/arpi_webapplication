@@ -1,0 +1,146 @@
+@if (locationOption) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title i18n="@@notifications location">Location</mat-panel-title>
+      <mat-panel-description i18n="@@notifications location settings">
+        Configure notification source location
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    @if (locationForm) {
+      <form [formGroup]="locationForm" (ngSubmit)="onSaveLocation()" class="location-form">
+        <div class="row">
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location name">Location name</mat-label>
+            <input
+              matInput
+              formControlName="locationName"
+              i18n-placeholder="@@notifications location name"
+              placeholder="Location name"
+            />
+          </mat-form-field>
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location description">Description</mat-label>
+            <input
+              matInput
+              formControlName="locationDescription"
+              i18n-placeholder="@@notifications location description"
+              placeholder="Description"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location latitude">Latitude</mat-label>
+            <input
+              type="number"
+              matInput
+              formControlName="locationLatitude"
+              i18n-placeholder="@@notifications location latitude"
+              placeholder="Latitude"
+            />
+          </mat-form-field>
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location longitude">Longitude</mat-label>
+            <input
+              type="number"
+              matInput
+              formControlName="locationLongitude"
+              i18n-placeholder="@@notifications location longitude"
+              placeholder="Longitude"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location country">Country</mat-label>
+            <input
+              matInput
+              formControlName="locationCountry"
+              i18n-placeholder="@@notifications location country"
+              placeholder="Country"
+            />
+          </mat-form-field>
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location state">State / Region</mat-label>
+            <input
+              matInput
+              formControlName="locationState"
+              i18n-placeholder="@@notifications location state"
+              placeholder="State / Region"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location city">City</mat-label>
+            <input
+              matInput
+              formControlName="locationCity"
+              i18n-placeholder="@@notifications location city"
+              placeholder="City"
+            />
+          </mat-form-field>
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location zip code">ZIP code</mat-label>
+            <input
+              matInput
+              formControlName="locationZipCode"
+              i18n-placeholder="@@notifications location zip code"
+              placeholder="ZIP code"
+            />
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-label i18n="@@notifications location address">Address</mat-label>
+          <input
+            matInput
+            formControlName="locationAddress"
+            i18n-placeholder="@@notifications location address"
+            placeholder="Address"
+          />
+        </mat-form-field>
+        <div class="row">
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location contact name">Contact name</mat-label>
+            <input
+              matInput
+              formControlName="locationContactName"
+              i18n-placeholder="@@notifications location contact name"
+              placeholder="Contact name"
+            />
+          </mat-form-field>
+          <mat-form-field class="container-item">
+            <mat-label i18n="@@notifications location contact phone">Contact phone</mat-label>
+            <input
+              matInput
+              formControlName="locationContactPhone"
+              i18n-placeholder="@@notifications location contact phone"
+              placeholder="Contact phone"
+            />
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-label i18n="@@notifications location contact email">Contact email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="locationContactEmail"
+            i18n-placeholder="@@notifications location contact email"
+            placeholder="Contact email"
+          />
+        </mat-form-field>
+        <div class="form-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="locationForm.invalid || locationForm.pristine"
+            i18n="@@save button"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    }
+  </mat-expansion-panel>
+}
