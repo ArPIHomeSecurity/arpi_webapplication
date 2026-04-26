@@ -29,6 +29,22 @@
   }
 }
 
+button.small {
+  color: blue;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0px !important;
+  margin-left: 10px;
+  vertical-align: middle;
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+  }
+}
+  
+
 .details {
   margin-top: 20px;
   margin-bottom: 20px;

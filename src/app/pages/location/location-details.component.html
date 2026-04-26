@@ -136,20 +136,22 @@
           <dl>
             @if (location.id) {
               <dt>ID</dt>
-            }
-            @if (location.id) {
               <dd>{{ location.id }}</dd>
             }
-            @if (version) {
-              <dt i18n="@@location version">Version</dt>
+            @if (systemLocationName) {
+              <dt i18n="@@location system name">Remote name</dt>
+              <dd>{{ systemLocationName }}
+                <button mat-icon-button class="small" (click)="onSaveRemoteToLocalname()">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+              </dd>
             }
             @if (version) {
+              <dt i18n="@@location code">Code</dt>
               <dd>{{ version.version_tag }}</dd>
             }
             @if (boardVersion) {
-              <dt i18n="@@location board version">Board version</dt>
-            }
-            @if (boardVersion) {
+              <dt i18n="@@location board">Board</dt>
               <dd>{{ boardVersion }}</dd>
             }
           </dl>

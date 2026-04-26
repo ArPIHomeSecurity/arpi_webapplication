@@ -279,3 +279,73 @@ export function testLocation(location: Location): Observable<LocationTestResult>
     });
   });
 }
+
+function loadLocationName(locationNameUrl: string): Observable<string> {
+  if (!locationNameUrl) {
+    return undefinedObservableAny;
+  }
+
+  return new Observable<string>(observer => {
+    fetch(locationNameUrl)
+      .then(response => {
+        if (!response.ok) {
+          observer.next('');
+          observer.complete();
+          return;
+        }
+
+        return response.json();
+      })
+      .then(locationOption => {
+        observer.next(locationOption);
+        observer.complete();
+      })
+      .catch(error => {
+        console.error('Error loading location option', {
+          message: error.message,
+          stack: error.stack,
+          url: locationNameUrl
+        });
+        observer.next('');
+        observer.complete();
+      });
+  });
+}
+
+export function getLocationName(location: Location): Observable<string> {
+  if (!location || !location.id) {
+    return undefinedObservableAny;
+  }
+
+  return new Observable<string>(observer => {
+    let primaryLocationOption$: Observable<string>;
+    if (location.primaryDomain !== '') {
+      const url = `${location.scheme}://${location.primaryDomain}:${location.primaryPort}/api/config/location_name`;
+      primaryLocationOption$ = loadLocationName(url);
+    } else {
+      primaryLocationOption$ = undefinedObservableAny;
+    }
+
+    let secondaryLocationOption$: Observable<string>;
+    if (location.secondaryDomain !== '') {
+      const url = `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}/api/config/location_name`;
+      secondaryLocationOption$ = loadLocationName(url);
+    } else {
+      secondaryLocationOption$ = undefinedObservableAny;
+    }
+
+    forkJoin({
+      primaryLocationOption: primaryLocationOption$ || undefinedObservableAny,
+      secondaryLocationOption: secondaryLocationOption$ || undefinedObservableAny
+    }).subscribe(results => {
+      let locationOption = '';
+      if (results.primaryLocationOption) {
+        locationOption = results.primaryLocationOption;
+      } else if (results.secondaryLocationOption) {
+        locationOption = results.secondaryLocationOption;
+      }
+      observer.next(locationOption);
+      observer.complete();
+    });
+  });
+}

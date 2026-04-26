@@ -74,36 +74,36 @@ export class LocationComponent extends ConfigurationBaseComponent implements OnI
 
   updateLocationForm(locationOption: Option | null) {
     this.locationForm = this.fb.group({
-      locationName: getValue(locationOption?.value, 'location_name', ''),
-      locationLatitude: getValue(locationOption?.value, 'location_latitude', 0.0),
-      locationLongitude: getValue(locationOption?.value, 'location_longitude', 0.0),
-      locationCountry: getValue(locationOption?.value, 'location_country', ''),
-      locationCity: getValue(locationOption?.value, 'location_city', ''),
-      locationState: getValue(locationOption?.value, 'location_state', ''),
-      locationZipCode: getValue(locationOption?.value, 'location_zip_code', ''),
-      locationAddress: getValue(locationOption?.value, 'location_address', ''),
-      locationDescription: getValue(locationOption?.value, 'location_description', ''),
-      locationContactName: getValue(locationOption?.value, 'location_contact_name', ''),
-      locationContactPhone: getValue(locationOption?.value, 'location_contact_phone', ''),
-      locationContactEmail: getValue(locationOption?.value, 'location_contact_email', '')
+      name: getValue(locationOption?.value, 'name', ''),
+      latitude: getValue(locationOption?.value, 'latitude', 0.0),
+      longitude: getValue(locationOption?.value, 'longitude', 0.0),
+      country: getValue(locationOption?.value, 'country', ''),
+      city: getValue(locationOption?.value, 'city', ''),
+      state: getValue(locationOption?.value, 'state', ''),
+      zip_code: getValue(locationOption?.value, 'zip_code', ''),
+      address: getValue(locationOption?.value, 'address', ''),
+      description: getValue(locationOption?.value, 'description', ''),
+      contactName: getValue(locationOption?.value, 'contact_name', ''),
+      contactPhone: getValue(locationOption?.value, 'contact_phone', ''),
+      contactEmail: getValue(locationOption?.value, 'contact_email', '')
     });
   }
 
   prepareLocation(): any {
     const formModel = this.locationForm.value;
     return {
-      location_name: formModel.locationName,
-      location_latitude: formModel.locationLatitude,
-      location_longitude: formModel.locationLongitude,
-      location_country: formModel.locationCountry,
-      location_city: formModel.locationCity,
-      location_state: formModel.locationState,
-      location_zip_code: formModel.locationZipCode,
-      location_address: formModel.locationAddress,
-      location_description: formModel.locationDescription,
-      location_contact_name: formModel.locationContactName,
-      location_contact_phone: formModel.locationContactPhone,
-      location_contact_email: formModel.locationContactEmail
+      name: formModel.name,
+      latitude: formModel.latitude,
+      longitude: formModel.longitude,
+      country: formModel.country,
+      city: formModel.city,
+      state: formModel.state,
+      zip_code: formModel.zip_code,
+      address: formModel.address,
+      description: formModel.description,
+      contact_name: formModel.contactName,
+      contact_phone: formModel.contactPhone,
+      contact_email: formModel.contactEmail
     };
   }
 

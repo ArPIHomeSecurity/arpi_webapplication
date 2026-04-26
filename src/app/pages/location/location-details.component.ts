@@ -8,7 +8,7 @@ import { AuthenticationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
 import { LocationVersion } from '../../models/version';
-import { LocationTestResult, testLocation } from './location';
+import { getLocationName, LocationTestResult, testLocation } from './location';
 
 @Component({
   selector: 'app-location-details',
@@ -19,17 +19,19 @@ import { LocationTestResult, testLocation } from './location';
 export class LocationDetailsComponent {
   ALREADY_EXISTS = $localize`:@@location already exists:Location already exists!`;
 
-  location: Location;
-  version: LocationVersion = null;
-  boardVersion: string = null;
-  locationForm: FormGroup;
-  newLocation: boolean;
-  firstLocation: boolean;
+  location: Location | null = null;
+  version: LocationVersion | null = null;
+  boardVersion: string | null = null;
+  locationForm: FormGroup | null = null;
+  newLocation: boolean = false;
+  firstLocation: boolean = false;
 
-  selectedLocationId: string;
-  testResult: LocationTestResult = null;
+  selectedLocationId: string | null = null;
+  testResult: LocationTestResult | null = null;
   showApiLink = environment.showApiLink;
   isMultiLocation = environment.isMultiLocation;
+
+  systemLocationName: string | null = null;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
@@ -39,10 +41,10 @@ export class LocationDetailsComponent {
     public dialog: MatDialog
   ) {
     this.route.params.subscribe(params => {
-      const locations = JSON.parse(localStorage.getItem('locations')) || [];
+      const locations = JSON.parse(localStorage.getItem('locations') || '[]');
       this.firstLocation = locations.length === 0;
       if (params.id) {
-        this.location = locations.find(location => location.id === params.id);
+        this.location = locations.find(location => location.id === params.id) || null;
         this.newLocation = false;
       } else {
         this.location = this.defaultLocation();
@@ -70,7 +72,7 @@ export class LocationDetailsComponent {
     };
   }
 
-  updateForm(location: Location) {
+  updateForm(location: Location | null) {
     if (location) {
       this.locationForm = new FormGroup({
         id: new FormControl(location.id),
@@ -104,6 +106,10 @@ export class LocationDetailsComponent {
         this.version = result.secondaryVersion;
         this.boardVersion = result.secondaryBoardVersion;
       }
+    });
+
+    getLocationName(this.location).subscribe(locationName => {
+      this.systemLocationName = locationName || null;
     });
   }
 
@@ -144,6 +150,12 @@ export class LocationDetailsComponent {
     }
   }
 
+  onSaveRemoteToLocalname() {
+    if (this.systemLocationName) {
+      this.locationForm.controls.name.setValue(this.systemLocationName);
+    }
+  }
+
   prepareLocation(): Location {
     const formModel = this.locationForm.value;
     const location = new Location();
@@ -162,7 +174,7 @@ export class LocationDetailsComponent {
   }
 
   alreadyExists() {
-    const locations = JSON.parse(localStorage.getItem('locations')) || [];
+    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
     return locations.some(l => l.id === this.location.id);
   }
 
@@ -216,7 +228,7 @@ export class LocationDetailsComponent {
   }
 
   openDeleteDialog() {
-    let locations = JSON.parse(localStorage.getItem('locations')) || [];
+    let locations = JSON.parse(localStorage.getItem('locations') || '[]');
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '450px',
       data: {
