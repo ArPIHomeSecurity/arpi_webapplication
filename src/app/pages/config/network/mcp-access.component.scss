@@ -1,0 +1,17 @@
+.mcp-access-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mcp-access-content p {
+  margin: 0;
+}
+
+.mcp-access-content a {
+  align-self: flex-start;
+}
+
+textarea.token {
+  font-family: monospace !important;
+}

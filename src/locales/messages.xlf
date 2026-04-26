@@ -24,6 +24,21 @@
       <trans-unit id="notifications menu link" datatype="html">
         <source>Notifications</source>
       </trans-unit>
+      <trans-unit id="network mcp access" datatype="html">
+        <source>MCP access</source>
+      </trans-unit>
+      <trans-unit id="network mcp access description" datatype="html">
+        <source> How to configure your MCP client </source>
+      </trans-unit>
+      <trans-unit id="network mcp access get token" datatype="html">
+        <source>Get your token</source>
+      </trans-unit>
+      <trans-unit id="network mcp access local" datatype="html">
+        <source> Local network access </source>
+      </trans-unit>
+      <trans-unit id="network mcp access remote" datatype="html">
+        <source> Remote access (dynamic DNS) </source>
+      </trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source>
       </trans-unit>
@@ -419,6 +434,9 @@
       </trans-unit>
       <trans-unit id="user register device button" datatype="html">
         <source> Device registration </source>
+      </trans-unit>
+      <trans-unit id="user registering card" datatype="html">
+        <source>Registering card</source>
       </trans-unit>
       <trans-unit id="user register card button" datatype="html">
         <source> Register card </source>
@@ -945,6 +963,48 @@
       <trans-unit id="notifications loading sms" datatype="html">
         <source>Loading SMS messages...</source>
       </trans-unit>
+      <trans-unit id="notifications location" datatype="html">
+        <source>Location</source>
+      </trans-unit>
+      <trans-unit id="notifications location address" datatype="html">
+        <source>Address</source>
+      </trans-unit>
+      <trans-unit id="notifications location city" datatype="html">
+        <source>City</source>
+      </trans-unit>
+      <trans-unit id="notifications location contact email" datatype="html">
+        <source>Contact email</source>
+      </trans-unit>
+      <trans-unit id="notifications location contact name" datatype="html">
+        <source>Contact name</source>
+      </trans-unit>
+      <trans-unit id="notifications location contact phone" datatype="html">
+        <source>Contact phone</source>
+      </trans-unit>
+      <trans-unit id="notifications location country" datatype="html">
+        <source>Country</source>
+      </trans-unit>
+      <trans-unit id="notifications location description" datatype="html">
+        <source>Description</source>
+      </trans-unit>
+      <trans-unit id="notifications location latitude" datatype="html">
+        <source>Latitude</source>
+      </trans-unit>
+      <trans-unit id="notifications location longitude" datatype="html">
+        <source>Longitude</source>
+      </trans-unit>
+      <trans-unit id="notifications location name" datatype="html">
+        <source>Location name</source>
+      </trans-unit>
+      <trans-unit id="notifications location settings" datatype="html">
+        <source> Configure source location </source>
+      </trans-unit>
+      <trans-unit id="notifications location state" datatype="html">
+        <source>State / Region</source>
+      </trans-unit>
+      <trans-unit id="notifications location zip code" datatype="html">
+        <source>ZIP code</source>
+      </trans-unit>
       <trans-unit id="notifications no sms" datatype="html">
         <source>No SMS messages</source>
       </trans-unit>
@@ -992,6 +1052,9 @@
       </trans-unit>
       <trans-unit id="location check" datatype="html">
         <source>Check API version and certificate</source>
+      </trans-unit>
+      <trans-unit id="location code" datatype="html">
+        <source>Code</source>
       </trans-unit>
       <trans-unit id="location device registered" datatype="html">
         <source>Device registered</source>
@@ -1075,10 +1138,10 @@
         <source>New access code</source>
       </trans-unit>
       <trans-unit id="user no cards" datatype="html">
-        <source> No cards registered </source>
+        <source>No cards registered</source>
       </trans-unit>
       <trans-unit id="user no registration code" datatype="html">
-        <source> No registration code </source>
+        <source>No registration code</source>
       </trans-unit>
       <trans-unit id="user no ssh key" datatype="html">
         <source>No SSH key</source>
@@ -1254,6 +1317,9 @@
       <trans-unit id="location support subtitle" datatype="html">
         <source> Join our Slack workspace for help and discussion </source>
       </trans-unit>
+      <trans-unit id="location system name" datatype="html">
+        <source>Remote name</source>
+      </trans-unit>
       <trans-unit id="location welcome subtitle" datatype="html">
         <source> Your smart security system starts here </source>
       </trans-unit>
@@ -1302,6 +1368,9 @@
       <trans-unit id="location software installation guide" datatype="html">
         <source> Software installation guide </source>
       </trans-unit>
+      <trans-unit id="location board" datatype="html">
+        <source>Board</source>
+      </trans-unit>
       <trans-unit id="location board version" datatype="html">
         <source>Board version</source>
       </trans-unit>
@@ -1324,7 +1393,7 @@
         <source> Get MCP token </source>
       </trans-unit>
       <trans-unit id="user no mcp token" datatype="html">
-        <source> No MCP token </source>
+        <source>No MCP token</source>
       </trans-unit>
     </body>
   </file>

@@ -47,7 +47,7 @@ import { AreaDetailComponent, AreaListComponent } from './pages/area';
 import { BackendErrorComponent } from './pages/backend-error/backend-error.component';
 import { ClockComponent } from './pages/config/clock';
 import { KeypadComponent } from './pages/config/keypad';
-import { MqttComponent, NetworkComponent } from './pages/config/network';
+import { McpAccessComponent, MqttComponent, NetworkComponent } from './pages/config/network';
 import { LocationComponent, NotificationsComponent, SmsMessagesDialogComponent } from './pages/config/notifications';
 import { SyrenComponent } from './pages/config/syren';
 import { HomeComponent } from './pages/home';
@@ -141,6 +141,7 @@ import { CapacitorService } from './services/capacitor.service';
     routing,
 
     // Standalone components
+    McpAccessComponent,
     MqttComponent,
     LocationComponent,
 
