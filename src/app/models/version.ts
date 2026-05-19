@@ -57,7 +57,7 @@ export function parseVersion(versionString: string): LocationVersion {
   const [mainPart, commitId] = versionString.split(':');
   version.commit_id = commitId || '';
 
-  const versionMatch = mainPart.match(/^v(\d+)\.(\d+)\.(\d+)(?:_([A-Za-z]+)(\d+))?$/);
+  const versionMatch = mainPart.match(/^(?:v)?(\d+)\.(\d+)\.(\d+)(?:_([A-Za-z]+)(\d+))?$/);
   if (versionMatch) {
     version.major = parseInt(versionMatch[1]);
     version.minor = parseInt(versionMatch[2]);

@@ -226,6 +226,13 @@
                     <div matListItemTitle i18n="@@location next version">Next Version</div>
                     <div matListItemLine>
                       {{ serverLatestVersion.version_tag }}
+                      <a
+                        href="https://github.com/ArPIHomeSecurity/arpi_server/releases/tag/{{ serverLatestVersion.version_tag }}"
+                        target="_blank"
+                        class="test-link"
+                        >
+                        <mat-icon>open_in_new</mat-icon>
+                      </a>
                     </div>
                   </mat-list-item>
                 }

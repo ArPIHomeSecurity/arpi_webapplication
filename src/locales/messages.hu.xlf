@@ -1380,7 +1380,7 @@
       </trans-unit>
       <trans-unit id="area number of outputs" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </source>
-        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> output(s) </target>
+        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{ getOutputs(area.id).length }}"/> kimenet(ek) </target>
       </trans-unit>
       <trans-unit id="area no outputs" datatype="html">
         <source>No outputs</source>
@@ -1420,7 +1420,7 @@
       </trans-unit>
       <trans-unit id="location code" datatype="html">
         <source>Code</source>
-        <target state="new">Code</target>
+        <target state="translated">Kód</target>
       </trans-unit>
       <trans-unit id="location port" datatype="html">
         <source>Port</source>
