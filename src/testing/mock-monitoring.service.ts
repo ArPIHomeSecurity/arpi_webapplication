@@ -57,4 +57,8 @@ export class MockMonitoringService {
   getPowerState(): Observable<POWER_STATE> {
     return of(POWER_STATE.NETWORK);
   }
+
+  getBoardVersion(): Observable<string> {
+    return of('2');
+  }
 }
