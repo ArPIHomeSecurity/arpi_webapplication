@@ -52,6 +52,7 @@
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/preferences": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
+    "@capawesome-team/capacitor-android-foreground-service": "^8.1.0",
     "@capgo/capacitor-native-biometric": "^8.0.0",
     "@danielmoncada/angular-datetime-picker": "^21.0.0",
     "@ionic/angular": "^8.8.3",

@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 import { ROLE_TYPES } from './models';
-import { AuthenticationService, LoaderService, MonitoringService } from './services';
+import { AuthenticationService, EventService, LoaderService, MonitoringService } from './services';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
+    @Inject('EventService') private eventService: EventService,
     @Inject('LoaderService') private loader: LoaderService,
     @Inject('MonitoringService') private monitoring: MonitoringService,
     @Inject('ThemeService') private themeService: ThemeService,
@@ -92,6 +93,8 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.eventService.connect();
+
     this.darkTheme = this.themeService.load();
 
     this.resizeObserver = new ResizeObserver(entries => {
