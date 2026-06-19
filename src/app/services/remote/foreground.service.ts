@@ -91,9 +91,23 @@ export class ForegroundEventsService {
       smallIcon: 'ic_notification',
       notificationChannelId: this.foregroundChannelId,
       serviceType: ServiceType.Location,
+      buttons: [{
+        id: 1,
+        title: 'Stop',
+      }]
     });
     this.foregroundRunning = true;
     console.log('[ForegroundEventsService] foreground service started successfully');
+
+    ForegroundService.removeAllListeners().then(() => {
+      ForegroundService.addListener('buttonClicked', (event) => {
+        console.log('[ForegroundEventsService] notification action performed', JSON.stringify(event));
+        if (event.buttonId === 1) {
+          console.log('[ForegroundEventsService] stop button clicked, stopping foreground service');
+          ForegroundService.stopForegroundService()
+        }
+      });
+    });
   }
 
   async stop(): Promise<void> {
