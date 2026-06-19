@@ -259,7 +259,7 @@ export class EventService {
       this.lastMonitoringState.set(locationId, monitoringState);
 
       if (monitoringState === MONITORING_STATE.ALERT && previousState !== MONITORING_STATE.ALERT) {
-        void this.notificationService.notifyAlert(locationName);
+        void this.notificationService.notifyAlert(locationName, locationId);
       }
     });
 
@@ -273,7 +273,7 @@ export class EventService {
       this.lastArmState.set(locationId, armState);
 
       if (armState === ARM_TYPE.DISARMED && previousArmState !== ARM_TYPE.DISARMED) {
-        void this.notificationService.notifyDisarmed(locationName);
+        void this.notificationService.notifyDisarmed(locationName, locationId);
         return;
       }
 
@@ -281,7 +281,7 @@ export class EventService {
         [ARM_TYPE.AWAY, ARM_TYPE.STAY, ARM_TYPE.MIXED].includes(armState) &&
         armState !== previousArmState
       ) {
-        void this.notificationService.notifyArmed(locationName, armState);
+        void this.notificationService.notifyArmed(locationName, locationId, armState);
       }
     });
   }

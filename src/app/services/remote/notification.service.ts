@@ -4,6 +4,13 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 
 import { ARM_TYPE } from '@app/models';
 
+import * as crypto from 'crypto-js';
+
+
+
+const FIRST_NOTIFICATION_ID = 1000;
+const MAX_NOTIFICATION_ID = 9999;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,27 +18,43 @@ export class NotificationService {
   private readonly channelId = 'arpi_events';
   private channelReady = false;
   private permissionChecked = false;
-  private nextNotificationId = 2000;
+  private nextNotificationId = FIRST_NOTIFICATION_ID;
 
-  async notifyAlert(locationName: string): Promise<void> {
-    const body = locationName ? `${locationName}: System is in alert state.` : 'System is in alert state.';
-    await this.schedule('ArPI alert', body);
+  constructor() {
+    LocalNotifications.removeAllListeners().then(() => {
+      LocalNotifications.addListener('localNotificationActionPerformed', async (notificationAction) => {
+        const locationId = this.getLocationId(notificationAction.notification.id);
+        if (locationId) {
+          console.log(`Local notification received for locationId: ${locationId}, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`);
+          localStorage.setItem('selectedLocationId', locationId);
+          window.dispatchEvent(new StorageEvent('storage', { key: 'selectedLocationId', newValue: locationId }));
+          window.location.href = '/';
+        }
+        else {
+          console.warn(`Local notification received with unknown locationId, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`);
+        }
+        return notificationAction.notification;
+      });
+    });
   }
 
-  async notifyArmed(locationName: string, armType: ARM_TYPE): Promise<void> {
+  async notifyAlert(locationName: string, locationId: string): Promise<void> {
+    // TODO: translation
+    await this.schedule(locationId, 'ArPI alert', `Location: ${locationName}\n System is in alert state.`);
+  }
+
+  async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
+    // TODO: translation
     const armTypeText = this.armTypeToText(armType);
-    const body = locationName
-      ? `${locationName}: System armed (${armTypeText}).`
-      : `System armed (${armTypeText}).`;
-    await this.schedule('ArPI armed', body);
+    await this.schedule(locationId, 'ArPI armed', `Location: ${locationName}\n System armed (${armTypeText}).`);
   }
 
-  async notifyDisarmed(locationName: string): Promise<void> {
-    const body = locationName ? `${locationName}: System disarmed.` : 'System disarmed.';
-    await this.schedule('ArPI disarmed', body);
+  async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
+    // TODO: translation
+    await this.schedule(locationId, 'ArPI disarmed', `Location: ${locationName}\n System disarmed.`);
   }
 
-  private async schedule(title: string, body: string): Promise<void> {
+  private async schedule(locationId: string, title: string, body: string): Promise<void> {
     const platform = Capacitor.getPlatform();
     console.log(`Scheduling notification on platform: ${platform}, title: ${title}, body: ${body}`);
 
@@ -45,7 +68,7 @@ export class NotificationService {
       const result = await LocalNotifications.schedule({
         notifications: [
           {
-            id: this.getNextNotificationId(),
+            id: this.getNotificationId(locationId),
             title,
             body,
             channelId: this.channelId,
@@ -104,11 +127,6 @@ export class NotificationService {
       });
       console.log('Local notification channel creation result:', JSON.stringify(result));
       this.channelReady = true;
-
-      setTimeout(async () => {
-        const pending = await LocalNotifications.getPending();
-        console.log('Pending local notifications after channel setup:', JSON.stringify(pending));
-      }, 1000);
     }
 
     return true;
@@ -147,14 +165,27 @@ export class NotificationService {
     }
   }
 
-  private getNextNotificationId(): number {
-    this.nextNotificationId += 1;
+  private getNotificationId(locationId: string): number {
+    const content = `${locationId}:${this.nextNotificationId}`;
+    const hash = crypto.SHA256(content).toString(crypto.enc.Hex);
+    const id = parseInt(hash.substring(0, 8), 16);
+    this.nextNotificationId++;
+    return id;
+  }
 
-    if (this.nextNotificationId > 2147483000) {
-      this.nextNotificationId = 2000;
+  private getLocationId(notificationId: number): string | null {
+    const locationids = JSON.parse(localStorage.getItem('locations') || '[]').map((location: any) => location.id);
+    for (const locationId of locationids) {
+      for (let i = FIRST_NOTIFICATION_ID; i < MAX_NOTIFICATION_ID; i++) {
+        const content = `${locationId}:${i}`;
+        const hash = crypto.SHA256(content).toString(crypto.enc.Hex);
+        const id = parseInt(hash.substring(0, 8), 16);
+        if (id === notificationId) {
+          return locationId;
+        }
+      }
     }
-
-    return this.nextNotificationId;
+    return null;
   }
 
   private armTypeToText(armType: ARM_TYPE): string {
