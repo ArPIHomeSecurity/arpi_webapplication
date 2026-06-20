@@ -11,15 +11,6 @@ import { CapacitorService } from '@app/services/capacitor.service';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { Subscription } from 'rxjs';
 
-enum BiometricStatus {
-  Undefined, // not yet checked
-  NotAvailable, // not available on the device
-  Available, // available but not yet allowed
-  PendingApproval, // waiting for user approval
-  Enabled, // allowed and already in use
-  Disabled, // not allowed
-  AuthenticationFailed // failed to authenticate with biometric
-}
 
 @Component({
   styleUrls: ['login.component.scss'],
@@ -40,16 +31,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   hide = true;
   userName = '';
 
+  // identify intentional logout to avoid biometric login after logout
   isLogout = false;
 
   goBackSubscription: Subscription;
 
-  /**
-   * Use biometric authentication
-   */
-  BIOMETRIC_STATUSES = BiometricStatus;
-  useBiometric: BiometricStatus = BiometricStatus.Undefined;
+  // is the user logged in
+  isLoggedIn = false;
+  // biometric is available on the platform
   isBiometricAvailable = false;
+  // biometric is enabled for the selected location
+  // null means not set yet, true means enabled, false means disabled
+  isBiometricEnabled: boolean | null = false;
+  // biometric login is running
+  isBiometricRunning = false;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
@@ -86,8 +81,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.accessCodeField?.nativeElement.focus();
 
           this.biometricService.isAvailable().then(isAvailable => {
+            this.isBiometricAvailable = isAvailable;
             if (isAvailable) {
-              this.isBiometricAvailable = true;
               const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
               const locationId = localStorage.getItem('selectedLocationId');
               const useBiometric = status[locationId];
@@ -95,22 +90,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
               if (useBiometric === true) {
                 // allowed
-                this.useBiometric = BiometricStatus.Enabled;
+                this.isBiometricEnabled = true;
 
                 // start biometric login only if not logout
                 if (!this.isLogout) {
-                  this.biometricLogin();
+                  this.loginBiometric();
                 }
               } else if (useBiometric === false) {
                 // not allowed so use the manual login
-                this.useBiometric = BiometricStatus.Disabled;
+                this.isBiometricEnabled = false;
               } else {
                 // available so ask the user to allow it after successful login
-                this.useBiometric = BiometricStatus.Available;
+                this.isBiometricEnabled = null;
               }
-            } else {
-              // not available so normal login
-              this.useBiometric = BiometricStatus.NotAvailable;
             }
           });
         } else {
@@ -121,12 +113,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.updateForms();
-  }
-
-  getBiometricStatus(): BiometricStatus {
-    const status: Map<string, BiometricStatus> = JSON.parse(localStorage.getItem('biometricEnabled'));
-    const locationId = localStorage.getItem('selectedLocationId');
-    return status.get(locationId) || BiometricStatus.Undefined;
   }
 
   ngOnDestroy() {
@@ -188,14 +174,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  canLoginManually() {
+  askLogin() {
     return (
-      this.isRegistered &&
-      (this.useBiometric === BiometricStatus.Disabled ||
-        this.useBiometric === BiometricStatus.Available ||
-        this.useBiometric === BiometricStatus.NotAvailable ||
-        this.useBiometric === BiometricStatus.AuthenticationFailed ||
-        this.isLogout)
+      this.isRegistered && !this.isLoggedIn && !this.isBiometricRunning
     );
   }
 
@@ -210,22 +191,17 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe({
           next: result => {
             if (result) {
-              if (
-                this.useBiometric === BiometricStatus.Enabled ||
-                this.useBiometric === BiometricStatus.NotAvailable ||
-                this.useBiometric === BiometricStatus.Disabled ||
-                this.useBiometric === BiometricStatus.AuthenticationFailed ||
-                this.isLogout
-              ) {
-                // already allowed or not available so just navigate forward
+              this.isLoggedIn = true;
+              if (this.isBiometricEnabled !== null) {
+                // biometric already allowed or not available so just navigate forward
                 this.navigateForward();
-              } else if (this.useBiometric === BiometricStatus.Available) {
+              }
+              else {
                 // ask the user to allow biometric
-                this.useBiometric = BiometricStatus.PendingApproval;
+                this.isBiometricRunning = true;
               }
             } else {
               this.error = 'invalid access code';
-              this.loading = false;
               this.accessCode.setValue(null);
             }
           },
@@ -238,7 +214,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             } else {
               this.error = 'no connection';
             }
-            this.loading = false;
           }
         });
     } else {
@@ -247,6 +222,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Navigate forward after successful login or registration.
+   * Go to returnUrl if set, otherwise go to home page.
+   */
   private navigateForward() {
     const returnUrl = JSON.parse(localStorage.getItem('returnUrl'));
     console.debug('Navigating to', returnUrl);
@@ -259,24 +238,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   canAskBiometric() {
-    return this.useBiometric === BiometricStatus.PendingApproval && !this.isLogout;
-  }
-
-  canStartLoginWithBiometric() {
-    return this.isBiometricAvailable && this.useBiometric === BiometricStatus.Enabled;
+    return this.isBiometricAvailable && this.isBiometricEnabled === null && this.isLoggedIn;
   }
 
   canLoginWithBiometric() {
-    return this.useBiometric === BiometricStatus.Enabled && !this.isLogout;
+    return this.isBiometricAvailable && this.isBiometricEnabled && !this.isBiometricRunning;
   }
 
-  async biometricLogin() {
+  runningLoginWithBiometric() {
+    return this.isBiometricAvailable && this.isBiometricEnabled && this.isBiometricRunning;
+  }
+
+  async loginBiometric() {
     console.debug('start biometric login');
     this.loading = true;
+    this.isBiometricRunning = true;
     const verified = await this.biometricService.verifyIdentity();
     if (!verified) {
-      this.useBiometric = BiometricStatus.AuthenticationFailed;
+      this.isBiometricEnabled = false;
       this.loading = false;
+      this.isBiometricRunning = false;
       return;
     }
 
@@ -290,7 +271,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (accessCode) {
       this.authenticationService
         .login(accessCode)
-        .pipe(finalize(() => (this.loading = false)))
+        .pipe(finalize(() => {
+          this.loading = false;
+          this.isBiometricRunning = false;
+        }))
         .subscribe({
           next: result => {
             console.debug('Biometric login result:', result);
@@ -298,6 +282,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.navigateForward();
             } else {
               this.error = 'invalid access code';
+              this.isBiometricEnabled = false;
+              localStorage.removeItem('biometricEnabled');
             }
           },
           error: error => {
@@ -306,13 +292,21 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.error = 'no connection';
             } else if (error && 'error' in error && 'error' in error.error) {
               this.error = error.error.error;
+              if (this.error === 'invalid access code') {
+                // re-enable biometric login if the credentials are not found or if there is an error
+                localStorage.removeItem('biometricEnabled');
+                this.isBiometricEnabled = false;
+              }
             } else {
               this.error = 'no connection';
             }
           }
         });
     } else {
-      this.useBiometric = BiometricStatus.AuthenticationFailed;
+      // re-enable biometric login if the credentials are not found or if there is an error
+      localStorage.removeItem('biometricEnabled');
+      this.isBiometricEnabled = false;
+      this.isBiometricRunning = false;
     }
   }
 
@@ -321,7 +315,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (accessCode) {
       const verified = await this.biometricService.verifyIdentity();
       if (!verified) {
-        this.useBiometric = BiometricStatus.AuthenticationFailed;
+        this.isBiometricEnabled = false;
         return;
       }
 
@@ -334,7 +328,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.debug('Saving access code', accessCode, 'for location', locationId);
       // update component state
       this.biometricService.setAccessCode(locationId, accessCode);
-      this.useBiometric = BiometricStatus.Enabled;
+      this.isBiometricEnabled = true;
 
       // update local storage
       const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
