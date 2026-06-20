@@ -249,12 +249,11 @@ export class EventService {
 
   private attachNotificationListeners(socket: any, locationId: string, locationName: string) {
     socket.on('system_state_change', (monitoringStateEvent: any) => {
-      const stateValue = monitoringStateEvent?.state;
-      if (!stateValue || typeof stateValue !== 'string') {
+      if (!monitoringStateEvent || typeof monitoringStateEvent !== 'string') {
         return;
       }
 
-      const monitoringState = string2MonitoringState(stateValue);
+      const monitoringState = string2MonitoringState(monitoringStateEvent);
       const previousState = this.lastMonitoringState.get(locationId);
       this.lastMonitoringState.set(locationId, monitoringState);
 

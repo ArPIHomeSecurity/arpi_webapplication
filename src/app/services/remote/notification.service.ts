@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
 import { ARM_TYPE } from '@app/models';
 
@@ -15,7 +15,7 @@ const MAX_NOTIFICATION_ID = 9999;
   providedIn: 'root'
 })
 export class NotificationService {
-  private readonly channelId = 'arpi_events';
+  private readonly alertChannelId = 'arpi_alerts';
   private channelReady = false;
   private permissionChecked = false;
   private nextNotificationId = FIRST_NOTIFICATION_ID;
@@ -38,23 +38,36 @@ export class NotificationService {
     });
   }
 
+  private armTypeToText(armType: ARM_TYPE): string {
+    switch (armType) {
+      case ARM_TYPE.AWAY:
+        return 'away';
+      case ARM_TYPE.STAY:
+        return 'stay';
+      case ARM_TYPE.MIXED:
+        return 'mixed';
+      default:
+        return 'unknown';
+    }
+  }
+
   async notifyAlert(locationName: string, locationId: string): Promise<void> {
     // TODO: translation
-    await this.schedule(locationId, 'ArPI alert', `Location: ${locationName}\n System is in alert state.`);
+    await this.schedule(this.alertChannelId, locationId, 'ArPI alert', `Location: ${locationName}\nSystem is in alert state.`);
   }
 
   async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
     // TODO: translation
     const armTypeText = this.armTypeToText(armType);
-    await this.schedule(locationId, 'ArPI armed', `Location: ${locationName}\n System armed (${armTypeText}).`);
+    await this.schedule(undefined, locationId, 'ArPI armed', `Location: ${locationName}\nSystem armed (${armTypeText}).`);
   }
 
   async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
     // TODO: translation
-    await this.schedule(locationId, 'ArPI disarmed', `Location: ${locationName}\n System disarmed.`);
+    await this.schedule(undefined, locationId, 'ArPI disarmed', `Location: ${locationName}\nSystem disarmed.`);
   }
 
-  private async schedule(locationId: string, title: string, body: string): Promise<void> {
+  private async schedule(channelId: string | undefined, locationId: string, title: string, body: string): Promise<void> {
     const platform = Capacitor.getPlatform();
     console.log(`Scheduling notification on platform: ${platform}, title: ${title}, body: ${body}`);
 
@@ -65,15 +78,23 @@ export class NotificationService {
         return;
       }
 
-      const result = await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: this.getNotificationId(locationId),
-            title,
-            body,
-            channelId: this.channelId,
-          }
-        ]
+      let notification: LocalNotificationSchema = {
+        id: this.getNotificationId(locationId),
+        title: title,
+        body: body,
+      };
+
+      if (channelId) {
+        notification.channelId = channelId;
+      }
+      const result = await LocalNotifications.schedule({notifications: [notification]})
+      .then((result) => {
+        console.log('Local notification scheduled successfully:', JSON.stringify(result));
+        return result;
+      })
+      .catch((error) => {
+        console.error('Error scheduling local notification:', error);
+        return null;
       });
       console.log('Local notification scheduled:', JSON.stringify(result));
       return;
@@ -118,12 +139,12 @@ export class NotificationService {
       console.log('Existing local notification channels:', JSON.stringify(channels));
 
       const result = await LocalNotifications.createChannel({
-        id: this.channelId,
-        name: 'ArPI events',
-        description: 'Alert and arm/disarm state changes',
+        id: this.alertChannelId,
+        name: 'ArPI alerts',
+        description: 'Alert notifications',
         importance: 5,
-        visibility: 0,
-        vibration: true
+        vibration: true,
+        sound: 'siren'
       });
       console.log('Local notification channel creation result:', JSON.stringify(result));
       this.channelReady = true;
@@ -168,7 +189,7 @@ export class NotificationService {
   private getNotificationId(locationId: string): number {
     const content = `${locationId}:${this.nextNotificationId}`;
     const hash = crypto.SHA256(content).toString(crypto.enc.Hex);
-    const id = parseInt(hash.substring(0, 8), 16);
+    const id = parseInt(hash.substring(0, 6), 16) | 0; // ensure it's a 32-bit signed integer
     this.nextNotificationId++;
     return id;
   }
@@ -186,18 +207,5 @@ export class NotificationService {
       }
     }
     return null;
-  }
-
-  private armTypeToText(armType: ARM_TYPE): string {
-    switch (armType) {
-      case ARM_TYPE.AWAY:
-        return 'away';
-      case ARM_TYPE.STAY:
-        return 'stay';
-      case ARM_TYPE.MIXED:
-        return 'mixed';
-      default:
-        return 'unknown';
-    }
   }
 }
