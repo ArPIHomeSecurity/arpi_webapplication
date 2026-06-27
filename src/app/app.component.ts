@@ -12,7 +12,7 @@ import { CountdownComponent } from 'ngx-countdown';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
-import { ROLE_TYPES } from './models';
+import { Location, ROLE_TYPES } from './models';
 import { AuthenticationService, LoaderService, MonitoringService } from './services';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
@@ -30,10 +30,10 @@ export class AppComponent implements OnInit {
   // display error message of the components
   displayLoader = false;
   disablePage = false;
-  message: string = null;
+  message: string | null = null;
 
-  locations: { name: string; id: string }[] = [];
-  selectedLocationId: string;
+  locations: Location[] = [];
+  selectedLocationId: string | null = null;
 
   locales = [
     { name: 'Magyar', id: 'hu' },
@@ -137,8 +137,8 @@ export class AppComponent implements OnInit {
       this.isDeviceRegistered = isRegistered;
     });
 
-    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
-    this.locations = locations.sort((a, b) => a.order - b.order).map(i => ({ name: i.name, id: i.id }));
+    const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
+    this.locations = locations.sort((a, b) => a.order - b.order);
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
 

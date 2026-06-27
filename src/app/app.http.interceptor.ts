@@ -1,10 +1,10 @@
 import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+    HttpResponse
 } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
@@ -59,7 +59,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
 
     if (this.backendUrl == '') {
       console.warn('No URL configured for backend requests!', this.backendUrl);
-      const locations = JSON.parse(localStorage.getItem('locations') || '[]');
+      const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
       if (locations.length > 0) {
         this.router.navigate(['/backend-error']);
       } else {

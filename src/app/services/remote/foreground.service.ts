@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { ForegroundService, ServiceType } from '@capawesome-team/capacitor-android-foreground-service';
+import { NOTIFICATIONS_ENABLED_KEY } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,12 @@ export class ForegroundEventsService {
   }
 
   async start(): Promise<void> {
+    const value = localStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
+    if (value !== 'true') {
+      console.log('[ForegroundEventsService] start skipped, notifications are disabled');
+      return;
+    }
+
     if (Capacitor.getPlatform() !== 'android') {
       console.log('[ForegroundEventsService] start skipped, platform is not android');
       return;

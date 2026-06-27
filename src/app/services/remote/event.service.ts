@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ARM_TYPE, MONITORING_STATE, string2ArmType, string2MonitoringState } from '@app/models';
+import { ARM_TYPE, Location, MONITORING_STATE, string2ArmType, string2MonitoringState } from '@app/models';
 import { fromEvent, Observable, Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
@@ -70,9 +70,9 @@ export class EventService {
   }
 
   connect() {
-    const selectedLocationId = localStorage.getItem('selectedLocationId');
-    const locations = this.readJson<Array<{ id?: string } & Record<string, any>>>(localStorage.getItem('locations'), []);
-    const deviceTokens = this.readJson<Record<string, string>>(localStorage.getItem('deviceTokens'), {});
+    const selectedLocationId = localStorage.getItem('selectedLocationId') || "";
+    const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
 
     console.log('[EventService] connect called', JSON.stringify({
       selectedLocationId,
@@ -80,7 +80,7 @@ export class EventService {
       deviceTokenCount: Object.keys(deviceTokens).length,
     }));
 
-    const nextConfigs = new Map<string, { backendUrl: string; deviceToken: string; locationName: string }>();
+    const eventBackendConfig = new Map<string, { backendUrl: string; deviceToken: string; locationName: string }>();
 
     for (const location of locations) {
       if (!location?.id) {
@@ -97,14 +97,14 @@ export class EventService {
         continue;
       }
 
-      nextConfigs.set(location.id, {
+      eventBackendConfig.set(location.id, {
         backendUrl,
         deviceToken,
-        locationName: typeof location.name === 'string' ? location.name : ''
+        locationName: location.name
       });
     }
 
-    for (const [locationId, config] of nextConfigs.entries()) {
+    for (const [locationId, config] of eventBackendConfig.entries()) {
       const previousConfig = this.socketConfig.get(locationId);
       if (
         previousConfig &&
@@ -146,7 +146,7 @@ export class EventService {
     }
 
     for (const [locationId, socket] of this.sockets.entries()) {
-      if (!nextConfigs.has(locationId)) {
+      if (!eventBackendConfig.has(locationId)) {
         socket.disconnect();
         this.sockets.delete(locationId);
         this.socketConfig.delete(locationId);
@@ -159,13 +159,13 @@ export class EventService {
     this.socketConnected$.next(!!this.socket?.connected);
 
     console.log('[EventService] connect finished', JSON.stringify({
-      configuredSocketCount: nextConfigs.size,
+      configuredSocketCount: eventBackendConfig.size,
       activeSocketCount: this.sockets.size,
       selectedLocationId,
       selectedSocketConnected: !!this.socket?.connected,
     }));
 
-    if (nextConfigs.size > 0) {
+    if (eventBackendConfig.size > 0) {
       void this.foregroundEventsService.start();
     } else {
       void this.foregroundEventsService.stop();
@@ -212,27 +212,17 @@ export class EventService {
       }
     }
 
+    // for other locations, use the primary backend if available
     if (location.scheme && location.primaryDomain && location.primaryPort) {
       return `${location.scheme}://${location.primaryDomain}:${location.primaryPort}`;
     }
 
+    // fallback to secondary backend if available
     if (location.scheme && location.secondaryDomain && location.secondaryPort) {
       return `${location.scheme}://${location.secondaryDomain}:${location.secondaryPort}`;
     }
 
     return null;
-  }
-
-  private readJson<T>(value: string | null, fallback: T): T {
-    if (!value) {
-      return fallback;
-    }
-
-    try {
-      return JSON.parse(value) as T;
-    } catch (error) {
-      return fallback;
-    }
   }
 
   private disconnectAll() {

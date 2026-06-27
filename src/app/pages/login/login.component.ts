@@ -83,8 +83,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.biometricService.isAvailable().then(isAvailable => {
             this.isBiometricAvailable = isAvailable;
             if (isAvailable) {
-              const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
+              const status = JSON.parse(localStorage.getItem('biometricEnabled') || '{}');
               const locationId = localStorage.getItem('selectedLocationId');
+
+              if (!locationId) {
+                console.error('Location ID is not set');
+                return;
+              }
+
               const useBiometric = status[locationId];
               console.debug('Biometric status:', JSON.stringify(status), locationId, useBiometric, typeof useBiometric);
 

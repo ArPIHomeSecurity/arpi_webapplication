@@ -41,7 +41,7 @@ export class LocationDetailsComponent {
     public dialog: MatDialog
   ) {
     this.route.params.subscribe(params => {
-      const locations = JSON.parse(localStorage.getItem('locations') || '[]');
+      const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
       this.firstLocation = locations.length === 0;
       if (params.id) {
         this.location = locations.find(location => location.id === params.id) || null;
@@ -174,13 +174,13 @@ export class LocationDetailsComponent {
   }
 
   alreadyExists() {
-    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
-    return locations.some(l => l.id === this.location.id);
+    const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
+    return locations.some(l => l.id === this.location?.id);
   }
 
   cantSave() {
     // do not save if location Id is not set
-    if (!this.location.id) {
+    if (!this.location?.id) {
       return true;
     }
 
@@ -190,12 +190,12 @@ export class LocationDetailsComponent {
     }
 
     // do not save if location form is invalid or pristine
-    if (this.locationForm.invalid || this.locationForm.pristine) {
+    if (this.locationForm?.invalid || this.locationForm?.pristine) {
       return true;
     }
 
     // do not save if primary or secondary is dirty and not tested
-    if (this.locationForm.controls.primaryDomain.dirty || this.locationForm.controls.secondaryDomain.dirty) {
+    if (this.locationForm?.controls?.primaryDomain?.dirty || this.locationForm?.controls?.secondaryDomain?.dirty) {
       if (this.testResult === null) {
         return true;
       }
@@ -210,7 +210,7 @@ export class LocationDetailsComponent {
 
   onSubmit() {
     const location = this.prepareLocation();
-    const locations = JSON.parse(localStorage.getItem('locations') || '[]');
+    const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
     const index = locations.findIndex(l => l.id === location.id);
     if (index >= 0) {
       locations[index] = location;
