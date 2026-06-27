@@ -2,11 +2,32 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { NativeBiometric } from '@capgo/capacitor-native-biometric';
 
+export const BIOMETRIC_ENABLED_KEY = 'biometricEnabled';
+
 @Injectable({
   providedIn: 'root'
 })
 export class BiometricService {
   constructor() {}
+
+  isBiometricEnabled(locationId: string): boolean | null {
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || '{}');
+    const value = status[locationId];
+    return value === undefined ? null : value;
+  }
+
+  enableBiometricLogin(locationId: string): void {
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || '{}');
+    // restore initial state when user can decide at login if biometric should be used
+    status[locationId] = null;
+    localStorage.setItem(BIOMETRIC_ENABLED_KEY, JSON.stringify(status));
+  }
+
+  disableBiometricLogin(locationId: string): void {
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || '{}');
+    status[locationId] = false;
+    localStorage.setItem(BIOMETRIC_ENABLED_KEY, JSON.stringify(status));
+  }
 
   isAvailable(): Promise<boolean> {
     if (!Capacitor.isNativePlatform()) {

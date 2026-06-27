@@ -4,6 +4,8 @@ import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-no
 
 import { ARM_TYPE } from '@app/models';
 
+export const NOTIFICATIONS_ENABLED_KEY = 'notificationsEnabled';
+
 
 const FIRST_NOTIFICATION_ID = 1000;
 
@@ -48,18 +50,46 @@ export class NotificationService {
     }
   }
 
+  isAvailable(): boolean {
+    const platform = Capacitor.getPlatform();
+    if (platform === 'android') {
+      return true;
+    }
+    if (platform === 'web') {
+      return typeof window !== 'undefined' && 'Notification' in window && window.isSecureContext;
+    }
+    return false;
+  }
+
+  isEnabled(): boolean {
+    const value = localStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
+    // null means disabled by default
+    return value === 'true';
+  }
+
+  enableNotifications(): void {
+    localStorage.setItem(NOTIFICATIONS_ENABLED_KEY, 'true');
+  }
+
+  disableNotifications(): void {
+    localStorage.removeItem(NOTIFICATIONS_ENABLED_KEY);
+  }
+
   async notifyAlert(locationName: string, locationId: string): Promise<void> {
+    if (!this.isEnabled()) { return; }
     // TODO: translation
     await this.schedule(this.alertChannelId, locationId, 'ArPI alert', `Location: ${locationName}\nSystem is in alert state.`);
   }
 
   async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
+    if (!this.isEnabled()) { return; }
     // TODO: translation
     const armTypeText = this.armTypeToText(armType);
     await this.schedule(undefined, locationId, 'ArPI armed', `Location: ${locationName}\nSystem armed (${armTypeText}).`);
   }
 
   async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
+    if (!this.isEnabled()) { return; }
     // TODO: translation
     await this.schedule(undefined, locationId, 'ArPI disarmed', `Location: ${locationName}\nSystem disarmed.`);
   }
