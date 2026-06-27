@@ -206,13 +206,45 @@
         <mat-divider></mat-divider>
         <h3 matSubheader i18n="@@user biometric login">Biometric login</h3>
         <mat-list-item>
-          <mat-icon matListItemIcon>fingerprint</mat-icon>
-          @if (biometricEnabled()) {
-            <span matListItemTitle i18n="@@user biometric enabled">Enabled</span>
-          }
-          @if (!biometricEnabled()) {
-            <span matListItemTitle i18n="@@user biometric disabled">Disabled</span>
-          }
+          <mat-icon matListItemIcon>
+            @if (biometricEnabled()) {
+              fingerprint
+            } @else {
+              fingerprint_off
+            }
+          </mat-icon>
+          <span matListItemTitle i18n="@@user biometric login">Biometric login</span>
+          <mat-slide-toggle
+            matListItemMeta
+            color="primary"
+            [checked]="biometricEnabled()"
+            [disabled]="disabled"
+            (change)="$event.checked ? enableBiometricLogin() : disableBiometricLogin()"
+            >
+          </mat-slide-toggle>
+        </mat-list-item>
+      }
+
+      <!-- Notifications -->
+      @if (notificationsAvailable) {
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListItemIcon>
+            @if (notificationsEnabled()) {
+              notifications_active
+            } @else {
+              notifications_off
+            }
+          </mat-icon>
+          <span matListItemTitle i18n="@@user notifications">Notifications</span>
+          <mat-slide-toggle
+            matListItemMeta
+            color="primary"
+            [checked]="notificationsEnabled()"
+            [disabled]="disabled"
+            (change)="$event.checked ? enableNotifications() : disableNotifications()"
+            >
+          </mat-slide-toggle>
         </mat-list-item>
       }
     </mat-list>
@@ -281,7 +313,6 @@
       <!-- Biometric login -->
       @if (biometricAvailable) {
         <div>
-          <mat-divider></mat-divider>
           @if (!biometricEnabled()) {
             <button
               mat-menu-item
@@ -300,6 +331,32 @@
               (click)="disableBiometricLogin()"
               >
               <span i18n="@@user disable biometric">Disable biometric login</span>
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Notifications -->
+      @if (notificationsAvailable) {
+        <div>
+          @if (!notificationsEnabled()) {
+            <button
+              mat-menu-item
+              color="primary"
+              [disabled]="disabled"
+              (click)="enableNotifications()"
+              >
+              <span i18n="@@user enable notifications">Enable notifications</span>
+            </button>
+          }
+          @if (notificationsEnabled()) {
+            <button
+              mat-menu-item
+              color="warn"
+              [disabled]="disabled"
+              (click)="disableNotifications()"
+              >
+              <span i18n="@@user disable notifications">Disable notifications</span>
             </button>
           }
         </div>

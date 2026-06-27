@@ -6,4 +6,10 @@ export interface BiometricService {
   setAccessCode(server: string, accessCode: string): Promise<void>;
 
   verifyIdentity(): Promise<boolean>;
+
+  isBiometricEnabled(locationId: string): boolean;
+
+  enableBiometricLogin(locationId: string): void;
+
+  disableBiometricLogin(locationId: string): void;
 }

@@ -7,6 +7,12 @@ const config: CapacitorConfig = {
   server: {
     cleartext: true,
     androidScheme: 'http'
+  },
+  plugins: {
+    LocalNotifications: {
+      iconColor: '#FF0000',
+      presentationOptions: ["badge", "sound", "banner", "list"]
+    }
   }
 };
 

@@ -5,6 +5,7 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 
 import { Card, ROLE_TYPES, User } from '@app/models';
 import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
+import { NotificationService } from '@app/services/remote/notification.service';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
 import { catchError, finalize, forkJoin, Observable, of, throwError } from 'rxjs';
@@ -40,7 +41,9 @@ export class UserCardComponent implements OnInit {
   hasSshKey = false;
   hasMCPToken: boolean | null = null;
   biometricAvailable = false;
-  useBiometric: boolean = null;
+  useBiometric: boolean | null = null;
+  useNotifications: boolean | null = null;
+  notificationsAvailable = false;
 
   dialog = inject(MatDialog);
 
@@ -51,11 +54,11 @@ export class UserCardComponent implements OnInit {
     @Inject('UserService') private userService: UserService,
     @Inject('BiometricService') private biometricService: BiometricService,
 
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private notificationService: NotificationService
   ) {
-    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
-    const locationId = localStorage.getItem('selectedLocationId');
-    this.useBiometric = status[locationId];
+    this.useBiometric = this.biometricService.isBiometricEnabled(localStorage.getItem('selectedLocationId'));
+    this.useNotifications = this.notificationService.isEnabled();
 
     this.eventService.listen('card_registered').subscribe(result => {
       this.registeringCard = false;
@@ -87,6 +90,7 @@ export class UserCardComponent implements OnInit {
       this.biometricService.isAvailable().then(result => {
         this.biometricAvailable = result;
       });
+      this.notificationsAvailable = this.notificationService.isAvailable();
     }
 
     let loadHasSshKey: Observable<boolean>;
@@ -365,26 +369,29 @@ export class UserCardComponent implements OnInit {
   }
 
   enableBiometricLogin() {
-    this.loading = true;
-    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
-
-    // restore initial state when use can decide at login if biometric should be used
-    status[locationId] = null;
-
-    localStorage.setItem('biometricEnabled', JSON.stringify(status));
+    this.biometricService.enableBiometricLogin(locationId);
     this.useBiometric = null;
-    this.loading = false;
   }
 
   disableBiometricLogin() {
-    this.loading = true;
-    const status = JSON.parse(localStorage.getItem('biometricEnabled')) || {};
     const locationId = localStorage.getItem('selectedLocationId');
-    status[locationId] = false;
-    localStorage.setItem('biometricEnabled', JSON.stringify(status));
+    this.biometricService.disableBiometricLogin(locationId);
     this.useBiometric = false;
-    this.loading = false;
+  }
+
+  notificationsEnabled(): boolean {
+    return this.useNotifications === true;
+  }
+
+  enableNotifications() {
+    this.notificationService.enableNotifications();
+    this.useNotifications = true;
+  }
+
+  disableNotifications() {
+    this.notificationService.disableNotifications();
+    this.useNotifications = false;
   }
 
   getMCPToken() {

@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { jwtDecode } from 'jwt-decode';
@@ -24,7 +24,7 @@ export class AuthenticationService implements AuthenticationService {
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const locationId = this.getLocationId();
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
     return this.http
       .post(
         '/api/user/authenticate',
@@ -36,7 +36,7 @@ export class AuthenticationService implements AuthenticationService {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
             deviceTokens[locationId] = response.device_token;
             localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
@@ -61,7 +61,7 @@ export class AuthenticationService implements AuthenticationService {
   logout(manualAction = true): void {
     // clear token remove user from local storage to log user out
     const locationId = this.getLocationId();
-    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
     if (locationId in userTokens) {
       delete userTokens[locationId];
     }
@@ -94,8 +94,8 @@ export class AuthenticationService implements AuthenticationService {
       try {
         return (jwtDecode(userToken) as any).role;
       } catch (error) {}
-      return '';
     }
+    return '';
   }
 
   getUsername(): string {
@@ -104,8 +104,8 @@ export class AuthenticationService implements AuthenticationService {
       try {
         return (jwtDecode(userToken) as any).name;
       } catch (error) {}
-      return '';
     }
+    return '';
   }
 
   getUserId(): number {
@@ -115,6 +115,7 @@ export class AuthenticationService implements AuthenticationService {
         return (jwtDecode(userToken) as any).id;
       } catch (error) {}
     }
+    return 0;
   }
 
   getToken(): string {
@@ -123,10 +124,11 @@ export class AuthenticationService implements AuthenticationService {
     } else if (this.getDeviceToken()) {
       return this.getDeviceToken();
     }
+    return '';
   }
 
   getLocationId(): string {
-    return localStorage.getItem('selectedLocationId');
+    return localStorage.getItem('selectedLocationId') || '';
   }
 
   /**
@@ -137,18 +139,18 @@ export class AuthenticationService implements AuthenticationService {
   getUserToken(): string {
     const locationId = this.getLocationId();
     if (!locationId) {
-      return;
+      return '';
     }
 
     const userToken = localStorage.getItem(`${locationId}:userToken`);
     if (!userToken) {
       // check in new format
-      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
-      return userTokens[locationId];
+      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
+      return userTokens[locationId] || '';
     }
 
     // save in new format
-    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
     userTokens[locationId] = userToken;
     localStorage.setItem('userTokens', JSON.stringify(userTokens));
 
@@ -161,19 +163,19 @@ export class AuthenticationService implements AuthenticationService {
       userData = jwtDecode(userToken);
     } catch (error) {
       console.error('Invalid token');
-      return;
+      return '';
     }
 
     // check expiry
     if (Date.now() / 1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
       // remove token
-      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
       if (locationId in userTokens) {
         delete userTokens[locationId];
       }
 
       this.isSessionValidSubject.next(false);
-      return;
+      return '';
     }
 
     return userToken;
@@ -190,7 +192,7 @@ export class AuthenticationService implements AuthenticationService {
       jwtDecode(token);
 
       // save in new format
-      const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
       userTokens[locationId] = token;
       localStorage.setItem('userTokens', JSON.stringify(userTokens));
 
@@ -217,20 +219,20 @@ export class AuthenticationService implements AuthenticationService {
     }
 
     if (!locationId) {
-      return;
+      return '';
     }
 
-    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || null;
+    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || '';
     if (!deviceToken) {
       // check in new format
-      const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+      const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
       if (locationId in deviceTokens) {
         return deviceTokens[locationId];
       }
     }
 
     // save in new format
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
     if (deviceToken) {
       deviceTokens[locationId] = deviceToken;
       localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
@@ -252,7 +254,7 @@ export class AuthenticationService implements AuthenticationService {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
             deviceTokens[locationId] = response.device_token;
             localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
@@ -270,14 +272,14 @@ export class AuthenticationService implements AuthenticationService {
     const locationId = this.getLocationId();
 
     // remove device token
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens')) || {};
+    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
     if (locationId in deviceTokens) {
       delete deviceTokens[locationId];
     }
     localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
 
     // remove user token
-    const userTokens = JSON.parse(localStorage.getItem('userTokens')) || {};
+    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
     if (locationId in userTokens) {
       delete userTokens[locationId];
     }
@@ -295,16 +297,17 @@ export class AuthenticationService implements AuthenticationService {
     return this.isDeviceRegisteredSubject.pipe(startWith(!!this.getDeviceToken()));
   }
 
-  getRegisteredUserId(): number {
+  getRegisteredUserId(): number | null {
     const deviceToken = this.getDeviceToken();
     if (deviceToken) {
       try {
         return (jwtDecode(deviceToken) as any).user_id;
       } catch (error) {}
     }
+    return null;
   }
 
-  getDeviceDomain(): string {
+  getDeviceDomain(): string | null {
     return localStorage.getItem('backend.domain');
   }
 }

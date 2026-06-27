@@ -48,7 +48,7 @@
   }
 
   <!-- login manually/biometric -->
-  @if (canLoginManually()) {
+  @if (askLogin()) {
     <mat-card class="login container-item">
       <mat-card-header>
         <mat-card-title-group>
@@ -98,10 +98,10 @@
                 </mat-icon>
               }
             </button>
-            @if (canStartLoginWithBiometric()) {
+            @if (canLoginWithBiometric()) {
               <button
                 mat-raised-button
-                (click)="biometricLogin()"
+                (click)="loginBiometric()"
                 [disabled]="loading"
                 color="primary"
                 >
@@ -187,7 +187,7 @@
   }
 
   <!-- biometric login -->
-  @if (canLoginWithBiometric()) {
+  @if (runningLoginWithBiometric()) {
     <mat-card class="biometric container-item">
       <mat-card-header>
         <mat-spinner mat-card-avatar diameter="32"></mat-spinner>

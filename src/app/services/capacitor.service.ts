@@ -3,17 +3,27 @@ import { Injectable } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Subject } from 'rxjs';
 
+export interface BackButtonEvent {
+  canGoBack: boolean;
+  preventDefault: () => void;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CapacitorService {
-  goBack = new Subject<void>();
+  goBack = new Subject<BackButtonEvent>();
 
   constructor() {
     App.addListener('backButton', ({ canGoBack }) => {
-      console.log('Pressed backButton');
-      this.goBack.next();
-      if (canGoBack) {
+      let defaultPrevented = false;
+      this.goBack.next({
+        canGoBack,
+        preventDefault: () => {
+          defaultPrevented = true;
+        }
+      });
+      if (canGoBack && !defaultPrevented) {
         window.history.back();
       }
     });
