@@ -466,6 +466,10 @@
         <source>The user was not found!</source>
         <target state="translated">A felhasználó nem található!</target>
       </trans-unit>
+      <trans-unit id="user notifications" datatype="html">
+        <source>Notifications</source>
+        <target state="translated">Értesítések</target>
+      </trans-unit>
       <trans-unit id="failed update" datatype="html">
         <source>Failed to update!</source>
         <target state="translated">Nem sikerült megváltoztatni!</target>
@@ -1614,17 +1618,13 @@
         <source>Biometric login</source>
         <target state="translated">Biometrikus bejelentkezés</target>
       </trans-unit>
-      <trans-unit id="user biometric enabled" datatype="html">
-        <source>Enabled</source>
-        <target state="translated">Engedélyezett</target>
-      </trans-unit>
-      <trans-unit id="user biometric disabled" datatype="html">
-        <source>Disabled</source>
-        <target state="translated">Letiltott</target>
-      </trans-unit>
       <trans-unit id="user enable biometric" datatype="html">
         <source>Enable biometric login</source>
         <target state="translated">Biometrikus bejelentkezés engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="user enable notifications" datatype="html">
+        <source>Enable notifications</source>
+        <target state="translated">Értesítések engedélyezése</target>
       </trans-unit>
       <trans-unit id="login biometric login" datatype="html">
         <source>Biometric login</source>
@@ -1661,6 +1661,10 @@
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
         <target state="translated">Biometrikus bejelentkezés letiltása</target>
+      </trans-unit>
+      <trans-unit id="user disable notifications" datatype="html">
+        <source>Disable notifications</source>
+        <target state="translated">Értesítések letiltása</target>
       </trans-unit>
       <trans-unit id="sensor settings" datatype="html">
         <source>Sensor settings</source>
