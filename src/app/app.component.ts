@@ -64,8 +64,8 @@ export class AppComponent implements OnInit {
   // theming
   width$ = new BehaviorSubject<number>(1000);
   resizeObserver!: ResizeObserver;
-  smallScreen: boolean = false;
-  darkTheme: boolean = false;
+  smallScreen = false;
+  darkTheme = false;
 
   constructor(
     @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,

@@ -11,7 +11,6 @@ import { CapacitorService } from '@app/services/capacitor.service';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   styleUrls: ['login.component.scss'],
   templateUrl: 'login.component.html',
@@ -181,9 +180,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   askLogin() {
-    return (
-      this.isRegistered && !this.isLoggedIn && !this.isBiometricRunning
-    );
+    return this.isRegistered && !this.isLoggedIn && !this.isBiometricRunning;
   }
 
   loginManually() {
@@ -201,8 +198,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               if (this.isBiometricEnabled !== null) {
                 // biometric already allowed or not available so just navigate forward
                 this.navigateForward();
-              }
-              else {
+              } else {
                 // ask the user to allow biometric
                 this.isBiometricRunning = true;
               }
@@ -277,10 +273,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (accessCode) {
       this.authenticationService
         .login(accessCode)
-        .pipe(finalize(() => {
-          this.loading = false;
-          this.isBiometricRunning = false;
-        }))
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+            this.isBiometricRunning = false;
+          })
+        )
         .subscribe({
           next: result => {
             console.debug('Biometric login result:', result);

@@ -2,7 +2,7 @@ import { LocationVersion } from './version';
 
 export class Location {
   id: string | null = null;
-  name: string = '';
+  name = '';
   scheme = 'https';
   primaryDomain = '';
   primaryPort: number | null = null;

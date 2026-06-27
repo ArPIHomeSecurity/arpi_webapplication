@@ -14,7 +14,7 @@ export class ForegroundEventsService {
   private startInFlight: Promise<void> | null = null;
 
   private async ensureNotificationPermission(): Promise<boolean> {
-    const currentPermission = (await ForegroundService.checkPermissions());
+    const currentPermission = await ForegroundService.checkPermissions();
     console.log('[ForegroundEventsService] notification permission status', JSON.stringify(currentPermission));
 
     if (currentPermission.display === 'granted') {
@@ -22,7 +22,10 @@ export class ForegroundEventsService {
     }
 
     const requestedPermission = await ForegroundService.requestPermissions();
-    console.log('[ForegroundEventsService] notification permission request result', JSON.stringify(requestedPermission));
+    console.log(
+      '[ForegroundEventsService] notification permission request result',
+      JSON.stringify(requestedPermission)
+    );
 
     return requestedPermission.display === 'granted';
   }
@@ -46,7 +49,7 @@ export class ForegroundEventsService {
         title: 'ArPI background service',
         body: 'Listening for backend events',
         smallIcon: 'ic_notification',
-        notificationChannelId: this.foregroundChannelId,
+        notificationChannelId: this.foregroundChannelId
       });
       return;
     }
@@ -71,25 +74,31 @@ export class ForegroundEventsService {
     }
 
     if (!this.foregroundChannelCreated) {
-      console.log('[ForegroundEventsService] creating notification channel', JSON.stringify({ channelId: this.foregroundChannelId }));
+      console.log(
+        '[ForegroundEventsService] creating notification channel',
+        JSON.stringify({ channelId: this.foregroundChannelId })
+      );
       await ForegroundService.createNotificationChannel({
         id: this.foregroundChannelId,
         name: 'ArPI Background Service',
         description: 'Connected to remote locations',
-        importance: 4,
+        importance: 4
       });
       this.foregroundChannelCreated = true;
       console.log('[ForegroundEventsService] notification channel created');
     }
 
-    console.log('[ForegroundEventsService] starting foreground service', JSON.stringify({
-      id: this.foregroundServiceId,
-      channelId: this.foregroundChannelId,
-      title: 'ArPI background service',
-      body: 'Listening for backend events',
-      smallIcon: 'ic_notification',
-      serviceType: ServiceType.Location
-    }));
+    console.log(
+      '[ForegroundEventsService] starting foreground service',
+      JSON.stringify({
+        id: this.foregroundServiceId,
+        channelId: this.foregroundChannelId,
+        title: 'ArPI background service',
+        body: 'Listening for backend events',
+        smallIcon: 'ic_notification',
+        serviceType: ServiceType.Location
+      })
+    );
     await ForegroundService.startForegroundService({
       id: this.foregroundServiceId,
       title: 'ArPI background service',
@@ -97,17 +106,17 @@ export class ForegroundEventsService {
       smallIcon: 'ic_notification',
       notificationChannelId: this.foregroundChannelId,
       silent: true,
-      serviceType: ServiceType.Location,
+      serviceType: ServiceType.Location
     });
     this.foregroundRunning = true;
     console.log('[ForegroundEventsService] foreground service started successfully');
 
     ForegroundService.removeAllListeners().then(() => {
-      ForegroundService.addListener('buttonClicked', (event) => {
+      ForegroundService.addListener('buttonClicked', event => {
         console.log('[ForegroundEventsService] notification action performed', JSON.stringify(event));
         if (event.buttonId === 1) {
           console.log('[ForegroundEventsService] stop button clicked, stopping foreground service');
-          ForegroundService.stopForegroundService()
+          ForegroundService.stopForegroundService();
         }
       });
     });

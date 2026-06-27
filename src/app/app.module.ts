@@ -33,6 +33,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { DigitOnlyDirective } from '@uiowa/digit-only';
 import { CountdownModule } from 'ngx-countdown';
+import { environment } from '@environments/environment';
 import { AppComponent } from './app.component';
 
 // application components
@@ -69,7 +70,6 @@ import { OutputDetailComponent, OutputListComponent } from './pages/output';
 import { ThemeService } from './services/theme.service';
 import { AUTHENTICATION_SERVICE } from './tokens';
 
-import { environment } from '@environments/environment';
 import { configureBackend } from './utils';
 
 // material components

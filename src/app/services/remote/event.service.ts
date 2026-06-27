@@ -29,7 +29,10 @@ export class EventService {
 
   private scheduleReconnect(reason: string, details?: unknown): void {
     if (this.reconnectScheduled) {
-      console.log('[EventService] reconnect already scheduled, ignoring duplicate request', JSON.stringify({ reason, details }));
+      console.log(
+        '[EventService] reconnect already scheduled, ignoring duplicate request',
+        JSON.stringify({ reason, details })
+      );
       return;
     }
 
@@ -70,15 +73,18 @@ export class EventService {
   }
 
   connect() {
-    const selectedLocationId = localStorage.getItem('selectedLocationId') || "";
+    const selectedLocationId = localStorage.getItem('selectedLocationId') || '';
     const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
     const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
 
-    console.log('[EventService] connect called', JSON.stringify({
-      selectedLocationId,
-      locationCount: locations.length,
-      deviceTokenCount: Object.keys(deviceTokens).length,
-    }));
+    console.log(
+      '[EventService] connect called',
+      JSON.stringify({
+        selectedLocationId,
+        locationCount: locations.length,
+        deviceTokenCount: Object.keys(deviceTokens).length
+      })
+    );
 
     const eventBackendConfig = new Map<string, { backendUrl: string; deviceToken: string; locationName: string }>();
 
@@ -158,12 +164,15 @@ export class EventService {
     this.socket = selectedLocationId ? this.sockets.get(selectedLocationId) : null;
     this.socketConnected$.next(!!this.socket?.connected);
 
-    console.log('[EventService] connect finished', JSON.stringify({
-      configuredSocketCount: eventBackendConfig.size,
-      activeSocketCount: this.sockets.size,
-      selectedLocationId,
-      selectedSocketConnected: !!this.socket?.connected,
-    }));
+    console.log(
+      '[EventService] connect finished',
+      JSON.stringify({
+        configuredSocketCount: eventBackendConfig.size,
+        activeSocketCount: this.sockets.size,
+        selectedLocationId,
+        selectedSocketConnected: !!this.socket?.connected
+      })
+    );
 
     if (eventBackendConfig.size > 0) {
       void this.foregroundEventsService.start();
@@ -266,10 +275,7 @@ export class EventService {
         return;
       }
 
-      if (
-        [ARM_TYPE.AWAY, ARM_TYPE.STAY, ARM_TYPE.MIXED].includes(armState) &&
-        armState !== previousArmState
-      ) {
+      if ([ARM_TYPE.AWAY, ARM_TYPE.STAY, ARM_TYPE.MIXED].includes(armState) && armState !== previousArmState) {
         void this.notificationService.notifyArmed(locationName, locationId, armState);
       }
     });

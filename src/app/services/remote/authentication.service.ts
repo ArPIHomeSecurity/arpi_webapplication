@@ -95,7 +95,7 @@ export class AuthenticationService implements AuthenticationService {
         return (jwtDecode(userToken) as any).role;
       } catch (error) {}
     }
-    return "";
+    return '';
   }
 
   getUsername(): string {
@@ -105,7 +105,7 @@ export class AuthenticationService implements AuthenticationService {
         return (jwtDecode(userToken) as any).name;
       } catch (error) {}
     }
-    return "";
+    return '';
   }
 
   getUserId(): number {
@@ -124,11 +124,11 @@ export class AuthenticationService implements AuthenticationService {
     } else if (this.getDeviceToken()) {
       return this.getDeviceToken();
     }
-    return "";
+    return '';
   }
 
   getLocationId(): string {
-    return localStorage.getItem('selectedLocationId') || "";
+    return localStorage.getItem('selectedLocationId') || '';
   }
 
   /**
@@ -139,14 +139,14 @@ export class AuthenticationService implements AuthenticationService {
   getUserToken(): string {
     const locationId = this.getLocationId();
     if (!locationId) {
-      return "";
+      return '';
     }
 
     const userToken = localStorage.getItem(`${locationId}:userToken`);
     if (!userToken) {
       // check in new format
       const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
-      return userTokens[locationId] || "";
+      return userTokens[locationId] || '';
     }
 
     // save in new format
@@ -163,7 +163,7 @@ export class AuthenticationService implements AuthenticationService {
       userData = jwtDecode(userToken);
     } catch (error) {
       console.error('Invalid token');
-      return "";
+      return '';
     }
 
     // check expiry
@@ -175,7 +175,7 @@ export class AuthenticationService implements AuthenticationService {
       }
 
       this.isSessionValidSubject.next(false);
-      return "";
+      return '';
     }
 
     return userToken;
@@ -219,10 +219,10 @@ export class AuthenticationService implements AuthenticationService {
     }
 
     if (!locationId) {
-      return "";
+      return '';
     }
 
-    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || "";
+    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || '';
     if (!deviceToken) {
       // check in new format
       const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');

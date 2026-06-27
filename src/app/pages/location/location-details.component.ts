@@ -23,8 +23,8 @@ export class LocationDetailsComponent {
   version: LocationVersion | null = null;
   boardVersion: string | null = null;
   locationForm: FormGroup | null = null;
-  newLocation: boolean = false;
-  firstLocation: boolean = false;
+  newLocation = false;
+  firstLocation = false;
 
   selectedLocationId: string | null = null;
   testResult: LocationTestResult | null = null;

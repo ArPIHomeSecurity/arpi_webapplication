@@ -6,9 +6,7 @@ import { ARM_TYPE } from '@app/models';
 
 export const NOTIFICATIONS_ENABLED_KEY = 'notificationsEnabled';
 
-
 const FIRST_NOTIFICATION_ID = 1000;
-
 
 @Injectable({
   providedIn: 'root'
@@ -21,16 +19,19 @@ export class NotificationService {
 
   constructor() {
     LocalNotifications.removeAllListeners().then(() => {
-      LocalNotifications.addListener('localNotificationActionPerformed', async (notificationAction) => {
+      LocalNotifications.addListener('localNotificationActionPerformed', async notificationAction => {
         const locationId = notificationAction.notification.extra?.locationId;
         if (locationId) {
-          console.log(`Local notification received for locationId: ${locationId}, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`);
+          console.log(
+            `Local notification received for locationId: ${locationId}, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`
+          );
           localStorage.setItem('selectedLocationId', locationId);
           window.dispatchEvent(new StorageEvent('storage', { key: 'selectedLocationId', newValue: locationId }));
           window.location.href = '/';
-        }
-        else {
-          console.warn(`Local notification received with unknown locationId, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`);
+        } else {
+          console.warn(
+            `Local notification received with unknown locationId, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`
+          );
         }
         return notificationAction.notification;
       });
@@ -76,25 +77,46 @@ export class NotificationService {
   }
 
   async notifyAlert(locationName: string, locationId: string): Promise<void> {
-    if (!this.isEnabled()) { return; }
+    if (!this.isEnabled()) {
+      return;
+    }
     // TODO: translation
-    await this.schedule(this.alertChannelId, locationId, 'ArPI alert', `Location: ${locationName}\nSystem is in alert state.`);
+    await this.schedule(
+      this.alertChannelId,
+      locationId,
+      'ArPI alert',
+      `Location: ${locationName}\nSystem is in alert state.`
+    );
   }
 
   async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
-    if (!this.isEnabled()) { return; }
+    if (!this.isEnabled()) {
+      return;
+    }
     // TODO: translation
     const armTypeText = this.armTypeToText(armType);
-    await this.schedule(undefined, locationId, 'ArPI armed', `Location: ${locationName}\nSystem armed (${armTypeText}).`);
+    await this.schedule(
+      undefined,
+      locationId,
+      'ArPI armed',
+      `Location: ${locationName}\nSystem armed (${armTypeText}).`
+    );
   }
 
   async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
-    if (!this.isEnabled()) { return; }
+    if (!this.isEnabled()) {
+      return;
+    }
     // TODO: translation
     await this.schedule(undefined, locationId, 'ArPI disarmed', `Location: ${locationName}\nSystem disarmed.`);
   }
 
-  private async schedule(channelId: string | undefined, locationId: string, title: string, body: string): Promise<void> {
+  private async schedule(
+    channelId: string | undefined,
+    locationId: string,
+    title: string,
+    body: string
+  ): Promise<void> {
     const platform = Capacitor.getPlatform();
     console.log(`Scheduling notification on platform: ${platform}, title: ${title}, body: ${body}`);
 
@@ -105,7 +127,7 @@ export class NotificationService {
         return;
       }
 
-      let notification: LocalNotificationSchema = {
+      const notification: LocalNotificationSchema = {
         id: this.getNotificationId(),
         title: title,
         body: body,
@@ -117,15 +139,15 @@ export class NotificationService {
       if (channelId) {
         notification.channelId = channelId;
       }
-      const result = await LocalNotifications.schedule({notifications: [notification]})
-      .then((result) => {
-        console.log('Local notification scheduled successfully:', JSON.stringify(result));
-        return result;
-      })
-      .catch((error) => {
-        console.error('Error scheduling local notification:', error);
-        return null;
-      });
+      const result = await LocalNotifications.schedule({ notifications: [notification] })
+        .then(result => {
+          console.log('Local notification scheduled successfully:', JSON.stringify(result));
+          return result;
+        })
+        .catch(error => {
+          console.error('Error scheduling local notification:', error);
+          return null;
+        });
       console.log('Local notification scheduled:', JSON.stringify(result));
       return;
     }
@@ -153,7 +175,7 @@ export class NotificationService {
           return false;
         }
 
-        LocalNotifications.addListener('localNotificationReceived', async (notification) => {
+        LocalNotifications.addListener('localNotificationReceived', async notification => {
           // Re-schedule it with a tiny delay so Android treats it as a background notification
           // OR show your own in-app toast/alert
           console.log('Foreground notification:', notification);
