@@ -4,12 +4,9 @@ import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-no
 
 import { ARM_TYPE } from '@app/models';
 
-import * as crypto from 'crypto-js';
-
-
 
 const FIRST_NOTIFICATION_ID = 1000;
-const MAX_NOTIFICATION_ID = 9999;
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +20,7 @@ export class NotificationService {
   constructor() {
     LocalNotifications.removeAllListeners().then(() => {
       LocalNotifications.addListener('localNotificationActionPerformed', async (notificationAction) => {
-        const locationId = this.getLocationId(notificationAction.notification.id);
+        const locationId = notificationAction.notification.extra?.locationId;
         if (locationId) {
           console.log(`Local notification received for locationId: ${locationId}, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`);
           localStorage.setItem('selectedLocationId', locationId);
@@ -79,9 +76,12 @@ export class NotificationService {
       }
 
       let notification: LocalNotificationSchema = {
-        id: this.getNotificationId(locationId),
+        id: this.getNotificationId(),
         title: title,
         body: body,
+        extra: {
+          locationId: locationId
+        }
       };
 
       if (channelId) {
@@ -186,26 +186,7 @@ export class NotificationService {
     }
   }
 
-  private getNotificationId(locationId: string): number {
-    const content = `${locationId}:${this.nextNotificationId}`;
-    const hash = crypto.SHA256(content).toString(crypto.enc.Hex);
-    const id = parseInt(hash.substring(0, 6), 16) | 0; // ensure it's a 32-bit signed integer
-    this.nextNotificationId++;
-    return id;
-  }
-
-  private getLocationId(notificationId: number): string | null {
-    const locationids = JSON.parse(localStorage.getItem('locations') || '[]').map((location: any) => location.id);
-    for (const locationId of locationids) {
-      for (let i = FIRST_NOTIFICATION_ID; i < MAX_NOTIFICATION_ID; i++) {
-        const content = `${locationId}:${i}`;
-        const hash = crypto.SHA256(content).toString(crypto.enc.Hex);
-        const id = parseInt(hash.substring(0, 8), 16);
-        if (id === notificationId) {
-          return locationId;
-        }
-      }
-    }
-    return null;
+  private getNotificationId(): number {
+    return this.nextNotificationId++;
   }
 }

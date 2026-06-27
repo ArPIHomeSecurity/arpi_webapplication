@@ -13,14 +13,13 @@ export class ForegroundEventsService {
   private startInFlight: Promise<void> | null = null;
 
   private async ensureNotificationPermission(): Promise<boolean> {
-    const currentPermission = await ForegroundService.checkPermissions();
+    const currentPermission = (await ForegroundService.checkPermissions());
     console.log('[ForegroundEventsService] notification permission status', JSON.stringify(currentPermission));
 
     if (currentPermission.display === 'granted') {
       return true;
     }
 
-    console.log('[ForegroundEventsService] requesting notification permission');
     const requestedPermission = await ForegroundService.requestPermissions();
     console.log('[ForegroundEventsService] notification permission request result', JSON.stringify(requestedPermission));
 
@@ -90,11 +89,8 @@ export class ForegroundEventsService {
       body: 'Listening for backend events',
       smallIcon: 'ic_notification',
       notificationChannelId: this.foregroundChannelId,
+      silent: true,
       serviceType: ServiceType.Location,
-      buttons: [{
-        id: 1,
-        title: 'Stop',
-      }]
     });
     this.foregroundRunning = true;
     console.log('[ForegroundEventsService] foreground service started successfully');
