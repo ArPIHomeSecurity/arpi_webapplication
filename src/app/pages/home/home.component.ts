@@ -1,19 +1,19 @@
-import { Component, Inject, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { App as CapacitorApp } from '@capacitor/app';
 
 import {
   Alert,
+  Area,
   ARM_TYPE,
   MONITORING_STATE,
+  Output,
+  OutputTriggerType,
+  Sensor,
+  SensorType,
   string2ArmType,
   string2MonitoringState,
-  SensorType,
-  Sensor,
-  Zone,
-  Area,
-  Output,
-  OutputTriggerType
+  Zone
 } from '@app/models';
 import {
   AlertService,
@@ -68,8 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(() => {
-      console.log('Pressed backButton - on home');
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(event => {
+      event.preventDefault();
       CapacitorApp.exitApp();
     });
 

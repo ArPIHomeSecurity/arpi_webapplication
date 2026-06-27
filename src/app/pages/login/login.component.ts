@@ -58,8 +58,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(() => {
-      console.debug('Pressed backButton - on login');
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(event => {
+      event.preventDefault();
       CapacitorApp.exitApp();
     });
 
