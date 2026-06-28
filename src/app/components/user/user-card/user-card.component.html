@@ -207,7 +207,7 @@
         <h3 matSubheader i18n="@@user biometric login">Biometric login</h3>
         <mat-list-item>
           <mat-icon matListItemIcon>
-            @if (biometricEnabled()) {
+            @if (isBiometricEnabled()) {
               fingerprint
             } @else {
               fingerprint_off
@@ -217,7 +217,7 @@
           <mat-slide-toggle
             matListItemMeta
             color="primary"
-            [checked]="biometricEnabled()"
+            [checked]="isBiometricEnabled()"
             [disabled]="disabled"
             (change)="$event.checked ? enableBiometricLogin() : disableBiometricLogin()"
             >
@@ -313,7 +313,7 @@
       <!-- Biometric login -->
       @if (biometricAvailable) {
         <div>
-          @if (!biometricEnabled()) {
+          @if (!isBiometricEnabled()) {
             <button
               mat-menu-item
               color="primary"
@@ -323,7 +323,7 @@
               <span i18n="@@user enable biometric">Enable biometric login</span>
             </button>
           }
-          @if (biometricEnabled()) {
+          @if (isBiometricEnabled()) {
             <button
               mat-menu-item
               color="warn"

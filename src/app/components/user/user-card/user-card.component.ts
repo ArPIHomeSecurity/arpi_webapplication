@@ -57,7 +57,13 @@ export class UserCardComponent implements OnInit {
     private snackBar: MatSnackBar,
     private notificationService: NotificationService
   ) {
-    this.useBiometric = this.biometricService.isBiometricEnabled(localStorage.getItem('selectedLocationId'));
+    this.biometricService.isAvailable().then(result => {
+      if (result) {
+        const locationId = localStorage.getItem('selectedLocationId') || '';
+        this.biometricService.isBiometricEnabled(locationId);
+        this.useBiometric = this.biometricService.isBiometricEnabled(locationId);
+      }
+    });
     this.useNotifications = this.notificationService.isEnabled();
 
     this.eventService.listen('card_registered').subscribe(result => {
@@ -65,18 +71,18 @@ export class UserCardComponent implements OnInit {
       this.snackBar.dismiss();
       if (result) {
         // registered
-        this.snackBar.open($localize`:@@card registered:Card registered!`, null, {
+        this.snackBar.open($localize`:@@card registered:Card registered!`, undefined, {
           duration: environment.snackDuration
         });
         this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards));
       } else if (result === false) {
         // not registered
-        this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+        this.snackBar.open($localize`:@@card not registered:Failed to register!`, undefined, {
           duration: environment.snackDuration
         });
       } else if (result === null) {
         // time expired
-        this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+        this.snackBar.open($localize`:@@card not registered:Failed to register!`, undefined, {
           duration: environment.snackDuration
         });
       }
@@ -165,11 +171,13 @@ export class UserCardComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
-          this.snackBar.open($localize`:@@user deleted:User deleted!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@user deleted:User deleted!`, undefined, {
+            duration: environment.snackDuration
+          });
           this.onUserDeleted.emit(this.user.id);
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
             duration: environment.snackDuration
           })
       });
@@ -180,7 +188,7 @@ export class UserCardComponent implements OnInit {
     this.userService.registerCard(this.user.id).subscribe({
       error: () => {
         this.registeringCard = false;
-        this.snackBar.open($localize`:@@failed register:Failed to register card!`, null, {
+        this.snackBar.open($localize`:@@failed register:Failed to register card!`, undefined, {
           duration: environment.snackDuration
         });
       }
@@ -201,7 +209,7 @@ export class UserCardComponent implements OnInit {
         .subscribe({
           next: updatedCard => (this.cards = this.cards.map(c => (c.id === updatedCard.id ? updatedCard : c))),
           error: _ =>
-            this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            this.snackBar.open($localize`:@@failed update:Failed to update!`, undefined, {
               duration: environment.snackDuration
             })
         });
@@ -242,11 +250,13 @@ export class UserCardComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
-          this.snackBar.open($localize`:@@card deleted:Card deleted!`, null, { duration: environment.snackDuration });
+          this.snackBar.open($localize`:@@card deleted:Card deleted!`, undefined, {
+            duration: environment.snackDuration
+          });
           this.cards = this.cards.filter(c => c.id !== cardId);
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
             duration: environment.snackDuration
           })
       });
@@ -302,7 +312,7 @@ export class UserCardComponent implements OnInit {
       .subscribe({
         next: _ => (this.user.hasRegistrationCode = false),
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
             duration: environment.snackDuration
           })
       });
@@ -358,24 +368,24 @@ export class UserCardComponent implements OnInit {
       .subscribe({
         next: _ => (this.hasSshKey = false),
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
             duration: environment.snackDuration
           })
       });
   }
 
-  biometricEnabled() {
+  isBiometricEnabled() {
     return this.useBiometric === true || this.useBiometric === null;
   }
 
   enableBiometricLogin() {
-    const locationId = localStorage.getItem('selectedLocationId');
+    const locationId = localStorage.getItem('selectedLocationId') || '';
     this.biometricService.enableBiometricLogin(locationId);
     this.useBiometric = null;
   }
 
   disableBiometricLogin() {
-    const locationId = localStorage.getItem('selectedLocationId');
+    const locationId = localStorage.getItem('selectedLocationId') || '';
     this.biometricService.disableBiometricLogin(locationId);
     this.useBiometric = false;
   }
@@ -412,7 +422,7 @@ export class UserCardComponent implements OnInit {
           });
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed get mcp token:Failed to get MCP token!`, null, {
+          this.snackBar.open($localize`:@@failed get mcp token:Failed to get MCP token!`, undefined, {
             duration: environment.snackDuration
           })
       });
@@ -422,12 +432,12 @@ export class UserCardComponent implements OnInit {
     this.userService.removeMCPToken(this.user.id).subscribe({
       next: _ => {
         this.hasMCPToken = false;
-        this.snackBar.open($localize`:@@mcp token deleted:MCP token deleted!`, null, {
+        this.snackBar.open($localize`:@@mcp token deleted:MCP token deleted!`, undefined, {
           duration: environment.snackDuration
         });
       },
       error: _ =>
-        this.snackBar.open($localize`:@@failed delete mcp token:Failed to delete MCP token!`, null, {
+        this.snackBar.open($localize`:@@failed delete mcp token:Failed to delete MCP token!`, undefined, {
           duration: environment.snackDuration
         })
     });

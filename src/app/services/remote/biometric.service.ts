@@ -12,8 +12,8 @@ export class BiometricService {
 
   isBiometricEnabled(locationId: string): boolean | null {
     const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || '{}');
-    const value = status[locationId];
-    return value === undefined ? null : value;
+    const value = status?.[locationId];
+    return value === null || value === undefined ? null : value;
   }
 
   enableBiometricLogin(locationId: string): void {
