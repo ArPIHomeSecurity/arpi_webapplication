@@ -1,9 +1,9 @@
 {
-  "version": "v1.11.3:3c3cc1f",
+  "version": "v1.11.4:d83099d",
   "major": 1,
   "minor": 11,
-  "patch": 3,
+  "patch": 4,
   "prerelease": null,
   "prerelease_num": null,
-  "commit_id": "3c3cc1f"
+  "commit_id": "d83099d"
 }
