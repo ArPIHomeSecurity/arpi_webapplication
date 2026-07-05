@@ -4,23 +4,28 @@ const fs = require("fs");
 function createIndexHtml(indexHtmlPath) {
   console.log("Creating index.html file: ", indexHtmlPath);
 
-  const htmlContent = `
-  <script type="text/javascript">
-      // const currentLocale = navigator.language;
-      const currentLocale = window.localStorage.getItem("localeId");
-      console.log("INDEX: Current language: ", currentLocale)
-      if (currentLocale === "hu") {
-          location.pathname = "/hu/index.html";
-          console.log("Moving to: HU")
-      }
-      else if (currentLocale === "it") {
-          location.pathname = "/it/index.html";
-          console.log("Moving to: IT")
-      }
-      else{
-          location.pathname = "/en/index.html";
-          console.log("Moving to: EN")
-      }
+  const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+</head>
+<body/>
+<script type="text/javascript">
+    // const currentLocale = navigator.language;
+    const currentLocale = window.localStorage.getItem("localeId");
+    console.log("INDEX: Current language: ", currentLocale)
+    if (currentLocale === "hu") {
+        location.pathname = "/hu/index.html";
+        console.log("Moving to: HU");
+    }
+    else if (currentLocale === "it") {
+        location.pathname = "/it/index.html";
+        console.log("Moving to: IT");
+    }
+    else{
+        location.pathname = "/en/index.html";
+        console.log("Moving to: EN");
+    }
   </script>
   `;
 
@@ -35,7 +40,7 @@ function createIndexHtml(indexHtmlPath) {
 
 async function copyApplicationFiles(sourcePath, destinationPath) {
   console.log("Copying application files from ", sourcePath, " to ", destinationPath);
-  
+
   try {
     if (fs.existsSync(destinationPath)) {
       await fs.promises.rm(destinationPath, { recursive: true });

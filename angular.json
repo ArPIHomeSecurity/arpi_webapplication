@@ -230,6 +230,12 @@
             "production": {
               "buildTarget": "app:build:production"
             },
+            "capacitor": {
+              "buildTarget": "app:build:capacitor"
+            },
+            "capacitor-dev": {
+              "buildTarget": "app:build:capacitor-dev"
+            },
             "demo": {
               "host": "0.0.0.0",
               "buildTarget": "app:build:demo-dev"

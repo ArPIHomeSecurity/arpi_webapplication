@@ -1,11 +1,12 @@
-import { Component, ElementRef, Inject, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, NgZone, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 
+import { StatusBar, Style } from '@capacitor/status-bar';
+
 import { HttpClient } from '@angular/common/http';
-import { StatusBar } from '@capacitor/status-bar';
 import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import { CountdownComponent } from 'ngx-countdown';
 
@@ -76,7 +77,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
 
-    private renderer: Renderer2,
     private host: ElementRef,
     private zone: NgZone,
     private http: HttpClient
@@ -93,6 +93,9 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     this.darkTheme = this.themeService.load();
+
+    // set static status bar style to dark (white on indigo)
+    await StatusBar.setStyle({ style: Style.Dark });
 
     this.resizeObserver = new ResizeObserver(entries => {
       this.zone.run(() => {
@@ -144,24 +147,6 @@ export class AppComponent implements OnInit {
 
     fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
 
-    // update navigation bar for edge-to-edge
-    const isEdgeToEdge = await this.isEdgeToEdgeEnabled();
-    if (isEdgeToEdge) {
-      console.log('Edge-to-edge enabled, update padding');
-      // update the style of the mat-toolbar
-      const toolbar = document.querySelector('mat-toolbar');
-      this.renderer.setStyle(toolbar, 'padding-top', '40px');
-      this.renderer.setStyle(toolbar, 'height', '90px');
-
-      // update the style of the page-wrapper
-      const pageWrapper = document.querySelector('.page-wrapper');
-      this.renderer.setStyle(pageWrapper, 'min-height', 'calc(100vh - 96px)');
-
-      // update the style of the all-wrapper
-      const allWrapper = document.querySelector('.all-wrap');
-      this.renderer.setStyle(allWrapper, 'min-height', 'calc(100vh - 96px)');
-    }
-
     // Load version from assets/version.json (new format)
     this.http
       .get<{
@@ -182,16 +167,6 @@ export class AppComponent implements OnInit {
           this.versions.webapplicationVersion = 'unknown';
         }
       });
-  }
-
-  async isEdgeToEdgeEnabled(): Promise<boolean> {
-    try {
-      // This checks if the web content extends into the system UI areas
-      const statusBarInfo = await StatusBar.getInfo();
-      return statusBarInfo.overlays;
-    } catch (error) {
-      return false;
-    }
   }
 
   isLoggedIn() {
