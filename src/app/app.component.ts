@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 
+import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 import { HttpClient } from '@angular/common/http';
@@ -94,8 +95,12 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.darkTheme = this.themeService.load();
 
-    // set static status bar style to dark (white on indigo)
-    await StatusBar.setStyle({ style: Style.Dark });
+
+    // check platform android
+    if (Capacitor.getPlatform() === 'android') {
+      // set static status bar style to dark (white on indigo)
+      await StatusBar.setStyle({ style: Style.Dark });
+    }
 
     this.resizeObserver = new ResizeObserver(entries => {
       this.zone.run(() => {
