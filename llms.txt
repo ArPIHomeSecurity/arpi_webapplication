@@ -1,0 +1,67 @@
+ArPI Webapplication
+
+Purpose
+- Frontend for the ArPI security system.
+- Built as a localized Angular application with Ionic UI and Capacitor mobile packaging.
+- Supports web, demo, remote-hosted, and Android/Capacitor deployment variants.
+
+Primary files
+- README.md: human-oriented project overview.
+- package.json: source of truth for scripts, dependencies, linting, tests, and release helpers.
+- angular.json: source of truth for build targets, output directories, localization, and environment file replacement.
+- capacitor.config.ts: Capacitor app configuration.
+- src/environments/: environment-specific runtime configuration.
+- src/main.ts: browser entrypoint.
+
+Technology
+- Angular 21
+- Ionic 8
+- Capacitor 8
+- TypeScript
+- SCSS
+- Karma/Jasmine for tests
+- ESLint and Prettier for code quality
+
+Safe commands
+- npm install
+- npm start
+- npm test
+- npm run test:ci
+- npm run lint
+- npm run format:check
+- npm run build:remote
+- npm run build:remote-dev
+
+Important scripts
+- npm start: start the Angular development server.
+- npm test: run frontend tests.
+- npm run test:ci: run tests without watch mode.
+- npm run lint: run ESLint.
+- npm run format:check: check Prettier formatting.
+- npm run extract-i18n: update translation source files under src/locales.
+- npm run create-package: create a production tarball from dist-production.
+- npm run release:remote: publish remote builds using the existing script.
+
+Build targets
+- default development -> dist-development
+- production -> dist-production, uses src/environments/environment.prod.ts
+- demo-dev -> dist-demo-dev, uses src/environments/environment.demo.ts and src/index.demo.html
+- demo -> dist-demo, uses src/environments/environment.demo.prod.ts and src/index.demo.html
+- remote-dev -> dist-remote-dev, uses src/environments/environment.remote.ts and base href /v1-dev/
+- remote -> dist-remote, uses src/environments/environment.remote.prod.ts and base href /v1/
+- capacitor-dev -> dist-capacitor-dev, uses src/environments/environment.capacitor.ts and src/index.capacitor.html
+- capacitor -> dist-capacitor, uses src/environments/environment.capacitor.prod.ts and src/index.capacitor.html
+
+Working rules for agents
+- Prefer commands already defined in package.json over ad hoc shell commands.
+- Do not invent environment values; inspect the matching file in src/environments.
+- When documenting or changing build behavior, verify against angular.json.
+- Web and Capacitor builds do not use the same environment files or index files.
+- Remote builds rely on base href configuration and are not meant to be served locally with the provided scripts.
+
+External endpoints
+- Project site: https://www.arpi-security.info/
+- Documentation: https://docs.arpi-security.info/
+- Remote app: https://app.arpi-security.info/
+- Demo: https://demo.arpi-security.info/
+- Google Play: https://play.google.com/store/apps/details?id=com.arpi.webapplication
