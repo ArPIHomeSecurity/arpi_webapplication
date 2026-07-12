@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -16,7 +17,7 @@ describe('LocationListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LocationListComponent],
-      imports: [MatIconModule],
+      imports: [MatCardModule, MatIconModule],
       providers: [
         { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
         { provide: 'EventService', useClass: environment.eventService },

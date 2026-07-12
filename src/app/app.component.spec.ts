@@ -3,10 +3,11 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter, RouterOutlet } from '@angular/router';
+import { provideRouter, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { MockAuthenticationService, MockMonitoringService, MockUserService } from 'testing';
 
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -28,6 +29,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent, SystemStateComponent],
       imports: [
         BrowserAnimationsModule,
+        MatExpansionModule,
         MatIconModule,
         MatListModule,
         MatMenuModule,
@@ -36,6 +38,7 @@ describe('AppComponent', () => {
         MatSlideToggle,
         MatSnackBarModule,
         MatToolbarModule,
+        RouterLinkActive,
         RouterOutlet
       ],
       providers: [
