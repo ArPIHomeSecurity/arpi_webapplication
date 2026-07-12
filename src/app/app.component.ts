@@ -95,7 +95,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.darkTheme = this.themeService.load();
 
-
     // check platform android
     if (Capacitor.getPlatform() === 'android') {
       // set static status bar style to dark (white on indigo)
