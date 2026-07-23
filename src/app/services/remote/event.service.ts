@@ -3,7 +3,6 @@ import { ARM_TYPE, Location, MONITORING_STATE, string2ArmType, string2Monitoring
 import { fromEvent, Observable, Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
-import { ForegroundEventsService } from './foreground.service';
 import { NotificationService } from './notification.service';
 
 @Injectable()
@@ -46,17 +45,15 @@ export class EventService {
   }
 
   constructor(
-    private foregroundEventsService: ForegroundEventsService,
     private notificationService: NotificationService
   ) {
     console.log('[EventService] constructed');
     this.connect();
 
     window.onbeforeunload = () => {
-      console.log('[EventService] window unload, disconnecting sockets and stopping foreground service');
+      console.log('[EventService] window unload, disconnecting sockets');
       this.unloading = true;
       this.disconnectAll();
-      void this.foregroundEventsService.stop();
     };
 
     fromEvent<StorageEvent>(window, 'storage').subscribe(event => {
@@ -174,11 +171,6 @@ export class EventService {
       })
     );
 
-    if (eventBackendConfig.size > 0) {
-      void this.foregroundEventsService.start();
-    } else {
-      void this.foregroundEventsService.stop();
-    }
   }
 
   listen(event: string): Observable<any> {
