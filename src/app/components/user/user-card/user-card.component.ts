@@ -5,7 +5,6 @@ import { QuestionDialogComponent } from '@app/components/question-dialog/questio
 
 import { Card, ROLE_TYPES, User } from '@app/models';
 import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
-import { NotificationService } from '@app/services/remote/notification.service';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
 import { catchError, finalize, forkJoin, Observable, of, throwError } from 'rxjs';
@@ -42,8 +41,6 @@ export class UserCardComponent implements OnInit {
   hasMCPToken: boolean | null = null;
   biometricAvailable = false;
   useBiometric: boolean | null = null;
-  useNotifications: boolean | null = null;
-  notificationsAvailable = false;
 
   dialog = inject(MatDialog);
 
@@ -54,8 +51,7 @@ export class UserCardComponent implements OnInit {
     @Inject('UserService') private userService: UserService,
     @Inject('BiometricService') private biometricService: BiometricService,
 
-    private snackBar: MatSnackBar,
-    private notificationService: NotificationService
+    private snackBar: MatSnackBar
   ) {
     this.biometricService.isAvailable().then(result => {
       if (result) {
@@ -64,8 +60,6 @@ export class UserCardComponent implements OnInit {
         this.useBiometric = this.biometricService.isBiometricEnabled(locationId);
       }
     });
-    this.useNotifications = this.notificationService.isEnabled();
-
     this.eventService.listen('card_registered').subscribe(result => {
       this.registeringCard = false;
       this.snackBar.dismiss();
@@ -96,7 +90,6 @@ export class UserCardComponent implements OnInit {
       this.biometricService.isAvailable().then(result => {
         this.biometricAvailable = result;
       });
-      this.notificationsAvailable = this.notificationService.isAvailable();
     }
 
     let loadHasSshKey: Observable<boolean>;
@@ -388,20 +381,6 @@ export class UserCardComponent implements OnInit {
     const locationId = localStorage.getItem('selectedLocationId') || '';
     this.biometricService.disableBiometricLogin(locationId);
     this.useBiometric = false;
-  }
-
-  notificationsEnabled(): boolean {
-    return this.useNotifications === true;
-  }
-
-  enableNotifications() {
-    this.notificationService.enableNotifications();
-    this.useNotifications = true;
-  }
-
-  disableNotifications() {
-    this.notificationService.disableNotifications();
-    this.useNotifications = false;
   }
 
   getMCPToken() {

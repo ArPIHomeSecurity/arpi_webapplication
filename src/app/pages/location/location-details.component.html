@@ -4,16 +4,29 @@
       <mat-card-content>
         <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
           <div class="column">
-            <mat-form-field>
-              <mat-label i18n="@@location name">Name</mat-label>
-              <input
-                matInput
-                type="text"
-                class="form-control"
-                maxlength="16"
-                formControlName="name"
-                />
-            </mat-form-field>
+            <div class="row">
+              <mat-form-field class="name" floatLabel="always">
+                <mat-label i18n="@@location name">Name</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    class="form-control"
+                    maxlength="16"
+                    formControlName="name"
+                  />
+                </mat-form-field>
+                @if (location.id != null && notificationsAvailable) {
+                  <div class="notifications">
+                    <mat-icon matSuffix>notifications</mat-icon>
+                    <mat-slide-toggle
+                      matSuffix
+                      color="primary"
+                      formControlName="notifications"
+                      >
+                    </mat-slide-toggle>
+                  </div>
+                }
+            </div>
             <div class="row">
               <mat-form-field class="domain" floatLabel="always">
                 <mat-label i18n="@@location primary domain">Primary Domain</mat-label>

@@ -4,21 +4,22 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 import {
-  AlertService,
-  AreaService,
-  ArmService,
-  AuthenticationService,
-  CardService,
-  ConfigurationService,
-  EventService,
-  KeypadService,
-  LoaderService,
-  MonitoringService,
-  OutputService,
-  SensorService,
-  UserService,
-  ZoneService
+    AlertService,
+    AreaService,
+    ArmService,
+    AuthenticationService,
+    CardService,
+    ConfigurationService,
+    EventService,
+    KeypadService,
+    LoaderService,
+    MonitoringService,
+    OutputService,
+    SensorService,
+    UserService,
+    ZoneService
 } from '@app/services/demo';
+import { NotificationService } from '@app/services/remote';
 
 export const environment = {
   production: true,
@@ -48,6 +49,7 @@ export const environment = {
   keypadService: KeypadService,
   loaderService: LoaderService,
   monitoringService: MonitoringService,
+  notificationService: NotificationService,
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,

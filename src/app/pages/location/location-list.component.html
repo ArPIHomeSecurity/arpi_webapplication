@@ -11,14 +11,9 @@
             >
             @if (!isMultiLocation) {
               <mat-card-header>
-                <div
-                  mat-card-avatar
-            [ngClass]="{
-              registered: isRegistered(location.id),
-              'not-registered': !isRegistered(location.id)
-            }"
-                  >
-                  <mat-icon>location_on</mat-icon>
+                <div mat-card-avatar>
+                  <mat-icon class="registered-icon" [ngClass]="{enabled: isRegistered(location.id), 'disabled': !isRegistered(location.id)}">location_on</mat-icon>
+                  <mat-icon class="notification-icon" [ngClass]="{enabled: isNotificationEnabled(location.id), 'disabled': !isNotificationEnabled(location.id)}">notifications</mat-icon>
                 </div>
                 <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
                 @if (location.version != null) {
@@ -49,14 +44,9 @@
             }
             @if (isMultiLocation) {
               <mat-card-header>
-                <div
-                  mat-card-avatar
-            [ngClass]="{
-              registered: isRegistered(location.id),
-              'not-registered': !isRegistered(location.id)
-            }"
-                  >
-                  <mat-icon>location_on</mat-icon>
+                <div mat-card-avatar>
+                  <mat-icon [ngClass]="{enabled: isRegistered(location.id), 'disabled': !isRegistered(location.id)}">location_on</mat-icon>
+                  <mat-icon [ngClass]="{enabled: isNotificationEnabled(location.id), 'disabled': !isNotificationEnabled(location.id)}">notifications</mat-icon>
                 </div>
                 <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
                 @if (location.id != null) {

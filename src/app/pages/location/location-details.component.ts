@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Location } from '@app/models';
-import { AuthenticationService } from '@app/services';
+import { AuthenticationService, NotificationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { environment } from '@environments/environment';
 import { LocationVersion } from '../../models/version';
@@ -30,6 +30,7 @@ export class LocationDetailsComponent {
   testResult: LocationTestResult | null = null;
   showApiLink = environment.showApiLink;
   isMultiLocation = environment.isMultiLocation;
+  notificationsAvailable = false;
 
   systemLocationName: string | null = null;
 
@@ -38,7 +39,8 @@ export class LocationDetailsComponent {
 
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject('NotificationService') private notificationService: NotificationService
   ) {
     this.route.params.subscribe(params => {
       const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
@@ -55,6 +57,31 @@ export class LocationDetailsComponent {
     });
 
     this.selectedLocationId = localStorage.getItem('selectedLocationId');
+    this.notificationsAvailable = this.notificationService.isAvailable();
+  }
+
+  notificationsEnabled(): boolean {
+    if (!this.location?.id) {
+      return false;
+    }
+
+    return this.notificationService.isEnabled(this.location.id);
+  }
+
+  enableNotifications(): void {
+    if (!this.location?.id) {
+      return;
+    }
+
+    this.notificationService.enableNotifications(this.location.id);
+  }
+
+  disableNotifications(): void {
+    if (!this.location?.id) {
+      return;
+    }
+
+    this.notificationService.disableNotifications(this.location.id);
   }
 
   defaultLocation(): Location {
@@ -81,7 +108,8 @@ export class LocationDetailsComponent {
         primaryDomain: new FormControl(location.primaryDomain),
         primaryPort: new FormControl(location.primaryPort),
         secondaryDomain: new FormControl(location.secondaryDomain),
-        secondaryPort: new FormControl(location.secondaryPort)
+        secondaryPort: new FormControl(location.secondaryPort),
+        notifications: new FormControl(this.notificationsEnabled())
       });
     }
   }
@@ -213,13 +241,23 @@ export class LocationDetailsComponent {
     const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
     const index = locations.findIndex(l => l.id === location.id);
     if (index >= 0) {
-      locations[index] = location;
+      // merge
+      locations[index] = { ...locations[index], ...location };
     } else {
       locations.push(location);
     }
 
     localStorage.setItem('locations', JSON.stringify(locations));
     window.dispatchEvent(new StorageEvent('storage', { key: 'locations', newValue: JSON.stringify(locations) }));
+
+    const notificationsEnabled = this.locationForm?.value?.notifications;
+    if (notificationsEnabled === true) {
+      this.enableNotifications();
+    }
+    if (notificationsEnabled === false) {
+      this.disableNotifications();
+    }
+
     if (this.isMultiLocation) {
       this.router.navigate(['/locations']);
     } else {

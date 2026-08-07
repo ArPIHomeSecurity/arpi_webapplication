@@ -31,9 +31,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { environment } from '@environments/environment';
 import { DigitOnlyDirective } from '@uiowa/digit-only';
 import { CountdownModule } from 'ngx-countdown';
-import { environment } from '@environments/environment';
 import { AppComponent } from './app.component';
 
 // application components
@@ -188,6 +188,7 @@ import { CapacitorService } from './services/capacitor.service';
     { provide: 'KeypadService', useClass: environment.keypadService },
     { provide: 'LoaderService', useClass: environment.loaderService },
     { provide: 'MonitoringService', useClass: environment.monitoringService },
+    { provide: 'NotificationService', useClass: environment.notificationService },
     { provide: 'OutputService', useClass: environment.outputService },
     { provide: 'SensorService', useClass: environment.sensorService },
     { provide: 'ThemeService', useClass: ThemeService },

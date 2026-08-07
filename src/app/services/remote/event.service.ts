@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ARM_TYPE, Location, MONITORING_STATE, string2ArmType, string2MonitoringState } from '@app/models';
+import { NotificationService } from '@app/services';
 import { fromEvent, Observable, Subject } from 'rxjs';
 
 import { io } from 'socket.io-client';
-import { NotificationService } from './notification.service';
 
 @Injectable()
 export class EventService {
@@ -44,9 +44,7 @@ export class EventService {
     });
   }
 
-  constructor(
-    private notificationService: NotificationService
-  ) {
+  constructor(@Inject('NotificationService') private notificationService: NotificationService) {
     console.log('[EventService] constructed');
     this.connect();
 
@@ -87,6 +85,10 @@ export class EventService {
 
     for (const location of locations) {
       if (!location?.id) {
+        continue;
+      }
+
+      if (!this.notificationService.isEnabled(location.id)) {
         continue;
       }
 

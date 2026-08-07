@@ -225,28 +225,6 @@
         </mat-list-item>
       }
 
-      <!-- Notifications -->
-      @if (notificationsAvailable) {
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <mat-icon matListItemIcon>
-            @if (notificationsEnabled()) {
-              notifications_active
-            } @else {
-              notifications_off
-            }
-          </mat-icon>
-          <span matListItemTitle i18n="@@user notifications">Notifications</span>
-          <mat-slide-toggle
-            matListItemMeta
-            color="primary"
-            [checked]="notificationsEnabled()"
-            [disabled]="disabled"
-            (change)="$event.checked ? enableNotifications() : disableNotifications()"
-            >
-          </mat-slide-toggle>
-        </mat-list-item>
-      }
     </mat-list>
   }
 
@@ -336,31 +314,6 @@
         </div>
       }
 
-      <!-- Notifications -->
-      @if (notificationsAvailable) {
-        <div>
-          @if (!notificationsEnabled()) {
-            <button
-              mat-menu-item
-              color="primary"
-              [disabled]="disabled"
-              (click)="enableNotifications()"
-              >
-              <span i18n="@@user enable notifications">Enable notifications</span>
-            </button>
-          }
-          @if (notificationsEnabled()) {
-            <button
-              mat-menu-item
-              color="warn"
-              [disabled]="disabled"
-              (click)="disableNotifications()"
-              >
-              <span i18n="@@user disable notifications">Disable notifications</span>
-            </button>
-          }
-        </div>
-      }
     </mat-menu>
   </mat-card-actions>
 </mat-card>

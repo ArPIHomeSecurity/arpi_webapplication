@@ -7,6 +7,7 @@ import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-dr
 import { MatDialog } from '@angular/material/dialog';
 import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
 import { Location } from '@app/models';
+import { NotificationService } from '@app/services';
 import { AUTHENTICATION_SERVICE } from '@app/tokens';
 import { configureBackend } from '@app/utils';
 import { environment } from '@environments/environment';
@@ -34,6 +35,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     @Inject('EventService') public eventService: EventService,
     @Inject('LoaderService') public loader: LoaderService,
     @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject('NotificationService') public notificationService: NotificationService,
 
     public dialog: MatDialog
   ) {
@@ -57,6 +59,14 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     }
 
     return this.authenticationService.getDeviceToken(locationId) != null;
+  }
+
+  isNotificationEnabled(locationId: string): boolean {
+    if (!locationId) {
+      return null;
+    }
+
+    return this.notificationService.isEnabled(locationId);
   }
 
   getServerLatestVersion(prerelease: boolean): LocationVersion {

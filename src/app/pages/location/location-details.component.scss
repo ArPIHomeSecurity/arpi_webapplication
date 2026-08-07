@@ -1,3 +1,13 @@
+.name {
+  width: 425px;
+}
+
+.notifications {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
 .scheme {
   width: 170px;
 }
@@ -43,7 +53,7 @@ button.small {
     font-size: 16px;
   }
 }
-  
+
 
 .details {
   margin-top: 20px;

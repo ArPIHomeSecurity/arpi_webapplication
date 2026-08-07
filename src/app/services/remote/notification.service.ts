@@ -3,15 +3,17 @@ import { Capacitor } from '@capacitor/core';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
 import { ARM_TYPE } from '@app/models';
+import { NotificationService as NotificationServiceInterface } from '@app/services';
 
 export const NOTIFICATIONS_ENABLED_KEY = 'notificationsEnabled';
+export const LOCATIONS_STORAGE_KEY = 'locations';
 
 const FIRST_NOTIFICATION_ID = 1000;
 
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class NotificationService implements NotificationServiceInterface {
   private readonly alertChannelId = 'arpi_alerts';
   private channelReady = false;
   private permissionChecked = false;
@@ -51,6 +53,38 @@ export class NotificationService {
     }
   }
 
+  private getLocations(): Array<Record<string, any>> {
+    try {
+      const locations = JSON.parse(localStorage.getItem(LOCATIONS_STORAGE_KEY) || '[]');
+      return Array.isArray(locations) ? locations : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  private getLocationNotificationsEnabled(locationId: string): boolean | null {
+    const locations = this.getLocations();
+    const location = locations.find(item => item?.id === locationId);
+    if (!location || typeof location[NOTIFICATIONS_ENABLED_KEY] !== 'boolean') {
+      return null;
+    }
+
+    return location[NOTIFICATIONS_ENABLED_KEY];
+  }
+
+  private setLocationNotificationsEnabled(locationId: string, enabled: boolean): boolean {
+    const locations = this.getLocations();
+    const locationIndex = locations.findIndex(item => item?.id === locationId);
+    if (locationIndex < 0) {
+      return false;
+    }
+
+    const updatedLocation = { ...locations[locationIndex], [NOTIFICATIONS_ENABLED_KEY]: enabled };
+    locations[locationIndex] = updatedLocation;
+    localStorage.setItem(LOCATIONS_STORAGE_KEY, JSON.stringify(locations));
+    return true;
+  }
+
   isAvailable(): boolean {
     const platform = Capacitor.getPlatform();
     if (platform === 'android') {
@@ -62,22 +96,33 @@ export class NotificationService {
     return false;
   }
 
-  isEnabled(): boolean {
-    const value = localStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
-    // null means disabled by default
-    return value === 'true';
+  isEnabled(locationId: string): boolean {
+    if (!locationId) {
+      return false;
+    }
+
+    const locationValue = this.getLocationNotificationsEnabled(locationId);
+    return locationValue === true;
   }
 
-  enableNotifications(): void {
-    localStorage.setItem(NOTIFICATIONS_ENABLED_KEY, 'true');
+  enableNotifications(locationId: string): void {
+    if (!locationId) {
+      return;
+    }
+
+    this.setLocationNotificationsEnabled(locationId, true);
   }
 
-  disableNotifications(): void {
-    localStorage.removeItem(NOTIFICATIONS_ENABLED_KEY);
+  disableNotifications(locationId: string): void {
+    if (!locationId) {
+      return;
+    }
+
+    this.setLocationNotificationsEnabled(locationId, false);
   }
 
   async notifyAlert(locationName: string, locationId: string): Promise<void> {
-    if (!this.isEnabled()) {
+    if (!this.isEnabled(locationId)) {
       return;
     }
     // TODO: translation
@@ -90,7 +135,7 @@ export class NotificationService {
   }
 
   async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
-    if (!this.isEnabled()) {
+    if (!this.isEnabled(locationId)) {
       return;
     }
     // TODO: translation
@@ -104,7 +149,7 @@ export class NotificationService {
   }
 
   async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
-    if (!this.isEnabled()) {
+    if (!this.isEnabled(locationId)) {
       return;
     }
     // TODO: translation
