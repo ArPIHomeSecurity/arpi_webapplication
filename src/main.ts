@@ -1,37 +1,43 @@
-import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, provideZoneChangeDetection } from "@angular/core"
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"
 
-import * as moment from 'moment';
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import * as moment from "moment"
+import { AppModule } from "./app/app.module"
+import { environment } from "./environments/environment"
 
-let locale = localStorage.getItem('localeId');
-console.log('Selected language: ', locale);
+let locale = localStorage.getItem("localeId")
+console.log("Selected language: ", locale)
 if (locale === null) {
-  locale = 'en';
+  locale = "en"
 }
 
-moment.locale(locale);
+moment.locale(locale)
 
-console.log('Current path: ', location.pathname);
-const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
-const matches = pathParser.exec(location.pathname);
+console.log("Current path: ", location.pathname)
+const pathParser = new RegExp(
+  "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
+)
+const matches = pathParser.exec(location.pathname)
 
 if (matches) {
-  console.log('Path matches: ', matches);
-  const newPath = [matches.groups.version, locale, matches.groups.path].join('/');
+  console.log("Path matches: ", matches)
+  const newPath = [matches.groups.version, locale, matches.groups.path].join(
+    "/"
+  )
   if (newPath !== location.pathname) {
-    console.log('Redirect to ' + newPath);
-    location.pathname = newPath;
+    console.log("Redirect to " + newPath)
+    location.pathname = newPath
   } else {
-    console.log('No need to redirect');
+    console.log("No need to redirect")
   }
 } else {
-  console.error('Path does not match', location.pathname);
+  console.error("Path does not match", location.pathname)
 }
 
 if (environment.production) {
-  enableProdMode();
+  enableProdMode()
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] });
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  applicationProviders: [provideZoneChangeDetection()]
+})

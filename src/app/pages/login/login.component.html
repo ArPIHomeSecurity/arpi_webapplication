@@ -19,9 +19,9 @@
               autocomplete="off"
               required
               autofocus
-              />
+            />
             <mat-icon matSuffix (click)="hide = !hide">
-              {{ hide ? 'visibility_off' : 'visibility' }}
+              {{ hide ? "visibility_off" : "visibility" }}
             </mat-icon>
           </mat-form-field>
           <div class="form-group actions">
@@ -30,7 +30,7 @@
               (click)="register()"
               [disabled]="loading || !registerForm.valid"
               color="primary"
-              >
+            >
               <span i18n="Register button">Register</span>
               @if (loading) {
                 <mat-icon>
@@ -78,9 +78,9 @@
               digitOnly
               required
               autofocus
-              />
+            />
             <mat-icon matSuffix (click)="hide = !hide">
-              {{ hide ? 'visibility_off' : 'visibility' }}
+              {{ hide ? "visibility_off" : "visibility" }}
             </mat-icon>
           </mat-form-field>
           <div class="form-group actions">
@@ -90,7 +90,7 @@
               (click)="loginManually()"
               [disabled]="loading || !loginForm.valid"
               color="primary"
-              >
+            >
               <span i18n="Login button">Login</span>
               @if (loading) {
                 <mat-icon>
@@ -104,7 +104,7 @@
                 (click)="loginBiometric()"
                 [disabled]="loading"
                 color="primary"
-                >
+              >
                 <span i18n="@@login biometric login">Biometric login</span>
               </button>
             }
@@ -112,45 +112,37 @@
           @if (error) {
             <div class="alert alert-danger">
               @switch (error) {
-                @case ('invalid origin') {
-                  <div i18n="@@login host not allowed">
-            Host not allowed!
-          </div>
+                @case ("invalid origin") {
+                  <div i18n="@@login host not allowed">Host not allowed!</div>
                 }
-                @case ('missing device token') {
+                @case ("missing device token") {
                   <div i18n="@@login missing device token">
-            Missing device token! Register your device!
-          </div>
+                    Missing device token! Register your device!
+                  </div>
                 }
-                @case ('invalid device token') {
+                @case ("invalid device token") {
                   <div i18n="@@login invalid device token">
-            Invalid device token! Update your device registration!
-          </div>
+                    Invalid device token! Update your device registration!
+                  </div>
                 }
-                @case ('expired registration code') {
+                @case ("expired registration code") {
                   <div i18n="@@login expired registration code">
-            Expired device registration code!
-          </div>
+                    Expired device registration code!
+                  </div>
                 }
-                @case ('invalid user id') {
+                @case ("invalid user id") {
                   <div i18n="@@login invalid user id">
-            Invalid user id! Update your device registration!
-          </div>
+                    Invalid user id! Update your device registration!
+                  </div>
                 }
-                @case ('invalid registration code') {
-                  <div i18n="@@login invalid registration code">
-            Invalid registration code!
-          </div>
+                @case ("invalid registration code") {
+                  <div i18n="@@login invalid registration code">Invalid registration code!</div>
                 }
-                @case ('invalid access code') {
-                  <div i18n="@@login invalid access code">
-            Invalid access code!
-          </div>
+                @case ("invalid access code") {
+                  <div i18n="@@login invalid access code">Invalid access code!</div>
                 }
-                @case ('no connection') {
-                  <div i18n="@@login no connedtion">
-            No connection to the security system!
-          </div>
+                @case ("no connection") {
+                  <div i18n="@@login no connedtion">No connection to the security system!</div>
                 }
                 @default {
                   <div i18n="@@login error">Something went wrong!?</div>
@@ -169,11 +161,11 @@
       <mat-card-header>
         <mat-icon mat-card-avatar>fingerprint</mat-icon>
         <mat-card-title i18n="@@biometric description">
-        Do you want to use biometric login?
-      </mat-card-title>
+          Do you want to use biometric login?
+        </mat-card-title>
         <mat-card-subtitle i18n="@@biometric question">
-        You can use biometric login to access the security system.
-      </mat-card-subtitle>
+          You can use biometric login to access the security system.
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions>
         <button mat-raised-button (click)="allowBiometric(true)" color="primary">
@@ -193,8 +185,8 @@
         <mat-spinner mat-card-avatar diameter="32"></mat-spinner>
         <mat-card-title>Login with biometric</mat-card-title>
         <mat-card-subtitle i18n="@@biometric login description">
-        Use biometric login to access the security system.
-      </mat-card-subtitle>
+          Use biometric login to access the security system.
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content></mat-card-content>
     </mat-card>

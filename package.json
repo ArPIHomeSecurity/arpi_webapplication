@@ -12,6 +12,7 @@
     "lint": "eslint",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
+    "format:single": "prettier --write ",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
     "e2e": "ng e2e",
     "extract-i18n": "ng extract-i18n --output-path src/locales --format xliff",

@@ -1,116 +1,152 @@
-import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Inject,
+  Input,
+  OnInit,
+  Output
+} from "@angular/core"
+import { MatDialog } from "@angular/material/dialog"
+import { MatSnackBar } from "@angular/material/snack-bar"
+import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 
-import { Card, ROLE_TYPES, User } from '@app/models';
-import { AuthenticationService, BiometricService, CardService, EventService, UserService } from '@app/services';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
-import { environment } from '@environments/environment';
-import { catchError, finalize, forkJoin, Observable, of, throwError } from 'rxjs';
-import { MCPTokenDialogComponent } from '../mcp-token-dialog/mcp-token-dialog.component';
-import { UserDeviceRegistrationDialogComponent } from '../user-device-registration/user-device-registration.component';
-import { UserSshKeySetupDialogComponent } from '../user-ssh-key-setup/user-ssh-key-setup.component';
+import { Card, ROLE_TYPES, User } from "@app/models"
+import {
+  AuthenticationService,
+  BiometricService,
+  CardService,
+  EventService,
+  UserService
+} from "@app/services"
+import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { environment } from "@environments/environment"
+import {
+  catchError,
+  finalize,
+  forkJoin,
+  Observable,
+  of,
+  throwError
+} from "rxjs"
+import { MCPTokenDialogComponent } from "../mcp-token-dialog/mcp-token-dialog.component"
+import { UserDeviceRegistrationDialogComponent } from "../user-device-registration/user-device-registration.component"
+import { UserSshKeySetupDialogComponent } from "../user-ssh-key-setup/user-ssh-key-setup.component"
 
 @Component({
-  selector: 'user-card',
-  templateUrl: './user-card.component.html',
-  styleUrls: ['./user-card.component.scss'],
+  selector: "user-card",
+  templateUrl: "./user-card.component.html",
+  styleUrls: ["./user-card.component.scss"],
   standalone: false
 })
 export class UserCardComponent implements OnInit {
-  @Input() user: User;
+  @Input() user: User
 
-  @Input() disabled = false;
+  @Input() disabled = false
 
-  @Input() canManageUser = false;
-  @Input() canManageCards = false;
-  @Input() canManageSshKeys = false;
-  @Input() canManageRegistration = false;
-  @Input() canManageMCP = false;
+  @Input() canManageUser = false
+  @Input() canManageCards = false
+  @Input() canManageSshKeys = false
+  @Input() canManageRegistration = false
+  @Input() canManageMCP = false
 
-  @Output() onUserDeleted = new EventEmitter<number>();
-  @Output() onNavigateToUserEdit = new EventEmitter<void>();
+  @Output() onUserDeleted = new EventEmitter<number>()
+  @Output() onNavigateToUserEdit = new EventEmitter<void>()
 
-  readonly roleTypes = ROLE_TYPES;
+  readonly roleTypes = ROLE_TYPES
 
-  loading = true;
-  cards: Card[] = [];
-  registeringCard = false;
-  hasSshKey = false;
-  hasMCPToken: boolean | null = null;
-  biometricAvailable = false;
-  useBiometric: boolean | null = null;
+  loading = true
+  cards: Card[] = []
+  registeringCard = false
+  hasSshKey = false
+  hasMCPToken: boolean | null = null
+  biometricAvailable = false
+  useBiometric: boolean | null = null
 
-  dialog = inject(MatDialog);
+  dialog = inject(MatDialog)
 
   constructor(
-    @Inject(AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
-    @Inject('CardService') private cardService: CardService,
-    @Inject('EventService') private eventService: EventService,
-    @Inject('UserService') private userService: UserService,
-    @Inject('BiometricService') private biometricService: BiometricService,
+    @Inject(AUTHENTICATION_SERVICE)
+    private authenticationService: AuthenticationService,
+    @Inject("CardService") private cardService: CardService,
+    @Inject("EventService") private eventService: EventService,
+    @Inject("UserService") private userService: UserService,
+    @Inject("BiometricService") private biometricService: BiometricService,
 
     private snackBar: MatSnackBar
   ) {
     this.biometricService.isAvailable().then(result => {
       if (result) {
-        const locationId = localStorage.getItem('selectedLocationId') || '';
-        this.biometricService.isBiometricEnabled(locationId);
-        this.useBiometric = this.biometricService.isBiometricEnabled(locationId);
+        const locationId = localStorage.getItem("selectedLocationId") || ""
+        this.biometricService.isBiometricEnabled(locationId)
+        this.useBiometric = this.biometricService.isBiometricEnabled(locationId)
       }
-    });
-    this.eventService.listen('card_registered').subscribe(result => {
-      this.registeringCard = false;
-      this.snackBar.dismiss();
+    })
+    this.eventService.listen("card_registered").subscribe(result => {
+      this.registeringCard = false
+      this.snackBar.dismiss()
       if (result) {
         // registered
-        this.snackBar.open($localize`:@@card registered:Card registered!`, undefined, {
-          duration: environment.snackDuration
-        });
-        this.cardService.getCards(this.user.id).subscribe(cards => (this.cards = cards));
+        this.snackBar.open(
+          $localize`:@@card registered:Card registered!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
+        this.cardService
+          .getCards(this.user.id)
+          .subscribe(cards => (this.cards = cards))
       } else if (result === false) {
         // not registered
-        this.snackBar.open($localize`:@@card not registered:Failed to register!`, undefined, {
-          duration: environment.snackDuration
-        });
+        this.snackBar.open(
+          $localize`:@@card not registered:Failed to register!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
       } else if (result === null) {
         // time expired
-        this.snackBar.open($localize`:@@card not registered:Failed to register!`, undefined, {
-          duration: environment.snackDuration
-        });
+        this.snackBar.open(
+          $localize`:@@card not registered:Failed to register!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
       }
-    });
+    })
   }
 
   ngOnInit(): void {
     // biometric login is only available for the current user
-    const userId = this.authenticationService.getUserId();
+    const userId = this.authenticationService.getUserId()
     if (this.user.id === userId) {
       this.biometricService.isAvailable().then(result => {
-        this.biometricAvailable = result;
-      });
+        this.biometricAvailable = result
+      })
     }
 
-    let loadHasSshKey: Observable<boolean>;
+    let loadHasSshKey: Observable<boolean>
     if (this.canManageSshKeys) {
-      loadHasSshKey = this.userService.hasSshKey(this.user.id);
+      loadHasSshKey = this.userService.hasSshKey(this.user.id)
     } else {
-      loadHasSshKey = of(false);
+      loadHasSshKey = of(false)
     }
 
-    let loadHasMCPToken: Observable<boolean | null>;
+    let loadHasMCPToken: Observable<boolean | null>
     if (this.canManageMCP) {
       loadHasMCPToken = this.userService.hasMCPToken(this.user.id).pipe(
         catchError(error => {
           if (error?.status === 404) {
-            return of(null);
+            return of(null)
           }
-          return throwError(() => error);
+          return throwError(() => error)
         })
-      );
+      )
     } else {
-      loadHasMCPToken = of(null);
+      loadHasMCPToken = of(null)
     }
 
     forkJoin({
@@ -120,14 +156,14 @@ export class UserCardComponent implements OnInit {
     })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(result => {
-        this.cards = result.cards;
-        this.hasSshKey = result.hasSshKey;
-        this.hasMCPToken = result.hasMCPToken;
-      });
+        this.cards = result.cards
+        this.hasSshKey = result.hasSshKey
+        this.hasMCPToken = result.hasMCPToken
+      })
   }
 
   navigateToUserEdit() {
-    this.onNavigateToUserEdit.emit();
+    this.onNavigateToUserEdit.emit()
   }
 
   openDeleteUserDialog() {
@@ -137,75 +173,94 @@ export class UserCardComponent implements OnInit {
         message: $localize`:@@delete user message:Are you sure you want to delete the user "${this.user.name}"?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       },
-      width: '450px'
-    });
+      width: "450px"
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.deleteUser();
+      if (result === "ok") {
+        this.deleteUser()
       }
-    });
+    })
   }
 
   deleteUser() {
-    this.loading = true;
+    this.loading = true
     this.userService
       .deleteUser(this.user.id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
-          this.snackBar.open($localize`:@@user deleted:User deleted!`, undefined, {
-            duration: environment.snackDuration
-          });
-          this.onUserDeleted.emit(this.user.id);
+          this.snackBar.open(
+            $localize`:@@user deleted:User deleted!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+          this.onUserDeleted.emit(this.user.id)
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed delete:Failed to delete!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
   }
 
   onClickRegisterCard() {
-    this.registeringCard = true;
+    this.registeringCard = true
     this.userService.registerCard(this.user.id).subscribe({
       error: () => {
-        this.registeringCard = false;
-        this.snackBar.open($localize`:@@failed register:Failed to register card!`, undefined, {
-          duration: environment.snackDuration
-        });
+        this.registeringCard = false
+        this.snackBar.open(
+          $localize`:@@failed register:Failed to register card!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
       }
-    });
+    })
   }
 
   toggleCardEnabled(cardId: number) {
-    const card = this.cards.find(c => c.id === cardId);
+    const card = this.cards.find(c => c.id === cardId)
     if (card) {
       // clone the card, change the state and update
-      const tmpCard = Object.assign({}, card);
-      tmpCard.enabled = !card.enabled;
+      const tmpCard = Object.assign({}, card)
+      tmpCard.enabled = !card.enabled
 
-      this.loading = true;
+      this.loading = true
       this.cardService
         .updateCard(tmpCard)
         .pipe(finalize(() => (this.loading = false)))
         .subscribe({
-          next: updatedCard => (this.cards = this.cards.map(c => (c.id === updatedCard.id ? updatedCard : c))),
+          next: updatedCard =>
+            (this.cards = this.cards.map(c =>
+              c.id === updatedCard.id ? updatedCard : c
+            )),
           error: _ =>
-            this.snackBar.open($localize`:@@failed update:Failed to update!`, undefined, {
-              duration: environment.snackDuration
-            })
-        });
+            this.snackBar.open(
+              $localize`:@@failed update:Failed to update!`,
+              undefined,
+              {
+                duration: environment.snackDuration
+              }
+            )
+        })
     }
   }
 
@@ -216,58 +271,66 @@ export class UserCardComponent implements OnInit {
         message: $localize`:@@delete card message:Are you sure you want to delete this card?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       },
-      width: '250px'
-    });
+      width: "250px"
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.removeCard(cardId);
+      if (result === "ok") {
+        this.removeCard(cardId)
       }
-    });
+    })
   }
 
   removeCard(cardId: number) {
-    this.loading = true;
+    this.loading = true
     this.cardService
       .deleteCard(cardId)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => {
-          this.snackBar.open($localize`:@@card deleted:Card deleted!`, undefined, {
-            duration: environment.snackDuration
-          });
-          this.cards = this.cards.filter(c => c.id !== cardId);
+          this.snackBar.open(
+            $localize`:@@card deleted:Card deleted!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+          this.cards = this.cards.filter(c => c.id !== cardId)
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed delete:Failed to delete!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
   }
 
   openDeviceRegistrationDialog() {
     const dialogRef = this.dialog.open(UserDeviceRegistrationDialogComponent, {
-      width: '350px',
+      width: "350px",
       data: this.user
-    });
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      this.loading = true;
+      this.loading = true
       this.userService
         .getUser(this.user.id)
         .pipe(finalize(() => (this.loading = false)))
-        .subscribe(user => (this.user = user));
-    });
+        .subscribe(user => (this.user = user))
+    })
   }
 
   openDeleteRegistrationCodeDialog() {
@@ -277,53 +340,57 @@ export class UserCardComponent implements OnInit {
         message: $localize`:@@delete registration code message:Are you sure you want to delete the registration code?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       },
-      width: '250px'
-    });
+      width: "250px"
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.removeRegistrationCode();
+      if (result === "ok") {
+        this.removeRegistrationCode()
       }
-    });
+    })
   }
 
   removeRegistrationCode() {
-    this.loading = true;
+    this.loading = true
     this.userService
       .deleteRegistrationCode(this.user.id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => (this.user.hasRegistrationCode = false),
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed delete:Failed to delete!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
   }
 
   openSshKeySetupDialog() {
     const dialogRef = this.dialog.open(UserSshKeySetupDialogComponent, {
-      width: '350px',
+      width: "350px",
       data: this.user
-    });
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      this.loading = true;
+      this.loading = true
       this.userService
         .hasSshKey(this.user.id)
         .pipe(finalize(() => (this.loading = false)))
-        .subscribe(hasSshKey => (this.hasSshKey = hasSshKey));
-    });
+        .subscribe(hasSshKey => (this.hasSshKey = hasSshKey))
+    })
   }
 
   openDeleteSshKeyDialog() {
@@ -333,92 +400,108 @@ export class UserCardComponent implements OnInit {
         message: $localize`:@@delete ssh key message:Are you sure you want to delete the SSH key?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       },
-      width: '250px'
-    });
+      width: "250px"
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.removeSSHKey();
+      if (result === "ok") {
+        this.removeSSHKey()
       }
-    });
+    })
   }
 
   removeSSHKey() {
-    this.loading = true;
+    this.loading = true
     this.userService
       .deleteSshKey(this.user.id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: _ => (this.hasSshKey = false),
         error: _ =>
-          this.snackBar.open($localize`:@@failed delete:Failed to delete!`, undefined, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed delete:Failed to delete!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
   }
 
   isBiometricEnabled() {
-    return this.useBiometric === true || this.useBiometric === null;
+    return this.useBiometric === true || this.useBiometric === null
   }
 
   enableBiometricLogin() {
-    const locationId = localStorage.getItem('selectedLocationId') || '';
-    this.biometricService.enableBiometricLogin(locationId);
-    this.useBiometric = null;
+    const locationId = localStorage.getItem("selectedLocationId") || ""
+    this.biometricService.enableBiometricLogin(locationId)
+    this.useBiometric = null
   }
 
   disableBiometricLogin() {
-    const locationId = localStorage.getItem('selectedLocationId') || '';
-    this.biometricService.disableBiometricLogin(locationId);
-    this.useBiometric = false;
+    const locationId = localStorage.getItem("selectedLocationId") || ""
+    this.biometricService.disableBiometricLogin(locationId)
+    this.useBiometric = false
   }
 
   getMCPToken() {
-    this.loading = true;
+    this.loading = true
     this.userService
       .getMCPToken(this.user.id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: token => {
           // display the token in a dialog
-          this.hasMCPToken = true;
+          this.hasMCPToken = true
           this.dialog.open(MCPTokenDialogComponent, {
             data: {
               title: $localize`:@@mcp token:MCP token`,
               token
             },
-            width: '500px'
-          });
+            width: "500px"
+          })
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed get mcp token:Failed to get MCP token!`, undefined, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed get mcp token:Failed to get MCP token!`,
+            undefined,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
   }
 
   removeMCPToken() {
     this.userService.removeMCPToken(this.user.id).subscribe({
       next: _ => {
-        this.hasMCPToken = false;
-        this.snackBar.open($localize`:@@mcp token deleted:MCP token deleted!`, undefined, {
-          duration: environment.snackDuration
-        });
+        this.hasMCPToken = false
+        this.snackBar.open(
+          $localize`:@@mcp token deleted:MCP token deleted!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
       },
       error: _ =>
-        this.snackBar.open($localize`:@@failed delete mcp token:Failed to delete MCP token!`, undefined, {
-          duration: environment.snackDuration
-        })
-    });
+        this.snackBar.open(
+          $localize`:@@failed delete mcp token:Failed to delete MCP token!`,
+          undefined,
+          {
+            duration: environment.snackDuration
+          }
+        )
+    })
   }
 }

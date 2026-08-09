@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
 export interface EventService {
-  connect();
+  connect()
 
-  isConnected(): Observable<boolean>;
+  isConnected(): Observable<boolean>
 
-  listen(event: string): Observable<any>;
+  listen(event: string): Observable<any>
 }

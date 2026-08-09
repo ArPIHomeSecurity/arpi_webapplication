@@ -1,10 +1,10 @@
-import { Alert } from './alert';
+import { Alert } from "./alert"
 
 // monitoring arm types from the backend system
-const ARM_MIXED = 'arm_mixed';
-const ARM_AWAY = 'arm_away';
-const ARM_STAY = 'arm_stay';
-const ARM_DISARM = 'disarm';
+const ARM_MIXED = "arm_mixed"
+const ARM_AWAY = "arm_away"
+const ARM_STAY = "arm_stay"
+const ARM_DISARM = "disarm"
 
 export enum ARM_TYPE {
   UNDEFINED = 0,
@@ -20,7 +20,7 @@ export const string2ArmType = (armType: string): ARM_TYPE =>
     [ARM_STAY]: ARM_TYPE.STAY,
     [ARM_AWAY]: ARM_TYPE.AWAY,
     [ARM_MIXED]: ARM_TYPE.MIXED
-  })[armType as keyof typeof string2ArmType];
+  })[armType as keyof typeof string2ArmType]
 
 export const armType2String = (armType: ARM_TYPE): string => {
   const mapping: Record<ARM_TYPE, string> = {
@@ -28,37 +28,37 @@ export const armType2String = (armType: ARM_TYPE): string => {
     [ARM_TYPE.AWAY]: ARM_AWAY,
     [ARM_TYPE.STAY]: ARM_STAY,
     [ARM_TYPE.DISARMED]: ARM_DISARM,
-    [ARM_TYPE.UNDEFINED]: ''
-  };
-  return mapping[armType];
-};
+    [ARM_TYPE.UNDEFINED]: ""
+  }
+  return mapping[armType]
+}
 
 export class Arm {
-  id: number;
-  type: ARM_TYPE;
-  time: string;
-  userId: number;
-  keypadId: number;
-  alert: Alert;
+  id: number
+  type: ARM_TYPE
+  time: string
+  userId: number
+  keypadId: number
+  alert: Alert
 }
 
 export class Disarm {
-  id: number;
-  time: string;
-  userId: number;
-  keypadId: number;
-  arm: Arm;
+  id: number
+  time: string
+  userId: number
+  keypadId: number
+  arm: Arm
 }
 
 export const armTypeToTextTranslated = (armType: ARM_TYPE): string => {
   switch (armType) {
     case ARM_TYPE.AWAY:
-      return $localize`:@@arm away:away`;
+      return $localize`:@@arm away:away`
     case ARM_TYPE.STAY:
-      return $localize`:@@arm stay:stay`;
+      return $localize`:@@arm stay:stay`
     case ARM_TYPE.MIXED:
-      return $localize`:@@arm mixed:mixed`;
+      return $localize`:@@arm mixed:mixed`
     default:
-      return $localize`:@@arm unknown:unknown`;
+      return $localize`:@@arm unknown:unknown`
   }
-};
+}

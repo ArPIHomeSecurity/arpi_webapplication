@@ -6,48 +6,27 @@
     monitoringState == monitoringStates.INVALID_CONFIG ||
     monitoringState == monitoringStates.SABOTAGE ||
     monitoringState == monitoringStates.UNDEFINED
-    ) {
-    <mat-chip-listbox
-      class="system-state-desktop"
-      >
+  ) {
+    <mat-chip-listbox class="system-state-desktop">
       <!-- MONITORING STATES -->
       <span>
         @switch (monitoringState) {
           @case (monitoringStates.STARTUP) {
-            <mat-chip class="warning" i18n="@@starting state">
-        Starting up
-      </mat-chip>
+            <mat-chip class="warning" i18n="@@starting state">Starting up</mat-chip>
           }
           @case (monitoringStates.UPDATING_CONFIG) {
-            <mat-chip
-              class="warning"
-              i18n="@@updating state"
-              >
-        Updating configuration
-      </mat-chip>
+            <mat-chip class="warning" i18n="@@updating state">Updating configuration</mat-chip>
           }
           @case (monitoringStates.INVALID_CONFIG) {
-            <mat-chip
-              class="danger"
-              i18n="@@invalid state"
-              >
-        Invalid configuration
-      </mat-chip>
+            <mat-chip class="danger" i18n="@@invalid state">Invalid configuration</mat-chip>
           }
           @case (monitoringStates.SABOTAGE) {
-            <mat-chip class="danger" i18n="@@sabotage state">
-        Sabotage
-      </mat-chip>
+            <mat-chip class="danger" i18n="@@sabotage state">Sabotage</mat-chip>
           }
         }
       </span>
       @if (armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED) {
-        <mat-chip
-          class="danger"
-          i18n="@@error state"
-          >
-      ERROR
-    </mat-chip>
+        <mat-chip class="danger" i18n="@@error state">ERROR</mat-chip>
       }
     </mat-chip-listbox>
   }
@@ -59,51 +38,27 @@
     monitoringState == monitoringStates.INVALID_CONFIG ||
     monitoringState == monitoringStates.SABOTAGE ||
     monitoringState == monitoringStates.UNDEFINED
-    ) {
-    <mat-chip-listbox
-      class="system-state-mobile"
-      >
+  ) {
+    <mat-chip-listbox class="system-state-mobile">
       <!-- MONITORING STATES -->
       <span>
         @switch (monitoringState) {
           @case (monitoringStates.STARTUP) {
-            <mat-chip
-              class="warning"
-              i18n="@@starting state short"
-              >
-        S
-      </mat-chip>
+            <mat-chip class="warning" i18n="@@starting state short">S</mat-chip>
           }
           @case (monitoringStates.UPDATING_CONFIG) {
-            <mat-chip
-              class="warning"
-              i18n="@@updating state short"
-              >
-        U
-      </mat-chip>
+            <mat-chip class="warning" i18n="@@updating state short">U</mat-chip>
           }
           @case (monitoringStates.INVALID_CONFIG) {
-            <mat-chip
-              class="danger"
-              i18n="@@invalid state short"
-              >
-        I
-      </mat-chip>
+            <mat-chip class="danger" i18n="@@invalid state short">I</mat-chip>
           }
           @case (monitoringStates.SABOTAGE) {
-            <mat-chip
-              class="danger"
-              i18n="@@sabotage state short"
-              >
-        T
-      </mat-chip>
+            <mat-chip class="danger" i18n="@@sabotage state short">T</mat-chip>
           }
         }
       </span>
       @if (armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED) {
-        <mat-chip
-          class="danger"
-          >
+        <mat-chip class="danger">
           <mat-icon matListIcon>error</mat-icon>
         </mat-chip>
       }
@@ -118,10 +73,8 @@
     monitoringState != monitoringStates.UPDATING_CONFIG &&
     monitoringState != monitoringStates.INVALID_CONFIG &&
     monitoringState != monitoringStates.UNDEFINED
-    ) {
-    <div
-      class="states"
-      >
+  ) {
+    <div class="states">
       <!-- ARM STATES -->
       <span>
         @switch (armState) {
@@ -129,17 +82,13 @@
             <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
           }
           @case (armTypes.MIXED) {
-            <mat-icon [ngClass]="getArmClass()" class="icon_margin">
-              hotel
-            </mat-icon>
+            <mat-icon [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
           }
           @case (armTypes.AWAY) {
             <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
           }
           @case (armTypes.STAY) {
-            <mat-icon [ngClass]="getArmClass()" class="icon_margin">
-              hotel
-            </mat-icon>
+            <mat-icon [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
           }
         }
       </span>
@@ -153,9 +102,8 @@
         monitoringState === monitoringStates.ARM_DELAY ||
         monitoringState === monitoringStates.SABOTAGE ||
         monitoringState === monitoringStates.ALERT
-        ) {
-        <span
-          >
+      ) {
+        <span>
           @switch (sensorAlert) {
             @case (false) {
               <mat-icon class="normal icon_margin">sensors</mat-icon>

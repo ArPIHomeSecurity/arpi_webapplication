@@ -1,33 +1,33 @@
-import { Component, Inject, Input } from '@angular/core';
-import { Output } from '@app/models';
-import { OutputService } from '@app/services';
+import { Component, Inject, Input } from "@angular/core"
+import { Output } from "@app/models"
+import { OutputService } from "@app/services"
 
 @Component({
-  selector: 'component-output',
-  templateUrl: 'output.html',
-  styleUrls: ['output.scss'],
+  selector: "component-output",
+  templateUrl: "output.html",
+  styleUrls: ["output.scss"],
   providers: [],
   standalone: false
 })
 export class OutputComponent {
-  @Input() output: Output;
-  @Input() disabled: boolean;
+  @Input() output: Output
+  @Input() disabled: boolean
 
-  ENDLESS_DURATION = 0;
+  ENDLESS_DURATION = 0
 
-  longPressActive = false;
+  longPressActive = false
 
-  constructor(@Inject('OutputService') private outputService: OutputService) {}
+  constructor(@Inject("OutputService") private outputService: OutputService) {}
 
   onLongPressed() {
     if (this.output.state) {
-      this.outputService.deactivateOutput(this.output.id);
+      this.outputService.deactivateOutput(this.output.id)
     } else {
-      this.outputService.activateOutput(this.output.id);
+      this.outputService.activateOutput(this.output.id)
     }
   }
 
   onLongPressAvailable(available: boolean) {
-    this.longPressActive = available;
+    this.longPressActive = available
   }
 }

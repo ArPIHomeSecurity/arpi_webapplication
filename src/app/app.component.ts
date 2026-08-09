@@ -1,79 +1,94 @@
-import { Component, ElementRef, Inject, NgZone, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav } from '@angular/material/sidenav';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, fromEvent } from 'rxjs';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  NgZone,
+  OnInit,
+  ViewChild
+} from "@angular/core"
+import { MatDialog } from "@angular/material/dialog"
+import { MatSidenav } from "@angular/material/sidenav"
+import { MatSnackBar } from "@angular/material/snack-bar"
+import { BehaviorSubject, fromEvent } from "rxjs"
 
-import { Capacitor } from '@capacitor/core';
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { Capacitor } from "@capacitor/core"
+import { StatusBar, Style } from "@capacitor/status-bar"
 
-import { HttpClient } from '@angular/common/http';
-import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
-import { CountdownComponent } from 'ngx-countdown';
+import { HttpClient } from "@angular/common/http"
+import {
+  HumanizeDuration,
+  HumanizeDurationLanguage
+} from "humanize-duration-ts"
+import { CountdownComponent } from "ngx-countdown"
 
-import { Router } from '@angular/router';
-import { environment } from '@environments/environment';
-import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
-import { Location, ROLE_TYPES } from './models';
-import { AuthenticationService, LoaderService, MonitoringService } from './services';
-import { ThemeService } from './services/theme.service';
-import { AUTHENTICATION_SERVICE } from './tokens';
+import { Router } from "@angular/router"
+import { environment } from "@environments/environment"
+import { QuestionDialogComponent } from "./components/question-dialog/question-dialog.component"
+import { Location, ROLE_TYPES } from "./models"
+import {
+  AuthenticationService,
+  LoaderService,
+  MonitoringService
+} from "./services"
+import { ThemeService } from "./services/theme.service"
+import { AUTHENTICATION_SERVICE } from "./tokens"
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   standalone: false
 })
 export class AppComponent implements OnInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
-  @ViewChild('counter') private countdown: CountdownComponent;
+  @ViewChild("sidenav") sidenav: MatSidenav
+  @ViewChild("counter") private countdown: CountdownComponent
 
   // display error message of the components
-  displayLoader = false;
-  disablePage = false;
-  message: string | null = null;
+  displayLoader = false
+  disablePage = false
+  message: string | null = null
 
-  locations: Location[] = [];
-  selectedLocationId: string | null = null;
+  locations: Location[] = []
+  selectedLocationId: string | null = null
 
   locales = [
-    { name: 'Magyar', id: 'hu' },
-    { name: 'English', id: 'en' },
-    { name: 'Italiano', id: 'it' }
-  ];
-  currentLocale: string;
+    { name: "Magyar", id: "hu" },
+    { name: "English", id: "en" },
+    { name: "Italiano", id: "it" }
+  ]
+  currentLocale: string
   versions: {
-    serverVersion: string;
-    webapplicationVersion: string;
-    boardVersion: string;
-  };
+    serverVersion: string
+    webapplicationVersion: string
+    boardVersion: string
+  }
 
-  isMultiLocation = environment.isMultiLocation;
-  demoMode = environment.demo;
+  isMultiLocation = environment.isMultiLocation
+  demoMode = environment.demo
 
   countdownConfig = {
     leftTime: environment.userTokenExpiry,
-    format: 'mm:ss',
+    format: "mm:ss",
     notify: [environment.userTokenExpiry / 3]
-  };
-  isSessionValid: boolean;
-  isDeviceRegistered = false;
+  }
+  isSessionValid: boolean
+  isDeviceRegistered = false
 
-  langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
-  humanizer: HumanizeDuration = new HumanizeDuration(this.langService);
+  langService: HumanizeDurationLanguage = new HumanizeDurationLanguage()
+  humanizer: HumanizeDuration = new HumanizeDuration(this.langService)
 
   // theming
-  width$ = new BehaviorSubject<number>(1000);
-  resizeObserver!: ResizeObserver;
-  smallScreen = false;
-  darkTheme = false;
+  width$ = new BehaviorSubject<number>(1000)
+  resizeObserver!: ResizeObserver
+  smallScreen = false
+  darkTheme = false
 
   constructor(
-    @Inject(AUTHENTICATION_SERVICE) public authenticationService: AuthenticationService,
-    @Inject('LoaderService') private loader: LoaderService,
-    @Inject('MonitoringService') private monitoring: MonitoringService,
-    @Inject('ThemeService') private themeService: ThemeService,
+    @Inject(AUTHENTICATION_SERVICE)
+    public authenticationService: AuthenticationService,
+    @Inject("LoaderService") private loader: LoaderService,
+    @Inject("MonitoringService") private monitoring: MonitoringService,
+    @Inject("ThemeService") private themeService: ThemeService,
     public router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -82,293 +97,329 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private http: HttpClient
   ) {
-    this.currentLocale = localStorage.getItem('localeId') || 'en';
+    this.currentLocale = localStorage.getItem("localeId") || "en"
 
     if (!this.currentLocale) {
-      this.currentLocale = 'en';
+      this.currentLocale = "en"
     }
 
-    this.versions = { serverVersion: '', webapplicationVersion: '', boardVersion: '' };
-    this.isSessionValid = false;
+    this.versions = {
+      serverVersion: "",
+      webapplicationVersion: "",
+      boardVersion: ""
+    }
+    this.isSessionValid = false
   }
 
   async ngOnInit() {
-    this.darkTheme = this.themeService.load();
+    this.darkTheme = this.themeService.load()
 
     // check platform android
-    if (Capacitor.getPlatform() === 'android') {
+    if (Capacitor.getPlatform() === "android") {
       // set static status bar style to dark (white on indigo)
-      await StatusBar.setStyle({ style: Style.Dark });
+      await StatusBar.setStyle({ style: Style.Dark })
     }
 
     this.resizeObserver = new ResizeObserver(entries => {
       this.zone.run(() => {
-        this.width$.next(entries[0].contentRect.width);
-      });
-    });
-    this.resizeObserver.observe(this.host.nativeElement);
+        this.width$.next(entries[0].contentRect.width)
+      })
+    })
+    this.resizeObserver.observe(this.host.nativeElement)
 
     this.width$.subscribe(width => {
       if (width > 640) {
-        this.smallScreen = false;
-        this.themeService.updateSize(false);
+        this.smallScreen = false
+        this.themeService.updateSize(false)
         if (this.sidenav) {
-          this.sidenav.opened = true;
-          this.sidenav.mode = 'side';
-          this.sidenav.disableClose = true;
+          this.sidenav.opened = true
+          this.sidenav.mode = "side"
+          this.sidenav.disableClose = true
         }
       } else {
-        this.smallScreen = true;
-        this.themeService.updateSize(true);
+        this.smallScreen = true
+        this.themeService.updateSize(true)
         if (this.sidenav) {
-          this.sidenav.opened = false;
-          this.sidenav.mode = 'over';
-          this.sidenav.disableClose = false;
+          this.sidenav.opened = false
+          this.sidenav.mode = "over"
+          this.sidenav.disableClose = false
         }
       }
-    });
+    })
 
-    this.loader.displayed.subscribe(value => (this.displayLoader = value));
-    this.loader.disabled.subscribe(value => (this.disablePage = value));
-    this.loader.message.subscribe(message => (this.message = message));
-    this.monitoring.getVersion().subscribe(version => (this.versions.serverVersion = version));
-    this.monitoring.getBoardVersion().subscribe(version => (this.versions.boardVersion = version.toString()));
+    this.loader.displayed.subscribe(value => (this.displayLoader = value))
+    this.loader.disabled.subscribe(value => (this.disablePage = value))
+    this.loader.message.subscribe(message => (this.message = message))
+    this.monitoring
+      .getVersion()
+      .subscribe(version => (this.versions.serverVersion = version))
+    this.monitoring
+      .getBoardVersion()
+      .subscribe(version => (this.versions.boardVersion = version.toString()))
     this.authenticationService.isSessionValid().subscribe(isSessionValid => {
-      this.isSessionValid = isSessionValid;
+      this.isSessionValid = isSessionValid
       if (this.isSessionValid && this.countdown) {
-        this.countdown.restart();
+        this.countdown.restart()
       }
-    });
+    })
 
     this.authenticationService.isDeviceRegistered().subscribe(isRegistered => {
-      this.isDeviceRegistered = isRegistered;
-    });
+      this.isDeviceRegistered = isRegistered
+    })
 
-    const locations: Location[] = JSON.parse(localStorage.getItem('locations') || '[]');
-    this.locations = locations.sort((a, b) => a.order - b.order);
+    const locations: Location[] = JSON.parse(
+      localStorage.getItem("locations") || "[]"
+    )
+    this.locations = locations.sort((a, b) => a.order - b.order)
 
-    this.selectedLocationId = localStorage.getItem('selectedLocationId');
+    this.selectedLocationId = localStorage.getItem("selectedLocationId")
 
-    fromEvent(window, 'storage').subscribe(this.onConfigurationChanged.bind(this));
+    fromEvent(window, "storage").subscribe(
+      this.onConfigurationChanged.bind(this)
+    )
 
     // Load version from assets/version.json (new format)
     this.http
       .get<{
-        version: string;
-        major: number;
-        minor: number;
-        patch: number;
-        prerelease: string | null;
-        prerelease_num: number | null;
-        commit_id: string;
-      }>('assets/version.json')
+        version: string
+        major: number
+        minor: number
+        patch: number
+        prerelease: string | null
+        prerelease_num: number | null
+        commit_id: string
+      }>("assets/version.json")
       .subscribe({
         next: data => {
           // use the version string directly
-          this.versions.webapplicationVersion = data.version;
+          this.versions.webapplicationVersion = data.version
         },
         error: error => {
-          this.versions.webapplicationVersion = 'unknown';
+          this.versions.webapplicationVersion = "unknown"
         }
-      });
+      })
   }
 
   isLoggedIn() {
-    return this.authenticationService.isLoggedIn();
+    return this.authenticationService.isLoggedIn()
   }
 
   logout(manualAction: boolean) {
-    this.countdown.stop();
-    this.authenticationService.logout(manualAction);
+    this.countdown.stop()
+    this.authenticationService.logout(manualAction)
   }
 
   getUserName() {
-    return this.authenticationService.getUsername();
+    return this.authenticationService.getUsername()
   }
 
   isAdminUser() {
-    return this.authenticationService.getRole() === ROLE_TYPES.ADMIN;
+    return this.authenticationService.getRole() === ROLE_TYPES.ADMIN
   }
 
   getLocationName() {
     if (this.selectedLocationId !== null) {
-      const location = this.locations.find(i => i.id === this.selectedLocationId);
+      const location = this.locations.find(
+        i => i.id === this.selectedLocationId
+      )
       if (location) {
-        return location.name;
+        return location.name
       }
     }
 
-    return '';
+    return ""
   }
 
   getBackend() {
-    const backendScheme = localStorage.getItem('backend.scheme');
-    const backendDomain = localStorage.getItem('backend.domain');
-    const backendPort = localStorage.getItem('backend.port');
-    return `${backendScheme}://${backendDomain}:${backendPort}`;
+    const backendScheme = localStorage.getItem("backend.scheme")
+    const backendDomain = localStorage.getItem("backend.domain")
+    const backendPort = localStorage.getItem("backend.port")
+    return `${backendScheme}://${backendDomain}:${backendPort}`
   }
 
   onConfigurationChanged(event: StorageEvent) {
-    if (event.key === 'locations') {
-      const locations = JSON.parse(event.newValue);
-      this.locations = locations.sort((a, b) => a.order - b.order).map(i => ({ name: i.name, id: i.id }));
-    } else if (event.key === 'selectedLocationId') {
-      this.selectedLocationId = event.newValue;
+    if (event.key === "locations") {
+      const locations = JSON.parse(event.newValue)
+      this.locations = locations
+        .sort((a, b) => a.order - b.order)
+        .map(i => ({ name: i.name, id: i.id }))
+    } else if (event.key === "selectedLocationId") {
+      this.selectedLocationId = event.newValue
     }
   }
 
   onLocationChange(event) {
-    this.selectedLocationId = event.value;
-    localStorage.setItem('selectedLocationId', event.value);
+    this.selectedLocationId = event.value
+    localStorage.setItem("selectedLocationId", event.value)
 
     // navigate to the default page and reload the page
-    localStorage.removeItem('returnUrl');
-    window.location.href = '/';
+    localStorage.removeItem("returnUrl")
+    window.location.href = "/"
   }
 
   onLocaleSelected(event) {
-    const currentLocale = localStorage.getItem('localeId');
-    console.log('Change locale: ', currentLocale, '=>', event.value);
-    localStorage.setItem('localeId', event.value);
+    const currentLocale = localStorage.getItem("localeId")
+    console.log("Change locale: ", currentLocale, "=>", event.value)
+    localStorage.setItem("localeId", event.value)
 
-    const newLocale = event.value;
-    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
+    const newLocale = event.value
+    const pathParser = new RegExp(
+      "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
+    )
 
     // replace the language in the path
-    const path = window.location.pathname;
-    const matches = pathParser.exec(path);
+    const path = window.location.pathname
+    const matches = pathParser.exec(path)
     if (matches !== null) {
-      const newPath = [matches.groups.version, newLocale, matches.groups.path].join('/');
-      console.log('Redirect to ' + newPath);
-      window.location.pathname = newPath;
+      const newPath = [
+        matches.groups.version,
+        newLocale,
+        matches.groups.path
+      ].join("/")
+      console.log("Redirect to " + newPath)
+      window.location.pathname = newPath
     } else {
-      console.error('No match found for path: ', path);
+      console.error("No match found for path: ", path)
     }
   }
 
   onThemeSwitched($event) {
-    console.log('Theme switched: ', $event.checked);
-    this.themeService.updateTheme($event.checked ? 'argus-dark-theme' : 'argus-light-theme');
+    console.log("Theme switched: ", $event.checked)
+    this.themeService.updateTheme(
+      $event.checked ? "argus-dark-theme" : "argus-light-theme"
+    )
   }
 
   handleCountdown($event) {
-    if ($event.action === 'notify') {
-      this.snackBar.open($localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`, null, {
-        duration: environment.snackDuration
-      });
-    } else if ($event.action === 'done') {
-      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, {
-        duration: environment.snackDuration
-      });
-      this.logout(false);
+    if ($event.action === "notify") {
+      this.snackBar.open(
+        $localize`:@@session expiry:Your session will expire in ${this.getSessionDuration()}!`,
+        null,
+        {
+          duration: environment.snackDuration
+        }
+      )
+    } else if ($event.action === "done") {
+      this.snackBar.open(
+        $localize`:@@session expired:Your session expired, logged out!`,
+        null,
+        {
+          duration: environment.snackDuration
+        }
+      )
+      this.logout(false)
     }
   }
 
   getSessionDuration() {
-    let currentLocale = localStorage.getItem('localeId');
+    let currentLocale = localStorage.getItem("localeId")
     if (!currentLocale) {
-      currentLocale = 'en';
+      currentLocale = "en"
     }
-    return this.humanizer.humanize((environment.userTokenExpiry / 3) * 1000, { language: currentLocale });
+    return this.humanizer.humanize((environment.userTokenExpiry / 3) * 1000, {
+      language: currentLocale
+    })
   }
 
   unregister() {
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '250px',
+      width: "250px",
       data: {
         title: $localize`:@@unregister device:Unregister device`,
         message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@unregister:Unregister`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       }
-    });
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.authenticationService.unRegisterDevice();
+      if (result === "ok") {
+        this.authenticationService.unRegisterDevice()
       }
-    });
+    })
   }
 
   openHelp() {
     // get current path
-    const currentPath = location.pathname;
+    const currentPath = location.pathname
 
     // remove version and language from the path
-    const pathParser = new RegExp('^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$');
-    const matches = pathParser.exec(currentPath);
-    let pathWithoutLanguage = '';
+    const pathParser = new RegExp(
+      "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
+    )
+    const matches = pathParser.exec(currentPath)
+    let pathWithoutLanguage = ""
     if (matches !== null) {
-      pathWithoutLanguage = matches.groups.path;
+      pathWithoutLanguage = matches.groups.path
     }
 
     // remove trailing ids from the path
     // example sensor/123 => sensor
-    let basePath = pathWithoutLanguage.replace(/\/[0-9]+$/, '');
+    let basePath = pathWithoutLanguage.replace(/\/[0-9]+$/, "")
 
     // remove location id like "60f10270003f4530e2ba6c09190bf87b731c96185983c8b43147a863ac730ca8"
-    basePath = basePath.replace(/\/[a-f0-9]{64}$/, '');
+    basePath = basePath.replace(/\/[a-f0-9]{64}$/, "")
 
     // mapping of local urls to documentation urls
     const urlMap = {
-      '': 'en/latest/end_users/',
-      login: 'en/latest/end_users/login/',
-      events: 'en/latest/end_users/events/',
+      "": "en/latest/end_users/",
+      login: "en/latest/end_users/login/",
+      events: "en/latest/end_users/events/",
 
-      locations: 'en/latest/end_users/locations/',
-      'location/add': 'en/latest/end_users/locations/#edit-location',
-      location: 'en/latest/end_users/locations/#edit-location',
-      setup: 'en/latest/end_users/locations/',
+      locations: "en/latest/end_users/locations/",
+      "location/add": "en/latest/end_users/locations/#edit-location",
+      location: "en/latest/end_users/locations/#edit-location",
+      setup: "en/latest/end_users/locations/",
 
-      areas: 'en/latest/end_users/areas/',
-      'area/add': 'en/latest/end_users/areas/#edit-area',
-      area: 'en/latest/end_users/areas/#edit-area',
-      outputs: 'en/latest/end_users/outputs/',
-      'output/add': 'en/latest/end_users/outputs/#edit-output',
-      output: 'en/latest/end_users/outputs/#edit-output',
-      sensors: 'en/latest/end_users/sensors/',
-      'sensor/add': 'en/latest/end_users/sensors/#edit-area',
-      sensor: 'en/latest/end_users/sensors/#edit-area',
-      users: 'en/latest/end_users/users/',
-      'user/add': 'en/latest/end_users/users/#edit-user',
-      user: 'en/latest/end_users/users/#edit-user',
-      zones: 'en/latest/end_users/zones/',
-      'zone/add': 'en/latest/end_users/zones/#edit-zone',
-      zone: 'en/latest/end_users/zones/#edit-zone',
+      areas: "en/latest/end_users/areas/",
+      "area/add": "en/latest/end_users/areas/#edit-area",
+      area: "en/latest/end_users/areas/#edit-area",
+      outputs: "en/latest/end_users/outputs/",
+      "output/add": "en/latest/end_users/outputs/#edit-output",
+      output: "en/latest/end_users/outputs/#edit-output",
+      sensors: "en/latest/end_users/sensors/",
+      "sensor/add": "en/latest/end_users/sensors/#edit-area",
+      sensor: "en/latest/end_users/sensors/#edit-area",
+      users: "en/latest/end_users/users/",
+      "user/add": "en/latest/end_users/users/#edit-user",
+      user: "en/latest/end_users/users/#edit-user",
+      zones: "en/latest/end_users/zones/",
+      "zone/add": "en/latest/end_users/zones/#edit-zone",
+      zone: "en/latest/end_users/zones/#edit-zone",
 
-      'config/syren': 'en/latest/end_users/syren/',
-      'config/keypad': 'en/latest/end_users/keypad/',
-      'config/notifications/': 'en/latest/end_users/notifications/',
-      'config/network': 'en/latest/end_users/network/',
-      'config/clock': 'en/latest/end_users/clock/'
-    };
-
-    if (!(basePath in urlMap)) {
-      console.error('No mapping found for: ' + basePath);
-      basePath = '';
+      "config/syren": "en/latest/end_users/syren/",
+      "config/keypad": "en/latest/end_users/keypad/",
+      "config/notifications/": "en/latest/end_users/notifications/",
+      "config/network": "en/latest/end_users/network/",
+      "config/clock": "en/latest/end_users/clock/"
     }
 
-    console.debug('Mapping: ' + basePath + ' => ' + urlMap[basePath]);
+    if (!(basePath in urlMap)) {
+      console.error("No mapping found for: " + basePath)
+      basePath = ""
+    }
+
+    console.debug("Mapping: " + basePath + " => " + urlMap[basePath])
     // check if documentation path exists
-    const http = new XMLHttpRequest();
-    const url = 'https://docs.arpi-security.info/' + urlMap[basePath];
-    http.open('HEAD', url, false);
+    const http = new XMLHttpRequest()
+    const url = "https://docs.arpi-security.info/" + urlMap[basePath]
+    http.open("HEAD", url, false)
 
     try {
-      http.send();
+      http.send()
     } catch (error) {
       if (http.status === 404) {
         // fallback to main page
-        basePath = '';
+        basePath = ""
       }
     }
 
@@ -377,7 +428,7 @@ export class AppComponent implements OnInit {
     // * select documentation version
 
     // open the documentation in a new window
-    const documentationUrl = 'https://docs.arpi-security.info/';
-    window.open(documentationUrl + urlMap[basePath], 'arpi-docs');
+    const documentationUrl = "https://docs.arpi-security.info/"
+    window.open(documentationUrl + urlMap[basePath], "arpi-docs")
   }
 }

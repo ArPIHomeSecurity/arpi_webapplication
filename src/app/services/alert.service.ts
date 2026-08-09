@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { Alert } from '@app/models';
+import { Alert } from "@app/models"
 
 export interface AlertService {
-  getAlerts(): Observable<Alert[]>;
+  getAlerts(): Observable<Alert[]>
 
-  getAlert(): Observable<Alert>;
+  getAlert(): Observable<Alert>
 }

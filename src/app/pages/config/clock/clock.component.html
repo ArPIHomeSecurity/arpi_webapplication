@@ -15,18 +15,18 @@
             <mat-list-item class="clock">
               <span i18n="@@clock network time">Network time</span>
               <span class="spacer"></span>
-              {{ clock.network === null ? ' - - - ' : clock.network }}
+              {{ clock.network === null ? " - - - " : clock.network }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock system time">System time</span>
               <span class="spacer"></span>
-              {{ clock.system === null ? ' - - - ' : clock.system }}
+              {{ clock.system === null ? " - - - " : clock.system }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock hardware time">Hardware time</span>
               &nbsp;(UTC)
               <span class="spacer"></span>
-              {{ clock.hw === null ? ' - - - ' : clock.hw }}
+              {{ clock.hw === null ? " - - - " : clock.hw }}
             </mat-list-item>
           </mat-list>
           <!-- disable clock sync
@@ -47,7 +47,7 @@
                 [owlDateTimeTrigger]="dt"
                 [owlDateTime]="dt"
                 firstDayOfWeek="2"
-                />
+              />
               <mat-icon matSuffix>calendar_today</mat-icon>
               <owl-date-time #dt></owl-date-time>
             </mat-form-field>
@@ -60,16 +60,12 @@
                 formControlName="timezone"
                 required
                 [matAutocomplete]="autoGroup"
-                />
+              />
               <mat-autocomplete #autoGroup="matAutocomplete">
                 @for (group of timezoneGroupOptions | async; track group) {
-                  <mat-optgroup
-                    [label]="group.groupName"
-                    >
+                  <mat-optgroup [label]="group.groupName">
                     @for (name of group.zoneNames; track name) {
-                      <mat-option
-                        [value]="group.groupName + '/' + name"
-                        >
+                      <mat-option [value]="group.groupName + '/' + name">
                         {{ group.groupName }}/{{ name }}
                       </mat-option>
                     }
@@ -89,9 +85,9 @@
             type="submit"
             [disabled]="clockForm.invalid || monitoringState != monitoringStates.READY"
             i18n="@@save button"
-            >
-          Save
-        </button>
+          >
+            Save
+          </button>
         </mat-expansion-panel>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -102,36 +98,36 @@
               <span i18n="@@clock uptime system">System</span>
               <span class="spacer"></span>
               {{
-              clock.uptime === null
-              ? ' - - - '
-              : getDuration(clock.uptime) + ' (' + clock.uptime + ' s)'
+                clock.uptime === null
+                  ? " - - - "
+                  : getDuration(clock.uptime) + " (" + clock.uptime + " s)"
               }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock uptime server">Server</span>
               <span class="spacer"></span>
               {{
-              clock.uptime_server === null
-              ? ' - - - '
-              : getDuration(clock.uptime_server) + ' (' + clock.uptime_server + ' s)'
+                clock.uptime_server === null
+                  ? " - - - "
+                  : getDuration(clock.uptime_server) + " (" + clock.uptime_server + " s)"
               }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock uptime monitor">Monitor</span>
               <span class="spacer"></span>
               {{
-              clock.uptime_monitor === null
-              ? ' - - - '
-              : getDuration(clock.uptime_monitor) + ' (' + clock.uptime_monitor + ' s)'
+                clock.uptime_monitor === null
+                  ? " - - - "
+                  : getDuration(clock.uptime_monitor) + " (" + clock.uptime_monitor + " s)"
               }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock uptime nginx">Nginx</span>
               <span class="spacer"></span>
               {{
-              clock.uptime_nginx === null
-              ? ' - - - '
-              : getDuration(clock.uptime_nginx) + ' (' + clock.uptime_nginx + ' s)'
+                clock.uptime_nginx === null
+                  ? " - - - "
+                  : getDuration(clock.uptime_nginx) + " (" + clock.uptime_nginx + " s)"
               }}
             </mat-list-item>
           </mat-list>

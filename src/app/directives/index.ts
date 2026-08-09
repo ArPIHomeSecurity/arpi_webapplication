@@ -1,1 +1,1 @@
-export * from './long-press.directive';
+export * from "./long-press.directive"

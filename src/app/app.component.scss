@@ -24,7 +24,13 @@
   }
 }
 
-@mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
+@mixin app-theme(
+  $theme,
+  $argus-toolbar-primary,
+  $argus-ok,
+  $argus-alert,
+  $argus-warn
+) {
   $argus-accent: map.get($theme, accent);
 
   .logo {

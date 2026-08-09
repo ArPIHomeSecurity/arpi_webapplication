@@ -1,15 +1,15 @@
 export interface BiometricService {
-  isAvailable(): Promise<boolean>;
+  isAvailable(): Promise<boolean>
 
-  getAccessCode(server: string): Promise<number | undefined>;
+  getAccessCode(server: string): Promise<number | undefined>
 
-  setAccessCode(server: string, accessCode: string): Promise<void>;
+  setAccessCode(server: string, accessCode: string): Promise<void>
 
-  verifyIdentity(): Promise<boolean>;
+  verifyIdentity(): Promise<boolean>
 
-  isBiometricEnabled(locationId: string): boolean;
+  isBiometricEnabled(locationId: string): boolean
 
-  enableBiometricLogin(locationId: string): void;
+  enableBiometricLogin(locationId: string): void
 
-  disableBiometricLogin(locationId: string): void;
+  disableBiometricLogin(locationId: string): void
 }

@@ -23,7 +23,7 @@
         <mat-label>
           <span>{{ message.number }}</span>
           -
-          <span class="message-date">{{ message.time | date: 'yyyy-MM-dd HH:mm' }}</span>
+          <span class="message-date">{{ message.time | date: "yyyy-MM-dd HH:mm" }}</span>
         </mat-label>
         <button
           class="delete"
@@ -32,7 +32,7 @@
           tabindex="1"
           color="warn"
           [disabled]="loading"
-          >
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -50,7 +50,7 @@
     tabindex="2"
     color="warn"
     [disabled]="smsMessages == null || smsMessages.length == 0 || loading"
-    >
+  >
     <span i18n="@@notifications delete all">Delete all</span>
     @if (smsMessages != null && loading) {
       <mat-icon>

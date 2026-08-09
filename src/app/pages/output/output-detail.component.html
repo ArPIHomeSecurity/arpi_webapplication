@@ -11,7 +11,7 @@
               placeholder="Name"
               formControlName="name"
               required
-              />
+            />
           </mat-form-field>
           <mat-form-field>
             <mat-label i18n="@@description">Description</mat-label>
@@ -29,16 +29,16 @@
               formControlName="channel"
               i18n-placeholder="@@output channel"
               placeholder="Channel"
-              >
+            >
               @for (option of this.channelOptions; track option) {
                 <mat-option
                   [value]="option.channel"
                   [disabled]="option.output_name || option.channel == SYREN_CHANNEL"
-                  >
+                >
                   @if (option.channel === -1) {
                     <span i18n="@@output disconnected">Disconnected</span>
                   }
-                  @if (option.label !== '') {
+                  @if (option.label !== "") {
                     <span>
                       <span>{{ option.label }}</span>
                       @if (option.output_name) {
@@ -57,25 +57,17 @@
               i18n-placeholder="@@output trigger"
               placeholder="Trigger"
               (selectionChange)="onSelectTriggerType($event.value)"
-              >
+            >
               @for (triggerType of outputTriggerTypes | keyvalue; track triggerType) {
-                <mat-option
-                  [value]="triggerType.value"
-                  >
+                <mat-option [value]="triggerType.value">
                   @if (triggerType.value === outputTriggerTypes.AREA) {
-                    <span i18n="@@output area">
-                Area
-              </span>
+                    <span i18n="@@output area">Area</span>
                   }
                   @if (triggerType.value === outputTriggerTypes.SYSTEM) {
-                    <span i18n="@@output system">
-                System
-              </span>
+                    <span i18n="@@output system">System</span>
                   }
                   @if (triggerType.value === outputTriggerTypes.BUTTON) {
-                    <span i18n="@@output button">
-                Button
-              </span>
+                    <span i18n="@@output button">Button</span>
                   }
                 </mat-option>
               }
@@ -101,10 +93,10 @@
                 placeholder="Delay [s]"
                 formControlName="delay"
                 required
-                />
-              @if (outputForm.get('delay').invalid) {
+              />
+              @if (outputForm.get("delay").invalid) {
                 <mat-error>
-                  {{ outputForm.get('delay').getError('invalid') }}
+                  {{ outputForm.get("delay").getError("invalid") }}
                 </mat-error>
               }
             </mat-form-field>
@@ -117,25 +109,25 @@
                 placeholder="Duration [s]"
                 formControlName="duration"
                 required
-                />
-              @if (outputForm.get('duration').invalid) {
+              />
+              @if (outputForm.get("duration").invalid) {
                 <mat-error>
-                  {{ outputForm.get('duration').getError('invalid') }}
+                  {{ outputForm.get("duration").getError("invalid") }}
                 </mat-error>
               }
             </mat-form-field>
           </div>
           <div class="row">
             <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">
-            Enabled
-          </mat-checkbox>
+              Enabled
+            </mat-checkbox>
             <mat-checkbox
               formControlName="defaultState"
               color="primary"
               i18n="@@output default state"
-              >
-            Active default
-          </mat-checkbox>
+            >
+              Active default
+            </mat-checkbox>
           </div>
         </form>
       </mat-card-content>
@@ -146,7 +138,7 @@
           color="primary"
           [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
           (click)="onSubmit()"
-          >
+        >
           <mat-icon>save</mat-icon>
         </button>
         @if (outputId > 0) {
@@ -156,7 +148,7 @@
             type="button"
             (click)="openDeleteDialog(output.id)"
             [disabled]="monitoringState != monitoringStates.READY"
-            >
+          >
             <mat-icon>delete</mat-icon>
           </button>
         }

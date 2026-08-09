@@ -1,21 +1,21 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { ARM_TYPE, Area } from '@app/models';
+import { ARM_TYPE, Area } from "@app/models"
 
 export interface AreaService {
-  getAreas(): Observable<Area[]>;
+  getAreas(): Observable<Area[]>
 
-  getArea(areaId: number): Observable<Area>;
+  getArea(areaId: number): Observable<Area>
 
-  createArea(area: Area): Observable<Area>;
+  createArea(area: Area): Observable<Area>
 
-  updateArea(area: Area): Observable<Area>;
+  updateArea(area: Area): Observable<Area>
 
-  deleteArea(areaId: number): Observable<boolean>;
+  deleteArea(areaId: number): Observable<boolean>
 
-  arm(areaId: number, armtype: ARM_TYPE): Observable<Object>;
+  arm(areaId: number, armtype: ARM_TYPE): Observable<Object>
 
-  disarm(areaId: number): Observable<Object>;
+  disarm(areaId: number): Observable<Object>
 
-  reorder(areas: Area[]);
+  reorder(areas: Area[])
 }

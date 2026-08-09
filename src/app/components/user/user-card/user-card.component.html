@@ -1,30 +1,17 @@
 <mat-card class="user-card container-item">
   <mat-card-header>
     @if (user.role === roleTypes.ADMIN) {
-      <mat-icon
-        mat-card-avatar
-        matListIcon
-        mat-card-avatar
-        class="avatar"
-        >
-        person
-      </mat-icon>
+      <mat-icon mat-card-avatar matListIcon mat-card-avatar class="avatar">person</mat-icon>
     }
     @if (user.role === roleTypes.USER) {
-      <mat-icon matListIcon mat-card-avatar class="avatar">
-        person_outline
-      </mat-icon>
+      <mat-icon matListIcon mat-card-avatar class="avatar">person_outline</mat-icon>
     }
     <mat-card-title>{{ user.name }}</mat-card-title>
     @if (user.role === roleTypes.ADMIN) {
-      <mat-card-subtitle i18n="@@user type administrator">
-      Administrator
-    </mat-card-subtitle>
+      <mat-card-subtitle i18n="@@user type administrator">Administrator</mat-card-subtitle>
     }
     @if (user.role === roleTypes.USER) {
-      <mat-card-subtitle i18n="@@user type user">
-      User
-    </mat-card-subtitle>
+      <mat-card-subtitle i18n="@@user type user">User</mat-card-subtitle>
     }
   </mat-card-header>
 
@@ -36,7 +23,7 @@
     <mat-divider></mat-divider>
 
     <mat-list>
-            <!-- Registration code -->
+      <!-- Registration code -->
       <h3 matSubheader i18n="@@user device registration code">Device registration code</h3>
       @if (user.hasRegistrationCode) {
         <mat-list-item>
@@ -54,7 +41,7 @@
             color="warn"
             [disabled]="!canManageRegistration || disabled"
             (click)="openDeleteRegistrationCodeDialog()"
-            >
+          >
             <mat-icon color="warn">delete</mat-icon>
           </button>
         </mat-list-item>
@@ -68,7 +55,7 @@
             color="primary"
             [disabled]="!canManageRegistration || disabled"
             (click)="openDeviceRegistrationDialog()"
-            >
+          >
             <mat-icon>add</mat-icon>
           </button>
         </mat-list-item>
@@ -82,12 +69,11 @@
         <mat-list-item>
           <mat-icon matListItemIcon>credit_card</mat-icon>
           <mat-checkbox
-              color="primary"
-              [checked]="card.enabled"
-              [disabled]="!canManageCards || disabled"
-              (change)="toggleCardEnabled(card.id)"
-              >
-          </mat-checkbox>
+            color="primary"
+            [checked]="card.enabled"
+            [disabled]="!canManageCards || disabled"
+            (change)="toggleCardEnabled(card.id)"
+          ></mat-checkbox>
           <span matListItemTitle>{{ card.description }}</span>
           <div matListItemMeta>
             <button
@@ -95,7 +81,7 @@
               color="warn"
               [disabled]="!canManageCards || disabled"
               (click)="openDeleteCardDialog(card.id)"
-              >
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -110,19 +96,22 @@
             color="primary"
             [disabled]="!canManageCards || disabled"
             (click)="onClickRegisterCard()"
-            >
+          >
             <mat-icon>add</mat-icon>
           </button>
         </mat-list-item>
       }
       @if (registeringCard) {
         <mat-list-item>
-          <mat-progress-spinner matListItemIcon color="primary" mode="indeterminate" diameter="20">
-          </mat-progress-spinner>
+          <mat-progress-spinner
+            matListItemIcon
+            color="primary"
+            mode="indeterminate"
+            diameter="20"
+          ></mat-progress-spinner>
           <span matListItemTitle i18n="@@user registering card">Registering card</span>
         </mat-list-item>
       }
-
 
       <!-- SSH key -->
       @if (user.role === roleTypes.ADMIN) {
@@ -137,7 +126,7 @@
               color="warn"
               [disabled]="!canManageSshKeys || disabled"
               (click)="openDeleteSshKeyDialog()"
-              >
+            >
               <mat-icon color="warn">delete</mat-icon>
             </button>
           </mat-list-item>
@@ -151,7 +140,7 @@
               color="primary"
               [disabled]="!canManageSshKeys || disabled"
               (click)="openSshKeySetupDialog()"
-              >
+            >
               <mat-icon>add</mat-icon>
             </button>
           </mat-list-item>
@@ -170,7 +159,7 @@
               color="warn"
               [disabled]="!canManageMCP || disabled"
               (click)="removeMCPToken()"
-              >
+            >
               <mat-icon color="warn">delete</mat-icon>
             </button>
           </mat-list-item>
@@ -184,7 +173,7 @@
               color="primary"
               [disabled]="!canManageMCP || disabled"
               (click)="getMCPToken()"
-              >
+            >
               <mat-icon>add</mat-icon>
             </button>
           </mat-list-item>
@@ -220,11 +209,9 @@
             [checked]="isBiometricEnabled()"
             [disabled]="disabled"
             (change)="$event.checked ? enableBiometricLogin() : disableBiometricLogin()"
-            >
-          </mat-slide-toggle>
+          ></mat-slide-toggle>
         </mat-list-item>
       }
-
     </mat-list>
   }
 
@@ -239,7 +226,7 @@
       color="warn"
       [disabled]="!canManageUser || disabled"
       (click)="openDeleteUserDialog()"
-      >
+    >
       <mat-icon>delete</mat-icon>
     </button>
 
@@ -251,7 +238,7 @@
         [disabled]="!canManageRegistration || user.hasRegistrationCode || disabled"
         i18n="@@user register device button"
         (click)="openDeviceRegistrationDialog()"
-        >
+      >
         Device registration
       </button>
       @if (canManageCards) {
@@ -261,9 +248,9 @@
           [disabled]="disabled"
           (click)="onClickRegisterCard()"
           i18n="@@user register card button"
-          >
-        Register card
-      </button>
+        >
+          Register card
+        </button>
       }
       @if (user.role === roleTypes.ADMIN) {
         <button
@@ -272,9 +259,9 @@
           [disabled]="!canManageSshKeys || hasSshKey || disabled"
           (click)="openSshKeySetupDialog()"
           i18n="@@user generate ssk key"
-          >
-        Setup SSH key
-      </button>
+        >
+          Setup SSH key
+        </button>
       }
       @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
         <button
@@ -283,9 +270,9 @@
           [disabled]="!canManageMCP || disabled || hasMCPToken === true"
           (click)="getMCPToken()"
           i18n="@@user get mcp token"
-          >
-        Get MCP token
-      </button>
+        >
+          Get MCP token
+        </button>
       }
 
       <!-- Biometric login -->
@@ -297,7 +284,7 @@
               color="primary"
               [disabled]="disabled"
               (click)="enableBiometricLogin()"
-              >
+            >
               <span i18n="@@user enable biometric">Enable biometric login</span>
             </button>
           }
@@ -307,13 +294,12 @@
               color="warn"
               [disabled]="disabled"
               (click)="disableBiometricLogin()"
-              >
+            >
               <span i18n="@@user disable biometric">Disable biometric login</span>
             </button>
           }
         </div>
       }
-
     </mat-menu>
   </mat-card-actions>
 </mat-card>

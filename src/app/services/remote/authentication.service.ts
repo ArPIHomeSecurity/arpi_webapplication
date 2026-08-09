@@ -1,34 +1,39 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from "@angular/common/http"
+import { Inject, Injectable } from "@angular/core"
+import { Router } from "@angular/router"
 
-import { Observable, Subject } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject } from "rxjs"
+import { map, startWith } from "rxjs/operators"
 
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode"
 
-import { environment } from '@environments/environment';
-import { EventService } from './event.service';
+import { environment } from "@environments/environment"
+import { EventService } from "./event.service"
 
 @Injectable()
 export class AuthenticationService implements AuthenticationService {
-  private isDeviceRegisteredSubject = new Subject<boolean>();
-  private isSessionValidSubject = new Subject<boolean>();
+  private isDeviceRegisteredSubject = new Subject<boolean>()
+  private isSessionValidSubject = new Subject<boolean>()
 
   constructor(
-    @Inject('EventService') private eventService: EventService,
+    @Inject("EventService") private eventService: EventService,
     private http: HttpClient,
     private router: Router
   ) {}
 
   login(accessCode: number): Observable<boolean> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const locationId = this.getLocationId();
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
+    const headers = new HttpHeaders({ "Content-Type": "application/json" })
+    const locationId = this.getLocationId()
+    const deviceTokens = JSON.parse(
+      localStorage.getItem("deviceTokens") || "{}"
+    )
     return this.http
       .post(
-        '/api/user/authenticate',
-        JSON.stringify({ device_token: deviceTokens[locationId], access_code: accessCode }),
+        "/api/user/authenticate",
+        JSON.stringify({
+          device_token: deviceTokens[locationId],
+          access_code: accessCode
+        }),
         { headers }
       )
       .pipe(
@@ -36,99 +41,101 @@ export class AuthenticationService implements AuthenticationService {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
-            deviceTokens[locationId] = response.device_token;
-            localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+            const deviceTokens = JSON.parse(
+              localStorage.getItem("deviceTokens") || "{}"
+            )
+            deviceTokens[locationId] = response.device_token
+            localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
 
-            this.eventService.connect();
-            this.isDeviceRegisteredSubject.next(true);
+            this.eventService.connect()
+            this.isDeviceRegisteredSubject.next(true)
           }
 
           if (response.user_token) {
             // store user info with jwt token in local storage to keep user logged in between page refreshes
-            this.updateUserToken(response.user_token);
+            this.updateUserToken(response.user_token)
 
             // return true to indicate successful login
-            return true;
+            return true
           } else {
             // return false to indicate failed login
-            return false;
+            return false
           }
         })
-      );
+      )
   }
 
   logout(manualAction = true): void {
     // clear token remove user from local storage to log user out
-    const locationId = this.getLocationId();
-    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
+    const locationId = this.getLocationId()
+    const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
     if (locationId in userTokens) {
-      delete userTokens[locationId];
+      delete userTokens[locationId]
     }
-    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+    localStorage.setItem("userTokens", JSON.stringify(userTokens))
 
     // clear returnUrl to start from home
-    localStorage.removeItem('returnUrl');
-    this.isSessionValidSubject.next(false);
+    localStorage.removeItem("returnUrl")
+    this.isSessionValidSubject.next(false)
 
     if (manualAction) {
-      this.router.navigate(['/login'], { queryParams: { isLogout: true } });
+      this.router.navigate(["/login"], { queryParams: { isLogout: true } })
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"])
     }
   }
 
   isLoggedIn(): boolean {
     try {
-      const userToken = this.getUserToken();
-      return !!userToken;
+      const userToken = this.getUserToken()
+      return !!userToken
     } catch (error) {
       // console.error('Invalid token');
     }
-    return false;
+    return false
   }
 
   getRole(): string {
-    const userToken = this.getUserToken();
+    const userToken = this.getUserToken()
     if (userToken) {
       try {
-        return (jwtDecode(userToken) as any).role;
+        return (jwtDecode(userToken) as any).role
       } catch (error) {}
     }
-    return '';
+    return ""
   }
 
   getUsername(): string {
-    const userToken = this.getUserToken();
+    const userToken = this.getUserToken()
     if (userToken) {
       try {
-        return (jwtDecode(userToken) as any).name;
+        return (jwtDecode(userToken) as any).name
       } catch (error) {}
     }
-    return '';
+    return ""
   }
 
   getUserId(): number {
-    const userToken = this.getUserToken();
+    const userToken = this.getUserToken()
     if (userToken) {
       try {
-        return (jwtDecode(userToken) as any).id;
+        return (jwtDecode(userToken) as any).id
       } catch (error) {}
     }
-    return 0;
+    return 0
   }
 
   getToken(): string {
     if (this.getUserToken()) {
-      return this.getUserToken();
+      return this.getUserToken()
     } else if (this.getDeviceToken()) {
-      return this.getDeviceToken();
+      return this.getDeviceToken()
     }
-    return '';
+    return ""
   }
 
   getLocationId(): string {
-    return localStorage.getItem('selectedLocationId') || '';
+    return localStorage.getItem("selectedLocationId") || ""
   }
 
   /**
@@ -137,75 +144,78 @@ export class AuthenticationService implements AuthenticationService {
    * If the token is expired, it will be removed.
    */
   getUserToken(): string {
-    const locationId = this.getLocationId();
+    const locationId = this.getLocationId()
     if (!locationId) {
-      return '';
+      return ""
     }
 
-    const userToken = localStorage.getItem(`${locationId}:userToken`);
+    const userToken = localStorage.getItem(`${locationId}:userToken`)
     if (!userToken) {
       // check in new format
-      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
-      return userTokens[locationId] || '';
+      const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
+      return userTokens[locationId] || ""
     }
 
     // save in new format
-    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
-    userTokens[locationId] = userToken;
-    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+    const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
+    userTokens[locationId] = userToken
+    localStorage.setItem("userTokens", JSON.stringify(userTokens))
 
     // remove old format
-    localStorage.removeItem(`${locationId}:userToken`);
+    localStorage.removeItem(`${locationId}:userToken`)
 
     // parse token
-    let userData;
+    let userData
     try {
-      userData = jwtDecode(userToken);
+      userData = jwtDecode(userToken)
     } catch (error) {
-      console.error('Invalid token');
-      return '';
+      console.error("Invalid token")
+      return ""
     }
 
     // check expiry
-    if (Date.now() / 1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
+    if (
+      Date.now() / 1000 - parseInt(userData.timestamp) >
+      environment.userTokenExpiry
+    ) {
       // remove token
-      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
+      const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
       if (locationId in userTokens) {
-        delete userTokens[locationId];
+        delete userTokens[locationId]
       }
 
-      this.isSessionValidSubject.next(false);
-      return '';
+      this.isSessionValidSubject.next(false)
+      return ""
     }
 
-    return userToken;
+    return userToken
   }
 
   updateUserToken(token: string) {
-    const locationId = this.getLocationId();
+    const locationId = this.getLocationId()
     if (!locationId) {
-      return;
+      return
     }
 
     try {
       // check if token is valid
-      jwtDecode(token);
+      jwtDecode(token)
 
       // save in new format
-      const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
-      userTokens[locationId] = token;
-      localStorage.setItem('userTokens', JSON.stringify(userTokens));
+      const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
+      userTokens[locationId] = token
+      localStorage.setItem("userTokens", JSON.stringify(userTokens))
 
       // remove old format
-      localStorage.removeItem(`${locationId}:userToken`);
+      localStorage.removeItem(`${locationId}:userToken`)
 
-      return this.isSessionValidSubject.next(true);
+      return this.isSessionValidSubject.next(true)
     } catch (error) {}
-    return this.isSessionValidSubject.next(false);
+    return this.isSessionValidSubject.next(false)
   }
 
   isSessionValid(): Observable<boolean> {
-    return this.isSessionValidSubject.pipe(startWith(this.isLoggedIn()));
+    return this.isSessionValidSubject.pipe(startWith(this.isLoggedIn()))
   }
 
   /**
@@ -215,99 +225,113 @@ export class AuthenticationService implements AuthenticationService {
    */
   getDeviceToken(locationId?: string): string {
     if (!locationId) {
-      locationId = this.getLocationId();
+      locationId = this.getLocationId()
     }
 
     if (!locationId) {
-      return '';
+      return ""
     }
 
-    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || '';
+    const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || ""
     if (!deviceToken) {
       // check in new format
-      const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
+      const deviceTokens = JSON.parse(
+        localStorage.getItem("deviceTokens") || "{}"
+      )
       if (locationId in deviceTokens) {
-        return deviceTokens[locationId];
+        return deviceTokens[locationId]
       }
     }
 
     // save in new format
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
+    const deviceTokens = JSON.parse(
+      localStorage.getItem("deviceTokens") || "{}"
+    )
     if (deviceToken) {
-      deviceTokens[locationId] = deviceToken;
-      localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+      deviceTokens[locationId] = deviceToken
+      localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
     }
 
     // remove old format
-    localStorage.removeItem(`${locationId}:deviceToken`);
+    localStorage.removeItem(`${locationId}:deviceToken`)
 
-    return deviceToken;
+    return deviceToken
   }
 
   registerDevice(registrationCode: string): Observable<boolean> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const locationId = this.getLocationId();
+    const headers = new HttpHeaders({ "Content-Type": "application/json" })
+    const locationId = this.getLocationId()
     return this.http
-      .post('/api/user/register_device', JSON.stringify({ registration_code: registrationCode }), { headers })
+      .post(
+        "/api/user/register_device",
+        JSON.stringify({ registration_code: registrationCode }),
+        { headers }
+      )
       .pipe(
         map((response: any) => {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
-            deviceTokens[locationId] = response.device_token;
-            localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+            const deviceTokens = JSON.parse(
+              localStorage.getItem("deviceTokens") || "{}"
+            )
+            deviceTokens[locationId] = response.device_token
+            localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
 
-            this.eventService.connect();
-            this.isDeviceRegisteredSubject.next(true);
-            return true;
+            this.eventService.connect()
+            this.isDeviceRegisteredSubject.next(true)
+            return true
           }
 
-          return false;
+          return false
         })
-      );
+      )
   }
 
   unRegisterDevice() {
-    const locationId = this.getLocationId();
+    const locationId = this.getLocationId()
 
     // remove device token
-    const deviceTokens = JSON.parse(localStorage.getItem('deviceTokens') || '{}');
+    const deviceTokens = JSON.parse(
+      localStorage.getItem("deviceTokens") || "{}"
+    )
     if (locationId in deviceTokens) {
-      delete deviceTokens[locationId];
+      delete deviceTokens[locationId]
     }
-    localStorage.setItem('deviceTokens', JSON.stringify(deviceTokens));
+    localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
 
     // remove user token
-    const userTokens = JSON.parse(localStorage.getItem('userTokens') || '{}');
+    const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
     if (locationId in userTokens) {
-      delete userTokens[locationId];
+      delete userTokens[locationId]
     }
-    localStorage.setItem('userTokens', JSON.stringify(userTokens));
+    localStorage.setItem("userTokens", JSON.stringify(userTokens))
 
     // invalidate session
-    this.isSessionValidSubject.next(false);
-    this.isDeviceRegisteredSubject.next(false);
+    this.isSessionValidSubject.next(false)
+    this.isDeviceRegisteredSubject.next(false)
 
     // clear returnUrl to start from home
-    localStorage.removeItem('returnUrl');
+    localStorage.removeItem("returnUrl")
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this.isDeviceRegisteredSubject.pipe(startWith(!!this.getDeviceToken()));
+    return this.isDeviceRegisteredSubject.pipe(
+      startWith(!!this.getDeviceToken())
+    )
   }
 
   getRegisteredUserId(): number | null {
-    const deviceToken = this.getDeviceToken();
+    const deviceToken = this.getDeviceToken()
     if (deviceToken) {
       try {
-        return (jwtDecode(deviceToken) as any).user_id;
+        return (jwtDecode(deviceToken) as any).user_id
       } catch (error) {}
     }
-    return null;
+    return null
   }
 
   getDeviceDomain(): string | null {
-    return localStorage.getItem('backend.domain');
+    return localStorage.getItem("backend.domain")
   }
 }

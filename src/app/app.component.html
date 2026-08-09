@@ -9,12 +9,7 @@
     </button>
 
     @if (isLoggedIn()) {
-      <button
-        mat-flat-button
-        routerLink="/"
-        (click)="sidenav.close()"
-        class="logo-button"
-        >
+      <button mat-flat-button routerLink="/" (click)="sidenav.close()" class="logo-button">
         <img src="assets/images/argus-eye-30.png" />
         <span class="location">{{ getLocationName() }}</span>
       </button>
@@ -86,7 +81,7 @@
             routerLink="/login"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>login</mat-icon>
             <div matListItemTitle i18n="@@login menu link">Login</div>
           </mat-list-item>
@@ -97,7 +92,7 @@
             [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>home</mat-icon>
             <div matListItemTitle i18n="@@home menu link">Control</div>
           </mat-list-item>
@@ -107,7 +102,7 @@
             routerLink="/events"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>history</mat-icon>
             <span matListItemTitle i18n="@@events menu link">Events</span>
           </mat-list-item>
@@ -120,7 +115,7 @@
             routerLink="/locations"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>other_houses</mat-icon>
             <span i18n="@@locations menu link">Locations</span>
           </mat-list-item>
@@ -130,7 +125,7 @@
             routerLink="/areas"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>crop</mat-icon>
             <span i18n="@@areas menu link">Areas</span>
           </mat-list-item>
@@ -140,7 +135,7 @@
             routerLink="/zones"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>tab</mat-icon>
             <span i18n="@@zones menu link">Zones</span>
           </mat-list-item>
@@ -150,7 +145,7 @@
             routerLink="/sensors"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>input</mat-icon>
             <span i18n="@@sensors menu link">Sensors</span>
           </mat-list-item>
@@ -160,7 +155,7 @@
             routerLink="/outputs"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>output</mat-icon>
             <span i18n="@@outputs menu link">Outputs</span>
           </mat-list-item>
@@ -170,7 +165,7 @@
             routerLink="/users"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>group</mat-icon>
             <span i18n="@@users menu link">Users</span>
           </mat-list-item>
@@ -189,7 +184,7 @@
                 routerLink="/config/syren"
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
-                >
+              >
                 <mat-icon matListItemIcon>volume_up</mat-icon>
                 <span i18n="@@syren menu link">Syren</span>
               </mat-list-item>
@@ -197,7 +192,7 @@
                 routerLink="/config/keypad"
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
-                >
+              >
                 <mat-icon matListItemIcon>grid_on</mat-icon>
                 <span i18n="@@keypad menu link">Keypad</span>
               </mat-list-item>
@@ -205,7 +200,7 @@
                 routerLink="/config/notifications"
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
-                >
+              >
                 <mat-icon matListItemIcon>send</mat-icon>
                 <span i18n="@@notifications menu link">Notifications</span>
               </mat-list-item>
@@ -213,7 +208,7 @@
                 routerLink="/config/network"
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
-                >
+              >
                 <mat-icon matListItemIcon>public</mat-icon>
                 <span i18n="@@network menu link">Network</span>
               </mat-list-item>
@@ -221,7 +216,7 @@
                 routerLink="/config/clock"
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
-                >
+              >
                 <mat-icon matListItemIcon>access_time</mat-icon>
                 <span i18n="@@clock menu link">Clock</span>
               </mat-list-item>
@@ -237,7 +232,7 @@
             routerLink="/my-user"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>person</mat-icon>
             <span i18n="@@my-user menu link">My user</span>
           </mat-list-item>
@@ -258,7 +253,7 @@
             (change)="onThemeSwitched($event)"
             [checked]="darkTheme"
             i18n="@@dark theme"
-            >
+          >
             Dark theme
           </mat-slide-toggle>
         </mat-list-item>
@@ -274,7 +269,7 @@
             routerLink="/setup"
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>settings</mat-icon>
             <span i18n="@@setup menu link">Setup</span>
           </mat-list-item>
@@ -285,7 +280,7 @@
             routerLink="/login"
             routerLinkActive="active"
             (click)="logout(true); smallScreen ? sidenav.close() : null"
-            >
+          >
             <mat-icon matListItemIcon>exit_to_app</mat-icon>
             <div mat-line i18n="@@logout menu link">Logout</div>
             <div mat-line>({{ getUserName() }})</div>
@@ -316,7 +311,7 @@
             color="primary"
             mode="indeterminate"
             diameter="100"
-            />
+          />
         }
         <router-outlet></router-outlet>
       </div>
@@ -338,11 +333,11 @@
           </div>
           <div class="version">
             <b>Server</b>
-            &nbsp;{{ versions.serverVersion || '-' }}
+            &nbsp;{{ versions.serverVersion || "-" }}
           </div>
           <div class="version">
             <b>Board</b>
-            &nbsp;v{{ versions.boardVersion || '-' }}
+            &nbsp;v{{ versions.boardVersion || "-" }}
           </div>
         </div>
       </div>

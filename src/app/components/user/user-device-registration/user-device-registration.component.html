@@ -33,11 +33,7 @@
       {{ registrationCode }}
       <!-- https://stackoverflow.com/a/58115714 -->
       @if (registrationCode) {
-        <button
-          mat-icon-button
-          onclick="this.blur()"
-          (click)="copyText(registrationCode)"
-          >
+        <button mat-icon-button onclick="this.blur()" (click)="copyText(registrationCode)">
           <mat-icon>file_copy</mat-icon>
         </button>
       }
@@ -53,7 +49,7 @@
     tabindex="2"
     color="primary"
     i18n="@@user get new code"
-    >
+  >
     Get new code
   </button>
 

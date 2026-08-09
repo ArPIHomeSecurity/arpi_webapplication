@@ -1,14 +1,26 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Inject, output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  Inject,
+  output
+} from "@angular/core"
+import { MatDialog } from "@angular/material/dialog"
+import { MatSnackBar } from "@angular/material/snack-bar"
+import {
+  CdkDragDrop,
+  CdkDragStart,
+  moveItemInArray
+} from "@angular/cdk/drag-drop"
 
-import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { forkJoin } from "rxjs"
+import { finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { MONITORING_STATE, Sensor, Area, Output } from '@app/models';
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
+import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { MONITORING_STATE, Sensor, Area, Output } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -16,63 +28,66 @@ import {
   SensorService,
   AreaService,
   OutputService
-} from '@app/services';
+} from "@app/services"
 
-import { environment } from '@environments/environment';
-import { AUTHENTICATION_SERVICE } from '@app/tokens';
+import { environment } from "@environments/environment"
+import { AUTHENTICATION_SERVICE } from "@app/tokens"
 
-const scheduleMicrotask = Promise.resolve(null);
+const scheduleMicrotask = Promise.resolve(null)
 
 @Component({
-  templateUrl: 'area-list.component.html',
-  styleUrls: ['area-list.component.scss'],
+  templateUrl: "area-list.component.html",
+  styleUrls: ["area-list.component.scss"],
   providers: [],
   standalone: false
 })
-export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  CONFIG = 0;
-  SENSORS = 1;
+export class AreaListComponent
+  extends ConfigurationBaseComponent
+  implements OnInit, OnDestroy
+{
+  CONFIG = 0
+  SENSORS = 1
 
-  areas: Area[] = null;
-  outputs: Output[] = [];
-  sensors: Sensor[] = [];
-  outputListOpened: boolean[] = [];
-  sensorListOpened: boolean[] = [];
-  isDragging = false;
+  areas: Area[] = null
+  outputs: Output[] = []
+  sensors: Sensor[] = []
+  outputListOpened: boolean[] = []
+  sensorListOpened: boolean[] = []
+  isDragging = false
 
   constructor(
-    @Inject('AreaService') private areaService: AreaService,
+    @Inject("AreaService") private areaService: AreaService,
     @Inject(AUTHENTICATION_SERVICE) public authService: AuthenticationService,
-    @Inject('EventService') public eventService: EventService,
-    @Inject('LoaderService') public loader: LoaderService,
-    @Inject('MonitoringService') public monitoringService,
-    @Inject('OutputService') private outputService: OutputService,
-    @Inject('SensorService') private sensorService: SensorService,
+    @Inject("EventService") public eventService: EventService,
+    @Inject("LoaderService") public loader: LoaderService,
+    @Inject("MonitoringService") public monitoringService,
+    @Inject("OutputService") private outputService: OutputService,
+    @Inject("SensorService") private sensorService: SensorService,
 
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(eventService, loader, monitoringService);
+    super(eventService, loader, monitoringService)
   }
 
   ngOnInit() {
-    super.initialize();
+    super.initialize()
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
+      this.loader.display(true)
+    })
 
-    this.updateComponent();
+    this.updateComponent()
   }
 
   ngOnDestroy() {
-    super.destroy();
+    super.destroy()
   }
 
   updateComponent() {
-    if (this.isDragging) return;
+    if (this.isDragging) return
 
     forkJoin({
       areas: this.areaService.getAreas(),
@@ -81,102 +96,114 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
-        this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder);
-        this.outputs = results.outputs;
-        this.sensors = results.sensors;
-        this.loader.display(false);
-        this.loader.disable(false);
-      });
+        this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder)
+        this.outputs = results.outputs
+        this.sensors = results.sensors
+        this.loader.display(false)
+        this.loader.disable(false)
+      })
   }
 
   getSensors(areaId: number): Sensor[] {
-    const results: Sensor[] = [];
+    const results: Sensor[] = []
     this.sensors.forEach(sensor => {
       if (sensor.areaId === areaId) {
-        results.push(sensor);
+        results.push(sensor)
       }
-    });
+    })
 
-    return results;
+    return results
   }
 
   getOutputs(areaId: number): Output[] {
-    const results: Output[] = [];
+    const results: Output[] = []
     this.outputs.forEach(output => {
       if (output.areaId === areaId) {
-        results.push(output);
+        results.push(output)
       }
-    });
+    })
 
-    return results;
+    return results
   }
 
   userCanEdit() {
-    return this.authService.getRole() === 'admin';
+    return this.authService.getRole() === "admin"
   }
 
   openDeleteDialog(areaId: number) {
-    const area = this.areas.find(x => x.id === areaId);
+    const area = this.areas.find(x => x.id === areaId)
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '450px',
+      width: "450px",
       data: {
         title: $localize`:@@delete area:Delete Area`,
         message: $localize`:@@delete area message:Are you sure you want to delete the area "${area.name}"?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       }
-    });
+    })
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true);
+          this.loader.disable(true)
           this.areaService
             .deleteArea(areaId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, {
-                  duration: environment.snackDuration
-                });
-                this.updateComponent();
+                this.snackBar.open(
+                  $localize`:@@area deleted:Area deleted!`,
+                  null,
+                  {
+                    duration: environment.snackDuration
+                  }
+                )
+                this.updateComponent()
               },
               error: _ =>
-                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
-                  duration: environment.snackDuration
-                })
-            });
+                this.snackBar.open(
+                  $localize`:@@failed delete:Failed to delete!`,
+                  null,
+                  {
+                    duration: environment.snackDuration
+                  }
+                )
+            })
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
-            duration: environment.snackDuration
-          });
+          this.snackBar.open(
+            $localize`:@@cant delete state:Cannot delete while not in READY state!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
         }
       }
-    });
+    })
   }
 
   onDragStarted(event: CdkDragStart<string[]>) {
-    this.isDragging = true;
+    this.isDragging = true
   }
 
   onDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.areas, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.areas, event.previousIndex, event.currentIndex)
     this.areas.forEach((area, index) => {
-      area.uiOrder = index;
-    });
+      area.uiOrder = index
+    })
 
-    this.areaService.reorder(this.areas);
-    this.isDragging = false;
+    this.areaService.reorder(this.areas)
+    this.isDragging = false
     // delayed update
-    setTimeout(() => this.updateComponent(), 500);
+    setTimeout(() => this.updateComponent(), 500)
   }
 }

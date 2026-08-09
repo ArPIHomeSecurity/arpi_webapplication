@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
 import {
   AbstractControl,
   FormControl,
@@ -7,17 +7,17 @@ import {
   ValidationErrors,
   ValidatorFn,
   Validators
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+} from "@angular/forms"
+import { ActivatedRoute, Router } from "@angular/router"
 
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from "@angular/material/dialog"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { forkJoin, of, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { forkJoin, of, throwError } from "rxjs"
+import { catchError, finalize } from "rxjs/operators"
 
-import { QuestionDialogComponent } from '@app/components/question-dialog/question-dialog.component';
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
+import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
   ARM_TYPE,
   Area,
@@ -29,55 +29,65 @@ import {
   SensorType,
   Zone,
   string2MonitoringState
-} from '@app/models';
-import { AreaService, EventService, LoaderService, MonitoringService, SensorService, ZoneService } from '@app/services';
-import { positiveInteger } from '@app/utils';
+} from "@app/models"
+import {
+  AreaService,
+  EventService,
+  LoaderService,
+  MonitoringService,
+  SensorService,
+  ZoneService
+} from "@app/services"
+import { positiveInteger } from "@app/utils"
 
-import { environment } from '@environments/environment';
+import { environment } from "@environments/environment"
 
-const scheduleMicrotask = Promise.resolve(null);
+const scheduleMicrotask = Promise.resolve(null)
 
 /**
  * Channel info
  */
 class Channel {
-  channel: number;
-  sensor: Sensor;
-  sensorB: Sensor;
+  channel: number
+  sensor: Sensor
+  sensorB: Sensor
 }
 
 @Component({
-  templateUrl: './sensor-detail.component.html',
-  styleUrls: ['sensor-detail.component.scss'],
+  templateUrl: "./sensor-detail.component.html",
+  styleUrls: ["sensor-detail.component.scss"],
   providers: [],
   standalone: false
 })
-export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  sensorId: number;
-  sensor: Sensor = undefined;
-  sensors: Sensor[];
-  channels: Channel[];
-  areas: Area[];
-  zones: Zone[];
-  sensorTypes: SensorType[];
-  sensorForm: FormGroup;
-  zoneForm: FormGroup;
-  areaForm: FormGroup;
-  newZone = false;
-  boardVersion: number;
+export class SensorDetailComponent
+  extends ConfigurationBaseComponent
+  implements OnInit, OnDestroy
+{
+  sensorId: number
+  sensor: Sensor = undefined
+  sensors: Sensor[]
+  channels: Channel[]
+  areas: Area[]
+  zones: Zone[]
+  sensorTypes: SensorType[]
+  sensorForm: FormGroup
+  zoneForm: FormGroup
+  areaForm: FormGroup
+  newZone = false
+  boardVersion: number
 
-  monitoringStates = MONITORING_STATE;
-  channelTypes = ChannelTypes;
-  sensorContactTypes = SensorContactTypes;
-  eolCounts = SensorEOLCount;
+  monitoringStates = MONITORING_STATE
+  channelTypes = ChannelTypes
+  sensorContactTypes = SensorContactTypes
+  eolCounts = SensorEOLCount
 
   constructor(
-    @Inject('EventService') public eventService: EventService,
-    @Inject('LoaderService') public loader: LoaderService,
-    @Inject('MonitoringService') public monitoringService: MonitoringService,
-    @Inject('SensorService') private sensorService: SensorService,
-    @Inject('ZoneService') private zoneService: ZoneService,
-    @Inject('AreaService') private areaService: AreaService,
+    @Inject("EventService") public eventService: EventService,
+    @Inject("LoaderService") public loader: LoaderService,
+    @Inject("MonitoringService") public monitoringService: MonitoringService,
+    @Inject("SensorService") private sensorService: SensorService,
+    @Inject("ZoneService") private zoneService: ZoneService,
+    @Inject("AreaService") private areaService: AreaService,
 
     public router: Router,
 
@@ -86,30 +96,33 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
-    super(eventService, loader, monitoringService);
+    super(eventService, loader, monitoringService)
 
     this.route.paramMap.subscribe(params => {
-      if (params.get('id') != null) {
-        this.sensorId = +params.get('id');
+      if (params.get("id") != null) {
+        this.sensorId = +params.get("id")
       }
-    });
+    })
   }
 
   ngOnInit() {
-    super.initialize();
-    this.editableStates.push(MONITORING_STATE.INVALID_CONFIG);
+    super.initialize()
+    this.editableStates.push(MONITORING_STATE.INVALID_CONFIG)
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
+      this.loader.display(true)
+    })
 
     this.baseSubscriptions.push(
       this.eventService
-        .listen('system_state_change')
-        .subscribe(monitoringState => (this.monitoringState = string2MonitoringState(monitoringState)))
-    );
+        .listen("system_state_change")
+        .subscribe(
+          monitoringState =>
+            (this.monitoringState = string2MonitoringState(monitoringState))
+        )
+    )
 
     if (this.sensorId != null) {
       forkJoin({
@@ -123,26 +136,28 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         .pipe(
           catchError(error => {
             if (error.status === 404) {
-              this.sensor = null;
+              this.sensor = null
             }
-            return throwError(() => error);
+            return throwError(() => error)
           }),
           finalize(() => this.loader.display(false))
         )
         .subscribe(results => {
-          this.sensor = results.sensor;
-          this.sensors = results.sensors;
-          this.zones = results.zones;
-          this.areas = results.areas;
-          this.sensorTypes = results.sensorTypes.sort((st1, st2) => (st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0));
-          this.channels = this.generateChannels(this.sensors);
-          this.boardVersion = results.boardVersion;
+          this.sensor = results.sensor
+          this.sensors = results.sensors
+          this.zones = results.zones
+          this.areas = results.areas
+          this.sensorTypes = results.sensorTypes.sort((st1, st2) =>
+            st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0
+          )
+          this.channels = this.generateChannels(this.sensors)
+          this.boardVersion = results.boardVersion
 
-          this.updateForm(this.sensor);
-          this.onZoneSelected(this.sensor.zoneId);
-          this.onAreaSelected(this.sensor.areaId);
-          this.loader.display(false);
-        });
+          this.updateForm(this.sensor)
+          this.onZoneSelected(this.sensor.zoneId)
+          this.onAreaSelected(this.sensor.areaId)
+          this.loader.display(false)
+        })
     } else {
       forkJoin({
         sensors: this.sensorService.getSensors(),
@@ -153,60 +168,85 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       })
         .pipe(finalize(() => this.loader.display(false)))
         .subscribe(results => {
-          this.sensors = results.sensors;
-          this.sensorTypes = results.sensorTypes;
-          this.zones = results.zones;
-          this.areas = results.areas;
-          this.channels = this.generateChannels(this.sensors);
-          this.boardVersion = results.boardVersion;
+          this.sensors = results.sensors
+          this.sensorTypes = results.sensorTypes
+          this.zones = results.zones
+          this.areas = results.areas
+          this.channels = this.generateChannels(this.sensors)
+          this.boardVersion = results.boardVersion
 
-          this.sensor = new Sensor();
-          this.sensor.enabled = true;
-          const firstFreeChannel = this.channels.find(ch => ch.sensor == null && ch.channel >= 0);
-          this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null;
-          this.sensor.channelType = this.boardVersion >= 3 ? ChannelTypes.NORMAL : null;
-          this.sensor.sensorContactType = this.boardVersion >= 3 ? SensorContactTypes.NC : null;
-          this.sensor.sensorEolCount = this.boardVersion >= 3 ? SensorEOLCount.SINGLE : null;
-          this.sensor.zoneId = -1;
-          this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1;
-          this.sensor.typeId = this.sensorTypes[0].id;
-          this.sensor.uiHidden = false;
+          this.sensor = new Sensor()
+          this.sensor.enabled = true
+          const firstFreeChannel = this.channels.find(
+            ch => ch.sensor == null && ch.channel >= 0
+          )
+          this.sensor.channel = firstFreeChannel
+            ? firstFreeChannel.channel
+            : null
+          this.sensor.channelType =
+            this.boardVersion >= 3 ? ChannelTypes.NORMAL : null
+          this.sensor.sensorContactType =
+            this.boardVersion >= 3 ? SensorContactTypes.NC : null
+          this.sensor.sensorEolCount =
+            this.boardVersion >= 3 ? SensorEOLCount.SINGLE : null
+          this.sensor.zoneId = -1
+          this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1
+          this.sensor.typeId = this.sensorTypes[0].id
+          this.sensor.uiHidden = false
 
-          this.updateForm(this.sensor);
-          this.onZoneSelected(this.sensor.zoneId);
-          this.onAreaSelected(this.sensor.areaId);
-          this.loader.display(false);
-        });
+          this.updateForm(this.sensor)
+          this.onZoneSelected(this.sensor.zoneId)
+          this.onAreaSelected(this.sensor.areaId)
+          this.loader.display(false)
+        })
     }
   }
 
   ngOnDestroy() {
-    super.destroy();
+    super.destroy()
   }
 
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zoneId)
     this.zoneForm = this.fb.group({
-      zoneName: new FormControl('', [Validators.required, Validators.maxLength(32)]),
+      zoneName: new FormControl("", [
+        Validators.required,
+        Validators.maxLength(32)
+      ]),
       disarmedAlert: false,
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
-      awayAlertDelay: new FormControl(0, [Validators.required, positiveInteger()]),
-      awayArmDelay: new FormControl(0, [Validators.required, positiveInteger()]),
+      awayAlertDelay: new FormControl(0, [
+        Validators.required,
+        positiveInteger()
+      ]),
+      awayArmDelay: new FormControl(0, [
+        Validators.required,
+        positiveInteger()
+      ]),
       stayArmedAlert: true,
-      stayAlertDelay: new FormControl(0, [Validators.required, positiveInteger()]),
+      stayAlertDelay: new FormControl(0, [
+        Validators.required,
+        positiveInteger()
+      ]),
       stayArmDelay: new FormControl(0, [Validators.required, positiveInteger()])
-    });
+    })
 
     this.areaForm = this.fb.group({
-      areaName: new FormControl('', [Validators.required, Validators.maxLength(32)])
-    });
+      areaName: new FormControl("", [
+        Validators.required,
+        Validators.maxLength(32)
+      ])
+    })
 
     this.sensorForm = this.fb.group(
       {
         channel: new FormControl(sensor.channel),
         channelType: new FormControl(sensor.channelType, Validators.required),
-        sensorContactType: new FormControl(sensor.sensorContactType, Validators.required),
+        sensorContactType: new FormControl(
+          sensor.sensorContactType,
+          Validators.required
+        ),
         eolCount: new FormControl(sensor.sensorEolCount, Validators.required),
         typeId: new FormControl(sensor.typeId, Validators.required),
 
@@ -216,83 +256,105 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         enabled: sensor.enabled,
         silentAlert: new FormControl(),
         sensitivity: new FormControl(),
-        monitorPeriod: new FormControl(sensor.monitorPeriod, [Validators.required, positiveInteger()]),
+        monitorPeriod: new FormControl(sensor.monitorPeriod, [
+          Validators.required,
+          positiveInteger()
+        ]),
         monitorThreshold: new FormControl(sensor.monitorThreshold, [
           Validators.required,
           Validators.min(0),
           Validators.max(100),
           Validators.pattern(/^\d+$/)
         ]),
-        name: new FormControl(sensor.name, [Validators.required, Validators.maxLength(16)]),
+        name: new FormControl(sensor.name, [
+          Validators.required,
+          Validators.maxLength(16)
+        ]),
         description: new FormControl(sensor.description),
         zoneForm: this.zoneForm,
         areaForm: this.areaForm,
         hidden: sensor.uiHidden
       },
       { validators: this.validateChannel() }
-    );
+    )
 
     if (sensor.silentAlert == null) {
-      this.sensorForm.controls.silentAlert.setValue('undefined');
+      this.sensorForm.controls.silentAlert.setValue("undefined")
     } else if (sensor.silentAlert === true) {
-      this.sensorForm.controls.silentAlert.setValue('silent');
+      this.sensorForm.controls.silentAlert.setValue("silent")
     } else if (sensor.silentAlert === false) {
-      this.sensorForm.controls.silentAlert.setValue('loud');
+      this.sensorForm.controls.silentAlert.setValue("loud")
     }
 
     if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
-      this.sensorForm.controls.sensitivity.setValue('custom');
-      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
-      this.sensorForm.controls.monitorPeriod.enable();
-      this.sensorForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
-      this.sensorForm.controls.monitorThreshold.enable();
-    } else if (sensor.monitorPeriod == null && sensor.monitorThreshold != null) {
-      this.sensorForm.controls.sensitivity.setValue('instant');
-      this.sensorForm.controls.monitorPeriod.disable();
-      this.sensorForm.controls.monitorPeriod.clearValidators();
-      this.sensorForm.controls.monitorThreshold.disable();
-      this.sensorForm.controls.monitorThreshold.clearValidators();
+      this.sensorForm.controls.sensitivity.setValue("custom")
+      this.sensorForm.controls.monitorPeriod.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      this.sensorForm.controls.monitorPeriod.enable()
+      this.sensorForm.controls.monitorThreshold.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      this.sensorForm.controls.monitorThreshold.enable()
+    } else if (
+      sensor.monitorPeriod == null &&
+      sensor.monitorThreshold != null
+    ) {
+      this.sensorForm.controls.sensitivity.setValue("instant")
+      this.sensorForm.controls.monitorPeriod.disable()
+      this.sensorForm.controls.monitorPeriod.clearValidators()
+      this.sensorForm.controls.monitorThreshold.disable()
+      this.sensorForm.controls.monitorThreshold.clearValidators()
     } else {
-      this.sensorForm.controls.sensitivity.setValue('undefined');
-      this.sensorForm.controls.monitorPeriod.disable();
-      this.sensorForm.controls.monitorPeriod.clearValidators();
-      this.sensorForm.controls.monitorThreshold.disable();
-      this.sensorForm.controls.monitorThreshold.clearValidators();
+      this.sensorForm.controls.sensitivity.setValue("undefined")
+      this.sensorForm.controls.monitorPeriod.disable()
+      this.sensorForm.controls.monitorPeriod.clearValidators()
+      this.sensorForm.controls.monitorThreshold.disable()
+      this.sensorForm.controls.monitorThreshold.clearValidators()
     }
 
     if (sensor.typeId === 2) {
-      this.sensorForm.controls.sensitivity.setValue('instant');
-      this.sensorForm.controls.sensitivity.disable();
+      this.sensorForm.controls.sensitivity.setValue("instant")
+      this.sensorForm.controls.sensitivity.disable()
     } else {
-      this.sensorForm.controls.sensitivity.enable();
+      this.sensorForm.controls.sensitivity.enable()
     }
 
     if (this.boardVersion >= 3) {
-      this.sensorForm.controls.channelType.setValidators(Validators.required);
-      this.sensorForm.controls.sensorContactType.setValidators(Validators.required);
-      this.sensorForm.controls.eolCount.setValidators(Validators.required);
+      this.sensorForm.controls.channelType.setValidators(Validators.required)
+      this.sensorForm.controls.sensorContactType.setValidators(
+        Validators.required
+      )
+      this.sensorForm.controls.eolCount.setValidators(Validators.required)
     } else {
-      this.sensorForm.controls.channelType.clearValidators();
-      this.sensorForm.controls.sensorContactType.clearValidators();
-      this.sensorForm.controls.eolCount.clearValidators();
+      this.sensorForm.controls.channelType.clearValidators()
+      this.sensorForm.controls.sensorContactType.clearValidators()
+      this.sensorForm.controls.eolCount.clearValidators()
     }
 
-    if (sensor.channelType === ChannelTypes.CHANNEL_A || sensor.channelType === ChannelTypes.CHANNEL_B) {
-      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE);
-      this.sensorForm.controls.eolCount.disable();
+    if (
+      sensor.channelType === ChannelTypes.CHANNEL_A ||
+      sensor.channelType === ChannelTypes.CHANNEL_B
+    ) {
+      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE)
+      this.sensorForm.controls.eolCount.disable()
     } else {
-      this.sensorForm.controls.eolCount.enable();
+      this.sensorForm.controls.eolCount.enable()
     }
   }
 
   validateChannel(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (this.sensorForm == null) {
-        return null;
+        return null
       }
 
-      const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel);
-      const selectedChannelType = this.sensorForm.value.channelType;
+      const selectedChannel = this.channels.find(
+        ch => ch.channel === control.value.channel
+      )
+      const selectedChannelType = this.sensorForm.value.channelType
 
       // if selected channel type is A or B, allow only opposite type channels
       if (
@@ -304,38 +366,38 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           selectedChannel.sensorB.id !== this.sensor.id)
       ) {
         // assign errors to both controls to force error display
-        this.sensorForm.controls.channel.setErrors({ channelInUse: true });
-        this.sensorForm.controls.channel.markAsTouched();
-        this.sensorForm.controls.channelType.setErrors({ channelInUse: true });
-        this.sensorForm.controls.channelType.markAsTouched();
-        return { channelInUse: true };
+        this.sensorForm.controls.channel.setErrors({ channelInUse: true })
+        this.sensorForm.controls.channel.markAsTouched()
+        this.sensorForm.controls.channelType.setErrors({ channelInUse: true })
+        this.sensorForm.controls.channelType.markAsTouched()
+        return { channelInUse: true }
       }
 
-      this.sensorForm.controls.channel.setErrors(null);
-      this.sensorForm.controls.channel.markAsTouched();
-      this.sensorForm.controls.channelType.setErrors(null);
-      this.sensorForm.controls.channelType.markAsTouched();
-      return null;
-    };
+      this.sensorForm.controls.channel.setErrors(null)
+      this.sensorForm.controls.channel.markAsTouched()
+      this.sensorForm.controls.channelType.setErrors(null)
+      this.sensorForm.controls.channelType.markAsTouched()
+      return null
+    }
   }
 
   isChannelDisabled(channel: Channel): boolean {
     if (this.sensorForm == null) {
-      return false;
+      return false
     }
 
     // if channel is disconnected, always enable
     if (!channel.sensor && !channel.sensorB) {
-      return false;
+      return false
     }
 
     // if it is the originally selected channel, enable
     if (this.sensor.channel === channel.channel) {
-      return false;
+      return false
     }
 
     // if selected channel type is A or B, disable opposite type channels
-    const selectedChannelType = this.sensorForm.value.channelType;
+    const selectedChannelType = this.sensorForm.value.channelType
     if (
       (selectedChannelType === ChannelTypes.CHANNEL_A &&
         (!channel.sensor || channel.sensor?.id === this.sensor.id) &&
@@ -344,52 +406,61 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         (!channel.sensorB || channel.sensorB?.id === this.sensor.id) &&
         channel.sensor?.channelType === ChannelTypes.CHANNEL_A)
     ) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   onSensorTypeChanged(event) {
     if (event.value === 2) {
-      this.sensorForm.controls.sensitivity.setValue('instant');
-      this.sensorForm.controls.sensitivity.disable();
+      this.sensorForm.controls.sensitivity.setValue("instant")
+      this.sensorForm.controls.sensitivity.disable()
     } else {
-      this.sensorForm.controls.sensitivity.enable();
+      this.sensorForm.controls.sensitivity.enable()
     }
   }
 
   onChannelTypeChanged(event) {
-    if (event.value === ChannelTypes.CHANNEL_A || event.value === ChannelTypes.CHANNEL_B) {
-      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE);
-      this.sensorForm.controls.eolCount.disable();
+    if (
+      event.value === ChannelTypes.CHANNEL_A ||
+      event.value === ChannelTypes.CHANNEL_B
+    ) {
+      this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE)
+      this.sensorForm.controls.eolCount.disable()
     } else {
-      this.sensorForm.controls.eolCount.enable();
+      this.sensorForm.controls.eolCount.enable()
     }
   }
 
   onSensitivityChanged(event) {
-    if (event.value === 'custom') {
-      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()]);
-      this.sensorForm.controls.monitorPeriod.enable();
-      this.sensorForm.controls.monitorThreshold.setValidators([Validators.required, positiveInteger()]);
-      this.sensorForm.controls.monitorThreshold.enable();
+    if (event.value === "custom") {
+      this.sensorForm.controls.monitorPeriod.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      this.sensorForm.controls.monitorPeriod.enable()
+      this.sensorForm.controls.monitorThreshold.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      this.sensorForm.controls.monitorThreshold.enable()
     } else {
-      this.sensorForm.controls.monitorPeriod.clearValidators();
-      this.sensorForm.controls.monitorPeriod.setErrors(null);
-      this.sensorForm.controls.monitorPeriod.setValue(null);
-      this.sensorForm.controls.monitorPeriod.disable();
-      this.sensorForm.controls.monitorThreshold.clearValidators();
-      this.sensorForm.controls.monitorThreshold.setErrors(null);
-      this.sensorForm.controls.monitorThreshold.setValue(null);
-      this.sensorForm.controls.monitorThreshold.disable();
+      this.sensorForm.controls.monitorPeriod.clearValidators()
+      this.sensorForm.controls.monitorPeriod.setErrors(null)
+      this.sensorForm.controls.monitorPeriod.setValue(null)
+      this.sensorForm.controls.monitorPeriod.disable()
+      this.sensorForm.controls.monitorThreshold.clearValidators()
+      this.sensorForm.controls.monitorThreshold.setErrors(null)
+      this.sensorForm.controls.monitorThreshold.setValue(null)
+      this.sensorForm.controls.monitorThreshold.disable()
     }
   }
 
   onSubmit() {
-    const sensor = this.prepareSensor();
-    const zone = this.prepareZone();
-    const area = this.prepareArea();
+    const sensor = this.prepareSensor()
+    const zone = this.prepareZone()
+    const area = this.prepareArea()
 
     if (
       sensor.channel >= 0 &&
@@ -397,75 +468,97 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       sensor.id !== this.channels[sensor.channel].sensor.id
     ) {
       // disconnect sensor on channel collision
-      this.channels[sensor.channel].sensor.channel = -1;
-      this.sensorService.updateSensor(this.channels[sensor.channel].sensor);
+      this.channels[sensor.channel].sensor.channel = -1
+      this.sensorService.updateSensor(this.channels[sensor.channel].sensor)
     }
 
     if (this.sensor.zoneId === -1 || this.sensor.areaId === -1) {
       forkJoin({
-        resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : of(null),
-        resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : of(null)
+        resultZone:
+          this.sensor.zoneId === -1
+            ? this.zoneService.createZone(zone)
+            : of(null),
+        resultArea:
+          this.sensor.areaId === -1
+            ? this.areaService.createArea(area)
+            : of(null)
       }).subscribe({
         next: results => {
           if (results.resultZone) {
-            sensor.zoneId = results.resultZone.id;
+            sensor.zoneId = results.resultZone.id
           }
           if (results.resultArea) {
-            sensor.areaId = results.resultArea.id;
+            sensor.areaId = results.resultArea.id
           }
 
           if (this.sensor.id !== undefined) {
-            return this.sensorService.updateSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']));
+            return this.sensorService
+              .updateSensor(sensor)
+              .subscribe(_ => this.router.navigate(["/sensors"]))
           }
 
-          return this.sensorService.createSensor(sensor).subscribe(_ => this.router.navigate(['/sensors']));
+          return this.sensorService
+            .createSensor(sensor)
+            .subscribe(_ => this.router.navigate(["/sensors"]))
         },
         error: _ =>
-          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed create:Failed to create!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
     } else if (this.sensorId != null) {
       this.sensorService.updateSensor(sensor).subscribe({
-        next: () => this.router.navigate(['/sensors']),
+        next: () => this.router.navigate(["/sensors"]),
         error: () =>
-          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed update:Failed to update!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
     } else {
       this.sensorService.createSensor(sensor).subscribe({
-        next: () => this.router.navigate(['/sensors']),
+        next: () => this.router.navigate(["/sensors"]),
         error: () =>
-          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
-            duration: environment.snackDuration
-          })
-      });
+          this.snackBar.open(
+            $localize`:@@failed create:Failed to create!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
+      })
     }
   }
 
   onCancel() {
-    this.router.navigate(['/sensors']);
+    this.router.navigate(["/sensors"])
   }
 
   prepareSensor(): Sensor {
-    const formModel = this.sensorForm.value;
+    const formModel = this.sensorForm.value
 
-    let silentAlert = null;
-    if (formModel.silentAlert === 'undefined') {
-      silentAlert = null;
-    } else if (formModel.silentAlert === 'loud') {
-      silentAlert = false;
-    } else if (formModel.silentAlert === 'silent') {
-      silentAlert = true;
+    let silentAlert = null
+    if (formModel.silentAlert === "undefined") {
+      silentAlert = null
+    } else if (formModel.silentAlert === "loud") {
+      silentAlert = false
+    } else if (formModel.silentAlert === "silent") {
+      silentAlert = true
     }
 
-    if (formModel.sensitivity === 'undefined') {
-      formModel.monitorPeriod = null;
-      formModel.monitorThreshold = null;
-    } else if (formModel.sensitivity === 'instant') {
-      formModel.monitorPeriod = null;
-      formModel.monitorThreshold = 100;
+    if (formModel.sensitivity === "undefined") {
+      formModel.monitorPeriod = null
+      formModel.monitorThreshold = null
+    } else if (formModel.sensitivity === "instant") {
+      formModel.monitorPeriod = null
+      formModel.monitorThreshold = 100
     }
 
     return {
@@ -490,181 +583,219 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       monitorThreshold: formModel.monitorThreshold,
       uiOrder: null,
       uiHidden: formModel.hidden
-    };
+    }
   }
 
   getZoneName(): string {
-    const zone = this.zones.find(zone => zone.id === this.sensor.zoneId);
-    return zone ? zone.name : this.zoneForm.value.zoneName;
+    const zone = this.zones.find(zone => zone.id === this.sensor.zoneId)
+    return zone ? zone.name : this.zoneForm.value.zoneName
   }
 
   prepareZone(): Zone {
-    const sensorModel = this.sensorForm.value;
-    const zoneModel = this.zoneForm.value;
+    const sensorModel = this.sensorForm.value
+    const zoneModel = this.zoneForm.value
 
     return {
       id: sensorModel.zoneId,
       name: zoneModel.zoneName,
       description: zoneModel.zoneName,
-      disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
-      awayAlertDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayAlertDelay, 10) : null,
-      awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
-      stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
-      stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
+      disarmedDelay: zoneModel.disarmedAlert
+        ? parseInt(zoneModel.disarmedDelay, 10)
+        : null,
+      awayAlertDelay: zoneModel.awayArmedAlert
+        ? parseInt(zoneModel.awayAlertDelay, 10)
+        : null,
+      awayArmDelay: zoneModel.awayArmedAlert
+        ? parseInt(zoneModel.awayArmDelay, 10)
+        : null,
+      stayAlertDelay: zoneModel.stayArmedAlert
+        ? parseInt(zoneModel.stayAlertDelay, 10)
+        : null,
+      stayArmDelay: zoneModel.stayArmedAlert
+        ? parseInt(zoneModel.stayArmDelay, 10)
+        : null,
       uiOrder: null
-    };
+    }
   }
 
   getAreaName(): string {
-    const area = this.areas.find(area => area.id === this.sensor.areaId);
-    return area ? area.name : this.areaForm.value.areaName;
+    const area = this.areas.find(area => area.id === this.sensor.areaId)
+    return area ? area.name : this.areaForm.value.areaName
   }
 
   prepareArea(): Area {
-    const sensorModel = this.sensorForm.value;
-    const areaModel = this.areaForm.value;
+    const sensorModel = this.sensorForm.value
+    const areaModel = this.areaForm.value
 
     return {
       id: sensorModel.areaId,
       name: areaModel.areaName,
       armState: ARM_TYPE.DISARMED,
       uiOrder: null
-    };
+    }
   }
 
   onZoneSelected(zoneId: number) {
-    this.sensor.zoneId = zoneId;
-    const controls = this.zoneForm.controls;
+    this.sensor.zoneId = zoneId
+    const controls = this.zoneForm.controls
 
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
-      controls.disarmedDelay.setValidators([Validators.required, positiveInteger()]);
-      controls.awayAlertDelay.setValidators([Validators.required, positiveInteger()]);
-      controls.stayAlertDelay.setValidators([Validators.required, positiveInteger()]);
-      controls.zoneName.setValidators(Validators.required);
+      controls.disarmedDelay.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      controls.awayAlertDelay.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      controls.stayAlertDelay.setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
+      controls.zoneName.setValidators(Validators.required)
     } else {
-      controls.zoneName.clearValidators();
-      controls.zoneName.setErrors(null);
-      controls.disarmedDelay.clearValidators();
-      controls.disarmedDelay.setErrors(null);
-      controls.awayAlertDelay.clearValidators();
-      controls.awayAlertDelay.setErrors(null);
-      controls.stayAlertDelay.clearValidators();
-      controls.stayAlertDelay.setErrors(null);
+      controls.zoneName.clearValidators()
+      controls.zoneName.setErrors(null)
+      controls.disarmedDelay.clearValidators()
+      controls.disarmedDelay.setErrors(null)
+      controls.awayAlertDelay.clearValidators()
+      controls.awayAlertDelay.setErrors(null)
+      controls.stayAlertDelay.clearValidators()
+      controls.stayAlertDelay.setErrors(null)
     }
 
-    this.zoneForm.updateValueAndValidity();
-    this.sensorForm.updateValueAndValidity();
+    this.zoneForm.updateValueAndValidity()
+    this.sensorForm.updateValueAndValidity()
   }
 
   onAreaSelected(areaId: number) {
-    this.sensor.areaId = areaId;
-    const { controls } = this.areaForm;
+    this.sensor.areaId = areaId
+    const { controls } = this.areaForm
 
     // if NEW area selected
     if (this.sensor.areaId === -1) {
-      controls.areaName.setValidators(Validators.required);
+      controls.areaName.setValidators(Validators.required)
     } else {
-      controls.areaName.clearValidators();
-      controls.areaName.setErrors(null);
+      controls.areaName.clearValidators()
+      controls.areaName.setErrors(null)
     }
 
-    this.areaForm.updateValueAndValidity();
-    this.sensorForm.updateValueAndValidity();
+    this.areaForm.updateValueAndValidity()
+    this.sensorForm.updateValueAndValidity()
   }
 
   alertWhenChanged(event, delayName) {
-    const { controls } = this.zoneForm;
+    const { controls } = this.zoneForm
     if (event.checked) {
-      controls[delayName].setValidators([Validators.required, positiveInteger()]);
+      controls[delayName].setValidators([
+        Validators.required,
+        positiveInteger()
+      ])
     } else {
-      controls[delayName].clearValidators();
-      controls[delayName].setErrors(null);
+      controls[delayName].clearValidators()
+      controls[delayName].setErrors(null)
     }
 
-    controls[delayName].updateValueAndValidity();
+    controls[delayName].updateValueAndValidity()
   }
 
   openDeleteDialog(sensorId: number) {
-    const sensor = this.sensors.find(x => x.id === sensorId);
+    const sensor = this.sensors.find(x => x.id === sensorId)
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '450px',
+      width: "450px",
       data: {
         title: $localize`:@@delete sensor:Delete Sensor`,
         message: $localize`:@@delete sensor message:Are you sure you want to delete the sensor "${sensor.description}"?`,
         options: [
           {
-            id: 'ok',
+            id: "ok",
             text: $localize`:@@delete:Delete`,
-            color: 'warn'
+            color: "warn"
           },
           {
-            id: 'cancel',
+            id: "cancel",
             text: $localize`:@@cancel:Cancel`
           }
         ]
       }
-    });
+    })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result === "ok") {
         if (this.monitoringState === MONITORING_STATE.READY) {
-          this.loader.disable(true);
+          this.loader.disable(true)
           this.sensorService
             .deleteSensor(sensorId)
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, {
-                  duration: environment.snackDuration
-                });
-                this.router.navigate(['/sensors']);
+                this.snackBar.open(
+                  $localize`:@@sensor deleted:Sensor deleted!`,
+                  null,
+                  {
+                    duration: environment.snackDuration
+                  }
+                )
+                this.router.navigate(["/sensors"])
               },
               error: _ =>
-                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
-                  duration: environment.snackDuration
-                })
-            });
+                this.snackBar.open(
+                  $localize`:@@failed delete:Failed to delete!`,
+                  null,
+                  {
+                    duration: environment.snackDuration
+                  }
+                )
+            })
         } else {
-          this.snackBar.open($localize`:@@cant delete state:Cannot delete while not in READY state!`, null, {
-            duration: environment.snackDuration
-          });
+          this.snackBar.open(
+            $localize`:@@cant delete state:Cannot delete while not in READY state!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
         }
       }
-    });
+    })
   }
 
   generateChannels(sensors: Sensor[]): Channel[] {
     // channels are numbered 1..channel count
-    const channels: Channel[] = [];
+    const channels: Channel[] = []
     for (let channelId = 0; channelId < environment.channelCount; channelId++) {
-      const sensor = sensors.find(s => s.channel === channelId && s.channelType !== ChannelTypes.CHANNEL_B);
-      const sensorB = sensors.find(s => s.channel === channelId && sensor?.id !== s.id);
+      const sensor = sensors.find(
+        s => s.channel === channelId && s.channelType !== ChannelTypes.CHANNEL_B
+      )
+      const sensorB = sensors.find(
+        s => s.channel === channelId && sensor?.id !== s.id
+      )
       channels.push({
         channel: channelId,
         sensor: sensor,
         sensorB: sensorB
-      });
+      })
     }
 
     channels.push({
       channel: -1,
       sensor: null,
       sensorB: null
-    });
+    })
 
-    return channels;
+    return channels
   }
 
   orderedChannels(): Array<Channel> {
     return this.channels.concat().sort((ch1, ch2) => {
       if (ch1.channel > ch2.channel) {
-        return 1;
+        return 1
       }
       if (ch1.channel < ch2.channel) {
-        return -1;
+        return -1
       }
-      return 0;
-    });
+      return 0
+    })
   }
 }

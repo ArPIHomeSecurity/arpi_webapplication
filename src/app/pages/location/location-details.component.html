@@ -7,25 +7,24 @@
             <div class="row">
               <mat-form-field class="name" floatLabel="always">
                 <mat-label i18n="@@location name">Name</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    class="form-control"
-                    maxlength="16"
-                    formControlName="name"
-                  />
-                </mat-form-field>
-                @if (location.id != null && notificationsAvailable) {
-                  <div class="notifications">
-                    <mat-icon matSuffix>notifications</mat-icon>
-                    <mat-slide-toggle
-                      matSuffix
-                      color="primary"
-                      formControlName="notifications"
-                      >
-                    </mat-slide-toggle>
-                  </div>
-                }
+                <input
+                  matInput
+                  type="text"
+                  class="form-control"
+                  maxlength="16"
+                  formControlName="name"
+                />
+              </mat-form-field>
+              @if (location.id != null && notificationsAvailable) {
+                <div class="notifications">
+                  <mat-icon matSuffix>notifications</mat-icon>
+                  <mat-slide-toggle
+                    matSuffix
+                    color="primary"
+                    formControlName="notifications"
+                  ></mat-slide-toggle>
+                </div>
+              }
             </div>
             <div class="row">
               <mat-form-field class="domain" floatLabel="always">
@@ -39,14 +38,18 @@
                   name="primaryDomain"
                   formControlName="primaryDomain"
                   (change)="onFieldChange($event)"
-                  />
+                />
                 @if (showApiLink && testResult?.primary === false) {
                   <mat-hint>
                     <a
-                      href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
+                      href="https://{{ location.primaryDomain }}:{{
+                        location.primaryPort
+                      }}/api/version"
                       target="_blank"
-                      >
-                      <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
+                    >
+                      <span i18n="@@location check" class="no-wrap">
+                        Check API version and certificate
+                      </span>
                       <mat-icon>open_in_new</mat-icon>
                     </a>
                   </mat-hint>
@@ -61,19 +64,15 @@
                   name="primaryPort"
                   formControlName="primaryPort"
                   (change)="onFieldChange($event)"
-                  />
+                />
               </mat-form-field>
               @if (testResult !== null) {
                 <div class="status">
                   @if (testResult.primary === true) {
-                    <mat-icon class="icon-accessible">
-                      check_circle
-                    </mat-icon>
+                    <mat-icon class="icon-accessible">check_circle</mat-icon>
                   }
                   @if (testResult.primary === false) {
-                    <mat-icon class="icon-inaccessible">
-                      error
-                    </mat-icon>
+                    <mat-icon class="icon-inaccessible">error</mat-icon>
                   }
                   @if (testResult.primary === null) {
                     <mat-spinner diameter="16" />
@@ -93,16 +92,18 @@
                   name="secondaryDomain"
                   formControlName="secondaryDomain"
                   (change)="onFieldChange($event)"
-                  />
+                />
                 @if (showApiLink && testResult?.secondary === false) {
                   <mat-hint>
                     <a
-                  href="https://{{ location.secondaryDomain }}:{{
-                    location.secondaryPort
-                  }}/api/version"
+                      href="https://{{ location.secondaryDomain }}:{{
+                        location.secondaryPort
+                      }}/api/version"
                       target="_blank"
-                      >
-                      <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
+                    >
+                      <span i18n="@@location check" class="no-wrap">
+                        Check API version and certificate
+                      </span>
                       <mat-icon>open_in_new</mat-icon>
                     </a>
                   </mat-hint>
@@ -117,19 +118,15 @@
                   name="secondaryPort"
                   formControlName="secondaryPort"
                   (change)="onFieldChange($event)"
-                  />
+                />
               </mat-form-field>
               @if (testResult !== null) {
                 <div class="status">
                   @if (testResult.secondary === true) {
-                    <mat-icon class="icon-accessible">
-                      check_circle
-                    </mat-icon>
+                    <mat-icon class="icon-accessible">check_circle</mat-icon>
                   }
                   @if (testResult.secondary === false) {
-                    <mat-icon class="icon-inaccessible">
-                      error
-                    </mat-icon>
+                    <mat-icon class="icon-inaccessible">error</mat-icon>
                   }
                   @if (testResult.secondary === undefined) {
                     <mat-icon class="icon-na">not_interested</mat-icon>
@@ -153,7 +150,8 @@
             }
             @if (systemLocationName) {
               <dt i18n="@@location system name">Remote name</dt>
-              <dd>{{ systemLocationName }}
+              <dd>
+                {{ systemLocationName }}
                 <button mat-icon-button class="small" (click)="onSaveRemoteToLocalname()">
                   <mat-icon>content_copy</mat-icon>
                 </button>
@@ -180,16 +178,15 @@
               @if (isRegistered() === false) {
                 <div>
                   <mat-icon class="icon-inaccessible">error</mat-icon>
-                  <div class="text" i18n="@@location device not registered">Device NOT registered</div>
+                  <div class="text" i18n="@@location device not registered">
+                    Device NOT registered
+                  </div>
                 </div>
               }
             </div>
           }
           @if (alreadyExists() && newLocation) {
-            <app-message
-              type="warning"
-              [message]="ALREADY_EXISTS"
-            ></app-message>
+            <app-message type="warning" [message]="ALREADY_EXISTS"></app-message>
           }
         </mat-card-content>
       }
@@ -200,7 +197,7 @@
           color="primary"
           (click)="executeLocationTest()"
           [disabled]="locationForm.invalid"
-          >
+        >
           <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="cantSave()">
@@ -213,17 +210,12 @@
             type="button"
             (click)="openDeleteDialog()"
             [disabled]="selectedLocationId === location.id || location.id == null"
-            >
+          >
             <mat-icon>delete</mat-icon>
           </button>
         }
         @if (!firstLocation) {
-          <button
-            mat-icon-button
-            color="accent"
-            type="button"
-            (click)="onCancel()"
-            >
+          <button mat-icon-button color="accent" type="button" (click)="onCancel()">
             <mat-icon>cancel</mat-icon>
           </button>
         }

@@ -1,107 +1,131 @@
-import { Component, OnInit, OnDestroy, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  TemplateRef,
+  ViewChild
+} from "@angular/core"
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
-import { Observable } from 'rxjs';
-import { startWith, map, finalize } from 'rxjs/operators';
+import { DateTimeAdapter } from "@danielmoncada/angular-datetime-picker"
+import { Observable } from "rxjs"
+import { startWith, map, finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from '@app/configuration-base/configuration-base.component';
-import { EventService, LoaderService, MonitoringService } from '@app/services';
-import { environment } from '@environments/environment';
-import * as moment from 'moment';
-import { TIME_ZONES } from './timezones';
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
+import { EventService, LoaderService, MonitoringService } from "@app/services"
+import { environment } from "@environments/environment"
+import * as moment from "moment"
+import { TIME_ZONES } from "./timezones"
 
-const scheduleMicrotask = Promise.resolve(null);
+const scheduleMicrotask = Promise.resolve(null)
 
 export interface TimeZoneGroup {
-  groupName: string;
-  zoneNames: string[];
+  groupName: string
+  zoneNames: string[]
 }
 
 export const filter = (opt: string[], value: string): string[] => {
-  const filterValue = value.toLowerCase();
+  const filterValue = value.toLowerCase()
 
-  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
-};
+  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0)
+}
 
 @Component({
-  templateUrl: 'clock.component.html',
-  styleUrls: ['clock.component.scss'],
+  templateUrl: "clock.component.html",
+  styleUrls: ["clock.component.scss"],
   providers: [],
   standalone: false
 })
-export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
-  clockForm: UntypedFormGroup;
-  clock: any;
+export class ClockComponent
+  extends ConfigurationBaseComponent
+  implements OnInit, OnDestroy
+{
+  clockForm: UntypedFormGroup
+  clock: any
 
-  timezoneGroups: TimeZoneGroup[] = [];
-  timezoneGroupOptions: Observable<TimeZoneGroup[]>;
+  timezoneGroups: TimeZoneGroup[] = []
+  timezoneGroupOptions: Observable<TimeZoneGroup[]>
 
-  timezoneUngroupped: string[] = [];
-  timezoneUngrouppedOptions: Observable<string[]>;
+  timezoneUngroupped: string[] = []
+  timezoneUngrouppedOptions: Observable<string[]>
 
   constructor(
-    @Inject('EventService') public eventService: EventService,
-    @Inject('LoaderService') public loader: LoaderService,
-    @Inject('MonitoringService') public monitoringService: MonitoringService,
+    @Inject("EventService") public eventService: EventService,
+    @Inject("LoaderService") public loader: LoaderService,
+    @Inject("MonitoringService") public monitoringService: MonitoringService,
 
     private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     dateTimeAdapter: DateTimeAdapter<any>
   ) {
-    super(eventService, loader, monitoringService);
-    dateTimeAdapter.setLocale(localStorage.getItem('localeId') || 'en');
+    super(eventService, loader, monitoringService)
+    dateTimeAdapter.setLocale(localStorage.getItem("localeId") || "en")
 
     TIME_ZONES.forEach(timezoneName => {
-      const results = timezoneName.match(/(.*)\/(.*)/);
+      const results = timezoneName.match(/(.*)\/(.*)/)
       if (results == null) {
-        this.timezoneUngroupped.push(timezoneName);
+        this.timezoneUngroupped.push(timezoneName)
       } else {
-        const timezoneGroup = this.timezoneGroups.find(tzGroup => tzGroup.groupName === results[1]);
+        const timezoneGroup = this.timezoneGroups.find(
+          tzGroup => tzGroup.groupName === results[1]
+        )
         if (timezoneGroup == null) {
-          this.timezoneGroups.push({ groupName: results[1], zoneNames: [results[2]] });
+          this.timezoneGroups.push({
+            groupName: results[1],
+            zoneNames: [results[2]]
+          })
         } else {
-          timezoneGroup.zoneNames.push(results[2]);
+          timezoneGroup.zoneNames.push(results[2])
         }
       }
-    });
+    })
   }
 
   ngOnInit() {
-    super.initialize();
+    super.initialize()
 
     // avoid ExpressionChangedAfterItHasBeenCheckedError
     // https://github.com/angular/angular/issues/17572#issuecomment-323465737
     scheduleMicrotask.then(() => {
-      this.loader.display(true);
-    });
-    this.updateComponent();
+      this.loader.display(true)
+    })
+    this.updateComponent()
 
-    this.updateForm();
+    this.updateForm()
 
-    if (this.clockForm.get('timezone')) {
-      this.timezoneGroupOptions = this.clockForm.get('timezone').valueChanges.pipe(
-        startWith(''),
-        map(value => this.filterGroup(value))
-      );
+    if (this.clockForm.get("timezone")) {
+      this.timezoneGroupOptions = this.clockForm
+        .get("timezone")
+        .valueChanges.pipe(
+          startWith(""),
+          map(value => this.filterGroup(value))
+        )
 
-      this.timezoneUngrouppedOptions = this.clockForm.get('timezone').valueChanges.pipe(
-        startWith(''),
-        map(value => this.filterUngroupped(value))
-      );
+      this.timezoneUngrouppedOptions = this.clockForm
+        .get("timezone")
+        .valueChanges.pipe(
+          startWith(""),
+          map(value => this.filterUngroupped(value))
+        )
     }
   }
 
   ngOnDestroy() {
-    super.destroy();
+    super.destroy()
   }
 
   updateForm() {
     this.clockForm = this.fb.group({
-      dateTime: new UntypedFormControl('', Validators.required),
-      timezone: new UntypedFormControl('', Validators.required)
-    });
+      dateTime: new UntypedFormControl("", Validators.required),
+      timezone: new UntypedFormControl("", Validators.required)
+    })
   }
 
   updateComponent() {
@@ -109,14 +133,14 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
       .getClock()
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(clock => {
-        this.clock = clock;
+        this.clock = clock
         if (clock != null) {
-          this.clockForm.get('timezone').setValue(clock.timezone);
+          this.clockForm.get("timezone").setValue(clock.timezone)
         }
 
-        this.loader.display(false);
-        this.loader.disable(false);
-      });
+        this.loader.display(false)
+        this.loader.disable(false)
+      })
   }
 
   // onSynchronize() {
@@ -126,42 +150,49 @@ export class ClockComponent extends ConfigurationBaseComponent implements OnInit
   // }
 
   onSubmit() {
-    this.loader.disable(true);
-    const formModel = this.clockForm.value;
-    const newDate = formModel.dateTime;
+    this.loader.disable(true)
+    const formModel = this.clockForm.value
+    const newDate = formModel.dateTime
     this.monitoringService
       .changeClock(newDate.toISOString(), formModel.timezone)
       .pipe(finalize(() => this.loader.disable(false)))
       .subscribe({
         next: _ => this.updateComponent(),
         error: _ => {
-          this.loader.disable(false);
-          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
-            duration: environment.snackDuration
-          });
+          this.loader.disable(false)
+          this.snackBar.open(
+            $localize`:@@failed update:Failed to update!`,
+            null,
+            {
+              duration: environment.snackDuration
+            }
+          )
         }
-      });
+      })
   }
 
   getDuration(uptime) {
-    return moment.duration(-uptime, 'seconds').humanize(true);
+    return moment.duration(-uptime, "seconds").humanize(true)
   }
 
   private filterGroup(value: string): TimeZoneGroup[] {
     if (value) {
       return this.timezoneGroups
-        .map(group => ({ groupName: group.groupName, zoneNames: filter(group.zoneNames, value) }))
-        .filter(group => group.zoneNames.length > 0);
+        .map(group => ({
+          groupName: group.groupName,
+          zoneNames: filter(group.zoneNames, value)
+        }))
+        .filter(group => group.zoneNames.length > 0)
     }
 
-    return this.timezoneGroups;
+    return this.timezoneGroups
   }
 
   private filterUngroupped(value: string): string[] {
     if (value) {
-      return filter(this.timezoneUngroupped, value);
+      return filter(this.timezoneUngroupped, value)
     }
 
-    return this.timezoneUngroupped;
+    return this.timezoneUngroupped
   }
 }

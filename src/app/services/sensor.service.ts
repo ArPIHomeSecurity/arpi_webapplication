@@ -1,27 +1,27 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { Sensor, SensorType } from '@app/models';
+import { Sensor, SensorType } from "@app/models"
 
 export interface SensorService {
-  getSensors(onlyAlerting?: boolean): Observable<Sensor[]>;
+  getSensors(onlyAlerting?: boolean): Observable<Sensor[]>
 
-  getSensor(sensorId: number): Observable<Sensor>;
+  getSensor(sensorId: number): Observable<Sensor>
 
-  createSensor(sensor: Sensor): Observable<Sensor>;
+  createSensor(sensor: Sensor): Observable<Sensor>
 
-  updateSensor(sensor: Sensor): Observable<Sensor>;
+  updateSensor(sensor: Sensor): Observable<Sensor>
 
-  deleteSensor(sensorId: number): Observable<boolean>;
+  deleteSensor(sensorId: number): Observable<boolean>
 
-  getAlert(sensorId?: number): Observable<boolean>;
+  getAlert(sensorId?: number): Observable<boolean>
 
-  getError(sensorId?: number): Observable<boolean>;
+  getError(sensorId?: number): Observable<boolean>
 
-  getSensorTypes(): Observable<SensorType[]>;
+  getSensorTypes(): Observable<SensorType[]>
 
-  resetReferences();
+  resetReferences()
 
-  resetReference(sensorId);
+  resetReference(sensorId)
 
-  reorder(sensors: Sensor[]);
+  reorder(sensors: Sensor[])
 }
