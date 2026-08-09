@@ -23,6 +23,10 @@ describe("LocationDetailsComponent", () => {
           useClass: MockAuthenticationService
         },
         { provide: "EventService", useClass: environment.eventService },
+        {
+          provide: "NotificationService",
+          useClass: environment.notificationService
+        },
         provideHttpClient(withInterceptorsFromDi()),
         { provide: ActivatedRoute, useValue: { params: of({ id: "123" }) } }
       ]

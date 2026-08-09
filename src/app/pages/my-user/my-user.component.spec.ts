@@ -47,6 +47,10 @@ describe("MyUserComponent", () => {
         { provide: "UserService", useClass: MockUserService },
         { provide: "LoaderService", useClass: environment.loaderService },
         { provide: "MonitoringService", useClass: MockMonitoringService },
+        {
+          provide: "NotificationService",
+          useClass: environment.notificationService
+        },
         provideHttpClient(withInterceptorsFromDi())
       ]
     }).compileComponents()

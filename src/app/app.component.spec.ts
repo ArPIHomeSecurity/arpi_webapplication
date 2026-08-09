@@ -2,7 +2,6 @@ import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http"
 import { provideHttpClientTesting } from "@angular/common/http/testing"
 import { TestBed, waitForAsync } from "@angular/core/testing"
 import { provideNativeDateAdapter } from "@angular/material/core"
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { provideRouter, RouterLinkActive, RouterOutlet } from "@angular/router"
 
 import {
@@ -32,7 +31,6 @@ describe("AppComponent", () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, SystemStateComponent],
       imports: [
-        BrowserAnimationsModule,
         MatExpansionModule,
         MatIconModule,
         MatListModule,
@@ -65,6 +63,10 @@ describe("AppComponent", () => {
         { provide: "KeypadService", useClass: environment.keypadService },
         { provide: "LoaderService", useClass: environment.loaderService },
         { provide: "MonitoringService", useClass: MockMonitoringService },
+        {
+          provide: "NotificationService",
+          useClass: environment.notificationService
+        },
         { provide: "SensorService", useClass: environment.sensorService },
         { provide: "ThemeService", useClass: ThemeService },
         { provide: "UserService", useClass: MockUserService },

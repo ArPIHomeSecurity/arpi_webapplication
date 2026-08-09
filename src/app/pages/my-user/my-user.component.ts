@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
-import { ActivatedRoute, Router } from "@angular/router"
+import { Router } from "@angular/router"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { Card, User } from "@app/models"
+import { User } from "@app/models"
 import { AuthenticationService } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 

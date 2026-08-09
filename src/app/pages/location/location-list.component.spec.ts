@@ -27,6 +27,10 @@ describe("LocationListComponent", () => {
         { provide: "LoaderService", useClass: environment.loaderService },
         { provide: "MonitoringService", useClass: MockMonitoringService },
         {
+          provide: "NotificationService",
+          useClass: environment.notificationService
+        },
+        {
           provide: "ConfigurationService",
           useClass: environment.configurationService
         },
