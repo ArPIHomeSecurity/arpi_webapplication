@@ -22,13 +22,16 @@ export const string2ArmType = (armType: string): ARM_TYPE =>
     [ARM_MIXED]: ARM_TYPE.MIXED
   })[armType as keyof typeof string2ArmType];
 
-export const armType2String = (armType: ARM_TYPE): string =>
-  ({
+export const armType2String = (armType: ARM_TYPE): string => {
+  const mapping: Record<ARM_TYPE, string> = {
     [ARM_TYPE.MIXED]: ARM_MIXED,
     [ARM_TYPE.AWAY]: ARM_AWAY,
     [ARM_TYPE.STAY]: ARM_STAY,
-    [ARM_TYPE.DISARMED]: ARM_DISARM
-  })[armType];
+    [ARM_TYPE.DISARMED]: ARM_DISARM,
+    [ARM_TYPE.UNDEFINED]: ''
+  };
+  return mapping[armType];
+};
 
 export class Arm {
   id: number;
@@ -45,4 +48,17 @@ export class Disarm {
   userId: number;
   keypadId: number;
   arm: Arm;
+}
+
+export const armTypeToTextTranslated = (armType: ARM_TYPE): string => {
+  switch (armType) {
+    case ARM_TYPE.AWAY:
+      return $localize`:@@arm away:away`;
+    case ARM_TYPE.STAY:
+      return $localize`:@@arm stay:stay`;
+    case ARM_TYPE.MIXED:
+      return $localize`:@@arm mixed:mixed`;
+    default:
+      return $localize`:@@arm unknown:unknown`;
+  }
 }

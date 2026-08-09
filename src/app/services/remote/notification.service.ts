@@ -2,18 +2,16 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
-import { ARM_TYPE } from '@app/models';
-import { NotificationService as NotificationServiceInterface } from '@app/services';
+import { ARM_TYPE, armTypeToTextTranslated } from '@app/models';
 
-export const NOTIFICATIONS_ENABLED_KEY = 'notificationsEnabled';
 export const LOCATIONS_STORAGE_KEY = 'locations';
-
+const NOTIFICATIONS_ENABLED_KEY = 'notificationsEnabled';
 const FIRST_NOTIFICATION_ID = 1000;
 
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService implements NotificationServiceInterface {
+export class NotificationService {
   private readonly alertChannelId = 'arpi_alerts';
   private channelReady = false;
   private permissionChecked = false;
@@ -40,19 +38,6 @@ export class NotificationService implements NotificationServiceInterface {
     });
   }
 
-  private armTypeToText(armType: ARM_TYPE): string {
-    switch (armType) {
-      case ARM_TYPE.AWAY:
-        return 'away';
-      case ARM_TYPE.STAY:
-        return 'stay';
-      case ARM_TYPE.MIXED:
-        return 'mixed';
-      default:
-        return 'unknown';
-    }
-  }
-
   private getLocations(): Array<Record<string, any>> {
     try {
       const locations = JSON.parse(localStorage.getItem(LOCATIONS_STORAGE_KEY) || '[]');
@@ -60,16 +45,6 @@ export class NotificationService implements NotificationServiceInterface {
     } catch (_error) {
       return [];
     }
-  }
-
-  private getLocationNotificationsEnabled(locationId: string): boolean | null {
-    const locations = this.getLocations();
-    const location = locations.find(item => item?.id === locationId);
-    if (!location || typeof location[NOTIFICATIONS_ENABLED_KEY] !== 'boolean') {
-      return null;
-    }
-
-    return location[NOTIFICATIONS_ENABLED_KEY];
   }
 
   private setLocationNotificationsEnabled(locationId: string, enabled: boolean): boolean {
@@ -101,8 +76,13 @@ export class NotificationService implements NotificationServiceInterface {
       return false;
     }
 
-    const locationValue = this.getLocationNotificationsEnabled(locationId);
-    return locationValue === true;
+    const locations = this.getLocations();
+    const location = locations.find(item => item?.id === locationId);
+    if (!location || typeof location[NOTIFICATIONS_ENABLED_KEY] !== 'boolean') {
+      return false;
+    }
+
+    return location[NOTIFICATIONS_ENABLED_KEY];
   }
 
   enableNotifications(locationId: string): void {
@@ -125,12 +105,12 @@ export class NotificationService implements NotificationServiceInterface {
     if (!this.isEnabled(locationId)) {
       return;
     }
-    // TODO: translation
+
     await this.schedule(
       this.alertChannelId,
       locationId,
-      'ArPI alert',
-      `Location: ${locationName}\nSystem is in alert state.`
+      $localize`:@@notifications ArPI alert:ArPI alert`,
+      $localize`Location: ${locationName}\nSystem is in alert state.`
     );
   }
 
@@ -138,13 +118,13 @@ export class NotificationService implements NotificationServiceInterface {
     if (!this.isEnabled(locationId)) {
       return;
     }
-    // TODO: translation
-    const armTypeText = this.armTypeToText(armType);
+
+    const armTypeText = armTypeToTextTranslated(armType);
     await this.schedule(
       undefined,
       locationId,
-      'ArPI armed',
-      `Location: ${locationName}\nSystem armed (${armTypeText}).`
+      $localize`:@@notifications ArPI armed:ArPI armed`,
+      $localize`:@@notifications location armed:Location: ${locationName}\nSystem armed (${armTypeText}).`
     );
   }
 
@@ -152,8 +132,12 @@ export class NotificationService implements NotificationServiceInterface {
     if (!this.isEnabled(locationId)) {
       return;
     }
-    // TODO: translation
-    await this.schedule(undefined, locationId, 'ArPI disarmed', `Location: ${locationName}\nSystem disarmed.`);
+
+    await this.schedule(
+      undefined,
+      locationId,
+      $localize`:@@notifications ArPI disarmed:ArPI disarmed`,
+      $localize`:@@notifications location disarmed:Location: ${locationName}\nSystem disarmed.`);
   }
 
   private async schedule(
@@ -219,12 +203,6 @@ export class NotificationService implements NotificationServiceInterface {
           this.permissionChecked = true;
           return false;
         }
-
-        LocalNotifications.addListener('localNotificationReceived', async notification => {
-          // Re-schedule it with a tiny delay so Android treats it as a background notification
-          // OR show your own in-app toast/alert
-          console.log('Foreground notification:', notification);
-        });
 
         console.log('Local notification permission granted.');
       }
