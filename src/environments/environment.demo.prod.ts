@@ -4,20 +4,20 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 import {
-    AlertService,
-    AreaService,
-    ArmService,
-    AuthenticationService,
-    CardService,
-    ConfigurationService,
-    EventService,
-    KeypadService,
-    LoaderService,
-    MonitoringService,
-    OutputService,
-    SensorService,
-    UserService,
-    ZoneService
+  AlertService,
+  AreaService,
+  ArmService,
+  AuthenticationService,
+  CardService,
+  ConfigurationService,
+  EventService,
+  KeypadService,
+  LoaderService,
+  MonitoringService,
+  OutputService,
+  SensorService,
+  UserService,
+  ZoneService
 } from '@app/services/demo';
 import { NotificationService } from '@app/services/remote';
 

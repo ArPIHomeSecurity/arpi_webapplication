@@ -173,7 +173,6 @@ export class EventService {
         selectedSocketConnected: !!this.socket?.connected
       })
     );
-
   }
 
   listen(event: string): Observable<any> {

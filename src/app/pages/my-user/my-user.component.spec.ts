@@ -22,7 +22,15 @@ describe('MyUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MyUserComponent, UserCardComponent],
-      imports: [MatCardModule, MatDividerModule, MatIconModule, MatListModule, MatMenuModule, MatProgressSpinnerModule, MatSlideToggleModule],
+      imports: [
+        MatCardModule,
+        MatDividerModule,
+        MatIconModule,
+        MatListModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatSlideToggleModule
+      ],
       providers: [
         { provide: AUTHENTICATION_SERVICE, useClass: MockAuthenticationService },
         { provide: 'BiometricService', useClass: environment.biometricService },

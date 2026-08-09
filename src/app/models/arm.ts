@@ -61,4 +61,4 @@ export const armTypeToTextTranslated = (armType: ARM_TYPE): string => {
     default:
       return $localize`:@@arm unknown:unknown`;
   }
-}
+};

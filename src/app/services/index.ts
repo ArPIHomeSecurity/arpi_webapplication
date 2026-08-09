@@ -15,4 +15,3 @@ export * from './sensor.service';
 export * from './theme.service';
 export * from './user.service';
 export * from './zone.service';
-

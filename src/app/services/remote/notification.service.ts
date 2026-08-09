@@ -137,7 +137,8 @@ export class NotificationService {
       undefined,
       locationId,
       $localize`:@@notifications ArPI disarmed:ArPI disarmed`,
-      $localize`:@@notifications location disarmed:Location: ${locationName}\nSystem disarmed.`);
+      $localize`:@@notifications location disarmed:Location: ${locationName}\nSystem disarmed.`
+    );
   }
 
   private async schedule(
