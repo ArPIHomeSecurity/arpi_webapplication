@@ -21,7 +21,12 @@
   }
 }
 
-@mixin system-state-indicator-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+@mixin system-state-indicator-theme(
+  $theme,
+  $argus-ok,
+  $argus-alert,
+  $argus-warn
+) {
   /* states */
   .mat-icon.normal {
     color: mat.m2-get-color-from-palette($argus-ok);

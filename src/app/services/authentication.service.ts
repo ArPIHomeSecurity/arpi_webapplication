@@ -1,35 +1,35 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
 export interface AuthenticationService {
-  login(accessCode: number): Observable<boolean>;
+  login(accessCode: number): Observable<boolean>
 
-  logout(manualAction: boolean): void;
+  logout(manualAction: boolean): void
 
-  isLoggedIn(): boolean;
+  isLoggedIn(): boolean
 
-  getRole(): string;
+  getRole(): string
 
-  getUsername(): string;
+  getUsername(): string
 
-  getUserId(): number;
+  getUserId(): number
 
-  getToken(): string;
+  getToken(): string
 
-  getUserToken(): string;
+  getUserToken(): string
 
-  updateUserToken(token: string);
+  updateUserToken(token: string)
 
-  isSessionValid(): Observable<boolean>;
+  isSessionValid(): Observable<boolean>
 
-  getDeviceToken(locationId?: string): string;
+  getDeviceToken(locationId?: string): string
 
-  registerDevice(registrationCode: string): Observable<boolean>;
+  registerDevice(registrationCode: string): Observable<boolean>
 
-  unRegisterDevice();
+  unRegisterDevice()
 
-  isDeviceRegistered(): Observable<boolean>;
+  isDeviceRegistered(): Observable<boolean>
 
-  getDeviceDomain(): string;
+  getDeviceDomain(): string
 
-  getRegisteredUserId(): number;
+  getRegisteredUserId(): number
 }

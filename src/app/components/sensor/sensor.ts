@@ -1,23 +1,23 @@
-import { Component, Input } from '@angular/core';
-import { Sensor, SensorType } from '@app/models';
+import { Component, Input } from "@angular/core"
+import { Sensor, SensorType } from "@app/models"
 
 @Component({
-  selector: 'component-sensor',
-  templateUrl: 'sensor.html',
-  styleUrls: ['sensor.scss'],
+  selector: "component-sensor",
+  templateUrl: "sensor.html",
+  styleUrls: ["sensor.scss"],
   providers: [],
   standalone: false
 })
 export class SensorComponent {
-  @Input() sensor: Sensor;
-  @Input() delay: number = null;
-  @Input('data') sensorTypes: SensorType[];
+  @Input() sensor: Sensor
+  @Input() delay: number = null
+  @Input("data") sensorTypes: SensorType[]
 
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length && sensorTypeId != null) {
-      return this.sensorTypes.find(x => x.id === sensorTypeId).name;
+      return this.sensorTypes.find(x => x.id === sensorTypeId).name
     }
 
-    return '';
+    return ""
   }
 }

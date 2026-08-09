@@ -1,17 +1,17 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { Zone } from '@app/models';
+import { Zone } from "@app/models"
 
 export interface ZoneService {
-  getZones(): Observable<Zone[]>;
+  getZones(): Observable<Zone[]>
 
-  getZone(zoneId: number): Observable<Zone>;
+  getZone(zoneId: number): Observable<Zone>
 
-  createZone(zone: Zone): Observable<Zone>;
+  createZone(zone: Zone): Observable<Zone>
 
-  updateZone(zone: Zone): Observable<Zone>;
+  updateZone(zone: Zone): Observable<Zone>
 
-  deleteZone(zoneId: number): Observable<boolean>;
+  deleteZone(zoneId: number): Observable<boolean>
 
-  reorder(zones: Zone[]);
+  reorder(zones: Zone[])
 }

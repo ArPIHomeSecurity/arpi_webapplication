@@ -8,13 +8,9 @@
           </mat-expansion-panel-header>
           <div class="row">
             @if (keypadTypes) {
-              <mat-checkbox
-                formControlName="keypadEnabled"
-                color="primary"
-                i18n="@@keypad enabled"
-                >
-            Enabled
-          </mat-checkbox>
+              <mat-checkbox formControlName="keypadEnabled" color="primary" i18n="@@keypad enabled">
+                Enabled
+              </mat-checkbox>
             }
             <mat-form-field>
               <mat-label i18n="@@keypad type">Keypad type</mat-label>
@@ -22,7 +18,7 @@
                 formControlName="keypadType"
                 i18n-placeholder="@@keypad type"
                 placeholder="Keypad type"
-                >
+              >
                 @for (type of keypadTypes; track type) {
                   <mat-option [value]="type.id">
                     {{ type.name }}
@@ -40,9 +36,9 @@
           type="submit"
           [disabled]="keypadForm.invalid || monitoringState != monitoringStates.READY"
           i18n="@@save button"
-          >
-        Save
-      </button>
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>

@@ -13,16 +13,16 @@ export enum MONITORING_STATE {
 }
 
 // monitoring system states from the backend
-const MONITORING_STARTUP = 'monitoring_startup';
-const MONITORING_READY = 'monitoring_ready';
-const MONITORING_UPDATING_CONFIG = 'monitoring_updating_config';
-const MONITORING_INVALID_CONFIG = 'monitoring_invalid_config';
-const MONITORING_ARM_DELAY = 'monitoring_arm_delay';
-const MONITORING_ALERT_DELAY = 'monitoring_alert_delay';
-const MONITORING_ALERT = 'monitoring_alert';
-const MONITORING_ARMED = 'monitoring_armed';
-const MONITORING_SABOTAGE = 'monitoring_sabotage';
-const MONITORING_ERROR = 'monitoring_error';
+const MONITORING_STARTUP = "monitoring_startup"
+const MONITORING_READY = "monitoring_ready"
+const MONITORING_UPDATING_CONFIG = "monitoring_updating_config"
+const MONITORING_INVALID_CONFIG = "monitoring_invalid_config"
+const MONITORING_ARM_DELAY = "monitoring_arm_delay"
+const MONITORING_ALERT_DELAY = "monitoring_alert_delay"
+const MONITORING_ALERT = "monitoring_alert"
+const MONITORING_ARMED = "monitoring_armed"
+const MONITORING_SABOTAGE = "monitoring_sabotage"
+const MONITORING_ERROR = "monitoring_error"
 
 export const string2MonitoringState = (systemState: string): MONITORING_STATE =>
   ({
@@ -36,7 +36,7 @@ export const string2MonitoringState = (systemState: string): MONITORING_STATE =>
     [MONITORING_ALERT]: MONITORING_STATE.ALERT,
     [MONITORING_SABOTAGE]: MONITORING_STATE.SABOTAGE,
     [MONITORING_ERROR]: MONITORING_STATE.ERROR
-  })[systemState as keyof typeof string2MonitoringState];
+  })[systemState as keyof typeof string2MonitoringState]
 
 export const monitoringState2String = (systemState: MONITORING_STATE): string =>
   ({
@@ -50,10 +50,10 @@ export const monitoringState2String = (systemState: MONITORING_STATE): string =>
     [MONITORING_STATE.ALERT]: MONITORING_ALERT,
     [MONITORING_STATE.SABOTAGE]: MONITORING_SABOTAGE,
     [MONITORING_STATE.ERROR]: MONITORING_ERROR
-  })[systemState];
+  })[systemState]
 
 export class Clocks {
-  system: string;
-  network: string;
-  timezone: string;
+  system: string
+  network: string
+  timezone: string
 }

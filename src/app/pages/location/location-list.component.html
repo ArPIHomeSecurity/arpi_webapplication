@@ -1,35 +1,52 @@
 <div class="container">
   @if (locations && locations.length > 0) {
     <div>
-      <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListDisabled]="!isMultiLocation">
+      <div
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+        [cdkDropListDisabled]="!isMultiLocation"
+      >
         @for (location of locations; track getLocationKey(index); let index = $index) {
           <mat-card
             id="location-{{ location.id }}"
             cdkDrag
             (cdkDragStarted)="onDragStarted($event)"
             class="container-item location-form"
-            >
+          >
             @if (!isMultiLocation) {
               <mat-card-header>
-                <div
-                  mat-card-avatar
-            [ngClass]="{
-              registered: isRegistered(location.id),
-              'not-registered': !isRegistered(location.id)
-            }"
+                <div mat-card-avatar>
+                  <mat-icon
+                    class="registered-icon"
+                    [ngClass]="{
+                      enabled: isRegistered(location.id),
+                      disabled: !isRegistered(location.id)
+                    }"
                   >
-                  <mat-icon>location_on</mat-icon>
+                    location_on
+                  </mat-icon>
+                  <mat-icon
+                    class="notification-icon"
+                    [ngClass]="{
+                      enabled: isNotificationEnabled(location.id),
+                      disabled: !isNotificationEnabled(location.id)
+                    }"
+                  >
+                    notifications
+                  </mat-icon>
                 </div>
                 <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
                 @if (location.version != null) {
                   <mat-card-subtitle>
-                    <span i18n="@@location version">Version</span>:
+                    <span i18n="@@location version">Version</span>
+                    :
                     {{ location.version.version_tag }}
                   </mat-card-subtitle>
                 }
                 @if (location.boardVersion != null) {
                   <mat-card-subtitle>
-                    <span i18n="@@location board version">Board version</span>:
+                    <span i18n="@@location board version">Board version</span>
+                    :
                     {{ location.boardVersion }}
                   </mat-card-subtitle>
                 }
@@ -49,28 +66,41 @@
             }
             @if (isMultiLocation) {
               <mat-card-header>
-                <div
-                  mat-card-avatar
-            [ngClass]="{
-              registered: isRegistered(location.id),
-              'not-registered': !isRegistered(location.id)
-            }"
+                <div mat-card-avatar>
+                  <mat-icon
+                    [ngClass]="{
+                      enabled: isRegistered(location.id),
+                      disabled: !isRegistered(location.id)
+                    }"
                   >
-                  <mat-icon>location_on</mat-icon>
+                    location_on
+                  </mat-icon>
+                  <mat-icon
+                    [ngClass]="{
+                      enabled: isNotificationEnabled(location.id),
+                      disabled: !isNotificationEnabled(location.id)
+                    }"
+                  >
+                    notifications
+                  </mat-icon>
                 </div>
-                <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
+                <mat-card-title i18n="@@location location">
+                  Location: {{ location.name }}
+                </mat-card-title>
                 @if (location.id != null) {
                   <mat-card-subtitle>ID: {{ location.id }}</mat-card-subtitle>
                 }
                 @if (location.version != null) {
                   <mat-card-subtitle>
-                    <span i18n="@@location version">Version</span>:
+                    <span i18n="@@location version">Version</span>
+                    :
                     {{ location.version.version_tag }}
                   </mat-card-subtitle>
                 }
                 @if (location.boardVersion != null) {
                   <mat-card-subtitle>
-                    <span i18n="@@location board version">Board version</span>:
+                    <span i18n="@@location board version">Board version</span>
+                    :
                     {{ location.boardVersion }}
                   </mat-card-subtitle>
                 }
@@ -95,41 +125,25 @@
                   @if (
                     getTestResult(location.id) === null ||
                     getTestResult(location.id).primary === undefined
-                    ) {
-                    <mat-icon
-                      matListItemIcon
-                      >
-                      link
-                    </mat-icon>
+                  ) {
+                    <mat-icon matListItemIcon>link</mat-icon>
                   }
                   @if (
-                    getTestResult(location.id) !== null && getTestResult(location.id).primary === null
-                    ) {
-                    <mat-spinner
-                      matListItemIcon
-                      diameter="16"
-                      />
+                    getTestResult(location.id) !== null &&
+                    getTestResult(location.id).primary === null
+                  ) {
+                    <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.primary === true) {
-                    <mat-icon
-                      matListItemIcon
-                      class="icon-accessible"
-                      >
-                      check_circle
-                    </mat-icon>
+                    <mat-icon matListItemIcon class="icon-accessible">check_circle</mat-icon>
                   }
                   @if (getTestResult(location.id)?.primary === false) {
-                    <mat-icon
-                      matListItemIcon
-                      class="icon-inaccessible"
-                      >
-                      error
-                    </mat-icon>
+                    <mat-icon matListItemIcon class="icon-inaccessible">error</mat-icon>
                   }
                   <div matListItemTitle i18n="@@location primary url">Primary URL</div>
                   @if (location.primaryDomain) {
                     <div matListItemLine>
-                      {{ 'https://' + location.primaryDomain + ':' + location.primaryPort }}
+                      {{ "https://" + location.primaryDomain + ":" + location.primaryPort }}
                     </div>
                   }
                   @if (!location.primaryDomain) {
@@ -139,15 +153,15 @@
                     showApiLink &&
                     getTestResult(location.id) !== null &&
                     getTestResult(location.id).primary === false
-                    ) {
-                    <div
-                      matListItemLine
-                      >
+                  ) {
+                    <div matListItemLine>
                       <a
-                        href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
+                        href="https://{{ location.primaryDomain }}:{{
+                          location.primaryPort
+                        }}/api/version"
                         target="_blank"
                         class="test-link"
-                        >
+                      >
                         <span i18n="@@location check">Check API version and certificate</span>
                         <mat-icon>open_in_new</mat-icon>
                       </a>
@@ -158,42 +172,25 @@
                   @if (
                     getTestResult(location.id) === null ||
                     getTestResult(location.id).secondary === undefined
-                    ) {
-                    <mat-icon
-                      matListItemIcon
-                      >
-                      link
-                    </mat-icon>
+                  ) {
+                    <mat-icon matListItemIcon>link</mat-icon>
                   }
                   @if (
                     getTestResult(location.id) !== null &&
                     getTestResult(location.id)?.secondary === null
-                    ) {
-                    <mat-spinner
-                      matListItemIcon
-                      diameter="16"
-                      />
+                  ) {
+                    <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.secondary === true) {
-                    <mat-icon
-                      matListItemIcon
-                      class="icon-accessible"
-                      >
-                      check_circle
-                    </mat-icon>
+                    <mat-icon matListItemIcon class="icon-accessible">check_circle</mat-icon>
                   }
                   @if (getTestResult(location.id)?.secondary === false) {
-                    <mat-icon
-                      matListItemIcon
-                      class="icon-inaccessible"
-                      >
-                      error
-                    </mat-icon>
+                    <mat-icon matListItemIcon class="icon-inaccessible">error</mat-icon>
                   }
                   <div matListItemTitle i18n="@@location secondary url">Secondary URL</div>
                   @if (location.secondaryDomain) {
                     <div matListItemLine>
-                      {{ 'https://' + location.secondaryDomain + ':' + location.secondaryPort }}
+                      {{ "https://" + location.secondaryDomain + ":" + location.secondaryPort }}
                     </div>
                   }
                   @if (!location.secondaryDomain) {
@@ -203,17 +200,15 @@
                     showApiLink &&
                     getTestResult(location.id) !== null &&
                     getTestResult(location.id).secondary === false
-                    ) {
-                    <div
-                      matListItemLine
-                      >
+                  ) {
+                    <div matListItemLine>
                       <a
-                  href="https://{{ location.secondaryDomain }}:{{
-                    location.secondaryPort
-                  }}/api/version"
+                        href="https://{{ location.secondaryDomain }}:{{
+                          location.secondaryPort
+                        }}/api/version"
                         target="_blank"
                         class="test-link"
-                        >
+                      >
                         <span i18n="@@location check">Check API version and certificate</span>
                         <mat-icon>open_in_new</mat-icon>
                       </a>
@@ -227,10 +222,12 @@
                     <div matListItemLine>
                       {{ serverLatestVersion.version_tag }}
                       <a
-                        href="https://github.com/ArPIHomeSecurity/arpi_server/releases/tag/{{ serverLatestVersion.version_tag }}"
+                        href="https://github.com/ArPIHomeSecurity/arpi_server/releases/tag/{{
+                          serverLatestVersion.version_tag
+                        }}"
                         target="_blank"
                         class="test-link"
-                        >
+                      >
                         <mat-icon>open_in_new</mat-icon>
                       </a>
                     </div>
@@ -260,7 +257,7 @@
                   color="warn"
                   (click)="openDeleteDialog(location.id)"
                   [disabled]="selectedLocationId === location.id"
-                  >
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               }
@@ -279,11 +276,11 @@
             <mat-icon color="primary" class="avatar-icon">home</mat-icon>
           </div>
           <mat-card-title i18n="@@location welcome title">
-          Welcome to ArPI Home Security
-        </mat-card-title>
+            Welcome to ArPI Home Security
+          </mat-card-title>
           <mat-card-subtitle i18n="@@location welcome subtitle">
-          Your smart security system starts here
-        </mat-card-subtitle>
+            Your smart security system starts here
+          </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="welcome-content">
           <mat-card class="getting-started-card">
@@ -293,33 +290,33 @@
               </div>
               <mat-card-title i18n="@@location getting started">Getting Started</mat-card-title>
               <mat-card-subtitle i18n="@@location getting started subtitle">
-              Follow these steps to set up your system
-            </mat-card-subtitle>
+                Follow these steps to set up your system
+              </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
               <ol class="welcome-steps">
                 <li>
                   <span i18n="@@location step install">
-                  Install your ArPI Home Security device and connect it to your network.
-                </span>
+                    Install your ArPI Home Security device and connect it to your network.
+                  </span>
                   <a
                     mat-button
                     color="primary"
                     href="https://docs.arpi-security.info/en/latest/security_engineers/installation-sw/"
                     target="_blank"
                     rel="noopener"
-                    >
+                  >
                     <span i18n="@@location software installation guide">
-                    Software installation guide
-                  </span>
+                      Software installation guide
+                    </span>
                     <mat-icon>open_in_new</mat-icon>
                   </a>
                 </li>
                 <li i18n="@@location step add location">
-                Return here and click
-                <b>Add Location</b>
-                to register your device.
-              </li>
+                  Return here and click
+                  <b>Add Location</b>
+                  to register your device.
+                </li>
               </ol>
             </mat-card-content>
           </mat-card>
@@ -330,8 +327,8 @@
               </div>
               <mat-card-title i18n="@@location support">Community Support</mat-card-title>
               <mat-card-subtitle i18n="@@location support subtitle">
-              Join our Slack workspace for help and discussion
-            </mat-card-subtitle>
+                Join our Slack workspace for help and discussion
+              </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content class="support-content">
               <a
@@ -341,10 +338,10 @@
                 target="_blank"
                 rel="noopener"
                 i18n="@@location support link"
-                >
-              ArPI Home Security Slack
-              <mat-icon>open_in_new</mat-icon>
-            </a>
+              >
+                ArPI Home Security Slack
+                <mat-icon>open_in_new</mat-icon>
+              </a>
             </mat-card-content>
           </mat-card>
         </mat-card-content>
@@ -354,9 +351,9 @@
             color="accent"
             routerLink="/location/add"
             i18n="@@location get started"
-            >
-          Get Started: Add Location
-        </button>
+          >
+            Get Started: Add Location
+          </button>
           <a
             mat-stroked-button
             color="primary"
@@ -365,9 +362,9 @@
             rel="noopener"
             i18n="@@location docs button"
             tabindex="0"
-            >
-          View Documentation
-        </a>
+          >
+            View Documentation
+          </a>
           <a
             mat-stroked-button
             color="primary"
@@ -376,9 +373,9 @@
             rel="noopener"
             i18n="@@location demo button"
             tabindex="0"
-            >
-          Try Demo
-        </a>
+          >
+            Try Demo
+          </a>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -387,22 +384,12 @@
 
 <div class="list-actions">
   @if (isMultiLocation || locations.length === 0) {
-    <button
-      class="list-action"
-      mat-fab
-      color="accent"
-      routerLink="/location/add"
-      >
+    <button class="list-action" mat-fab color="accent" routerLink="/location/add">
       <mat-icon>add</mat-icon>
     </button>
   }
   @if (isMultiLocation || locations.length === 0) {
-    <button
-      class="list-action"
-      mat-mini-fab
-      color="accent"
-      routerLink="/location/add"
-      >
+    <button class="list-action" mat-mini-fab color="accent" routerLink="/location/add">
       <mat-icon>add</mat-icon>
     </button>
   }

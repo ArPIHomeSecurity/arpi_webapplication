@@ -7,10 +7,9 @@
   </mat-expansion-panel-header>
 
   <mat-form-field class="container-item">
-    <mat-label i18n="@@network mcp access local">
-      Local network access
-    </mat-label>
-    <textarea matInput readonly rows="7">"ArPI home security": {
+    <mat-label i18n="@@network mcp access local">Local network access</mat-label>
+    <textarea matInput readonly rows="7">
+"ArPI home security": {
     "url": "https://arpi.local/mcp",
     "type": "http",
     "headers": {
@@ -20,12 +19,11 @@
     </textarea>
   </mat-form-field>
 
-@if (hostname !== null) {
-  <mat-form-field class="container-item">
-    <mat-label i18n="@@network mcp access remote">
-      Remote access (dynamic DNS)
-    </mat-label>
-    <textarea matInput readonly rows="7">"ArPI home security (dynamic DNS)": {
+  @if (hostname !== null) {
+    <mat-form-field class="container-item">
+      <mat-label i18n="@@network mcp access remote">Remote access (dynamic DNS)</mat-label>
+      <textarea matInput readonly rows="7">
+"ArPI home security (dynamic DNS)": {
     "url": "https://{{ hostname }}/mcp",
     "type": "http",
     "headers": {
@@ -33,12 +31,11 @@
     }
 }
     </textarea>
-  </mat-form-field>
-}
+    </mat-form-field>
+  }
 
   <a mat-stroked-button color="primary" routerLink="/users" class="container-item">
     <mat-icon>people</mat-icon>
     <span i18n="@@network mcp access get token">Get your token</span>
   </a>
-
 </mat-expansion-panel>

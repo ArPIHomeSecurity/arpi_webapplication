@@ -21,9 +21,9 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
+      gtag("js", new Date());
 
-      gtag('config', 'G-XJP2LTFKZ1');
+      gtag("config", "G-XJP2LTFKZ1");
     </script>
 
     <!-- Github Pages hack to allow SPA refresh without receiving 404. -->
@@ -57,13 +57,11 @@
           <div style="left: 80px; top: 122px; animation-delay: 0.625s"></div>
           <div style="left: 122px; top: 122px; animation-delay: 0.5s"></div>
         </div>
-        <button id="cancel-spinner">
-          Cancel
-        </button>
+        <button id="cancel-spinner">Cancel</button>
       </div>
     </app-root>
     <script>
-      document.getElementById('cancel-spinner').onclick = function() {
+      document.getElementById("cancel-spinner").onclick = function () {
         // Cancel the running backend configuration
         if (window.abortBackendConfiguration) {
           window.abortBackendConfiguration();

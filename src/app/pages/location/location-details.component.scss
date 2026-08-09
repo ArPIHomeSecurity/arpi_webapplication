@@ -1,3 +1,13 @@
+.name {
+  width: 425px;
+}
+
+.notifications {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
 .scheme {
   width: 170px;
 }
@@ -23,7 +33,6 @@
     margin: 15px 0px;
   }
 
-
   .mat-spinner {
     margin: 15px 0px;
   }
@@ -43,7 +52,6 @@ button.small {
     font-size: 16px;
   }
 }
-  
 
 .details {
   margin-top: 20px;

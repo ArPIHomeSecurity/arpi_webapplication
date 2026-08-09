@@ -1,29 +1,35 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from '@app/models';
+import {
+  ARM_TYPE,
+  Clocks,
+  KeypadType,
+  MONITORING_STATE,
+  POWER_STATE
+} from "@app/models"
 
 export interface MonitoringService {
-  isAlert(): Observable<boolean>;
+  isAlert(): Observable<boolean>
 
-  getArmState(): Observable<ARM_TYPE>;
+  getArmState(): Observable<ARM_TYPE>
 
-  arm(armtype: ARM_TYPE): Observable<Object>;
+  arm(armtype: ARM_TYPE): Observable<Object>
 
-  disarm(): Observable<Object>;
+  disarm(): Observable<Object>
 
-  getMonitoringState(): Observable<MONITORING_STATE>;
+  getMonitoringState(): Observable<MONITORING_STATE>
 
-  getVersion(): Observable<string>;
+  getVersion(): Observable<string>
 
-  getBoardVersion(): Observable<number>;
+  getBoardVersion(): Observable<number>
 
-  getClock(): Observable<Clocks>;
+  getClock(): Observable<Clocks>
 
-  synchronizeClock();
+  synchronizeClock()
 
-  changeClock(dateTime: string, timeZone: string);
+  changeClock(dateTime: string, timeZone: string)
 
-  getKeypadTypes(): Observable<KeypadType[]>;
+  getKeypadTypes(): Observable<KeypadType[]>
 
-  getPowerState(): Observable<POWER_STATE>;
+  getPowerState(): Observable<POWER_STATE>
 }

@@ -1,37 +1,41 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { User, UserCreate, UserUpdate } from '@app/models';
+import { User, UserCreate, UserUpdate } from "@app/models"
 
 export interface UserService {
-  getUsers(): Observable<User[]>;
+  getUsers(): Observable<User[]>
 
-  getUser(userId: number): Observable<User>;
+  getUser(userId: number): Observable<User>
 
-  getUserName(userId: number): Observable<string>;
+  getUserName(userId: number): Observable<string>
 
-  createUser(user: UserCreate): Observable<User>;
+  createUser(user: UserCreate): Observable<User>
 
-  updateUser(user: UserUpdate): Observable<User>;
+  updateUser(user: UserUpdate): Observable<User>
 
-  deleteUser(userId: number): Observable<boolean>;
+  deleteUser(userId: number): Observable<boolean>
 
-  generateRegistrationCode(userId: number, expiry: number): Observable<any>;
+  generateRegistrationCode(userId: number, expiry: number): Observable<any>
 
-  deleteRegistrationCode(userId: number): Observable<object>;
+  deleteRegistrationCode(userId: number): Observable<object>
 
-  registerCard(userId: number): Observable<any>;
+  registerCard(userId: number): Observable<any>
 
-  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string>;
+  generateSshKey(
+    userId: number,
+    keyType: string,
+    passphrase: string
+  ): Observable<string>
 
-  setPublicKey(userId: number, publicKey: string): Observable<boolean>;
+  setPublicKey(userId: number, publicKey: string): Observable<boolean>
 
-  hasSshKey(userId: number): Observable<boolean>;
+  hasSshKey(userId: number): Observable<boolean>
 
-  deleteSshKey(userId: number): Observable<boolean>;
+  deleteSshKey(userId: number): Observable<boolean>
 
-  getMCPToken(userId: number): Observable<string>;
+  getMCPToken(userId: number): Observable<string>
 
-  hasMCPToken(userId: number): Observable<boolean>;
+  hasMCPToken(userId: number): Observable<boolean>
 
-  removeMCPToken(userId: number): Observable<boolean>;
+  removeMCPToken(userId: number): Observable<boolean>
 }

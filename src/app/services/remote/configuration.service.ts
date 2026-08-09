@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { Injectable } from "@angular/core"
+import { HttpClient, HttpParams } from "@angular/common/http"
+import { catchError, Observable, of, throwError } from "rxjs"
 
-import { Location, Option } from '@app/models';
+import { Location, Option } from "@app/models"
 
 @Injectable()
 export class ConfigurationService implements ConfigurationService {
@@ -11,49 +11,53 @@ export class ConfigurationService implements ConfigurationService {
   getOption(option: string, section: string): Observable<Option> {
     // get configuration option from api
     return this.http
-      .get<Option>('/api/config/' + option + '/' + section)
-      .pipe(catchError(err => (err.status === 404 ? of(null) : throwError(() => err))));
+      .get<Option>("/api/config/" + option + "/" + section)
+      .pipe(
+        catchError(err =>
+          err.status === 404 ? of(null) : throwError(() => err)
+        )
+      )
   }
 
   setOption(option: string, section: string, value: any): Observable<any> {
     // get configuration option from api
-    return this.http.put('/api/config/' + option + '/' + section, value);
+    return this.http.put("/api/config/" + option + "/" + section, value)
   }
 
   sendTestEmail() {
-    return this.http.get('/api/config/test_email');
+    return this.http.get("/api/config/test_email")
   }
 
   sendTestSMS() {
-    return this.http.get('/api/config/test_sms');
+    return this.http.get("/api/config/test_sms")
   }
 
   getSmsMessages() {
-    return this.http.get('/api/config/sms');
+    return this.http.get("/api/config/sms")
   }
 
   deleteSmsMessage(id: number) {
-    return this.http.delete('/api/config/sms/' + id);
+    return this.http.delete("/api/config/sms/" + id)
   }
 
   doTestCall() {
-    return this.http.get('/api/config/test_call');
+    return this.http.get("/api/config/test_call")
   }
 
   testSyren(duration?: number) {
-    const params = duration ? new HttpParams().set('duration', duration) : null;
-    return this.http.get('/api/config/test_syren', { params });
+    const params = duration ? new HttpParams().set("duration", duration) : null
+    return this.http.get("/api/config/test_syren", { params })
   }
 
   getPublicAccess() {
-    return this.http.get<boolean>('/api/config/public_access');
+    return this.http.get<boolean>("/api/config/public_access")
   }
 
   getLocation(): Observable<Location> {
-    return this.http.get<Location>('/api/config/installation');
+    return this.http.get<Location>("/api/config/installation")
   }
 
   getLocationId(): Observable<string> {
-    return this.http.get<string>('/api/config/installation_id');
+    return this.http.get<string>("/api/config/installation_id")
   }
 }

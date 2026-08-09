@@ -1,52 +1,52 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from "@angular/core"
+import { MatDialog } from "@angular/material/dialog"
 
-import { SensorService, CardService } from '@app/services/demo';
-import { getSessionValue, setSessionValue } from '@app/utils';
+import { SensorService, CardService } from "@app/services/demo"
+import { getSessionValue, setSessionValue } from "@app/utils"
 
-import { environment } from '@environments/environment';
-import { DemoHelpDialogComponent } from './demo.help.dialog.component';
+import { environment } from "@environments/environment"
+import { DemoHelpDialogComponent } from "./demo.help.dialog.component"
 
 @Component({
-  selector: 'app-demo',
-  templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.scss'],
+  selector: "app-demo",
+  templateUrl: "./demo.component.html",
+  styleUrls: ["./demo.component.scss"],
   standalone: false
 })
 export class DemoComponent implements OnInit {
-  channels: boolean[] = [];
+  channels: boolean[] = []
   constructor(
     public dialog: MatDialog,
-    @Inject('SensorService') private sensorService: SensorService,
-    @Inject('CardService') private cardService: CardService
+    @Inject("SensorService") private sensorService: SensorService,
+    @Inject("CardService") private cardService: CardService
   ) {
-    const channels: boolean[] = [];
+    const channels: boolean[] = []
     // channels are numbered 1..N
     for (let i = 0; i < environment.channelCount; i++) {
-      channels.push(false);
+      channels.push(false)
     }
 
-    this.channels = getSessionValue('DemoComponent.channels', channels);
+    this.channels = getSessionValue("DemoComponent.channels", channels)
   }
 
   ngOnInit() {
-    const appRoot = document.getElementsByTagName('app-root')[0];
+    const appRoot = document.getElementsByTagName("app-root")[0]
     if (appRoot) {
-      appRoot.classList.add('demo');
+      appRoot.classList.add("demo")
     }
   }
 
   help() {
-    this.dialog.open(DemoHelpDialogComponent, {});
+    this.dialog.open(DemoHelpDialogComponent, {})
   }
 
   putCard(cardId: number) {
-    this.cardService.onCard(cardId);
+    this.cardService.onCard(cardId)
   }
 
   toogleChannel(index: number) {
-    this.channels[index] = !this.channels[index];
-    setSessionValue('DemoComponent.channels', this.channels);
-    this.sensorService.alertChannel(index, this.channels[index]);
+    this.channels[index] = !this.channels[index]
+    setSessionValue("DemoComponent.channels", this.channels)
+    this.sensorService.alertChannel(index, this.channels[index])
   }
 }

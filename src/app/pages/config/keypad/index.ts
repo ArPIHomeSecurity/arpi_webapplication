@@ -1,1 +1,1 @@
-export * from './keypad.component';
+export * from "./keypad.component"

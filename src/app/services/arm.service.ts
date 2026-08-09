@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { Arm, ArmEvent, ARM_TYPE } from '@app/models';
+import { ArmEvent, ARM_TYPE } from "@app/models"
 
 export interface ArmService {
   getArms(
@@ -11,7 +11,7 @@ export interface ArmService {
     hasAlert: boolean,
     offset: number,
     size: number
-  ): Observable<ArmEvent[]>;
+  ): Observable<ArmEvent[]>
 
   getArmsCount(
     armType: ARM_TYPE,
@@ -19,5 +19,5 @@ export interface ArmService {
     startDate: Date,
     endDate: Date,
     hasAlert: boolean
-  ): Observable<number>;
+  ): Observable<number>
 }

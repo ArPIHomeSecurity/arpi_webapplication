@@ -11,22 +11,22 @@
       sessionStorage.redirect = location.href;
 
       const pathParser = new RegExp(
-        '^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$'
+        "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
       );
       const matches = pathParser.exec(window.location.pathname);
       if (matches) {
-        const newPath = [matches.groups.version, matches.groups.language].join('/');
+        const newPath = [matches.groups.version, matches.groups.language].join("/");
         if (newPath !== location.pathname) {
           // Immediately redirect to the base URL so we can use the SPA routing.
-          console.log('Redirect to ' + newPath);
+          console.log("Redirect to " + newPath);
           location.pathname = newPath;
         } else {
-          console.log('No need to redirect');
+          console.log("No need to redirect");
         }
-      } else if (location.pathname == '/') {
-        location.pathname = '/en/';
+      } else if (location.pathname == "/") {
+        location.pathname = "/en/";
       } else {
-        console.error('Path does not match', location.pathname);
+        console.error("Path does not match", location.pathname);
       }
     </script>
   </head>

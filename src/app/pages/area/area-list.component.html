@@ -1,11 +1,7 @@
 @if (areas != null && sensors != null) {
   <div class="container">
     @if (areas.length > 0) {
-      <div
-        cdkDropList
-        class="area-list"
-        (cdkDropListDropped)="onDrop($event)"
-        >
+      <div cdkDropList class="area-list" (cdkDropListDropped)="onDrop($event)">
         @for (area of areas; track area) {
           <mat-card
             id="area-{{ area.id }}"
@@ -13,7 +9,7 @@
             (cdkDragStarted)="onDragStarted($event)"
             [cdkDragDisabled]="!userCanEdit()"
             ngClass="area-card container-item"
-            >
+          >
             <mat-card-content>
               <mat-card-title>{{ area.name }}</mat-card-title>
               <mat-accordion multi>
@@ -21,15 +17,13 @@
                   class="sensors"
                   (opened)="sensorListOpened[area.id] = true"
                   (closed)="sensorListOpened[area.id] = false"
-                  >
+                >
                   <mat-expansion-panel-header>
                     <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
                     @if (!sensorListOpened[area.id]) {
-                      <mat-panel-description
-                        i18n="@@area number of sensors"
-                        >
-                {{ getSensors(area.id).length }} sensor(s)
-              </mat-panel-description>
+                      <mat-panel-description i18n="@@area number of sensors">
+                        {{ getSensors(area.id).length }} sensor(s)
+                      </mat-panel-description>
                     }
                   </mat-expansion-panel-header>
                   @if (getSensors(area.id).length > 0) {
@@ -44,7 +38,7 @@
                                 [routerLink]="['/sensor', sensor.id]"
                                 routerLinkActive="active"
                                 color="accent"
-                                >
+                              >
                                 <mat-icon matListIcon>mode_edit</mat-icon>
                               </button>
                             }
@@ -60,15 +54,13 @@
                   class="outputs"
                   (opened)="outputListOpened[area.id] = true"
                   (closed)="outputListOpened[area.id] = false"
-                  >
+                >
                   <mat-expansion-panel-header>
                     <mat-panel-title i18n="@@area outputs">Outputs</mat-panel-title>
                     @if (!outputListOpened[area.id]) {
-                      <mat-panel-description
-                        i18n="@@area number of outputs"
-                        >
-                {{ getOutputs(area.id).length }} output(s)
-              </mat-panel-description>
+                      <mat-panel-description i18n="@@area number of outputs">
+                        {{ getOutputs(area.id).length }} output(s)
+                      </mat-panel-description>
                     }
                   </mat-expansion-panel-header>
                   @if (getOutputs(area.id).length > 0) {
@@ -83,7 +75,7 @@
                                 [routerLink]="['/output', output.id]"
                                 routerLinkActive="active"
                                 color="accent"
-                                >
+                              >
                                 <mat-icon matListIcon>mode_edit</mat-icon>
                               </button>
                             }
@@ -109,10 +101,12 @@
                   mat-icon-button
                   cdkDragHandle
                   class="drag-handle"
-          [disabled]="
-            ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
-          "
-                  >
+                  [disabled]="
+                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
+                      monitoringState
+                    )
+                  "
+                >
                   <mat-icon>drag_indicator</mat-icon>
                 </button>
                 <button
@@ -120,19 +114,19 @@
                   [routerLink]="['/area', area.id]"
                   color="primary"
                   [disabled]="monitoringState != monitoringStates.READY"
-                  >
+                >
                   <mat-icon>mode_edit</mat-icon>
                 </button>
                 <button
                   mat-icon-button
                   (click)="openDeleteDialog(area.id)"
                   color="warn"
-          [disabled]="
-            getSensors(area.id).length > 0 ||
-            getOutputs(area.id).length > 0 ||
-            monitoringState != monitoringStates.READY
-          "
-                  >
+                  [disabled]="
+                    getSensors(area.id).length > 0 ||
+                    getOutputs(area.id).length > 0 ||
+                    monitoringState != monitoringStates.READY
+                  "
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-card-actions>
@@ -157,7 +151,7 @@
       routerLink="/area/add"
       [disabled]="monitoringState != monitoringStates.READY"
       ngClass="false"
-      >
+    >
       <mat-icon>add</mat-icon>
     </button>
     <button
@@ -167,7 +161,7 @@
       routerLink="/area/add"
       [disabled]="monitoringState != monitoringStates.READY"
       ngClass="false"
-      >
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>

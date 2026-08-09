@@ -4,26 +4,21 @@
     <mat-expansion-panel-header>
       <mat-panel-title i18n="@@network mqtt settings">MQTT Settings</mat-panel-title>
       <mat-panel-description i18n="@@network mqtt description">
-      Configure MQTT broker connection
-    </mat-panel-description>
+        Configure MQTT broker connection
+      </mat-panel-description>
     </mat-expansion-panel-header>
     @if (mqttForm) {
       <form [formGroup]="mqttForm" (ngSubmit)="onSaveMqtt()" class="mqtt-form">
         <div class="row">
           <mat-checkbox formControlName="mqttEnabled" i18n="@@network mqtt enable">
-        Enable MQTT connection
-      </mat-checkbox>
-          <mat-checkbox
-            formControlName="mqttExternal"
-            i18n="@@network mqtt external"
-            >
-        Use external MQTT broker
-      </mat-checkbox>
+            Enable MQTT connection
+          </mat-checkbox>
+          <mat-checkbox formControlName="mqttExternal" i18n="@@network mqtt external">
+            Use external MQTT broker
+          </mat-checkbox>
         </div>
-        @if (mqttForm.controls['mqttEnabled'].value && mqttForm.controls['mqttExternal'].value) {
-          <div
-            class="row"
-            >
+        @if (mqttForm.controls["mqttEnabled"].value && mqttForm.controls["mqttExternal"].value) {
+          <div class="row">
             <mat-form-field class="container-item">
               <mat-label i18n="@@network mqtt hostname">Hostname</mat-label>
               <input
@@ -31,7 +26,7 @@
                 formControlName="mqttHostname"
                 i18n-placeholder="@@network mqtt hostname"
                 placeholder="Hostname"
-                />
+              />
             </mat-form-field>
             <mat-form-field class="container-item">
               <mat-label i18n="@@network mqtt port">Port</mat-label>
@@ -41,14 +36,12 @@
                 formControlName="mqttPort"
                 i18n-placeholder="@@network mqtt port"
                 placeholder="Port"
-                />
+              />
             </mat-form-field>
           </div>
         }
-        @if (mqttForm.controls['mqttEnabled'].value && mqttForm.controls['mqttExternal'].value) {
-          <div
-            class="row"
-            >
+        @if (mqttForm.controls["mqttEnabled"].value && mqttForm.controls["mqttExternal"].value) {
+          <div class="row">
             <mat-form-field class="container-item">
               <mat-label i18n="@@network mqtt username">MQTT Username</mat-label>
               <input
@@ -56,7 +49,7 @@
                 formControlName="mqttUsername"
                 i18n-placeholder="@@network mqtt username"
                 placeholder="MQTT Username"
-                />
+              />
             </mat-form-field>
             <mat-form-field class="container-item">
               <mat-label i18n="@@network mqtt password">MQTT Password</mat-label>
@@ -66,25 +59,22 @@
                 formControlName="mqttPassword"
                 i18n-placeholder="@@network mqtt password"
                 placeholder="MQTT Password"
-                />
+              />
             </mat-form-field>
           </div>
         }
-        @if (mqttForm.controls['mqttEnabled'].value && mqttForm.controls['mqttExternal'].value) {
-          <div
-            class="row"
-            >
+        @if (mqttForm.controls["mqttEnabled"].value && mqttForm.controls["mqttExternal"].value) {
+          <div class="row">
             <mat-checkbox formControlName="mqttTlsEnabled" i18n="@@network mqtt enable tls">
-        Enable TLS
-      </mat-checkbox>
+              Enable TLS
+            </mat-checkbox>
             <mat-checkbox formControlName="mqttTlsInsecure" i18n="@@network mqtt insecure tls">
-        Allow insecure TLS connection
-      </mat-checkbox>
+              Allow insecure TLS connection
+            </mat-checkbox>
           </div>
         }
-        @if (mqttForm.controls['mqttEnabled'].value && !mqttForm.controls['mqttExternal'].value) {
-          <span
-            >
+        @if (mqttForm.controls["mqttEnabled"].value && !mqttForm.controls["mqttExternal"].value) {
+          <span>
             <h3 i18n="@@network mqtt internal broker info">Internal MQTT Broker read</h3>
             <mat-list>
               <mat-list-item>
@@ -100,20 +90,20 @@
                   color="primary"
                   onclick="this.blur()"
                   (click)="copyToClipboard(getMqttUsername())"
-                  >
+                >
                   <mat-icon>content_copy</mat-icon>
                 </button>
               </mat-list-item>
               <mat-list-item>
                 <span matListItemTitle i18n="@@network mqtt password">MQTT Password</span>
-                {{ getMqttPassword() || 'No password set' }}
+                {{ getMqttPassword() || "No password set" }}
                 <button
                   type="button"
                   mat-icon-button
                   color="primary"
                   onclick="this.blur()"
                   (click)="copyToClipboard(getMqttPassword())"
-                  >
+                >
                   <mat-icon>content_copy</mat-icon>
                 </button>
               </mat-list-item>
@@ -125,13 +115,13 @@
             mat-raised-button
             color="primary"
             type="submit"
-        [disabled]="
-          monitoringState != monitoringStates.READY || mqttForm.invalid || mqttForm.pristine
-        "
+            [disabled]="
+              monitoringState != monitoringStates.READY || mqttForm.invalid || mqttForm.pristine
+            "
             i18n="@@save button"
-            >
-        Save
-      </button>
+          >
+            Save
+          </button>
         </div>
       </form>
     }

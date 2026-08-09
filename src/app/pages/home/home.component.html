@@ -6,7 +6,7 @@
       [sensorAlert]="sensorAlert"
       [systemAlert]="alert != null"
       (armChanged)="armChanged($event)"
-      />
+    />
   </div>
 
   @if (alert) {
@@ -16,14 +16,10 @@
           <mat-panel-title>
             <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
             @if (alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">
-                volume_mute
-              </mat-icon>
+              <mat-icon matListIcon class="material-icons-outlined">volume_mute</mat-icon>
             }
             @if (!alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">
-                volume_up
-              </mat-icon>
+              <mat-icon matListIcon class="material-icons-outlined">volume_up</mat-icon>
             }
             <div>{{ alert.startTime }}</div>
           </mat-panel-title>
@@ -43,7 +39,7 @@
         <component-sensor
           [sensor]="sensor"
           [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
-          />
+        />
       }
     </div>
   }
@@ -56,7 +52,7 @@
           [sensors]="getSensors(area.id)"
           [delays]="getSensorDelays(area.id)"
           [monitoringState]="monitoringState"
-          />
+        />
       }
     </div>
   }

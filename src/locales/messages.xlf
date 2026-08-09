@@ -162,6 +162,15 @@
       <trans-unit id="notifications alert stopped" datatype="html">
         <source>Alert stopped</source>
       </trans-unit>
+      <trans-unit id="notifications ArPI alert" datatype="html">
+        <source>ArPI alert</source>
+      </trans-unit>
+      <trans-unit id="notifications ArPI armed" datatype="html">
+        <source>ArPI armed</source>
+      </trans-unit>
+      <trans-unit id="notifications ArPI disarmed" datatype="html">
+        <source>ArPI disarmed</source>
+      </trans-unit>
       <trans-unit id="notifications power outage started" datatype="html">
         <source> Power outage started </source>
       </trans-unit>
@@ -183,14 +192,26 @@
       <trans-unit id="copied to clipboard" datatype="html">
         <source>Copied to clipboard!</source>
       </trans-unit>
+      <trans-unit id="arm away" datatype="html">
+        <source>away</source>
+      </trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source> AWAY </source>
       </trans-unit>
       <trans-unit id="disarm button" datatype="html">
         <source> OFF </source>
       </trans-unit>
+      <trans-unit id="arm mixed" datatype="html">
+        <source>mixed</source>
+      </trans-unit>
+      <trans-unit id="arm stay" datatype="html">
+        <source>stay</source>
+      </trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
+      </trans-unit>
+      <trans-unit id="arm unknown" datatype="html">
+        <source>unknown</source>
       </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
@@ -240,6 +261,9 @@
       <trans-unit id="6414252246095738391" datatype="html">
         <source>Register device</source>
         <note priority="1" from="description">Register device</note>
+      </trans-unit>
+      <trans-unit id="8841092084837401943" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System is in alert state.</source>
       </trans-unit>
       <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
@@ -383,9 +407,6 @@
       </trans-unit>
       <trans-unit id="user not found" datatype="html">
         <source>The user was not found!</source>
-      </trans-unit>
-      <trans-unit id="user notifications" datatype="html">
-        <source>Notifications</source>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -972,6 +993,9 @@
       <trans-unit id="notifications location address" datatype="html">
         <source>Address</source>
       </trans-unit>
+      <trans-unit id="notifications location armed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System armed (<x id="PH_1" equiv-text="armTypeText"/>).</source>
+      </trans-unit>
       <trans-unit id="notifications location city" datatype="html">
         <source>City</source>
       </trans-unit>
@@ -989,6 +1013,9 @@
       </trans-unit>
       <trans-unit id="notifications location description" datatype="html">
         <source>Description</source>
+      </trans-unit>
+      <trans-unit id="notifications location disarmed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System disarmed.</source>
       </trans-unit>
       <trans-unit id="notifications location latitude" datatype="html">
         <source>Latitude</source>
@@ -1239,17 +1266,11 @@
       <trans-unit id="user enable biometric" datatype="html">
         <source>Enable biometric login</source>
       </trans-unit>
-      <trans-unit id="user enable notifications" datatype="html">
-        <source>Enable notifications</source>
-      </trans-unit>
       <trans-unit id="failed register" datatype="html">
         <source>Failed to register card!</source>
       </trans-unit>
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
-      </trans-unit>
-      <trans-unit id="user disable notifications" datatype="html">
-        <source>Disable notifications</source>
       </trans-unit>
       <trans-unit id="sensor channel a" datatype="html">
         <source>Channel A</source>

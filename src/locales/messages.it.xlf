@@ -215,6 +215,18 @@
         <source>Alert stopped</source>
         <target>Allarme interrotto</target>
       </trans-unit>
+      <trans-unit id="notifications ArPI alert" datatype="html">
+        <source>ArPI alert</source>
+        <target state="new">ArPI allarme</target>
+      </trans-unit>
+      <trans-unit id="notifications ArPI armed" datatype="html">
+        <source>ArPI armed</source>
+        <target state="new">ArPI armato</target>
+      </trans-unit>
+      <trans-unit id="notifications ArPI disarmed" datatype="html">
+        <source>ArPI disarmed</source>
+        <target state="new">ArPI disarmato</target>
+      </trans-unit>
       <trans-unit id="notifications power outage started" datatype="html">
         <source> Power outage started </source>
         <target state="translated"> Inizio interruzione di corrente </target>
@@ -243,6 +255,10 @@
         <source>Copied to clipboard!</source>
         <target>Copiato negli appunti!</target>
       </trans-unit>
+      <trans-unit id="arm away" datatype="html">
+        <source>away</source>
+        <target state="new">assenti</target>
+      </trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source> AWAY </source>
         <target state="translated"> ASSENTI/FUORI CASA </target>
@@ -251,9 +267,21 @@
         <source> OFF </source>
         <target> SPENTO </target>
       </trans-unit>
+      <trans-unit id="arm mixed" datatype="html">
+        <source>mixed</source>
+        <target state="new">misto</target>
+      </trans-unit>
+      <trans-unit id="arm stay" datatype="html">
+        <source>stay</source>
+        <target state="new">presenti</target>
+      </trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
         <target state="translated"> PRESENTI </target>
+      </trans-unit>
+      <trans-unit id="arm unknown" datatype="html">
+        <source>unknown</source>
+        <target state="new">sconosciuto</target>
       </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
@@ -319,6 +347,10 @@
         <source>Register device</source>
         <target>Registra il dispositivo</target>
         <note priority="1" from="description">Register device</note>
+      </trans-unit>
+      <trans-unit id="8841092084837401943" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System is in alert state.</source>
+        <target state="new">Località: <x id="PH" equiv-text="locationName"/> Il sistema è in stato di allerta.</target>
       </trans-unit>
       <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
@@ -509,10 +541,6 @@
       <trans-unit id="user not found" datatype="html">
         <source>The user was not found!</source>
         <target state="translated">Utente non trovato!</target>
-      </trans-unit>
-      <trans-unit id="user notifications" datatype="html">
-        <source>Notifications</source>
-        <target state="translated">Notifiche</target>
       </trans-unit>
       <trans-unit id="user device registration" datatype="html">
         <source>Device registration</source>
@@ -1308,59 +1336,67 @@
       </trans-unit>
       <trans-unit id="notifications location" datatype="html">
         <source>Location</source>
-        <target state="new">Location</target>
+        <target state="new">Località</target>
       </trans-unit>
       <trans-unit id="notifications location address" datatype="html">
         <source>Address</source>
-        <target state="new">Address</target>
+        <target state="new">Indirizzo</target>
+      </trans-unit>
+      <trans-unit id="notifications location armed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System armed (<x id="PH_1" equiv-text="armTypeText"/>).</source>
+        <target state="new">Località: <x id="PH" equiv-text="locationName"/> Sistema armato (<x id="PH_1" equiv-text="armTypeText"/>).</target>
       </trans-unit>
       <trans-unit id="notifications location city" datatype="html">
         <source>City</source>
-        <target state="new">City</target>
+        <target state="new">Città</target>
       </trans-unit>
       <trans-unit id="notifications location contact email" datatype="html">
         <source>Contact email</source>
-        <target state="new">Contact email</target>
+        <target state="new">Email del contatto</target>
       </trans-unit>
       <trans-unit id="notifications location contact name" datatype="html">
         <source>Contact name</source>
-        <target state="new">Contact name</target>
+        <target state="new">Nome del contatto</target>
       </trans-unit>
       <trans-unit id="notifications location contact phone" datatype="html">
         <source>Contact phone</source>
-        <target state="new">Contact phone</target>
+        <target state="new">Telefono del contatto</target>
       </trans-unit>
       <trans-unit id="notifications location country" datatype="html">
         <source>Country</source>
-        <target state="new">Country</target>
+        <target state="new">Paese</target>
       </trans-unit>
       <trans-unit id="notifications location description" datatype="html">
         <source>Description</source>
-        <target state="new">Description</target>
+        <target state="new">Descrizione</target>
+      </trans-unit>
+      <trans-unit id="notifications location disarmed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System disarmed.</source>
+        <target state="new">Località: <x id="PH" equiv-text="locationName"/> Sistema disarmato.</target>
       </trans-unit>
       <trans-unit id="notifications location latitude" datatype="html">
         <source>Latitude</source>
-        <target state="new">Latitude</target>
+        <target state="new">Latitudine</target>
       </trans-unit>
       <trans-unit id="notifications location longitude" datatype="html">
         <source>Longitude</source>
-        <target state="new">Longitude</target>
+        <target state="new">Longitudine</target>
       </trans-unit>
       <trans-unit id="notifications location name" datatype="html">
         <source>Location name</source>
-        <target state="new">Location name</target>
+        <target state="new">Nome della località</target>
       </trans-unit>
       <trans-unit id="notifications location settings" datatype="html">
         <source> Configure source location </source>
-        <target state="new"> Configure notification source location </target>
+        <target state="new"> Configura la località della notifica </target>
       </trans-unit>
       <trans-unit id="notifications location state" datatype="html">
         <source>State / Region</source>
-        <target state="new">State / Region</target>
+        <target state="new">Stato / Regione</target>
       </trans-unit>
       <trans-unit id="notifications location zip code" datatype="html">
         <source>ZIP code</source>
-        <target state="new">ZIP code</target>
+        <target state="new">CAP</target>
       </trans-unit>
       <trans-unit id="notifications no sms" datatype="html">
         <source>No SMS messages</source>
@@ -1622,10 +1658,6 @@
         <source>Enable biometric login</source>
         <target state="translated">Abilita il login biometrico</target>
       </trans-unit>
-      <trans-unit id="user enable notifications" datatype="html">
-        <source>Enable notifications</source>
-        <target state="translated">Abilita le notifiche</target>
-      </trans-unit>
       <trans-unit id="login biometric login" datatype="html">
         <source>Biometric login</source>
         <target state="translated">Accesso biometrico</target>
@@ -1661,10 +1693,6 @@
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
         <target state="translated">Disattivare il login biometrico</target>
-      </trans-unit>
-      <trans-unit id="user disable notifications" datatype="html">
-        <source>Disable notifications</source>
-        <target state="translated">Disattiva le notifiche</target>
       </trans-unit>
       <trans-unit id="sensor settings" datatype="html">
         <source>Sensor settings</source>

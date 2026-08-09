@@ -1,1 +1,1 @@
-export * from './syren.component';
+export * from "./syren.component"

@@ -1,2 +1,2 @@
-export { LocationDetailsComponent } from './location-details.component';
-export { LocationListComponent } from './location-list.component';
+export { LocationDetailsComponent } from "./location-details.component"
+export { LocationListComponent } from "./location-list.component"

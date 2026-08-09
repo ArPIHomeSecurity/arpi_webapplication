@@ -53,14 +53,54 @@ $argus-dark-theme: mat.m2-define-dark-theme(
     $argus-alert,
     $argus-warn
   );
-  @include system-state.system-state-indicator-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor.sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include home.home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include controller.controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output.output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include area-list.area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list.sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-list.output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include system-state.system-state-indicator-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include sensor.sensor-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include home.home-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include controller.controller-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include output.output-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include area-list.area-list-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include sensor-list.sensor-list-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include output-list.output-list-theme(
+    $argus-light-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
 
   button.drag-handle.cdk-focused,
   button.drag-handle:hover {
@@ -78,15 +118,61 @@ $argus-dark-theme: mat.m2-define-dark-theme(
   @include mat.all-component-densities($argus-dark-theme);
   @include mat.all-component-colors($argus-dark-theme);
   @include mat.toolbar-color($argus-light-theme);
-  @include app.app-theme($argus-dark-theme, map.get($argus-light-theme, primary), $argus-ok, $argus-alert, $argus-warn);
-  @include system-state.system-state-indicator-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor.sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include home.home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include controller.controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output.output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include area-list.area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list.sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include output-list.output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include app.app-theme(
+    $argus-dark-theme,
+    map.get($argus-light-theme, primary),
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include system-state.system-state-indicator-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include sensor.sensor-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include home.home-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include controller.controller-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include output.output-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include area-list.area-list-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include sensor-list.sensor-list-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
+  @include output-list.output-list-theme(
+    $argus-dark-theme,
+    $argus-ok,
+    $argus-alert,
+    $argus-warn
+  );
 
   button.drag-handle.cdk-focused,
   button.drag-handle:hover {

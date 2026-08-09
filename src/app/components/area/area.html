@@ -4,35 +4,31 @@
     (closed)="onToggle(false)"
     [expanded]="expanded"
     [disabled]="sensors.length === 0"
-    >
+  >
     <mat-expansion-panel-header [ngClass]="{'alert': hasAlertingSensor() && !expanded}">
       <mat-panel-title>{{ area.name }}</mat-panel-title>
 
       <mat-panel-description>
         @if (sensors.length === 0) {
-          <div class="empty" i18n="@@area no sensors">No sensors</div>
-        }
-        @if (sensors.length > 0) {
-          <component-controller
-            [armState]="area.armState"
-            [monitoringState]="monitoringState"
-            [sensorAlert]="hasAlertingSensor()"
-            [systemAlert]="false"
-            (armChanged)="armChanged($event)"
-            />
+        <div class="empty" i18n="@@area no sensors">No sensors</div>
+        } @if (sensors.length > 0) {
+        <component-controller
+          [armState]="area.armState"
+          [monitoringState]="monitoringState"
+          [sensorAlert]="hasAlertingSensor()"
+          [systemAlert]="false"
+          (armChanged)="armChanged($event)"
+        />
         }
       </mat-panel-description>
     </mat-expansion-panel-header>
 
     @for (sensor of sensors; track sensor; let i = $index) {
-      <span>
-        @if (!sensor.uiHidden || sensor.alert) {
-          <component-sensor
-            [sensor]="sensor"
-            [delay]="delays[i]"
-            />
-        }
-      </span>
+    <span>
+      @if (!sensor.uiHidden || sensor.alert) {
+      <component-sensor [sensor]="sensor" [delay]="delays[i]" />
+      }
+    </span>
     }
   </mat-expansion-panel>
 </mat-accordion>

@@ -8,6 +8,9 @@
 }
 
 .app-viewport {
+  /* CSS variables for safe area insets (EdgeToEdge) */
+  --app-top-safe-area: env(safe-area-inset-top, 0px);
+  --app-bottom-safe-area: env(safe-area-inset-bottom, 0px);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -21,7 +24,13 @@
   }
 }
 
-@mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
+@mixin app-theme(
+  $theme,
+  $argus-toolbar-primary,
+  $argus-ok,
+  $argus-alert,
+  $argus-warn
+) {
   $argus-accent: map.get($theme, accent);
 
   .logo {
@@ -48,6 +57,13 @@
     margin-right: 10px;
   }
 
+  /* some gap below the toolbar */
+  .mat-toolbar {
+    padding-top: var(--app-top-safe-area);
+    min-height: calc(45px + var(--app-top-safe-area));
+    box-sizing: border-box;
+  }
+
   .mat-toolbar .mat-button {
     min-width: 0;
     padding: 0px;
@@ -59,24 +75,24 @@
   }
 
   .all-wrap {
-    min-height: calc(100dvh - 45px);
+    min-height: calc(100dvh - 45px - var(--app-top-safe-area));
   }
 
   .page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 45px);
+    min-height: calc(100dvh - 45px - var(--app-top-safe-area));
     overflow: hidden; /* Prevent scroll bars */
   }
 
   app-root.demo .all-wrap {
-    min-height: calc(100dvh - 128px);
+    min-height: calc(100dvh - 128px - var(--app-top-safe-area));
   }
 
   app-root.demo .page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 128px);
+    min-height: calc(100dvh - 128px - var(--app-top-safe-area));
   }
 
   .page {
@@ -136,6 +152,11 @@
     }
   }
 
+  mat-sidenav mat-nav-list {
+    padding-bottom: calc(16px + var(--app-bottom-safe-area));
+    box-sizing: border-box;
+  }
+
   #overlay {
     position: fixed;
     display: block;
@@ -164,6 +185,8 @@
     display: flex;
     color: white;
     background-color: mat.m2-get-color-from-palette($argus-toolbar-primary);
+    padding-bottom: var(--app-bottom-safe-area);
+    box-sizing: border-box;
 
     .links {
       display: flex;

@@ -14,7 +14,7 @@
 
     <mat-form-field
       [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'"
-      >
+    >
       <label i18n="@@user ssh key type">SSH key type</label>
       <mat-select formControlName="keyType">
         @for (keyType of keyTypes; track keyType) {
@@ -27,14 +27,14 @@
 
     <mat-form-field
       [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'custom'"
-      >
+    >
       <label i18n="@@user ssh key passphrase">SSH key passphrase</label>
       <input matInput formControlName="passphrase" type="text" placeholder="Passphrase" />
     </mat-form-field>
 
     <mat-form-field
       [class.cdk-visually-hidden]="setupKeyForm.controls.setupMethod.value === 'generate'"
-      >
+    >
       <label i18n="@@user ssh key public key">SSh public key</label>
       <input matInput formControlName="publicKey" type="text" placeholder="Public key" />
     </mat-form-field>
@@ -56,7 +56,7 @@
     (click)="generateKey()"
     tabindex="2"
     i18n="@@user generate ssh key"
-    >
+  >
     Generate SSH key
   </button>
 
@@ -68,7 +68,7 @@
     (click)="setPublicKey()"
     tabindex="2"
     i18n="@@user setup ssh key"
-    >
+  >
     Setup SSH key
   </button>
 
@@ -79,7 +79,7 @@
     tabindex="2"
     color="primary"
     i18n="@@user copy ssh key"
-    >
+  >
     Copy key
   </button>
 

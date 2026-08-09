@@ -18,7 +18,8 @@ import {
   SensorService,
   UserService,
   ZoneService
-} from '@app/services/demo';
+} from "@app/services/demo"
+import { NotificationService } from "@app/services/remote"
 
 export const environment = {
   production: false,
@@ -31,8 +32,8 @@ export const environment = {
   isMultiLocation: true,
   showApiLink: true,
 
-  defaultLanguage: 'en',
-  languages: 'hu it',
+  defaultLanguage: "en",
+  languages: "hu it",
 
   // authentication token valid for 15 mins
   userTokenExpiry: 60 * 15,
@@ -48,8 +49,9 @@ export const environment = {
   keypadService: KeypadService,
   loaderService: LoaderService,
   monitoringService: MonitoringService,
+  notificationService: NotificationService,
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
   zoneService: ZoneService
-};
+}

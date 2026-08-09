@@ -136,6 +136,10 @@
         <source>Something went wrong!?</source>
         <target state="translated">Valami félre ment!?</target>
       </trans-unit>
+      <trans-unit id="arm away" datatype="html">
+        <source>away</source>
+        <target state="new">távozó</target>
+      </trans-unit>
       <trans-unit id="arm away button" datatype="html">
         <source> AWAY </source>
         <target state="translated"> TÁVOZÓ </target>
@@ -144,9 +148,21 @@
         <source> OFF </source>
         <target state="translated"> KI </target>
       </trans-unit>
+      <trans-unit id="arm mixed" datatype="html">
+        <source>mixed</source>
+        <target state="new">vegyes</target>
+      </trans-unit>
+      <trans-unit id="arm stay" datatype="html">
+        <source>stay</source>
+        <target state="new">maradó</target>
+      </trans-unit>
       <trans-unit id="arm stay button" datatype="html">
         <source> STAY </source>
         <target state="translated"> MARADÓ </target>
+      </trans-unit>
+      <trans-unit id="arm unknown" datatype="html">
+        <source>unknown</source>
+        <target state="new">ismeretlen</target>
       </trans-unit>
       <trans-unit id="home armed away" datatype="html">
         <source>System armed away</source>
@@ -259,6 +275,18 @@
       <trans-unit id="notifications alert stopped" datatype="html">
         <source>Alert stopped</source>
         <target state="translated">Riasztás vége</target>
+      </trans-unit>
+      <trans-unit id="notifications ArPI alert" datatype="html">
+        <source>ArPI alert</source>
+        <target state="new">ArPI riasztás</target>
+      </trans-unit>
+      <trans-unit id="notifications ArPI armed" datatype="html">
+        <source>ArPI armed</source>
+        <target state="new">ArPI élesítve</target>
+      </trans-unit>
+      <trans-unit id="notifications ArPI disarmed" datatype="html">
+        <source>ArPI disarmed</source>
+        <target state="new">ArPI hatástalanítva</target>
       </trans-unit>
       <trans-unit id="network dns" datatype="html">
         <source>Dynamic DNS</source>
@@ -449,6 +477,10 @@
         <target state="translated">Eszköz regisztrálása</target>
         <note priority="1" from="description">Register device</note>
       </trans-unit>
+      <trans-unit id="8841092084837401943" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System is in alert state.</source>
+        <target state="new">Helyszín: <x id="PH" equiv-text="locationName"/> A rendszer riasztási állapotban van.</target>
+      </trans-unit>
       <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
         <target state="translated">Regisztrációs kód</target>
@@ -465,10 +497,6 @@
       <trans-unit id="user not found" datatype="html">
         <source>The user was not found!</source>
         <target state="translated">A felhasználó nem található!</target>
-      </trans-unit>
-      <trans-unit id="user notifications" datatype="html">
-        <source>Notifications</source>
-        <target state="translated">Értesítések</target>
       </trans-unit>
       <trans-unit id="failed update" datatype="html">
         <source>Failed to update!</source>
@@ -1314,6 +1342,10 @@
         <source>Address</source>
         <target state="new">Cím</target>
       </trans-unit>
+      <trans-unit id="notifications location armed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System armed (<x id="PH_1" equiv-text="armTypeText"/>).</source>
+        <target state="new">Helyszín: <x id="PH" equiv-text="locationName"/> Rendszer élesítve (<x id="PH_1" equiv-text="armTypeText"/>).</target>
+      </trans-unit>
       <trans-unit id="notifications location city" datatype="html">
         <source>City</source>
         <target state="new">Város</target>
@@ -1337,6 +1369,10 @@
       <trans-unit id="notifications location description" datatype="html">
         <source>Description</source>
         <target state="new">Leírás</target>
+      </trans-unit>
+      <trans-unit id="notifications location disarmed" datatype="html">
+        <source>Location: <x id="PH" equiv-text="locationName"/> System disarmed.</source>
+        <target state="new">Helyszín: <x id="PH" equiv-text="locationName"/> Rendszer hatástalanítva.</target>
       </trans-unit>
       <trans-unit id="notifications location latitude" datatype="html">
         <source>Latitude</source>
@@ -1622,10 +1658,6 @@
         <source>Enable biometric login</source>
         <target state="translated">Biometrikus bejelentkezés engedélyezése</target>
       </trans-unit>
-      <trans-unit id="user enable notifications" datatype="html">
-        <source>Enable notifications</source>
-        <target state="translated">Értesítések engedélyezése</target>
-      </trans-unit>
       <trans-unit id="login biometric login" datatype="html">
         <source>Biometric login</source>
         <target state="translated">Biometrikus bejelentkezés</target>
@@ -1661,10 +1693,6 @@
       <trans-unit id="user disable biometric" datatype="html">
         <source>Disable biometric login</source>
         <target state="translated">Biometrikus bejelentkezés letiltása</target>
-      </trans-unit>
-      <trans-unit id="user disable notifications" datatype="html">
-        <source>Disable notifications</source>
-        <target state="translated">Értesítések letiltása</target>
       </trans-unit>
       <trans-unit id="sensor settings" datatype="html">
         <source>Sensor settings</source>

@@ -12,7 +12,7 @@
               formControlName="name"
               required
               maxlength="32"
-              />
+            />
           </mat-form-field>
           @if (!isMyProfile) {
             <mat-form-field>
@@ -22,7 +22,7 @@
                 placeholder="Select a role"
                 formControlName="role"
                 required
-                >
+              >
                 @for (role of roles; track role) {
                   <mat-option [value]="role.value">{{ role.name }}</mat-option>
                 }
@@ -42,13 +42,13 @@
                 placeholder="Old access code"
                 formControlName="oldAccessCode"
                 [type]="hideOld ? 'password' : 'text'"
-                />
+              />
               <mat-icon matSuffix (click)="hideOld = !hideOld">
-                {{ hideOld ? 'visibility_off' : 'visibility' }}
+                {{ hideOld ? "visibility_off" : "visibility" }}
               </mat-icon>
-              @if (userForm.get('oldAccessCode').invalid) {
+              @if (userForm.get("oldAccessCode").invalid) {
                 <mat-error>
-                  {{ userForm.get('oldAccessCode').getError('invalid') }}
+                  {{ userForm.get("oldAccessCode").getError("invalid") }}
                 </mat-error>
               }
             </mat-form-field>
@@ -66,13 +66,13 @@
               formControlName="newAccessCode"
               [autocomplete]="isMyProfile ? 'on' : 'off'"
               [type]="hideNew ? 'password' : 'text'"
-              />
+            />
             <mat-icon matSuffix (click)="hideNew = !hideNew">
-              {{ hideNew ? 'visibility_off' : 'visibility' }}
+              {{ hideNew ? "visibility_off" : "visibility" }}
             </mat-icon>
-            @if (userForm.get('newAccessCode').invalid) {
+            @if (userForm.get("newAccessCode").invalid) {
               <mat-error>
-                {{ userForm.get('newAccessCode').getError('invalid') }}
+                {{ userForm.get("newAccessCode").getError("invalid") }}
               </mat-error>
             }
           </mat-form-field>
@@ -95,7 +95,7 @@
           color="primary"
           [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
           (click)="onSave()"
-          >
+        >
           <mat-icon>save</mat-icon>
         </button>
         @if (!isMyProfile) {
@@ -105,17 +105,12 @@
             type="button"
             (click)="openDeleteDialog(user.id)"
             [disabled]="monitoringState != monitoringStates.READY"
-            >
+          >
             <mat-icon>delete</mat-icon>
           </button>
         }
         @if (!isMyProfile) {
-          <button
-            mat-icon-button
-            color="accent"
-            type="button"
-            (click)="onCancel()"
-            >
+          <button mat-icon-button color="accent" type="button" (click)="onCancel()">
             <mat-icon>cancel</mat-icon>
           </button>
         }

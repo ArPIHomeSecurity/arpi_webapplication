@@ -1,18 +1,18 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs"
 
-import { Keypad, KeypadType } from '@app/models';
+import { Keypad, KeypadType } from "@app/models"
 
 export interface KeypadService {
   /** Not implemented yet */
-  getKeypads(): Observable<Keypad[]>;
+  getKeypads(): Observable<Keypad[]>
 
-  getKeypad(keypadId: number): Observable<Keypad>;
+  getKeypad(keypadId: number): Observable<Keypad>
 
-  createKeypad(keypad: Keypad): Observable<Keypad>;
+  createKeypad(keypad: Keypad): Observable<Keypad>
 
-  updateKeypad(keypad: Keypad): Observable<Keypad>;
+  updateKeypad(keypad: Keypad): Observable<Keypad>
 
-  deleteKeypad(keypadId: number): Observable<boolean>;
+  deleteKeypad(keypadId: number): Observable<boolean>
 
-  getKeypadTypes(): Observable<KeypadType[]>;
+  getKeypadTypes(): Observable<KeypadType[]>
 }
