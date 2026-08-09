@@ -88,12 +88,13 @@ export class EventService {
         continue;
       }
 
-      if (!this.notificationService.isEnabled(location.id)) {
+      const deviceToken = deviceTokens[location.id];
+      if (!deviceToken) {
         continue;
       }
 
-      const deviceToken = deviceTokens[location.id];
-      if (!deviceToken) {
+      // selected location is always allowed to connect, even if notifications are disabled
+      if (location.id != selectedLocationId && !this.notificationService.isEnabled(location.id)) {
         continue;
       }
 
