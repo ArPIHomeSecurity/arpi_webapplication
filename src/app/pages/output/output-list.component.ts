@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  Inject
-} from "@angular/core"
+import { Component, Input, OnInit, OnDestroy, Inject } from "@angular/core"
 
 import {
   CdkDragDrop,

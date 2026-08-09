@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  Inject,
-  output
-} from "@angular/core"
+import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import {

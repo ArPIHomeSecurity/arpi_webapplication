@@ -4,7 +4,6 @@ import { Observable } from "rxjs"
 import { map } from "rxjs/operators"
 
 import {
-  Arm,
   ArmEvent,
   armType2String,
   ARM_TYPE,

@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  Inject
-} from "@angular/core"
-import { Location } from "@angular/common"
+import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
 import {
   UntypedFormBuilder,
   FormControl,

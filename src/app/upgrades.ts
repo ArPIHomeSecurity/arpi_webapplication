@@ -1,5 +1,3 @@
-import { _isNumberValue } from "@angular/cdk/coercion"
-
 class Installation {
   id: number
   installationId: string | null

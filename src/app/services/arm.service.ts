@@ -1,6 +1,6 @@
 import { Observable } from "rxjs"
 
-import { Arm, ArmEvent, ARM_TYPE } from "@app/models"
+import { ArmEvent, ARM_TYPE } from "@app/models"
 
 export interface ArmService {
   getArms(

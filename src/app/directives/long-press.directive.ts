@@ -1,10 +1,4 @@
-import {
-  Directive,
-  HostListener,
-  Output,
-  EventEmitter,
-  Input
-} from "@angular/core"
+import { Directive, HostListener, Output, EventEmitter } from "@angular/core"
 
 // Long press threshold in milliseconds
 // disable long press for now

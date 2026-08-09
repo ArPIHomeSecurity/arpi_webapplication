@@ -1,10 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-  TemplateRef
-} from "@angular/core"
+import { Component, Inject, OnInit } from "@angular/core"
 import { Clipboard } from "@angular/cdk/clipboard"
 import {
   UntypedFormGroup,

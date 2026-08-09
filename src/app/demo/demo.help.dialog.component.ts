@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from "@angular/core"
+import { Component } from "@angular/core"
 import { Clipboard } from "@angular/cdk/clipboard"
 import { MatDialogRef } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"

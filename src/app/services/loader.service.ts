@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
 
 export interface LoaderService {

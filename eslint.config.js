@@ -6,6 +6,7 @@ const angular = require('@angular-eslint/eslint-plugin');
 const angularTemplate = require('@angular-eslint/eslint-plugin-template');
 const angularParser = require('@angular-eslint/template-parser');
 const importPlugin = require('eslint-plugin-import');
+const unusedImportsPlugin = require('eslint-plugin-unused-imports');
 const prettierPlugin = require('eslint-plugin-prettier');
 
 module.exports = [
@@ -68,12 +69,14 @@ module.exports = [
             '@typescript-eslint': tseslint,
             '@angular-eslint': angular,
             'import': importPlugin,
+            'unused-imports': unusedImportsPlugin,
             'prettier': prettierPlugin
         },
         rules: {
             // Base ESLint rules
             ...js.configs.recommended.rules,
             'no-unused-vars': 'off',
+            'unused-imports/no-unused-imports': 'error',
 
             // TypeScript ESLint rules
             '@typescript-eslint/no-unused-vars': [

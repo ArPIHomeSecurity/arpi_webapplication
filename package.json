@@ -94,6 +94,7 @@
     "eslint-plugin-jsdoc": "50.3.2",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-prettier": "^5.5.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "husky": "^9.1.7",
     "jasmine-core": "~5.4.0",
     "jasmine-spec-reporter": "~5.0.0",

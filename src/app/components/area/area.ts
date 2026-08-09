@@ -1,11 +1,4 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild
-} from "@angular/core"
+import { Component, Inject, Input, OnInit } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 import {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core"
 import { Router } from "@angular/router"
 import { Observable, of, Subject } from "rxjs"
-import { delay, map, startWith } from "rxjs/operators"
+import { delay, startWith } from "rxjs/operators"
 
 import { User } from "@app/models"
 import { environment } from "@environments/environment"

@@ -9,14 +9,13 @@ import {
   Arm,
   ArmEvent,
   Disarm,
-  Option,
   SensorsChange,
   SensorState,
   ALERT_TYPE,
   Alert,
   Sensor
 } from "@app/models"
-import { ARMS, DISARMS, EVENTS } from "@app/demo/configuration"
+import { EVENTS } from "@app/demo/configuration"
 import { getSessionValue, setSessionValue } from "@app/utils"
 import { environment } from "@environments/environment"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
