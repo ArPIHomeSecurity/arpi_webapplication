@@ -22,6 +22,61 @@ export class LocationTestResult {
   secondaryBoardVersion: string = null
 }
 
+/**
+ * Persist the location list and notify the listeners (AppComponent, EventService)
+ * through the storage event bus.
+ */
+export function saveLocations(locations: Location[]): void {
+  const value = JSON.stringify(locations)
+  localStorage.setItem("locations", value)
+  window.dispatchEvent(
+    new StorageEvent("storage", { key: "locations", newValue: value })
+  )
+}
+
+/**
+ * Persist the selected location id and notify the listeners. Pass null to clear it.
+ */
+export function setSelectedLocationId(locationId: string | null): void {
+  if (locationId) {
+    localStorage.setItem("selectedLocationId", locationId)
+  } else {
+    localStorage.removeItem("selectedLocationId")
+  }
+  window.dispatchEvent(
+    new StorageEvent("storage", {
+      key: "selectedLocationId",
+      newValue: locationId
+    })
+  )
+}
+
+/**
+ * Ensure that the selected location id points to an existing location.
+ *
+ * A valid selection is never changed, so adding a location cannot hijack an active session.
+ * Otherwise the preferred location is selected, falling back to the first one.
+ *
+ * @returns The selected location id afterwards.
+ */
+export function syncSelectedLocationId(
+  locations: Location[],
+  preferredId: string | null = null
+): string | null {
+  const current = localStorage.getItem("selectedLocationId")
+  if (current && locations.some(location => location.id === current)) {
+    return current
+  }
+
+  const preferred =
+    preferredId && locations.some(location => location.id === preferredId)
+      ? preferredId
+      : null
+  const next = preferred ?? locations[0]?.id ?? null
+  setSelectedLocationId(next)
+  return next
+}
+
 function testUrl(url: string): Observable<boolean> {
   if (!url) {
     return

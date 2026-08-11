@@ -6,9 +6,16 @@ import { QuestionDialogComponent } from "@app/components/question-dialog/questio
 import { Location } from "@app/models"
 import { AuthenticationService, NotificationService } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { configureBackend } from "@app/utils"
 import { environment } from "@environments/environment"
 import { LocationVersion } from "../../models/version"
-import { getLocationName, LocationTestResult, testLocation } from "./location"
+import {
+  getLocationName,
+  LocationTestResult,
+  saveLocations,
+  syncSelectedLocationId,
+  testLocation
+} from "./location"
 
 @Component({
   selector: "app-location-details",
@@ -259,7 +266,7 @@ export class LocationDetailsComponent {
     return false
   }
 
-  onSubmit() {
+  async onSubmit() {
     const location = this.prepareLocation()
     const locations: Location[] = JSON.parse(
       localStorage.getItem("locations") || "[]"
@@ -272,13 +279,7 @@ export class LocationDetailsComponent {
       locations.push(location)
     }
 
-    localStorage.setItem("locations", JSON.stringify(locations))
-    window.dispatchEvent(
-      new StorageEvent("storage", {
-        key: "locations",
-        newValue: JSON.stringify(locations)
-      })
-    )
+    saveLocations(locations)
 
     const notificationsEnabled = this.locationForm?.value?.notifications
     if (notificationsEnabled === true) {
@@ -287,6 +288,11 @@ export class LocationDetailsComponent {
     if (notificationsEnabled === false) {
       this.disableNotifications()
     }
+
+    // select the new location if there is no working selection yet
+    this.selectedLocationId = syncSelectedLocationId(locations, location.id)
+    // configure the backend before navigating, otherwise the first request fails
+    await configureBackend()
 
     if (this.isMultiLocation) {
       this.router.navigate(["/locations"])
@@ -316,11 +322,18 @@ export class LocationDetailsComponent {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result === "ok") {
         locations = locations.filter(x => x.id !== this.location.id)
-        localStorage.setItem("locations", JSON.stringify(locations))
-        this.router.navigate(["/locations"])
+        saveLocations(locations)
+        this.selectedLocationId = syncSelectedLocationId(locations)
+        await configureBackend()
+
+        if (this.isMultiLocation) {
+          this.router.navigate(["/locations"])
+        } else {
+          this.router.navigate(["/setup"])
+        }
       }
     })
   }

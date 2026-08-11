@@ -1368,8 +1368,17 @@
       <trans-unit id="network mqtt insecure tls" datatype="html">
         <source> Allow insecure TLS connection </source>
       </trans-unit>
-      <trans-unit id="network mqtt internal broker info" datatype="html">
-        <source>Internal MQTT Broker read</source>
+      <trans-unit id="network mqtt internal broker control" datatype="html">
+        <source>Internal MQTT Broker read and control</source>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker control info" datatype="html">
+        <source> For external clients that also arm and disarm the system, like Home Assistant. </source>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker read" datatype="html">
+        <source>Internal MQTT Broker read only</source>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker read info" datatype="html">
+        <source> For external clients that only display the state of the system. </source>
       </trans-unit>
       <trans-unit id="network mqtt password" datatype="html">
         <source>MQTT Password</source>

@@ -17,6 +17,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { Clipboard } from "@angular/cdk/clipboard"
+import { NgTemplateOutlet } from "@angular/common"
 import { MatListModule } from "@angular/material/list"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { Option } from "@app/models"
@@ -46,7 +47,8 @@ const scheduleMicrotask = Promise.resolve(null)
     MatButtonModule,
     MatDividerModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    NgTemplateOutlet
   ]
 })
 export class MqttComponent
@@ -56,6 +58,7 @@ export class MqttComponent
   mqttForm: FormGroup
   mqttConnection: Option = null
   mqttInternalRead: Option = null
+  mqttInternalControl: Option = null
   mqttExternalPublish: Option = null
   private mqttFormSubscriptions: Subscription[] = []
 
@@ -94,6 +97,10 @@ export class MqttComponent
     forkJoin({
       mqttConnection: this.configService.getOption("mqtt", "connection"),
       mqttInternalRead: this.configService.getOption("mqtt", "internal_read"),
+      mqttInternalControl: this.configService.getOption(
+        "mqtt",
+        "internal_control"
+      ),
       mqttExternalPublish: this.configService.getOption(
         "mqtt",
         "external_publish"
@@ -101,9 +108,15 @@ export class MqttComponent
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(
-        ({ mqttConnection, mqttInternalRead, mqttExternalPublish }) => {
+        ({
+          mqttConnection,
+          mqttInternalRead,
+          mqttInternalControl,
+          mqttExternalPublish
+        }) => {
           this.mqttConnection = mqttConnection
           this.mqttInternalRead = mqttInternalRead
+          this.mqttInternalControl = mqttInternalControl
           this.mqttExternalPublish = mqttExternalPublish
 
           this.updateMqttForm(this.mqttConnection, this.mqttExternalPublish)
@@ -191,37 +204,31 @@ export class MqttComponent
     )
   }
 
-  getMqttUrl() {
-    if (
+  private usesInternalBroker() {
+    return (
       getValue(this.mqttConnection.value, "enabled") &&
       !getValue(this.mqttConnection.value, "external")
-    ) {
-      const protocol = getValue(this.mqttInternalRead.value, "tls_enabled")
-        ? "mqtts"
-        : "mqtt"
-      const hostname = getValue(this.mqttInternalRead.value, "hostname")
-      const port = getValue(this.mqttInternalRead.value, "port")
+    )
+  }
+
+  getMqttUrl(config: Option) {
+    if (this.usesInternalBroker()) {
+      const protocol = getValue(config?.value, "tls_enabled") ? "mqtts" : "mqtt"
+      const hostname = getValue(config?.value, "hostname")
+      const port = getValue(config?.value, "port")
       return `${protocol}://${hostname}:${port}`
     }
   }
 
-  getMqttUsername() {
-    if (
-      getValue(this.mqttConnection.value, "enabled") &&
-      !getValue(this.mqttConnection.value, "external")
-    ) {
-      const username = getValue(this.mqttInternalRead.value, "username")
-      return username
+  getMqttUsername(config: Option) {
+    if (this.usesInternalBroker()) {
+      return getValue(config?.value, "username")
     }
   }
 
-  getMqttPassword() {
-    if (
-      getValue(this.mqttConnection.value, "enabled") &&
-      !getValue(this.mqttConnection.value, "external")
-    ) {
-      const password = getValue(this.mqttInternalRead.value, "password")
-      return password
+  getMqttPassword(config: Option) {
+    if (this.usesInternalBroker()) {
+      return getValue(config?.value, "password")
     }
   }
 
