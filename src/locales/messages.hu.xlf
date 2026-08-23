@@ -1756,7 +1756,7 @@
       </trans-unit>
       <trans-unit id="network mqtt enable" datatype="html">
         <source> Enable MQTT connection </source>
-        <target state="translated"> MQTT kapcsolat engdeélyezése </target>
+        <target state="translated"> MQTT kapcsolat engedélyezése </target>
       </trans-unit>
       <trans-unit id="network mqtt external" datatype="html">
         <source> Use external MQTT broker </source>
@@ -1786,9 +1786,21 @@
         <source> Allow insecure TLS connection </source>
         <target state="translated"> Nem biztonságos TLS kapcsolat engedélyezése </target>
       </trans-unit>
-      <trans-unit id="network mqtt internal broker info" datatype="html">
-        <source>Internal MQTT Broker read</source>
-        <target state="translated">Belső MQTT Broker olvasás</target>
+      <trans-unit id="network mqtt internal broker control" datatype="html">
+        <source>Internal MQTT Broker read and control</source>
+        <target state="translated">Belső MQTT Broker olvasás és vezérlés</target>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker control info" datatype="html">
+        <source> For external clients that also arm and disarm the system, like Home Assistant. </source>
+        <target state="translated"> Külső klienseknek, amelyek a rendszert élesítik és hatástalanítják is, például a Home Assistant. </target>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker read" datatype="html">
+        <source>Internal MQTT Broker read only</source>
+        <target state="translated">Belső MQTT Broker csak olvasás</target>
+      </trans-unit>
+      <trans-unit id="network mqtt internal broker read info" datatype="html">
+        <source> For external clients that only display the state of the system. </source>
+        <target state="translated"> Külső klienseknek, amelyek csak megjelenítik a rendszer állapotát. </target>
       </trans-unit>
       <trans-unit id="network mqtt url" datatype="html">
         <source>MQTT URL</source>
