@@ -1756,7 +1756,7 @@
       </trans-unit>
       <trans-unit id="network mqtt enable" datatype="html">
         <source> Enable MQTT connection </source>
-        <target state="translated"> MQTT kapcsolat engdeélyezése </target>
+        <target state="translated"> MQTT kapcsolat engedélyezése </target>
       </trans-unit>
       <trans-unit id="network mqtt external" datatype="html">
         <source> Use external MQTT broker </source>
