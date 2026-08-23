@@ -25,7 +25,13 @@ import {
   LocationVersion,
   parseVersion
 } from "../../models/version"
-import { LocationTestResult, testLocation } from "./location"
+import {
+  LocationTestResult,
+  saveLocations,
+  setSelectedLocationId,
+  syncSelectedLocationId,
+  testLocation
+} from "./location"
 
 @Component({
   selector: "location-list",
@@ -159,36 +165,13 @@ export class LocationListComponent extends ConfigurationBaseComponent {
   }
 
   onLogin(locationId: string) {
-    localStorage.setItem("selectedLocationId", locationId)
-    window.dispatchEvent(
-      new StorageEvent("storage", {
-        key: "selectedLocationId",
-        newValue: locationId
-      })
-    )
+    setSelectedLocationId(locationId)
     window.location.href = "/login"
   }
 
   onSave() {
-    const locations = JSON.stringify(this.locations)
-    localStorage.setItem("locations", locations)
-    window.dispatchEvent(
-      new StorageEvent("storage", { key: "locations", newValue: locations })
-    )
-
-    if (this.locations.length === 1) {
-      this.selectedLocationId = this.locations[0].id
-      localStorage.setItem(
-        "selectedLocationId",
-        this.selectedLocationId.toString()
-      )
-      window.dispatchEvent(
-        new StorageEvent("storage", {
-          key: "selectedLocationId",
-          newValue: this.selectedLocationId.toString()
-        })
-      )
-    }
+    saveLocations(this.locations)
+    this.selectedLocationId = syncSelectedLocationId(this.locations)
 
     configureBackend().then(() => {
       console.log("Backend configured")

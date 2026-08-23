@@ -75,39 +75,22 @@
         }
         @if (mqttForm.controls["mqttEnabled"].value && !mqttForm.controls["mqttExternal"].value) {
           <span>
-            <h3 i18n="@@network mqtt internal broker info">Internal MQTT Broker read</h3>
-            <mat-list>
-              <mat-list-item>
-                <span matListItemTitle i18n="@@network mqtt url">MQTT URL</span>
-                {{ getMqttUrl() }}
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle i18n="@@network mqtt username">MQTT Username</span>
-                {{ getMqttUsername() }}
-                <button
-                  type="button"
-                  mat-icon-button
-                  color="primary"
-                  onclick="this.blur()"
-                  (click)="copyToClipboard(getMqttUsername())"
-                >
-                  <mat-icon>content_copy</mat-icon>
-                </button>
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle i18n="@@network mqtt password">MQTT Password</span>
-                {{ getMqttPassword() || "No password set" }}
-                <button
-                  type="button"
-                  mat-icon-button
-                  color="primary"
-                  onclick="this.blur()"
-                  (click)="copyToClipboard(getMqttPassword())"
-                >
-                  <mat-icon>content_copy</mat-icon>
-                </button>
-              </mat-list-item>
-            </mat-list>
+            <h3 i18n="@@network mqtt internal broker read">Internal MQTT Broker read only</h3>
+            <p i18n="@@network mqtt internal broker read info">
+              For external clients that only display the state of the system.
+            </p>
+            <ng-container
+              *ngTemplateOutlet="internalCredentials; context: { config: mqttInternalRead }"
+            ></ng-container>
+            <h3 i18n="@@network mqtt internal broker control">
+              Internal MQTT Broker read and control
+            </h3>
+            <p i18n="@@network mqtt internal broker control info">
+              For external clients that also arm and disarm the system, like Home Assistant.
+            </p>
+            <ng-container
+              *ngTemplateOutlet="internalCredentials; context: { config: mqttInternalControl }"
+            ></ng-container>
           </span>
         }
         <div class="form-actions">
@@ -127,3 +110,38 @@
     }
   </mat-expansion-panel>
 }
+
+<ng-template #internalCredentials let-config="config">
+  <mat-list>
+    <mat-list-item>
+      <span matListItemTitle i18n="@@network mqtt url">MQTT URL</span>
+      {{ getMqttUrl(config) }}
+    </mat-list-item>
+    <mat-list-item>
+      <span matListItemTitle i18n="@@network mqtt username">MQTT Username</span>
+      {{ getMqttUsername(config) }}
+      <button
+        type="button"
+        mat-icon-button
+        color="primary"
+        onclick="this.blur()"
+        (click)="copyToClipboard(getMqttUsername(config))"
+      >
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <span matListItemTitle i18n="@@network mqtt password">MQTT Password</span>
+      {{ getMqttPassword(config) || "No password set" }}
+      <button
+        type="button"
+        mat-icon-button
+        color="primary"
+        onclick="this.blur()"
+        (click)="copyToClipboard(getMqttPassword(config))"
+      >
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</ng-template>
