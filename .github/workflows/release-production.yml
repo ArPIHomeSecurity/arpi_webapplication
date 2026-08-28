@@ -32,9 +32,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
       packages: write
+      models: read
 
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Display context 📝
         run: |
           echo "GitHub Context: ${{ toJson(github) }}"
@@ -42,7 +50,7 @@ jobs:
       - name: Checkout repository 🛎️
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
 
       - name: Setup Node.js 🔧
