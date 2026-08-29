@@ -57,8 +57,7 @@ export class SensorService {
 
   createSensor(sensor: Sensor): Observable<Sensor> {
     // get the maximum id and increment it
-    sensor.id =
-      Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1
+    sensor.id = Math.max.apply(Math.max, this.sensors.map(s => s.id).concat([0])) + 1
     sensor.alert = sensor.channel === -1 ? false : this.channels[sensor.channel]
     this.sensors.push(sensor)
     setSessionValue("SensorService.sensors", this.sensors)
@@ -108,9 +107,7 @@ export class SensorService {
         )
       }
     } else {
-      return of(
-        this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2, null)
-      ).pipe(
+      return of(this.sensors.map(s => s.alert).reduce((a1, a2) => a1 || a2, null)).pipe(
         delay(environment.delay),
         map(_ => {
           this.authService.updateUserToken("user.session")
@@ -154,9 +151,7 @@ export class SensorService {
       sensor.alert = value
       setSessionValue("SensorService.sensors", this.sensors)
 
-      const alertState = this.sensors
-        .map(s => s.alert && s.enabled)
-        .reduce((a1, a2) => a1 || a2)
+      const alertState = this.sensors.map(s => s.alert && s.enabled).reduce((a1, a2) => a1 || a2)
       this.eventService.updateSensorsState(alertState)
 
       if (value && sensor.enabled) {

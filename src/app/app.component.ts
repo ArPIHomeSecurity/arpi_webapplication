@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  NgZone,
-  OnInit,
-  ViewChild
-} from "@angular/core"
+import { Component, ElementRef, Inject, NgZone, OnInit, ViewChild } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSidenav } from "@angular/material/sidenav"
 import { MatSnackBar } from "@angular/material/snack-bar"
@@ -15,21 +8,14 @@ import { Capacitor } from "@capacitor/core"
 import { StatusBar, Style } from "@capacitor/status-bar"
 
 import { HttpClient } from "@angular/common/http"
-import {
-  HumanizeDuration,
-  HumanizeDurationLanguage
-} from "humanize-duration-ts"
+import { HumanizeDuration, HumanizeDurationLanguage } from "humanize-duration-ts"
 import { CountdownComponent } from "ngx-countdown"
 
 import { Router } from "@angular/router"
 import { environment } from "@environments/environment"
 import { QuestionDialogComponent } from "./components/question-dialog/question-dialog.component"
 import { Location, ROLE_TYPES } from "./models"
-import {
-  AuthenticationService,
-  LoaderService,
-  MonitoringService
-} from "./services"
+import { AuthenticationService, LoaderService, MonitoringService } from "./services"
 import { ThemeService } from "./services/theme.service"
 import { AUTHENTICATION_SERVICE } from "./tokens"
 
@@ -150,9 +136,7 @@ export class AppComponent implements OnInit {
     this.loader.displayed.subscribe(value => (this.displayLoader = value))
     this.loader.disabled.subscribe(value => (this.disablePage = value))
     this.loader.message.subscribe(message => (this.message = message))
-    this.monitoring
-      .getVersion()
-      .subscribe(version => (this.versions.serverVersion = version))
+    this.monitoring.getVersion().subscribe(version => (this.versions.serverVersion = version))
     this.monitoring
       .getBoardVersion()
       .subscribe(version => (this.versions.boardVersion = version.toString()))
@@ -167,16 +151,12 @@ export class AppComponent implements OnInit {
       this.isDeviceRegistered = isRegistered
     })
 
-    const locations: Location[] = JSON.parse(
-      localStorage.getItem("locations") || "[]"
-    )
+    const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
     this.locations = locations.sort((a, b) => a.order - b.order)
 
     this.selectedLocationId = localStorage.getItem("selectedLocationId")
 
-    fromEvent(window, "storage").subscribe(
-      this.onConfigurationChanged.bind(this)
-    )
+    fromEvent(window, "storage").subscribe(this.onConfigurationChanged.bind(this))
 
     // Load version from assets/version.json (new format)
     this.http
@@ -219,9 +199,7 @@ export class AppComponent implements OnInit {
 
   getLocationName() {
     if (this.selectedLocationId !== null) {
-      const location = this.locations.find(
-        i => i.id === this.selectedLocationId
-      )
+      const location = this.locations.find(i => i.id === this.selectedLocationId)
       if (location) {
         return location.name
       }
@@ -271,11 +249,7 @@ export class AppComponent implements OnInit {
     const path = window.location.pathname
     const matches = pathParser.exec(path)
     if (matches !== null) {
-      const newPath = [
-        matches.groups.version,
-        newLocale,
-        matches.groups.path
-      ].join("/")
+      const newPath = [matches.groups.version, newLocale, matches.groups.path].join("/")
       console.log("Redirect to " + newPath)
       window.location.pathname = newPath
     } else {
@@ -285,9 +259,7 @@ export class AppComponent implements OnInit {
 
   onThemeSwitched($event) {
     console.log("Theme switched: ", $event.checked)
-    this.themeService.updateTheme(
-      $event.checked ? "argus-dark-theme" : "argus-light-theme"
-    )
+    this.themeService.updateTheme($event.checked ? "argus-dark-theme" : "argus-light-theme")
   }
 
   handleCountdown($event) {
@@ -300,13 +272,9 @@ export class AppComponent implements OnInit {
         }
       )
     } else if ($event.action === "done") {
-      this.snackBar.open(
-        $localize`:@@session expired:Your session expired, logged out!`,
-        null,
-        {
-          duration: environment.snackDuration
-        }
-      )
+      this.snackBar.open($localize`:@@session expired:Your session expired, logged out!`, null, {
+        duration: environment.snackDuration
+      })
       this.logout(false)
     }
   }

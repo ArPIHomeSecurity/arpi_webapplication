@@ -8,10 +8,7 @@ export class LocationVersion {
   commit_id: string
 }
 
-export function compareVersions(
-  v1: LocationVersion,
-  v2: LocationVersion
-): number {
+export function compareVersions(v1: LocationVersion, v2: LocationVersion): number {
   if (v1.major !== v2.major) {
     return v1.major - v2.major
   }
@@ -60,9 +57,7 @@ export function parseVersion(versionString: string): LocationVersion {
   const [mainPart, commitId] = versionString.split(":")
   version.commit_id = commitId || ""
 
-  const versionMatch = mainPart.match(
-    /^(?:v)?(\d+)\.(\d+)\.(\d+)(?:_([A-Za-z]+)(\d+))?$/
-  )
+  const versionMatch = mainPart.match(/^(?:v)?(\d+)\.(\d+)\.(\d+)(?:_([A-Za-z]+)(\d+))?$/)
   if (versionMatch) {
     version.major = parseInt(versionMatch[1])
     version.minor = parseInt(versionMatch[2])

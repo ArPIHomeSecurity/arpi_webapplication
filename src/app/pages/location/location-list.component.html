@@ -1,11 +1,7 @@
 <div class="container">
   @if (locations && locations.length > 0) {
     <div>
-      <div
-        cdkDropList
-        (cdkDropListDropped)="onDrop($event)"
-        [cdkDropListDisabled]="!isMultiLocation"
-      >
+      <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListDisabled]="!isMultiLocation">
         @for (location of locations; track getLocationKey(index); let index = $index) {
           <mat-card
             id="location-{{ location.id }}"
@@ -84,9 +80,7 @@
                     notifications
                   </mat-icon>
                 </div>
-                <mat-card-title i18n="@@location location">
-                  Location: {{ location.name }}
-                </mat-card-title>
+                <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
                 @if (location.id != null) {
                   <mat-card-subtitle>ID: {{ location.id }}</mat-card-subtitle>
                 }
@@ -122,16 +116,10 @@
             <mat-card-content>
               <mat-list>
                 <mat-list-item class="primary">
-                  @if (
-                    getTestResult(location.id) === null ||
-                    getTestResult(location.id).primary === undefined
-                  ) {
+                  @if (getTestResult(location.id) === null || getTestResult(location.id).primary === undefined) {
                     <mat-icon matListItemIcon>link</mat-icon>
                   }
-                  @if (
-                    getTestResult(location.id) !== null &&
-                    getTestResult(location.id).primary === null
-                  ) {
+                  @if (getTestResult(location.id) !== null && getTestResult(location.id).primary === null) {
                     <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.primary === true) {
@@ -150,15 +138,11 @@
                     <div matListItemLine>-</div>
                   }
                   @if (
-                    showApiLink &&
-                    getTestResult(location.id) !== null &&
-                    getTestResult(location.id).primary === false
+                    showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).primary === false
                   ) {
                     <div matListItemLine>
                       <a
-                        href="https://{{ location.primaryDomain }}:{{
-                          location.primaryPort
-                        }}/api/version"
+                        href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
                         target="_blank"
                         class="test-link"
                       >
@@ -169,16 +153,10 @@
                   }
                 </mat-list-item>
                 <mat-list-item class="secondary">
-                  @if (
-                    getTestResult(location.id) === null ||
-                    getTestResult(location.id).secondary === undefined
-                  ) {
+                  @if (getTestResult(location.id) === null || getTestResult(location.id).secondary === undefined) {
                     <mat-icon matListItemIcon>link</mat-icon>
                   }
-                  @if (
-                    getTestResult(location.id) !== null &&
-                    getTestResult(location.id)?.secondary === null
-                  ) {
+                  @if (getTestResult(location.id) !== null && getTestResult(location.id)?.secondary === null) {
                     <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.secondary === true) {
@@ -197,15 +175,11 @@
                     <div matListItemLine>-</div>
                   }
                   @if (
-                    showApiLink &&
-                    getTestResult(location.id) !== null &&
-                    getTestResult(location.id).secondary === false
+                    showApiLink && getTestResult(location.id) !== null && getTestResult(location.id).secondary === false
                   ) {
                     <div matListItemLine>
                       <a
-                        href="https://{{ location.secondaryDomain }}:{{
-                          location.secondaryPort
-                        }}/api/version"
+                        href="https://{{ location.secondaryDomain }}:{{ location.secondaryPort }}/api/version"
                         target="_blank"
                         class="test-link"
                       >
@@ -275,9 +249,7 @@
           <div mat-card-avatar>
             <mat-icon color="primary" class="avatar-icon">home</mat-icon>
           </div>
-          <mat-card-title i18n="@@location welcome title">
-            Welcome to ArPI Home Security
-          </mat-card-title>
+          <mat-card-title i18n="@@location welcome title">Welcome to ArPI Home Security</mat-card-title>
           <mat-card-subtitle i18n="@@location welcome subtitle">
             Your smart security system starts here
           </mat-card-subtitle>
@@ -306,9 +278,7 @@
                     target="_blank"
                     rel="noopener"
                   >
-                    <span i18n="@@location software installation guide">
-                      Software installation guide
-                    </span>
+                    <span i18n="@@location software installation guide">Software installation guide</span>
                     <mat-icon>open_in_new</mat-icon>
                   </a>
                 </li>
@@ -346,12 +316,7 @@
           </mat-card>
         </mat-card-content>
         <mat-card-actions style="gap: 10px">
-          <button
-            mat-raised-button
-            color="accent"
-            routerLink="/location/add"
-            i18n="@@location get started"
-          >
+          <button mat-raised-button color="accent" routerLink="/location/add" i18n="@@location get started">
             Get Started: Add Location
           </button>
           <a

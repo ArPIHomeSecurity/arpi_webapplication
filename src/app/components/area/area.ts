@@ -1,13 +1,7 @@
 import { Component, Inject, Input, OnInit } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
-import {
-  ARM_TYPE,
-  Area,
-  MONITORING_STATE,
-  Sensor,
-  SensorType
-} from "@app/models"
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from "@app/models"
 import { AreaService } from "@app/services"
 import { environment } from "@environments/environment"
 
@@ -41,23 +35,15 @@ export class AreaComponent implements OnInit {
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
       this.areaService.arm(this.area.id, ARM_TYPE.AWAY).subscribe(() =>
-        this.snackBar.open(
-          $localize`:@@area armed away:Area armed away`,
-          null,
-          {
-            duration: environment.snackDuration
-          }
-        )
+        this.snackBar.open($localize`:@@area armed away:Area armed away`, null, {
+          duration: environment.snackDuration
+        })
       )
     } else if (armType === ARM_TYPE.STAY) {
       this.areaService.arm(this.area.id, ARM_TYPE.STAY).subscribe(() =>
-        this.snackBar.open(
-          $localize`:@@area armed stay:Area armed stay`,
-          null,
-          {
-            duration: environment.snackDuration
-          }
-        )
+        this.snackBar.open($localize`:@@area armed stay:Area armed stay`, null, {
+          duration: environment.snackDuration
+        })
       )
     } else if (armType === ARM_TYPE.DISARMED) {
       this.areaService.disarm(this.area.id).subscribe(() =>
@@ -79,8 +65,7 @@ export class AreaComponent implements OnInit {
 
   canBeArmed(): boolean {
     return (
-      this.area.armState === ARM_TYPE.DISARMED &&
-      this.monitoringState === MONITORING_STATE.READY
+      this.area.armState === ARM_TYPE.DISARMED && this.monitoringState === MONITORING_STATE.READY
     )
   }
 }

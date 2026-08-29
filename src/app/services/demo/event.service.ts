@@ -9,19 +9,13 @@ import { environment } from "@environments/environment"
 export class EventService {
   alertDelayed: boolean
   private alertStateSubject = new Subject<Alert>()
-  private alertState = this.alertStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private alertState = this.alertStateSubject.asObservable().pipe(delay(environment.delay))
 
   private armStateSubject = new Subject<string>()
-  private armState = this.armStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private armState = this.armStateSubject.asObservable().pipe(delay(environment.delay))
 
   private areaStateSubject = new Subject<Area>()
-  private areaState = this.areaStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private areaState = this.areaStateSubject.asObservable().pipe(delay(environment.delay))
 
   private monitoringStateSubject = new Subject<string>()
   private monitoringState = this.monitoringStateSubject
@@ -29,24 +23,16 @@ export class EventService {
     .pipe(delay(environment.delay))
 
   private outputStateSubject = new Subject<Output>()
-  private outputState = this.outputStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private outputState = this.outputStateSubject.asObservable().pipe(delay(environment.delay))
 
   private sensorsStateSubject = new Subject<boolean>()
-  private sensorsState = this.sensorsStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private sensorsState = this.sensorsStateSubject.asObservable().pipe(delay(environment.delay))
 
   private syrenStateSubject = new Subject<boolean>()
-  private syrenState = this.syrenStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private syrenState = this.syrenStateSubject.asObservable().pipe(delay(environment.delay))
 
   private powerStateSubject = new Subject<boolean>()
-  private powerState = this.powerStateSubject
-    .asObservable()
-    .pipe(delay(environment.delay))
+  private powerState = this.powerStateSubject.asObservable().pipe(delay(environment.delay))
 
   private connectionStateSubject = new Subject<boolean>()
   private connectionState = this.connectionStateSubject.asObservable()

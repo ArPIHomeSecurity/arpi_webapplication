@@ -65,14 +65,7 @@
             </mat-form-field>
             <mat-form-field>
               <mat-label i18n="@@alert monitor threshold">Monitoring threshold [%]</mat-label>
-              <input
-                matInput
-                formControlName="monitorThreshold"
-                type="number"
-                min="0"
-                max="100"
-                required
-              />
+              <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required />
             </mat-form-field>
           </div>
         </mat-expansion-panel>
@@ -91,9 +84,7 @@
           mat-raised-button
           type="button"
           color="primary"
-          [disabled]="
-            syrenForm.invalid || monitoringState != monitoringStates.READY || testInProgress
-          "
+          [disabled]="syrenForm.invalid || monitoringState != monitoringStates.READY || testInProgress"
           (click)="onTestSyren()"
         >
           <span i18n="@@syren test">Test</span>

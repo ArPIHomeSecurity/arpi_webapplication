@@ -37,12 +37,10 @@ export class ConfigurationBaseComponent {
     })
 
     this.baseSubscriptions = [
-      this.eventService
-        .listen("system_state_change")
-        .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState)
-          this.onStateChange()
-        })
+      this.eventService.listen("system_state_change").subscribe(monitoringState => {
+        this.monitoringState = string2MonitoringState(monitoringState)
+        this.onStateChange()
+      })
     ]
   }
 

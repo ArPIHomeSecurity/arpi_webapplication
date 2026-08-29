@@ -156,11 +156,7 @@
                   mat-icon-button
                   cdkDragHandle
                   class="drag-handle"
-                  [disabled]="
-                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
-                      monitoringState
-                    )
-                  "
+                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
                   <mat-icon>drag_indicator</mat-icon>
                 </button>
@@ -176,9 +172,7 @@
                   mat-icon-button
                   (click)="openDeleteDialog(zone.id)"
                   color="warn"
-                  [disabled]="
-                    getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY
-                  "
+                  [disabled]="getSensors(zone.id).length > 0 || monitoringState != monitoringStates.READY"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>

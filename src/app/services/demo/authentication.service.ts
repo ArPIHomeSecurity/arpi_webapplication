@@ -5,12 +5,7 @@ import { delay, startWith } from "rxjs/operators"
 
 import { User } from "@app/models"
 import { environment } from "@environments/environment"
-import {
-  getSessionValue,
-  setSessionValue,
-  setLocalValue,
-  getLocalValue
-} from "@app/utils"
+import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from "@app/utils"
 import { UserService } from "./user.service"
 
 @Injectable()
@@ -26,17 +21,11 @@ export class AuthenticationService {
     private router: Router
   ) {
     this.loggedInAs = getSessionValue("AuthenticationService.loggedInAs", null)
-    this.registeredUserId = getLocalValue(
-      "AuthenticationService.registeredForUser",
-      -1
-    )
+    this.registeredUserId = getLocalValue("AuthenticationService.registeredForUser", -1)
   }
 
   login(access_code: string): Observable<boolean> {
-    const userId = getLocalValue(
-      "AuthenticationService.registeredForUser",
-      null
-    )
+    const userId = getLocalValue("AuthenticationService.registeredForUser", null)
     const tmpUser = this.userService.users.find(user => user.id === userId)
     if (tmpUser && String(tmpUser.accessCode) === access_code) {
       this.loggedInAs = tmpUser
@@ -108,10 +97,7 @@ export class AuthenticationService {
       this.userService.updateUser(tmpUser)
 
       this.registeredUserId = tmpUser.id
-      setLocalValue(
-        "AuthenticationService.registeredForUser",
-        this.registeredUserId
-      )
+      setLocalValue("AuthenticationService.registeredForUser", this.registeredUserId)
       this.isDeviceRegisteredSubject.next(true)
     }
 
@@ -120,16 +106,11 @@ export class AuthenticationService {
 
   unRegisterDevice() {
     this.registeredUserId = -1
-    setLocalValue(
-      "AuthenticationService.registeredForUser",
-      this.registeredUserId
-    )
+    setLocalValue("AuthenticationService.registeredForUser", this.registeredUserId)
     this.isDeviceRegisteredSubject.next(false)
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this.isDeviceRegisteredSubject
-      .asObservable()
-      .pipe(startWith(this.registeredUserId >= 0))
+    return this.isDeviceRegisteredSubject.asObservable().pipe(startWith(this.registeredUserId >= 0))
   }
 }

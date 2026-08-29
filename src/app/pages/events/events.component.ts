@@ -11,12 +11,7 @@ import {
   SensorsChange,
   User
 } from "@app/models"
-import {
-  ArmService,
-  LoaderService,
-  SensorService,
-  UserService
-} from "@app/services"
+import { ArmService, LoaderService, SensorService, UserService } from "@app/services"
 import { finalize } from "rxjs/operators"
 
 import { environment } from "@environments/environment"
@@ -135,14 +130,10 @@ export class EventsComponent implements OnInit {
   sortArms() {
     this.events = this.events.map((event: ArmEvent) => {
       if (event.sensorChanges) {
-        event.sensorChanges = event.sensorChanges.map(
-          (sensorChange: SensorsChange) => {
-            sensorChange.sensors.sort((s1, s2) =>
-              s1.channel < s2.channel ? -1 : 1
-            )
-            return sensorChange
-          }
-        )
+        event.sensorChanges = event.sensorChanges.map((sensorChange: SensorsChange) => {
+          sensorChange.sensors.sort((s1, s2) => (s1.channel < s2.channel ? -1 : 1))
+          return sensorChange
+        })
       }
       return event
     })
@@ -225,9 +216,7 @@ export class EventsComponent implements OnInit {
 
     if (event.alert) {
       event.alert.sensors.forEach(sensor => {
-        const silent = sensor.silent
-          ? $localize`:@@events timeline silent:(silent)`
-          : ""
+        const silent = sensor.silent ? $localize`:@@events timeline silent:(silent)` : ""
         timeline.push({
           time: sensor.startTime,
           description: $localize`:@@events start:Start ${sensor.name} ${silent}`,

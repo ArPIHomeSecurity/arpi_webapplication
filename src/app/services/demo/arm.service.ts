@@ -48,21 +48,14 @@ export class ArmService {
     const filteredEvents = events
       .filter(event =>
         armType != ARM_TYPE.UNDEFINED
-          ? (event.arm?.type == null && armType == ARM_TYPE.DISARMED) ||
-            event.arm?.type === armType
+          ? (event.arm?.type == null && armType == ARM_TYPE.DISARMED) || event.arm?.type === armType
           : true
       )
       .filter(event =>
-        userId != 0
-          ? event.arm?.userId === userId || event.disarm?.userId === userId
-          : true
+        userId != 0 ? event.arm?.userId === userId || event.disarm?.userId === userId : true
       )
-      .filter(event =>
-        startDate != undefined ? new Date(event.arm?.time) >= startDate : true
-      )
-      .filter(event =>
-        endDate != undefined ? new Date(event.arm?.time) <= endDate : true
-      )
+      .filter(event => (startDate != undefined ? new Date(event.arm?.time) >= startDate : true))
+      .filter(event => (endDate != undefined ? new Date(event.arm?.time) <= endDate : true))
       .filter(
         event =>
           hasAlert == null ||
@@ -110,21 +103,14 @@ export class ArmService {
     const filteredEvents = events
       .filter(event =>
         armType != ARM_TYPE.UNDEFINED
-          ? (event.arm?.type == null && armType == ARM_TYPE.DISARMED) ||
-            event.arm?.type === armType
+          ? (event.arm?.type == null && armType == ARM_TYPE.DISARMED) || event.arm?.type === armType
           : true
       )
       .filter(event =>
-        userId != 0
-          ? event.arm?.userId === userId || event.disarm?.userId === userId
-          : true
+        userId != 0 ? event.arm?.userId === userId || event.disarm?.userId === userId : true
       )
-      .filter(event =>
-        startDate != undefined ? new Date(event.arm?.time) >= startDate : true
-      )
-      .filter(event =>
-        endDate != undefined ? new Date(event.arm?.time) <= endDate : true
-      )
+      .filter(event => (startDate != undefined ? new Date(event.arm?.time) >= startDate : true))
+      .filter(event => (endDate != undefined ? new Date(event.arm?.time) <= endDate : true))
       .filter(
         event =>
           hasAlert == null ||
@@ -177,12 +163,10 @@ export class ArmService {
     this.sensorService.sensors.forEach(sensor => {
       const getDelay = (armType: ARM_TYPE, zoneId: number) => {
         if (armType === ARM_TYPE.AWAY) {
-          return this.zoneService.zones.find(z => z.id === zoneId)
-            .awayAlertDelay
+          return this.zoneService.zones.find(z => z.id === zoneId).awayAlertDelay
         }
         if (armType === ARM_TYPE.STAY) {
-          return this.zoneService.zones.find(z => z.id === zoneId)
-            .stayAlertDelay
+          return this.zoneService.zones.find(z => z.id === zoneId).stayAlertDelay
         }
         if (armType === ARM_TYPE.DISARMED) {
           return this.zoneService.zones.find(z => z.id === zoneId).disarmedDelay
@@ -195,10 +179,7 @@ export class ArmService {
         type_id: sensor.typeId,
         description: sensor.description,
         timestamp: new Date().toISOString().split(".")[0].replace("T", " "),
-        delay: getDelay(
-          this.areaService.getAreaDirectly(sensor.areaId).armState,
-          sensor.zoneId
-        ),
+        delay: getDelay(this.areaService.getAreaDirectly(sensor.areaId).armState, sensor.zoneId),
         enabled: sensor.enabled
       }
       sensorsChange.sensors.push(sensorState)
@@ -234,10 +215,7 @@ export class ArmService {
 
     // stop alert
     if (currentEvent.alert != null) {
-      currentEvent.alert.endTime = new Date()
-        .toISOString()
-        .split(".")[0]
-        .replace("T", " ")
+      currentEvent.alert.endTime = new Date().toISOString().split(".")[0].replace("T", " ")
     }
 
     currentEvent.disarm = disarm

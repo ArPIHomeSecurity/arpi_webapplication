@@ -36,10 +36,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class AreaDetailComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class AreaDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   areaId: number
   area: Area = undefined
   sensors: Sensor[]
@@ -113,10 +110,7 @@ export class AreaDetailComponent
 
   updateForm(area: Area) {
     this.areaForm = this.fb.group({
-      name: new UntypedFormControl(area.name, [
-        Validators.required,
-        Validators.maxLength(32)
-      ])
+      name: new UntypedFormControl(area.name, [Validators.required, Validators.maxLength(32)])
     })
   }
 
@@ -126,25 +120,17 @@ export class AreaDetailComponent
       this.areaService.updateArea(area).subscribe({
         next: _ => this.router.navigate(["/areas"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else {
       this.areaService.createArea(area).subscribe({
         next: _ => this.router.navigate(["/areas"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     }
   }
@@ -218,23 +204,15 @@ export class AreaDetailComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@area deleted:Area deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.router.navigate(["/areas"])
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(
@@ -252,10 +230,7 @@ export class AreaDetailComponent
   alertWhenChanged(event, delayName) {
     const controls = this.areaForm.controls
     if (event.checked) {
-      controls[delayName].setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      controls[delayName].setValidators([Validators.required, positiveInteger()])
     } else {
       controls[delayName].setValidators(null)
     }

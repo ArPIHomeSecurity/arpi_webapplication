@@ -10,11 +10,7 @@ export interface NotificationService {
 
   notifyAlert(locationName: string, locationId: string): Promise<void>
 
-  notifyArmed(
-    locationName: string,
-    locationId: string,
-    armType: ARM_TYPE
-  ): Promise<void>
+  notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void>
 
   notifyDisarmed(locationName: string, locationId: string): Promise<void>
 }

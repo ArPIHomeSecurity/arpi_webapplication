@@ -8,13 +8,7 @@ import { throwError } from "rxjs"
 import { catchError, finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import {
-  User,
-  ROLE_TYPES,
-  UserUpdate,
-  UserCreate,
-  MONITORING_STATE
-} from "@app/models"
+import { User, ROLE_TYPES, UserUpdate, UserCreate, MONITORING_STATE } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -34,10 +28,7 @@ const scheduleMicrotask = Promise.resolve(null)
   styleUrls: ["user-detail.component.scss"],
   standalone: false
 })
-export class UserDetailComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class UserDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   userId: number = null
   user: User = null
   userForm: FormGroup
@@ -139,22 +130,14 @@ export class UserDetailComponent
   }
 
   updateForm(user: User) {
-    const accessCode = new FormControl(user.accessCode, [
-      Validators.pattern("^\\d{4,12}$")
-    ])
+    const accessCode = new FormControl(user.accessCode, [Validators.pattern("^\\d{4,12}$")])
 
     if (!user.id) {
-      accessCode.setValidators([
-        Validators.required,
-        Validators.pattern("^\\d{4,12}$")
-      ])
+      accessCode.setValidators([Validators.required, Validators.pattern("^\\d{4,12}$")])
     }
 
     this.userForm = this.fb.group({
-      name: new FormControl(user.name, [
-        Validators.required,
-        Validators.maxLength(32)
-      ]),
+      name: new FormControl(user.name, [Validators.required, Validators.maxLength(32)]),
       role: user.role,
       hasRegistrationCode: user.hasRegistrationCode,
       oldAccessCode: new FormControl("", [Validators.pattern("^\\d{4,12}$")]),
@@ -184,13 +167,9 @@ export class UserDetailComponent
           }
         },
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else {
       const user = this.prepareUserCreate()
@@ -199,13 +178,9 @@ export class UserDetailComponent
           this.router.navigate(["/users"])
         },
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     }
   }
@@ -270,13 +245,9 @@ export class UserDetailComponent
             .subscribe({
               next: _ => this.router.navigate(["/users"]),
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(

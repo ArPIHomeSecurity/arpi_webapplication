@@ -1,10 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
-import {
-  UntypedFormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms"
+import { UntypedFormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 
 import { MatDialog } from "@angular/material/dialog"
@@ -49,10 +44,7 @@ class ChannelOption {
   providers: [],
   standalone: false
 })
-export class OutputDetailComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class OutputDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   outputId: number
   output: Output = undefined
   outputs: Output[]
@@ -110,8 +102,7 @@ export class OutputDetailComponent
         )
         .subscribe(results => {
           this.output = results.output
-          this.output.channel =
-            this.output.channel === null ? -1 : this.output.channel
+          this.output.channel = this.output.channel === null ? -1 : this.output.channel
           this.output.duration = this.output.duration
           this.outputs = results.outputs
           this.areas = results.areas
@@ -189,26 +180,18 @@ export class OutputDetailComponent
       this.outputService.updateOutput(output).subscribe({
         next: _ => this.router.navigate(["/outputs"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else {
       output.state = output.defaultState
       this.outputService.createOutput(output).subscribe({
         next: _ => this.router.navigate(["/outputs"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     }
   }
@@ -286,23 +269,15 @@ export class OutputDetailComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@output deleted:Output deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.router.navigate(["/outputs"])
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(
@@ -320,10 +295,7 @@ export class OutputDetailComponent
   alertWhenChanged(event, delayName) {
     const controls = this.outputForm.controls
     if (event.checked) {
-      controls[delayName].setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      controls[delayName].setValidators([Validators.required, positiveInteger()])
     } else {
       controls[delayName].setValidators(null)
     }

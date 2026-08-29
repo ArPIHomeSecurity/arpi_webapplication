@@ -57,11 +57,7 @@ export class UserService {
     return this.http.put("/api/user/" + userId + "/register_card", {})
   }
 
-  generateSshKey(
-    userId: number,
-    keyType: string,
-    passphrase: string
-  ): Observable<string> {
+  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string> {
     return this.http
       .post("/api/user/" + userId + "/ssh_key", { keyType, passphrase })
       .pipe(map((res: any) => res))
@@ -74,21 +70,15 @@ export class UserService {
   }
 
   hasSshKey(userId: number): Observable<boolean> {
-    return this.http
-      .get("/api/user/" + userId + "/has_ssh_key")
-      .pipe(map((res: any) => res))
+    return this.http.get("/api/user/" + userId + "/has_ssh_key").pipe(map((res: any) => res))
   }
 
   deleteSshKey(userId: number): Observable<boolean> {
-    return this.http
-      .delete("/api/user/" + userId + "/ssh_key")
-      .pipe(map((res: any) => res))
+    return this.http.delete("/api/user/" + userId + "/ssh_key").pipe(map((res: any) => res))
   }
 
   getMCPToken(userId: number): Observable<string> {
-    return this.http
-      .post("/api/user/" + userId + "/mcp_token", {})
-      .pipe(map((res: any) => res))
+    return this.http.post("/api/user/" + userId + "/mcp_token", {}).pipe(map((res: any) => res))
   }
 
   hasMCPToken(userId: number): Observable<boolean> {
@@ -98,8 +88,6 @@ export class UserService {
   }
 
   removeMCPToken(userId: number): Observable<boolean> {
-    return this.http
-      .delete("/api/user/" + userId + "/mcp_token")
-      .pipe(map((res: any) => res))
+    return this.http.delete("/api/user/" + userId + "/mcp_token").pipe(map((res: any) => res))
   }
 }

@@ -65,9 +65,7 @@
                 @for (group of timezoneGroupOptions | async; track group) {
                   <mat-optgroup [label]="group.groupName">
                     @for (name of group.zoneNames; track name) {
-                      <mat-option [value]="group.groupName + '/' + name">
-                        {{ group.groupName }}/{{ name }}
-                      </mat-option>
+                      <mat-option [value]="group.groupName + '/' + name">{{ group.groupName }}/{{ name }}</mat-option>
                     }
                   </mat-optgroup>
                 }
@@ -97,11 +95,7 @@
             <mat-list-item class="clock">
               <span i18n="@@clock uptime system">System</span>
               <span class="spacer"></span>
-              {{
-                clock.uptime === null
-                  ? " - - - "
-                  : getDuration(clock.uptime) + " (" + clock.uptime + " s)"
-              }}
+              {{ clock.uptime === null ? " - - - " : getDuration(clock.uptime) + " (" + clock.uptime + " s)" }}
             </mat-list-item>
             <mat-list-item class="clock">
               <span i18n="@@clock uptime server">Server</span>

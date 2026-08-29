@@ -1,11 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
-import {
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray
-} from "@angular/cdk/drag-drop"
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 
 import { forkJoin } from "rxjs"
 import { finalize } from "rxjs/operators"
@@ -33,10 +29,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class AreaListComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   CONFIG = 0
   SENSORS = 1
 
@@ -152,23 +145,15 @@ export class AreaListComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@area deleted:Area deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@area deleted:Area deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.updateComponent()
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(

@@ -1,9 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
-import {
-  FormGroup,
-  ReactiveFormsModule,
-  UntypedFormBuilder
-} from "@angular/forms"
+import { FormGroup, ReactiveFormsModule, UntypedFormBuilder } from "@angular/forms"
 import { MatButtonModule } from "@angular/material/button"
 import { MatExpansionModule } from "@angular/material/expansion"
 import { MatFormFieldModule } from "@angular/material/form-field"
@@ -14,12 +10,7 @@ import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { Option } from "@app/models"
-import {
-  ConfigurationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from "@app/services"
 import { getValue } from "@app/utils"
 import { environment } from "@environments/environment"
 
@@ -38,10 +29,7 @@ const scheduleMicrotask = Promise.resolve(null)
     MatButtonModule
   ]
 })
-export class LocationComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class LocationComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   locationForm: FormGroup
   locationOption: Option | null = null
 
@@ -134,13 +122,9 @@ export class LocationComponent
       .subscribe({
         next: () => this.updateComponent(),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            undefined,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, undefined, {
+            duration: environment.snackDuration
+          })
       })
   }
 }

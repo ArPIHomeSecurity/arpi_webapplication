@@ -5,13 +5,7 @@
         <form [formGroup]="outputForm" (ngSubmit)="onSubmit()" novalidate class="column">
           <mat-form-field>
             <mat-label i18n="@@name">Name</mat-label>
-            <input
-              matInput
-              i18n-placeholder="@@name"
-              placeholder="Name"
-              formControlName="name"
-              required
-            />
+            <input matInput i18n-placeholder="@@name" placeholder="Name" formControlName="name" required />
           </mat-form-field>
           <mat-form-field>
             <mat-label i18n="@@description">Description</mat-label>
@@ -25,16 +19,9 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label i18n="@@output channel">Channel</mat-label>
-            <mat-select
-              formControlName="channel"
-              i18n-placeholder="@@output channel"
-              placeholder="Channel"
-            >
+            <mat-select formControlName="channel" i18n-placeholder="@@output channel" placeholder="Channel">
               @for (option of this.channelOptions; track option) {
-                <mat-option
-                  [value]="option.channel"
-                  [disabled]="option.output_name || option.channel == SYREN_CHANNEL"
-                >
+                <mat-option [value]="option.channel" [disabled]="option.output_name || option.channel == SYREN_CHANNEL">
                   @if (option.channel === -1) {
                     <span i18n="@@output disconnected">Disconnected</span>
                   }
@@ -118,14 +105,8 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">
-              Enabled
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="defaultState"
-              color="primary"
-              i18n="@@output default state"
-            >
+            <mat-checkbox formControlName="enabled" color="primary" i18n="@@output enabled">Enabled</mat-checkbox>
+            <mat-checkbox formControlName="defaultState" color="primary" i18n="@@output default state">
               Active default
             </mat-checkbox>
           </div>

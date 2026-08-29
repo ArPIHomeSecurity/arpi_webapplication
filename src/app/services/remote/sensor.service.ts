@@ -72,9 +72,7 @@ export class SensorService {
 
   resetReference(sensorId) {
     // set sensor from api
-    return this.http
-      .put("/api/sensor/" + sensorId + "/reset-reference", null)
-      .subscribe()
+    return this.http.put("/api/sensor/" + sensorId + "/reset-reference", null).subscribe()
   }
 
   reorder(sensors: Sensor[]) {

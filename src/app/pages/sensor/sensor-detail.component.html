@@ -5,11 +5,7 @@
         <form [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate class="column">
           <mat-form-field>
             <mat-label i18n="@@sensor channel">Channel</mat-label>
-            <mat-select
-              formControlName="channel"
-              i18n-placeholder="@@sensor channel"
-              placeholder="Channel"
-            >
+            <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
               @for (channel of orderedChannels(); track channel) {
                 <mat-option [value]="channel.channel" [disabled]="isChannelDisabled(channel)">
                   @if (channel.channel === -1) {
@@ -71,12 +67,8 @@
             ></textarea>
           </mat-form-field>
           <div class="row">
-            <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">
-              Enabled
-            </mat-checkbox>
-            <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">
-              Hidden
-            </mat-checkbox>
+            <mat-checkbox formControlName="enabled" color="primary" i18n="@@sensor enabled">Enabled</mat-checkbox>
+            <mat-checkbox formControlName="hidden" color="primary" i18n="@@sensor hidden">Hidden</mat-checkbox>
           </div>
           @if (boardVersion > 2) {
             <mat-divider></mat-divider>
@@ -95,18 +87,10 @@
                     placeholder="Channel type"
                     (selectionChange)="onChannelTypeChanged($event)"
                   >
-                    <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">
-                      Basic
-                    </mat-option>
-                    <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">
-                      Normal
-                    </mat-option>
-                    <mat-option [value]="channelTypes.CHANNEL_A" i18n="@@sensor channel a">
-                      Channel A
-                    </mat-option>
-                    <mat-option [value]="channelTypes.CHANNEL_B" i18n="@@sensor channel b">
-                      Channel B
-                    </mat-option>
+                    <mat-option [value]="channelTypes.BASIC" i18n="@@sensor channel basic">Basic</mat-option>
+                    <mat-option [value]="channelTypes.NORMAL" i18n="@@sensor channel normal">Normal</mat-option>
+                    <mat-option [value]="channelTypes.CHANNEL_A" i18n="@@sensor channel a">Channel A</mat-option>
+                    <mat-option [value]="channelTypes.CHANNEL_B" i18n="@@sensor channel b">Channel B</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field>
@@ -126,17 +110,9 @@
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label i18n="@@sensor eol count">EOL count</mat-label>
-                  <mat-select
-                    formControlName="eolCount"
-                    i18n-placeholder="@@sensor eol count"
-                    placeholder="EOL count"
-                  >
-                    <mat-option [value]="eolCounts.SINGLE" i18n="@@sensor eol single">
-                      Single EOL
-                    </mat-option>
-                    <mat-option [value]="eolCounts.DOUBLE" i18n="@@sensor eol double">
-                      Double EOL
-                    </mat-option>
+                  <mat-select formControlName="eolCount" i18n-placeholder="@@sensor eol count" placeholder="EOL count">
+                    <mat-option [value]="eolCounts.SINGLE" i18n="@@sensor eol single">Single EOL</mat-option>
+                    <mat-option [value]="eolCounts.DOUBLE" i18n="@@sensor eol double">Double EOL</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -177,14 +153,7 @@
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label i18n="@@sensor monitor threshold">Monitoring threshold [%]</mat-label>
-                  <input
-                    matInput
-                    formControlName="monitorThreshold"
-                    type="number"
-                    min="0"
-                    max="100"
-                    required
-                  />
+                  <input matInput formControlName="monitorThreshold" type="number" min="0" max="100" required />
                 </mat-form-field>
               </div>
             }
@@ -408,9 +377,7 @@
             color="warn"
             type="button"
             (click)="openDeleteDialog(sensor.id)"
-            [disabled]="
-              ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)
-            "
+            [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
           >
             <mat-icon>delete</mat-icon>
           </button>

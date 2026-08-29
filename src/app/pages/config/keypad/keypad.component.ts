@@ -11,12 +11,7 @@ import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { Keypad, KeypadType } from "@app/models"
-import {
-  EventService,
-  KeypadService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { EventService, KeypadService, LoaderService, MonitoringService } from "@app/services"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -26,10 +21,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class KeypadComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class KeypadComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   keypadForm: UntypedFormGroup
   keypad: Keypad = null
   keypadTypes: KeypadType[]
@@ -64,10 +56,7 @@ export class KeypadComponent
     if (this.keypad) {
       this.keypadForm = this.fb.group({
         keypadEnabled: this.keypad.enabled,
-        keypadType: new UntypedFormControl(
-          this.keypad.typeId,
-          Validators.required
-        )
+        keypadType: new UntypedFormControl(this.keypad.typeId, Validators.required)
       })
     }
   }
@@ -107,8 +96,6 @@ export class KeypadComponent
 
   onSubmit() {
     this.loader.disable(true)
-    this.keypadService
-      .updateKeypad(this.prepareKeypad())
-      .subscribe(_ => this.updateComponent())
+    this.keypadService.updateKeypad(this.prepareKeypad()).subscribe(_ => this.updateComponent())
   }
 }

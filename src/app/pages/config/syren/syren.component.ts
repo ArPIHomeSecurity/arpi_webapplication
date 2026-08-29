@@ -5,12 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import {
-  ConfigurationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from "@app/services"
 import { getValue, positiveInteger } from "@app/utils"
 import { Option } from "@app/models"
 import { environment } from "@environments/environment"
@@ -24,10 +19,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class SyrenComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class SyrenComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   syrenForm: FormGroup
   syren: Option
   sensitivity: Option
@@ -85,22 +77,15 @@ export class SyrenComponent
       ]),
 
       sensitivity: new FormControl(),
-      monitorPeriod: new FormControl(
-        getValue(this.sensitivity.value, "monitor_period", null)
-      ),
-      monitorThreshold: new FormControl(
-        getValue(this.sensitivity.value, "monitor_threshold", null)
-      )
+      monitorPeriod: new FormControl(getValue(this.sensitivity.value, "monitor_period", null)),
+      monitorThreshold: new FormControl(getValue(this.sensitivity.value, "monitor_threshold", null))
     })
 
     if (
       getValue(this.sensitivity.value, "monitor_period", null) != null &&
       getValue(this.sensitivity.value, "monitor_threshold", null) != null
     ) {
-      this.syrenForm.controls.monitorPeriod.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      this.syrenForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
       this.syrenForm.controls.monitorPeriod.enable()
       this.syrenForm.controls.monitorThreshold.setValidators([
         Validators.required,
@@ -120,10 +105,7 @@ export class SyrenComponent
   updateComponent() {
     forkJoin({
       syren: this.configurationService.getOption("syren", "timing"),
-      alertSensitivity: this.configurationService.getOption(
-        "alert",
-        "sensitivity"
-      )
+      alertSensitivity: this.configurationService.getOption("alert", "sensitivity")
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(({ syren, alertSensitivity }) => {
@@ -156,18 +138,13 @@ export class SyrenComponent
     const formModel = this.syrenForm.value
     return {
       monitor_period: formModel.sensitivity ? formModel.monitorPeriod : null,
-      monitor_threshold: formModel.sensitivity
-        ? formModel.monitorThreshold
-        : null
+      monitor_threshold: formModel.sensitivity ? formModel.monitorThreshold : null
     }
   }
 
   onSensitivityChanged(event) {
     if (event.checked) {
-      this.syrenForm.controls.monitorPeriod.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      this.syrenForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
       this.syrenForm.controls.monitorPeriod.enable()
       this.syrenForm.controls.monitorThreshold.setValidators([
         Validators.required,
@@ -195,11 +172,7 @@ export class SyrenComponent
     this.loader.disable(true)
 
     forkJoin({
-      syren: this.configurationService.setOption(
-        "syren",
-        "timing",
-        this.prepareSyren()
-      ),
+      syren: this.configurationService.setOption("syren", "timing", this.prepareSyren()),
       alertSensitivity: this.configurationService.setOption(
         "alert",
         "sensitivity",
@@ -210,13 +183,9 @@ export class SyrenComponent
       .subscribe({
         next: _ => this.updateComponent(),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
   }
 }

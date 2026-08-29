@@ -11,10 +11,7 @@ import { AUTHENTICATION_SERVICE } from "@app/tokens"
   templateUrl: "./my-user.component.html",
   styleUrl: "./my-user.component.scss"
 })
-export class MyUserComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class MyUserComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   user: User = null
 
   constructor(

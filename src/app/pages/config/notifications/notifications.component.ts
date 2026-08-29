@@ -48,14 +48,8 @@ export class NotificationsComponent
   testingCall = false
 
   readonly subscriptionChannels = [
-    {
-      key: "email1",
-      label: $localize`:@@notifications send email1:Send Email 1`
-    },
-    {
-      key: "email2",
-      label: $localize`:@@notifications send email2:Send Email 2`
-    },
+    { key: "email1", label: $localize`:@@notifications send email1:Send Email 1` },
+    { key: "email2", label: $localize`:@@notifications send email2:Send Email 2` },
     { key: "sms1", label: $localize`:@@notifications send sms1:Send SMS 1` },
     { key: "sms2", label: $localize`:@@notifications send sms2:Send SMS 2` },
     { key: "call1", label: $localize`:@@notifications call 1:Call 1` },

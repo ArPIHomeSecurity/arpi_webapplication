@@ -68,45 +68,30 @@ export class SystemStateComponent implements OnInit {
     this.sensorService.getError().subscribe(error => (this.sensorError = error))
     this.alertService
       .getAlert()
-      .subscribe(
-        alert => (this.syrenAlert = alert != null ? !alert.silent : null)
-      )
+      .subscribe(alert => (this.syrenAlert = alert != null ? !alert.silent : null))
     this.monitoringService.getMonitoringState().subscribe({
       next: monitoringState => (this.monitoringState = monitoringState),
       error: () => (this.monitoringState = MONITORING_STATE.UNDEFINED)
     })
-    this.monitoringService
-      .getPowerState()
-      .subscribe(powerState => (this.powerState = powerState))
+    this.monitoringService.getPowerState().subscribe(powerState => (this.powerState = powerState))
 
     this.eventService
       .listen("arm_state_change")
       .subscribe(armState => (this.armState = string2ArmType(armState)))
-    this.eventService
-      .listen("sensors_state_change")
-      .subscribe(alert => (this.sensorAlert = alert))
-    this.eventService
-      .listen("sensors_error_change")
-      .subscribe(error => (this.sensorError = error))
+    this.eventService.listen("sensors_state_change").subscribe(alert => (this.sensorAlert = alert))
+    this.eventService.listen("sensors_error_change").subscribe(error => (this.sensorError = error))
     this.eventService
       .listen("system_state_change")
       .subscribe(
-        monitoringState =>
-          (this.monitoringState = string2MonitoringState(monitoringState))
+        monitoringState => (this.monitoringState = string2MonitoringState(monitoringState))
       )
-    this.eventService
-      .listen("syren_state_change")
-      .subscribe(event => (this.syrenAlert = event))
+    this.eventService.listen("syren_state_change").subscribe(event => (this.syrenAlert = event))
     this.eventService
       .listen("power_state_change")
-      .subscribe(
-        powerState => (this.powerState = string2PowerState(powerState))
-      )
+      .subscribe(powerState => (this.powerState = string2PowerState(powerState)))
 
     this.eventService.listen("connect").subscribe(event => {
-      this.monitoringService
-        .getArmState()
-        .subscribe(armState => (this.armState = armState))
+      this.monitoringService.getArmState().subscribe(armState => (this.armState = armState))
       this.monitoringService
         .getMonitoringState()
         .subscribe(monitoringState => (this.monitoringState = monitoringState))

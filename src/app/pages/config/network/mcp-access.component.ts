@@ -27,9 +27,7 @@ import { getValue } from "@app/utils"
 export class McpAccessComponent implements OnInit {
   hostname: any = null
 
-  constructor(
-    @Inject("ConfigurationService") private configService: ConfigurationService
-  ) {}
+  constructor(@Inject("ConfigurationService") private configService: ConfigurationService) {}
 
   ngOnInit() {
     this.configService.getOption("network", "dyndns").subscribe(dyndns => {

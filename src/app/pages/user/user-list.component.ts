@@ -27,10 +27,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class UserListComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class UserListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   readonly roleTypes = ROLE_TYPES
   users: User[] = null
   has_ssh_key: Map<number, boolean> = new Map<number, boolean>()
@@ -69,31 +66,19 @@ export class UserListComponent
         this.snackBar.dismiss()
         if (result) {
           // registered
-          this.snackBar.open(
-            $localize`:@@card registered:Card registered!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@card registered:Card registered!`, null, {
+            duration: environment.snackDuration
+          })
         } else if (result === false) {
           // not registered
-          this.snackBar.open(
-            $localize`:@@card not registered:Failed to register!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+            duration: environment.snackDuration
+          })
         } else if (result === null) {
           // time expired
-          this.snackBar.open(
-            $localize`:@@card not registered:Failed to register!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@card not registered:Failed to register!`, null, {
+            duration: environment.snackDuration
+          })
         }
         this.updateComponent()
       })

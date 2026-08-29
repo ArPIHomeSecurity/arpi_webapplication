@@ -52,13 +52,10 @@ export class LocationDetailsComponent {
     private notificationService: NotificationService
   ) {
     this.route.params.subscribe(params => {
-      const locations: Location[] = JSON.parse(
-        localStorage.getItem("locations") || "[]"
-      )
+      const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
       this.firstLocation = locations.length === 0
       if (params.id) {
-        this.location =
-          locations.find(location => location.id === params.id) || null
+        this.location = locations.find(location => location.id === params.id) || null
         this.newLocation = false
       } else {
         this.location = this.defaultLocation()
@@ -102,9 +99,7 @@ export class LocationDetailsComponent {
       name: this.firstLocation ? "Default" : "",
       scheme: "https",
       primaryDomain: !this.isMultiLocation ? window.location.hostname : "",
-      primaryPort: !this.isMultiLocation
-        ? parseInt(window.location.port)
-        : null,
+      primaryPort: !this.isMultiLocation ? parseInt(window.location.port) : null,
       secondaryDomain: "",
       secondaryPort: null,
       version: null,
@@ -138,10 +133,7 @@ export class LocationDetailsComponent {
         result.secondaryLocationId &&
         result.primaryLocationId !== result.secondaryLocationId
       ) {
-        console.error(
-          "Primary and secondary location IDs do not match!",
-          result
-        )
+        console.error("Primary and secondary location IDs do not match!", result)
       } else if (result.primaryLocationId) {
         this.location.id = result.primaryLocationId
         this.version = result.primaryVersion
@@ -163,10 +155,7 @@ export class LocationDetailsComponent {
       return false
     }
 
-    return (
-      this.authenticationService.getDeviceToken(this.locationForm.value.id) !==
-      null
-    )
+    return this.authenticationService.getDeviceToken(this.locationForm.value.id) !== null
   }
 
   onFieldChange($event) {
@@ -217,16 +206,12 @@ export class LocationDetailsComponent {
     location.order = this.location.order
     // use the version loaded from the test or keep the existing one
     location.version = this.version ? this.version : this.location.version
-    location.boardVersion = this.boardVersion
-      ? this.boardVersion
-      : this.location.boardVersion
+    location.boardVersion = this.boardVersion ? this.boardVersion : this.location.boardVersion
     return location
   }
 
   alreadyExists() {
-    const locations: Location[] = JSON.parse(
-      localStorage.getItem("locations") || "[]"
-    )
+    const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
     return locations.some(l => l.id === this.location?.id)
   }
 
@@ -255,10 +240,7 @@ export class LocationDetailsComponent {
         return true
       }
 
-      if (
-        this.testResult.primary === null ||
-        this.testResult.secondary === null
-      ) {
+      if (this.testResult.primary === null || this.testResult.secondary === null) {
         return true
       }
     }
@@ -268,9 +250,7 @@ export class LocationDetailsComponent {
 
   async onSubmit() {
     const location = this.prepareLocation()
-    const locations: Location[] = JSON.parse(
-      localStorage.getItem("locations") || "[]"
-    )
+    const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
     const index = locations.findIndex(l => l.id === location.id)
     if (index >= 0) {
       // merge

@@ -221,12 +221,7 @@
     <button mat-icon-button color="primary" [disabled]="disabled" (click)="navigateToUserEdit()">
       <mat-icon>mode_edit</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      color="warn"
-      [disabled]="!canManageUser || disabled"
-      (click)="openDeleteUserDialog()"
-    >
+    <button mat-icon-button color="warn" [disabled]="!canManageUser || disabled" (click)="openDeleteUserDialog()">
       <mat-icon>delete</mat-icon>
     </button>
 
@@ -279,22 +274,12 @@
       @if (biometricAvailable) {
         <div>
           @if (!isBiometricEnabled()) {
-            <button
-              mat-menu-item
-              color="primary"
-              [disabled]="disabled"
-              (click)="enableBiometricLogin()"
-            >
+            <button mat-menu-item color="primary" [disabled]="disabled" (click)="enableBiometricLogin()">
               <span i18n="@@user enable biometric">Enable biometric login</span>
             </button>
           }
           @if (isBiometricEnabled()) {
-            <button
-              mat-menu-item
-              color="warn"
-              [disabled]="disabled"
-              (click)="disableBiometricLogin()"
-            >
+            <button mat-menu-item color="warn" [disabled]="disabled" (click)="disableBiometricLogin()">
               <span i18n="@@user disable biometric">Disable biometric login</span>
             </button>
           }

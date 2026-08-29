@@ -36,10 +36,7 @@ export const filter = (opt: string[], value: string): string[] => {
   providers: [],
   standalone: false
 })
-export class ClockComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class ClockComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   clockForm: UntypedFormGroup
   clock: any
 
@@ -66,9 +63,7 @@ export class ClockComponent
       if (results == null) {
         this.timezoneUngroupped.push(timezoneName)
       } else {
-        const timezoneGroup = this.timezoneGroups.find(
-          tzGroup => tzGroup.groupName === results[1]
-        )
+        const timezoneGroup = this.timezoneGroups.find(tzGroup => tzGroup.groupName === results[1])
         if (timezoneGroup == null) {
           this.timezoneGroups.push({
             groupName: results[1],
@@ -94,19 +89,15 @@ export class ClockComponent
     this.updateForm()
 
     if (this.clockForm.get("timezone")) {
-      this.timezoneGroupOptions = this.clockForm
-        .get("timezone")
-        .valueChanges.pipe(
-          startWith(""),
-          map(value => this.filterGroup(value))
-        )
+      this.timezoneGroupOptions = this.clockForm.get("timezone").valueChanges.pipe(
+        startWith(""),
+        map(value => this.filterGroup(value))
+      )
 
-      this.timezoneUngrouppedOptions = this.clockForm
-        .get("timezone")
-        .valueChanges.pipe(
-          startWith(""),
-          map(value => this.filterUngroupped(value))
-        )
+      this.timezoneUngrouppedOptions = this.clockForm.get("timezone").valueChanges.pipe(
+        startWith(""),
+        map(value => this.filterUngroupped(value))
+      )
     }
   }
 
@@ -153,13 +144,9 @@ export class ClockComponent
         next: _ => this.updateComponent(),
         error: _ => {
           this.loader.disable(false)
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
         }
       })
   }

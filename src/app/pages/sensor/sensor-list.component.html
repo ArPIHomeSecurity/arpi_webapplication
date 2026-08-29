@@ -39,9 +39,7 @@
                   @default {
                     <img
                       mat-card-sm-image
-                      src="https://via.placeholder.com/100?text={{
-                        getSensorTypeName(sensor.typeId)
-                      }}"
+                      src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
                     />
                   }
                 }
@@ -69,28 +67,16 @@
                               @case ("image") {
                                 @switch (attribute.iconSwitch) {
                                   @case (1) {
-                                    <img
-                                      ngClass="sensor-icon"
-                                      src="assets/images/sensor_motion.png"
-                                    />
+                                    <img ngClass="sensor-icon" src="assets/images/sensor_motion.png" />
                                   }
                                   @case (2) {
-                                    <img
-                                      ngClass="sensor-icon"
-                                      src="assets/images/sensor_tamper.png"
-                                    />
+                                    <img ngClass="sensor-icon" src="assets/images/sensor_tamper.png" />
                                   }
                                   @case (3) {
-                                    <img
-                                      ngClass="sensor-icon"
-                                      src="assets/images/sensor_open.png"
-                                    />
+                                    <img ngClass="sensor-icon" src="assets/images/sensor_open.png" />
                                   }
                                   @case (4) {
-                                    <img
-                                      ngClass="sensor-icon"
-                                      src="assets/images/sensor_break.png"
-                                    />
+                                    <img ngClass="sensor-icon" src="assets/images/sensor_break.png" />
                                   }
                                   @default {
                                     <img
@@ -122,11 +108,7 @@
                   mat-icon-button
                   cdkDragHandle
                   class="drag-handle"
-                  [disabled]="
-                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
-                      monitoringState
-                    )
-                  "
+                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
                   <mat-icon>drag_indicator</mat-icon>
                 </button>
@@ -134,11 +116,7 @@
                   mat-icon-button
                   [routerLink]="['/sensor', sensor.id]"
                   color="primary"
-                  [disabled]="
-                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
-                      monitoringState
-                    )
-                  "
+                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
                   <mat-icon>mode_edit</mat-icon>
                 </button>
@@ -146,11 +124,7 @@
                   mat-icon-button
                   (click)="onResetReferences(sensor.id)"
                   color="accent"
-                  [disabled]="
-                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
-                      monitoringState
-                    )
-                  "
+                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
                   <mat-icon>refresh</mat-icon>
                 </button>
@@ -158,11 +132,7 @@
                   mat-icon-button
                   (click)="openDeleteDialog(sensor.id)"
                   color="warn"
-                  [disabled]="
-                    ![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(
-                      monitoringState
-                    )
-                  "
+                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>

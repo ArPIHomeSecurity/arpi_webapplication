@@ -21,11 +21,7 @@ export interface UserService {
 
   registerCard(userId: number): Observable<any>
 
-  generateSshKey(
-    userId: number,
-    keyType: string,
-    passphrase: string
-  ): Observable<string>
+  generateSshKey(userId: number, keyType: string, passphrase: string): Observable<string>
 
   setPublicKey(userId: number, publicKey: string): Observable<boolean>
 

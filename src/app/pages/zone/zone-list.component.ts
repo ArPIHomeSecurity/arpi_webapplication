@@ -17,11 +17,7 @@ import {
 } from "@app/services"
 
 import { environment } from "@environments/environment"
-import {
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray
-} from "@angular/cdk/drag-drop"
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 
 const scheduleMicrotask = Promise.resolve(null)
@@ -32,10 +28,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class ZoneListComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   CONFIG = 0
   SENSORS = 1
 
@@ -91,12 +84,8 @@ export class ZoneListComponent
         this.loader.disable(false)
 
         this.zones.forEach((zone, i) => {
-          this.configOpened[zone.id] = JSON.parse(
-            localStorage.getItem("configOpened_" + zone.id)
-          )
-          this.sensorOpened[zone.id] = JSON.parse(
-            localStorage.getItem("sensorOpened_" + zone.id)
-          )
+          this.configOpened[zone.id] = JSON.parse(localStorage.getItem("configOpened_" + zone.id))
+          this.sensorOpened[zone.id] = JSON.parse(localStorage.getItem("sensorOpened_" + zone.id))
         })
       })
   }
@@ -146,23 +135,15 @@ export class ZoneListComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@zone deleted:Zone deleted!`,
-                  "",
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, "", {
+                  duration: environment.snackDuration
+                })
                 this.updateComponent()
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  "",
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, "", {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(
@@ -195,33 +176,21 @@ export class ZoneListComponent
 
   onOpenConfig(zoneId: number) {
     this.configOpened[zoneId] = true
-    localStorage.setItem(
-      "configOpened_" + zoneId,
-      this.configOpened[zoneId].toString()
-    )
+    localStorage.setItem("configOpened_" + zoneId, this.configOpened[zoneId].toString())
   }
 
   onCloseConfig(zoneId: number) {
     this.configOpened[zoneId] = false
-    localStorage.setItem(
-      "configOpened_" + zoneId,
-      this.configOpened[zoneId].toString()
-    )
+    localStorage.setItem("configOpened_" + zoneId, this.configOpened[zoneId].toString())
   }
 
   onOpenSensor(zoneId: number) {
     this.sensorOpened[zoneId] = true
-    localStorage.setItem(
-      "sensorOpened_" + zoneId,
-      this.sensorOpened[zoneId].toString()
-    )
+    localStorage.setItem("sensorOpened_" + zoneId, this.sensorOpened[zoneId].toString())
   }
 
   onCloseSensor(zoneId: number) {
     this.sensorOpened[zoneId] = false
-    localStorage.setItem(
-      "sensorOpened_" + zoneId,
-      this.sensorOpened[zoneId].toString()
-    )
+    localStorage.setItem("sensorOpened_" + zoneId, this.sensorOpened[zoneId].toString())
   }
 }

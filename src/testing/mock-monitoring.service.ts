@@ -1,11 +1,5 @@
 import { Injectable } from "@angular/core"
-import {
-  ARM_TYPE,
-  Clocks,
-  KeypadType,
-  MONITORING_STATE,
-  POWER_STATE
-} from "@app/models"
+import { ARM_TYPE, Clocks, KeypadType, MONITORING_STATE, POWER_STATE } from "@app/models"
 import { Observable, of } from "rxjs"
 
 /**

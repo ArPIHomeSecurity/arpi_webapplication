@@ -8,11 +8,7 @@ import {
   MonitoringService
 } from "@app/services"
 
-import {
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray
-} from "@angular/cdk/drag-drop"
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { MatDialog } from "@angular/material/dialog"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { Location } from "@app/models"
@@ -20,11 +16,7 @@ import { NotificationService } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { configureBackend } from "@app/utils"
 import { environment } from "@environments/environment"
-import {
-  compareVersions,
-  LocationVersion,
-  parseVersion
-} from "../../models/version"
+import { compareVersions, LocationVersion, parseVersion } from "../../models/version"
 import {
   LocationTestResult,
   saveLocations,
@@ -92,8 +84,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
 
   getServerLatestVersion(prerelease: boolean): LocationVersion {
     // GitHub API for arpi_server releases
-    const apiUrl =
-      "https://api.github.com/repos/ArPIHomeSecurity/arpi_server/releases"
+    const apiUrl = "https://api.github.com/repos/ArPIHomeSecurity/arpi_server/releases"
     const xhr = new XMLHttpRequest()
     xhr.open("GET", apiUrl, false) // synchronous request for simplicity
     xhr.send()
@@ -103,10 +94,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     }
     const releases = JSON.parse(xhr.responseText)
     for (const release of releases) {
-      if (
-        (prerelease && release.prerelease) ||
-        (!prerelease && !release.prerelease)
-      ) {
+      if ((prerelease && release.prerelease) || (!prerelease && !release.prerelease)) {
         return parseVersion(release.tag_name)
       }
     }
@@ -133,12 +121,9 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     testLocation(location).subscribe(result => {
       this.testResults.set(location.id, result)
 
-      location.version =
-        result.primaryVersion || result.secondaryVersion || location.version
+      location.version = result.primaryVersion || result.secondaryVersion || location.version
       location.boardVersion =
-        result.primaryBoardVersion ||
-        result.secondaryBoardVersion ||
-        location.boardVersion
+        result.primaryBoardVersion || result.secondaryBoardVersion || location.boardVersion
 
       // update location in the list
       const index = this.locations.findIndex(x => x.id === location.id)

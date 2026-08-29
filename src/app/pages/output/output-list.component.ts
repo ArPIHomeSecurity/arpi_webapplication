@@ -1,10 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, Inject } from "@angular/core"
 
-import {
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray
-} from "@angular/cdk/drag-drop"
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
@@ -42,10 +38,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class OutputListComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class OutputListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false
 
   outputs: Output[] = null
@@ -82,9 +75,7 @@ export class OutputListComponent
 
     // TODO: update only one output instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService
-        .listen("outputs_state_change")
-        .subscribe(_ => this.updateComponent())
+      this.eventService.listen("outputs_state_change").subscribe(_ => this.updateComponent())
     )
   }
 
@@ -142,23 +133,15 @@ export class OutputListComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@output deleted:Output deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@output deleted:Output deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.updateComponent()
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(

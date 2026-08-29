@@ -13,19 +13,12 @@ import { AuthenticationService } from "./authentication.service"
 export class ConfigurationService {
   configuration: Option[]
 
-  constructor(
-    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
-  ) {
-    this.configuration = getSessionValue(
-      "ConfigurationService.configuration",
-      DEMO_CONFIGURATION
-    )
+  constructor(@Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService) {
+    this.configuration = getSessionValue("ConfigurationService.configuration", DEMO_CONFIGURATION)
   }
 
   getOption(option: string, section: string): Observable<Option> {
-    return of(
-      this.configuration.find(o => o.option === option && o.section === section)
-    ).pipe(
+    return of(this.configuration.find(o => o.option === option && o.section === section)).pipe(
       delay(environment.delay),
       map(_ => {
         this.authService.updateUserToken("user.session")
@@ -35,9 +28,7 @@ export class ConfigurationService {
   }
 
   setOption(option: string, section: string, value: any): Observable<boolean> {
-    const tmpOption = this.configuration.find(
-      o => o.option === option && o.section === section
-    )
+    const tmpOption = this.configuration.find(o => o.option === option && o.section === section)
     if (tmpOption != null) {
       tmpOption.value = value
     } else {

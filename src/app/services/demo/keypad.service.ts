@@ -13,9 +13,7 @@ export class KeypadService {
   keypad: Keypad = KEYPADS[0]
   keypadTypes: KeypadType[] = KEYPAD_TYPES
 
-  constructor(
-    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
-  ) {}
+  constructor(@Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService) {}
 
   getKeypads(): Observable<Keypad[]> {
     return of(Object.assign([], [this.keypad])).pipe(

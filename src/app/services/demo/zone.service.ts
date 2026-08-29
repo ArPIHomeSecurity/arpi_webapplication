@@ -13,9 +13,7 @@ import { AuthenticationService } from "./authentication.service"
 export class ZoneService {
   zones: Zone[]
 
-  constructor(
-    @Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService
-  ) {
+  constructor(@Inject(AUTHENTICATION_SERVICE) private authService: AuthenticationService) {
     this.zones = getSessionValue("ZoneService.zones", ZONES)
   }
 
@@ -32,9 +30,7 @@ export class ZoneService {
 
   getZone(zoneId: number): Observable<Zone> {
     // send variables by value
-    return of(
-      Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])
-    ).pipe(
+    return of(Object.assign({}, this.zones.filter(zone => zone.id === zoneId)[0])).pipe(
       delay(environment.delay),
       map(_ => {
         this.authService.updateUserToken("user.session")
@@ -44,8 +40,7 @@ export class ZoneService {
   }
 
   createZone(zone: Zone): Observable<Zone> {
-    zone.id =
-      Math.max.apply(Math.max, this.zones.map(z => z.id).concat([0])) + 1
+    zone.id = Math.max.apply(Math.max, this.zones.map(z => z.id).concat([0])) + 1
     this.zones.push(zone)
     setSessionValue("ZoneService.zones", this.zones)
     return of(zone)

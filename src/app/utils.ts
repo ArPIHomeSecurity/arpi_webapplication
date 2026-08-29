@@ -51,11 +51,7 @@ export function setLocalValue(name: string, value: any) {
   localStorage.setItem(name, JSON.stringify(value))
 }
 
-export function getValue(
-  value: any,
-  attribute: string,
-  defaultValue: any = ""
-) {
+export function getValue(value: any, attribute: string, defaultValue: any = "") {
   // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
 
   // clone the default value to avoid changing it through a reference
@@ -73,10 +69,7 @@ export function getValue(
   return clonedDefaultValue
 }
 
-export const checkUrl = async (
-  url: string,
-  controller?: AbortController
-): Promise<boolean> => {
+export const checkUrl = async (url: string, controller?: AbortController): Promise<boolean> => {
   const timeoutId = setTimeout(() => controller?.abort(), 15000)
 
   try {
@@ -94,12 +87,7 @@ export const checkUrl = async (
     if (error instanceof Error && error.name === "AbortError") {
       throw error // Propagate abort errors up
     }
-    console.error(
-      "Failed to connect to the security system: ",
-      url,
-      "Error:",
-      error
-    )
+    console.error("Failed to connect to the security system: ", url, "Error:", error)
     return false
   } finally {
     clearTimeout(timeoutId)
@@ -139,19 +127,13 @@ async function checkAndSetDomain(
       // if the backend and the domain are different, set the domain
       console.log(`Domain is available: `, domain)
       localStorage.setItem("backend.scheme", scheme)
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "backend.domain", newValue: domain })
-      )
+      window.dispatchEvent(new StorageEvent("storage", { key: "backend.domain", newValue: domain }))
 
       localStorage.setItem("backend.domain", domain)
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "backend.port", newValue: port })
-      )
+      window.dispatchEvent(new StorageEvent("storage", { key: "backend.port", newValue: port }))
 
       localStorage.setItem("backend.port", port)
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "backend.scheme", newValue: scheme })
-      )
+      window.dispatchEvent(new StorageEvent("storage", { key: "backend.scheme", newValue: scheme }))
 
       console.log("Connected to: ", url)
       return true
@@ -181,15 +163,12 @@ export async function configureBackend(): Promise<void> {
       // Create abort controller for this configuration attempt
       configurationAbortController = new AbortController()
 
-      const locations: [Location] =
-        JSON.parse(localStorage.getItem("locations")) || []
+      const locations: [Location] = JSON.parse(localStorage.getItem("locations")) || []
       const selectedLocationId = localStorage.getItem("selectedLocationId")
       const backendDomain = localStorage.getItem("backend.domain")
 
       if (selectedLocationId) {
-        const location: Location = locations.find(
-          i => i.id === selectedLocationId
-        )
+        const location: Location = locations.find(i => i.id === selectedLocationId)
         if (location) {
           const primaryAvailable = await checkAndSetDomain(
             location.scheme,
@@ -201,10 +180,7 @@ export async function configureBackend(): Promise<void> {
           if (primaryAvailable) {
             localStorage.setItem("backend.scheme", location.scheme)
             localStorage.setItem("backend.domain", location.primaryDomain)
-            localStorage.setItem(
-              "backend.port",
-              location.primaryPort.toString()
-            )
+            localStorage.setItem("backend.port", location.primaryPort.toString())
             configurationAbortController = null
             resolve()
             return
@@ -220,10 +196,7 @@ export async function configureBackend(): Promise<void> {
           if (secondaryAvailable) {
             localStorage.setItem("backend.scheme", location.scheme)
             localStorage.setItem("backend.domain", location.secondaryDomain)
-            localStorage.setItem(
-              "backend.port",
-              location.secondaryPort.toString()
-            )
+            localStorage.setItem("backend.port", location.secondaryPort.toString())
             configurationAbortController = null
             resolve()
             return

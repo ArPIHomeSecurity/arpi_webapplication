@@ -12,11 +12,7 @@ export class ConfigurationService implements ConfigurationService {
     // get configuration option from api
     return this.http
       .get<Option>("/api/config/" + option + "/" + section)
-      .pipe(
-        catchError(err =>
-          err.status === 404 ? of(null) : throwError(() => err)
-        )
-      )
+      .pipe(catchError(err => (err.status === 404 ? of(null) : throwError(() => err))))
   }
 
   setOption(option: string, section: string, value: any): Observable<any> {

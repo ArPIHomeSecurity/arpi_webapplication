@@ -3,18 +3,10 @@ import { HttpClient, HttpParams } from "@angular/common/http"
 import { Observable } from "rxjs"
 import { map } from "rxjs/operators"
 
-import {
-  ArmEvent,
-  armType2String,
-  ARM_TYPE,
-  string2AlertType,
-  string2ArmType
-} from "@app/models"
+import { ArmEvent, armType2String, ARM_TYPE, string2AlertType, string2ArmType } from "@app/models"
 
 function formatDate(date: Date) {
-  const year = date
-    .toLocaleString("default", { year: "numeric" })
-    .replace(".", "")
+  const year = date.toLocaleString("default", { year: "numeric" }).replace(".", "")
   const month = date.toLocaleString("default", { month: "2-digit" })
   const day = date.toLocaleString("default", { day: "2-digit" })
 
@@ -66,9 +58,7 @@ export class ArmService implements ArmService {
           }
 
           if (rawArmEvent.alert) {
-            rawArmEvent.alert.alertType = string2AlertType(
-              rawArmEvent.alert.alertType
-            )
+            rawArmEvent.alert.alertType = string2AlertType(rawArmEvent.alert.alertType)
           }
         }
         return rawArmEvents as ArmEvent[]

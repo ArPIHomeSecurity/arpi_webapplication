@@ -34,15 +34,11 @@ export class OutputService {
   }
 
   activateOutput(outputId: number) {
-    return this.http
-      .put("/api/output/" + outputId + "/activate", null)
-      .subscribe()
+    return this.http.put("/api/output/" + outputId + "/activate", null).subscribe()
   }
 
   deactivateOutput(outputId: number) {
-    return this.http
-      .put("/api/output/" + outputId + "/deactivate", null)
-      .subscribe()
+    return this.http.put("/api/output/" + outputId + "/deactivate", null).subscribe()
   }
 
   reorder(outputs: Output[]) {

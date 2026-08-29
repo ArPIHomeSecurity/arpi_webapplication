@@ -24,9 +24,7 @@ export class AuthenticationService implements AuthenticationService {
   login(accessCode: number): Observable<boolean> {
     const headers = new HttpHeaders({ "Content-Type": "application/json" })
     const locationId = this.getLocationId()
-    const deviceTokens = JSON.parse(
-      localStorage.getItem("deviceTokens") || "{}"
-    )
+    const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
     return this.http
       .post(
         "/api/user/authenticate",
@@ -41,9 +39,7 @@ export class AuthenticationService implements AuthenticationService {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(
-              localStorage.getItem("deviceTokens") || "{}"
-            )
+            const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
             deviceTokens[locationId] = response.device_token
             localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
 
@@ -174,10 +170,7 @@ export class AuthenticationService implements AuthenticationService {
     }
 
     // check expiry
-    if (
-      Date.now() / 1000 - parseInt(userData.timestamp) >
-      environment.userTokenExpiry
-    ) {
+    if (Date.now() / 1000 - parseInt(userData.timestamp) > environment.userTokenExpiry) {
       // remove token
       const userTokens = JSON.parse(localStorage.getItem("userTokens") || "{}")
       if (locationId in userTokens) {
@@ -235,18 +228,14 @@ export class AuthenticationService implements AuthenticationService {
     const deviceToken = localStorage.getItem(`${locationId}:deviceToken`) || ""
     if (!deviceToken) {
       // check in new format
-      const deviceTokens = JSON.parse(
-        localStorage.getItem("deviceTokens") || "{}"
-      )
+      const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
       if (locationId in deviceTokens) {
         return deviceTokens[locationId]
       }
     }
 
     // save in new format
-    const deviceTokens = JSON.parse(
-      localStorage.getItem("deviceTokens") || "{}"
-    )
+    const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
     if (deviceToken) {
       deviceTokens[locationId] = deviceToken
       localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
@@ -262,19 +251,15 @@ export class AuthenticationService implements AuthenticationService {
     const headers = new HttpHeaders({ "Content-Type": "application/json" })
     const locationId = this.getLocationId()
     return this.http
-      .post(
-        "/api/user/register_device",
-        JSON.stringify({ registration_code: registrationCode }),
-        { headers }
-      )
+      .post("/api/user/register_device", JSON.stringify({ registration_code: registrationCode }), {
+        headers
+      })
       .pipe(
         map((response: any) => {
           // login successful if there's a jwt token in the response
           if (response.device_token) {
             // save in new format
-            const deviceTokens = JSON.parse(
-              localStorage.getItem("deviceTokens") || "{}"
-            )
+            const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
             deviceTokens[locationId] = response.device_token
             localStorage.setItem("deviceTokens", JSON.stringify(deviceTokens))
 
@@ -292,9 +277,7 @@ export class AuthenticationService implements AuthenticationService {
     const locationId = this.getLocationId()
 
     // remove device token
-    const deviceTokens = JSON.parse(
-      localStorage.getItem("deviceTokens") || "{}"
-    )
+    const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
     if (locationId in deviceTokens) {
       delete deviceTokens[locationId]
     }
@@ -316,9 +299,7 @@ export class AuthenticationService implements AuthenticationService {
   }
 
   isDeviceRegistered(): Observable<boolean> {
-    return this.isDeviceRegisteredSubject.pipe(
-      startWith(!!this.getDeviceToken())
-    )
+    return this.isDeviceRegisteredSubject.pipe(startWith(!!this.getDeviceToken()))
   }
 
   getRegisteredUserId(): number | null {

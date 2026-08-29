@@ -29,9 +29,7 @@ export class LocationTestResult {
 export function saveLocations(locations: Location[]): void {
   const value = JSON.stringify(locations)
   localStorage.setItem("locations", value)
-  window.dispatchEvent(
-    new StorageEvent("storage", { key: "locations", newValue: value })
-  )
+  window.dispatchEvent(new StorageEvent("storage", { key: "locations", newValue: value }))
 }
 
 /**
@@ -69,9 +67,7 @@ export function syncSelectedLocationId(
   }
 
   const preferred =
-    preferredId && locations.some(location => location.id === preferredId)
-      ? preferredId
-      : null
+    preferredId && locations.some(location => location.id === preferredId) ? preferredId : null
   const next = preferred ?? locations[0]?.id ?? null
   setSelectedLocationId(next)
   return next
@@ -95,12 +91,7 @@ function testUrl(url: string): Observable<boolean> {
         observer.complete()
       })
       .catch(error => {
-        console.error(
-          "Failed to connect to the security system: ",
-          url,
-          "Error: ",
-          error
-        )
+        console.error("Failed to connect to the security system: ", url, "Error: ", error)
         observer.next(false)
         observer.complete()
       })
@@ -126,10 +117,7 @@ function loadLocationId(locationIdURL: string): Observable<string> {
       .then(locationId => {
         // check response format
         // location id sha256
-        if (
-          typeof locationId !== "string" ||
-          !/^[a-f0-9]{64}$/.test(locationId)
-        ) {
+        if (typeof locationId !== "string" || !/^[a-f0-9]{64}$/.test(locationId)) {
           console.error("Invalid location id", locationId.substring(0, 100))
           observer.next(undefined)
         } else {
@@ -231,9 +219,7 @@ const undefinedObservableString = new Observable<string>(observer => {
   observer.complete()
 })
 
-export function testLocation(
-  location: Location
-): Observable<LocationTestResult> {
+export function testLocation(location: Location): Observable<LocationTestResult> {
   if (!location) {
     return
   }
@@ -403,8 +389,7 @@ export function getLocationName(location: Location): Observable<string> {
 
     forkJoin({
       primaryLocationOption: primaryLocationOption$ || undefinedObservableAny,
-      secondaryLocationOption:
-        secondaryLocationOption$ || undefinedObservableAny
+      secondaryLocationOption: secondaryLocationOption$ || undefinedObservableAny
     }).subscribe(results => {
       let locationOption = ""
       if (results.primaryLocationOption) {

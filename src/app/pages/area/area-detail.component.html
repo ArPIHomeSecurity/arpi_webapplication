@@ -32,11 +32,7 @@
             color="warn"
             type="button"
             (click)="openDeleteDialog(area.id)"
-            [disabled]="
-              getSensors().length > 0 ||
-              getOutputs().length > 0 ||
-              monitoringState != monitoringStates.READY
-            "
+            [disabled]="getSensors().length > 0 || getOutputs().length > 0 || monitoringState != monitoringStates.READY"
           >
             <mat-icon>delete</mat-icon>
           </button>

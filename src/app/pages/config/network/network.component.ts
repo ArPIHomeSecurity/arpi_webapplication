@@ -12,12 +12,7 @@ import {
   DEFAULT_PASSWORD_VALUE,
   Option
 } from "@app/models"
-import {
-  ConfigurationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from "@app/services"
 import { getValue } from "@app/utils"
 import { environment } from "@environments/environment"
 
@@ -28,10 +23,7 @@ const scheduleMicrotask = Promise.resolve(null)
   styleUrls: ["network.component.scss"],
   standalone: false
 })
-export class NetworkComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class NetworkComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false
   dyndnsForm: FormGroup
   accessForm: FormGroup
@@ -145,24 +137,15 @@ export class NetworkComponent
       dyndnsHostname: [getValue(dyndns.value, "hostname"), Validators.required],
       dyndnsProvider: [getValue(dyndns.value, "provider"), Validators.required],
       dyndnsRestrictHost: getValue(dyndns.value, "restrict_host"),
-      certbotEmail: [
-        getValue(dyndns.value, "certbot_email"),
-        Validators.required
-      ]
+      certbotEmail: [getValue(dyndns.value, "certbot_email"), Validators.required]
     })
   }
 
   updateTerminalForm(access: Option) {
     this.accessForm = this.fb.group({
       accessSshService: getValue(access.value, "service_enabled"),
-      accessSshRestrictLocalNetwork: getValue(
-        access.value,
-        "restrict_local_network"
-      ),
-      accessSshPasswordAuthentication: getValue(
-        access.value,
-        "password_authentication_enabled"
-      )
+      accessSshRestrictLocalNetwork: getValue(access.value, "restrict_local_network"),
+      accessSshPasswordAuthentication: getValue(access.value, "password_authentication_enabled")
     })
   }
 
@@ -214,8 +197,7 @@ export class NetworkComponent
     return {
       service_enabled: formModel.accessSshService || false,
       restrict_local_network: formModel.accessSshRestrictLocalNetwork || false,
-      password_authentication_enabled:
-        formModel.accessSshPasswordAuthentication || false
+      password_authentication_enabled: formModel.accessSshPasswordAuthentication || false
     }
   }
 
@@ -246,13 +228,9 @@ export class NetworkComponent
       .subscribe({
         next: () => this.updateDyndns(),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
   }
 
@@ -264,13 +242,9 @@ export class NetworkComponent
       .subscribe({
         next: () => this.updateAccess(),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
   }
 }

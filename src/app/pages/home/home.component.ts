@@ -68,12 +68,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.goBackSubscription = this.capacitorService
-      .listenBackButton()
-      .subscribe(event => {
-        event.preventDefault()
-        CapacitorApp.exitApp()
-      })
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(event => {
+      event.preventDefault()
+      CapacitorApp.exitApp()
+    })
 
     this.loadStates()
 
@@ -97,9 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.outputs = results.outputs
         .filter(o => o.triggerType === OutputTriggerType.BUTTON)
         .filter(o => o.enabled)
-        .sort((o1, o2) =>
-          o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0
-        )
+        .sort((o1, o2) => (o1.uiOrder > o2.uiOrder ? 1 : o1.uiOrder < o2.uiOrder ? -1 : 0))
     })
 
     // ALERT STATE
@@ -150,12 +146,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // MONITORING STATE
     this.subscriptions.push(
-      this.eventService
-        .listen("system_state_change")
-        .subscribe(monitoringState => {
-          this.monitoringState = string2MonitoringState(monitoringState)
-          this.onStateChanged()
-        })
+      this.eventService.listen("system_state_change").subscribe(monitoringState => {
+        this.monitoringState = string2MonitoringState(monitoringState)
+        this.onStateChanged()
+      })
     )
 
     this.subscriptions.push(
@@ -251,33 +245,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   armChanged(armType: ARM_TYPE) {
     if (armType === ARM_TYPE.AWAY) {
       this.monitoringService.arm(ARM_TYPE.AWAY).subscribe(() =>
-        this.snackBar.open(
-          $localize`:@@home armed away:System armed away`,
-          null,
-          {
-            duration: environment.snackDuration
-          }
-        )
+        this.snackBar.open($localize`:@@home armed away:System armed away`, null, {
+          duration: environment.snackDuration
+        })
       )
     } else if (armType === ARM_TYPE.STAY) {
       this.monitoringService.arm(ARM_TYPE.STAY).subscribe(() =>
-        this.snackBar.open(
-          $localize`:@@home armed stay:System armed stay`,
-          null,
-          {
-            duration: environment.snackDuration
-          }
-        )
+        this.snackBar.open($localize`:@@home armed stay:System armed stay`, null, {
+          duration: environment.snackDuration
+        })
       )
     } else if (armType === ARM_TYPE.DISARMED) {
       this.monitoringService
         .disarm()
         .subscribe(() =>
-          this.snackBar.open(
-            $localize`:@@home disarmed:System disarmed`,
-            null,
-            { duration: environment.snackDuration }
-          )
+          this.snackBar.open($localize`:@@home disarmed:System disarmed`, null, {
+            duration: environment.snackDuration
+          })
         )
     }
   }
@@ -327,9 +311,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   getSensorDelays(areaId: number): number[] {
     const sensors = this.getSensors(areaId)
 
-    return sensors.map(sensor =>
-      this.getSensorDelay(sensor.areaId, sensor.zoneId)
-    )
+    return sensors.map(sensor => this.getSensorDelay(sensor.areaId, sensor.zoneId))
   }
 
   areaIdentify(index: number, area: Area) {

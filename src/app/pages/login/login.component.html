@@ -25,12 +25,7 @@
             </mat-icon>
           </mat-form-field>
           <div class="form-group actions">
-            <button
-              mat-raised-button
-              (click)="register()"
-              [disabled]="loading || !registerForm.valid"
-              color="primary"
-            >
+            <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary">
               <span i18n="Register button">Register</span>
               @if (loading) {
                 <mat-icon>
@@ -99,12 +94,7 @@
               }
             </button>
             @if (canLoginWithBiometric()) {
-              <button
-                mat-raised-button
-                (click)="loginBiometric()"
-                [disabled]="loading"
-                color="primary"
-              >
+              <button mat-raised-button (click)="loginBiometric()" [disabled]="loading" color="primary">
                 <span i18n="@@login biometric login">Biometric login</span>
               </button>
             }
@@ -116,24 +106,16 @@
                   <div i18n="@@login host not allowed">Host not allowed!</div>
                 }
                 @case ("missing device token") {
-                  <div i18n="@@login missing device token">
-                    Missing device token! Register your device!
-                  </div>
+                  <div i18n="@@login missing device token">Missing device token! Register your device!</div>
                 }
                 @case ("invalid device token") {
-                  <div i18n="@@login invalid device token">
-                    Invalid device token! Update your device registration!
-                  </div>
+                  <div i18n="@@login invalid device token">Invalid device token! Update your device registration!</div>
                 }
                 @case ("expired registration code") {
-                  <div i18n="@@login expired registration code">
-                    Expired device registration code!
-                  </div>
+                  <div i18n="@@login expired registration code">Expired device registration code!</div>
                 }
                 @case ("invalid user id") {
-                  <div i18n="@@login invalid user id">
-                    Invalid user id! Update your device registration!
-                  </div>
+                  <div i18n="@@login invalid user id">Invalid user id! Update your device registration!</div>
                 }
                 @case ("invalid registration code") {
                   <div i18n="@@login invalid registration code">Invalid registration code!</div>
@@ -160,9 +142,7 @@
     <mat-card class="biometric container-item">
       <mat-card-header>
         <mat-icon mat-card-avatar>fingerprint</mat-icon>
-        <mat-card-title i18n="@@biometric description">
-          Do you want to use biometric login?
-        </mat-card-title>
+        <mat-card-title i18n="@@biometric description">Do you want to use biometric login?</mat-card-title>
         <mat-card-subtitle i18n="@@biometric question">
           You can use biometric login to access the security system.
         </mat-card-subtitle>

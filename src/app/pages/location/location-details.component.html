@@ -7,22 +7,12 @@
             <div class="row">
               <mat-form-field class="name" floatLabel="always">
                 <mat-label i18n="@@location name">Name</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  class="form-control"
-                  maxlength="16"
-                  formControlName="name"
-                />
+                <input matInput type="text" class="form-control" maxlength="16" formControlName="name" />
               </mat-form-field>
               @if (location.id != null && notificationsAvailable) {
                 <div class="notifications">
                   <mat-icon matSuffix>notifications</mat-icon>
-                  <mat-slide-toggle
-                    matSuffix
-                    color="primary"
-                    formControlName="notifications"
-                  ></mat-slide-toggle>
+                  <mat-slide-toggle matSuffix color="primary" formControlName="notifications"></mat-slide-toggle>
                 </div>
               }
             </div>
@@ -42,14 +32,10 @@
                 @if (showApiLink && testResult?.primary === false) {
                   <mat-hint>
                     <a
-                      href="https://{{ location.primaryDomain }}:{{
-                        location.primaryPort
-                      }}/api/version"
+                      href="https://{{ location.primaryDomain }}:{{ location.primaryPort }}/api/version"
                       target="_blank"
                     >
-                      <span i18n="@@location check" class="no-wrap">
-                        Check API version and certificate
-                      </span>
+                      <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
                       <mat-icon>open_in_new</mat-icon>
                     </a>
                   </mat-hint>
@@ -96,14 +82,10 @@
                 @if (showApiLink && testResult?.secondary === false) {
                   <mat-hint>
                     <a
-                      href="https://{{ location.secondaryDomain }}:{{
-                        location.secondaryPort
-                      }}/api/version"
+                      href="https://{{ location.secondaryDomain }}:{{ location.secondaryPort }}/api/version"
                       target="_blank"
                     >
-                      <span i18n="@@location check" class="no-wrap">
-                        Check API version and certificate
-                      </span>
+                      <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
                       <mat-icon>open_in_new</mat-icon>
                     </a>
                   </mat-hint>
@@ -178,9 +160,7 @@
               @if (isRegistered() === false) {
                 <div>
                   <mat-icon class="icon-inaccessible">error</mat-icon>
-                  <div class="text" i18n="@@location device not registered">
-                    Device NOT registered
-                  </div>
+                  <div class="text" i18n="@@location device not registered">Device NOT registered</div>
                 </div>
               }
             </div>
@@ -192,12 +172,7 @@
       }
       <mat-divider></mat-divider>
       <mat-card-actions align="end">
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="executeLocationTest()"
-          [disabled]="locationForm.invalid"
-        >
+        <button mat-icon-button color="primary" (click)="executeLocationTest()" [disabled]="locationForm.invalid">
           <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="cantSave()">

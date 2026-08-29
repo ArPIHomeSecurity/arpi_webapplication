@@ -21,15 +21,8 @@
     <mat-divider></mat-divider>
 
     <mat-card-actions>
-      <a mat-raised-button color="primary" (click)="reloadHome()" i18n="@@backend error reload">
-        Try to reconnect
-      </a>
-      <a
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/locations']"
-        i18n="@@backend error locations"
-      >
+      <a mat-raised-button color="primary" (click)="reloadHome()" i18n="@@backend error reload">Try to reconnect</a>
+      <a mat-raised-button color="primary" [routerLink]="['/locations']" i18n="@@backend error locations">
         Edit locations
       </a>
     </mat-card-actions>

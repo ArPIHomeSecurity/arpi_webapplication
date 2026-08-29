@@ -38,9 +38,7 @@ export class AreaService {
 
   getArea(areaId: number): Observable<Area> {
     // send variables by value
-    return of(
-      Object.assign({}, this.areas.filter(area => area.id === areaId)[0])
-    ).pipe(
+    return of(Object.assign({}, this.areas.filter(area => area.id === areaId)[0])).pipe(
       delay(environment.delay),
       map(_ => {
         this.authService.updateUserToken("user.session")
@@ -50,8 +48,7 @@ export class AreaService {
   }
 
   createArea(area: Area): Observable<Area> {
-    area.id =
-      Math.max.apply(Math.max, this.areas.map(z => z.id).concat([0])) + 1
+    area.id = Math.max.apply(Math.max, this.areas.map(z => z.id).concat([0])) + 1
     this.areas.push(area)
     setSessionValue("AreaService.areas", this.areas)
     return of(area)

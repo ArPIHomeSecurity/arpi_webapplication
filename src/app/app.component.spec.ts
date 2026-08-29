@@ -4,11 +4,7 @@ import { TestBed, waitForAsync } from "@angular/core/testing"
 import { provideNativeDateAdapter } from "@angular/material/core"
 import { provideRouter, RouterLinkActive, RouterOutlet } from "@angular/router"
 
-import {
-  MockAuthenticationService,
-  MockMonitoringService,
-  MockUserService
-} from "testing"
+import { MockAuthenticationService, MockMonitoringService, MockUserService } from "testing"
 
 import { MatExpansionModule } from "@angular/material/expansion"
 import { MatIconModule } from "@angular/material/icon"

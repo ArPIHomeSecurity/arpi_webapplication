@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from "@angular/core"
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FormControl, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { App as CapacitorApp } from "@capacitor/app"
@@ -13,11 +6,7 @@ import { App as CapacitorApp } from "@capacitor/app"
 import { finalize } from "rxjs/operators"
 
 import { HttpErrorResponse } from "@angular/common/http"
-import {
-  AuthenticationService,
-  BiometricService,
-  UserService
-} from "@app/services"
+import { AuthenticationService, BiometricService, UserService } from "@app/services"
 import { CapacitorService } from "@app/services/capacitor.service"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { Subscription } from "rxjs"
@@ -69,12 +58,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.goBackSubscription = this.capacitorService
-      .listenBackButton()
-      .subscribe(event => {
-        event.preventDefault()
-        CapacitorApp.exitApp()
-      })
+    this.goBackSubscription = this.capacitorService.listenBackButton().subscribe(event => {
+      event.preventDefault()
+      CapacitorApp.exitApp()
+    })
 
     if (this.authenticationService.isLoggedIn()) {
       this.router.navigate(["/"])
@@ -96,9 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.biometricService.isAvailable().then(isAvailable => {
             this.isBiometricAvailable = isAvailable
             if (isAvailable) {
-              const status = JSON.parse(
-                localStorage.getItem("biometricEnabled") || "{}"
-              )
+              const status = JSON.parse(localStorage.getItem("biometricEnabled") || "{}")
               const locationId = localStorage.getItem("selectedLocationId")
 
               if (!locationId) {
@@ -150,10 +135,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   updateForms() {
     this.registerForm = new FormGroup({
-      registerCode: (this.registerCode = new FormControl(
-        "",
-        Validators.required
-      ))
+      registerCode: (this.registerCode = new FormControl("", Validators.required))
     })
     this.loginForm = new FormGroup({
       accessCode: (this.accessCode = new FormControl("", Validators.required))
@@ -265,27 +247,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   canAskBiometric() {
-    return (
-      this.isBiometricAvailable &&
-      this.isBiometricEnabled === null &&
-      this.isLoggedIn
-    )
+    return this.isBiometricAvailable && this.isBiometricEnabled === null && this.isLoggedIn
   }
 
   canLoginWithBiometric() {
-    return (
-      this.isBiometricAvailable &&
-      this.isBiometricEnabled &&
-      !this.isBiometricRunning
-    )
+    return this.isBiometricAvailable && this.isBiometricEnabled && !this.isBiometricRunning
   }
 
   runningLoginWithBiometric() {
-    return (
-      this.isBiometricAvailable &&
-      this.isBiometricEnabled &&
-      this.isBiometricRunning
-    )
+    return this.isBiometricAvailable && this.isBiometricEnabled && this.isBiometricRunning
   }
 
   async loginBiometric() {
@@ -366,12 +336,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         return
       }
 
-      console.debug(
-        "Saving access code",
-        accessCode,
-        "for location",
-        locationId
-      )
+      console.debug("Saving access code", accessCode, "for location", locationId)
       // update component state
       this.biometricService.setAccessCode(locationId, accessCode)
       this.isBiometricEnabled = true

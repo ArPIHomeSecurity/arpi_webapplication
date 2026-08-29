@@ -6,17 +6,16 @@
     .
   </p>
   <p>
-    In the top toolbar you can find buttons for the input channels of the system to simulate the
-    interactions with the sensors.
+    In the top toolbar you can find buttons for the input channels of the system to simulate the interactions with the
+    sensors.
   </p>
   <p>
-    This page uses a mock implementation of the real backend system. May contain errors not existing
-    in the real system.
+    This page uses a mock implementation of the real backend system. May contain errors not existing in the real system.
   </p>
 
   <p>
-    You need two types of code to access the application. The first code registers your device for a
-    user. After registering the device you can access the application only with the 'access code'.
+    You need two types of code to access the application. The first code registers your device for a user. After
+    registering the device you can access the application only with the 'access code'.
   </p>
   <!-- https://stackoverflow.com/a/58115714 -->
   <table class="mat-table mat-elevation-z3">
@@ -40,12 +39,7 @@
       </td>
       <td class="mat-cell">
         {{ ADMIN_ACCESS_CODE }}
-        <button
-          mat-icon-button
-          colo7="primary"
-          onclick="this.blur()"
-          (click)="copyToClipboard(ADMIN_ACCESS_CODE)"
-        >
+        <button mat-icon-button colo7="primary" onclick="this.blur()" (click)="copyToClipboard(ADMIN_ACCESS_CODE)">
           <mat-icon>content_copy</mat-icon>
         </button>
       </td>
@@ -54,23 +48,13 @@
       <td class="mat-cell">User</td>
       <td class="mat-cell">
         {{ USER_REGISTRATION_CODE }}
-        <button
-          mat-icon-button
-          colo7="primary"
-          onclick="this.blur()"
-          (click)="copyToClipboard(USER_REGISTRATION_CODE)"
-        >
+        <button mat-icon-button colo7="primary" onclick="this.blur()" (click)="copyToClipboard(USER_REGISTRATION_CODE)">
           <mat-icon>content_copy</mat-icon>
         </button>
       </td>
       <td class="mat-cell">
         {{ USER_ACCESS_CODE }}
-        <button
-          mat-icon-button
-          colo7="primary"
-          onclick="this.blur()"
-          (click)="copyToClipboard(USER_ACCESS_CODE)"
-        >
+        <button mat-icon-button colo7="primary" onclick="this.blur()" (click)="copyToClipboard(USER_ACCESS_CODE)">
           <mat-icon>content_copy</mat-icon>
         </button>
       </td>

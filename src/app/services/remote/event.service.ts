@@ -25,10 +25,7 @@ export class EventService {
   ])
 
   private sockets = new Map<string, any>()
-  private socketConfig = new Map<
-    string,
-    { backendUrl: string; deviceToken: string }
-  >()
+  private socketConfig = new Map<string, { backendUrl: string; deviceToken: string }>()
   private lastMonitoringState = new Map<string, MONITORING_STATE>()
   private lastArmState = new Map<string, ARM_TYPE>()
   private reconnectScheduled = false
@@ -45,10 +42,7 @@ export class EventService {
     }
 
     this.reconnectScheduled = true
-    console.log(
-      "[EventService] scheduling reconnect",
-      JSON.stringify({ reason, details })
-    )
+    console.log("[EventService] scheduling reconnect", JSON.stringify({ reason, details }))
 
     queueMicrotask(() => {
       this.reconnectScheduled = false
@@ -87,12 +81,8 @@ export class EventService {
 
   connect() {
     const selectedLocationId = localStorage.getItem("selectedLocationId") || ""
-    const locations: Location[] = JSON.parse(
-      localStorage.getItem("locations") || "[]"
-    )
-    const deviceTokens = JSON.parse(
-      localStorage.getItem("deviceTokens") || "{}"
-    )
+    const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
+    const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
 
     console.log(
       "[EventService] connect called",
@@ -119,10 +109,7 @@ export class EventService {
       }
 
       // selected location is always allowed to connect, even if notifications are disabled
-      if (
-        location.id != selectedLocationId &&
-        !this.notificationService.isEnabled(location.id)
-      ) {
+      if (location.id != selectedLocationId && !this.notificationService.isEnabled(location.id)) {
         continue
       }
 
@@ -168,10 +155,7 @@ export class EventService {
       })
 
       socket.on("disconnect", () => {
-        if (
-          !this.unloading &&
-          locationId === localStorage.getItem("selectedLocationId")
-        ) {
+        if (!this.unloading && locationId === localStorage.getItem("selectedLocationId")) {
           this.socketConnected$.next(false)
         }
       })
@@ -192,9 +176,7 @@ export class EventService {
       }
     }
 
-    this.socket = selectedLocationId
-      ? this.sockets.get(selectedLocationId)
-      : null
+    this.socket = selectedLocationId ? this.sockets.get(selectedLocationId) : null
     this.socketConnected$.next(!!this.socket?.connected)
 
     console.log(
@@ -212,9 +194,7 @@ export class EventService {
     // console.log("Listen:", event)
     return new Observable(observer => {
       const selectedLocationId = localStorage.getItem("selectedLocationId")
-      const socket = selectedLocationId
-        ? this.sockets.get(selectedLocationId)
-        : null
+      const socket = selectedLocationId ? this.sockets.get(selectedLocationId) : null
 
       if (!socket) {
         console.warn("No socket connection")
@@ -238,10 +218,7 @@ export class EventService {
     })
   }
 
-  private getBackendUrl(
-    location: any,
-    selectedLocationId: string | null
-  ): string | null {
+  private getBackendUrl(location: any, selectedLocationId: string | null): string | null {
     // For the active location, respect the currently resolved backend from local storage.
     if (selectedLocationId && location.id === selectedLocationId) {
       const backendScheme = localStorage.getItem("backend.scheme")
@@ -278,11 +255,7 @@ export class EventService {
     this.socketConnected$.next(false)
   }
 
-  private attachNotificationListeners(
-    socket: any,
-    locationId: string,
-    locationName: string
-  ) {
+  private attachNotificationListeners(socket: any, locationId: string, locationName: string) {
     socket.on("system_state_change", (monitoringStateEvent: any) => {
       if (!monitoringStateEvent || typeof monitoringStateEvent !== "string") {
         return
@@ -292,10 +265,7 @@ export class EventService {
       const previousState = this.lastMonitoringState.get(locationId)
       this.lastMonitoringState.set(locationId, monitoringState)
 
-      if (
-        monitoringState === MONITORING_STATE.ALERT &&
-        previousState !== MONITORING_STATE.ALERT
-      ) {
+      if (monitoringState === MONITORING_STATE.ALERT && previousState !== MONITORING_STATE.ALERT) {
         void this.notificationService.notifyAlert(locationName, locationId)
       }
     })
@@ -309,10 +279,7 @@ export class EventService {
       const previousArmState = this.lastArmState.get(locationId)
       this.lastArmState.set(locationId, armState)
 
-      if (
-        armState === ARM_TYPE.DISARMED &&
-        previousArmState !== ARM_TYPE.DISARMED
-      ) {
+      if (armState === ARM_TYPE.DISARMED && previousArmState !== ARM_TYPE.DISARMED) {
         void this.notificationService.notifyDisarmed(locationName, locationId)
         return
       }
@@ -321,11 +288,7 @@ export class EventService {
         [ARM_TYPE.AWAY, ARM_TYPE.STAY, ARM_TYPE.MIXED].includes(armState) &&
         armState !== previousArmState
       ) {
-        void this.notificationService.notifyArmed(
-          locationName,
-          locationId,
-          armState
-        )
+        void this.notificationService.notifyArmed(locationName, locationId, armState)
       }
     })
   }

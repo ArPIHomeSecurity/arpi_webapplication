@@ -30,8 +30,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     const backendPort = localStorage.getItem("backend.port")
 
     if (backendScheme && backendDomain && backendPort) {
-      this.backendUrl =
-        backendScheme + "://" + backendDomain + ":" + backendPort
+      this.backendUrl = backendScheme + "://" + backendDomain + ":" + backendPort
     } else {
       this.backendUrl = ""
     }
@@ -47,8 +46,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         const backendPort = localStorage.getItem("backend.port")
 
         if (backendScheme && backendDomain && backendPort) {
-          this.backendUrl =
-            backendScheme + "://" + backendDomain + ":" + backendPort
+          this.backendUrl = backendScheme + "://" + backendDomain + ":" + backendPort
         } else {
           this.backendUrl = ""
         }
@@ -56,10 +54,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     })
   }
 
-  intercept(
-    originalRequest: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(originalRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (originalRequest.url.endsWith("assets/version.json")) {
       // special handling of webapplication version.json
       // we need to load it from the application host not from the backend
@@ -68,15 +63,11 @@ export class AppHttpInterceptor implements HttpInterceptor {
 
     if (this.backendUrl == "") {
       console.warn("No URL configured for backend requests!", this.backendUrl)
-      const locations: Location[] = JSON.parse(
-        localStorage.getItem("locations") || "[]"
-      )
+      const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
       if (locations.length > 0) {
         this.router.navigate(["/backend-error"])
       } else {
-        this.router.navigate([
-          environment.isMultiLocation ? "locations" : "location/add"
-        ])
+        this.router.navigate([environment.isMultiLocation ? "locations" : "location/add"])
       }
       return throwError(
         () =>
@@ -93,10 +84,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     const token = this.authService.getToken()
     if (token) {
       newRequest = originalRequest.clone({
-        headers: originalRequest.headers.set(
-          "Authorization",
-          "Bearer " + token
-        ),
+        headers: originalRequest.headers.set("Authorization", "Bearer " + token),
         url: this.backendUrl + originalRequest.url
       })
     }
@@ -113,11 +101,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
       }),
       catchError(error => {
         if (error instanceof HttpErrorResponse) {
-          if (
-            error.status === 400 ||
-            error.status === 403 ||
-            error.status === 500
-          ) {
+          if (error.status === 400 || error.status === 403 || error.status === 500) {
             // Bad request/unauthorized access/internal server error
             console.error("Error when calling backend service:", error)
             return throwError(() => error)
@@ -126,10 +110,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
             this.authService.logout(false)
             console.error("Session expired! Redirecting to login page...")
             return of(undefined)
-          } else if (
-            error.status === 0 &&
-            error.statusText === "Unknown Error"
-          ) {
+          } else if (error.status === 0 && error.statusText === "Unknown Error") {
             // No connection to the REST API
             console.error(
               "No connection to the security system! Status:",

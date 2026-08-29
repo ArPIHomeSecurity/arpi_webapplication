@@ -14,11 +14,7 @@
             }
             <mat-form-field>
               <mat-label i18n="@@keypad type">Keypad type</mat-label>
-              <mat-select
-                formControlName="keypadType"
-                i18n-placeholder="@@keypad type"
-                placeholder="Keypad type"
-              >
+              <mat-select formControlName="keypadType" i18n-placeholder="@@keypad type" placeholder="Keypad type">
                 @for (type of keypadTypes; track type) {
                   <mat-option [value]="type.id">
                     {{ type.name }}

@@ -11,26 +11,20 @@ export class BiometricService {
   constructor() {}
 
   isBiometricEnabled(locationId: string): boolean | null {
-    const status = JSON.parse(
-      localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}"
-    )
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}")
     const value = status?.[locationId]
     return value === null || value === undefined ? null : value
   }
 
   enableBiometricLogin(locationId: string): void {
-    const status = JSON.parse(
-      localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}"
-    )
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}")
     // restore initial state when user can decide at login if biometric should be used
     status[locationId] = null
     localStorage.setItem(BIOMETRIC_ENABLED_KEY, JSON.stringify(status))
   }
 
   disableBiometricLogin(locationId: string): void {
-    const status = JSON.parse(
-      localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}"
-    )
+    const status = JSON.parse(localStorage.getItem(BIOMETRIC_ENABLED_KEY) || "{}")
     status[locationId] = false
     localStorage.setItem(BIOMETRIC_ENABLED_KEY, JSON.stringify(status))
   }

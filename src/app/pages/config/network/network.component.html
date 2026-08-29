@@ -4,19 +4,13 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title i18n="@@network dns">Dynamic DNS</mat-panel-title>
-          <mat-panel-description i18n="@@network remote access">
-            Remote access by hostname
-          </mat-panel-description>
+          <mat-panel-description i18n="@@network remote access">Remote access by hostname</mat-panel-description>
         </mat-expansion-panel-header>
         <form [formGroup]="dyndnsForm" (ngSubmit)="onSaveDyndns()" class="network-form">
           <div class="row">
             <mat-form-field class="container-item">
               <mat-label i18n="@@network provider">Provider</mat-label>
-              <mat-select
-                formControlName="dyndnsProvider"
-                i18n-placeholder="@@network provider"
-                placeholder="Provider"
-              >
+              <mat-select formControlName="dyndnsProvider" i18n-placeholder="@@network provider" placeholder="Provider">
                 @for (provider of providers; track provider) {
                   <mat-option [value]="provider.value">
                     {{ provider.label }}
@@ -77,11 +71,7 @@
               mat-raised-button
               color="primary"
               type="submit"
-              [disabled]="
-                monitoringState != monitoringStates.READY ||
-                dyndnsForm.invalid ||
-                dyndnsForm.pristine
-              "
+              [disabled]="monitoringState != monitoringStates.READY || dyndnsForm.invalid || dyndnsForm.pristine"
               i18n="@@save button"
             >
               Save
@@ -99,17 +89,11 @@
             Enable SSH connection
           </mat-checkbox>
           <br />
-          <mat-checkbox
-            formControlName="accessSshRestrictLocalNetwork"
-            i18n="@@network restrict local"
-          >
+          <mat-checkbox formControlName="accessSshRestrictLocalNetwork" i18n="@@network restrict local">
             Restrict SSH connection to local network
           </mat-checkbox>
           <br />
-          <mat-checkbox
-            formControlName="accessSshPasswordAuthentication"
-            i18n="@@network password authentication"
-          >
+          <mat-checkbox formControlName="accessSshPasswordAuthentication" i18n="@@network password authentication">
             Enable SSH password authentication
           </mat-checkbox>
           <div class="form-actions">
@@ -118,10 +102,7 @@
               color="primary"
               type="submit"
               [disabled]="
-                !(
-                  monitoringState == monitoringStates.READY ||
-                  monitoringState == monitoringStates.ARMED
-                ) ||
+                !(monitoringState == monitoringStates.READY || monitoringState == monitoringStates.ARMED) ||
                 accessForm.invalid ||
                 accessForm.pristine
               "

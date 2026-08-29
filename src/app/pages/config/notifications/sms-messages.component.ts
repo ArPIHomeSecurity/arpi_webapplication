@@ -31,9 +31,7 @@ export class SmsMessagesDialogComponent implements OnInit {
   onDeleteMessage(smsMessage: any): void {
     this.loading = true
     this.configService.deleteSmsMessage(smsMessage.idx).subscribe(() => {
-      this.smsMessages = this.smsMessages.filter(
-        message => message !== smsMessage
-      )
+      this.smsMessages = this.smsMessages.filter(message => message !== smsMessage)
       this.loading = false
     })
   }
@@ -41,9 +39,7 @@ export class SmsMessagesDialogComponent implements OnInit {
   onDeleteAllMessages(): void {
     this.loading = true
     forkJoin(
-      this.smsMessages.map(smsMessage =>
-        this.configService.deleteSmsMessage(smsMessage.idx)
-      )
+      this.smsMessages.map(smsMessage => this.configService.deleteSmsMessage(smsMessage.idx))
     ).subscribe(() => {
       this.dialogRef.close()
       this.loading = false

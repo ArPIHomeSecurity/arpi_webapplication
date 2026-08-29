@@ -13,10 +13,7 @@ import { NotificationsComponent } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
 import { EventsComponent } from "./pages/events/events.component"
 import { HomeComponent } from "./pages/home"
-import {
-  LocationDetailsComponent,
-  LocationListComponent
-} from "./pages/location"
+import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
 import { OutputDetailComponent, OutputListComponent } from "./pages/output"

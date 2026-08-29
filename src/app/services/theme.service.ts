@@ -47,9 +47,7 @@ export class ThemeService {
     this.renderer.addClass(document.body, this.theme)
     this.renderer.removeClass(
       document.body,
-      this.theme === "argus-dark-theme"
-        ? "argus-light-theme"
-        : "argus-dark-theme"
+      this.theme === "argus-dark-theme" ? "argus-light-theme" : "argus-dark-theme"
     )
   }
 

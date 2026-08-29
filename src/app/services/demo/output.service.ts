@@ -43,8 +43,7 @@ export class OutputService {
 
   createOutput(output: Output): Observable<Output> {
     // get the maximum id and increment it
-    output.id =
-      Math.max.apply(Math.max, this.outputs.map(o => o.id).concat([0])) + 1
+    output.id = Math.max.apply(Math.max, this.outputs.map(o => o.id).concat([0])) + 1
 
     this.outputs.push(output)
     setSessionValue("OutputService.outputs", this.outputs)

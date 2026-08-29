@@ -3,11 +3,7 @@ import { Observable, of } from "rxjs"
 import { delay, map } from "rxjs/operators"
 
 import { AuthenticationService } from "@app/services"
-import {
-  EventService,
-  MonitoringService,
-  UserService
-} from "@app/services/demo"
+import { EventService, MonitoringService, UserService } from "@app/services/demo"
 import { Card } from "@app/models"
 import { CARDS } from "@app/demo/configuration"
 import { getSessionValue, setSessionValue } from "@app/utils"
@@ -56,9 +52,7 @@ export class CardService {
 
   deleteCard(cardId: number): Observable<boolean> {
     const cardIndex = this.cards.findIndex(c => c.id === cardId)
-    const userIndex = this.userService.users.findIndex(
-      u => u.id === this.cards[cardIndex].userId
-    )
+    const userIndex = this.userService.users.findIndex(u => u.id === this.cards[cardIndex].userId)
     if (userIndex !== -1) {
       this.userService.users[userIndex].hasCard = false
       this.cards[cardIndex].userId = null
@@ -74,9 +68,7 @@ export class CardService {
     const userIndex = this.userService.users.findIndex(u => u.registeringCards)
     if (userIndex !== -1) {
       this.registerCard(cardId, userIndex)
-    } else if (
-      this.cards[this.cards.findIndex(c => c.id === cardId)].userId !== null
-    ) {
+    } else if (this.cards[this.cards.findIndex(c => c.id === cardId)].userId !== null) {
       this.monitoringService.disarm()
     }
 

@@ -59,10 +59,7 @@ class Channel {
   providers: [],
   standalone: false
 })
-export class SensorDetailComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class SensorDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   sensorId: number
   sensor: Sensor = undefined
   sensors: Sensor[]
@@ -119,8 +116,7 @@ export class SensorDetailComponent
       this.eventService
         .listen("system_state_change")
         .subscribe(
-          monitoringState =>
-            (this.monitoringState = string2MonitoringState(monitoringState))
+          monitoringState => (this.monitoringState = string2MonitoringState(monitoringState))
         )
     )
 
@@ -177,18 +173,11 @@ export class SensorDetailComponent
 
           this.sensor = new Sensor()
           this.sensor.enabled = true
-          const firstFreeChannel = this.channels.find(
-            ch => ch.sensor == null && ch.channel >= 0
-          )
-          this.sensor.channel = firstFreeChannel
-            ? firstFreeChannel.channel
-            : null
-          this.sensor.channelType =
-            this.boardVersion >= 3 ? ChannelTypes.NORMAL : null
-          this.sensor.sensorContactType =
-            this.boardVersion >= 3 ? SensorContactTypes.NC : null
-          this.sensor.sensorEolCount =
-            this.boardVersion >= 3 ? SensorEOLCount.SINGLE : null
+          const firstFreeChannel = this.channels.find(ch => ch.sensor == null && ch.channel >= 0)
+          this.sensor.channel = firstFreeChannel ? firstFreeChannel.channel : null
+          this.sensor.channelType = this.boardVersion >= 3 ? ChannelTypes.NORMAL : null
+          this.sensor.sensorContactType = this.boardVersion >= 3 ? SensorContactTypes.NC : null
+          this.sensor.sensorEolCount = this.boardVersion >= 3 ? SensorEOLCount.SINGLE : null
           this.sensor.zoneId = -1
           this.sensor.areaId = this.areas.length >= 1 ? this.areas[0].id : -1
           this.sensor.typeId = this.sensorTypes[0].id
@@ -209,44 +198,26 @@ export class SensorDetailComponent
   updateForm(sensor: Sensor) {
     // create zone form if new zone is selected (zoneId)
     this.zoneForm = this.fb.group({
-      zoneName: new FormControl("", [
-        Validators.required,
-        Validators.maxLength(32)
-      ]),
+      zoneName: new FormControl("", [Validators.required, Validators.maxLength(32)]),
       disarmedAlert: false,
       disarmedDelay: new FormControl(0),
       awayArmedAlert: true,
-      awayAlertDelay: new FormControl(0, [
-        Validators.required,
-        positiveInteger()
-      ]),
-      awayArmDelay: new FormControl(0, [
-        Validators.required,
-        positiveInteger()
-      ]),
+      awayAlertDelay: new FormControl(0, [Validators.required, positiveInteger()]),
+      awayArmDelay: new FormControl(0, [Validators.required, positiveInteger()]),
       stayArmedAlert: true,
-      stayAlertDelay: new FormControl(0, [
-        Validators.required,
-        positiveInteger()
-      ]),
+      stayAlertDelay: new FormControl(0, [Validators.required, positiveInteger()]),
       stayArmDelay: new FormControl(0, [Validators.required, positiveInteger()])
     })
 
     this.areaForm = this.fb.group({
-      areaName: new FormControl("", [
-        Validators.required,
-        Validators.maxLength(32)
-      ])
+      areaName: new FormControl("", [Validators.required, Validators.maxLength(32)])
     })
 
     this.sensorForm = this.fb.group(
       {
         channel: new FormControl(sensor.channel),
         channelType: new FormControl(sensor.channelType, Validators.required),
-        sensorContactType: new FormControl(
-          sensor.sensorContactType,
-          Validators.required
-        ),
+        sensorContactType: new FormControl(sensor.sensorContactType, Validators.required),
         eolCount: new FormControl(sensor.sensorEolCount, Validators.required),
         typeId: new FormControl(sensor.typeId, Validators.required),
 
@@ -266,10 +237,7 @@ export class SensorDetailComponent
           Validators.max(100),
           Validators.pattern(/^\d+$/)
         ]),
-        name: new FormControl(sensor.name, [
-          Validators.required,
-          Validators.maxLength(16)
-        ]),
+        name: new FormControl(sensor.name, [Validators.required, Validators.maxLength(16)]),
         description: new FormControl(sensor.description),
         zoneForm: this.zoneForm,
         areaForm: this.areaForm,
@@ -288,20 +256,14 @@ export class SensorDetailComponent
 
     if (sensor.monitorPeriod != null && sensor.monitorThreshold != null) {
       this.sensorForm.controls.sensitivity.setValue("custom")
-      this.sensorForm.controls.monitorPeriod.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
       this.sensorForm.controls.monitorPeriod.enable()
       this.sensorForm.controls.monitorThreshold.setValidators([
         Validators.required,
         positiveInteger()
       ])
       this.sensorForm.controls.monitorThreshold.enable()
-    } else if (
-      sensor.monitorPeriod == null &&
-      sensor.monitorThreshold != null
-    ) {
+    } else if (sensor.monitorPeriod == null && sensor.monitorThreshold != null) {
       this.sensorForm.controls.sensitivity.setValue("instant")
       this.sensorForm.controls.monitorPeriod.disable()
       this.sensorForm.controls.monitorPeriod.clearValidators()
@@ -324,9 +286,7 @@ export class SensorDetailComponent
 
     if (this.boardVersion >= 3) {
       this.sensorForm.controls.channelType.setValidators(Validators.required)
-      this.sensorForm.controls.sensorContactType.setValidators(
-        Validators.required
-      )
+      this.sensorForm.controls.sensorContactType.setValidators(Validators.required)
       this.sensorForm.controls.eolCount.setValidators(Validators.required)
     } else {
       this.sensorForm.controls.channelType.clearValidators()
@@ -351,9 +311,7 @@ export class SensorDetailComponent
         return null
       }
 
-      const selectedChannel = this.channels.find(
-        ch => ch.channel === control.value.channel
-      )
+      const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel)
       const selectedChannelType = this.sensorForm.value.channelType
 
       // if selected channel type is A or B, allow only opposite type channels
@@ -422,10 +380,7 @@ export class SensorDetailComponent
   }
 
   onChannelTypeChanged(event) {
-    if (
-      event.value === ChannelTypes.CHANNEL_A ||
-      event.value === ChannelTypes.CHANNEL_B
-    ) {
+    if (event.value === ChannelTypes.CHANNEL_A || event.value === ChannelTypes.CHANNEL_B) {
       this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE)
       this.sensorForm.controls.eolCount.disable()
     } else {
@@ -435,10 +390,7 @@ export class SensorDetailComponent
 
   onSensitivityChanged(event) {
     if (event.value === "custom") {
-      this.sensorForm.controls.monitorPeriod.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
       this.sensorForm.controls.monitorPeriod.enable()
       this.sensorForm.controls.monitorThreshold.setValidators([
         Validators.required,
@@ -474,14 +426,8 @@ export class SensorDetailComponent
 
     if (this.sensor.zoneId === -1 || this.sensor.areaId === -1) {
       forkJoin({
-        resultZone:
-          this.sensor.zoneId === -1
-            ? this.zoneService.createZone(zone)
-            : of(null),
-        resultArea:
-          this.sensor.areaId === -1
-            ? this.areaService.createArea(area)
-            : of(null)
+        resultZone: this.sensor.zoneId === -1 ? this.zoneService.createZone(zone) : of(null),
+        resultArea: this.sensor.areaId === -1 ? this.areaService.createArea(area) : of(null)
       }).subscribe({
         next: results => {
           if (results.resultZone) {
@@ -502,37 +448,25 @@ export class SensorDetailComponent
             .subscribe(_ => this.router.navigate(["/sensors"]))
         },
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else if (this.sensorId != null) {
       this.sensorService.updateSensor(sensor).subscribe({
         next: () => this.router.navigate(["/sensors"]),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else {
       this.sensorService.createSensor(sensor).subscribe({
         next: () => this.router.navigate(["/sensors"]),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     }
   }
@@ -599,21 +533,11 @@ export class SensorDetailComponent
       id: sensorModel.zoneId,
       name: zoneModel.zoneName,
       description: zoneModel.zoneName,
-      disarmedDelay: zoneModel.disarmedAlert
-        ? parseInt(zoneModel.disarmedDelay, 10)
-        : null,
-      awayAlertDelay: zoneModel.awayArmedAlert
-        ? parseInt(zoneModel.awayAlertDelay, 10)
-        : null,
-      awayArmDelay: zoneModel.awayArmedAlert
-        ? parseInt(zoneModel.awayArmDelay, 10)
-        : null,
-      stayAlertDelay: zoneModel.stayArmedAlert
-        ? parseInt(zoneModel.stayAlertDelay, 10)
-        : null,
-      stayArmDelay: zoneModel.stayArmedAlert
-        ? parseInt(zoneModel.stayArmDelay, 10)
-        : null,
+      disarmedDelay: zoneModel.disarmedAlert ? parseInt(zoneModel.disarmedDelay, 10) : null,
+      awayAlertDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayAlertDelay, 10) : null,
+      awayArmDelay: zoneModel.awayArmedAlert ? parseInt(zoneModel.awayArmDelay, 10) : null,
+      stayAlertDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayAlertDelay, 10) : null,
+      stayArmDelay: zoneModel.stayArmedAlert ? parseInt(zoneModel.stayArmDelay, 10) : null,
       uiOrder: null
     }
   }
@@ -641,18 +565,9 @@ export class SensorDetailComponent
 
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
-      controls.disarmedDelay.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
-      controls.awayAlertDelay.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
-      controls.stayAlertDelay.setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      controls.disarmedDelay.setValidators([Validators.required, positiveInteger()])
+      controls.awayAlertDelay.setValidators([Validators.required, positiveInteger()])
+      controls.stayAlertDelay.setValidators([Validators.required, positiveInteger()])
       controls.zoneName.setValidators(Validators.required)
     } else {
       controls.zoneName.clearValidators()
@@ -688,10 +603,7 @@ export class SensorDetailComponent
   alertWhenChanged(event, delayName) {
     const { controls } = this.zoneForm
     if (event.checked) {
-      controls[delayName].setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      controls[delayName].setValidators([Validators.required, positiveInteger()])
     } else {
       controls[delayName].clearValidators()
       controls[delayName].setErrors(null)
@@ -730,23 +642,15 @@ export class SensorDetailComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@sensor deleted:Sensor deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.router.navigate(["/sensors"])
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(
@@ -768,9 +672,7 @@ export class SensorDetailComponent
       const sensor = sensors.find(
         s => s.channel === channelId && s.channelType !== ChannelTypes.CHANNEL_B
       )
-      const sensorB = sensors.find(
-        s => s.channel === channelId && sensor?.id !== s.id
-      )
+      const sensorB = sensors.find(s => s.channel === channelId && sensor?.id !== s.id)
       channels.push({
         channel: channelId,
         sensor: sensor,

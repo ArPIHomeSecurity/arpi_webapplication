@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core"
 import { Capacitor } from "@capacitor/core"
-import {
-  LocalNotifications,
-  LocalNotificationSchema
-} from "@capacitor/local-notifications"
+import { LocalNotifications, LocalNotificationSchema } from "@capacitor/local-notifications"
 
 import { ARM_TYPE, armTypeToTextTranslated } from "@app/models"
 
@@ -51,19 +48,14 @@ export class NotificationService {
 
   private getLocations(): Array<Record<string, any>> {
     try {
-      const locations = JSON.parse(
-        localStorage.getItem(LOCATIONS_STORAGE_KEY) || "[]"
-      )
+      const locations = JSON.parse(localStorage.getItem(LOCATIONS_STORAGE_KEY) || "[]")
       return Array.isArray(locations) ? locations : []
     } catch (_error) {
       return []
     }
   }
 
-  private setLocationNotificationsEnabled(
-    locationId: string,
-    enabled: boolean
-  ): boolean {
+  private setLocationNotificationsEnabled(locationId: string, enabled: boolean): boolean {
     const locations = this.getLocations()
     const locationIndex = locations.findIndex(item => item?.id === locationId)
     if (locationIndex < 0) {
@@ -85,11 +77,7 @@ export class NotificationService {
       return true
     }
     if (platform === "web") {
-      return (
-        typeof window !== "undefined" &&
-        "Notification" in window &&
-        window.isSecureContext
-      )
+      return typeof window !== "undefined" && "Notification" in window && window.isSecureContext
     }
     return false
   }
@@ -137,11 +125,7 @@ export class NotificationService {
     )
   }
 
-  async notifyArmed(
-    locationName: string,
-    locationId: string,
-    armType: ARM_TYPE
-  ): Promise<void> {
+  async notifyArmed(locationName: string, locationId: string, armType: ARM_TYPE): Promise<void> {
     if (!this.isEnabled(locationId)) {
       return
     }
@@ -155,10 +139,7 @@ export class NotificationService {
     )
   }
 
-  async notifyDisarmed(
-    locationName: string,
-    locationId: string
-  ): Promise<void> {
+  async notifyDisarmed(locationName: string, locationId: string): Promise<void> {
     if (!this.isEnabled(locationId)) {
       return
     }
@@ -178,16 +159,12 @@ export class NotificationService {
     body: string
   ): Promise<void> {
     const platform = Capacitor.getPlatform()
-    console.log(
-      `Scheduling notification on platform: ${platform}, title: ${title}, body: ${body}`
-    )
+    console.log(`Scheduling notification on platform: ${platform}, title: ${title}, body: ${body}`)
 
     if (platform === "android") {
       const ready = await this.ensureAndroidReady()
       if (!ready) {
-        console.warn(
-          "Local notification not scheduled due to permission or channel issues."
-        )
+        console.warn("Local notification not scheduled due to permission or channel issues.")
         return
       }
 
@@ -207,10 +184,7 @@ export class NotificationService {
         notifications: [notification]
       })
         .then(result => {
-          console.log(
-            "Local notification scheduled successfully:",
-            JSON.stringify(result)
-          )
+          console.log("Local notification scheduled successfully:", JSON.stringify(result))
           return result
         })
         .catch(error => {
@@ -251,10 +225,7 @@ export class NotificationService {
 
     if (!this.channelReady) {
       const channels = await LocalNotifications.listChannels()
-      console.log(
-        "Existing local notification channels:",
-        JSON.stringify(channels)
-      )
+      console.log("Existing local notification channels:", JSON.stringify(channels))
 
       const result = await LocalNotifications.createChannel({
         id: this.alertChannelId,
@@ -264,10 +235,7 @@ export class NotificationService {
         vibration: true,
         sound: "siren"
       })
-      console.log(
-        "Local notification channel creation result:",
-        JSON.stringify(result)
-      )
+      console.log("Local notification channel creation result:", JSON.stringify(result))
       this.channelReady = true
     }
 
@@ -280,9 +248,7 @@ export class NotificationService {
     }
 
     if (!window.isSecureContext) {
-      console.warn(
-        "Browser notifications require a secure context (HTTPS or localhost)."
-      )
+      console.warn("Browser notifications require a secure context (HTTPS or localhost).")
       return false
     }
 
@@ -298,10 +264,7 @@ export class NotificationService {
     return false
   }
 
-  private async showBrowserNotification(
-    title: string,
-    body: string
-  ): Promise<void> {
+  private async showBrowserNotification(title: string, body: string): Promise<void> {
     try {
       new Notification(title, {
         body,

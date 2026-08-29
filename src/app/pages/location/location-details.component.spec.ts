@@ -75,9 +75,7 @@ describe("LocationDetailsComponent", () => {
   })
 
   afterEach(() => {
-    storageListeners.forEach(listener =>
-      window.removeEventListener("storage", listener)
-    )
+    storageListeners.forEach(listener => window.removeEventListener("storage", listener))
     storageListeners = []
     localStorage.clear()
   })
@@ -116,10 +114,7 @@ describe("LocationDetailsComponent", () => {
   })
 
   it("should repair a selected location id pointing to a missing location", async () => {
-    localStorage.setItem(
-      "locations",
-      JSON.stringify([createLocation("a".repeat(64), "Existing")])
-    )
+    localStorage.setItem("locations", JSON.stringify([createLocation("a".repeat(64), "Existing")]))
     localStorage.setItem("selectedLocationId", "c".repeat(64))
 
     const location = createLocation("b".repeat(64), "New")

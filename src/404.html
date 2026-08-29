@@ -10,9 +10,7 @@
       // Store the URL the user was trying to access when receiving the 404.
       sessionStorage.redirect = location.href;
 
-      const pathParser = new RegExp(
-        "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
-      );
+      const pathParser = new RegExp("^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$");
       const matches = pathParser.exec(window.location.pathname);
       if (matches) {
         const newPath = [matches.groups.version, matches.groups.language].join("/");

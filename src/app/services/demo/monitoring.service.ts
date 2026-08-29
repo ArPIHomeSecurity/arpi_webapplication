@@ -47,10 +47,7 @@ export class MonitoringService {
       "MonitoringService.monitoringState",
       MONITORING_STATE.STARTUP
     )
-    this.armState = getSessionValue(
-      "MonitoringService.armState",
-      ARM_TYPE.DISARMED
-    )
+    this.armState = getSessionValue("MonitoringService.armState", ARM_TYPE.DISARMED)
     this.alert = getSessionValue("MonitoringService.alert", false)
     this.datetime = getSessionValue(
       "MonitoringService.datetime",
@@ -74,22 +71,12 @@ export class MonitoringService {
     if (this.monitoringState === MONITORING_STATE.STARTUP) {
       setTimeout(() => {
         this.monitoringState = MONITORING_STATE.UPDATING_CONFIG
-        setSessionValue(
-          "MonitoringService.monitoringState",
-          this.monitoringState
-        )
-        this.eventService.updateMonitoringState(
-          monitoringState2String(this.monitoringState)
-        )
+        setSessionValue("MonitoringService.monitoringState", this.monitoringState)
+        this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
         setTimeout(() => {
           this.monitoringState = MONITORING_STATE.READY
-          setSessionValue(
-            "MonitoringService.monitoringState",
-            this.monitoringState
-          )
-          this.eventService.updateMonitoringState(
-            monitoringState2String(this.monitoringState)
-          )
+          setSessionValue("MonitoringService.monitoringState", this.monitoringState)
+          this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
         }, 3000)
       }, 2000)
     }
@@ -140,15 +127,8 @@ export class MonitoringService {
     return of(true)
   }
 
-  setArm(
-    armType: ARM_TYPE,
-    monitoringState: MONITORING_STATE,
-    updateAreas = true
-  ) {
-    if (
-      this.monitoringState === MONITORING_STATE.ARMED &&
-      this.armState !== armType
-    ) {
+  setArm(armType: ARM_TYPE, monitoringState: MONITORING_STATE, updateAreas = true) {
+    if (this.monitoringState === MONITORING_STATE.ARMED && this.armState !== armType) {
       armType = ARM_TYPE.MIXED
     }
 
@@ -161,9 +141,7 @@ export class MonitoringService {
     setSessionValue("MonitoringService.armState", this.armState)
     setSessionValue("MonitoringService.monitoringState", this.monitoringState)
     this.eventService.updateArmState(armType2String(armType))
-    this.eventService.updateMonitoringState(
-      monitoringState2String(this.monitoringState)
-    )
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
     this.authService.updateUserToken("user.token")
 
     const armService = this.injector.get(ArmService)
@@ -182,9 +160,7 @@ export class MonitoringService {
     setSessionValue("MonitoringService.monitoringState", this.monitoringState)
     this.alertService.stopAlert()
     this.eventService.updateArmState(armType2String(this.armState))
-    this.eventService.updateMonitoringState(
-      monitoringState2String(this.monitoringState)
-    )
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
     this.authService.updateUserToken("user.token")
 
     const armService = this.injector.get(ArmService)
@@ -258,40 +234,24 @@ export class MonitoringService {
     const areaService = this.injector.get(AreaService)
     const area = areaService.getAreaDirectly(sensor.areaId)
     const zone = this.zoneService.getZoneDirectly(sensor.zoneId)
-    if (
-      area.armState === ARM_TYPE.AWAY &&
-      zone.awayAlertDelay != null &&
-      sensor.enabled
-    ) {
+    if (area.armState === ARM_TYPE.AWAY && zone.awayAlertDelay != null && sensor.enabled) {
       this.monitoringState = MONITORING_STATE.ALERT_DELAY
-      this.eventService.updateMonitoringState(
-        monitoringState2String(this.monitoringState)
-      )
+      this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
       setTimeout(() => {
         this.monitoringState = MONITORING_STATE.ALERT
-        this.eventService.updateMonitoringState(
-          monitoringState2String(this.monitoringState)
-        )
+        this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
         if (area.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
             this.alertService.createAlert([sensor], ALERT_TYPE.AWAY)
           }
         }
       }, 1000 * zone.awayAlertDelay)
-    } else if (
-      area.armState === ARM_TYPE.STAY &&
-      zone.stayAlertDelay != null &&
-      sensor.enabled
-    ) {
+    } else if (area.armState === ARM_TYPE.STAY && zone.stayAlertDelay != null && sensor.enabled) {
       this.monitoringState = MONITORING_STATE.ALERT_DELAY
-      this.eventService.updateMonitoringState(
-        monitoringState2String(this.monitoringState)
-      )
+      this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
       setTimeout(() => {
         this.monitoringState = MONITORING_STATE.ALERT
-        this.eventService.updateMonitoringState(
-          monitoringState2String(this.monitoringState)
-        )
+        this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
         if (area.armState !== ARM_TYPE.DISARMED) {
           if (sensor.alert) {
             this.alertService.createAlert([sensor], ALERT_TYPE.STAY)
@@ -320,15 +280,11 @@ export class MonitoringService {
   resetReferences() {
     this.monitoringState = MONITORING_STATE.UPDATING_CONFIG
     setSessionValue("MonitoringService.monitoringState", this.monitoringState)
-    this.eventService.updateMonitoringState(
-      monitoringState2String(this.monitoringState)
-    )
+    this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
     setTimeout(() => {
       this.monitoringState = MONITORING_STATE.READY
       setSessionValue("MonitoringService.monitoringState", this.monitoringState)
-      this.eventService.updateMonitoringState(
-        monitoringState2String(this.monitoringState)
-      )
+      this.eventService.updateMonitoringState(monitoringState2String(this.monitoringState))
     }, 3000)
   }
 }

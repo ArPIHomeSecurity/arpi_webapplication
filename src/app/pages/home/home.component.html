@@ -36,10 +36,7 @@
   @if (areas.length == 1) {
     <div class="container-item areas">
       @for (sensor of sensors; track sensor) {
-        <component-sensor
-          [sensor]="sensor"
-          [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
-        />
+        <component-sensor [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)" />
       }
     </div>
   }

@@ -26,13 +26,9 @@ export class MCPTokenDialogComponent {
 
   copyToken() {
     this.clipboard.copy(this.data.token)
-    this.snackBar.open(
-      $localize`:@@copied to clipboard:Copied to clipboard!`,
-      null,
-      {
-        duration: environment.snackDuration
-      }
-    )
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    })
   }
 
   onClickClose(): void {

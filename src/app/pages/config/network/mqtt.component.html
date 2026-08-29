@@ -3,16 +3,12 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title i18n="@@network mqtt settings">MQTT Settings</mat-panel-title>
-      <mat-panel-description i18n="@@network mqtt description">
-        Configure MQTT broker connection
-      </mat-panel-description>
+      <mat-panel-description i18n="@@network mqtt description">Configure MQTT broker connection</mat-panel-description>
     </mat-expansion-panel-header>
     @if (mqttForm) {
       <form [formGroup]="mqttForm" (ngSubmit)="onSaveMqtt()" class="mqtt-form">
         <div class="row">
-          <mat-checkbox formControlName="mqttEnabled" i18n="@@network mqtt enable">
-            Enable MQTT connection
-          </mat-checkbox>
+          <mat-checkbox formControlName="mqttEnabled" i18n="@@network mqtt enable">Enable MQTT connection</mat-checkbox>
           <mat-checkbox formControlName="mqttExternal" i18n="@@network mqtt external">
             Use external MQTT broker
           </mat-checkbox>
@@ -65,9 +61,7 @@
         }
         @if (mqttForm.controls["mqttEnabled"].value && mqttForm.controls["mqttExternal"].value) {
           <div class="row">
-            <mat-checkbox formControlName="mqttTlsEnabled" i18n="@@network mqtt enable tls">
-              Enable TLS
-            </mat-checkbox>
+            <mat-checkbox formControlName="mqttTlsEnabled" i18n="@@network mqtt enable tls">Enable TLS</mat-checkbox>
             <mat-checkbox formControlName="mqttTlsInsecure" i18n="@@network mqtt insecure tls">
               Allow insecure TLS connection
             </mat-checkbox>
@@ -79,12 +73,8 @@
             <p i18n="@@network mqtt internal broker read info">
               For external clients that only display the state of the system.
             </p>
-            <ng-container
-              *ngTemplateOutlet="internalCredentials; context: { config: mqttInternalRead }"
-            ></ng-container>
-            <h3 i18n="@@network mqtt internal broker control">
-              Internal MQTT Broker read and control
-            </h3>
+            <ng-container *ngTemplateOutlet="internalCredentials; context: { config: mqttInternalRead }"></ng-container>
+            <h3 i18n="@@network mqtt internal broker control">Internal MQTT Broker read and control</h3>
             <p i18n="@@network mqtt internal broker control info">
               For external clients that also arm and disarm the system, like Home Assistant.
             </p>
@@ -98,9 +88,7 @@
             mat-raised-button
             color="primary"
             type="submit"
-            [disabled]="
-              monitoringState != monitoringStates.READY || mqttForm.invalid || mqttForm.pristine
-            "
+            [disabled]="monitoringState != monitoringStates.READY || mqttForm.invalid || mqttForm.pristine"
             i18n="@@save button"
           >
             Save

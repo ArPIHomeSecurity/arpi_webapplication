@@ -66,24 +66,16 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
       } else if (this.registrationForm.controls.unit.value === "hours") {
         expiry = this.registrationForm.controls.counter.value * 60 * 60
       } else {
-        console.error(
-          "Unknown time unit: ",
-          this.registrationForm.controls.unit.value
-        )
+        console.error("Unknown time unit: ", this.registrationForm.controls.unit.value)
       }
     } else if (this.registrationForm.controls.mode.value === "no_expiry") {
     } else {
-      console.error(
-        "Unknown expiry mode: ",
-        this.registrationForm.controls.mode.value
-      )
+      console.error("Unknown expiry mode: ", this.registrationForm.controls.mode.value)
     }
 
-    this.userService
-      .generateRegistrationCode(this.user.id, expiry)
-      .subscribe(code => {
-        this.registrationCode = code.code.match(/.{1,3}/g).join("-")
-      })
+    this.userService.generateRegistrationCode(this.user.id, expiry).subscribe(code => {
+      this.registrationCode = code.code.match(/.{1,3}/g).join("-")
+    })
   }
 
   onClickClose(): void {
@@ -105,12 +97,8 @@ export class UserDeviceRegistrationDialogComponent implements OnInit {
 
   copyText(val: string) {
     this.clipboard.copy(val)
-    this.snackBar.open(
-      $localize`:@@copied to clipboard:Copied to clipboard!`,
-      null,
-      {
-        duration: environment.snackDuration
-      }
-    )
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    })
   }
 }

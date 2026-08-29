@@ -1,10 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from "@angular/core"
 
-import {
-  CdkDragDrop,
-  CdkDragStart,
-  moveItemInArray
-} from "@angular/cdk/drag-drop"
+import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
@@ -54,10 +50,7 @@ interface SensorAttribute {
   providers: [],
   standalone: false
 })
-export class SensorListComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   @Input() onlyAlerting = false
 
   sensors: Sensor[] = null
@@ -100,9 +93,7 @@ export class SensorListComponent
 
     // TODO: update only one sensor instead of the whole page
     this.baseSubscriptions.push(
-      this.eventService
-        .listen("sensors_state_change")
-        .subscribe(_ => this.updateComponent())
+      this.eventService.listen("sensors_state_change").subscribe(_ => this.updateComponent())
     )
   }
 
@@ -127,9 +118,7 @@ export class SensorListComponent
         this.zones = results.zones
         this.areas = results.areas
         this.boardVersion = results.boardVersion
-        this.sensorAttributeGroupsById = this.buildSensorAttributeGroups(
-          this.sensors
-        )
+        this.sensorAttributeGroupsById = this.buildSensorAttributeGroups(this.sensors)
 
         this.loader.display(false)
         this.loader.disable(false)
@@ -175,10 +164,7 @@ export class SensorListComponent
     attributes.push({
       icon: "label",
       iconType: "material",
-      content:
-        sensor.channel !== -1
-          ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}`
-          : "-"
+      content: sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-"
     })
 
     // Channel type (only for board version >= 3)
@@ -229,10 +215,7 @@ export class SensorListComponent
     attributes.push({
       icon: "tune",
       iconType: "material",
-      content: this.getMonitorSettingsLabel(
-        sensor.monitorPeriod,
-        sensor.monitorThreshold
-      )
+      content: this.getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
     })
 
     // Enabled status
@@ -249,9 +232,7 @@ export class SensorListComponent
     attributes.push({
       icon: sensor.uiHidden ? "visibility_off" : "visibility",
       iconType: "material",
-      iconClass: sensor.uiHidden
-        ? "sensor-status-icon-hide"
-        : "sensor-status-icon-show",
+      iconClass: sensor.uiHidden ? "sensor-status-icon-hide" : "sensor-status-icon-show",
       content: sensor.uiHidden
         ? $localize`:@@sensor hidden:Hidden`
         : $localize`:@@sensor visible:Visible`
@@ -271,9 +252,7 @@ export class SensorListComponent
     return this.sensorAttributeGroupsById.get(sensorId) ?? []
   }
 
-  private buildSensorAttributeGroups(
-    sensors: Sensor[]
-  ): Map<number, SensorAttribute[][]> {
+  private buildSensorAttributeGroups(sensors: Sensor[]): Map<number, SensorAttribute[][]> {
     const groupsById = new Map<number, SensorAttribute[][]>()
     sensors.forEach(sensor => {
       groupsById.set(sensor.id, this.getSensorAttributeGroups(sensor))
@@ -334,10 +313,8 @@ export class SensorListComponent
   }
 
   private getSilentAlertLabel(silentAlert: boolean | null): string {
-    if (silentAlert === false)
-      return $localize`:@@sensor silent syren:Alarm with syren`
-    if (silentAlert === true)
-      return $localize`:@@sensor silent alert:Silent alert`
+    if (silentAlert === false) return $localize`:@@sensor silent syren:Alarm with syren`
+    if (silentAlert === true) return $localize`:@@sensor silent alert:Silent alert`
     return "-"
   }
 
@@ -388,23 +365,15 @@ export class SensorListComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@sensor deleted:Sensor deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@sensor deleted:Sensor deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.updateComponent()
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(

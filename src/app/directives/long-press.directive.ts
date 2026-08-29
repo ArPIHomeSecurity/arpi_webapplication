@@ -57,20 +57,14 @@ export class LongPressToggleDirective {
   private startPress() {
     this.startTimestamp = Date.now()
     setTimeout(() => {
-      if (
-        this.startTimestamp &&
-        Date.now() - this.startTimestamp > PRESS_THRESHOLD
-      ) {
+      if (this.startTimestamp && Date.now() - this.startTimestamp > PRESS_THRESHOLD) {
         this.longPressAvailable.emit(true)
       }
     }, PRESS_THRESHOLD)
   }
 
   private emitPress() {
-    if (
-      this.startTimestamp &&
-      Date.now() - this.startTimestamp > PRESS_THRESHOLD
-    ) {
+    if (this.startTimestamp && Date.now() - this.startTimestamp > PRESS_THRESHOLD) {
       this.longPressed.emit()
     }
     this.startTimestamp = null

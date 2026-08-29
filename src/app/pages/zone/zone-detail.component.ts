@@ -1,10 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
-import {
-  UntypedFormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms"
+import { UntypedFormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 
 import { MatDialog } from "@angular/material/dialog"
@@ -35,10 +30,7 @@ const scheduleMicrotask = Promise.resolve(null)
   providers: [],
   standalone: false
 })
-export class ZoneDetailComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class ZoneDetailComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   zoneId: number
   zone: Zone = undefined
   sensors: Sensor[]
@@ -113,42 +105,29 @@ export class ZoneDetailComponent
 
   updateForm(zone: Zone) {
     this.zoneForm = this.fb.group({
-      name: new FormControl(zone.name, [
-        Validators.required,
-        Validators.maxLength(32)
-      ]),
+      name: new FormControl(zone.name, [Validators.required, Validators.maxLength(32)]),
       disarmedAlert: zone.disarmedDelay !== null,
       disarmedDelay: new FormControl(
         zone.disarmedDelay,
-        zone.disarmedDelay != null
-          ? [Validators.required, positiveInteger()]
-          : null
+        zone.disarmedDelay != null ? [Validators.required, positiveInteger()] : null
       ),
       awayArmedAlert: zone.awayAlertDelay !== null,
       awayAlertDelay: new FormControl(
         zone.awayAlertDelay,
-        zone.awayAlertDelay != null
-          ? [Validators.required, positiveInteger()]
-          : null
+        zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null
       ),
       awayArmDelay: new FormControl(
         zone.awayArmDelay,
-        zone.awayAlertDelay != null
-          ? [Validators.required, positiveInteger()]
-          : null
+        zone.awayAlertDelay != null ? [Validators.required, positiveInteger()] : null
       ),
       stayArmedAlert: zone.stayAlertDelay !== null,
       stayAlertDelay: new FormControl(
         zone.stayAlertDelay,
-        zone.stayAlertDelay != null
-          ? [Validators.required, positiveInteger()]
-          : null
+        zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null
       ),
       stayArmDelay: new FormControl(
         zone.stayArmDelay,
-        zone.stayAlertDelay != null
-          ? [Validators.required, positiveInteger()]
-          : null
+        zone.stayAlertDelay != null ? [Validators.required, positiveInteger()] : null
       ),
       description: new FormControl(zone.description, [
         Validators.required,
@@ -163,25 +142,17 @@ export class ZoneDetailComponent
       this.zoneService.updateZone(zone).subscribe({
         next: _ => this.router.navigate(["/zones"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
     } else {
       this.zoneService.createZone(zone).subscribe({
         next: _ => this.router.navigate(["/zones"]),
         error: _ =>
-          this.snackBar.open(
-            $localize`:@@failed create:Failed to create!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed create:Failed to create!`, null, {
+            duration: environment.snackDuration
+          })
       })
     }
   }
@@ -210,21 +181,11 @@ export class ZoneDetailComponent
     zone.id = this.zoneId
     zone.name = formModel.name
     zone.description = formModel.description
-    zone.disarmedDelay = formModel.disarmedAlert
-      ? parseInt(formModel.disarmedDelay, 10)
-      : null
-    zone.awayAlertDelay = formModel.awayArmedAlert
-      ? parseInt(formModel.awayAlertDelay, 10)
-      : null
-    zone.awayArmDelay = formModel.awayArmedAlert
-      ? parseInt(formModel.awayArmDelay, 10)
-      : null
-    zone.stayAlertDelay = formModel.stayArmedAlert
-      ? parseInt(formModel.stayAlertDelay, 10)
-      : null
-    zone.stayArmDelay = formModel.stayArmedAlert
-      ? parseInt(formModel.stayArmDelay, 10)
-      : null
+    zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null
+    zone.awayAlertDelay = formModel.awayArmedAlert ? parseInt(formModel.awayAlertDelay, 10) : null
+    zone.awayArmDelay = formModel.awayArmedAlert ? parseInt(formModel.awayArmDelay, 10) : null
+    zone.stayAlertDelay = formModel.stayArmedAlert ? parseInt(formModel.stayAlertDelay, 10) : null
+    zone.stayArmDelay = formModel.stayArmedAlert ? parseInt(formModel.stayArmDelay, 10) : null
 
     return zone
   }
@@ -236,21 +197,11 @@ export class ZoneDetailComponent
     zone.id = this.zoneId
     zone.name = formModel.name
     zone.description = formModel.description
-    zone.disarmedDelay = formModel.disarmedAlert
-      ? parseInt(formModel.disarmedDelay, 10)
-      : null
-    zone.awayAlertDelay = formModel.awayArmedAlert
-      ? parseInt(formModel.awayAlertDelay, 10)
-      : null
-    zone.awayArmDelay = formModel.awayArmedAlert
-      ? parseInt(formModel.awayArmDelay, 10)
-      : null
-    zone.stayAlertDelay = formModel.stayArmedAlert
-      ? parseInt(formModel.stayAlertDelay, 10)
-      : null
-    zone.stayArmDelay = formModel.stayArmedAlert
-      ? parseInt(formModel.stayArmDelay, 10)
-      : null
+    zone.disarmedDelay = formModel.disarmedAlert ? parseInt(formModel.disarmedDelay, 10) : null
+    zone.awayAlertDelay = formModel.awayArmedAlert ? parseInt(formModel.awayAlertDelay, 10) : null
+    zone.awayArmDelay = formModel.awayArmedAlert ? parseInt(formModel.awayArmDelay, 10) : null
+    zone.stayAlertDelay = formModel.stayArmedAlert ? parseInt(formModel.stayAlertDelay, 10) : null
+    zone.stayArmDelay = formModel.stayArmedAlert ? parseInt(formModel.stayArmDelay, 10) : null
 
     return zone
   }
@@ -285,23 +236,15 @@ export class ZoneDetailComponent
             .pipe(finalize(() => this.loader.disable(false)))
             .subscribe({
               next: _ => {
-                this.snackBar.open(
-                  $localize`:@@zone deleted:Zone deleted!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@zone deleted:Zone deleted!`, null, {
+                  duration: environment.snackDuration
+                })
                 this.router.navigate(["/zones"])
               },
               error: _ =>
-                this.snackBar.open(
-                  $localize`:@@failed delete:Failed to delete!`,
-                  null,
-                  {
-                    duration: environment.snackDuration
-                  }
-                )
+                this.snackBar.open($localize`:@@failed delete:Failed to delete!`, null, {
+                  duration: environment.snackDuration
+                })
             })
         } else {
           this.snackBar.open(
@@ -319,10 +262,7 @@ export class ZoneDetailComponent
   alertWhenChanged(event, delayName) {
     const controls = this.zoneForm.controls
     if (event.checked) {
-      controls[delayName].setValidators([
-        Validators.required,
-        positiveInteger()
-      ])
+      controls[delayName].setValidators([Validators.required, positiveInteger()])
     } else {
       controls[delayName].setValidators(null)
     }

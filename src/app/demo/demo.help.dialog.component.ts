@@ -33,13 +33,9 @@ export class DemoHelpDialogComponent {
   copyToClipboard(text: string) {
     this.clipboard.copy(text)
 
-    this.snackBar.open(
-      $localize`:@@copied to clipboard:Copied to clipboard!`,
-      null,
-      {
-        duration: environment.snackDuration
-      }
-    )
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    })
   }
 
   onClose(): void {

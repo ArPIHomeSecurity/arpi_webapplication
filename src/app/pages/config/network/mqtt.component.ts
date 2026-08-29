@@ -1,10 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
-import {
-  FormGroup,
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-  Validators
-} from "@angular/forms"
+import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from "@angular/forms"
 import { MatButtonModule } from "@angular/material/button"
 import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatDividerModule } from "@angular/material/divider"
@@ -21,12 +16,7 @@ import { NgTemplateOutlet } from "@angular/common"
 import { MatListModule } from "@angular/material/list"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { Option } from "@app/models"
-import {
-  ConfigurationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from "@app/services"
 import { getValue } from "@app/utils"
 import { environment } from "@environments/environment"
 import { forkJoin, Subscription } from "rxjs"
@@ -51,10 +41,7 @@ const scheduleMicrotask = Promise.resolve(null)
     NgTemplateOutlet
   ]
 })
-export class MqttComponent
-  extends ConfigurationBaseComponent
-  implements OnInit, OnDestroy
-{
+export class MqttComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   mqttForm: FormGroup
   mqttConnection: Option = null
   mqttInternalRead: Option = null
@@ -97,23 +84,12 @@ export class MqttComponent
     forkJoin({
       mqttConnection: this.configService.getOption("mqtt", "connection"),
       mqttInternalRead: this.configService.getOption("mqtt", "internal_read"),
-      mqttInternalControl: this.configService.getOption(
-        "mqtt",
-        "internal_control"
-      ),
-      mqttExternalPublish: this.configService.getOption(
-        "mqtt",
-        "external_publish"
-      )
+      mqttInternalControl: this.configService.getOption("mqtt", "internal_control"),
+      mqttExternalPublish: this.configService.getOption("mqtt", "external_publish")
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(
-        ({
-          mqttConnection,
-          mqttInternalRead,
-          mqttInternalControl,
-          mqttExternalPublish
-        }) => {
+        ({ mqttConnection, mqttInternalRead, mqttInternalControl, mqttExternalPublish }) => {
           this.mqttConnection = mqttConnection
           this.mqttInternalRead = mqttInternalRead
           this.mqttInternalControl = mqttInternalControl
@@ -133,10 +109,7 @@ export class MqttComponent
     this.mqttForm = this.fb.group({
       mqttEnabled: mqttEnabled,
       mqttExternal: [{ value: mqttExternal, disabled: !mqttEnabled }],
-      mqttHostname: [
-        getValue(mqttExternalPublish?.value, "hostname"),
-        Validators.required
-      ],
+      mqttHostname: [getValue(mqttExternalPublish?.value, "hostname"), Validators.required],
       mqttPort: [
         getValue(mqttExternalPublish?.value, "port"),
         [Validators.required, Validators.min(1), Validators.max(65535)]
@@ -144,25 +117,14 @@ export class MqttComponent
       mqttUsername: getValue(mqttExternalPublish?.value, "username"),
       mqttPassword: getValue(mqttExternalPublish?.value, "password"),
       mqttTlsEnabled: getValue(mqttExternalPublish?.value, "tls_enabled", true),
-      mqttTlsInsecure: getValue(
-        mqttExternalPublish?.value,
-        "tls_insecure",
-        false
-      )
+      mqttTlsInsecure: getValue(mqttExternalPublish?.value, "tls_insecure", false)
     })
 
-    if (
-      this.mqttForm.get("mqttEnabled").value &&
-      this.mqttForm.get("mqttExternal").value
-    ) {
+    if (this.mqttForm.get("mqttEnabled").value && this.mqttForm.get("mqttExternal").value) {
       this.mqttForm.get("mqttHostname").setValidators([Validators.required])
       this.mqttForm
         .get("mqttPort")
-        .setValidators([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(65535)
-        ])
+        .setValidators([Validators.required, Validators.min(1), Validators.max(65535)])
       this.mqttForm.get("mqttUsername").setValidators([Validators.required])
       this.mqttForm.get("mqttPassword").setValidators([Validators.required])
     } else {
@@ -186,22 +148,16 @@ export class MqttComponent
   }
 
   private resetMqttFormSubscriptions() {
-    this.mqttFormSubscriptions.forEach(subscription =>
-      subscription.unsubscribe()
-    )
+    this.mqttFormSubscriptions.forEach(subscription => subscription.unsubscribe())
     this.mqttFormSubscriptions = []
   }
 
   copyToClipboard(text: string) {
     this.clipboard.copy(text)
 
-    this.snackBar.open(
-      $localize`:@@copied to clipboard:Copied to clipboard!`,
-      null,
-      {
-        duration: environment.snackDuration
-      }
-    )
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    })
   }
 
   private usesInternalBroker() {
@@ -270,13 +226,9 @@ export class MqttComponent
       .subscribe({
         next: () => this.updateComponent(),
         error: () =>
-          this.snackBar.open(
-            $localize`:@@failed update:Failed to update!`,
-            null,
-            {
-              duration: environment.snackDuration
-            }
-          )
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
       })
   }
 }

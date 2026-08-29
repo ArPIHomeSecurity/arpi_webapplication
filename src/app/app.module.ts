@@ -1,11 +1,7 @@
 // animation for material design
 import { ClipboardModule } from "@angular/cdk/clipboard"
 import { DragDropModule } from "@angular/cdk/drag-drop"
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi
-} from "@angular/common/http"
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http"
 import { NgModule, provideAppInitializer } from "@angular/core"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { MatAutocompleteModule } from "@angular/material/autocomplete"
@@ -34,10 +30,7 @@ import { MatTableModule } from "@angular/material/table"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { BrowserModule } from "@angular/platform-browser"
-import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule
-} from "@danielmoncada/angular-datetime-picker"
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from "@danielmoncada/angular-datetime-picker"
 import { environment } from "@environments/environment"
 import { DigitOnlyDirective } from "@uiowa/digit-only"
 import { CountdownModule } from "ngx-countdown"
@@ -55,11 +48,7 @@ import { AreaDetailComponent, AreaListComponent } from "./pages/area"
 import { BackendErrorComponent } from "./pages/backend-error/backend-error.component"
 import { ClockComponent } from "./pages/config/clock"
 import { KeypadComponent } from "./pages/config/keypad"
-import {
-  McpAccessComponent,
-  MqttComponent,
-  NetworkComponent
-} from "./pages/config/network"
+import { McpAccessComponent, MqttComponent, NetworkComponent } from "./pages/config/network"
 import {
   LocationComponent,
   NotificationsComponent,
@@ -67,10 +56,7 @@ import {
 } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
 import { HomeComponent } from "./pages/home"
-import {
-  LocationDetailsComponent,
-  LocationListComponent
-} from "./pages/location"
+import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
 import { SensorDetailComponent, SensorListComponent } from "./pages/sensor"
@@ -79,12 +65,7 @@ import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
 import { AppHttpInterceptor } from "./app.http.interceptor"
 import { routing } from "./app.routing"
-import {
-  AreaComponent,
-  ControllerComponent,
-  OutputComponent,
-  SensorComponent
-} from "./components"
+import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from "./components"
 import { DemoComponent } from "./demo/demo.component"
 import { DemoHelpDialogComponent } from "./demo/demo.help.dialog.component"
 import { PageNotFoundComponent } from "./page-not-found.component"

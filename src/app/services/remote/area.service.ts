@@ -44,9 +44,7 @@ export class AreaService {
   }
 
   arm(areaId: number, armtype: ARM_TYPE): Observable<Object> {
-    const params = new HttpParams()
-      .set("type", armType2String(armtype))
-      .set("area_id", areaId)
+    const params = new HttpParams().set("type", armType2String(armtype)).set("area_id", areaId)
 
     return this.http.put<Area[]>("/api/area/arm", null, { params })
   }

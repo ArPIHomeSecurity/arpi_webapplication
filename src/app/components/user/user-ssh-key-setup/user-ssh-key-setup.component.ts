@@ -79,24 +79,18 @@ export class UserSshKeySetupDialogComponent implements OnInit {
 
   setPublicKey() {
     this.loading = true
-    this.userService
-      .setPublicKey(this.user.id, this.setupKeyForm.value.publicKey)
-      .subscribe(() => {
-        this.loading = false
-        this.dialogRef.close()
-      })
+    this.userService.setPublicKey(this.user.id, this.setupKeyForm.value.publicKey).subscribe(() => {
+      this.loading = false
+      this.dialogRef.close()
+    })
   }
 
   onCopyKey(value: string) {
     this.clipboard.copy(value)
 
-    this.snackBar.open(
-      $localize`:@@copied to clipboard:Copied to clipboard!`,
-      null,
-      {
-        duration: environment.snackDuration
-      }
-    )
+    this.snackBar.open($localize`:@@copied to clipboard:Copied to clipboard!`, null, {
+      duration: environment.snackDuration
+    })
   }
 
   onClickClose() {

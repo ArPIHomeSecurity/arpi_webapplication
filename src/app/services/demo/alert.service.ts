@@ -64,9 +64,7 @@ export class AlertService {
 
   getAlert(): Observable<Alert> {
     // get sensors from api
-    return of(this.alerts.find(a => a.endTime === null)).pipe(
-      delay(environment.delay)
-    )
+    return of(this.alerts.find(a => a.endTime === null)).pipe(delay(environment.delay))
   }
 
   createAlert(sensors: Sensor[], alertType: ALERT_TYPE) {

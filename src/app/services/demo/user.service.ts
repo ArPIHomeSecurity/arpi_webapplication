@@ -41,8 +41,7 @@ export class UserService {
   }
 
   createUser(user: User): Observable<User> {
-    user.id =
-      Math.max.apply(Math.max, this.users.map(u => u.id).concat([0])) + 1
+    user.id = Math.max.apply(Math.max, this.users.map(u => u.id).concat([0])) + 1
     this.users.push(Object.assign(new UserDemo(), user))
     setSessionValue("UserService.users", this.users)
     return of(user)
@@ -94,8 +93,7 @@ export class UserService {
   }
 
   registerCard(userId: number): Observable<any> {
-    this.users[this.users.findIndex(u => u.id === userId)].registeringCards =
-      true
+    this.users[this.users.findIndex(u => u.id === userId)].registeringCards = true
     setSessionValue("UserService.users", this.users)
     return of(true)
   }
