@@ -37,29 +37,65 @@ export const DEFAULT_NOTIFICATION_SUBSCRIPTIONS = {
   option: "notifications",
   section: "subscriptions",
   value: {
+    call1: {
+      alert_started: false,
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
+    },
+    call2: {
+      alert_started: false,
+      alert_stopped: false,
+      power_outage_started: false,
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
+    },
     email1: {
       alert_started: false,
       alert_stopped: false,
       power_outage_started: false,
-      power_outage_stopped: false
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
     },
     email2: {
       alert_started: false,
       alert_stopped: false,
       power_outage_started: false,
-      power_outage_stopped: false
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
     },
     sms1: {
       alert_started: false,
       alert_stopped: false,
       power_outage_started: false,
-      power_outage_stopped: false
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
     },
     sms2: {
       alert_started: false,
       alert_stopped: false,
       power_outage_started: false,
-      power_outage_stopped: false
+      power_outage_stopped: false,
+      local_network_issue_started: false,
+      local_network_issue_stopped: false,
+      internet_issue_started: false,
+      internet_issue_stopped: false
     }
   }
 }

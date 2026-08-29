@@ -1,36 +1,23 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  Inject,
-  ViewChild,
-  TemplateRef
-} from "@angular/core"
-import { FormGroup, FormBuilder } from "@angular/forms"
+import { Component, Inject, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from "@angular/core"
+import { FormBuilder, FormGroup } from "@angular/forms"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 import { forkJoin } from "rxjs"
 import { finalize } from "rxjs/operators"
 
+import { MatDialog } from "@angular/material/dialog"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
-  Option,
-  DEFAULT_NOTIFICATION_SMTP,
   DEFAULT_NOTIFICATION_GSM,
+  DEFAULT_NOTIFICATION_SMTP,
   DEFAULT_NOTIFICATION_SUBSCRIPTIONS,
   DEFAULT_PASSWORD_VALUE,
-  MONITORING_STATE
+  MONITORING_STATE,
+  Option
 } from "@app/models"
-import {
-  ConfigurationService,
-  EventService,
-  LoaderService,
-  MonitoringService
-} from "@app/services"
+import { ConfigurationService, EventService, LoaderService, MonitoringService } from "@app/services"
 import { getValue } from "@app/utils"
 import { environment } from "@environments/environment"
-import { MatDialog } from "@angular/material/dialog"
 import { SmsMessagesDialogComponent } from "./sms-messages.component"
 
 const scheduleMicrotask = Promise.resolve(null)
@@ -59,6 +46,35 @@ export class NotificationsComponent
   testingSms = false
   testCallResult: any = {}
   testingCall = false
+
+  readonly subscriptionChannels = [
+    {
+      key: "email1",
+      label: $localize`:@@notifications send email1:Send Email 1`
+    },
+    {
+      key: "email2",
+      label: $localize`:@@notifications send email2:Send Email 2`
+    },
+    { key: "sms1", label: $localize`:@@notifications send sms1:Send SMS 1` },
+    { key: "sms2", label: $localize`:@@notifications send sms2:Send SMS 2` },
+    { key: "call1", label: $localize`:@@notifications call 1:Call 1` },
+    { key: "call2", label: $localize`:@@notifications call 2:Call 2` }
+  ]
+
+  // notification types accepted by the backend, detected from the loaded configuration
+  subscriptionTypes: string[] = []
+
+  private readonly subscriptionTypeLabels: Record<string, string> = {
+    alert_started: $localize`:@@notifications alert started:Alert started`,
+    alert_stopped: $localize`:@@notifications alert stopped:Alert stopped`,
+    power_outage_started: $localize`:@@notifications power outage started:Power outage started`,
+    power_outage_stopped: $localize`:@@notifications power outage stopped:Power outage stopped`,
+    local_network_issue_started: $localize`:@@notifications local network issue started:Local network issue started`,
+    local_network_issue_stopped: $localize`:@@notifications local network issue stopped:Local network issue stopped`,
+    internet_issue_started: $localize`:@@notifications internet issue started:Internet issue started`,
+    internet_issue_stopped: $localize`:@@notifications internet issue stopped:Internet issue stopped`
+  }
 
   constructor(
     @Inject("ConfigurationService") private configService: ConfigurationService,
@@ -93,6 +109,34 @@ export class NotificationsComponent
     super.destroy()
   }
 
+  subscriptionControl(channel: string, type: string): string {
+    return `${channel}_${type}`
+  }
+
+  subscriptionTypeLabel(type: string): string {
+    return (
+      this.subscriptionTypeLabels[type] ??
+      type.replace(/_/g, " ").replace(/^./, first => first.toUpperCase())
+    )
+  }
+
+  /**
+   * The backend always returns every accepted notification type for each channel,
+   * so the response defines which subscriptions can be configured.
+   */
+  private detectSubscriptionTypes(subscriptions: Record<string, unknown>): string[] {
+    const types: string[] = []
+    for (const channel of this.subscriptionChannels) {
+      for (const type of Object.keys(getValue(subscriptions, channel.key, {}))) {
+        if (!types.includes(type)) {
+          types.push(type)
+        }
+      }
+    }
+
+    return types.length ? types : Object.keys(DEFAULT_NOTIFICATION_SUBSCRIPTIONS.value.email1)
+  }
+
   updateForm(smtp: Option, gsm: Option, subscriptions: Option) {
     //    console.log('Email', this.email);
     //    console.log('GSM', this.gsm);
@@ -115,94 +159,25 @@ export class NotificationsComponent
       gsmEnabled: getValue(gsm.value, "enabled")
     })
 
-    this.subscriptionsForm = this.fb.group({
-      alertStartedCall1: getValue(
-        getValue(subscriptions.value, "call1"),
-        "alert_started"
-      ),
-      alertStartedCall2: getValue(
-        getValue(subscriptions.value, "call2"),
-        "alert_started"
-      ),
+    this.subscriptionTypes = this.detectSubscriptionTypes(subscriptions.value)
 
-      alertStartedEmail1: getValue(
-        getValue(subscriptions.value, "email1"),
-        "alert_started"
-      ),
-      alertStoppedEmail1: getValue(
-        getValue(subscriptions.value, "email1"),
-        "alert_stopped"
-      ),
-      powerOutageStartedEmail1: getValue(
-        getValue(subscriptions.value, "email1"),
-        "power_outage_started"
-      ),
-      powerOutageStoppedEmail1: getValue(
-        getValue(subscriptions.value, "email1"),
-        "power_outage_stopped"
-      ),
+    const subscriptionControls: Record<string, boolean> = {}
+    for (const channel of this.subscriptionChannels) {
+      const channelValue = getValue(subscriptions.value, channel.key, {})
+      for (const type of this.subscriptionTypes) {
+        subscriptionControls[this.subscriptionControl(channel.key, type)] =
+          getValue(channelValue, type, false) === true
+      }
+    }
 
-      alertStartedEmail2: getValue(
-        getValue(subscriptions.value, "email2"),
-        "alert_started"
-      ),
-      alertStoppedEmail2: getValue(
-        getValue(subscriptions.value, "email2"),
-        "alert_stopped"
-      ),
-      powerOutageStartedEmail2: getValue(
-        getValue(subscriptions.value, "email2"),
-        "power_outage_started"
-      ),
-      powerOutageStoppedEmail2: getValue(
-        getValue(subscriptions.value, "email2"),
-        "power_outage_stopped"
-      ),
-
-      alertStartedSms1: getValue(
-        getValue(subscriptions.value, "sms1"),
-        "alert_started"
-      ),
-      alertStoppedSms1: getValue(
-        getValue(subscriptions.value, "sms1"),
-        "alert_stopped"
-      ),
-      powerOutageStartedSms1: getValue(
-        getValue(subscriptions.value, "sms1"),
-        "power_outage_started"
-      ),
-      powerOutageStoppedSms1: getValue(
-        getValue(subscriptions.value, "sms1"),
-        "power_outage_stopped"
-      ),
-
-      alertStartedSms2: getValue(
-        getValue(subscriptions.value, "sms2"),
-        "alert_started"
-      ),
-      alertStoppedSms2: getValue(
-        getValue(subscriptions.value, "sms2"),
-        "alert_stopped"
-      ),
-      powerOutageStartedSms2: getValue(
-        getValue(subscriptions.value, "sms2"),
-        "power_outage_started"
-      ),
-      powerOutageStoppedSms2: getValue(
-        getValue(subscriptions.value, "sms2"),
-        "power_outage_stopped"
-      )
-    })
+    this.subscriptionsForm = this.fb.group(subscriptionControls)
   }
 
   updateComponent() {
     forkJoin({
       smtp: this.configService.getOption("notifications", "smtp"),
       gsm: this.configService.getOption("notifications", "gsm"),
-      subscriptions: this.configService.getOption(
-        "notifications",
-        "subscriptions"
-      )
+      subscriptions: this.configService.getOption("notifications", "subscriptions")
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
@@ -246,38 +221,18 @@ export class NotificationsComponent
 
   prepareSubscriptions(): any {
     const formModel = this.subscriptionsForm.value
-    return {
-      call1: {
-        alert_started: formModel.alertStartedCall1
-      },
-      call2: {
-        alert_started: formModel.alertStartedCall2
-      },
-      email1: {
-        alert_started: formModel.alertStartedEmail1,
-        alert_stopped: formModel.alertStoppedEmail1,
-        power_outage_started: formModel.powerOutageStartedEmail1,
-        power_outage_stopped: formModel.powerOutageStoppedEmail1
-      },
-      email2: {
-        alert_started: formModel.alertStartedEmail2,
-        alert_stopped: formModel.alertStoppedEmail2,
-        power_outage_started: formModel.powerOutageStartedEmail2,
-        power_outage_stopped: formModel.powerOutageStoppedEmail2
-      },
-      sms1: {
-        alert_started: formModel.alertStartedSms1,
-        alert_stopped: formModel.alertStoppedSms1,
-        power_outage_started: formModel.powerOutageStartedSms1,
-        power_outage_stopped: formModel.powerOutageStoppedSms1
-      },
-      sms2: {
-        alert_started: formModel.alertStartedSms2,
-        alert_stopped: formModel.alertStoppedSms2,
-        power_outage_started: formModel.powerOutageStartedSms2,
-        power_outage_stopped: formModel.powerOutageStoppedSms2
+    const subscriptions: Record<string, Record<string, boolean>> = {}
+
+    // only send the types detected on the backend, unknown keys are rejected
+    for (const channel of this.subscriptionChannels) {
+      const channelSubscriptions: Record<string, boolean> = {}
+      for (const type of this.subscriptionTypes) {
+        channelSubscriptions[type] = formModel[this.subscriptionControl(channel.key, type)] === true
       }
+      subscriptions[channel.key] = channelSubscriptions
     }
+
+    return subscriptions
   }
 
   canSaveSmtp() {
@@ -297,8 +252,7 @@ export class NotificationsComponent
       this.smtpForm.value.smtpPort &&
       this.smtpForm.value.smtpUsername &&
       this.smtpForm.value.smtpPassword &&
-      (this.smtpForm.value.emailAddress1 ||
-        this.smtpForm.value.emailAddress2) &&
+      (this.smtpForm.value.emailAddress1 || this.smtpForm.value.emailAddress2) &&
       this.smtpForm.value.smtpEnabled
     )
   }
@@ -342,9 +296,7 @@ export class NotificationsComponent
 
   canSaveGsm() {
     return (
-      this.monitoringState == MONITORING_STATE.READY &&
-      this.gsmForm.valid &&
-      !this.gsmForm.pristine
+      this.monitoringState == MONITORING_STATE.READY && this.gsmForm.valid && !this.gsmForm.pristine
     )
   }
 
@@ -467,9 +419,7 @@ export class NotificationsComponent
   onSubmitGsm() {
     const gsm = this.prepareGsm()
     this.loader.disable(true)
-    this.configService
-      .setOption("notifications", "gsm", gsm)
-      .subscribe(_ => this.updateComponent())
+    this.configService.setOption("notifications", "gsm", gsm).subscribe(_ => this.updateComponent())
   }
 
   onSubmitSubscriptions() {

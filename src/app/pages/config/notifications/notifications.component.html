@@ -70,17 +70,9 @@
               placeholder="Email address 2"
             />
           </mat-form-field>
-          <mat-checkbox formControlName="smtpEnabled" i18n="@@notifications smtp enabled">
-            SMTP enabled
-          </mat-checkbox>
+          <mat-checkbox formControlName="smtpEnabled" i18n="@@notifications smtp enabled">SMTP enabled</mat-checkbox>
           <div class="row">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!canSaveSmtp()"
-              i18n="@@save button"
-            >
+            <button mat-raised-button color="primary" type="submit" [disabled]="!canSaveSmtp()" i18n="@@save button">
               Save
             </button>
             <button
@@ -135,17 +127,9 @@
               placeholder="Target phone number 2"
             />
           </mat-form-field>
-          <mat-checkbox formControlName="gsmEnabled" i18n="@@notifications gsm enabled">
-            GSM enabled
-          </mat-checkbox>
+          <mat-checkbox formControlName="gsmEnabled" i18n="@@notifications gsm enabled">GSM enabled</mat-checkbox>
           <div class="row">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!canSaveGsm()"
-              i18n="@@save button"
-            >
+            <button mat-raised-button color="primary" type="submit" [disabled]="!canSaveGsm()" i18n="@@save button">
               Save
             </button>
             <button
@@ -153,9 +137,7 @@
               color="primary"
               type="button"
               (click)="onSendTestSMS()"
-              [disabled]="
-                monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
-              "
+              [disabled]="monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()"
             >
               <span i18n="@@notifications send test sms">Send test SMS</span>
               @if (testingSms) {
@@ -169,9 +151,7 @@
               color="primary"
               type="button"
               (click)="onTestCall()"
-              [disabled]="
-                monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
-              "
+              [disabled]="monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()"
             >
               <span i18n="@@notifications test call">Test call</span>
               @if (testingCall) {
@@ -185,9 +165,7 @@
               color="primary"
               type="button"
               (click)="onShowSmsMessages()"
-              [disabled]="
-                monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()
-              "
+              [disabled]="monitoringState != monitoringStates.READY || gsmForm.touched || !canTestGsm()"
             >
               <span i18n="@@notification sms">SMS messages</span>
             </button>
@@ -205,101 +183,20 @@
           <div class="mat-table">
             <div class="mat-header-row">
               <div class="mat-header-cell" i18n="@@notifications source">Event</div>
-              <div class="mat-header-cell" i18n="@@notifications send email1">Send Email 1</div>
-              <div class="mat-header-cell" i18n="@@notifications send email2">Send Email 2</div>
-              <div class="mat-header-cell" i18n="@@notifications send sms1">Send SMS 1</div>
-              <div class="mat-header-cell" i18n="@@notifications send sms2">Send SMS 2</div>
-              <div class="mat-header-cell" i18n="@@notifications call 1">Call 1</div>
-              <div class="mat-header-cell" i18n="@@notifications call 2">Call 2</div>
+              @for (channel of subscriptionChannels; track channel.key) {
+                <div class="mat-header-cell">{{ channel.label }}</div>
+              }
             </div>
-            <div class="mat-row">
-              <div class="mat-cell" i18n="@@notifications alert started">Alert started</div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedEmail1"></mat-checkbox>
+            @for (type of subscriptionTypes; track type) {
+              <div class="mat-row">
+                <div class="mat-cell">{{ subscriptionTypeLabel(type) }}</div>
+                @for (channel of subscriptionChannels; track channel.key) {
+                  <div class="mat-cell">
+                    <mat-checkbox [formControlName]="subscriptionControl(channel.key, type)"></mat-checkbox>
+                  </div>
+                }
               </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedEmail2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedSms1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedSms2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedCall1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStartedCall2"></mat-checkbox>
-              </div>
-            </div>
-            <div class="mat-row">
-              <div class="mat-cell" i18n="@@notifications alert stopped">Alert stopped</div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStoppedEmail1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStoppedEmail2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStoppedSms1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="alertStoppedSms2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-            </div>
-            <div class="mat-row">
-              <div class="mat-cell" i18n="@@notifications power outage started">
-                Power outage started
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStartedEmail1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStartedEmail2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStartedSms1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStartedSms2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-            </div>
-            <div class="mat-row">
-              <div class="mat-cell" i18n="@@notifications power outage stopped">
-                Power outage stopped
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStoppedEmail1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStoppedEmail2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStoppedSms1"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox formControlName="powerOutageStoppedSms2"></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-              <div class="mat-cell">
-                <mat-checkbox disabled></mat-checkbox>
-              </div>
-            </div>
+            }
           </div>
           <div class="form-actions">
             <button
@@ -307,9 +204,7 @@
               color="primary"
               type="submit"
               [disabled]="
-                monitoringState != monitoringStates.READY ||
-                !subscriptionsForm.valid ||
-                subscriptionsForm.pristine
+                monitoringState != monitoringStates.READY || !subscriptionsForm.valid || subscriptionsForm.pristine
               "
               i18n="@@save button"
             >
@@ -329,9 +224,7 @@
       <div>
         @switch (testEmailResult["email1"]) {
           @case (true) {
-            <div i18n="@@notifications email1 success">
-              Email sent successfully to email address 1!
-            </div>
+            <div i18n="@@notifications email1 success">Email sent successfully to email address 1!</div>
           }
           @case (false) {
             <div i18n="@@email1 failed">Failed to send to email address 1!</div>
@@ -341,9 +234,7 @@
       <div>
         @switch (testEmailResult["email2"]) {
           @case (true) {
-            <div i18n="@@notifications email2 success">
-              Email sent successfully to email address 2!
-            </div>
+            <div i18n="@@notifications email2 success">Email sent successfully to email address 2!</div>
           }
           @case (false) {
             <div i18n="@@notifications email2 failed">Failed to send to email address 2!</div>
@@ -360,9 +251,7 @@
     </div>
   }
   @if (
-    testEmailResult["email1"] == false ||
-    testEmailResult["email2"] == false ||
-    testEmailResult["connection"] == false
+    testEmailResult["email1"] == false || testEmailResult["email2"] == false || testEmailResult["connection"] == false
   ) {
     <div i18n="@@notifications test failed">Please check logs for more information!</div>
   }
@@ -396,11 +285,7 @@
   @if (testSmsResult["connection"] == false) {
     <div i18n="@@notifications gsm connection failed">Failed to connect to GSM module!</div>
   }
-  @if (
-    testSmsResult["phone1"] == false ||
-    testSmsResult["phone2"] == false ||
-    testSmsResult["connection"] == false
-  ) {
+  @if (testSmsResult["phone1"] == false || testSmsResult["phone2"] == false || testSmsResult["connection"] == false) {
     <div i18n="@@notifications test failed">Please check logs for more information!</div>
   }
 </ng-template>
@@ -434,9 +319,7 @@
     <div i18n="@@notifications gsm connection failed">Failed to connect to GSM module!</div>
   }
   @if (
-    testCallResult["phone1"] == false ||
-    testCallResult["phone2"] == false ||
-    testCallResult["connection"] == false
+    testCallResult["phone1"] == false || testCallResult["phone2"] == false || testCallResult["connection"] == false
   ) {
     <div i18n="@@notifications test failed">Please check logs for more information!</div>
   }
