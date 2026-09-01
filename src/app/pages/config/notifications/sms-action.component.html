@@ -1,0 +1,47 @@
+@if (smsActionOption != null) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title i18n="@@notifications sms action">SMS action</mat-panel-title>
+      <mat-panel-description i18n="@@notifications sms action settings">SMS action settings</mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="smsActionForm" (ngSubmit)="onSaveSmsAction()">
+      <mat-checkbox formControlName="smsActionEnabled" i18n="@@notifications sms action enabled">
+        SMS action enabled
+      </mat-checkbox>
+      <mat-checkbox formControlName="checkPhoneNumber" i18n="@@notifications check phone number">
+        Check phone number
+      </mat-checkbox>
+      <mat-checkbox formControlName="accessCodeRequired" i18n="@@notifications access code required">
+        Access code required
+      </mat-checkbox>
+      <mat-checkbox formControlName="caseSensitive" i18n="@@notifications sms command case sensitive">
+        Commands are case sensitive
+      </mat-checkbox>
+      <div class="row">
+        <mat-form-field>
+          <mat-label i18n="@@notifications sms arm away command">Arm away command</mat-label>
+          <input matInput formControlName="armAwayCommand" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label i18n="@@notifications sms arm stay command">Arm stay command</mat-label>
+          <input matInput formControlName="armStayCommand" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label i18n="@@notifications sms disarm command">Disarm command</mat-label>
+          <input matInput formControlName="disarmCommand" />
+        </mat-form-field>
+      </div>
+      <div class="form-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="monitoringState != monitoringStates.READY || smsActionForm.invalid || smsActionForm.pristine"
+          i18n="@@save button"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-expansion-panel>
+}

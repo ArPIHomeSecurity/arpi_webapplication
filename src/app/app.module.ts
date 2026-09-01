@@ -52,6 +52,7 @@ import { McpAccessComponent, MqttComponent, NetworkComponent } from "./pages/con
 import {
   LocationComponent,
   NotificationsComponent,
+  SmsActionComponent,
   SmsMessagesDialogComponent
 } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
@@ -148,6 +149,7 @@ import { CapacitorService } from "./services/capacitor.service"
     McpAccessComponent,
     MqttComponent,
     LocationComponent,
+    SmsActionComponent,
 
     MatAutocompleteModule,
     MatButtonModule,

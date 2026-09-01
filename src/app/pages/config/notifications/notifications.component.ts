@@ -31,14 +31,14 @@ export class NotificationsComponent
   extends ConfigurationBaseComponent
   implements OnInit, OnDestroy
 {
-  @ViewChild("snackbarTemplateEmail") snackbarTemplateEmail: TemplateRef<any>
-  @ViewChild("snackbarTemplateSms") snackbarTemplateSms: TemplateRef<any>
-  @ViewChild("snackbarTemplateCall") snackbarTemplateCall: TemplateRef<any>
+  @ViewChild("snackbarTemplateEmail") snackbarTemplateEmail!: TemplateRef<any>
+  @ViewChild("snackbarTemplateSms") snackbarTemplateSms!: TemplateRef<any>
+  @ViewChild("snackbarTemplateCall") snackbarTemplateCall!: TemplateRef<any>
   @Input() onlyAlerting = false
 
-  smtpForm: FormGroup
-  gsmForm: FormGroup
-  subscriptionsForm: FormGroup
+  smtpForm!: FormGroup
+  gsmForm!: FormGroup
+  subscriptionsForm!: FormGroup
 
   testEmailResult: any = {}
   testingEmail = false
@@ -386,7 +386,7 @@ export class NotificationsComponent
   onPasswordFocus() {
     const passwordControl = this.smtpForm.get("smtpPassword")
 
-    if (passwordControl.value == DEFAULT_PASSWORD_VALUE) {
+    if (passwordControl && passwordControl.value == DEFAULT_PASSWORD_VALUE) {
       passwordControl.markAsTouched()
       passwordControl.setValue("")
     }
@@ -396,7 +396,7 @@ export class NotificationsComponent
     const passwordControl = this.smtpForm.get("smtpPassword")
 
     // Check if the user has changed the password field's value.
-    if (!passwordControl.dirty) {
+    if (passwordControl && !passwordControl.dirty) {
       // If the user didn't change it, restore the initial value.
       passwordControl.setValue(DEFAULT_PASSWORD_VALUE)
     }

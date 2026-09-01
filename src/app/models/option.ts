@@ -33,6 +33,16 @@ export const DEFAULT_NOTIFICATION_GSM = {
   }
 }
 
+export const DEFAULT_NOTIFICATION_SMS_ACTION = {
+  option: "notifications",
+  section: "sms_action",
+  value: {
+    enabled: false,
+    check_phone_number: true,
+    access_code_required: false
+  }
+}
+
 export const DEFAULT_NOTIFICATION_SUBSCRIPTIONS = {
   option: "notifications",
   section: "subscriptions",
