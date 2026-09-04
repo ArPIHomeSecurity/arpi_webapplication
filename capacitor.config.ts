@@ -1,19 +1,27 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import type { CapacitorConfig } from "@capacitor/cli"
 
 const config: CapacitorConfig = {
-  appId: 'com.arpi.webapplication',
-  appName: 'ArPI',
-  webDir: 'capacitor-app',
+  appId: "com.arpi.webapplication",
+  appName: "ArPI",
+  webDir: "capacitor-app",
   server: {
     cleartext: true,
-    androidScheme: 'http'
+    androidScheme: "http"
   },
   plugins: {
+    StatusBar: {
+      overlaysWebView: false,
+      style: "DARK"
+    },
+    SystemBars: {
+      insetsHandling: "css",
+      style: "DARK"
+    },
     LocalNotifications: {
-      iconColor: '#FF0000',
+      iconColor: "#FF0000",
       presentationOptions: ["badge", "sound", "banner", "list"]
     }
   }
-};
+}
 
-export default config;
+export default config

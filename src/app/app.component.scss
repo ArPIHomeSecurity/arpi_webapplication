@@ -9,8 +9,8 @@
 
 .app-viewport {
   /* CSS variables for safe area insets (EdgeToEdge) */
-  --app-top-safe-area: env(safe-area-inset-top, 0px);
-  --app-bottom-safe-area: env(safe-area-inset-bottom, 0px);
+  --app-top-safe-area: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --app-bottom-safe-area: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
   position: fixed;
   top: 0;
   bottom: 0;
@@ -24,13 +24,7 @@
   }
 }
 
-@mixin app-theme(
-  $theme,
-  $argus-toolbar-primary,
-  $argus-ok,
-  $argus-alert,
-  $argus-warn
-) {
+@mixin app-theme($theme, $argus-toolbar-primary, $argus-ok, $argus-alert, $argus-warn) {
   $argus-accent: map.get($theme, accent);
 
   .logo {
