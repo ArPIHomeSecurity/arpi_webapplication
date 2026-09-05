@@ -34,7 +34,7 @@ const scheduleMicrotask = Promise.resolve(null)
 })
 export class SmsActionComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   smsActionForm: FormGroup
-  smsActionOption: Option | null = null
+  hasSmsActionOption = false
 
   constructor(
     @Inject("ConfigurationService") private configService: ConfigurationService,
@@ -71,11 +71,11 @@ export class SmsActionComponent extends ConfigurationBaseComponent implements On
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe({
         next: options => {
-          this.smsActionOption = options.smsAction
+          this.hasSmsActionOption = Boolean(options.smsAction?.value != null)
           this.updateForm(options.smsAction, options.smsCommand)
         },
         error: () => {
-          this.smsActionOption = null
+          this.hasSmsActionOption = false
           this.updateForm(null, null)
         }
       })

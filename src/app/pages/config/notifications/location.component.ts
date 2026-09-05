@@ -31,7 +31,7 @@ const scheduleMicrotask = Promise.resolve(null)
 })
 export class LocationComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   locationForm: FormGroup
-  locationOption: Option | null = null
+  hasLocationOption = false
 
   constructor(
     @Inject("ConfigurationService") private configService: ConfigurationService,
@@ -68,12 +68,12 @@ export class LocationComponent extends ConfigurationBaseComponent implements OnI
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe({
         next: locationOption => {
-          this.locationOption = locationOption
-          this.updateLocationForm(this.locationOption)
+          this.hasLocationOption = Boolean(locationOption?.value != null)
+          this.updateLocationForm(locationOption)
         },
         error: () => {
-          this.locationOption = null
-          this.updateLocationForm(this.locationOption)
+          this.hasLocationOption = false
+          this.updateLocationForm(null)
         }
       })
   }
