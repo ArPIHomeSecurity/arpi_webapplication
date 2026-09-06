@@ -3,6 +3,10 @@
 // `ng build --env=demo` then `environment.demo.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+/**
+ * RUNNING ON THE GITHUB PAGES
+ */
+
 import {
   AlertService,
   AreaService,

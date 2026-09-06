@@ -258,6 +258,28 @@
         </mat-card>
       }
 
+      @if (redirectToRemote) {
+        <div class="container">
+          <div class="redirect-message">
+            <mat-card>
+              <mat-card-header>
+                <mat-icon mat-card-avatar>info</mat-icon>
+                <mat-card-title i18n="@@redirect title">Remote access required</mat-card-title>
+                <mat-card-subtitle i18n="@@redirect message">
+                  Please use the remote web application to access this device.
+                </mat-card-subtitle>
+                <mat-card-subtitle i18n="@@redirect message 2">
+                  The access on this interface will be disabled in the future.
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <a href="https://app.arpi-security.info">https://app.arpi-security.info</a>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      }
+
       <!-- main app container -->
       <div class="page">
         <!-- AJAX loading spinner triggered by the loader service -->

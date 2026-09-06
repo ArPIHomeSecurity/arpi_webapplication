@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
   displayLoader = false
   disablePage = false
   message: string | null = null
+  redirectToRemote = !environment.isMultiLocation
 
   locations: Location[] = []
   selectedLocationId: string | null = null

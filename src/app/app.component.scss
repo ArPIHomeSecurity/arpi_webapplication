@@ -151,6 +151,27 @@
     box-sizing: border-box;
   }
 
+  .redirect-message {
+    width: 600px;
+
+    .mat-mdc-card {
+      .mat-mdc-card-header {
+        color: white !important;
+        background-color: mat.m2-get-color-from-palette($argus-alert);
+        padding-bottom: 10px;
+      }
+
+      .mat-mdc-card-subtitle {
+        color: white !important;
+      }
+    }
+
+    .mat-mdc-card-content {
+      padding: 10px;
+      text-align: center;
+    }
+  }
+
   #overlay {
     position: fixed;
     display: block;

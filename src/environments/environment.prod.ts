@@ -3,23 +3,27 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+/**
+ * RUNNING ON THE RASPBERRY PI
+ */
+
 import {
-    AlertService,
-    AreaService,
-    ArmService,
-    AuthenticationService,
-    BiometricService,
-    CardService,
-    ConfigurationService,
-    EventService,
-    KeypadService,
-    LoaderService,
-    MonitoringService,
-    NotificationService,
-    OutputService,
-    SensorService,
-    UserService,
-    ZoneService,
+  AlertService,
+  AreaService,
+  ArmService,
+  AuthenticationService,
+  BiometricService,
+  CardService,
+  ConfigurationService,
+  EventService,
+  KeypadService,
+  LoaderService,
+  MonitoringService,
+  NotificationService,
+  OutputService,
+  SensorService,
+  UserService,
+  ZoneService,
 } from '@app/services/remote';
 
 
