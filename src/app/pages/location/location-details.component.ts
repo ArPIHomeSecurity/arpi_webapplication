@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog"
 import { ActivatedRoute, Router } from "@angular/router"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { Location } from "@app/models"
-import { AuthenticationService, NotificationService } from "@app/services"
+import { AuthenticationService, BiometricService, NotificationService } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { configureBackend } from "@app/utils"
 import { environment } from "@environments/environment"
@@ -38,6 +38,8 @@ export class LocationDetailsComponent {
   showApiLink = environment.showApiLink
   isMultiLocation = environment.isMultiLocation
   notificationsAvailable = false
+  biometricAvailable = false
+  useBiometric: boolean | null = null
 
   systemLocationName: string | null = null
 
@@ -49,7 +51,9 @@ export class LocationDetailsComponent {
     private router: Router,
     public dialog: MatDialog,
     @Inject("NotificationService")
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    @Inject("BiometricService")
+    private biometricService: BiometricService
   ) {
     this.route.params.subscribe(params => {
       const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
@@ -63,10 +67,15 @@ export class LocationDetailsComponent {
       }
 
       this.updateForm(this.location)
+      this.updateBiometricState()
     })
 
     this.selectedLocationId = localStorage.getItem("selectedLocationId")
     this.notificationsAvailable = this.notificationService.isAvailable()
+    this.biometricService.isAvailable().then(result => {
+      this.biometricAvailable = result
+      this.updateBiometricState()
+    })
   }
 
   notificationsEnabled(): boolean {
@@ -91,6 +100,34 @@ export class LocationDetailsComponent {
     }
 
     this.notificationService.disableNotifications(this.location.id)
+  }
+
+  updateBiometricState(): void {
+    this.useBiometric = this.location?.id
+      ? this.biometricService.isBiometricEnabled(this.location.id)
+      : null
+  }
+
+  isBiometricEnabled(): boolean {
+    return this.useBiometric === true || this.useBiometric === null
+  }
+
+  enableBiometricLogin(): void {
+    if (!this.location?.id) {
+      return
+    }
+
+    this.biometricService.enableBiometricLogin(this.location.id)
+    this.useBiometric = null
+  }
+
+  disableBiometricLogin(): void {
+    if (!this.location?.id) {
+      return
+    }
+
+    this.biometricService.disableBiometricLogin(this.location.id)
+    this.useBiometric = false
   }
 
   defaultLocation(): Location {

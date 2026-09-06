@@ -13,6 +13,16 @@ import { LocationListComponent } from "./location-list.component"
 describe("LocationListComponent", () => {
   let component: LocationListComponent
   let fixture: ComponentFixture<LocationListComponent>
+  const biometricCalls: string[] = []
+  const biometricService = {
+    isAvailable: () => Promise.resolve(true),
+    isBiometricEnabled: (locationId: string) => {
+      biometricCalls.push(locationId)
+      return true
+    },
+    enableBiometricLogin: () => undefined,
+    disableBiometricLogin: () => undefined
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,6 +33,7 @@ describe("LocationListComponent", () => {
           provide: AUTHENTICATION_SERVICE,
           useClass: MockAuthenticationService
         },
+        { provide: "BiometricService", useValue: biometricService },
         { provide: "EventService", useClass: environment.eventService },
         { provide: "LoaderService", useClass: environment.loaderService },
         { provide: "MonitoringService", useClass: MockMonitoringService },
@@ -45,5 +56,12 @@ describe("LocationListComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should expose biometric state for a location", () => {
+    component.biometricAvailable = true
+
+    expect(component.isBiometricEnabled("location-1")).toBeTrue()
+    expect(biometricCalls).toContain("location-1")
   })
 })

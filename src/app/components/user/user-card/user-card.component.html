@@ -189,29 +189,6 @@
           <span matListItemTitle>{{ user.comment }}</span>
         </mat-list-item>
       }
-
-      <!-- Biometric login -->
-      @if (biometricAvailable) {
-        <mat-divider></mat-divider>
-        <h3 matSubheader i18n="@@user biometric login">Biometric login</h3>
-        <mat-list-item>
-          <mat-icon matListItemIcon>
-            @if (isBiometricEnabled()) {
-              fingerprint
-            } @else {
-              fingerprint_off
-            }
-          </mat-icon>
-          <span matListItemTitle i18n="@@user biometric login">Biometric login</span>
-          <mat-slide-toggle
-            matListItemMeta
-            color="primary"
-            [checked]="isBiometricEnabled()"
-            [disabled]="disabled"
-            (change)="$event.checked ? enableBiometricLogin() : disableBiometricLogin()"
-          ></mat-slide-toggle>
-        </mat-list-item>
-      }
     </mat-list>
   }
 
@@ -268,22 +245,6 @@
         >
           Get MCP token
         </button>
-      }
-
-      <!-- Biometric login -->
-      @if (biometricAvailable) {
-        <div>
-          @if (!isBiometricEnabled()) {
-            <button mat-menu-item color="primary" [disabled]="disabled" (click)="enableBiometricLogin()">
-              <span i18n="@@user enable biometric">Enable biometric login</span>
-            </button>
-          }
-          @if (isBiometricEnabled()) {
-            <button mat-menu-item color="warn" [disabled]="disabled" (click)="disableBiometricLogin()">
-              <span i18n="@@user disable biometric">Disable biometric login</span>
-            </button>
-          }
-        </div>
       }
     </mat-menu>
   </mat-card-actions>

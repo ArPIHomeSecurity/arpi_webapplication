@@ -3,6 +3,7 @@ import { Component, Inject } from "@angular/core"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
   AuthenticationService,
+  BiometricService,
   EventService,
   LoaderService,
   MonitoringService
@@ -34,10 +35,11 @@ import {
 export class LocationListComponent extends ConfigurationBaseComponent {
   isMultiLocation = environment.isMultiLocation
   locations: Location[]
-  serverLatestVersion: LocationVersion = null
+  serverLatestVersion: LocationVersion | null = null
   selectedLocationId: string
   testResults: Map<string, LocationTestResult> = new Map()
   showApiLink = environment.showApiLink
+  biometricAvailable = false
 
   isDragging = false
 
@@ -49,6 +51,8 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     @Inject("MonitoringService") public monitoringService: MonitoringService,
     @Inject("NotificationService")
     public notificationService: NotificationService,
+    @Inject("BiometricService")
+    public biometricService: BiometricService,
 
     public dialog: MatDialog
   ) {
@@ -58,6 +62,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     this.selectedLocationId = localStorage.getItem("selectedLocationId")
 
     this.serverLatestVersion = this.getServerLatestVersion(false)
+    this.biometricService.isAvailable().then(result => (this.biometricAvailable = result))
   }
 
   getLocationKey(index: number): string {
@@ -80,6 +85,14 @@ export class LocationListComponent extends ConfigurationBaseComponent {
     }
 
     return this.notificationService.isEnabled(locationId)
+  }
+
+  isBiometricEnabled(locationId: string): boolean | null {
+    if (!locationId || !this.biometricAvailable) {
+      return null
+    }
+
+    return this.biometricService.isBiometricEnabled(locationId)
   }
 
   getServerLatestVersion(prerelease: boolean): LocationVersion {

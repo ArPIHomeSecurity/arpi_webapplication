@@ -30,6 +30,15 @@
                   >
                     notifications
                   </mat-icon>
+                  @if (biometricAvailable) {
+                    <mat-icon>
+                      @if (isBiometricEnabled(location.id) === true) {
+                        fingerprint
+                      } @else {
+                        fingerprint_off
+                      }
+                    </mat-icon>
+                  }
                 </div>
                 <mat-card-title i18n="@@location backend">Location backend</mat-card-title>
                 @if (location.version != null) {
@@ -79,6 +88,15 @@
                   >
                     notifications
                   </mat-icon>
+                  @if (biometricAvailable) {
+                    <mat-icon>
+                      @if (isBiometricEnabled(location.id) === true) {
+                        fingerprint
+                      } @else {
+                        fingerprint_off
+                      }
+                    </mat-icon>
+                  }
                 </div>
                 <mat-card-title i18n="@@location location">Location: {{ location.name }}</mat-card-title>
                 @if (location.id != null) {

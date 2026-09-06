@@ -15,6 +15,23 @@
                   <mat-slide-toggle matSuffix color="primary" formControlName="notifications"></mat-slide-toggle>
                 </div>
               }
+              @if (location.id != null && biometricAvailable) {
+                <div class="notifications">
+                  <mat-icon matSuffix>
+                    @if (isBiometricEnabled()) {
+                      fingerprint
+                    } @else {
+                      fingerprint_off
+                    }
+                  </mat-icon>
+                  <mat-slide-toggle
+                    matSuffix
+                    color="primary"
+                    [checked]="isBiometricEnabled()"
+                    (change)="$event.checked ? enableBiometricLogin() : disableBiometricLogin()"
+                  ></mat-slide-toggle>
+                </div>
+              }
             </div>
             <div class="row">
               <mat-form-field class="domain" floatLabel="always">

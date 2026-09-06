@@ -4,14 +4,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 
 import { Card, ROLE_TYPES, User } from "@app/models"
-import {
-  AuthenticationService,
-  BiometricService,
-  CardService,
-  EventService,
-  UserService
-} from "@app/services"
-import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { CardService, EventService, UserService } from "@app/services"
 import { environment } from "@environments/environment"
 import { catchError, finalize, forkJoin, Observable, of, throwError } from "rxjs"
 import { MCPTokenDialogComponent } from "../mcp-token-dialog/mcp-token-dialog.component"
@@ -45,28 +38,16 @@ export class UserCardComponent implements OnInit {
   registeringCard = false
   hasSshKey = false
   hasMCPToken: boolean | null = null
-  biometricAvailable = false
-  useBiometric: boolean | null = null
 
   dialog = inject(MatDialog)
 
   constructor(
-    @Inject(AUTHENTICATION_SERVICE)
-    private authenticationService: AuthenticationService,
     @Inject("CardService") private cardService: CardService,
     @Inject("EventService") private eventService: EventService,
     @Inject("UserService") private userService: UserService,
-    @Inject("BiometricService") private biometricService: BiometricService,
 
     private snackBar: MatSnackBar
   ) {
-    this.biometricService.isAvailable().then(result => {
-      if (result) {
-        const locationId = localStorage.getItem("selectedLocationId") || ""
-        this.biometricService.isBiometricEnabled(locationId)
-        this.useBiometric = this.biometricService.isBiometricEnabled(locationId)
-      }
-    })
     this.eventService.listen("card_registered").subscribe(result => {
       this.registeringCard = false
       this.snackBar.dismiss()
@@ -91,14 +72,6 @@ export class UserCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // biometric login is only available for the current user
-    const userId = this.authenticationService.getUserId()
-    if (this.user.id === userId) {
-      this.biometricService.isAvailable().then(result => {
-        this.biometricAvailable = result
-      })
-    }
-
     let loadHasSshKey: Observable<boolean>
     if (this.canManageSshKeys) {
       loadHasSshKey = this.userService.hasSshKey(this.user.id)
@@ -373,22 +346,6 @@ export class UserCardComponent implements OnInit {
             duration: environment.snackDuration
           })
       })
-  }
-
-  isBiometricEnabled() {
-    return this.useBiometric === true || this.useBiometric === null
-  }
-
-  enableBiometricLogin() {
-    const locationId = localStorage.getItem("selectedLocationId") || ""
-    this.biometricService.enableBiometricLogin(locationId)
-    this.useBiometric = null
-  }
-
-  disableBiometricLogin() {
-    const locationId = localStorage.getItem("selectedLocationId") || ""
-    this.biometricService.disableBiometricLogin(locationId)
-    this.useBiometric = false
   }
 
   getMCPToken() {

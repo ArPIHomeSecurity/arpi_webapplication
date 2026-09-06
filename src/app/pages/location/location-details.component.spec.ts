@@ -13,6 +13,13 @@ import { LocationDetailsComponent } from "./location-details.component"
 describe("LocationDetailsComponent", () => {
   let component: LocationDetailsComponent
   let fixture: ComponentFixture<LocationDetailsComponent>
+  const biometricCalls: string[] = []
+  const biometricService = {
+    isAvailable: () => Promise.resolve(true),
+    isBiometricEnabled: () => null,
+    enableBiometricLogin: (locationId: string) => biometricCalls.push(`enable:${locationId}`),
+    disableBiometricLogin: (locationId: string) => biometricCalls.push(`disable:${locationId}`)
+  }
 
   /**
    * Location without domain/port, so that configureBackend() does not perform any request.
@@ -58,6 +65,7 @@ describe("LocationDetailsComponent", () => {
           provide: AUTHENTICATION_SERVICE,
           useClass: MockAuthenticationService
         },
+        { provide: "BiometricService", useValue: biometricService },
         { provide: "EventService", useClass: environment.eventService },
         {
           provide: "NotificationService",
@@ -82,6 +90,17 @@ describe("LocationDetailsComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should configure biometric login for the current location", () => {
+    const location = createLocation("a".repeat(64), "Default")
+    component.location = location
+
+    component.enableBiometricLogin()
+    expect(biometricCalls).toContain(`enable:${location.id}`)
+
+    component.disableBiometricLogin()
+    expect(biometricCalls).toContain(`disable:${location.id}`)
   })
 
   it("should select the first created location", async () => {
