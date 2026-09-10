@@ -15,8 +15,7 @@ span.selection :focus {
 
 body {
   font-family:
-    Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial,
-    "Lucida Grande", sans-serif;
+    Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 html,
@@ -87,7 +86,7 @@ material-app,
 .small-screen {
   .list-actions {
     position: fixed;
-    bottom: 40px;
+    bottom: 100px;
     right: 15px;
     float: right;
   }
@@ -100,7 +99,7 @@ material-app,
 .large-screen {
   .list-actions {
     position: fixed;
-    bottom: 35px;
+    bottom: 55px;
     right: 25px;
     float: right;
   }
