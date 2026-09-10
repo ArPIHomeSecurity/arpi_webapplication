@@ -126,5 +126,12 @@
     "*.json": [
       "prettier --write"
     ]
+  },
+  "overrides": {
+    "@capacitor/assets": {
+      "@capacitor/cli": "$@capacitor/cli",
+      "sharp": "0.35.4"
+    },
+    "uuid": "11.1.1"
   }
 }
