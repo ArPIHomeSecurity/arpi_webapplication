@@ -44,12 +44,12 @@
         <target state="new">MCP token igénylése</target>
       </trans-unit>
       <trans-unit id="network mcp access local" datatype="html">
-        <source> Local network access </source>
-        <target state="new"> Hozzáférés helyi hálózaton </target>
+        <source>Local network access</source>
+        <target state="new">Hozzáférés helyi hálózaton</target>
       </trans-unit>
       <trans-unit id="network mcp access remote" datatype="html">
-        <source> Remote access (dynamic DNS) </source>
-        <target state="new"> Távoli hozzáférés (dinamikus DNS) </target>
+        <source>Remote access (dynamic DNS)</source>
+        <target state="new">Távoli hozzáférés (dinamikus DNS)</target>
       </trans-unit>
       <trans-unit id="network menu link" datatype="html">
         <source>Network</source>
@@ -62,6 +62,10 @@
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source>
         <target state="translated">Felhasználók</target>
+      </trans-unit>
+      <trans-unit id="webapp version label" datatype="html">
+        <source>WebApp</source>
+        <target state="new">WebApp</target>
       </trans-unit>
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source>
@@ -78,6 +82,10 @@
       <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
         <target state="translated">A munkamenet lejár <x id="PH" equiv-text="{{ getSessionDuration() }}"/> múlva!</target>
+      </trans-unit>
+      <trans-unit id="server version label" datatype="html">
+        <source>Server</source>
+        <target state="new">Szerver</target>
       </trans-unit>
       <trans-unit id="session expired" datatype="html">
         <source>Your session expired, logged out!</source>
@@ -101,36 +109,36 @@
         <target state="translated">Hozzáférési kód</target>
       </trans-unit>
       <trans-unit id="login host not allowed" datatype="html">
-        <source> Host not allowed! </source>
-        <target state="translated"> A hoszt nem engedélyezett! </target>
+        <source>Host not allowed!</source>
+        <target state="translated">A hoszt nem engedélyezett!</target>
       </trans-unit>
       <trans-unit id="login missing device token" datatype="html">
-        <source> Missing device token! Register your device! </source>
-        <target state="translated"> Hiányzó eszköz token! </target>
+        <source>Missing device token! Register your device!</source>
+        <target state="translated">Hiányzó eszköz token!</target>
       </trans-unit>
       <trans-unit id="login invalid device token" datatype="html">
-        <source> Invalid device token! Update your device registration! </source>
-        <target state="translated"> Érvénytelen eszköz token! </target>
+        <source>Invalid device token! Update your device registration!</source>
+        <target state="translated">Érvénytelen eszköz token!</target>
       </trans-unit>
       <trans-unit id="login expired registration code" datatype="html">
-        <source> Expired device registration code! </source>
-        <target state="translated"> Lejárt eszköz regisztrációs kód! </target>
+        <source>Expired device registration code!</source>
+        <target state="translated">Lejárt eszköz regisztrációs kód!</target>
       </trans-unit>
       <trans-unit id="login invalid user id" datatype="html">
-        <source> Invalid user id! Update your device registration! </source>
-        <target state="translated"> Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációt! </target>
+        <source>Invalid user id! Update your device registration!</source>
+        <target state="translated">Érvénytelen felhasználó azonosító! Frissítsd az eszköz regisztrációt!</target>
       </trans-unit>
       <trans-unit id="login invalid registration code" datatype="html">
-        <source> Invalid registration code! </source>
-        <target state="translated"> Érvénytelen regisztrációs kód! </target>
+        <source>Invalid registration code!</source>
+        <target state="translated">Érvénytelen regisztrációs kód!</target>
       </trans-unit>
       <trans-unit id="login invalid access code" datatype="html">
-        <source> Invalid access code! </source>
-        <target state="translated"> Érvénytelen hozzáférési kód! </target>
+        <source>Invalid access code!</source>
+        <target state="translated">Érvénytelen hozzáférési kód!</target>
       </trans-unit>
       <trans-unit id="login no connedtion" datatype="html">
-        <source> No connection to the security system! </source>
-        <target state="translated"> Nincs kapcsolat a biztonsági rendszerrel! </target>
+        <source>No connection to the security system!</source>
+        <target state="translated">Nincs kapcsolat a biztonsági rendszerrel!</target>
       </trans-unit>
       <trans-unit id="login error" datatype="html">
         <source>Something went wrong!?</source>
@@ -240,6 +248,14 @@
         <source> Mobil settings for sending notifications </source>
         <target state="translated"> GSM beállítások üzenetküldéshez </target>
       </trans-unit>
+      <trans-unit id="notifications internet issue started" datatype="html">
+        <source>Internet issue started</source>
+        <target state="new">Internet probléma kezdődött</target>
+      </trans-unit>
+      <trans-unit id="notifications internet issue stopped" datatype="html">
+        <source>Internet issue stopped</source>
+        <target state="new">Internet probléma megszűnt</target>
+      </trans-unit>
       <trans-unit id="notifications sim card pin" datatype="html">
         <source>SIM card PIN code</source>
         <target state="translated">SIM kártya PIN kód</target>
@@ -268,6 +284,10 @@
         <source>Send SMS 1</source>
         <target state="translated">SMS küldése 1</target>
       </trans-unit>
+      <trans-unit id="notifications access code required" datatype="html">
+        <source> Access code required </source>
+        <target state="new">Hozzáférési kód szükséges</target>
+      </trans-unit>
       <trans-unit id="notifications alert started" datatype="html">
         <source>Alert started</source>
         <target state="translated">Riasztás kezdete</target>
@@ -293,8 +313,8 @@
         <target state="translated">Dinamikus DNS</target>
       </trans-unit>
       <trans-unit id="network remote access" datatype="html">
-        <source> Remote access by hostname </source>
-        <target state="translated"> Távoli hozzáférés a számítógép neve alapján </target>
+        <source>Remote access by hostname</source>
+        <target state="translated">Távoli hozzáférés a számítógép neve alapján</target>
       </trans-unit>
       <trans-unit id="network username" datatype="html">
         <source>Username</source>
@@ -481,6 +501,18 @@
         <source>Location: <x id="PH" equiv-text="locationName"/> System is in alert state.</source>
         <target state="new">Helyszín: <x id="PH" equiv-text="locationName"/> A rendszer riasztási állapotban van.</target>
       </trans-unit>
+      <trans-unit id="redirect message" datatype="html">
+        <source> Please use the remote web application to access this device. </source>
+        <target state="new"> Kérjük, használja a távoli webalkalmazást az eszköz eléréséhez. </target>
+      </trans-unit>
+      <trans-unit id="redirect message 2" datatype="html">
+        <source> The access on this interface will be disabled in the future. </source>
+        <target state="new"> A hozzáférés ezen a felületen a jövőben le lesz tiltva. </target>
+      </trans-unit>
+      <trans-unit id="redirect title" datatype="html">
+        <source>Remote access required</source>
+        <target state="new">Távoli hozzáférés szükséges</target>
+      </trans-unit>
       <trans-unit id="register registration code" datatype="html">
         <source>Registration code</source>
         <target state="translated">Regisztrációs kód</target>
@@ -579,12 +611,12 @@
         <target state="translated">Valóban meg akarod szüntetni az eszköz regisztrációját?</target>
       </trans-unit>
       <trans-unit id="user type administrator" datatype="html">
-        <source> Administrator </source>
-        <target state="translated"> Adminisztrátor </target>
+        <source>Administrator</source>
+        <target state="translated">Adminisztrátor</target>
       </trans-unit>
       <trans-unit id="user type user" datatype="html">
-        <source> User </source>
-        <target state="translated"> Felhasználó </target>
+        <source>User</source>
+        <target state="translated">Felhasználó</target>
       </trans-unit>
       <trans-unit id="user cards" datatype="html">
         <source>Cards</source>
@@ -635,40 +667,40 @@
         <target state="translated">Zóna törlése</target>
       </trans-unit>
       <trans-unit id="starting state" datatype="html">
-        <source> Starting up </source>
-        <target state="translated"> Indulás </target>
+        <source>Starting up</source>
+        <target state="translated">Indulás</target>
       </trans-unit>
       <trans-unit id="updating state" datatype="html">
-        <source> Updating configuration </source>
-        <target state="translated"> Konfiguráció frissítés </target>
+        <source>Updating configuration</source>
+        <target state="translated">Konfiguráció frissítés</target>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
-        <source> Invalid configuration </source>
-        <target state="translated"> Hibás konfiguráció </target>
+        <source>Invalid configuration</source>
+        <target state="translated">Hibás konfiguráció</target>
       </trans-unit>
       <trans-unit id="sabotage state" datatype="html">
-        <source> Sabotage </source>
-        <target state="translated"> Szabotázs </target>
+        <source>Sabotage</source>
+        <target state="translated">Szabotázs</target>
       </trans-unit>
       <trans-unit id="error state" datatype="html">
-        <source> ERROR </source>
-        <target state="translated"> HIBA </target>
+        <source>ERROR</source>
+        <target state="translated">HIBA</target>
       </trans-unit>
       <trans-unit id="starting state short" datatype="html">
-        <source> S </source>
-        <target state="translated"> SZ </target>
+        <source>S</source>
+        <target state="translated">SZ</target>
       </trans-unit>
       <trans-unit id="updating state short" datatype="html">
-        <source> U </source>
-        <target state="translated"> U </target>
+        <source>U</source>
+        <target state="translated">U</target>
       </trans-unit>
       <trans-unit id="invalid state short" datatype="html">
-        <source> I </source>
-        <target state="translated"> H </target>
+        <source>I</source>
+        <target state="translated">H</target>
       </trans-unit>
       <trans-unit id="sabotage state short" datatype="html">
-        <source> T </source>
-        <target state="translated"> T </target>
+        <source>T</source>
+        <target state="translated">T</target>
       </trans-unit>
       <trans-unit id="notifications smtp hostname" datatype="html">
         <source>SMTP hostname</source>
@@ -687,12 +719,12 @@
         <target state="translated">Email küldése 2</target>
       </trans-unit>
       <trans-unit id="notifications power outage started" datatype="html">
-        <source> Power outage started </source>
-        <target state="translated"> Áramszünet kezdete </target>
+        <source>Power outage started</source>
+        <target state="translated">Áramszünet kezdete</target>
       </trans-unit>
       <trans-unit id="notifications power outage stopped" datatype="html">
-        <source> Power outage stopped </source>
-        <target state="translated"> Áramszünet vége </target>
+        <source>Power outage stopped</source>
+        <target state="translated">Áramszünet vége</target>
       </trans-unit>
       <trans-unit id="notifications smtp" datatype="html">
         <source>SMTP</source>
@@ -707,28 +739,28 @@
         <target state="translated">Teszt SMS küldés</target>
       </trans-unit>
       <trans-unit id="notifications email1 success" datatype="html">
-        <source> Email sent successfully to email address 1! </source>
-        <target state="translated"> Sikeres email küldés az email 1 címre! </target>
+        <source>Email sent successfully to email address 1!</source>
+        <target state="translated">Sikeres email küldés az email 1 címre!</target>
       </trans-unit>
       <trans-unit id="email1 failed" datatype="html">
         <source>Failed to send to email address 1!</source>
         <target state="translated">Sikertelen email küldés az email 1 címre!</target>
       </trans-unit>
       <trans-unit id="notifications email2 success" datatype="html">
-        <source> Email sent successfully to email address 2! </source>
-        <target state="translated"> Sikeres email küldés az email 2 címre! </target>
+        <source>Email sent successfully to email address 2!</source>
+        <target state="translated">Sikeres email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications email2 failed" datatype="html">
-        <source> Failed to send to email address 2! </source>
-        <target state="translated"> Sikertelen email küldés az email 2 címre! </target>
+        <source>Failed to send to email address 2!</source>
+        <target state="translated">Sikertelen email küldés az email 2 címre!</target>
       </trans-unit>
       <trans-unit id="notifications smtp connection failed" datatype="html">
         <source> Failed to connect to SMTP server! <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> Please check logs for more information! </source>
         <target state="translated"> Sikertelen csatlakozás a SMTP szerverhez! Bővebb információért nézd meg a logokat! </target>
       </trans-unit>
       <trans-unit id="notifications sms1 success" datatype="html">
-        <source> SMS sent successfully to phone 1! </source>
-        <target state="translated"> Sikeres SMS küldés a telefon 1-re! </target>
+        <source>SMS sent successfully to phone 1!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 1-re!</target>
       </trans-unit>
       <trans-unit id="syren test" datatype="html">
         <source>Test</source>
@@ -743,8 +775,8 @@
         <target state="translated">Kezdés <x id="PH" equiv-text="sensor.name"/> <x id="PH_1" equiv-text="silent"/></target>
       </trans-unit>
       <trans-unit id="events arm undefined" datatype="html">
-        <source> Undefined </source>
-        <target state="translated"> Nem definiált </target>
+        <source>Undefined</source>
+        <target state="translated">Nem definiált</target>
       </trans-unit>
       <trans-unit id="events arm away" datatype="html">
         <source>AWAY</source>
@@ -767,16 +799,16 @@
         <target state="translated">Nem definiált</target>
       </trans-unit>
       <trans-unit id="events armed keypad" datatype="html">
-        <source> Armed with keypad </source>
-        <target state="translated"> Billentyűzetről élesítve </target>
+        <source>Armed with keypad</source>
+        <target state="translated">Billentyűzetről élesítve</target>
       </trans-unit>
       <trans-unit id="events filter date" datatype="html">
         <source>Enter a date range</source>
         <target state="translated">Dátumok megadása</target>
       </trans-unit>
       <trans-unit id="events alert" datatype="html">
-        <source> Alert event </source>
-        <target state="translated"> Riasztás </target>
+        <source>Alert event</source>
+        <target state="translated">Riasztás</target>
       </trans-unit>
       <trans-unit id="events alert undefined" datatype="html">
         <source>Undefined</source>
@@ -795,12 +827,12 @@
         <target state="translated"> Szűrők törlése </target>
       </trans-unit>
       <trans-unit id="events sabotage" datatype="html">
-        <source> Sabotage event </source>
-        <target state="translated"> Szabotázs </target>
+        <source>Sabotage event</source>
+        <target state="translated">Szabotázs</target>
       </trans-unit>
       <trans-unit id="events arm" datatype="html">
-        <source> Arm event </source>
-        <target state="translated"> Élesítés </target>
+        <source>Arm event</source>
+        <target state="translated">Élesítés</target>
       </trans-unit>
       <trans-unit id="events armed" datatype="html">
         <source>Armed</source>
@@ -819,8 +851,8 @@
         <target state="translated">Hatástalanítva</target>
       </trans-unit>
       <trans-unit id="events disarmed keypad" datatype="html">
-        <source> Disarmed with keypad </source>
-        <target state="translated"> Billentyűzetről hatástalanítva </target>
+        <source>Disarmed with keypad</source>
+        <target state="translated">Billentyűzetről hatástalanítva</target>
       </trans-unit>
       <trans-unit id="events disarmed system" datatype="html">
         <source> Disarmed by system </source>
@@ -871,8 +903,8 @@
         <target state="translated">MARADÓ</target>
       </trans-unit>
       <trans-unit id="events disarmed by" datatype="html">
-        <source> Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/> </source>
-        <target state="translated"> Hatástalanította <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/> </target>
+        <source>Disarmed by <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm?.userId) }}"/></source>
+        <target state="translated">Hatástalanította <x id="INTERPOLATION" equiv-text="{{ getUsername(event.disarm.userId) }}"/></target>
       </trans-unit>
       <trans-unit id="events properties" datatype="html">
         <source>Properties</source>
@@ -1011,16 +1043,16 @@
         <target state="translated">Kioldó</target>
       </trans-unit>
       <trans-unit id="output area" datatype="html">
-        <source> Area </source>
-        <target state="translated"> Terület </target>
+        <source>Area</source>
+        <target state="translated">Terület</target>
       </trans-unit>
       <trans-unit id="output system" datatype="html">
-        <source> System </source>
-        <target state="translated"> Rendszer </target>
+        <source>System</source>
+        <target state="translated">Rendszer</target>
       </trans-unit>
       <trans-unit id="output button" datatype="html">
-        <source> Button </source>
-        <target state="translated"> Gomb </target>
+        <source>Button</source>
+        <target state="translated">Gomb</target>
       </trans-unit>
       <trans-unit id="output delay" datatype="html">
         <source>Delay [s]</source>
@@ -1031,8 +1063,8 @@
         <target state="translated">Időtartam [s]</target>
       </trans-unit>
       <trans-unit id="output enabled" datatype="html">
-        <source> Enabled </source>
-        <target state="translated"> Engedélyezett </target>
+        <source>Enabled</source>
+        <target state="translated">Engedélyezett</target>
       </trans-unit>
       <trans-unit id="output default state" datatype="html">
         <source> Active default </source>
@@ -1095,12 +1127,12 @@
         <target state="translated">Monitor küszöbérték [%]</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
-        <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &apos;s&apos; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
-        <target state="translated"> érzékenység: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &apos;s&apos; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </target>
+        <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &quot;s&quot; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
+        <target state="new"> érzékenység: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &apos;s&apos; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </target>
       </trans-unit>
       <trans-unit id="events sensitivity instant" datatype="html">
-        <source> sensitivity: instant alert </source>
-        <target state="translated"> érzékenység: azonnali riasztás </target>
+        <source>sensitivity: instant alert</source>
+        <target state="translated">érzékenység: azonnali riasztás</target>
       </trans-unit>
       <trans-unit id="events loud" datatype="html">
         <source>loud</source>
@@ -1279,12 +1311,12 @@
         <target state="translated"> Kulcs másolása </target>
       </trans-unit>
       <trans-unit id="notifications smtp enabled" datatype="html">
-        <source> SMTP enabled </source>
-        <target state="translated"> SMTP engedélyezett </target>
+        <source>SMTP enabled</source>
+        <target state="translated">SMTP engedélyezett</target>
       </trans-unit>
       <trans-unit id="notifications gsm enabled" datatype="html">
-        <source> GSM enabled </source>
-        <target state="translated"> GSM engedélyezett </target>
+        <source>GSM enabled</source>
+        <target state="translated">GSM engedélyezett</target>
       </trans-unit>
       <trans-unit id="notifications test call" datatype="html">
         <source>Test call</source>
@@ -1299,28 +1331,56 @@
         <target state="translated">Hívás 2</target>
       </trans-unit>
       <trans-unit id="notifications test failed" datatype="html">
-        <source> Please check logs for more information! </source>
-        <target state="translated"> További információk a log-ban! </target>
+        <source>Please check logs for more information!</source>
+        <target state="translated">További információk a log-ban!</target>
+      </trans-unit>
+      <trans-unit id="notifications sms action" datatype="html">
+        <source>SMS action</source>
+        <target state="new">SMS művelet</target>
+      </trans-unit>
+      <trans-unit id="notifications sms action enabled" datatype="html">
+        <source> SMS action enabled </source>
+        <target state="new"> SMS művelet engedélyezve </target>
+      </trans-unit>
+      <trans-unit id="notifications sms action settings" datatype="html">
+        <source>SMS action settings</source>
+        <target state="new">SMS művelet beállításai</target>
+      </trans-unit>
+      <trans-unit id="notifications sms arm away command" datatype="html">
+        <source>Arm away command</source>
+        <target state="new">Távozás élesítése parancs</target>
+      </trans-unit>
+      <trans-unit id="notifications sms arm stay command" datatype="html">
+        <source>Arm stay command</source>
+        <target state="new">Otthon élesítése parancs</target>
+      </trans-unit>
+      <trans-unit id="notifications sms command case sensitive" datatype="html">
+        <source> Commands are case sensitive </source>
+        <target state="new"> A parancsok kis- és nagybetyű érzékenyek </target>
+      </trans-unit>
+      <trans-unit id="notifications sms disarm command" datatype="html">
+        <source>Disarm command</source>
+        <target state="new">Hatástalanítás parancs</target>
       </trans-unit>
       <trans-unit id="notifications sms1 failed" datatype="html">
-        <source> Failed to send SMS to phone 1! </source>
-        <target state="translated"> Telefon 1 SMS küldés nem sikerült! </target>
+        <source>Failed to send SMS to phone 1!</source>
+        <target state="translated">Telefon 1 SMS küldés nem sikerült!</target>
       </trans-unit>
       <trans-unit id="notifications sms2 success" datatype="html">
-        <source> SMS sent successfully to phone 2! </source>
-        <target state="translated"> Sikeres SMS küldés a telefon 2-re! </target>
+        <source>SMS sent successfully to phone 2!</source>
+        <target state="translated">Sikeres SMS küldés a telefon 2-re!</target>
       </trans-unit>
       <trans-unit id="notifications sms2 failed" datatype="html">
-        <source> Failed to send SMS to phone 2! </source>
-        <target state="translated"> Telefon 2 SMS küldés nem sikerült! </target>
+        <source>Failed to send SMS to phone 2!</source>
+        <target state="translated">Telefon 2 SMS küldés nem sikerült!</target>
       </trans-unit>
       <trans-unit id="notifications gsm connection failed" datatype="html">
-        <source> Failed to connect to GSM module! </source>
-        <target state="translated"> Sikertelen csatlakozás a GSM modulhoz! </target>
+        <source>Failed to connect to GSM module!</source>
+        <target state="translated">Sikertelen csatlakozás a GSM modulhoz!</target>
       </trans-unit>
       <trans-unit id="notifications call1 success" datatype="html">
-        <source> Successfully called phone 1! </source>
-        <target state="translated"> Sikeres hívás a telefon 1-re! </target>
+        <source>Successfully called phone 1!</source>
+        <target state="translated">Sikeres hívás a telefon 1-re!</target>
       </trans-unit>
       <trans-unit id="notifications call1 failed" datatype="html">
         <source>Failed to call phone 1!</source>
@@ -1333,6 +1393,14 @@
       <trans-unit id="notifications loading sms" datatype="html">
         <source>Loading SMS messages...</source>
         <target state="translated">SMS üzenetek betöltése...</target>
+      </trans-unit>
+      <trans-unit id="notifications local network issue started" datatype="html">
+        <source>Local network issue started</source>
+        <target state="new">Helyi hálózati probléma kezdődött</target>
+      </trans-unit>
+      <trans-unit id="notifications local network issue stopped" datatype="html">
+        <source>Local network issue stopped</source>
+        <target state="new">Helyi hálózati probléma megszűnt</target>
       </trans-unit>
       <trans-unit id="notifications location" datatype="html">
         <source>Location</source>
@@ -1387,8 +1455,8 @@
         <target state="new">Helyszín neve</target>
       </trans-unit>
       <trans-unit id="notifications location settings" datatype="html">
-        <source> Configure source location </source>
-        <target state="new"> Helyszín beállításai </target>
+        <source>Configure source location</source>
+        <target state="new">Helyszín beállításai</target>
       </trans-unit>
       <trans-unit id="notifications location state" datatype="html">
         <source>State / Region</source>
@@ -1407,8 +1475,12 @@
         <target state="translated">Összes törlése</target>
       </trans-unit>
       <trans-unit id="notifications call2 success" datatype="html">
-        <source> Successfully called phone 2! </source>
-        <target state="translated"> Sikeres hívás a telefon 2-re! </target>
+        <source>Successfully called phone 2!</source>
+        <target state="translated">Sikeres hívás a telefon 2-re!</target>
+      </trans-unit>
+      <trans-unit id="notifications check phone number" datatype="html">
+        <source> Check phone number </source>
+        <target state="new"> Telefonszám ellenőrzése </target>
       </trans-unit>
       <trans-unit id="notifications call2 failed" datatype="html">
         <source>Failed to call phone 2!</source>
@@ -1603,8 +1675,8 @@
         <target state="translated">A tűzfal blokkolja a backend-et</target>
       </trans-unit>
       <trans-unit id="backend error reload" datatype="html">
-        <source> Try to reconnect </source>
-        <target state="translated"> Újracsatlakozás </target>
+        <source>Try to reconnect</source>
+        <target state="translated">Újracsatlakozás</target>
       </trans-unit>
       <trans-unit id="backend error locations" datatype="html">
         <source> Edit locations </source>
@@ -1650,21 +1722,13 @@
         <source>Secondary URL</source>
         <target state="translated">Másodlagos URL</target>
       </trans-unit>
-      <trans-unit id="user biometric login" datatype="html">
-        <source>Biometric login</source>
-        <target state="translated">Biometrikus bejelentkezés</target>
-      </trans-unit>
-      <trans-unit id="user enable biometric" datatype="html">
-        <source>Enable biometric login</source>
-        <target state="translated">Biometrikus bejelentkezés engedélyezése</target>
-      </trans-unit>
       <trans-unit id="login biometric login" datatype="html">
         <source>Biometric login</source>
         <target state="translated">Biometrikus bejelentkezés</target>
       </trans-unit>
       <trans-unit id="biometric description" datatype="html">
-        <source> Do you want to use biometric login? </source>
-        <target state="translated"> Biometrikus bejelentkezést szeretne használni? </target>
+        <source>Do you want to use biometric login?</source>
+        <target state="translated">Biometrikus bejelentkezést szeretne használni?</target>
       </trans-unit>
       <trans-unit id="biometric question" datatype="html">
         <source> You can use biometric login to access the security system. </source>
@@ -1673,6 +1737,10 @@
       <trans-unit id="biometric yes" datatype="html">
         <source>Yes</source>
         <target state="translated">Igen</target>
+      </trans-unit>
+      <trans-unit id="board version label" datatype="html">
+        <source>Board</source>
+        <target state="new">Alaplap</target>
       </trans-unit>
       <trans-unit id="biometric no" datatype="html">
         <source>No</source>
@@ -1689,10 +1757,6 @@
       <trans-unit id="failed register" datatype="html">
         <source>Failed to register card!</source>
         <target state="translated">Nem sikerült regisztrálni a kártyát!</target>
-      </trans-unit>
-      <trans-unit id="user disable biometric" datatype="html">
-        <source>Disable biometric login</source>
-        <target state="translated">Biometrikus bejelentkezés letiltása</target>
       </trans-unit>
       <trans-unit id="sensor settings" datatype="html">
         <source>Sensor settings</source>
@@ -1723,12 +1787,12 @@
         <target state="translated">Kapcsoló típus</target>
       </trans-unit>
       <trans-unit id="sensor contact nc" datatype="html">
-        <source>Normally Closed (NC)</source>
-        <target state="translated">Normally Closed (NC)</target>
+        <source> Normally Closed (NC) </source>
+        <target state="translated"> Normally Closed (NC) </target>
       </trans-unit>
       <trans-unit id="sensor contact no" datatype="html">
-        <source>Normally Open (NO)</source>
-        <target state="translated">Normally Open (NO)</target>
+        <source> Normally Open (NO) </source>
+        <target state="translated"> Normally Open (NO) </target>
       </trans-unit>
       <trans-unit id="sensor eol count" datatype="html">
         <source>EOL count</source>
@@ -1751,12 +1815,12 @@
         <target state="translated">MQTT beállítások</target>
       </trans-unit>
       <trans-unit id="network mqtt description" datatype="html">
-        <source> Configure MQTT broker connection </source>
-        <target state="translated"> MQTT broker kapcsolat beállítása </target>
+        <source>Configure MQTT broker connection</source>
+        <target state="translated">MQTT broker kapcsolat beállítása</target>
       </trans-unit>
       <trans-unit id="network mqtt enable" datatype="html">
-        <source> Enable MQTT connection </source>
-        <target state="translated"> MQTT kapcsolat engedélyezése </target>
+        <source>Enable MQTT connection</source>
+        <target state="translated">MQTT kapcsolat engedélyezése</target>
       </trans-unit>
       <trans-unit id="network mqtt external" datatype="html">
         <source> Use external MQTT broker </source>
@@ -1779,8 +1843,8 @@
         <target state="translated">MQTT Jelszó</target>
       </trans-unit>
       <trans-unit id="network mqtt enable tls" datatype="html">
-        <source> Enable TLS </source>
-        <target state="translated"> TLS engedélyezése </target>
+        <source>Enable TLS</source>
+        <target state="translated">TLS engedélyezése</target>
       </trans-unit>
       <trans-unit id="network mqtt insecure tls" datatype="html">
         <source> Allow insecure TLS connection </source>
@@ -1807,8 +1871,8 @@
         <target state="translated">MQTT URL</target>
       </trans-unit>
       <trans-unit id="location welcome title" datatype="html">
-        <source> Welcome to ArPI Home Security </source>
-        <target state="translated"> Üdvözlünk az ArPI Home Security-nél </target>
+        <source>Welcome to ArPI Home Security</source>
+        <target state="translated">Üdvözlünk az ArPI Home Security-nél</target>
       </trans-unit>
       <trans-unit id="location welcome subtitle" datatype="html">
         <source> Your smart security system starts here </source>
@@ -1863,8 +1927,8 @@
         <target state="translated">Bementei csatorna hiba</target>
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
-        <source> Software installation guide </source>
-        <target state="translated"> Szoftver telepítési útmutató </target>
+        <source>Software installation guide</source>
+        <target state="translated">Szoftver telepítési útmutató</target>
       </trans-unit>
       <trans-unit id="location board" datatype="html">
         <source>Board</source>

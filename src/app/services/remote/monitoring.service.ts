@@ -62,7 +62,14 @@ export class MonitoringService {
         }
         return version
       }),
-      catchError(() => of(2))
+      catchError(error => {
+        console.error(error)
+        if (error.status === 404) {
+          return of(2)
+        }
+
+        throw error
+      })
     )
   }
 

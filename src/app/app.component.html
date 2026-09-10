@@ -299,16 +299,16 @@
 
         <div class="versions">
           <div class="version">
-            <b>WebApp</b>
+            <b i18n="@@webapp version label">WebApp</b>
             &nbsp;{{ versions.webapplicationVersion }}
           </div>
           <div class="version">
-            <b>Server</b>
+            <b i18n="@@server version label">Server</b>
             &nbsp;{{ versions.serverVersion || "-" }}
           </div>
           <div class="version">
-            <b>Board</b>
-            &nbsp;v{{ versions.boardVersion || "-" }}
+            <b i18n="@@board version label">Board</b>
+            &nbsp;{{ versions.boardVersion ? "v" + versions.boardVersion : "-" }}
           </div>
         </div>
       </div>
