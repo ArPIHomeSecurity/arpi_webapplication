@@ -1,8 +1,10 @@
 <mat-button-toggle
   class="output-button"
-  [ngClass]="{active: output.state, 'long-press-active': longPressActive && !disabled}"
+  [ngClass]="{active: output.state, 'long-press-active': (output.state || longPressActive) && !disabled}"
   [checked]="output.state"
   [disabled]="disabled"
+  [longPressEnabled]="longPressEnabled"
+  (pressed)="onPressed()"
   (longPressed)="onLongPressed()"
   (longPressAvailable)="onLongPressAvailable($event)"
   long-press-toggle

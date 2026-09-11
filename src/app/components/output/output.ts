@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from "@angular/core"
 import { Output } from "@app/models"
-import { OutputService } from "@app/services"
+import { AppPreferencesService, OutputService } from "@app/services"
 
 @Component({
   selector: "component-output",
@@ -10,16 +10,31 @@ import { OutputService } from "@app/services"
   standalone: false
 })
 export class OutputComponent {
-  @Input() output: Output
-  @Input() disabled: boolean
+  @Input() output!: Output
+  @Input() disabled = false
+
+  get longPressEnabled(): boolean {
+    return this.appPreferencesService.longPressEnabled
+  }
 
   ENDLESS_DURATION = 0
 
   longPressActive = false
 
-  constructor(@Inject("OutputService") private outputService: OutputService) {}
+  constructor(
+    @Inject("OutputService") private outputService: OutputService,
+    private appPreferencesService: AppPreferencesService
+  ) {}
+
+  onPressed() {
+    this.toggleOutput()
+  }
 
   onLongPressed() {
+    this.toggleOutput()
+  }
+
+  private toggleOutput() {
     if (this.output.state) {
       this.outputService.deactivateOutput(this.output.id)
     } else {

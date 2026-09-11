@@ -109,6 +109,16 @@
           </mat-list-item>
         }
         @if (isLoggedIn()) {
+          <mat-list-item
+            routerLink="/preferences"
+            routerLinkActive="active"
+            (click)="smallScreen ? sidenav.close() : null"
+          >
+            <mat-icon matListItemIcon>tune</mat-icon>
+            <span i18n="@@preferences menu link">Preferences</span>
+          </mat-list-item>
+        }
+        @if (isLoggedIn()) {
           <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>crop</mat-icon>
             <span i18n="@@areas menu link">Areas</span>

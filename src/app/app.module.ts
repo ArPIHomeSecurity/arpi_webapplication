@@ -72,6 +72,7 @@ import { DemoHelpDialogComponent } from "./demo/demo.help.dialog.component"
 import { PageNotFoundComponent } from "./page-not-found.component"
 import { EventsComponent } from "./pages/events/events.component"
 import { OutputDetailComponent, OutputListComponent } from "./pages/output"
+import { PreferencesComponent } from "./pages/preferences/preferences.component"
 import { ThemeService } from "./services/theme.service"
 import { AUTHENTICATION_SERVICE } from "./tokens"
 
@@ -116,6 +117,7 @@ import { CapacitorService } from "./services/capacitor.service"
     OutputComponent,
     OutputListComponent,
     OutputDetailComponent,
+    PreferencesComponent,
 
     SensorComponent,
     SensorListComponent,

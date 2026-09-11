@@ -256,13 +256,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       )
     } else if (armType === ARM_TYPE.DISARMED) {
-      this.monitoringService
-        .disarm()
-        .subscribe(() =>
-          this.snackBar.open($localize`:@@home disarmed:System disarmed`, null, {
-            duration: environment.snackDuration
-          })
-        )
+      this.monitoringService.disarm().subscribe(() =>
+        this.snackBar.open($localize`:@@home disarmed:System disarmed`, null, {
+          duration: environment.snackDuration
+        })
+      )
     }
   }
 
