@@ -29,71 +29,73 @@
   padding: 0;
 }
 
-::ng-deep .mat-mdc-card-header {
-  .mat-mdc-card-avatar {
-    width: 25px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
+.location-form {
+  ::ng-deep .mat-mdc-card-header {
+    .mat-mdc-card-avatar {
+      width: 25px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .mat-icon {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .mat-mdc-card-header-text {
+      margin-bottom: 20px;
+    }
   }
 
-  .mat-icon {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  ::ng-deep .mat-mdc-card-header-text {
+    width: 100%;
+
+    .mat-mdc-card-subtitle {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
-  .mat-mdc-card-header-text {
-    margin-bottom: 20px;
+  .mat-mdc-card-content {
+    padding-top: 10px;
   }
-}
 
-::ng-deep .mat-mdc-card-header-text {
-  width: 100%;
-
-  .mat-mdc-card-subtitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .mat-mdc-form-field {
+    width: 100%;
   }
-}
 
-.mat-mdc-card-content {
-  padding-top: 10px;
-}
-
-.mat-mdc-form-field {
-  width: 100%;
-}
-
-.enabled {
-  color: #4caf50;
-}
-
-.disabled {
-  color: #f44336;
-}
-
-.primary,
-.secondary {
-  .icon-accessible {
+  .enabled {
     color: #4caf50;
   }
 
-  .icon-inaccessible {
+  .disabled {
     color: #f44336;
   }
-}
 
-.test-link {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  .primary,
+  .secondary {
+    .icon-accessible {
+      color: #4caf50;
+    }
 
-  .mat-icon {
-    font-size: 18px;
-    vertical-align: middle;
+    .icon-inaccessible {
+      color: #f44336;
+    }
+  }
+
+  .test-link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .mat-icon {
+      font-size: 18px;
+      vertical-align: middle;
+    }
   }
 }
