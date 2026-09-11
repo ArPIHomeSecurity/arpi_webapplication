@@ -243,6 +243,18 @@
               <button mat-icon-button color="primary" (click)="onLogin(location.id)">
                 <mat-icon>login</mat-icon>
               </button>
+              @if (isRegistered(location.id)) {
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openUnregisterDialog(location.id)"
+                  [disabled]="isUnregisterDisabled(location.id)"
+                  aria-label="Unregister device"
+                  i18n-aria-label="@@unregister device action"
+                >
+                  <mat-icon>disabled_by_default</mat-icon>
+                </button>
+              }
               @if (locations.length > 1) {
                 <button
                   mat-icon-button

@@ -1010,7 +1010,7 @@
         <source>Send SMS 2</source>
         <target state="translated">SMS küldése 2</target>
       </trans-unit>
-      <trans-unit id="unregister menu link" datatype="html">
+      <trans-unit id="unregister device action" datatype="html">
         <source>Unregister device</source>
         <target state="translated">Eszköz eltávolítása</target>
       </trans-unit>

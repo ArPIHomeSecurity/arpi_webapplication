@@ -759,7 +759,7 @@
       <trans-unit id="notifications target phone2" datatype="html">
         <source>Target phone number 2</source>
       </trans-unit>
-      <trans-unit id="unregister menu link" datatype="html">
+      <trans-unit id="unregister device action" datatype="html">
         <source>Unregister device</source>
       </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">

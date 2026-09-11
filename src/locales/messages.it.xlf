@@ -1010,7 +1010,7 @@
         <source>Target phone number 2</source>
         <target state="translated">Numero di telefono 2</target>
       </trans-unit>
-      <trans-unit id="unregister menu link" datatype="html">
+      <trans-unit id="unregister device action" datatype="html">
         <source>Unregister device</source>
         <target state="translated">Disregistrare il dispositivo</target>
       </trans-unit>

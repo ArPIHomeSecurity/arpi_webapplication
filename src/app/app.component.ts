@@ -1,5 +1,4 @@
 import { Component, ElementRef, Inject, NgZone, OnInit, ViewChild } from "@angular/core"
-import { MatDialog } from "@angular/material/dialog"
 import { MatSidenav } from "@angular/material/sidenav"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { BehaviorSubject, fromEvent } from "rxjs"
@@ -13,7 +12,6 @@ import { CountdownComponent } from "ngx-countdown"
 
 import { Router } from "@angular/router"
 import { environment } from "@environments/environment"
-import { QuestionDialogComponent } from "./components/question-dialog/question-dialog.component"
 import { Location, ROLE_TYPES } from "./models"
 import { AuthenticationService, LoaderService, MonitoringService } from "./services"
 import { ThemeService } from "./services/theme.service"
@@ -59,7 +57,6 @@ export class AppComponent implements OnInit {
     notify: [environment.userTokenExpiry / 3]
   }
   isSessionValid: boolean
-  isDeviceRegistered = false
 
   langService: HumanizeDurationLanguage = new HumanizeDurationLanguage()
   humanizer: HumanizeDuration = new HumanizeDuration(this.langService)
@@ -77,7 +74,6 @@ export class AppComponent implements OnInit {
     @Inject("MonitoringService") private monitoring: MonitoringService,
     @Inject("ThemeService") private themeService: ThemeService,
     public router: Router,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
 
     private host: ElementRef,
@@ -146,10 +142,6 @@ export class AppComponent implements OnInit {
       if (this.isSessionValid && this.countdown) {
         this.countdown.restart()
       }
-    })
-
-    this.authenticationService.isDeviceRegistered().subscribe(isRegistered => {
-      this.isDeviceRegistered = isRegistered
     })
 
     const locations: Location[] = JSON.parse(localStorage.getItem("locations") || "[]")
@@ -287,33 +279,6 @@ export class AppComponent implements OnInit {
     }
     return this.humanizer.humanize((environment.userTokenExpiry / 3) * 1000, {
       language: currentLocale
-    })
-  }
-
-  unregister() {
-    const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: "250px",
-      data: {
-        title: $localize`:@@unregister device:Unregister device`,
-        message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
-        options: [
-          {
-            id: "ok",
-            text: $localize`:@@unregister:Unregister`,
-            color: "warn"
-          },
-          {
-            id: "cancel",
-            text: $localize`:@@cancel:Cancel`
-          }
-        ]
-      }
-    })
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === "ok") {
-        this.authenticationService.unRegisterDevice()
-      }
     })
   }
 

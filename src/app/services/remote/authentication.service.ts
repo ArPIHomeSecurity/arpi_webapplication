@@ -273,8 +273,8 @@ export class AuthenticationService implements AuthenticationService {
       )
   }
 
-  unRegisterDevice() {
-    const locationId = this.getLocationId()
+  unRegisterDevice(locationId = this.getLocationId()) {
+    const selectedLocationId = this.getLocationId()
 
     // remove device token
     const deviceTokens = JSON.parse(localStorage.getItem("deviceTokens") || "{}")
@@ -290,12 +290,14 @@ export class AuthenticationService implements AuthenticationService {
     }
     localStorage.setItem("userTokens", JSON.stringify(userTokens))
 
-    // invalidate session
-    this.isSessionValidSubject.next(false)
-    this.isDeviceRegisteredSubject.next(false)
+    if (locationId === selectedLocationId) {
+      // invalidate session
+      this.isSessionValidSubject.next(false)
+      this.isDeviceRegisteredSubject.next(false)
 
-    // clear returnUrl to start from home
-    localStorage.removeItem("returnUrl")
+      // clear returnUrl to start from home
+      localStorage.removeItem("returnUrl")
+    }
   }
 
   isDeviceRegistered(): Observable<boolean> {

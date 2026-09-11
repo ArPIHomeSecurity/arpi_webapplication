@@ -4,8 +4,8 @@ import { Observable, of, Subject } from "rxjs"
 import { delay, startWith } from "rxjs/operators"
 
 import { User } from "@app/models"
+import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from "@app/utils"
 import { environment } from "@environments/environment"
-import { getSessionValue, setSessionValue, setLocalValue, getLocalValue } from "@app/utils"
 import { UserService } from "./user.service"
 
 @Injectable()
@@ -104,7 +104,7 @@ export class AuthenticationService {
     return of(!!tmpUser).pipe(delay(environment.delay))
   }
 
-  unRegisterDevice() {
+  unRegisterDevice(locationId?: string) {
     this.registeredUserId = -1
     setLocalValue("AuthenticationService.registeredForUser", this.registeredUserId)
     this.isDeviceRegisteredSubject.next(false)

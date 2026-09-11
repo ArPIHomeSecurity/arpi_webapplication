@@ -63,7 +63,7 @@ export class MockAuthenticationService {
     return of(true)
   }
 
-  unRegisterDevice(): void {
+  unRegisterDevice(locationId?: string): void {
     this.isSessionValidSubject.next(false)
     this.isDeviceRegisteredSubject.next(false)
   }

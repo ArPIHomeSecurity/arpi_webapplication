@@ -76,7 +76,11 @@ export class LocationListComponent extends ConfigurationBaseComponent {
       return null
     }
 
-    return this.authenticationService.getDeviceToken(locationId) != null
+    return !!this.authenticationService.getDeviceToken(locationId)
+  }
+
+  isUnregisterDisabled(locationId: string): boolean {
+    return this.selectedLocationId === locationId && this.authenticationService.isLoggedIn()
   }
 
   isNotificationEnabled(locationId: string): boolean {
@@ -222,6 +226,33 @@ export class LocationListComponent extends ConfigurationBaseComponent {
       if (result === "ok") {
         this.locations = this.locations.filter(x => x.id !== locationId)
         this.onSave()
+      }
+    })
+  }
+
+  openUnregisterDialog(locationId: string) {
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      width: "250px",
+      data: {
+        title: $localize`:@@unregister device:Unregister device`,
+        message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
+        options: [
+          {
+            id: "ok",
+            text: $localize`:@@unregister:Unregister`,
+            color: "warn"
+          },
+          {
+            id: "cancel",
+            text: $localize`:@@cancel:Cancel`
+          }
+        ]
+      }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "ok") {
+        this.authenticationService.unRegisterDevice(locationId)
       }
     })
   }
