@@ -6,6 +6,31 @@
     <mat-card-content>
       <mat-list>
         <mat-list-item>
+          <mat-icon matListItemIcon>language</mat-icon>
+          <span matListItemTitle i18n="@@language setting">Language</span>
+          <div matListItemMeta>
+            <mat-select class="language-select" [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
+              @for (locale of locales; track locale) {
+                <mat-option [value]="locale.id">
+                  {{ locale.name }}
+                </mat-option>
+              }
+            </mat-select>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListItemIcon>invert_colors</mat-icon>
+          <span matListItemTitle i18n="@@dark theme">Dark theme</span>
+          <div matListItemMeta>
+            <mat-slide-toggle
+              [checked]="darkTheme"
+              (change)="onThemeSwitched($event)"
+              i18n-aria-label="@@dark theme aria label"
+              aria-label="Enable dark theme"
+            />
+          </div>
+        </mat-list-item>
+        <mat-list-item>
           <mat-icon matListItemIcon>touch_app</mat-icon>
           <span matListItemTitle i18n="@@long press setting">Long press</span>
           <span matListItemLine i18n="@@long press setting description">

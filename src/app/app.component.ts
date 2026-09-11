@@ -36,12 +36,6 @@ export class AppComponent implements OnInit {
   locations: Location[] = []
   selectedLocationId: string | null = null
 
-  locales = [
-    { name: "Magyar", id: "hu" },
-    { name: "English", id: "en" },
-    { name: "Italiano", id: "it" }
-  ]
-  currentLocale: string
   versions: {
     serverVersion: string
     webapplicationVersion: string
@@ -80,12 +74,6 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private http: HttpClient
   ) {
-    this.currentLocale = localStorage.getItem("localeId") || "en"
-
-    if (!this.currentLocale) {
-      this.currentLocale = "en"
-    }
-
     this.versions = {
       serverVersion: "",
       webapplicationVersion: "",
@@ -226,33 +214,6 @@ export class AppComponent implements OnInit {
     // navigate to the default page and reload the page
     localStorage.removeItem("returnUrl")
     window.location.href = "/"
-  }
-
-  onLocaleSelected(event) {
-    const currentLocale = localStorage.getItem("localeId")
-    console.log("Change locale: ", currentLocale, "=>", event.value)
-    localStorage.setItem("localeId", event.value)
-
-    const newLocale = event.value
-    const pathParser = new RegExp(
-      "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
-    )
-
-    // replace the language in the path
-    const path = window.location.pathname
-    const matches = pathParser.exec(path)
-    if (matches !== null) {
-      const newPath = [matches.groups.version, newLocale, matches.groups.path].join("/")
-      console.log("Redirect to " + newPath)
-      window.location.pathname = newPath
-    } else {
-      console.error("No match found for path: ", path)
-    }
-  }
-
-  onThemeSwitched($event) {
-    console.log("Theme switched: ", $event.checked)
-    this.themeService.updateTheme($event.checked ? "argus-dark-theme" : "argus-light-theme")
   }
 
   handleCountdown($event) {

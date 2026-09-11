@@ -71,6 +71,18 @@
         <source>Logout</source>
         <target>Disconnessione</target>
       </trans-unit>
+      <trans-unit id="long press setting" datatype="html">
+        <source>Long press</source>
+        <target state="new">Pressione lunga</target>
+      </trans-unit>
+      <trans-unit id="long press setting aria label" datatype="html">
+        <source>Enable long press</source>
+        <target state="new">Abilita pressione lunga</target>
+      </trans-unit>
+      <trans-unit id="long press setting description" datatype="html">
+        <source> Hold output buttons to activate or deactivate them. </source>
+        <target state="new"> Tieni premuti i pulsanti di output per attivarli o disattivarli. </target>
+      </trans-unit>
       <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
         <target state="translated">La sessione scadrà tra <x id="PH" equiv-text="this.getSessionDuration()"/>!</target>
@@ -374,11 +386,11 @@
       </trans-unit>
       <trans-unit id="redirect message" datatype="html">
         <source> Please use the remote web application to access this device. </source>
-        <target state="new"> Si prega di utilizzare l'applicazione web remota per accedere a questo dispositivo. </target>
+        <target state="new"> Si prega di utilizzare l&apos;applicazione web remota per accedere a questo dispositivo. </target>
       </trans-unit>
       <trans-unit id="redirect message 2" datatype="html">
         <source> The access on this interface will be disabled in the future. </source>
-        <target state="new"> L'accesso a questa interfaccia sarà disabilitato in futuro. </target>
+        <target state="new"> L&apos;accesso a questa interfaccia sarà disabilitato in futuro. </target>
       </trans-unit>
       <trans-unit id="redirect title" datatype="html">
         <source>Remote access required</source>
@@ -1078,6 +1090,10 @@
         <source>Outputs</source>
         <target>Uscite</target>
       </trans-unit>
+      <trans-unit id="preferences menu link" datatype="html">
+        <source>Preferences</source>
+        <target state="new">Preferenze</target>
+      </trans-unit>
       <trans-unit id="sensor area form" datatype="html">
         <source>Area</source>
         <target state="translated">Area</target>
@@ -1202,6 +1218,10 @@
         <source>Alert sensitivity</source>
         <target state="translated">Sensibilità all&apos;allarme</target>
       </trans-unit>
+      <trans-unit id="app preferences title" datatype="html">
+        <source>App preferences</source>
+        <target state="new">Preferenze dell&apos;app</target>
+      </trans-unit>
       <trans-unit id="area" datatype="html">
         <source>Area</source>
         <target state="translated">Area</target>
@@ -1251,8 +1271,12 @@
         <target state="translated">Nginx</target>
       </trans-unit>
       <trans-unit id="dark theme" datatype="html">
-        <source> Dark theme </source>
-        <target state="translated"> Tema scuro </target>
+        <source>Dark theme</source>
+        <target state="translated">Tema scuro</target>
+      </trans-unit>
+      <trans-unit id="dark theme aria label" datatype="html">
+        <source>Enable dark theme</source>
+        <target state="new">Abilita tema scuro</target>
       </trans-unit>
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
@@ -1694,6 +1718,10 @@
         <source>The location was not found!</source>
         <target state="translated">La posizione non è stata trovata!</target>
       </trans-unit>
+      <trans-unit id="language setting" datatype="html">
+        <source>Language</source>
+        <target state="new">Lingua</target>
+      </trans-unit>
       <trans-unit id="location already exists" datatype="html">
         <source>Location already exists!</source>
         <target state="translated">La posizione esiste già!</target>
@@ -1928,7 +1956,7 @@
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source>Software installation guide</source>
-        <target state="new">Guida all'installazione del software</target>
+        <target state="new">Guida all&apos;installazione del software</target>
       </trans-unit>
       <trans-unit id="location board" datatype="html">
         <source>Board</source>

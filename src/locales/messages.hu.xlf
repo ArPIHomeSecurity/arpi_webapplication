@@ -71,6 +71,18 @@
         <source>Logout</source>
         <target state="translated">Kijelentkezés</target>
       </trans-unit>
+      <trans-unit id="long press setting" datatype="html">
+        <source>Long press</source>
+        <target state="new">Hosszú kattintás</target>
+      </trans-unit>
+      <trans-unit id="long press setting aria label" datatype="html">
+        <source>Enable long press</source>
+        <target state="new">Hosszú kattintás engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="long press setting description" datatype="html">
+        <source> Hold output buttons to activate or deactivate them. </source>
+        <target state="new"> Tartsa lenyomva a kimeneti gombokat az aktiváláshoz vagy deaktiváláshoz. </target>
+      </trans-unit>
       <trans-unit id="message system error" datatype="html">
         <source>The system is not working correctly, you can&apos;t make changes in the configuration!</source>
         <target state="translated">A rendszer nem működik megfelelően, nem lehet módosítani a konfigurációt!</target>
@@ -1026,6 +1038,10 @@
         <source>Outputs</source>
         <target state="translated">Kimenetek</target>
       </trans-unit>
+      <trans-unit id="preferences menu link" datatype="html">
+        <source>Preferences</source>
+        <target state="new">Beállítások</target>
+      </trans-unit>
       <trans-unit id="delete output" datatype="html">
         <source>Delete Output</source>
         <target state="translated">Kimenet törlése</target>
@@ -1202,6 +1218,10 @@
         <source>Alert sensitivity</source>
         <target state="translated">Riasztási érzékenység</target>
       </trans-unit>
+      <trans-unit id="app preferences title" datatype="html">
+        <source>App preferences</source>
+        <target state="new">Alkalmazás beállítások</target>
+      </trans-unit>
       <trans-unit id="area" datatype="html">
         <source>Area</source>
         <target state="translated">Terület</target>
@@ -1251,8 +1271,12 @@
         <target state="translated">Nginx</target>
       </trans-unit>
       <trans-unit id="dark theme" datatype="html">
-        <source> Dark theme </source>
-        <target state="translated"> Sötét téma </target>
+        <source>Dark theme</source>
+        <target state="translated">Sötét téma</target>
+      </trans-unit>
+      <trans-unit id="dark theme aria label" datatype="html">
+        <source>Enable dark theme</source>
+        <target state="new">Sötét téma engedélyezése</target>
       </trans-unit>
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
@@ -1693,6 +1717,10 @@
       <trans-unit id="location not found" datatype="html">
         <source>The location was not found!</source>
         <target state="translated">A helyszín nem található!</target>
+      </trans-unit>
+      <trans-unit id="language setting" datatype="html">
+        <source>Language</source>
+        <target state="new">Nyelv</target>
       </trans-unit>
       <trans-unit id="location already exists" datatype="html">
         <source>Location already exists!</source>

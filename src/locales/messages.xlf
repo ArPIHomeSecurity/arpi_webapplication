@@ -54,6 +54,15 @@
       <trans-unit id="logout menu link" datatype="html">
         <source>Logout</source>
       </trans-unit>
+      <trans-unit id="long press setting" datatype="html">
+        <source>Long press</source>
+      </trans-unit>
+      <trans-unit id="long press setting aria label" datatype="html">
+        <source>Enable long press</source>
+      </trans-unit>
+      <trans-unit id="long press setting description" datatype="html">
+        <source> Hold output buttons to activate or deactivate them. </source>
+      </trans-unit>
       <trans-unit id="session expiry" datatype="html">
         <source>Your session will expire in <x id="PH" equiv-text="this.getSessionDuration()"/>!</source>
       </trans-unit>
@@ -810,6 +819,9 @@
       <trans-unit id="outputs menu link" datatype="html">
         <source>Outputs</source>
       </trans-unit>
+      <trans-unit id="preferences menu link" datatype="html">
+        <source>Preferences</source>
+      </trans-unit>
       <trans-unit id="sensor area form" datatype="html">
         <source>Area</source>
       </trans-unit>
@@ -903,6 +915,9 @@
       <trans-unit id="syren volume" datatype="html">
         <source>Syren volume</source>
       </trans-unit>
+      <trans-unit id="app preferences title" datatype="html">
+        <source>App preferences</source>
+      </trans-unit>
       <trans-unit id="area" datatype="html">
         <source>Area</source>
       </trans-unit>
@@ -940,7 +955,10 @@
         <source>System</source>
       </trans-unit>
       <trans-unit id="dark theme" datatype="html">
-        <source> Dark theme </source>
+        <source>Dark theme</source>
+      </trans-unit>
+      <trans-unit id="dark theme aria label" datatype="html">
+        <source>Enable dark theme</source>
       </trans-unit>
       <trans-unit id="syren duration" datatype="html">
         <source>Duration</source>
@@ -1265,6 +1283,9 @@
       </trans-unit>
       <trans-unit id="delete location message" datatype="html">
         <source>Are you sure you want to delete the location &quot;<x id="PH" equiv-text="this.location.name"/>&quot;?</source>
+      </trans-unit>
+      <trans-unit id="language setting" datatype="html">
+        <source>Language</source>
       </trans-unit>
       <trans-unit id="location already exists" datatype="html">
         <source>Location already exists!</source>

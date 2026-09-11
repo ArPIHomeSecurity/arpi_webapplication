@@ -108,16 +108,14 @@
             <span i18n="@@locations menu link">Locations</span>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
-          <mat-list-item
-            routerLink="/preferences"
-            routerLinkActive="active"
-            (click)="smallScreen ? sidenav.close() : null"
-          >
-            <mat-icon matListItemIcon>tune</mat-icon>
-            <span i18n="@@preferences menu link">Preferences</span>
-          </mat-list-item>
-        }
+        <mat-list-item
+          routerLink="/preferences"
+          routerLinkActive="active"
+          (click)="smallScreen ? sidenav.close() : null"
+        >
+          <mat-icon matListItemIcon>tune</mat-icon>
+          <span i18n="@@preferences menu link">Preferences</span>
+        </mat-list-item>
         @if (isLoggedIn()) {
           <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>crop</mat-icon>
@@ -211,23 +209,6 @@
             <span i18n="@@my-user menu link">My user</span>
           </mat-list-item>
         }
-        <mat-list-item>
-          <mat-icon matListItemIcon>language</mat-icon>
-          <mat-select [(value)]="currentLocale" (selectionChange)="onLocaleSelected($event)">
-            @for (locale of locales; track locale) {
-              <mat-option [value]="locale.id">
-                {{ locale.name }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-list-item>
-        <mat-list-item [disableRipple]="true">
-          <mat-icon matListItemIcon>invert_colors</mat-icon>
-          <mat-slide-toggle (change)="onThemeSwitched($event)" [checked]="darkTheme" i18n="@@dark theme">
-            Dark theme
-          </mat-slide-toggle>
-        </mat-list-item>
-
         @if (!isMultiLocation) {
           <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>settings</mat-icon>
