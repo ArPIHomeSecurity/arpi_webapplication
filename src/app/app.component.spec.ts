@@ -1,5 +1,6 @@
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http"
 import { provideHttpClientTesting } from "@angular/common/http/testing"
+import { NO_ERRORS_SCHEMA } from "@angular/core"
 import { TestBed, waitForAsync } from "@angular/core/testing"
 import { provideNativeDateAdapter } from "@angular/material/core"
 import { provideRouter, RouterLinkActive, RouterOutlet } from "@angular/router"
@@ -39,6 +40,7 @@ describe("AppComponent", () => {
         RouterLinkActive,
         RouterOutlet
       ],
+      schemas: [NO_ERRORS_SCHEMA], // Countdown component doesn't produce template errors
       providers: [
         provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),

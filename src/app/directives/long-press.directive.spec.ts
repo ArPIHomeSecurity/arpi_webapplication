@@ -16,7 +16,7 @@ describe("LongPressToggleDirective", () => {
     directive.longPressAvailable.subscribe(availableSpy)
     directive.longPressed.subscribe(longPressedSpy)
     ;(directive as any).startPress()
-    tick(1900)
+    tick(500)
 
     expect(availableSpy).not.toHaveBeenCalledWith(true)
     expect(longPressedSpy).not.toHaveBeenCalled()
