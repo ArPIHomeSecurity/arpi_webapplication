@@ -109,7 +109,7 @@ describe("LocationListComponent", () => {
     expect(dialog.open).toHaveBeenCalledWith(
       jasmine.anything(),
       jasmine.objectContaining({
-        width: "250px",
+        width: "450px",
         data: jasmine.objectContaining({
           title: "Unregister device",
           message: "Are you sure you want to unregister this device?"

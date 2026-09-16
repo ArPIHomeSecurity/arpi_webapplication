@@ -232,7 +232,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
 
   openUnregisterDialog(locationId: string) {
     const dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: "250px",
+      width: "450px",
       data: {
         title: $localize`:@@unregister device:Unregister device`,
         message: $localize`:@@unregister device message:Are you sure you want to unregister this device?`,
