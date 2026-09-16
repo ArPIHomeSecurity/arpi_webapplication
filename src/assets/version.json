@@ -1,9 +1,9 @@
 {
-  "version": "v1.15.1:db66c74",
+  "version": "v1.15.2:36afac9",
   "major": 1,
   "minor": 15,
-  "patch": 1,
+  "patch": 2,
   "prerelease": null,
   "prerelease_num": null,
-  "commit_id": "db66c74"
+  "commit_id": "36afac9"
 }
