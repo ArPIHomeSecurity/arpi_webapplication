@@ -72,13 +72,13 @@
       }
 
       <mat-nav-list>
-        @if (!isLoggedIn() && locations.length > 0) {
+        @if (!isLoggedIn() && isConnected() && locations.length > 0) {
           <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>login</mat-icon>
             <div matListItemTitle i18n="@@login menu link">Login</div>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item
             routerLink="/"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -89,13 +89,13 @@
             <div matListItemTitle i18n="@@home menu link">Control</div>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>history</mat-icon>
             <span matListItemTitle i18n="@@events menu link">Events</span>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <h3 mat-subheader i18n="Settings menu title">Settings</h3>
         }
         @if (isMultiLocation) {
@@ -116,38 +116,38 @@
           <mat-icon matListItemIcon>tune</mat-icon>
           <span i18n="@@preferences menu link">Preferences</span>
         </mat-list-item>
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>crop</mat-icon>
             <span i18n="@@areas menu link">Areas</span>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>tab</mat-icon>
             <span i18n="@@zones menu link">Zones</span>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>input</mat-icon>
             <span i18n="@@sensors menu link">Sensors</span>
           </mat-list-item>
         }
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>output</mat-icon>
             <span i18n="@@outputs menu link">Outputs</span>
           </mat-list-item>
         }
-        @if (isAdminUser()) {
+        @if (isAdminUser() && isConnected()) {
           <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>group</mat-icon>
             <span i18n="@@users menu link">Users</span>
           </mat-list-item>
         }
 
-        @if (isAdminUser() && isLoggedIn()) {
+        @if (isAdminUser() && isLoggedIn() && isConnected()) {
           <mat-accordion class="menu">
             <mat-expansion-panel [expanded]="router.url.includes('/config/')">
               <mat-expansion-panel-header>
@@ -200,23 +200,23 @@
           </mat-accordion>
         }
 
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-divider></mat-divider>
         }
-        @if (isLoggedIn() && !isAdminUser()) {
+        @if (isLoggedIn() && !isAdminUser() && isConnected()) {
           <mat-list-item routerLink="/my-user" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>person</mat-icon>
             <span i18n="@@my-user menu link">My user</span>
           </mat-list-item>
         }
-        @if (!isMultiLocation) {
+        @if (!isMultiLocation && isConnected()) {
           <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
             <mat-icon matListItemIcon>settings</mat-icon>
             <span i18n="@@setup menu link">Setup</span>
           </mat-list-item>
         }
 
-        @if (isLoggedIn()) {
+        @if (isLoggedIn() && isConnected()) {
           <mat-list-item
             routerLink="/login"
             routerLinkActive="active"

@@ -166,6 +166,13 @@ export class AppComponent implements OnInit {
     return this.authenticationService.isLoggedIn()
   }
 
+  isConnected() {
+    return (
+      localStorage.getItem("backend.scheme") !== null &&
+      localStorage.getItem("backend.domain") !== null
+    )
+  }
+
   logout(manualAction: boolean) {
     this.countdown.stop()
     this.authenticationService.logout(manualAction)
