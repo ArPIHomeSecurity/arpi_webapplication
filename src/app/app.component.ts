@@ -16,6 +16,7 @@ import { Location, ROLE_TYPES } from "./models"
 import { AuthenticationService, LoaderService, MonitoringService } from "./services"
 import { ThemeService } from "./services/theme.service"
 import { AUTHENTICATION_SERVICE } from "./tokens"
+import { redirectTo } from "./utils"
 
 @Component({
   selector: "app-root",
@@ -213,7 +214,7 @@ export class AppComponent implements OnInit {
 
     // navigate to the default page and reload the page
     localStorage.removeItem("returnUrl")
-    window.location.href = "/"
+    redirectTo("/")
   }
 
   handleCountdown($event) {

@@ -1,5 +1,7 @@
 import { Component } from "@angular/core"
 
+import { redirectTo } from "@app/utils"
+
 @Component({
   selector: "app-backend-error",
   templateUrl: "./backend-error.component.html",
@@ -8,6 +10,6 @@ import { Component } from "@angular/core"
 })
 export class BackendErrorComponent {
   reloadHome() {
-    window.location.href = "/"
+    redirectTo("/")
   }
 }

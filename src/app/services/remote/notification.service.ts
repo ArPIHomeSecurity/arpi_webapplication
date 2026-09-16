@@ -3,6 +3,7 @@ import { Capacitor } from "@capacitor/core"
 import { LocalNotifications, LocalNotificationSchema } from "@capacitor/local-notifications"
 
 import { ARM_TYPE, armTypeToTextTranslated } from "@app/models"
+import { redirectTo } from "@app/utils"
 
 export const LOCATIONS_STORAGE_KEY = "locations"
 const NOTIFICATIONS_ENABLED_KEY = "notificationsEnabled"
@@ -34,7 +35,7 @@ export class NotificationService {
                 newValue: locationId
               })
             )
-            window.location.href = "/"
+            redirectTo("/")
           } else {
             console.warn(
               `Local notification received with unknown locationId, title: ${notificationAction.notification.title}, body: ${notificationAction.notification.body}`

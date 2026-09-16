@@ -51,6 +51,47 @@ export function setLocalValue(name: string, value: any) {
   localStorage.setItem(name, JSON.stringify(value))
 }
 
+/**
+ * Loads the localized entry document and restores the requested Angular route from sessionStorage.
+ * This works for both static Capacitor assets and nginx/GitHub Pages fallback routing.
+ */
+export function redirectTo(targetPath?: string, targetLocale?: string): void {
+  if (targetLocale) {
+    localStorage.setItem("localeId", targetLocale)
+  }
+
+  const pathParser = new RegExp(
+    "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})(?:/(?<path>.*))?$"
+  )
+  const matches = pathParser.exec(window.location.pathname)
+
+  const version = matches?.groups?.version || ""
+  const locale =
+    targetLocale || matches?.groups?.language || localStorage.getItem("localeId") || "en"
+
+  // Determine the final path to navigate to, removing any leading or trailing slashes
+  let path: string
+  if (targetPath !== undefined) {
+    path = targetPath.replace(/^\/+/, "").replace(/\/+$/, "")
+  } else if (matches?.groups?.path !== undefined) {
+    path = matches.groups.path
+      .replace(/^index\.html$/, "")
+      .replace(/^\/+/, "")
+      .replace(/\/+$/, "")
+  } else {
+    path = ""
+  }
+
+  const routeParts = [version, locale, path].filter(Boolean)
+  const targetPathname = "/" + routeParts.join("/")
+  const targetUrl = window.location.origin + targetPathname
+
+  sessionStorage.redirect = targetUrl
+
+  const entryParts = [version, locale, "index.html"].filter(Boolean)
+  window.location.pathname = "/" + entryParts.join("/")
+}
+
 export function getValue(value: any, attribute: string, defaultValue: any = "") {
   // console.log("Getting attribute:",value,".",attribute," = ",value[attribute]);
 

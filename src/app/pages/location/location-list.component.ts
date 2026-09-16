@@ -15,7 +15,7 @@ import { QuestionDialogComponent } from "@app/components/question-dialog/questio
 import { Location } from "@app/models"
 import { NotificationService } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
-import { configureBackend } from "@app/utils"
+import { configureBackend, redirectTo } from "@app/utils"
 import { environment } from "@environments/environment"
 import { compareVersions, LocationVersion, parseVersion } from "../../models/version"
 import {
@@ -168,7 +168,7 @@ export class LocationListComponent extends ConfigurationBaseComponent {
 
   onLogin(locationId: string) {
     setSelectedLocationId(locationId)
-    window.location.href = "/login"
+    redirectTo("/login")
   }
 
   onSave() {
