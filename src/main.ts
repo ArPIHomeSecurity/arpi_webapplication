@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"
 
 import * as moment from "moment"
 import { AppModule } from "./app/app.module"
+import { PATH_PARSER } from "./app/utils"
 import { environment } from "./environments/environment"
 
 let locale = localStorage.getItem("localeId")
@@ -14,12 +15,12 @@ if (locale === null) {
 moment.locale(locale)
 
 console.log("Current path: ", location.pathname)
-const pathParser = new RegExp("^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$")
-const matches = pathParser.exec(location.pathname)
+const matches = PATH_PARSER.exec(location.pathname)
 
 if (matches) {
   console.log("Path matches: ", matches)
-  const newPath = [matches.groups.version, locale, matches.groups.path].join("/")
+  const newPath =
+    "/" + [matches.groups.version, locale, matches.groups.path].filter(Boolean).join("/")
   if (newPath !== location.pathname) {
     console.log("Redirect to " + newPath)
     location.pathname = newPath

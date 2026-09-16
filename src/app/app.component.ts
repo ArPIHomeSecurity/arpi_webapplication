@@ -16,7 +16,7 @@ import { Location, ROLE_TYPES } from "./models"
 import { AuthenticationService, LoaderService, MonitoringService } from "./services"
 import { ThemeService } from "./services/theme.service"
 import { AUTHENTICATION_SERVICE } from "./tokens"
-import { redirectTo } from "./utils"
+import { PATH_PARSER, redirectTo } from "./utils"
 
 @Component({
   selector: "app-root",
@@ -249,10 +249,7 @@ export class AppComponent implements OnInit {
     const currentPath = location.pathname
 
     // remove version and language from the path
-    const pathParser = new RegExp(
-      "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})/(?<path>.*)$"
-    )
-    const matches = pathParser.exec(currentPath)
+    const matches = PATH_PARSER.exec(currentPath)
     let pathWithoutLanguage = ""
     if (matches !== null) {
       pathWithoutLanguage = matches.groups.path

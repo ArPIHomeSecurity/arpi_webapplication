@@ -7,6 +7,11 @@ import { upgradeInstallationsToLocations } from "./upgrades"
 // Global AbortController for backend configuration
 let configurationAbortController: AbortController | null = null
 
+// Parses "/<version>/<language>/<path>" pathnames; version excludes its leading slash to avoid doubling it when rejoining parts
+export const PATH_PARSER = new RegExp(
+  "^(?:/(?<version>v\\d*-?[a-zA-Z]*))?/(?<language>[a-z]{2})(?:/(?<path>.*))?$"
+)
+
 const showAlert = async (title: string, message: string) => {
   await Dialog.alert({
     title: title,
@@ -60,10 +65,7 @@ export function redirectTo(targetPath?: string, targetLocale?: string): void {
     localStorage.setItem("localeId", targetLocale)
   }
 
-  const pathParser = new RegExp(
-    "^(?<version>/v\\d*-?[a-zA-Z]*)?/(?<language>[a-z]{2})(?:/(?<path>.*))?$"
-  )
-  const matches = pathParser.exec(window.location.pathname)
+  const matches = PATH_PARSER.exec(window.location.pathname)
 
   const version = matches?.groups?.version || ""
   const locale =
