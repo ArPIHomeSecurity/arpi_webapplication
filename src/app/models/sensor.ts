@@ -28,6 +28,7 @@ export class Sensor {
 
   areaId: number
   zoneId: number
+  zigbeeDeviceId?: number
 
   alert: boolean
   error: boolean

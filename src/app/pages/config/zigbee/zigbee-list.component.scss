@@ -1,0 +1,118 @@
+@use "@angular/material" as mat;
+
+@mixin zigbee-list-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  .pairing-banner {
+    background-color: mat.m2-get-color-from-palette($argus-alert, 50);
+    border: 1px solid mat.m2-get-color-from-palette($argus-alert);
+    margin-bottom: 16px;
+
+    .pairing-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 16px;
+      font-weight: 500;
+    }
+  }
+
+  .zigbee-card {
+    .mat-mdc-card-subtitle.error-text {
+      display: flex;
+      align-items: center;
+
+      .error-icon {
+        margin-right: 8px;
+        color: mat.m2-get-color-from-palette($argus-alert);
+      }
+    }
+
+    .device-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 50);
+      color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+
+      &.offline {
+        opacity: 0.5;
+        background-color: #e0e0e0;
+        color: #757575;
+      }
+
+      .device-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .attributes {
+      width: 100%;
+      overflow: hidden;
+
+      .attributes-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .mdc-list {
+        padding: 0;
+      }
+
+      .attribute-list {
+        margin: 0 0 auto;
+
+        .mat-mdc-list-item {
+          height: 32px;
+
+          .mat-icon {
+            margin-right: 12px;
+          }
+
+          .mat-list-item-content {
+            padding-left: 16px;
+          }
+
+          .long-field {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .zigbee-status-online {
+      color: mat.m2-get-color-from-palette($argus-ok);
+    }
+
+    .zigbee-status-offline {
+      color: mat.m2-get-color-from-palette($argus-alert);
+    }
+
+    .connected-warning {
+      font-size: 12px;
+      color: mat.m2-get-color-from-palette($argus-alert);
+      margin-right: 12px;
+    }
+  }
+
+  .empty {
+    text-align: center;
+  }
+}

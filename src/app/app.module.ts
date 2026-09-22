@@ -56,6 +56,7 @@ import {
   SmsMessagesDialogComponent
 } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
+import { ZigbeeListComponent } from "./pages/config/zigbee"
 import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
@@ -98,6 +99,7 @@ import { CapacitorService } from "./services/capacitor.service"
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
+    ZigbeeListComponent,
 
     UserCardComponent,
     UserListComponent,
@@ -210,6 +212,7 @@ import { CapacitorService } from "./services/capacitor.service"
     { provide: "SensorService", useClass: environment.sensorService },
     { provide: "ThemeService", useClass: ThemeService },
     { provide: "UserService", useClass: environment.userService },
+    { provide: "ZigbeeService", useClass: environment.zigbeeService },
     { provide: "ZoneService", useClass: environment.zoneService },
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
