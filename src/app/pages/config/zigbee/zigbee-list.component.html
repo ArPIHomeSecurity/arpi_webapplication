@@ -1,4 +1,8 @@
-@if (devices != null) {
+@if (!zigbeeSupported) {
+  <div class="container zigbee-list">
+    <h1 class="empty" i18n="@@zigbee unsupported">Zigbee is not supported by this server</h1>
+  </div>
+} @else if (devices != null) {
   <div class="container zigbee-list">
     @if (isPairing) {
       <mat-card class="pairing-banner container-item">
@@ -90,7 +94,7 @@
   </div>
 }
 
-@if (userCanEdit()) {
+@if (userCanEdit() && zigbeeSupported) {
   <div class="list-actions">
     <button
       class="list-action"

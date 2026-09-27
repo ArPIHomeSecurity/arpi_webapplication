@@ -9,7 +9,7 @@
             (change)="onBindingModeChanged($event.value)"
           >
             <mat-radio-button value="wired" i18n="@@sensor binding wired">Wired</mat-radio-button>
-            <mat-radio-button value="zigbee">Zigbee</mat-radio-button>
+            <mat-radio-button value="zigbee" [disabled]="zigbeeSupported === false">Zigbee</mat-radio-button>
           </mat-radio-group>
           @if (sensorForm.value.bindingMode !== "zigbee") {
             <mat-form-field>

@@ -34,6 +34,7 @@ interface ZigbeeAttribute {
 })
 export class ZigbeeListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   devices: ZigbeeDevice[] | null = null
+  zigbeeSupported = true
   isPairing = false
   pairingTimeLeft = 0
   progress = 0.0
@@ -83,6 +84,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe({
         next: devices => {
+          this.zigbeeSupported = true
           this.devices = devices.sort((a, b) =>
             (a.name || a.ieeeAddress).localeCompare(b.name || b.ieeeAddress)
           )
@@ -90,7 +92,8 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
           this.loader.display(false)
           this.loader.disable(false)
         },
-        error: _ => {
+        error: error => {
+          this.zigbeeSupported = error.status !== 404
           this.devices = []
           this.loader.display(false)
           this.loader.disable(false)

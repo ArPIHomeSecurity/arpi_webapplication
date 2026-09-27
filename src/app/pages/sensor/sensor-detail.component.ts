@@ -70,6 +70,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   zones: Zone[]
   sensorTypes: SensorType[]
   zigbeeDevices: ZigbeeDevice[] = []
+  zigbeeSupported = true
   sensorForm: FormGroup
   zoneForm: FormGroup
   areaForm: FormGroup
@@ -132,7 +133,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         areas: this.areaService.getAreas(),
         sensorTypes: this.sensorService.getSensorTypes(),
         boardVersion: this.monitoringService.getBoardVersion(),
-        zigbeeDevices: this.zigbeeService.getDevices()
+        zigbeeDevices: this.getZigbeeDevices()
       })
         .pipe(
           catchError(error => {
@@ -167,7 +168,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
         boardVersion: this.monitoringService.getBoardVersion(),
-        zigbeeDevices: this.zigbeeService.getDevices()
+        zigbeeDevices: this.getZigbeeDevices()
       })
         .pipe(finalize(() => this.loader.display(false)))
         .subscribe(results => {
@@ -197,6 +198,19 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.loader.display(false)
         })
     }
+  }
+
+  private getZigbeeDevices() {
+    return this.zigbeeService.getDevices().pipe(
+      catchError(error => {
+        if (error.status !== 404) {
+          return throwError(() => error)
+        }
+
+        this.zigbeeSupported = false
+        return of([])
+      })
+    )
   }
 
   ngOnDestroy() {
