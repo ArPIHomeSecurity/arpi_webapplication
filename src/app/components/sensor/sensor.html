@@ -1,10 +1,6 @@
 <mat-card class="sensor-component" [ngClass]="{'error': sensor.error}">
   <mat-card-header>
-    <div
-      mat-card-avatar
-      class="sensor-image"
-      [ngClass]="{'alerting': sensor.alert && sensor.enabled === true , 'disabled': sensor.enabled === false}"
-    >
+    <div mat-card-avatar class="sensor-image">
       @switch (sensor.typeId) { @case (1) {
       <img src="assets/images/sensor_motion.png" />
       } @case (2) {
@@ -19,14 +15,20 @@
     </div>
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
+      @if (sensor.zigbeeDeviceId != null &&zigbeeDevice) {
+      <mat-card-subtitle>{{ zigbeeDevice.name || zigbeeDevice.ieeeAddress }}</mat-card-subtitle>
+      } @else {
       <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
-
-      @if (sensor.error) {
+      } @if (sensor.error) {
       <div class="sensor-state error-state">
         <mat-icon class="error-icon">error</mat-icon>
       </div>
-      } @if (sensor.enabled === true && delay != null && sensor.error !== true) {
-      <div class="sensor-state" [ngClass]="{'enabled': sensor.enabled}">
+      } @if ((sensor.enabled === false || (sensor.enabled === true && (delay != null || sensor.alert))) && sensor.error
+      !== true) {
+      <div
+        class="sensor-state"
+        [ngClass]="{'enabled': sensor.enabled === true, 'disabled': sensor.enabled === false, 'alerting': sensor.alert && sensor.enabled === true}"
+      >
         @if (sensor.enabled && delay > 0) {
         <span class="delay">{{delay}}</span>
         }

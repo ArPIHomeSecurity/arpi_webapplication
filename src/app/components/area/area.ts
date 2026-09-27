@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType } from "@app/models"
+import { ARM_TYPE, Area, MONITORING_STATE, Sensor, SensorType, ZigbeeDevice } from "@app/models"
 import { AreaService } from "@app/services"
 import { environment } from "@environments/environment"
 
@@ -16,6 +16,7 @@ export class AreaComponent implements OnInit {
   @Input() delays: number[]
   @Input() sensors: Sensor[]
   @Input("data") sensorTypes: SensorType[]
+  @Input() zigbeeDevices: Map<number, ZigbeeDevice>
   @Input() monitoringState: MONITORING_STATE
 
   armTypes: any = ARM_TYPE

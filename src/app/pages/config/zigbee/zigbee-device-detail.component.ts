@@ -54,7 +54,7 @@ export class ZigbeeDeviceDetailComponent
         next: device => {
           this.device = device
           this.deviceForm = this.formBuilder.group({
-            name: [device.name ?? "", [Validators.required, Validators.maxLength(64)]]
+            name: [device.name ?? "", [Validators.required, Validators.maxLength(12)]]
           })
         },
         error: error => {

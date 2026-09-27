@@ -26,7 +26,7 @@
         </mat-expansion-panel-header>
         <div class="column">
           @for (sensor of alert.sensors; track sensor) {
-            <component-sensor [sensor]="sensor" />
+            <component-sensor [sensor]="sensor" [zigbeeDevices]="zigbeeDevicesById" />
           }
         </div>
       </mat-expansion-panel>
@@ -36,7 +36,11 @@
   @if (areas.length == 1) {
     <div class="container-item areas">
       @for (sensor of sensors; track sensor) {
-        <component-sensor [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)" />
+        <component-sensor
+          [sensor]="sensor"
+          [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
+          [zigbeeDevices]="zigbeeDevicesById"
+        />
       }
     </div>
   }
@@ -48,6 +52,7 @@
           [area]="area"
           [sensors]="getSensors(area.id)"
           [delays]="getSensorDelays(area.id)"
+          [zigbeeDevices]="zigbeeDevicesById"
           [monitoringState]="monitoringState"
         />
       }

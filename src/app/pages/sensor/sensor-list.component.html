@@ -9,20 +9,28 @@
             (cdkDragStarted)="onDragStarted($event)"
             [cdkDragDisabled]="!userCanEdit()"
             class="sensor-card container-item"
-            [ngClass]="{ disabled: !sensor.enabled }"
           >
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title>{{ sensor.name }}</mat-card-title>
-                @if (sensor.error) {
+                @if (sensor.error && !sensor.zigbeeDeviceId) {
                   <mat-card-subtitle class="error-text">
                     <mat-icon class="error-icon">error</mat-icon>
-                    <span i18n="@@sensor error">Error on input channel</span>
+                    <span i18n="@@sensor error channel">Error on input channel</span>
+                  </mat-card-subtitle>
+                }
+                @if (sensor.error && sensor.zigbeeDeviceId) {
+                  <mat-card-subtitle class="error-text">
+                    <mat-icon class="error-icon">error</mat-icon>
+                    <span i18n="@@sensor error zigbee">Error on Zigbee device</span>
                   </mat-card-subtitle>
                 }
                 <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
               </mat-card-title-group>
-              <div class="sensor-image" [ngClass]="{ alerting: sensor.alert, error: sensor.error }">
+              <div
+                class="sensor-image"
+                [ngClass]="{ alerting: sensor.alert, error: sensor.error, disabled: !sensor.enabled }"
+              >
                 @switch (sensor.typeId) {
                   @case (1) {
                     <img mat-card-sm-image src="assets/images/sensor_motion.png" />

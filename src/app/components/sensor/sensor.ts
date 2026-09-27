@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core"
-import { Sensor, SensorType } from "@app/models"
+import { Sensor, SensorType, ZigbeeDevice } from "@app/models"
 
 @Component({
   selector: "component-sensor",
@@ -12,6 +12,13 @@ export class SensorComponent {
   @Input() sensor: Sensor
   @Input() delay: number = null
   @Input("data") sensorTypes: SensorType[]
+  @Input() zigbeeDevices: Map<number, ZigbeeDevice>
+
+  get zigbeeDevice(): ZigbeeDevice | undefined {
+    return this.sensor?.zigbeeDeviceId != null
+      ? this.zigbeeDevices?.get(this.sensor.zigbeeDeviceId)
+      : undefined
+  }
 
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length && sensorTypeId != null) {

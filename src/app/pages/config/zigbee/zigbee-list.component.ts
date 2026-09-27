@@ -143,7 +143,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     attributes.push({
       icon: "battery_std",
       label: $localize`:@@zigbee battery:Battery`,
-      value: device.batteryLevel != null ? `${device.batteryLevel}%` : "-"
+      value: device.batteryLevel != null ? `${device.batteryLevel * 100}%` : "-"
     })
 
     // Signal Quality (LQI)

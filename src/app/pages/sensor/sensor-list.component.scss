@@ -17,6 +17,8 @@
       overflow: hidden;
 
       .attributes-container {
+        margin-top: 15px;
+        margin-bottom: 15px;
         display: grid;
         grid-template-columns: 1fr;
         gap: 0;
@@ -54,10 +56,14 @@
     }
 
     .sensor-image {
-      height: fit-content;
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 1px solid black;
+      color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+      margin-bottom: 10px;
 
       &.alerting {
         background-color: mat.m2-get-color-from-palette($argus-alert);
@@ -67,7 +73,14 @@
         background-color: mat.m2-get-color-from-palette($argus-warn);
       }
 
+      &.disabled {
+        background-color: rgb(160, 160, 160);
+      }
+
       img {
+        width: 100%;
+        height: 100%;
+
         .argus-dark-theme & {
           filter: invert(1);
         }
@@ -81,10 +94,6 @@
 
     .sensor-status-icon-enabled {
       color: mat.m2-get-color-from-palette($argus-ok);
-    }
-
-    &.disabled {
-      background-color: rgb(160, 160, 160);
     }
   }
 
