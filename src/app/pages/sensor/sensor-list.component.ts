@@ -293,9 +293,9 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   private getContactTypeLabel(contactType: SensorContactTypes): string {
     switch (contactType) {
       case SensorContactTypes.NC:
-        return $localize`:@@sensor contact nc:Normally Closed (NC)`
+        return $localize`:@@sensor contact nc: Normally Closed (NC) `
       case SensorContactTypes.NO:
-        return $localize`:@@sensor contact no:Normally Open (NO)`
+        return $localize`:@@sensor contact no: Normally Open (NO) `
       default:
         return ""
     }

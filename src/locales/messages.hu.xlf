@@ -364,6 +364,114 @@
         <source>Arm delay</source>
         <target state="translated">Élesítési késleltetés</target>
       </trans-unit>
+      <trans-unit id="zigbee battery" datatype="html">
+        <source>Battery</source>
+        <target state="new">Akkumulátor</target>
+      </trans-unit>
+      <trans-unit id="zigbee cant delete connected" datatype="html">
+        <source>Cannot delete device connected to <x id="PH" equiv-text="device.sensorCount"/> sensor(s)!</source>
+        <target state="new">Nem lehet törölni az eszközt, amely a <x id="PH" equiv-text="device.sensorCount"/> érzékelőhöz csatlakozik!</target>
+      </trans-unit>
+      <trans-unit id="zigbee connected sensors" datatype="html">
+        <source>Sensors</source>
+        <target state="new">Érzékelők</target>
+      </trans-unit>
+      <trans-unit id="zigbee device deleted" datatype="html">
+        <source>Zigbee device deleted!</source>
+        <target state="new">Zigbee eszköz törölve!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device form" datatype="html">
+        <source>Zigbee device</source>
+        <target state="new">Zigbee eszköz</target>
+      </trans-unit>
+      <trans-unit id="zigbee device load failed" datatype="html">
+        <source>Failed to load Zigbee device!</source>
+        <target state="new">Nem sikerült betölteni a Zigbee eszközt!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device name" datatype="html">
+        <source>Name</source>
+        <target state="new">Név</target>
+      </trans-unit>
+      <trans-unit id="zigbee device not found" datatype="html">
+        <source>The Zigbee device was not found!</source>
+        <target state="new">A Zigbee eszköz nem található!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device update failed" datatype="html">
+        <source>Failed to update Zigbee device name!</source>
+        <target state="new">Nem sikerült frissíteni a Zigbee eszköz nevét!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device updated" datatype="html">
+        <source>Zigbee device name updated!</source>
+        <target state="new">A Zigbee eszköz neve frissítve!</target>
+      </trans-unit>
+      <trans-unit id="zigbee ieee" datatype="html">
+        <source>IEEE Address</source>
+        <target state="new">IEEE cím</target>
+      </trans-unit>
+      <trans-unit id="zigbee last seen" datatype="html">
+        <source>Last Seen</source>
+        <target state="new">Utolsó észlelés</target>
+      </trans-unit>
+      <trans-unit id="zigbee menu link" datatype="html">
+        <source>Zigbee</source>
+        <target state="new">Zigbee</target>
+      </trans-unit>
+      <trans-unit id="zigbee model" datatype="html">
+        <source>Model</source>
+        <target state="new">Model</target>
+      </trans-unit>
+      <trans-unit id="zigbee no sensors" datatype="html">
+        <source>None</source>
+        <target state="new">Nincs</target>
+      </trans-unit>
+      <trans-unit id="zigbee none" datatype="html">
+        <source>No Zigbee devices found</source>
+        <target state="new">Nincs Zigbee eszköz</target>
+      </trans-unit>
+      <trans-unit id="zigbee nwk" datatype="html">
+        <source>Network Address</source>
+        <target state="new">Hálózati cím</target>
+      </trans-unit>
+      <trans-unit id="zigbee offline" datatype="html">
+        <source>Offline</source>
+        <target state="new">Offline</target>
+      </trans-unit>
+      <trans-unit id="zigbee offline status" datatype="html">
+        <source>Device is offline</source>
+        <target state="new">Az eszköz offline</target>
+      </trans-unit>
+      <trans-unit id="zigbee online" datatype="html">
+        <source>Online</source>
+        <target state="new">Online</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing failed" datatype="html">
+        <source>Failed to start Zigbee pairing!</source>
+        <target state="new">Nem sikerült elindítani a Zigbee párosítást!</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing started" datatype="html">
+        <source>Zigbee pairing enabled for 60 seconds! Put your device into pairing mode.</source>
+        <target state="new">A Zigbee párosítás 60 másodpercre engedélyezve! Helyezze az eszközt párosítási módba.</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing timer" datatype="html">
+        <source> Pairing mode active (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/>s remaining). Put your Zigbee device into pairing mode. </source>
+        <target state="new"> A párosítási mód aktív (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/> másodperc maradt). Helyezze a Zigbee eszközt párosítási módba. </target>
+      </trans-unit>
+      <trans-unit id="zigbee sensor count" datatype="html">
+        <source><x id="PH" equiv-text="device.sensorCount"/> sensor(s)</source>
+        <target state="new"><x id="PH" equiv-text="device.sensorCount"/> érzékelő(k)</target>
+      </trans-unit>
+      <trans-unit id="zigbee signal" datatype="html">
+        <source>Link Quality</source>
+        <target state="new">Kapcsolat minősége</target>
+      </trans-unit>
+      <trans-unit id="zigbee status" datatype="html">
+        <source>Status</source>
+        <target state="new">Állapot</target>
+      </trans-unit>
+      <trans-unit id="zigbee unknown" datatype="html">
+        <source>Unknown</source>
+        <target state="new">Ismeretlen</target>
+      </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
         <target state="translated">Riasztás késleltetés</target>
@@ -562,6 +670,10 @@
         <source>Open</source>
         <target state="translated">Nyitás</target>
       </trans-unit>
+      <trans-unit id="sensor binding wired" datatype="html">
+        <source>Wired</source>
+        <target state="new">Vezetékes</target>
+      </trans-unit>
       <trans-unit id="sensor break" datatype="html">
         <source>Break</source>
         <target state="translated">Törés</target>
@@ -658,6 +770,14 @@
         <source> Save </source>
         <target state="translated"> Mentés </target>
       </trans-unit>
+      <trans-unit id="sensor zigbee capability" datatype="html">
+        <source>Capability</source>
+        <target state="new">Capability</target>
+      </trans-unit>
+      <trans-unit id="sensor zigbee device" datatype="html">
+        <source>Zigbee device</source>
+        <target state="new">Zigbee device</target>
+      </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
         <source>Zone</source>
         <target state="translated">Zóna</target>
@@ -673,6 +793,14 @@
       <trans-unit id="sensor type" datatype="html">
         <source>Sensor type</source>
         <target state="translated">Érzékelő típusa</target>
+      </trans-unit>
+      <trans-unit id="delete zigbee device" datatype="html">
+        <source>Delete Zigbee Device</source>
+        <target state="new">Zigbee eszköz törlése</target>
+      </trans-unit>
+      <trans-unit id="delete zigbee device message" datatype="html">
+        <source>Are you sure you want to delete the device &quot;<x id="PH" equiv-text="device.name || device.ieeeAddress"/>&quot;?</source>
+        <target state="new">Biztosan törölni szeretné a &quot;<x id="PH" equiv-text="device.name || device.ieeeAddress"/>&quot; eszközt?</target>
       </trans-unit>
       <trans-unit id="delete zone" datatype="html">
         <source>Delete Zone</source>
@@ -1950,9 +2078,13 @@
         <source> Try Demo </source>
         <target state="translated"> Demo kipróbálása </target>
       </trans-unit>
-      <trans-unit id="sensor error" datatype="html">
+      <trans-unit id="sensor error channel" datatype="html">
         <source>Error on input channel</source>
         <target state="translated">Bementei csatorna hiba</target>
+      </trans-unit>
+      <trans-unit id="sensor error zigbee" datatype="html">
+        <source>Error on Zigbee device</source>
+        <target state="new">Error on Zigbee device</target>
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source>Software installation guide</source>

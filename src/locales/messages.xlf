@@ -360,6 +360,12 @@
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
       </trans-unit>
+      <trans-unit id="sensor zigbee capability" datatype="html">
+        <source>Capability</source>
+      </trans-unit>
+      <trans-unit id="sensor zigbee device" datatype="html">
+        <source>Zigbee device</source>
+      </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
         <source>Zone</source>
       </trans-unit>
@@ -410,6 +416,9 @@
       </trans-unit>
       <trans-unit id="sensor open" datatype="html">
         <source>Open</source>
+      </trans-unit>
+      <trans-unit id="sensor binding wired" datatype="html">
+        <source>Wired</source>
       </trans-unit>
       <trans-unit id="sensor break" datatype="html">
         <source>Break</source>
@@ -501,6 +510,12 @@
       <trans-unit id="user no users" datatype="html">
         <source>No users found</source>
       </trans-unit>
+      <trans-unit id="delete zigbee device" datatype="html">
+        <source>Delete Zigbee Device</source>
+      </trans-unit>
+      <trans-unit id="delete zigbee device message" datatype="html">
+        <source>Are you sure you want to delete the device &quot;<x id="PH" equiv-text="device.name || device.ieeeAddress"/>&quot;?</source>
+      </trans-unit>
       <trans-unit id="delete zone" datatype="html">
         <source>Delete Zone</source>
       </trans-unit>
@@ -533,6 +548,87 @@
       </trans-unit>
       <trans-unit id="zone arm delay" datatype="html">
         <source>Arm delay</source>
+      </trans-unit>
+      <trans-unit id="zigbee battery" datatype="html">
+        <source>Battery</source>
+      </trans-unit>
+      <trans-unit id="zigbee cant delete connected" datatype="html">
+        <source>Cannot delete device connected to <x id="PH" equiv-text="device.sensorCount"/> sensor(s)!</source>
+      </trans-unit>
+      <trans-unit id="zigbee connected sensors" datatype="html">
+        <source>Sensors</source>
+      </trans-unit>
+      <trans-unit id="zigbee device deleted" datatype="html">
+        <source>Zigbee device deleted!</source>
+      </trans-unit>
+      <trans-unit id="zigbee device form" datatype="html">
+        <source>Zigbee device</source>
+      </trans-unit>
+      <trans-unit id="zigbee device load failed" datatype="html">
+        <source>Failed to load Zigbee device!</source>
+      </trans-unit>
+      <trans-unit id="zigbee device name" datatype="html">
+        <source>Name</source>
+      </trans-unit>
+      <trans-unit id="zigbee device not found" datatype="html">
+        <source>The Zigbee device was not found!</source>
+      </trans-unit>
+      <trans-unit id="zigbee device update failed" datatype="html">
+        <source>Failed to update Zigbee device name!</source>
+      </trans-unit>
+      <trans-unit id="zigbee device updated" datatype="html">
+        <source>Zigbee device name updated!</source>
+      </trans-unit>
+      <trans-unit id="zigbee ieee" datatype="html">
+        <source>IEEE Address</source>
+      </trans-unit>
+      <trans-unit id="zigbee last seen" datatype="html">
+        <source>Last Seen</source>
+      </trans-unit>
+      <trans-unit id="zigbee menu link" datatype="html">
+        <source>Zigbee</source>
+      </trans-unit>
+      <trans-unit id="zigbee model" datatype="html">
+        <source>Model</source>
+      </trans-unit>
+      <trans-unit id="zigbee no sensors" datatype="html">
+        <source>None</source>
+      </trans-unit>
+      <trans-unit id="zigbee none" datatype="html">
+        <source>No Zigbee devices found</source>
+      </trans-unit>
+      <trans-unit id="zigbee nwk" datatype="html">
+        <source>Network Address</source>
+      </trans-unit>
+      <trans-unit id="zigbee offline" datatype="html">
+        <source>Offline</source>
+      </trans-unit>
+      <trans-unit id="zigbee offline status" datatype="html">
+        <source>Device is offline</source>
+      </trans-unit>
+      <trans-unit id="zigbee online" datatype="html">
+        <source>Online</source>
+      </trans-unit>
+      <trans-unit id="zigbee pairing failed" datatype="html">
+        <source>Failed to start Zigbee pairing!</source>
+      </trans-unit>
+      <trans-unit id="zigbee pairing started" datatype="html">
+        <source>Zigbee pairing enabled for 60 seconds! Put your device into pairing mode.</source>
+      </trans-unit>
+      <trans-unit id="zigbee pairing timer" datatype="html">
+        <source> Pairing mode active (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/>s remaining). Put your Zigbee device into pairing mode. </source>
+      </trans-unit>
+      <trans-unit id="zigbee sensor count" datatype="html">
+        <source><x id="PH" equiv-text="device.sensorCount"/> sensor(s)</source>
+      </trans-unit>
+      <trans-unit id="zigbee signal" datatype="html">
+        <source>Link Quality</source>
+      </trans-unit>
+      <trans-unit id="zigbee status" datatype="html">
+        <source>Status</source>
+      </trans-unit>
+      <trans-unit id="zigbee unknown" datatype="html">
+        <source>Unknown</source>
       </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
@@ -1464,8 +1560,11 @@
       <trans-unit id="network mqtt username" datatype="html">
         <source>MQTT Username</source>
       </trans-unit>
-      <trans-unit id="sensor error" datatype="html">
+      <trans-unit id="sensor error channel" datatype="html">
         <source>Error on input channel</source>
+      </trans-unit>
+      <trans-unit id="sensor error zigbee" datatype="html">
+        <source>Error on Zigbee device</source>
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source>Software installation guide</source>
