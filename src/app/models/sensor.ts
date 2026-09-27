@@ -26,9 +26,12 @@ export class Sensor {
   sensorEolCount: SensorEOLCount
   typeId: number
 
+  zigbeeDeviceId?: number
+  zigbeeEndpoint?: string
+  zigbeeCapability?: string
+
   areaId: number
   zoneId: number
-  zigbeeDeviceId?: number
 
   alert: boolean
   error: boolean

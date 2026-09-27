@@ -3,41 +3,82 @@
     <mat-card class="sensor-form container-item">
       <mat-card-content>
         <form [formGroup]="sensorForm" (ngSubmit)="onSubmit()" novalidate class="column">
-          <mat-form-field>
-            <mat-label i18n="@@sensor channel">Channel</mat-label>
-            <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
-              @for (channel of orderedChannels(); track channel) {
-                <mat-option [value]="channel.channel" [disabled]="isChannelDisabled(channel)">
-                  @if (channel.channel === -1) {
-                    <span i18n="@@sensor disconnected">Disconnected</span>
-                  }
-                  @if (channel.channel !== -1) {
-                    <span>CH{{ channel.channel + 1 | number: "2.0-0" }}</span>
-                  }
-                  @if (
-                    (channel.sensor && channel.sensor.id !== sensor.id) ||
-                    (channel.sensorB && channel.sensorB?.id !== sensor.id)
-                  ) {
-                    -
-                    @if (channel.sensor && !channel.sensorB && sensor.id !== channel.sensor.id) {
-                      {{ channel.sensor.name }}
+          <mat-radio-group
+            class="binding-mode"
+            formControlName="bindingMode"
+            (change)="onBindingModeChanged($event.value)"
+          >
+            <mat-radio-button value="wired" i18n="@@sensor binding wired">Wired</mat-radio-button>
+            <mat-radio-button value="zigbee" i18n="@@sensor binding zigbee">Zigbee</mat-radio-button>
+          </mat-radio-group>
+          @if (sensorForm.value.bindingMode !== "zigbee") {
+            <mat-form-field>
+              <mat-label i18n="@@sensor channel">Channel</mat-label>
+              <mat-select formControlName="channel" i18n-placeholder="@@sensor channel" placeholder="Channel">
+                @for (channel of orderedChannels(); track channel) {
+                  <mat-option [value]="channel.channel" [disabled]="isChannelDisabled(channel)">
+                    @if (channel.channel === -1) {
+                      <span i18n="@@sensor disconnected">Disconnected</span>
                     }
-                    @if (channel.sensor && channel.sensorB) {
-                      @if (sensor.id !== channel.sensor.id) {
-                        A: {{ channel.sensor.name }}
+                    @if (channel.channel !== -1) {
+                      <span>CH{{ channel.channel + 1 | number: "2.0-0" }}</span>
+                    }
+                    @if (
+                      (channel.sensor && channel.sensor.id !== sensor.id) ||
+                      (channel.sensorB && channel.sensorB?.id !== sensor.id)
+                    ) {
+                      -
+                      @if (channel.sensor && !channel.sensorB && sensor.id !== channel.sensor.id) {
+                        {{ channel.sensor.name }}
                       }
-                      @if (channel.sensorB && sensor.id !== channel.sensorB.id) {
+                      @if (channel.sensor && channel.sensorB) {
                         @if (sensor.id !== channel.sensor.id) {
-                          /
+                          A: {{ channel.sensor.name }}
                         }
-                        B: {{ channel.sensorB.name }}
+                        @if (channel.sensorB && sensor.id !== channel.sensorB.id) {
+                          @if (sensor.id !== channel.sensor.id) {
+                            /
+                          }
+                          B: {{ channel.sensorB.name }}
+                        }
                       }
                     }
-                  }
-                </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+          @if (sensorForm.value.bindingMode === "zigbee") {
+            <mat-form-field>
+              <mat-label i18n="@@sensor zigbee device">Zigbee device</mat-label>
+              <mat-select
+                formControlName="zigbeeDeviceId"
+                i18n-placeholder="@@sensor zigbee device"
+                placeholder="Zigbee device"
+                (selectionChange)="onZigbeeDeviceChanged()"
+              >
+                @for (device of zigbeeDevices; track device) {
+                  <mat-option [value]="device.id">
+                    {{ device.name || device.ieeeAddress }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label i18n="@@sensor zigbee capability">Capability</mat-label>
+              <mat-select
+                formControlName="zigbeeCapabilityKey"
+                i18n-placeholder="@@sensor zigbee capability"
+                placeholder="Capability"
+              >
+                @for (capabilityKey of zigbeeCapabilityKeys; track capabilityKey) {
+                  <mat-option [value]="capabilityKey">
+                    {{ zigbeeCapabilityLabel(capabilityKey) }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
           <mat-form-field>
             <mat-label i18n="@@sensor type">Sensor type</mat-label>
             <mat-select
@@ -53,6 +94,7 @@
               }
             </mat-select>
           </mat-form-field>
+
           <mat-form-field>
             <mat-label i18n="@@sensor name">Name</mat-label>
             <input matInput formControlName="name" required maxlength="16" />

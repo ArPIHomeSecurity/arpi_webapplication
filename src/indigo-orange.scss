@@ -8,6 +8,7 @@
 @use "app/pages/home/home.component.scss" as home;
 @use "app/pages/area/area-list.component.scss" as area-list;
 @use "app/pages/sensor/sensor-list.component.scss" as sensor-list;
+@use "app/pages/config/zigbee/zigbee-list.component.scss" as zigbee-list;
 @use "app/pages/output/output-list.component.scss" as output-list;
 
 @include mat.elevation-classes();
@@ -59,48 +60,14 @@ $argus-dark-theme: mat.m2-define-dark-theme(
     $argus-alert,
     $argus-warn
   );
-  @include sensor.sensor-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include home.home-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include controller.controller-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include output.output-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include area-list.area-list-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include sensor-list.sensor-list-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include output-list.output-list-theme(
-    $argus-light-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
+  @include sensor.sensor-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home.home-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller.controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output.output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include area-list.area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include zigbee-list.zigbee-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list.output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
 
   button.drag-handle.cdk-focused,
   button.drag-handle:hover {
@@ -131,48 +98,14 @@ $argus-dark-theme: mat.m2-define-dark-theme(
     $argus-alert,
     $argus-warn
   );
-  @include sensor.sensor-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include home.home-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include controller.controller-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include output.output-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include area-list.area-list-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include sensor-list.sensor-list-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
-  @include output-list.output-list-theme(
-    $argus-dark-theme,
-    $argus-ok,
-    $argus-alert,
-    $argus-warn
-  );
+  @include sensor.sensor-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include home.home-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include controller.controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output.output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include area-list.area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include zigbee-list.zigbee-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include output-list.output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
 
   button.drag-handle.cdk-focused,
   button.drag-handle:hover {

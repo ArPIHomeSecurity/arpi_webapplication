@@ -56,7 +56,7 @@ import {
   SmsMessagesDialogComponent
 } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
-import { ZigbeeListComponent } from "./pages/config/zigbee"
+import { ZigbeeDeviceDetailComponent, ZigbeeListComponent } from "./pages/config/zigbee"
 import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
@@ -100,6 +100,7 @@ import { CapacitorService } from "./services/capacitor.service"
     NetworkComponent,
     SyrenComponent,
     ZigbeeListComponent,
+    ZigbeeDeviceDetailComponent,
 
     UserCardComponent,
     UserListComponent,

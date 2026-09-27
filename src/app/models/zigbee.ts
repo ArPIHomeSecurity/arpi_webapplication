@@ -1,3 +1,12 @@
+export interface ZigbeeCapability {
+  cluster: string
+  clusterId: number
+  attribute: string
+  attributeId: number
+  valueType: string
+  sources: string[]
+}
+
 export interface ZigbeeDevice {
   id: number
   ieeeAddress: string
@@ -10,5 +19,5 @@ export interface ZigbeeDevice {
   batteryLevel?: number
   signalQuality?: number
   sensorCount?: number
-  metadata?: any
+  metadata?: { capabilities?: Record<string, ZigbeeCapability> } & Record<string, unknown>
 }

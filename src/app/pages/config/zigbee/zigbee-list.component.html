@@ -50,10 +50,12 @@
                           <mat-icon matListItemIcon [ngClass]="attribute.iconClass">
                             <span class="material-icons-outlined">{{ attribute.icon }}</span>
                           </mat-icon>
-                          <span class="long-field">
-                            <strong>{{ attribute.label }}:</strong>
+                          <div matListItemTitle>
+                            {{ attribute.label }}
+                          </div>
+                          <div matListItemLine>
                             {{ attribute.value }}
-                          </span>
+                          </div>
                         </mat-list-item>
                       }
                     </mat-list>
@@ -63,22 +65,15 @@
             </mat-card-content>
             @if (userCanEdit()) {
               <mat-divider></mat-divider>
-              <mat-card-actions class="card-actions">
-                @if (device.sensorCount && device.sensorCount > 0) {
-                  <span class="connected-warning" i18n="@@zigbee sensor connected hint">
-                    Connected to {{ device.sensorCount }} sensor(s)
-                  </span>
-                }
+              <mat-card-actions>
+                <button mat-icon-button color="primary" [routerLink]="['/config/zigbee', device.id]">
+                  <mat-icon>edit</mat-icon>
+                </button>
                 <button
                   mat-icon-button
                   (click)="openDeleteDialog(device.id)"
                   color="warn"
                   [disabled]="!canDelete(device)"
-                  [title]="
-                    device.sensorCount && device.sensorCount > 0
-                      ? 'Cannot delete: device is connected to a sensor'
-                      : 'Delete device'
-                  "
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
@@ -101,19 +96,8 @@
       class="list-action"
       mat-fab
       color="accent"
-      [disabled]="monitoringState != monitoringStates.READY"
-      (click)="updateComponent()"
-      title="Refresh list"
-    >
-      <mat-icon>refresh</mat-icon>
-    </button>
-    <button
-      class="list-action"
-      mat-fab
-      [color]="isPairing ? 'warn' : 'primary'"
       [disabled]="monitoringState != monitoringStates.READY || isPairing"
       (click)="onPairing()"
-      title="Pair Zigbee device"
     >
       <mat-icon>leak_add</mat-icon>
     </button>
@@ -121,19 +105,8 @@
       class="list-action"
       mat-mini-fab
       color="accent"
-      [disabled]="monitoringState != monitoringStates.READY"
-      (click)="updateComponent()"
-      title="Refresh list"
-    >
-      <mat-icon>refresh</mat-icon>
-    </button>
-    <button
-      class="list-action"
-      mat-mini-fab
-      [color]="isPairing ? 'warn' : 'primary'"
       [disabled]="monitoringState != monitoringStates.READY || isPairing"
       (click)="onPairing()"
-      title="Pair Zigbee device"
     >
       <mat-icon>leak_add</mat-icon>
     </button>

@@ -55,12 +55,8 @@
 
       .attributes-container {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 2fr));
         gap: 0;
-
-        @media (min-width: 768px) {
-          grid-template-columns: repeat(2, 1fr);
-        }
       }
 
       .mdc-list {
@@ -69,10 +65,9 @@
 
       .attribute-list {
         margin: 0 0 auto;
+        min-width: 0;
 
         .mat-mdc-list-item {
-          height: 32px;
-
           .mat-icon {
             margin-right: 12px;
           }
@@ -89,12 +84,6 @@
           }
         }
       }
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
     }
 
     .zigbee-status-online {

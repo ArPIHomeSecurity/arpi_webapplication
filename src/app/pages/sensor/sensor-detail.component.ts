@@ -27,6 +27,7 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
+  ZigbeeDevice,
   Zone,
   string2MonitoringState
 } from "@app/models"
@@ -36,6 +37,7 @@ import {
   LoaderService,
   MonitoringService,
   SensorService,
+  ZigbeeService,
   ZoneService
 } from "@app/services"
 import { positiveInteger } from "@app/utils"
@@ -67,6 +69,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   areas: Area[]
   zones: Zone[]
   sensorTypes: SensorType[]
+  zigbeeDevices: ZigbeeDevice[] = []
   sensorForm: FormGroup
   zoneForm: FormGroup
   areaForm: FormGroup
@@ -85,6 +88,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     @Inject("SensorService") private sensorService: SensorService,
     @Inject("ZoneService") private zoneService: ZoneService,
     @Inject("AreaService") private areaService: AreaService,
+    @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
 
     public router: Router,
 
@@ -127,7 +131,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
         sensorTypes: this.sensorService.getSensorTypes(),
-        boardVersion: this.monitoringService.getBoardVersion()
+        boardVersion: this.monitoringService.getBoardVersion(),
+        zigbeeDevices: this.zigbeeService.getDevices()
       })
         .pipe(
           catchError(error => {
@@ -148,6 +153,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           )
           this.channels = this.generateChannels(this.sensors)
           this.boardVersion = results.boardVersion
+          this.zigbeeDevices = results.zigbeeDevices
 
           this.updateForm(this.sensor)
           this.onZoneSelected(this.sensor.zoneId)
@@ -160,7 +166,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensorTypes: this.sensorService.getSensorTypes(),
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
-        boardVersion: this.monitoringService.getBoardVersion()
+        boardVersion: this.monitoringService.getBoardVersion(),
+        zigbeeDevices: this.zigbeeService.getDevices()
       })
         .pipe(finalize(() => this.loader.display(false)))
         .subscribe(results => {
@@ -170,6 +177,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.areas = results.areas
           this.channels = this.generateChannels(this.sensors)
           this.boardVersion = results.boardVersion
+          this.zigbeeDevices = results.zigbeeDevices
 
           this.sensor = new Sensor()
           this.sensor.enabled = true
@@ -223,6 +231,14 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
         zoneId: new FormControl(sensor.zoneId, Validators.required),
         areaId: new FormControl(sensor.areaId, Validators.required),
+
+        bindingMode: new FormControl(sensor.zigbeeDeviceId != null ? "zigbee" : "wired"),
+        zigbeeDeviceId: new FormControl(sensor.zigbeeDeviceId ?? null),
+        zigbeeCapabilityKey: new FormControl(
+          sensor.zigbeeEndpoint != null && sensor.zigbeeCapability != null
+            ? `${sensor.zigbeeEndpoint}/${sensor.zigbeeCapability}`
+            : null
+        ),
 
         enabled: sensor.enabled,
         silentAlert: new FormControl(),
@@ -311,6 +327,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         return null
       }
 
+      // channel conflicts do not apply to Zigbee-bound sensors
+      if (this.sensorForm.value.bindingMode === "zigbee") {
+        this.sensorForm.controls.channel.setErrors(null)
+        this.sensorForm.controls.channelType.setErrors(null)
+        return null
+      }
+
       const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel)
       const selectedChannelType = this.sensorForm.value.channelType
 
@@ -388,6 +411,36 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
   }
 
+  onBindingModeChanged(mode: "wired" | "zigbee") {
+    if (mode === "zigbee") {
+      this.sensorForm.controls.channel.setValue(null)
+    } else {
+      this.sensorForm.controls.zigbeeDeviceId.setValue(null)
+      this.sensorForm.controls.zigbeeCapabilityKey.setValue(null)
+    }
+    this.sensorForm.controls.channel.updateValueAndValidity()
+  }
+
+  onZigbeeDeviceChanged() {
+    this.sensorForm.controls.zigbeeCapabilityKey.setValue(null)
+  }
+
+  get selectedZigbeeDevice(): ZigbeeDevice | undefined {
+    return this.zigbeeDevices.find(device => device.id === this.sensorForm?.value?.zigbeeDeviceId)
+  }
+
+  get zigbeeCapabilityKeys(): string[] {
+    const capabilities = this.selectedZigbeeDevice?.metadata?.capabilities
+    return capabilities ? Object.keys(capabilities) : []
+  }
+
+  zigbeeCapabilityLabel(capabilityKey: string): string {
+    const capability = this.selectedZigbeeDevice?.metadata?.capabilities?.[capabilityKey]
+    return capability?.cluster && capability?.attribute
+      ? `${capability.cluster} / ${capability.attribute}`
+      : capabilityKey
+  }
+
   onSensitivityChanged(event) {
     if (event.value === "custom") {
       this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
@@ -415,6 +468,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const area = this.prepareArea()
 
     if (
+      sensor.channel != null &&
       sensor.channel >= 0 &&
       this.channels[sensor.channel].sensor != null &&
       sensor.id !== this.channels[sensor.channel].sensor.id
@@ -495,12 +549,18 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       formModel.monitorThreshold = 100
     }
 
+    const isZigbee = formModel.bindingMode === "zigbee"
+    const [zigbeeEndpoint, ...zigbeeCapabilityParts] = isZigbee
+      ? (formModel.zigbeeCapabilityKey ?? "").split("/")
+      : [null]
+    const zigbeeCapability = isZigbee ? zigbeeCapabilityParts.join("/") : null
+
     return {
       id: this.sensor.id,
       name: formModel.name,
       description: formModel.description,
 
-      channel: formModel.channel,
+      channel: isZigbee ? null : formModel.channel,
       channelType: formModel.channelType,
       sensorContactType: formModel.sensorContactType,
       sensorEolCount: formModel.eolCount,
@@ -508,6 +568,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
       areaId: formModel.areaId,
       zoneId: formModel.zoneId,
+
+      zigbeeDeviceId: isZigbee ? formModel.zigbeeDeviceId : null,
+      zigbeeEndpoint: isZigbee ? zigbeeEndpoint : null,
+      zigbeeCapability: isZigbee ? zigbeeCapability : null,
 
       alert: false,
       error: false,

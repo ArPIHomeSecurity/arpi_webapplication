@@ -11,7 +11,7 @@ import { KeypadComponent } from "./pages/config/keypad"
 import { NetworkComponent } from "./pages/config/network"
 import { NotificationsComponent } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
-import { ZigbeeListComponent } from "./pages/config/zigbee"
+import { ZigbeeDeviceDetailComponent, ZigbeeListComponent } from "./pages/config/zigbee"
 import { EventsComponent } from "./pages/events/events.component"
 import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
@@ -144,6 +144,11 @@ const appRoutes: Routes = [
   {
     path: "config/zigbee",
     component: ZigbeeListComponent,
+    canActivate: [AdminGuard, setupGuard]
+  },
+  {
+    path: "config/zigbee/:id",
+    component: ZigbeeDeviceDetailComponent,
     canActivate: [AdminGuard, setupGuard]
   },
   {
