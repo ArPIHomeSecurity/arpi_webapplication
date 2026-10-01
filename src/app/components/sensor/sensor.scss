@@ -10,6 +10,19 @@
       margin-left: 15px;
     }
 
+    mat-card-subtitle {
+      display: inline-flex;
+      align-items: end;
+      gap: 5px;
+      white-space: nowrap;
+
+      mat-icon,
+      span {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
     .sensor-state {
       -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
       -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);

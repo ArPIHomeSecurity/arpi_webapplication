@@ -4,8 +4,8 @@ import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-dr
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { forkJoin } from "rxjs"
-import { finalize } from "rxjs/operators"
+import { forkJoin, of } from "rxjs"
+import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
@@ -17,6 +17,7 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
+  ZigbeeDevice,
   Zone
 } from "@app/models"
 import {
@@ -26,6 +27,7 @@ import {
   LoaderService,
   MonitoringService,
   SensorService,
+  ZigbeeService,
   ZoneService
 } from "@app/services"
 
@@ -59,6 +61,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   areas: Area[] = []
   isDragging = false
   boardVersion: number
+  zigbeeDevicesById = new Map<number, ZigbeeDevice>()
   sensorAttributeGroupsById = new Map<number, SensorAttribute[][]>()
 
   channelTypes = ChannelTypes
@@ -72,6 +75,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     @Inject("LoaderService") public loader: LoaderService,
     @Inject("MonitoringService") public monitoringService: MonitoringService,
     @Inject("SensorService") private sensorService: SensorService,
+    @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
     @Inject("ZoneService") private zoneService: ZoneService,
 
     public dialog: MatDialog,
@@ -107,6 +111,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     forkJoin({
       sensors: this.sensorService.getSensors(this.onlyAlerting),
       sensorTypes: this.sensorService.getSensorTypes(),
+      zigbeeDevices: this.zigbeeService.getDevices().pipe(catchError(() => of([]))),
       zones: this.zoneService.getZones(),
       areas: this.areaService.getAreas(),
       boardVersion: this.monitoringService.getBoardVersion()
@@ -115,6 +120,9 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       .subscribe(results => {
         this.sensors = results.sensors.sort((a, b) => a.uiOrder - b.uiOrder)
         this.sensorTypes = results.sensorTypes
+        this.zigbeeDevicesById = new Map(
+          results.zigbeeDevices.map(device => [device.id, device] as [number, ZigbeeDevice])
+        )
         this.zones = results.zones
         this.areas = results.areas
         this.boardVersion = results.boardVersion
@@ -161,10 +169,16 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     })
 
     // Channel
+    const zigbeeDevice =
+      sensor.zigbeeDeviceId != null ? this.zigbeeDevicesById.get(sensor.zigbeeDeviceId) : undefined
+
     attributes.push({
-      icon: "label",
+      icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
       iconType: "material",
-      content: sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-"
+      content:
+        zigbeeDevice?.name ||
+        zigbeeDevice?.ieeeAddress ||
+        (sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-")
     })
 
     // Channel type (only for board version >= 3)

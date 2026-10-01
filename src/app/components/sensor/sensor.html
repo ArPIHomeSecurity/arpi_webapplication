@@ -15,10 +15,16 @@
     </div>
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
-      @if (sensor.zigbeeDeviceId != null &&zigbeeDevice) {
-      <mat-card-subtitle>{{ zigbeeDevice.name || zigbeeDevice.ieeeAddress }}</mat-card-subtitle>
+      @if (sensor.zigbeeDeviceId != null && zigbeeDevice) {
+      <mat-card-subtitle>
+        <mat-icon aria-label="Wireless sensor">wifi</mat-icon>
+        <span>{{ zigbeeDevice.name || zigbeeDevice.ieeeAddress }}</span>
+      </mat-card-subtitle>
       } @else {
-      <mat-card-subtitle>CH{{ sensor.channel + 1 | number: '2.0-0'}}</mat-card-subtitle>
+      <mat-card-subtitle>
+        <mat-icon class="material-icons-outlined" aria-label="Wired sensor">label</mat-icon>
+        <span>CH{{ sensor.channel + 1 | number: '2.0-0' }}</span>
+      </mat-card-subtitle>
       } @if (sensor.error) {
       <div class="sensor-state error-state">
         <mat-icon class="error-icon">error</mat-icon>
