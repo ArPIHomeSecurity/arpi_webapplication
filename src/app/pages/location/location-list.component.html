@@ -13,7 +13,7 @@
               <mat-card-header>
                 <div mat-card-avatar>
                   <mat-icon
-                    class="registered-icon"
+                    class="material-symbols-outlined registered-icon"
                     [ngClass]="{
                       enabled: isRegistered(location.id),
                       disabled: !isRegistered(location.id)
@@ -22,7 +22,7 @@
                     location_on
                   </mat-icon>
                   <mat-icon
-                    class="notification-icon"
+                    class="material-symbols-outlined notification-icon"
                     [ngClass]="{
                       enabled: isNotificationEnabled(location.id),
                       disabled: !isNotificationEnabled(location.id)
@@ -31,7 +31,7 @@
                     notifications
                   </mat-icon>
                   @if (biometricAvailable) {
-                    <mat-icon>
+                    <mat-icon class="material-symbols-outlined">
                       @if (isBiometricEnabled(location.id) === true) {
                         fingerprint
                       } @else {
@@ -73,6 +73,7 @@
               <mat-card-header>
                 <div mat-card-avatar>
                   <mat-icon
+                    class="material-symbols-outlined"
                     [ngClass]="{
                       enabled: isRegistered(location.id),
                       disabled: !isRegistered(location.id)
@@ -81,6 +82,7 @@
                     location_on
                   </mat-icon>
                   <mat-icon
+                    class="material-symbols-outlined"
                     [ngClass]="{
                       enabled: isNotificationEnabled(location.id),
                       disabled: !isNotificationEnabled(location.id)
@@ -89,7 +91,7 @@
                     notifications
                   </mat-icon>
                   @if (biometricAvailable) {
-                    <mat-icon>
+                    <mat-icon class="material-symbols-outlined">
                       @if (isBiometricEnabled(location.id) === true) {
                         fingerprint
                       } @else {
@@ -135,16 +137,16 @@
               <mat-list>
                 <mat-list-item class="primary">
                   @if (getTestResult(location.id) === null || getTestResult(location.id).primary === undefined) {
-                    <mat-icon matListItemIcon>link</mat-icon>
+                    <mat-icon class="material-symbols-outlined" matListItemIcon>link</mat-icon>
                   }
                   @if (getTestResult(location.id) !== null && getTestResult(location.id).primary === null) {
                     <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.primary === true) {
-                    <mat-icon matListItemIcon class="icon-accessible">check_circle</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-accessible" matListItemIcon>check_circle</mat-icon>
                   }
                   @if (getTestResult(location.id)?.primary === false) {
-                    <mat-icon matListItemIcon class="icon-inaccessible">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-inaccessible" matListItemIcon>error</mat-icon>
                   }
                   <div matListItemTitle i18n="@@location primary url">Primary URL</div>
                   @if (location.primaryDomain) {
@@ -172,16 +174,16 @@
                 </mat-list-item>
                 <mat-list-item class="secondary">
                   @if (getTestResult(location.id) === null || getTestResult(location.id).secondary === undefined) {
-                    <mat-icon matListItemIcon>link</mat-icon>
+                    <mat-icon class="material-symbols-outlined" matListItemIcon>link</mat-icon>
                   }
                   @if (getTestResult(location.id) !== null && getTestResult(location.id)?.secondary === null) {
                     <mat-spinner matListItemIcon diameter="16" />
                   }
                   @if (getTestResult(location.id)?.secondary === true) {
-                    <mat-icon matListItemIcon class="icon-accessible">check_circle</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-accessible" matListItemIcon>check_circle</mat-icon>
                   }
                   @if (getTestResult(location.id)?.secondary === false) {
-                    <mat-icon matListItemIcon class="icon-inaccessible">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-inaccessible" matListItemIcon>error</mat-icon>
                   }
                   <div matListItemTitle i18n="@@location secondary url">Secondary URL</div>
                   @if (location.secondaryDomain) {
@@ -202,14 +204,14 @@
                         class="test-link"
                       >
                         <span i18n="@@location check">Check API version and certificate</span>
-                        <mat-icon>open_in_new</mat-icon>
+                        <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
                       </a>
                     </div>
                   }
                 </mat-list-item>
                 @if (upgradeAvailable(location)) {
                   <mat-list-item class="next-version">
-                    <mat-icon matListItemIcon>update</mat-icon>
+                    <mat-icon class="material-symbols-outlined" matListItemIcon>update</mat-icon>
                     <div matListItemTitle i18n="@@location next version">Next Version</div>
                     <div matListItemLine>
                       {{ serverLatestVersion.version_tag }}
@@ -220,7 +222,7 @@
                         target="_blank"
                         class="test-link"
                       >
-                        <mat-icon>open_in_new</mat-icon>
+                        <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
                       </a>
                     </div>
                   </mat-list-item>
@@ -231,17 +233,17 @@
             <mat-card-actions>
               @if (isMultiLocation) {
                 <button mat-icon-button cdkDragHandle class="drag-handle">
-                  <mat-icon>drag_indicator</mat-icon>
+                  <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
                 </button>
               }
               <button mat-icon-button [routerLink]="['/location', location.id]" color="primary">
-                <mat-icon>mode_edit</mat-icon>
+                <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
               </button>
               <button mat-icon-button color="primary" (click)="executeLocationTest(location)">
-                <mat-icon>search</mat-icon>
+                <mat-icon class="material-symbols-outlined">search</mat-icon>
               </button>
               <button mat-icon-button color="primary" (click)="onLogin(location.id)">
-                <mat-icon>login</mat-icon>
+                <mat-icon class="material-symbols-outlined">login</mat-icon>
               </button>
               @if (isRegistered(location.id)) {
                 <button
@@ -252,7 +254,7 @@
                   aria-label="Unregister device"
                   i18n-aria-label="@@unregister device action"
                 >
-                  <mat-icon>disabled_by_default</mat-icon>
+                  <mat-icon class="material-symbols-outlined">disabled_by_default</mat-icon>
                 </button>
               }
               @if (locations.length > 1) {
@@ -262,7 +264,7 @@
                   (click)="openDeleteDialog(location.id)"
                   [disabled]="selectedLocationId === location.id"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
                 </button>
               }
             </mat-card-actions>
@@ -277,7 +279,7 @@
       <mat-card class="welcome-card">
         <mat-card-header>
           <div mat-card-avatar>
-            <mat-icon color="primary" class="avatar-icon">home</mat-icon>
+            <mat-icon color="primary" class="material-symbols-outlined avatar-icon">home</mat-icon>
           </div>
           <mat-card-title i18n="@@location welcome title">Welcome to ArPI Home Security</mat-card-title>
           <mat-card-subtitle i18n="@@location welcome subtitle">
@@ -288,7 +290,7 @@
           <mat-card class="getting-started-card">
             <mat-card-header>
               <div mat-card-avatar>
-                <mat-icon color="primary" class="avatar-icon">play_circle</mat-icon>
+                <mat-icon color="primary" class="material-symbols-outlined avatar-icon">play_circle</mat-icon>
               </div>
               <mat-card-title i18n="@@location getting started">Getting Started</mat-card-title>
               <mat-card-subtitle i18n="@@location getting started subtitle">
@@ -309,7 +311,7 @@
                     rel="noopener"
                   >
                     <span i18n="@@location software installation guide">Software installation guide</span>
-                    <mat-icon>open_in_new</mat-icon>
+                    <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
                   </a>
                 </li>
                 <li i18n="@@location step add location">
@@ -323,7 +325,7 @@
           <mat-card class="support-card">
             <mat-card-header>
               <div mat-card-avatar>
-                <mat-icon color="primary" class="avatar-icon">support_agent</mat-icon>
+                <mat-icon color="primary" class="material-symbols-outlined avatar-icon">support_agent</mat-icon>
               </div>
               <mat-card-title i18n="@@location support">Community Support</mat-card-title>
               <mat-card-subtitle i18n="@@location support subtitle">
@@ -340,7 +342,7 @@
                 i18n="@@location support link"
               >
                 ArPI Home Security Slack
-                <mat-icon>open_in_new</mat-icon>
+                <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
               </a>
             </mat-card-content>
           </mat-card>
@@ -380,12 +382,12 @@
 <div class="list-actions">
   @if (isMultiLocation || locations.length === 0) {
     <button class="list-action" mat-fab color="accent" routerLink="/location/add">
-      <mat-icon>add</mat-icon>
+      <mat-icon class="material-symbols-outlined">add</mat-icon>
     </button>
   }
   @if (isMultiLocation || locations.length === 0) {
     <button class="list-action" mat-mini-fab color="accent" routerLink="/location/add">
-      <mat-icon>add</mat-icon>
+      <mat-icon class="material-symbols-outlined">add</mat-icon>
     </button>
   }
 </div>

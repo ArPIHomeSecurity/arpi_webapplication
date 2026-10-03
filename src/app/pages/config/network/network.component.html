@@ -119,17 +119,17 @@
     @if (publicUrl !== null) {
       <div class="status">
         @if (publicUrlAccessible === true) {
-          <mat-icon class="icon-accessible link-icon">check</mat-icon>
+          <mat-icon class="material-symbols-outlined icon-accessible link-icon">check</mat-icon>
         }
         @if (publicUrlAccessible === false) {
-          <mat-icon class="icon-inaccessible link-icon">error</mat-icon>
+          <mat-icon class="material-symbols-outlined icon-inaccessible link-icon">error</mat-icon>
         }
         @if (publicUrlAccessible === null) {
           <mat-spinner diameter="16"></mat-spinner>
         }
         <a mat-button color="primary" href="{{ publicUrl }}" target="_blank">
           {{ publicUrl }}
-          <mat-icon class="link-icon" iconPositionEnd>open_in_new</mat-icon>
+          <mat-icon class="material-symbols-outlined link-icon" iconPositionEnd>open_in_new</mat-icon>
         </a>
       </div>
     }

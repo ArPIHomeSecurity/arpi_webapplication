@@ -67,17 +67,15 @@
     .sensor-image {
       margin: 5px;
 
-      img {
-        width: 100%;
+      mat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        line-height: 40px;
       }
     }
   }
 
   .mat-mdc-card.sensor-component.error {
   }
-}
-
-.argus-dark-theme .mat-mdc-card.sensor-component .sensor-image img {
-  -webkit-filter: invert(1);
-  filter: invert(1);
 }

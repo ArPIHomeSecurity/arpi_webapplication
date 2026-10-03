@@ -14,12 +14,12 @@
       <mat-expansion-panel class="alert" color="warn">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
+            <mat-icon matListIcon class="blinking material-symbols-outlined">warning</mat-icon>
             @if (alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">volume_mute</mat-icon>
+              <mat-icon matListIcon class="material-symbols-outlined">volume_mute</mat-icon>
             }
             @if (!alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">volume_up</mat-icon>
+              <mat-icon matListIcon class="material-symbols-outlined">volume_up</mat-icon>
             }
             <div>{{ alert.startTime }}</div>
           </mat-panel-title>
@@ -38,6 +38,7 @@
       @for (sensor of sensors; track sensor) {
         <component-sensor
           [sensor]="sensor"
+          [sensorTypes]="sensorTypes"
           [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
           [zigbeeDevices]="zigbeeDevicesById"
         />

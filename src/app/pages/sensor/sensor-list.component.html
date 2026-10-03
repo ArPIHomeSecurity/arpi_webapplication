@@ -15,13 +15,13 @@
                 <mat-card-title>{{ sensor.name }}</mat-card-title>
                 @if (sensor.error && !sensor.zigbeeDeviceId) {
                   <mat-card-subtitle class="error-text">
-                    <mat-icon class="error-icon">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
                     <span i18n="@@sensor error channel">Error on input channel</span>
                   </mat-card-subtitle>
                 }
                 @if (sensor.error && sensor.zigbeeDeviceId) {
                   <mat-card-subtitle class="error-text">
-                    <mat-icon class="error-icon">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
                     <span i18n="@@sensor error zigbee">Error on Zigbee device</span>
                   </mat-card-subtitle>
                 }
@@ -31,26 +31,9 @@
                 class="sensor-image"
                 [ngClass]="{ alerting: sensor.alert, error: sensor.error, disabled: !sensor.enabled }"
               >
-                @switch (sensor.typeId) {
-                  @case (1) {
-                    <img mat-card-sm-image src="assets/images/sensor_motion.png" />
-                  }
-                  @case (2) {
-                    <img mat-card-sm-image src="assets/images/sensor_tamper.png" />
-                  }
-                  @case (3) {
-                    <img mat-card-sm-image src="assets/images/sensor_open.png" />
-                  }
-                  @case (4) {
-                    <img mat-card-sm-image src="assets/images/sensor_break.png" />
-                  }
-                  @default {
-                    <img
-                      mat-card-sm-image
-                      src="https://via.placeholder.com/100?text={{ getSensorTypeName(sensor.typeId) }}"
-                    />
-                  }
-                }
+                <mat-icon class="material-symbols-outlined">
+                  {{ SensorType.getIconName(getSensorTypeName(sensor.typeId)) }}
+                </mat-icon>
               </div>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -65,38 +48,8 @@
                     <mat-list class="attribute-list">
                       @for (attribute of attributeGroup; track attribute) {
                         <mat-list-item>
-                          <mat-icon matListItemIcon [ngClass]="attribute.iconClass">
-                            @switch (attribute.iconType) {
-                              <!-- Material icons -->
-                              @case ("material") {
-                                <span class="material-icons-outlined">{{ attribute.icon }}</span>
-                              }
-                              <!-- Image icons for sensor types -->
-                              @case ("image") {
-                                @switch (attribute.iconSwitch) {
-                                  @case (1) {
-                                    <img ngClass="sensor-icon" src="assets/images/sensor_motion.png" />
-                                  }
-                                  @case (2) {
-                                    <img ngClass="sensor-icon" src="assets/images/sensor_tamper.png" />
-                                  }
-                                  @case (3) {
-                                    <img ngClass="sensor-icon" src="assets/images/sensor_open.png" />
-                                  }
-                                  @case (4) {
-                                    <img ngClass="sensor-icon" src="assets/images/sensor_break.png" />
-                                  }
-                                  @default {
-                                    <img
-                                      ngClass="sensor-icon"
-                                      src="https://via.placeholder.com/100?text={{
-                                        getSensorTypeName(attribute.iconSwitch)
-                                      }}"
-                                    />
-                                  }
-                                }
-                              }
-                            }
+                          <mat-icon matListItemIcon class="material-symbols-outlined" [ngClass]="attribute.iconClass">
+                            {{ attribute.icon }}
                           </mat-icon>
                           <span class="long-field" [innerHTML]="attribute.content"></span>
                         </mat-list-item>
@@ -118,7 +71,7 @@
                   class="drag-handle"
                   [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
-                  <mat-icon>drag_indicator</mat-icon>
+                  <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -126,7 +79,7 @@
                   color="primary"
                   [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
-                  <mat-icon>mode_edit</mat-icon>
+                  <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -134,7 +87,7 @@
                   color="accent"
                   [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
-                  <mat-icon>refresh</mat-icon>
+                  <mat-icon class="material-symbols-outlined">refresh</mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -142,7 +95,7 @@
                   color="warn"
                   [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
                 </button>
               </mat-card-actions>
             }
@@ -166,7 +119,7 @@
       [disabled]="monitoringState != monitoringStates.READY"
       (click)="onResetReferences()"
     >
-      <mat-icon>refresh</mat-icon>
+      <mat-icon class="material-symbols-outlined">refresh</mat-icon>
     </button>
     <button
       class="list-action"
@@ -175,7 +128,7 @@
       routerLink="/sensor/add"
       [disabled]="monitoringState != monitoringStates.READY"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon class="material-symbols-outlined">add</mat-icon>
     </button>
     <button
       class="list-action"
@@ -184,7 +137,7 @@
       [disabled]="monitoringState != monitoringStates.READY"
       (click)="onResetReferences()"
     >
-      <mat-icon>refresh</mat-icon>
+      <mat-icon class="material-symbols-outlined">refresh</mat-icon>
     </button>
     <button
       class="list-action"
@@ -193,7 +146,7 @@
       routerLink="/sensor/add"
       [disabled]="monitoringState != monitoringStates.READY"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon class="material-symbols-outlined">add</mat-icon>
     </button>
   </div>
 }

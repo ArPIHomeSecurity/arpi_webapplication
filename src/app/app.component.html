@@ -5,7 +5,7 @@
 
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
-      <mat-icon>menu</mat-icon>
+      <mat-icon class="material-symbols-outlined">menu</mat-icon>
     </button>
 
     @if (isLoggedIn()) {
@@ -30,13 +30,13 @@
 
     <app-system-state></app-system-state>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
     </button>
   </mat-toolbar>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="openHelp()">
-      <mat-icon>help</mat-icon>
+      <mat-icon class="material-symbols-outlined">help</mat-icon>
       <span>Help</span>
     </button>
   </mat-menu>
@@ -48,7 +48,7 @@
         <mat-list role="list">
           @if (isMultiLocation && selectedLocationId != null) {
             <mat-list-item>
-              <mat-icon matListItemIcon>
+              <mat-icon class="material-symbols-outlined" matListItemIcon>
                 <img src="assets/images/argus-eye-64.png" width="24" />
               </mat-icon>
               <mat-select [value]="selectedLocationId" (selectionChange)="onLocationChange($event)">
@@ -62,7 +62,7 @@
           }
           @if (!isMultiLocation) {
             <mat-list-item role="listitem">
-              <mat-icon matListItemIcon>
+              <mat-icon class="material-symbols-outlined" matListItemIcon>
                 <img src="assets/images/argus-eye-64.png" width="24" />
               </mat-icon>
               <div matListItemTitle>{{ getLocationName() }}</div>
@@ -74,7 +74,7 @@
       <mat-nav-list>
         @if (!isLoggedIn() && isConnected() && locations.length > 0) {
           <mat-list-item routerLink="/login" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>login</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>login</mat-icon>
             <div matListItemTitle i18n="@@login menu link">Login</div>
           </mat-list-item>
         }
@@ -85,13 +85,13 @@
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
           >
-            <mat-icon matListItemIcon>home</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>home</mat-icon>
             <div matListItemTitle i18n="@@home menu link">Control</div>
           </mat-list-item>
         }
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/events" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>history</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>history</mat-icon>
             <span matListItemTitle i18n="@@events menu link">Events</span>
           </mat-list-item>
         }
@@ -104,7 +104,7 @@
             routerLinkActive="active"
             (click)="smallScreen ? sidenav.close() : null"
           >
-            <mat-icon matListItemIcon>other_houses</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>other_houses</mat-icon>
             <span i18n="@@locations menu link">Locations</span>
           </mat-list-item>
         }
@@ -113,36 +113,36 @@
           routerLinkActive="active"
           (click)="smallScreen ? sidenav.close() : null"
         >
-          <mat-icon matListItemIcon>tune</mat-icon>
+          <mat-icon class="material-symbols-outlined" matListItemIcon>tune</mat-icon>
           <span i18n="@@preferences menu link">Preferences</span>
         </mat-list-item>
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>crop</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>crop</mat-icon>
             <span i18n="@@areas menu link">Areas</span>
           </mat-list-item>
         }
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/zones" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>tab</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>tab</mat-icon>
             <span i18n="@@zones menu link">Zones</span>
           </mat-list-item>
         }
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/sensors" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>input</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>input</mat-icon>
             <span i18n="@@sensors menu link">Sensors</span>
           </mat-list-item>
         }
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/outputs" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>output</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>output</mat-icon>
             <span i18n="@@outputs menu link">Outputs</span>
           </mat-list-item>
         }
         @if (isAdminUser() && isConnected()) {
           <mat-list-item routerLink="/users" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>group</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>group</mat-icon>
             <span i18n="@@users menu link">Users</span>
           </mat-list-item>
         }
@@ -152,7 +152,7 @@
             <mat-expansion-panel [expanded]="router.url.includes('/config/')">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <mat-icon matListItemIcon>settings</mat-icon>
+                  <mat-icon class="material-symbols-outlined" matListItemIcon>settings</mat-icon>
                   <span i18n="@@admin menu title">Admin</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
@@ -161,7 +161,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>volume_up</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>volume_up</mat-icon>
                 <span i18n="@@syren menu link">Syren</span>
               </mat-list-item>
               <mat-list-item
@@ -169,7 +169,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>grid_on</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>grid_on</mat-icon>
                 <span i18n="@@keypad menu link">Keypad</span>
               </mat-list-item>
               <mat-list-item
@@ -177,7 +177,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>send</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>send</mat-icon>
                 <span i18n="@@notifications menu link">Notifications</span>
               </mat-list-item>
               <mat-list-item
@@ -185,7 +185,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>public</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>public</mat-icon>
                 <span i18n="@@network menu link">Network</span>
               </mat-list-item>
               <mat-list-item
@@ -193,7 +193,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>settings_input_antenna</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>settings_input_antenna</mat-icon>
                 <span i18n="@@zigbee menu link">Zigbee</span>
               </mat-list-item>
               <mat-list-item
@@ -201,7 +201,7 @@
                 routerLinkActive="active"
                 (click)="smallScreen ? sidenav.close() : null"
               >
-                <mat-icon matListItemIcon>access_time</mat-icon>
+                <mat-icon class="material-symbols-outlined" matListItemIcon>access_time</mat-icon>
                 <span i18n="@@clock menu link">Clock</span>
               </mat-list-item>
             </mat-expansion-panel>
@@ -213,13 +213,13 @@
         }
         @if (isLoggedIn() && !isAdminUser() && isConnected()) {
           <mat-list-item routerLink="/my-user" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>person</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>person</mat-icon>
             <span i18n="@@my-user menu link">My user</span>
           </mat-list-item>
         }
         @if (!isMultiLocation && isConnected()) {
           <mat-list-item routerLink="/setup" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon matListItemIcon>settings</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>settings</mat-icon>
             <span i18n="@@setup menu link">Setup</span>
           </mat-list-item>
         }
@@ -230,7 +230,7 @@
             routerLinkActive="active"
             (click)="logout(true); smallScreen ? sidenav.close() : null"
           >
-            <mat-icon matListItemIcon>exit_to_app</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>exit_to_app</mat-icon>
             <div mat-line i18n="@@logout menu link">Logout</div>
             <div mat-line>({{ getUserName() }})</div>
           </mat-list-item>
@@ -256,7 +256,7 @@
           <div class="redirect-message">
             <mat-card>
               <mat-card-header>
-                <mat-icon mat-card-avatar>info</mat-icon>
+                <mat-icon class="material-symbols-outlined" mat-card-avatar>info</mat-icon>
                 <mat-card-title i18n="@@redirect title">Remote access required</mat-card-title>
                 <mat-card-subtitle i18n="@@redirect message">
                   Please use the remote web application to access this device.

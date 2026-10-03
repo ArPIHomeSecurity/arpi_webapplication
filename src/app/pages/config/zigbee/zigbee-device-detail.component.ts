@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice } from "@app/models"
+import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import { EventService, LoaderService, MonitoringService, ZigbeeService } from "@app/services"
 import { environment } from "@environments/environment"
 
@@ -22,6 +22,7 @@ export class ZigbeeDeviceDetailComponent
 {
   device: ZigbeeDevice | null = undefined
   deviceForm: FormGroup
+  zoneTypeLabel = zigbeeZoneTypeLabel
 
   constructor(
     @Inject("EventService") public eventService: EventService,

@@ -36,12 +36,8 @@ import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
 
-type SensorAttributeIconType = "material" | "image"
-
 interface SensorAttribute {
   icon: string
-  iconType: SensorAttributeIconType
-  iconSwitch?: number
   iconClass?: string
   content: string
 }
@@ -53,6 +49,8 @@ interface SensorAttribute {
   standalone: false
 })
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  readonly SensorType = SensorType
+
   @Input() onlyAlerting = false
 
   sensors: Sensor[] = null
@@ -135,7 +133,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   getZoneName(zoneId: number) {
     if (this.zones.length && zoneId != null) {
-      return this.zones.find(x => x.id === zoneId).name
+      return this.zones.find(x => x.id === zoneId)?.name
     }
 
     return ""
@@ -143,7 +141,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   getAreaName(areaId: number) {
     if (this.areas.length && areaId != null) {
-      return this.areas.find(x => x.id === areaId).name
+      return this.areas.find(x => x.id === areaId)?.name
     }
 
     return ""
@@ -151,7 +149,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length) {
-      return this.sensorTypes.find(x => x.id === sensorTypeId).name
+      return this.sensorTypes.find(x => x.id === sensorTypeId)?.name ?? ""
     }
 
     return ""
@@ -161,11 +159,10 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     const attributes: SensorAttribute[] = []
 
     // Sensor type
+    const sensorTypeName = this.getSensorTypeName(sensor.typeId)
     attributes.push({
-      icon: "sensor_icon",
-      iconType: "image",
-      iconSwitch: sensor.typeId,
-      content: this.getSensorTypeLabel(sensor.typeId)
+      icon: SensorType.getIconName(sensorTypeName),
+      content: SensorType.getLabel(sensorTypeName)
     })
 
     // Channel
@@ -174,7 +171,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
 
     attributes.push({
       icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
-      iconType: "material",
       content:
         zigbeeDevice?.name ||
         zigbeeDevice?.ieeeAddress ||
@@ -185,21 +181,18 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     if (this.boardVersion >= 3) {
       attributes.push({
         icon: "device_hub",
-        iconType: "material",
         content: this.getChannelTypeLabel(sensor.channelType)
       })
 
       // Contact type
       attributes.push({
         icon: "toggle_on",
-        iconType: "material",
         content: this.getContactTypeLabel(sensor.sensorContactType)
       })
 
       // EOL count
       attributes.push({
         icon: "square",
-        iconType: "material",
         content: this.getEOLCountLabel(sensor.sensorEolCount)
       })
     }
@@ -207,35 +200,30 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     // Area
     attributes.push({
       icon: "crop",
-      iconType: "material",
       content: this.getAreaName(sensor.areaId)
     })
 
     // Zone
     attributes.push({
       icon: "rectangle",
-      iconType: "material",
       content: sensor.channel !== -1 ? this.getZoneName(sensor.zoneId) : "-"
     })
 
     // Silent alert
     attributes.push({
       icon: sensor.silentAlert ? "volume_mute" : "volume_up",
-      iconType: "material",
       content: this.getSilentAlertLabel(sensor.silentAlert)
     })
 
     // Monitor settings
     attributes.push({
       icon: "tune",
-      iconType: "material",
       content: this.getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
     })
 
     // Enabled status
     attributes.push({
       icon: sensor.enabled ? "check_circle" : "circle",
-      iconType: "material",
       iconClass: sensor.enabled ? "sensor-status-icon-enabled" : "",
       content: sensor.enabled
         ? $localize`:@@sensor enabled:Enabled`
@@ -245,7 +233,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     // Visibility
     attributes.push({
       icon: sensor.uiHidden ? "visibility_off" : "visibility",
-      iconType: "material",
       iconClass: sensor.uiHidden ? "sensor-status-icon-hide" : "sensor-status-icon-show",
       content: sensor.uiHidden
         ? $localize`:@@sensor hidden:Hidden`
@@ -272,21 +259,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       groupsById.set(sensor.id, this.getSensorAttributeGroups(sensor))
     })
     return groupsById
-  }
-
-  private getSensorTypeLabel(typeId: number): string {
-    switch (typeId) {
-      case 1:
-        return $localize`:@@sensor motion:Motion`
-      case 2:
-        return $localize`:@@sensor tamper:Tamper`
-      case 3:
-        return $localize`:@@sensor open:Open`
-      case 4:
-        return $localize`:@@sensor break:Break`
-      default:
-        return $localize`:@@sensor unknown:Unknown`
-    }
   }
 
   private getChannelTypeLabel(channelType: ChannelTypes): string {

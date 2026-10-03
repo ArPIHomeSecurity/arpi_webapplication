@@ -20,7 +20,7 @@
               required
               autofocus
             />
-            <mat-icon matSuffix (click)="hide = !hide">
+            <mat-icon class="material-symbols-outlined" matSuffix (click)="hide = !hide">
               {{ hide ? "visibility_off" : "visibility" }}
             </mat-icon>
           </mat-form-field>
@@ -28,7 +28,7 @@
             <button mat-raised-button (click)="register()" [disabled]="loading || !registerForm.valid" color="primary">
               <span i18n="Register button">Register</span>
               @if (loading) {
-                <mat-icon>
+                <mat-icon class="material-symbols-outlined">
                   <mat-spinner diameter="18" />
                 </mat-icon>
               }
@@ -74,7 +74,7 @@
               required
               autofocus
             />
-            <mat-icon matSuffix (click)="hide = !hide">
+            <mat-icon class="material-symbols-outlined" matSuffix (click)="hide = !hide">
               {{ hide ? "visibility_off" : "visibility" }}
             </mat-icon>
           </mat-form-field>
@@ -88,7 +88,7 @@
             >
               <span i18n="Login button">Login</span>
               @if (loading) {
-                <mat-icon>
+                <mat-icon class="material-symbols-outlined">
                   <mat-spinner diameter="18" />
                 </mat-icon>
               }
@@ -141,7 +141,7 @@
   @if (canAskBiometric()) {
     <mat-card class="biometric container-item">
       <mat-card-header>
-        <mat-icon mat-card-avatar>fingerprint</mat-icon>
+        <mat-icon class="material-symbols-outlined" mat-card-avatar>fingerprint</mat-icon>
         <mat-card-title i18n="@@biometric description">Do you want to use biometric login?</mat-card-title>
         <mat-card-subtitle i18n="@@biometric question">
           You can use biometric login to access the security system.
@@ -163,7 +163,7 @@
     <mat-card class="biometric container-item">
       <mat-card-header>
         <mat-spinner mat-card-avatar diameter="32"></mat-spinner>
-        <mat-card-title>Login with biometric</mat-card-title>
+        <mat-card-title i18n="@@biometric login title">Login with biometric</mat-card-title>
         <mat-card-subtitle i18n="@@biometric login description">
           Use biometric login to access the security system.
         </mat-card-subtitle>

@@ -56,40 +56,32 @@
     }
 
     .sensor-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 48px;
       height: 48px;
+      margin-bottom: 10px;
       border-radius: 50%;
       color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
-      margin-bottom: 10px;
 
       &.alerting {
         background-color: mat.m2-get-color-from-palette($argus-alert);
+        color: white;
       }
 
       &.error {
         background-color: mat.m2-get-color-from-palette($argus-warn);
+        color: white;
       }
 
       &.disabled {
         background-color: rgb(160, 160, 160);
       }
 
-      img {
-        width: 100%;
-        height: 100%;
-
-        .argus-dark-theme & {
-          filter: invert(1);
-        }
+      mat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 36px;
+        line-height: 48px;
       }
-    }
-
-    .sensor-icon {
-      width: 100%;
-      opacity: 0.5;
     }
 
     .sensor-status-icon-enabled {

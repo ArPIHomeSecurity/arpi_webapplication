@@ -112,3 +112,7 @@ $argus-dark-theme: mat.m2-define-dark-theme(
     color: mat.m2-get-color-from-palette(map.get($argus-dark-theme, accent));
   }
 }
+
+.material-symbols-outlined {
+  text-align: center;
+}

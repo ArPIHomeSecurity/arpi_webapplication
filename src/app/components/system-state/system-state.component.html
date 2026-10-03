@@ -59,7 +59,7 @@
       </span>
       @if (armState == armTypes.UNDEFINED || monitoringState == monitoringStates.UNDEFINED) {
         <mat-chip class="danger">
-          <mat-icon matListIcon>error</mat-icon>
+          <mat-icon class="material-symbols-outlined" matListIcon>error</mat-icon>
         </mat-chip>
       }
     </mat-chip-listbox>
@@ -79,22 +79,22 @@
       <span>
         @switch (armState) {
           @case (armTypes.MIXED) {
-            <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
+            <mat-icon class="material-symbols-outlined" [ngClass]="getArmClass()">directions_walk</mat-icon>
           }
           @case (armTypes.MIXED) {
-            <mat-icon [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
+            <mat-icon class="material-symbols-outlined" [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
           }
           @case (armTypes.AWAY) {
-            <mat-icon [ngClass]="getArmClass()">directions_walk</mat-icon>
+            <mat-icon class="material-symbols-outlined" [ngClass]="getArmClass()">directions_walk</mat-icon>
           }
           @case (armTypes.STAY) {
-            <mat-icon [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
+            <mat-icon class="material-symbols-outlined" [ngClass]="getArmClass()" class="icon_margin">hotel</mat-icon>
           }
         }
       </span>
       <!-- SENSOR STATES -->
       @if (sensorError) {
-        <span><mat-icon class="danger">warning</mat-icon></span>
+        <span><mat-icon class="material-symbols-outlined danger">warning</mat-icon></span>
       }
       @if (
         monitoringState === monitoringStates.ARMED ||
@@ -106,10 +106,10 @@
         <span>
           @switch (sensorAlert) {
             @case (false) {
-              <mat-icon class="normal icon_margin">sensors</mat-icon>
+              <mat-icon class="material-symbols-outlined normal icon_margin">sensors</mat-icon>
             }
             @case (true) {
-              <mat-icon class="danger icon_margin">sensors</mat-icon>
+              <mat-icon class="material-symbols-outlined danger icon_margin">sensors</mat-icon>
             }
           }
         </span>
@@ -118,29 +118,29 @@
         <span>
           @switch (sensorAlert) {
             @case (false) {
-              <mat-icon class="normal icon_margin">sensors</mat-icon>
+              <mat-icon class="material-symbols-outlined normal icon_margin">sensors</mat-icon>
             }
             @case (true) {
-              <mat-icon class="warning icon_margin">sensors</mat-icon>
+              <mat-icon class="material-symbols-outlined warning icon_margin">sensors</mat-icon>
             }
           }
         </span>
       }
       <!-- SYREN -->
       @if (syrenAlert === true) {
-        <mat-icon class="danger">volume_up</mat-icon>
+        <mat-icon class="material-symbols-outlined danger">volume_up</mat-icon>
       }
       @if (syrenAlert === false) {
-        <mat-icon class="warning">volume_mute</mat-icon>
+        <mat-icon class="material-symbols-outlined warning">volume_mute</mat-icon>
       }
       <!-- POWER -->
       <span>
         @switch (powerState) {
           @case (powerStates.NETWORK) {
-            <mat-icon class="normal">power</mat-icon>
+            <mat-icon class="material-symbols-outlined normal">power</mat-icon>
           }
           @case (powerStates.BATTERY) {
-            <mat-icon class="danger">battery_alert</mat-icon>
+            <mat-icon class="material-symbols-outlined danger">battery_alert</mat-icon>
           }
         }
       </span>

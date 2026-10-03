@@ -30,13 +30,13 @@
                 </mat-card-subtitle>
                 @if (device.availability === "offline") {
                   <mat-card-subtitle class="error-text">
-                    <mat-icon class="error-icon">cloud_off</mat-icon>
+                    <mat-icon class="material-symbols-outlined error-icon">cloud_off</mat-icon>
                     <span i18n="@@zigbee offline status">Device is offline</span>
                   </mat-card-subtitle>
                 }
               </mat-card-title-group>
               <div class="device-image" [ngClass]="{ offline: device.availability === 'offline' }">
-                <mat-icon class="device-icon">router</mat-icon>
+                <mat-icon class="material-symbols-outlined device-icon">router</mat-icon>
               </div>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -51,8 +51,8 @@
                     <mat-list class="attribute-list">
                       @for (attribute of attributeGroup; track attribute.label) {
                         <mat-list-item>
-                          <mat-icon matListItemIcon [ngClass]="attribute.iconClass">
-                            <span class="material-icons-outlined">{{ attribute.icon }}</span>
+                          <mat-icon class="material-symbols-outlined" matListItemIcon [ngClass]="attribute.iconClass">
+                            {{ attribute.icon }}
                           </mat-icon>
                           <div matListItemTitle>
                             {{ attribute.label }}
@@ -71,7 +71,7 @@
               <mat-divider></mat-divider>
               <mat-card-actions>
                 <button mat-icon-button color="primary" [routerLink]="['/config/zigbee', device.id]">
-                  <mat-icon>edit</mat-icon>
+                  <mat-icon class="material-symbols-outlined">edit</mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -79,7 +79,7 @@
                   color="warn"
                   [disabled]="!canDelete(device)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
                 </button>
               </mat-card-actions>
             }
@@ -103,7 +103,7 @@
       [disabled]="monitoringState != monitoringStates.READY || isPairing"
       (click)="onPairing()"
     >
-      <mat-icon>leak_add</mat-icon>
+      <mat-icon class="material-symbols-outlined">leak_add</mat-icon>
     </button>
     <button
       class="list-action"
@@ -112,7 +112,7 @@
       [disabled]="monitoringState != monitoringStates.READY || isPairing"
       (click)="onPairing()"
     >
-      <mat-icon>leak_add</mat-icon>
+      <mat-icon class="material-symbols-outlined">leak_add</mat-icon>
     </button>
   </div>
 }

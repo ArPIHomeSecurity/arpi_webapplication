@@ -9,9 +9,11 @@ import { Sensor, SensorType, ZigbeeDevice } from "@app/models"
   standalone: false
 })
 export class SensorComponent {
+  readonly SensorType = SensorType
+
   @Input() sensor: Sensor
   @Input() delay: number = null
-  @Input("data") sensorTypes: SensorType[]
+  @Input() sensorTypes: SensorType[]
   @Input() zigbeeDevices: Map<number, ZigbeeDevice>
 
   get zigbeeDevice(): ZigbeeDevice | undefined {
@@ -21,7 +23,7 @@ export class SensorComponent {
   }
 
   getSensorTypeName(sensorTypeId: number) {
-    if (this.sensorTypes.length && sensorTypeId != null) {
+    if (this.sensorTypes?.length && sensorTypeId != null) {
       return this.sensorTypes.find(x => x.id === sensorTypeId).name
     }
 

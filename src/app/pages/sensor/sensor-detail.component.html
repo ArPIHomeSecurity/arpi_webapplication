@@ -59,7 +59,7 @@
               >
                 @for (device of zigbeeDevices; track device) {
                   <mat-option [value]="device.id">
-                    {{ device.name || device.ieeeAddress }}
+                    {{ (device.name || device.ieeeAddress) + " (" + zoneTypeLabel(device.zoneType) + ")" }}
                   </mat-option>
                 }
               </mat-select>
@@ -89,6 +89,7 @@
             >
               @for (type of sensorTypes; track type) {
                 <mat-option [value]="type.id">
+                  <mat-icon class="material-symbols-outlined">{{ getIconName(type.name) }}</mat-icon>
                   {{ type.name }}
                 </mat-option>
               }
@@ -206,7 +207,7 @@
                 <mat-panel-title>
                   <span i18n="@@sensor area form">Area</span>
                   @if (areaForm.invalid) {
-                    <mat-icon class="warning">warning</mat-icon>
+                    <mat-icon class="material-symbols-outlined warning">warning</mat-icon>
                   }
                   @if (!areaForm.invalid) {
                     <span>&nbsp;({{ getAreaName() || "-" }})</span>
@@ -251,7 +252,7 @@
                 <mat-panel-title>
                   <span class="title" i18n="@@sensor zone form">Zone</span>
                   @if (zoneForm.invalid) {
-                    <mat-icon class="warning">warning</mat-icon>
+                    <mat-icon class="material-symbols-outlined warning">warning</mat-icon>
                   }
                   @if (!zoneForm.invalid) {
                     <span>&nbsp;({{ getZoneName() || "-" }})</span>
@@ -411,7 +412,7 @@
           "
           (click)="onSubmit()"
         >
-          <mat-icon>save</mat-icon>
+          <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (sensorId > 0) {
           <button
@@ -421,11 +422,11 @@
             (click)="openDeleteDialog(sensor.id)"
             [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="material-symbols-outlined">delete</mat-icon>
           </button>
         }
         <button mat-icon-button color="warn" type="button" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
+          <mat-icon class="material-symbols-outlined">cancel</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>

@@ -24,7 +24,7 @@
           [disabled]="areaForm.invalid || monitoringState != monitoringStates.READY"
           (click)="onSubmit()"
         >
-          <mat-icon>save</mat-icon>
+          <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (areaId > 0) {
           <button
@@ -34,11 +34,11 @@
             (click)="openDeleteDialog(area.id)"
             [disabled]="getSensors().length > 0 || getOutputs().length > 0 || monitoringState != monitoringStates.READY"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="material-symbols-outlined">delete</mat-icon>
           </button>
         }
         <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
+          <mat-icon class="material-symbols-outlined">cancel</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>

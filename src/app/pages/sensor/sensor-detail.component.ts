@@ -28,8 +28,10 @@ import {
   SensorEOLCount,
   SensorType,
   ZigbeeDevice,
+  ZigbeeZoneType,
   Zone,
-  string2MonitoringState
+  string2MonitoringState,
+  zigbeeZoneTypeLabel
 } from "@app/models"
 import {
   AreaService,
@@ -81,6 +83,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   channelTypes = ChannelTypes
   sensorContactTypes = SensorContactTypes
   eolCounts = SensorEOLCount
+
+  getIconName = SensorType.getIconName
+  zoneTypeLabel = zigbeeZoneTypeLabel
 
   constructor(
     @Inject("EventService") public eventService: EventService,
@@ -437,6 +442,48 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   onZigbeeDeviceChanged() {
     this.sensorForm.controls.zigbeeCapabilityKey.setValue(null)
+
+    // update sensor type based on the selected Zigbee zone type
+    const zigbeeZoneType = this.selectedZigbeeDevice?.zoneType
+    this.sensorForm.controls.typeId.setValue(this.sensorTypeByZigbeeZoneType(zigbeeZoneType)?.id)
+  }
+
+  /**
+   * Maps a Zigbee zone type to the corresponding sensor type.
+   * @param zoneType The Zigbee zone type to map.
+   * @returns The corresponding sensor type, or undefined if no match is found.
+   */
+  sensorTypeByZigbeeZoneType(zoneType?: number | null): SensorType | undefined {
+    switch (zoneType) {
+      case ZigbeeZoneType.MOTION_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Motion")
+      case ZigbeeZoneType.CONTACT_SWITCH:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Contact")
+      case ZigbeeZoneType.FIRE_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Fire")
+      case ZigbeeZoneType.WATER_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Water")
+      case ZigbeeZoneType.CARBON_MONOXIDE_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "CO")
+      case ZigbeeZoneType.PERSONAL_EMERGENCY_DEVICE:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Emergency")
+      case ZigbeeZoneType.VIBRATION_MOVEMENT_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Vibration")
+      case ZigbeeZoneType.REMOTE_CONTROL:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Remote")
+      case ZigbeeZoneType.KEY_FOB:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Key fob")
+      case ZigbeeZoneType.KEYPAD:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Keypad")
+      case ZigbeeZoneType.WARNING_DEVICE:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Warning")
+      case ZigbeeZoneType.GLASS_BREAK_SENSOR:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Glass")
+      case ZigbeeZoneType.SECURITY_REPEATER:
+        return this.sensorTypes.find(sensorType => sensorType.name === "Repeater")
+      default:
+        return undefined
+    }
   }
 
   get selectedZigbeeDevice(): ZigbeeDevice | undefined {
@@ -450,6 +497,12 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   zigbeeCapabilityLabel(capabilityKey: string): string {
     const capability = this.selectedZigbeeDevice?.metadata?.capabilities?.[capabilityKey]
+    if (capability?.field === "alarm") {
+      return $localize`:@@ias capability alarm:IAS Zone / Alarm`
+    }
+    if (capability?.field === "tamper") {
+      return $localize`:@@ias capability tamper:IAS Zone / Tamper`
+    }
     return capability?.cluster && capability?.attribute
       ? `${capability.cluster} / ${capability.attribute}`
       : capabilityKey

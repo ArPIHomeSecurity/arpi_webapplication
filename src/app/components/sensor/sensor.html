@@ -1,33 +1,26 @@
 <mat-card class="sensor-component" [ngClass]="{'error': sensor.error}">
   <mat-card-header>
     <div mat-card-avatar class="sensor-image">
-      @switch (sensor.typeId) { @case (1) {
-      <img src="assets/images/sensor_motion.png" />
-      } @case (2) {
-      <img src="assets/images/sensor_tamper.png" />
-      } @case (3) {
-      <img src="assets/images/sensor_open.png" />
-      } @case (4) {
-      <img src="assets/images/sensor_break.png" />
-      } @default {
-      <img src="https://via.placeholder.com/100?text={{getSensorTypeName(sensor.typeId)}}" />
-      } }
+      <mat-icon
+        class="material-symbols-outlined"
+        [fontIcon]="SensorType.getIconName(getSensorTypeName(sensor.typeId))"
+      ></mat-icon>
     </div>
     <mat-card-title-group>
       <mat-card-title>{{sensor.name}}</mat-card-title>
       @if (sensor.zigbeeDeviceId != null && zigbeeDevice) {
       <mat-card-subtitle>
-        <mat-icon aria-label="Wireless sensor">wifi</mat-icon>
+        <mat-icon class="material-symbols-outlined" aria-label="Wireless sensor">wifi</mat-icon>
         <span>{{ zigbeeDevice.name || zigbeeDevice.ieeeAddress }}</span>
       </mat-card-subtitle>
       } @else {
       <mat-card-subtitle>
-        <mat-icon class="material-icons-outlined" aria-label="Wired sensor">label</mat-icon>
+        <mat-icon class="material-symbols-outlined" aria-label="Wired sensor">label</mat-icon>
         <span>CH{{ sensor.channel + 1 | number: '2.0-0' }}</span>
       </mat-card-subtitle>
       } @if (sensor.error) {
       <div class="sensor-state error-state">
-        <mat-icon class="error-icon">error</mat-icon>
+        <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
       </div>
       } @if ((sensor.enabled === false || (sensor.enabled === true && (delay != null || sensor.alert))) && sensor.error
       !== true) {
