@@ -1,12 +1,15 @@
-export interface ZigbeeCapability {
+export interface ZigbeeSignal {
+  endpoint: string
   cluster: string
   clusterId: number
   attribute: string
   attributeId: number
   valueType: string
-  sources: string[]
+  sources: ZigbeeSignalSource[]
   field?: "alarm" | "tamper"
 }
+
+export type ZigbeeSignalSource = "attribute" | `command:${string}`
 
 export interface ZigbeeDevice {
   id: number
@@ -21,7 +24,7 @@ export interface ZigbeeDevice {
   signalQuality?: number
   zoneType?: number | null
   sensorCount?: number
-  metadata?: { capabilities?: Record<string, ZigbeeCapability> } & Record<string, unknown>
+  metadata?: { signals?: ZigbeeSignal[] } & Record<string, unknown>
 }
 
 export const ZigbeeZoneType = {

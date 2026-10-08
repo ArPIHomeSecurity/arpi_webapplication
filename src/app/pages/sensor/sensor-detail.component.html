@@ -65,15 +65,18 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <mat-label i18n="@@sensor zigbee capability">Capability</mat-label>
+              <mat-label i18n="@@sensor zigbee capability">Signal</mat-label>
               <mat-select
-                formControlName="zigbeeCapabilityKey"
+                formControlName="zigbeeSignal"
                 i18n-placeholder="@@sensor zigbee capability"
-                placeholder="Capability"
+                placeholder="Signal"
               >
-                @for (capabilityKey of zigbeeCapabilityKeys; track capabilityKey) {
-                  <mat-option [value]="capabilityKey">
-                    {{ zigbeeCapabilityLabel(capabilityKey) }}
+                @for (
+                  signal of zigbeeSignals;
+                  track signal.endpoint + "/" + signal.clusterId + "/" + signal.attributeId + "/" + signal.field
+                ) {
+                  <mat-option [value]="signal">
+                    {{ zigbeeSignalLabel(signal) }}
                   </mat-option>
                 }
               </mat-select>

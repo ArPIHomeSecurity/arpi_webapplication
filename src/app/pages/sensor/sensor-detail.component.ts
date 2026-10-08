@@ -28,6 +28,7 @@ import {
   SensorEOLCount,
   SensorType,
   ZigbeeDevice,
+  ZigbeeSignal,
   ZigbeeZoneType,
   Zone,
   string2MonitoringState,
@@ -253,11 +254,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
         bindingMode: new FormControl(sensor.zigbeeDeviceId != null ? "zigbee" : "wired"),
         zigbeeDeviceId: new FormControl(sensor.zigbeeDeviceId ?? null),
-        zigbeeCapabilityKey: new FormControl(
-          sensor.zigbeeEndpoint != null && sensor.zigbeeCapability != null
-            ? `${sensor.zigbeeEndpoint}/${sensor.zigbeeCapability}`
-            : null
-        ),
+        zigbeeSignal: new FormControl(this.findZigbeeSignal(sensor)),
 
         enabled: sensor.enabled,
         silentAlert: new FormControl(),
@@ -435,13 +432,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.channel.setValue(null)
     } else {
       this.sensorForm.controls.zigbeeDeviceId.setValue(null)
-      this.sensorForm.controls.zigbeeCapabilityKey.setValue(null)
+      this.sensorForm.controls.zigbeeSignal.setValue(null)
     }
     this.sensorForm.controls.channel.updateValueAndValidity()
   }
 
   onZigbeeDeviceChanged() {
-    this.sensorForm.controls.zigbeeCapabilityKey.setValue(null)
+    this.sensorForm.controls.zigbeeSignal.setValue(null)
 
     // update sensor type based on the selected Zigbee zone type
     const zigbeeZoneType = this.selectedZigbeeDevice?.zoneType
@@ -490,22 +487,37 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return this.zigbeeDevices.find(device => device.id === this.sensorForm?.value?.zigbeeDeviceId)
   }
 
-  get zigbeeCapabilityKeys(): string[] {
-    const capabilities = this.selectedZigbeeDevice?.metadata?.capabilities
-    return capabilities ? Object.keys(capabilities) : []
+  get zigbeeSignals(): ZigbeeSignal[] {
+    return this.selectedZigbeeDevice?.metadata?.signals ?? []
   }
 
-  zigbeeCapabilityLabel(capabilityKey: string): string {
-    const capability = this.selectedZigbeeDevice?.metadata?.capabilities?.[capabilityKey]
-    if (capability?.field === "alarm") {
+  zigbeeSignalLabel(signal: ZigbeeSignal): string {
+    if (signal.field === "alarm") {
       return $localize`:@@ias capability alarm:IAS Zone / Alarm`
     }
-    if (capability?.field === "tamper") {
+    if (signal.field === "tamper") {
       return $localize`:@@ias capability tamper:IAS Zone / Tamper`
     }
-    return capability?.cluster && capability?.attribute
-      ? `${capability.cluster} / ${capability.attribute}`
-      : capabilityKey
+    return signal.cluster && signal.attribute
+      ? `${signal.cluster} / ${signal.attribute}`
+      : `${signal.clusterId} / ${signal.attributeId}`
+  }
+
+  private findZigbeeSignal(sensor: Sensor): ZigbeeSignal | null {
+    if (sensor.zigbeeDeviceId == null) {
+      return null
+    }
+    return (
+      this.zigbeeDevices
+        .find(device => device.id === sensor.zigbeeDeviceId)
+        ?.metadata?.signals?.find(
+          signal =>
+            signal.endpoint === sensor.zigbeeEndpoint &&
+            signal.clusterId === sensor.zigbeeClusterId &&
+            signal.attributeId === sensor.zigbeeAttributeId &&
+            (signal.field ?? null) === (sensor.zigbeeField ?? null)
+        ) ?? null
+    )
   }
 
   onSensitivityChanged(event) {
@@ -617,10 +629,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     const isZigbee = formModel.bindingMode === "zigbee"
-    const [zigbeeEndpoint, ...zigbeeCapabilityParts] = isZigbee
-      ? (formModel.zigbeeCapabilityKey ?? "").split("/")
-      : [null]
-    const zigbeeCapability = isZigbee ? zigbeeCapabilityParts.join("/") : null
+    const zigbeeSignal = isZigbee ? (formModel.zigbeeSignal as ZigbeeSignal | null) : null
 
     return {
       id: this.sensor.id,
@@ -637,8 +646,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       zoneId: formModel.zoneId,
 
       zigbeeDeviceId: isZigbee ? formModel.zigbeeDeviceId : null,
-      zigbeeEndpoint: isZigbee ? zigbeeEndpoint : null,
-      zigbeeCapability: isZigbee ? zigbeeCapability : null,
+      zigbeeEndpoint: isZigbee ? zigbeeSignal?.endpoint : null,
+      zigbeeClusterId: isZigbee ? zigbeeSignal?.clusterId : null,
+      zigbeeAttributeId: isZigbee ? zigbeeSignal?.attributeId : null,
+      zigbeeField: isZigbee ? (zigbeeSignal?.field ?? null) : null,
 
       alert: false,
       error: false,
