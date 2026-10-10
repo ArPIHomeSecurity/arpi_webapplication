@@ -6,7 +6,7 @@ import { finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice } from "@app/models"
+import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -128,20 +128,6 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
       value: [device.manufacturer, device.model].filter(Boolean).join(" ") || "-"
     })
 
-    // Availability / Status
-    const isOnline = device.availability === "online"
-    const isOffline = device.availability === "offline"
-    attributes.push({
-      icon: isOnline ? "wifi" : isOffline ? "wifi_off" : "help_outline",
-      label: $localize`:@@zigbee status:Status`,
-      value: isOnline
-        ? $localize`:@@zigbee online:Online`
-        : isOffline
-          ? $localize`:@@zigbee offline:Offline`
-          : $localize`:@@zigbee unknown:Unknown`,
-      iconClass: isOnline ? "zigbee-status-online" : isOffline ? "zigbee-status-offline" : ""
-    })
-
     // Battery
     attributes.push({
       icon: "battery_std",
@@ -164,6 +150,40 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
         device.sensorCount != null && device.sensorCount > 0
           ? $localize`:@@zigbee sensor count:${device.sensorCount} sensor(s)`
           : $localize`:@@zigbee no sensors:None`
+    })
+
+    const sensorTypes = new Map<string, string>()
+    for (const signal of device.metadata?.signals ?? []) {
+      let sensorType: string
+      if (signal.clusterId === 0x0500) {
+        sensorType = zigbeeZoneTypeLabel(signal.zoneType)
+      } else if (signal.clusterId === 0x0406) {
+        sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
+      } else {
+        continue
+      }
+
+      const key = `${signal.endpoint}:${signal.clusterId}`
+      sensorTypes.set(key, `${sensorType} (endpoint ${signal.endpoint})`)
+    }
+    attributes.push({
+      icon: "sensors",
+      label: $localize`:@@zigbee sensor type:Sensor Type`,
+      value: [...sensorTypes.values()].join(", ") || "-"
+    })
+
+    // Availability / Status
+    const isOnline = device.availability === "online"
+    const isOffline = device.availability === "offline"
+    attributes.push({
+      icon: isOnline ? "wifi" : isOffline ? "wifi_off" : "help_outline",
+      label: $localize`:@@zigbee status:Status`,
+      value: isOnline
+        ? $localize`:@@zigbee online:Online`
+        : isOffline
+          ? $localize`:@@zigbee offline:Offline`
+          : $localize`:@@zigbee unknown:Unknown`,
+      iconClass: isOnline ? "zigbee-status-online" : isOffline ? "zigbee-status-offline" : ""
     })
 
     // Last Seen

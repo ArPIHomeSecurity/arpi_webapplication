@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice } from "@app/models"
+import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import { EventService, LoaderService, MonitoringService, ZigbeeService } from "@app/services"
 import { environment } from "@environments/environment"
 
@@ -74,6 +74,31 @@ export class ZigbeeDeviceDetailComponent
 
   ngOnDestroy() {
     super.destroy()
+  }
+
+  get deviceSubtitle(): string {
+    if (!this.device) {
+      return ""
+    }
+
+    const sensorTypes = new Map<string, string>()
+    for (const signal of this.device.metadata?.signals ?? []) {
+      let sensorType: string
+      if (signal.clusterId === 0x0500) {
+        sensorType = zigbeeZoneTypeLabel(signal.zoneType)
+      } else if (signal.clusterId === 0x0406) {
+        sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
+      } else {
+        continue
+      }
+
+      sensorTypes.set(
+        `${signal.endpoint}:${signal.clusterId}`,
+        `${sensorType} (endpoint ${signal.endpoint})`
+      )
+    }
+
+    return [this.device.manufacturer, ...sensorTypes.values()].filter(Boolean).join(" | ")
   }
 
   onSubmit() {
