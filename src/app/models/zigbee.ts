@@ -23,7 +23,6 @@ export interface ZigbeeDevice {
   lastSeen?: string
   batteryLevel?: number
   signalQuality?: number
-  zoneType?: number | null
   sensorCount?: number
   metadata?: { signals?: ZigbeeSignal[] } & Record<string, unknown>
 }

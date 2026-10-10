@@ -4,10 +4,6 @@
       <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()" novalidate class="column">
         <mat-card-content>
           <mat-card-title i18n="@@zigbee device form">Zigbee device</mat-card-title>
-          <dl>
-            <dt i18n="@@zigbee zone type">IAS zone type</dt>
-            <dd>{{ zoneTypeLabel(device.zoneType) }}</dd>
-          </dl>
           <mat-form-field>
             <mat-label i18n="@@zigbee device name">Name</mat-label>
             <input matInput formControlName="name" required maxlength="12" />

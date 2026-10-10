@@ -22,7 +22,6 @@ describe("SensorDetailComponent IAS bindings", () => {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
     availability: "online",
-    zoneType: 0x0015,
     metadata: {
       signals: [alarmSignal, tamperSignal]
     }

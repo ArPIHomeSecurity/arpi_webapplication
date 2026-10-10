@@ -31,8 +31,7 @@ import {
   ZigbeeSignal,
   ZigbeeZoneType,
   Zone,
-  string2MonitoringState,
-  zigbeeZoneTypeLabel
+  string2MonitoringState
 } from "@app/models"
 import {
   AreaService,
@@ -86,7 +85,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   eolCounts = SensorEOLCount
 
   getIconName = SensorType.getIconName
-  zoneTypeLabel = zigbeeZoneTypeLabel
 
   constructor(
     @Inject("EventService") public eventService: EventService,

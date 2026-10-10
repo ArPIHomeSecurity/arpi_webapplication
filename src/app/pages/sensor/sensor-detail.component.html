@@ -59,7 +59,7 @@
               >
                 @for (device of zigbeeDevices; track device) {
                   <mat-option [value]="device.id">
-                    {{ (device.name || device.ieeeAddress) + " (" + zoneTypeLabel(device.zoneType) + ")" }}
+                    {{ device.name || device.ieeeAddress }}
                   </mat-option>
                 }
               </mat-select>
