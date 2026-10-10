@@ -7,6 +7,7 @@ export interface ZigbeeSignal {
   valueType: string
   sources: ZigbeeSignalSource[]
   field?: "alarm" | "tamper"
+  zoneType?: number | null
 }
 
 export type ZigbeeSignalSource = "attribute" | `command:${string}`

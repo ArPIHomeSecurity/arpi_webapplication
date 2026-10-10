@@ -70,6 +70,7 @@
                 formControlName="zigbeeSignal"
                 i18n-placeholder="@@sensor zigbee capability"
                 placeholder="Signal"
+                (selectionChange)="onZigbeeSignalChanged()"
               >
                 @for (
                   signal of zigbeeSignals;

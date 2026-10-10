@@ -28,12 +28,6 @@
                 <mat-card-subtitle>
                   {{ [device.manufacturer, device.model].join(" ") || device.ieeeAddress }}
                 </mat-card-subtitle>
-                @if (device.availability === "offline") {
-                  <mat-card-subtitle class="error-text">
-                    <mat-icon class="material-symbols-outlined error-icon">cloud_off</mat-icon>
-                    <span i18n="@@zigbee offline status">Device is offline</span>
-                  </mat-card-subtitle>
-                }
               </mat-card-title-group>
               <div class="device-image" [ngClass]="{ offline: device.availability === 'offline' }">
                 <mat-icon class="material-symbols-outlined device-icon">router</mat-icon>

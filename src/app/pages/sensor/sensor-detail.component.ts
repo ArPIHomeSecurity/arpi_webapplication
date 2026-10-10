@@ -439,10 +439,20 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   onZigbeeDeviceChanged() {
     this.sensorForm.controls.zigbeeSignal.setValue(null)
+    this.sensorForm.controls.typeId.setValue(undefined)
+  }
 
-    // update sensor type based on the selected Zigbee zone type
-    const zigbeeZoneType = this.selectedZigbeeDevice?.zoneType
-    this.sensorForm.controls.typeId.setValue(this.sensorTypeByZigbeeZoneType(zigbeeZoneType)?.id)
+  onZigbeeSignalChanged() {
+    const signal = this.sensorForm.controls.zigbeeSignal.value as ZigbeeSignal | null
+    if (!signal) {
+      return
+    }
+
+    const sensorType =
+      signal.clusterId === 0x0406
+        ? this.sensorTypes.find(type => type.name === "Occupancy")
+        : this.sensorTypeByZigbeeZoneType(signal.zoneType)
+    this.sensorForm.controls.typeId.setValue(sensorType?.id)
   }
 
   /**

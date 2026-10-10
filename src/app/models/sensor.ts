@@ -47,6 +47,9 @@ export class Sensor {
 }
 
 export class SensorType {
+  /**
+   * Mapping of sensor types to their corresponding icon names.
+   */
   private static readonly icons: Record<string, string> = {
     Motion: "directions_run",
     Tamper: "tools_pliers_wire_stripper",
@@ -63,7 +66,8 @@ export class SensorType {
     Keypad: "dialpad",
     Warning: "warning",
     Glass: "broken_image",
-    Repeater: "wifi_tethering"
+    Repeater: "wifi_tethering",
+    Occupancy: "sensor_occupied"
   }
 
   static getIconName(typeName: string): string {
@@ -104,6 +108,8 @@ export class SensorType {
         return $localize`:@@sensor glass:Glass`
       case "Repeater":
         return $localize`:@@sensor repeater:Repeater`
+      case "Occupancy":
+        return $localize`:@@sensor occupancy:Occupancy`
       default:
         return $localize`:@@sensor unknown:Unknown`
     }
