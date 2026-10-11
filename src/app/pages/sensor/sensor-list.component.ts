@@ -178,7 +178,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     })
 
     // Channel type (only for board version >= 3)
-    if (this.boardVersion >= 3) {
+    if (this.boardVersion >= 3 && sensor.zigbeeDeviceId == null) {
       attributes.push({
         icon: "device_hub",
         content: this.getChannelTypeLabel(sensor.channelType)
@@ -261,7 +261,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     return groupsById
   }
 
-  private getChannelTypeLabel(channelType: ChannelTypes): string {
+  private getChannelTypeLabel(channelType: ChannelTypes | null): string {
     switch (channelType) {
       case ChannelTypes.BASIC:
         return $localize`:@@sensor channel basic:Basic`
@@ -276,7 +276,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     }
   }
 
-  private getContactTypeLabel(contactType: SensorContactTypes): string {
+  private getContactTypeLabel(contactType: SensorContactTypes | null): string {
     switch (contactType) {
       case SensorContactTypes.NC:
         return $localize`:@@sensor contact nc: Normally Closed (NC) `
@@ -287,7 +287,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     }
   }
 
-  private getEOLCountLabel(eolCount: SensorEOLCount): string {
+  private getEOLCountLabel(eolCount: SensorEOLCount | null): string {
     switch (eolCount) {
       case SensorEOLCount.SINGLE:
         return $localize`:@@sensor eol single:Single EOL`

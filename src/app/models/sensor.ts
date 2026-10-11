@@ -21,9 +21,9 @@ export class Sensor {
   description: string
 
   channel: number
-  channelType: ChannelTypes
-  sensorContactType: SensorContactTypes
-  sensorEolCount: SensorEOLCount
+  channelType: ChannelTypes | null
+  sensorContactType: SensorContactTypes | null
+  sensorEolCount: SensorEOLCount | null
   typeId: number
 
   zigbeeDeviceId?: number

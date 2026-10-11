@@ -1,8 +1,15 @@
-import { UntypedFormBuilder } from "@angular/forms"
+import { UntypedFormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, convertToParamMap } from "@angular/router"
 import { of } from "rxjs"
 
-import { Sensor, ZigbeeDevice, ZigbeeSignal } from "@app/models"
+import {
+  ChannelTypes,
+  Sensor,
+  SensorContactTypes,
+  SensorEOLCount,
+  ZigbeeDevice,
+  ZigbeeSignal
+} from "@app/models"
 import { SensorDetailComponent } from "./sensor-detail.component"
 
 describe("SensorDetailComponent IAS bindings", () => {
@@ -74,8 +81,73 @@ describe("SensorDetailComponent IAS bindings", () => {
     expect(sensor.typeId).toBe(3)
   })
 
+  it("does not require or send wired settings in Zigbee mode", () => {
+    component.boardVersion = 3
+    Object.assign(component.sensor, {
+      channelType: ChannelTypes.NORMAL,
+      sensorContactType: SensorContactTypes.NC,
+      sensorEolCount: SensorEOLCount.DOUBLE
+    })
+    component.updateForm(component.sensor)
+
+    expect(component.sensorForm.controls.bindingMode.value).toBe("zigbee")
+    expect(component.sensorForm.controls.channelType.hasValidator(Validators.required)).toBeFalse()
+    expect(
+      component.sensorForm.controls.sensorContactType.hasValidator(Validators.required)
+    ).toBeFalse()
+    expect(component.sensorForm.controls.eolCount.hasValidator(Validators.required)).toBeFalse()
+    expect(component.sensorForm.controls.eolCount.enabled).toBeTrue()
+
+    const sensor = component.prepareSensor()
+    expect(sensor.channelType).toBeNull()
+    expect(sensor.sensorContactType).toBeNull()
+    expect(sensor.sensorEolCount).toBeNull()
+  })
+
+  it("requires a signal for Zigbee sensors", () => {
+    const signalControl = component.sensorForm.controls.zigbeeSignal
+
+    expect(signalControl.hasValidator(Validators.required)).toBeTrue()
+    signalControl.setValue(null)
+    expect(signalControl.invalid).toBeTrue()
+
+    signalControl.setValue(tamperSignal)
+    expect(signalControl.valid).toBeTrue()
+  })
+
+  it("restores wired-setting validation when switching back to wired mode", () => {
+    component.boardVersion = 3
+    Object.assign(component.sensor, {
+      channel: 1,
+      channelType: ChannelTypes.NORMAL,
+      sensorContactType: SensorContactTypes.NC,
+      sensorEolCount: SensorEOLCount.SINGLE
+    })
+    component.channels = [{ channel: 1, sensor: null, sensorB: null }]
+    component.updateForm(component.sensor)
+
+    component.sensorForm.controls.bindingMode.setValue("wired")
+    component.onBindingModeChanged("wired")
+
+    expect(component.sensorForm.controls.channelType.hasValidator(Validators.required)).toBeTrue()
+    expect(
+      component.sensorForm.controls.sensorContactType.hasValidator(Validators.required)
+    ).toBeTrue()
+    expect(component.sensorForm.controls.eolCount.hasValidator(Validators.required)).toBeTrue()
+    expect(component.sensorForm.controls.zigbeeSignal.hasValidator(Validators.required)).toBeFalse()
+  })
+
+  it("allows switching to wired mode before a channel is selected", () => {
+    component.channels = [{ channel: -1, sensor: null, sensorB: null }]
+
+    expect(() => {
+      component.sensorForm.controls.bindingMode.setValue("wired")
+      component.onBindingModeChanged("wired")
+    }).not.toThrow()
+  })
+
   it("labels ordinary structured signals from their cluster and attribute", () => {
-    const ordinarySignal = {
+    const ordinarySignal: ZigbeeSignal = {
       endpoint: "2",
       cluster: "occupancy_sensing",
       clusterId: 0x0406,

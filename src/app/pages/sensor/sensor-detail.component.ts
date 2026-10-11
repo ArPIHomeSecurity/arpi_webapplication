@@ -276,6 +276,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       { validators: this.validateChannel() }
     )
 
+    this.updateZigbeeBindingValidators()
+
     if (sensor.silentAlert == null) {
       this.sensorForm.controls.silentAlert.setValue("undefined")
     } else if (sensor.silentAlert === true) {
@@ -314,25 +316,57 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.sensitivity.enable()
     }
 
-    if (this.boardVersion >= 3) {
-      this.sensorForm.controls.channelType.setValidators(Validators.required)
-      this.sensorForm.controls.sensorContactType.setValidators(Validators.required)
-      this.sensorForm.controls.eolCount.setValidators(Validators.required)
-    } else {
-      this.sensorForm.controls.channelType.clearValidators()
-      this.sensorForm.controls.sensorContactType.clearValidators()
-      this.sensorForm.controls.eolCount.clearValidators()
-    }
+    this.updateSensorSettingsValidators()
 
     if (
-      sensor.channelType === ChannelTypes.CHANNEL_A ||
-      sensor.channelType === ChannelTypes.CHANNEL_B
+      this.sensorForm.controls.bindingMode.value === "wired" &&
+      (sensor.channelType === ChannelTypes.CHANNEL_A ||
+        sensor.channelType === ChannelTypes.CHANNEL_B)
     ) {
       this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE)
       this.sensorForm.controls.eolCount.disable()
     } else {
       this.sensorForm.controls.eolCount.enable()
     }
+  }
+
+  private updateSensorSettingsValidators() {
+    const settingsRequired =
+      this.boardVersion >= 3 && this.sensorForm.controls.bindingMode.value === "wired"
+    const controls = [
+      this.sensorForm.controls.channelType,
+      this.sensorForm.controls.sensorContactType,
+      this.sensorForm.controls.eolCount
+    ]
+
+    controls.forEach(control => {
+      if (settingsRequired) {
+        control.setValidators(Validators.required)
+      } else {
+        control.clearValidators()
+      }
+      control.updateValueAndValidity({ onlySelf: true })
+    })
+    this.sensorForm.updateValueAndValidity()
+  }
+
+  private updateZigbeeBindingValidators() {
+    const zigbeeBinding = this.sensorForm.controls.bindingMode.value === "zigbee"
+    const validators = zigbeeBinding ? Validators.required : null
+    const controls = [
+      this.sensorForm.controls.zigbeeDeviceId,
+      this.sensorForm.controls.zigbeeSignal
+    ]
+
+    controls.forEach(control => {
+      if (validators) {
+        control.setValidators(validators)
+      } else {
+        control.clearValidators()
+      }
+      control.updateValueAndValidity({ onlySelf: true })
+    })
+    this.sensorForm.updateValueAndValidity()
   }
 
   validateChannel(): ValidatorFn {
@@ -349,6 +383,12 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       }
 
       const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel)
+      if (!selectedChannel) {
+        this.sensorForm.controls.channel.setErrors(null)
+        this.sensorForm.controls.channelType.setErrors(null)
+        return null
+      }
+
       const selectedChannelType = this.sensorForm.value.channelType
 
       // if selected channel type is A or B, allow only opposite type channels
@@ -432,6 +472,13 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.zigbeeDeviceId.setValue(null)
       this.sensorForm.controls.zigbeeSignal.setValue(null)
     }
+    this.updateZigbeeBindingValidators()
+    this.updateSensorSettingsValidators()
+    if (mode === "zigbee") {
+      this.sensorForm.controls.eolCount.enable()
+    } else {
+      this.onChannelTypeChanged({ value: this.sensorForm.controls.channelType.value })
+    }
     this.sensorForm.controls.channel.updateValueAndValidity()
   }
 
@@ -501,10 +548,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
   zigbeeSignalLabel(signal: ZigbeeSignal): string {
     if (signal.field === "alarm") {
-      return $localize`:@@ias capability alarm:IAS Zone / Alarm`
+      return $localize`:@@ias signal alarm:IAS Zone / Alarm`
     }
     if (signal.field === "tamper") {
-      return $localize`:@@ias capability tamper:IAS Zone / Tamper`
+      return $localize`:@@ias signal tamper:IAS Zone / Tamper`
     }
     return signal.cluster && signal.attribute
       ? `${signal.cluster} / ${signal.attribute}`
@@ -645,9 +692,9 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       description: formModel.description,
 
       channel: isZigbee ? null : formModel.channel,
-      channelType: formModel.channelType,
-      sensorContactType: formModel.sensorContactType,
-      sensorEolCount: formModel.eolCount,
+      channelType: isZigbee ? null : formModel.channelType,
+      sensorContactType: isZigbee ? null : formModel.sensorContactType,
+      sensorEolCount: isZigbee ? null : formModel.eolCount,
       typeId: formModel.typeId,
 
       areaId: formModel.areaId,

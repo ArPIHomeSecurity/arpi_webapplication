@@ -360,8 +360,8 @@
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
       </trans-unit>
-      <trans-unit id="sensor zigbee capability" datatype="html">
-        <source>Capability</source>
+      <trans-unit id="sensor zigbee signal" datatype="html">
+        <source>Signal</source>
       </trans-unit>
       <trans-unit id="sensor zigbee device" datatype="html">
         <source>Zigbee device</source>
