@@ -36,12 +36,14 @@
   @if (areas.length == 1) {
     <div class="container-item areas">
       @for (sensor of sensors; track sensor) {
-        <component-sensor
-          [sensor]="sensor"
-          [sensorTypes]="sensorTypes"
-          [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
-          [zigbeeDevices]="zigbeeDevicesById"
-        />
+        @if (!sensor.uiHidden || sensor.alert) {
+          <component-sensor
+            [sensor]="sensor"
+            [sensorTypes]="sensorTypes"
+            [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
+            [zigbeeDevices]="zigbeeDevicesById"
+          />
+        }
       }
     </div>
   }
