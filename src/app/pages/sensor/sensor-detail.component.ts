@@ -493,11 +493,18 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       return
     }
 
-    const sensorType =
-      signal.clusterId === 0x0406
-        ? this.sensorTypes.find(type => type.name === "Occupancy")
-        : this.sensorTypeByZigbeeZoneType(signal.zoneType)
-    this.sensorForm.controls.typeId.setValue(sensorType?.id)
+    // Override zone type for tamper signal
+    if (signal.field === "tamper") {
+      this.sensorForm.controls.typeId.setValue(
+        this.sensorTypes.find(type => type.name === "Tamper")?.id
+      )
+    } else {
+      const sensorType =
+        signal.clusterId === 0x0406
+          ? this.sensorTypes.find(type => type.name === "Occupancy")
+          : this.sensorTypeByZigbeeZoneType(signal.zoneType)
+      this.sensorForm.controls.typeId.setValue(sensorType?.id)
+    }
   }
 
   /**
