@@ -26,7 +26,7 @@
     @for (sensor of sensors; track sensor; let i = $index) {
     <span>
       @if (!sensor.uiHidden || sensor.alert) {
-      <component-sensor [sensor]="sensor" [delay]="delays[i]" [zigbeeDevices]="zigbeeDevices" />
+      <component-sensor [sensor]="sensor" [sensors]="sensors" [delay]="delays[i]" [zigbeeDevices]="zigbeeDevices" />
       }
     </span>
     }

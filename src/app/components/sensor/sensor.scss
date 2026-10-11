@@ -1,6 +1,21 @@
 @use "@angular/material" as mat;
 
 @mixin sensor-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  @keyframes sensor-alert-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.24),
+        0 0 0 0 rgba(mat.m2-get-color-from-palette($argus-alert), 0.22);
+    }
+
+    50% {
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.24),
+        0 0 0 4px rgba(mat.m2-get-color-from-palette($argus-alert), 0.18);
+    }
+  }
+
   .mat-mdc-card.sensor-component {
     .mat-mdc-card-header {
       padding: 16px;
@@ -8,6 +23,26 @@
 
     .mat-mdc-card-title-group {
       margin-left: 15px;
+    }
+
+    .sensor-title-group {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sensor-details {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .sensor-indicators {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      margin-left: auto;
     }
 
     mat-card-subtitle {
@@ -24,9 +59,8 @@
     }
 
     .sensor-state {
-      -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
-      -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
-      box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24);
+      border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 22px;
       width: 40px;
       height: 40px;
@@ -40,14 +74,44 @@
 
     .sensor-state.enabled {
       background-color: mat.m2-get-color-from-palette($argus-ok);
+      border-color: rgba(mat.m2-get-color-from-palette($argus-ok), 0.5);
+    }
+
+    .sensor-indicator-group {
+      display: inline-flex;
+      align-items: center;
+      margin: 0px 0px 0px 5px;
+      padding: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.35);
+      border-radius: 5px;
+
+      .sensor-state {
+        margin: 0 4px;
+      }
+    }
+
+    .sensor-indicator-type {
+      width: 24px;
+      height: 24px;
+      margin: 0 4px;
+      font-size: 24px;
+      line-height: 24px;
+    }
+
+    .sensor-state.neutral {
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.4);
     }
 
     .sensor-state.alerting {
       background-color: mat.m2-get-color-from-palette($argus-alert);
+      border-color: rgba(mat.m2-get-color-from-palette($argus-alert), 0.65);
+      animation: sensor-alert-pulse 1s ease-in-out infinite;
     }
 
     .sensor-state.disabled {
       background-color: rgb(160, 160, 160);
+      border-color: rgba(80, 80, 80, 0.35);
     }
 
     .sensor-state.error-state {
@@ -73,6 +137,12 @@
         font-size: 40px;
         line-height: 40px;
       }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mat-mdc-card.sensor-component .sensor-state.alerting {
+      animation: none;
     }
   }
 

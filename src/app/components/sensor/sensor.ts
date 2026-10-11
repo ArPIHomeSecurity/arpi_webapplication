@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core"
-import { Sensor, SensorType, ZigbeeDevice } from "@app/models"
+import { findZigbeeSignalSensor, Sensor, SensorType, ZigbeeDevice } from "@app/models"
 
 @Component({
   selector: "component-sensor",
@@ -12,6 +12,7 @@ export class SensorComponent {
   readonly SensorType = SensorType
 
   @Input() sensor: Sensor
+  @Input() sensors: Sensor[]
   @Input() delay: number = null
   @Input() sensorTypes: SensorType[]
   @Input() zigbeeDevices: Map<number, ZigbeeDevice>
@@ -20,6 +21,15 @@ export class SensorComponent {
     return this.sensor?.zigbeeDeviceId != null
       ? this.zigbeeDevices?.get(this.sensor.zigbeeDeviceId)
       : undefined
+  }
+
+  get tamperSensor(): Sensor | undefined {
+    if (this.sensor?.zigbeeField !== "alarm") {
+      return undefined
+    }
+
+    const sensor = findZigbeeSignalSensor(this.sensor, this.sensors, "tamper")
+    return sensor?.uiHidden === true ? sensor : undefined
   }
 
   getSensorTypeName(sensorTypeId: number) {

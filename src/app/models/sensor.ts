@@ -46,6 +46,30 @@ export class Sensor {
   uiHidden: boolean = null
 }
 
+export function findZigbeeSignalSensor(
+  sensor: Sensor,
+  sensors: Sensor[],
+  field: string
+): Sensor | undefined {
+  if (
+    sensor?.zigbeeDeviceId == null ||
+    sensor.zigbeeEndpoint == null ||
+    sensor.zigbeeClusterId == null ||
+    sensor.zigbeeAttributeId == null
+  ) {
+    return undefined
+  }
+
+  return sensors?.find(
+    candidate =>
+      candidate.zigbeeField === field &&
+      candidate.zigbeeDeviceId === sensor.zigbeeDeviceId &&
+      candidate.zigbeeEndpoint === sensor.zigbeeEndpoint &&
+      candidate.zigbeeClusterId === sensor.zigbeeClusterId &&
+      candidate.zigbeeAttributeId === sensor.zigbeeAttributeId
+  )
+}
+
 export class SensorType {
   /**
    * Mapping of sensor types to their corresponding icon names.
