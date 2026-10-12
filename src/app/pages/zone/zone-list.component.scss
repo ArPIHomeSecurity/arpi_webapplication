@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@use "@angular/material" as mat;
 
 .zone-list {
   .empty {
@@ -9,12 +10,27 @@
     margin: 0 10px;
   }
 
-  .description {
-    margin: {
-      top: 10px;
-      bottom: 10px;
-    }
+  .zone-details {
+    padding: 0px;
   }
+}
+
+.zone-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 50%;
+  background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 50);
+  color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+}
+
+.zone-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
 }
 
 .cdk-drag {
@@ -43,6 +59,14 @@ ul {
 
 .sensor-type-icon {
   flex: 0 0 auto;
+}
+
+.sensor-drag-handle {
+  flex: 0 0 auto;
+}
+
+.sensor-drop-target.cdk-drop-list-receiving {
+  background-color: rgba(63, 81, 181, 0.12);
 }
 
 .sensor-name {
