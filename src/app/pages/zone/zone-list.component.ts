@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 import { forkJoin } from "rxjs"
 import { finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
-import { MONITORING_STATE, Sensor, Zone } from "@app/models"
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
+import { MONITORING_STATE, Sensor, SensorType, Zone } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -16,9 +16,9 @@ import {
   ZoneService
 } from "@app/services"
 
-import { environment } from "@environments/environment"
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -29,11 +29,14 @@ const scheduleMicrotask = Promise.resolve(null)
   standalone: false
 })
 export class ZoneListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  readonly SensorType = SensorType
+
   CONFIG = 0
   SENSORS = 1
 
   zones: Zone[] = null
   sensors: Sensor[] = []
+  sensorTypes: SensorType[] = []
   configOpened: boolean[] = []
   sensorOpened: boolean[] = []
 
@@ -74,12 +77,14 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
 
     forkJoin({
       zones: this.zoneService.getZones(),
-      sensors: this.sensorService.getSensors()
+      sensors: this.sensorService.getSensors(),
+      sensorTypes: this.sensorService.getSensorTypes()
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
         this.zones = results.zones.sort((a, b) => a.uiOrder - b.uiOrder)
         this.sensors = results.sensors
+        this.sensorTypes = results.sensorTypes
         this.loader.display(false)
         this.loader.disable(false)
 
@@ -99,6 +104,10 @@ export class ZoneListComponent extends ConfigurationBaseComponent implements OnI
     })
 
     return results
+  }
+
+  getSensorTypeName(sensorTypeId: number) {
+    return this.sensorTypes.find(sensorType => sensorType.id === sensorTypeId)?.name ?? ""
   }
 
   userCanEdit() {

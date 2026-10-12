@@ -29,6 +29,34 @@ ul {
   margin-top: 0px;
 }
 
+.sensor-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sensor-row {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 8px;
+}
+
+.sensor-type-icon {
+  flex: 0 0 auto;
+}
+
+.sensor-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sensor-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
 .mat-table {
   display: block;
 }

@@ -125,24 +125,39 @@
                     }
                   </mat-expansion-panel-header>
                   @if (getSensors(zone.id).length > 0) {
-                    <div>
-                      <ul class="sensor-list">
-                        @for (sensor of getSensors(zone.id); track sensor) {
-                          <li>
-                            {{ sensor.name }}
+                    <div class="sensor-list">
+                      @for (sensor of getSensors(zone.id); track sensor) {
+                        <div class="sensor-row">
+                          <mat-icon
+                            class="material-symbols-outlined sensor-type-icon"
+                            [fontIcon]="SensorType.getIconName(getSensorTypeName(sensor.typeId))"
+                            aria-hidden="true"
+                          ></mat-icon>
+                          <span class="sensor-name">{{ sensor.name }}</span>
+                          <div class="sensor-actions">
+                            <button
+                              mat-icon-button
+                              [routerLink]="['/sensors', sensor.id]"
+                              color="primary"
+                              aria-label="View sensor"
+                              i18n-aria-label="@@view sensor"
+                            >
+                              <mat-icon class="material-symbols-outlined">visibility</mat-icon>
+                            </button>
                             @if (userCanEdit()) {
                               <button
-                                mat-button
+                                mat-icon-button
                                 [routerLink]="['/sensor', sensor.id]"
-                                routerLinkActive="active"
                                 color="accent"
+                                aria-label="Edit sensor"
+                                i18n-aria-label="@@edit sensor"
                               >
-                                <mat-icon class="material-symbols-outlined" matListIcon>mode_edit</mat-icon>
+                                <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
                               </button>
                             }
-                          </li>
-                        }
-                      </ul>
+                          </div>
+                        </div>
+                      }
                     </div>
                   } @else {
                     <h3 i18n="@@zone no sensors">No sensors</h3>
