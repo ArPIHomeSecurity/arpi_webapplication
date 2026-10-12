@@ -1,25 +1,25 @@
-import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
+import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
-import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 
 import { forkJoin } from "rxjs"
 import { finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
-import { MONITORING_STATE, Sensor, Area, Output } from "@app/models"
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
+import { Area, MONITORING_STATE, Output, Sensor, SensorType } from "@app/models"
 import {
+  AreaService,
   AuthenticationService,
   EventService,
   LoaderService,
-  SensorService,
-  AreaService,
-  OutputService
+  OutputService,
+  SensorService
 } from "@app/services"
 
-import { environment } from "@environments/environment"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -30,15 +30,20 @@ const scheduleMicrotask = Promise.resolve(null)
   standalone: false
 })
 export class AreaListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  readonly SensorType = SensorType
+
   CONFIG = 0
   SENSORS = 1
 
   areas: Area[] = null
   outputs: Output[] = []
   sensors: Sensor[] = []
+  sensorTypes: SensorType[] = []
   outputListOpened: boolean[] = []
   sensorListOpened: boolean[] = []
+  sensorDropListIds: string[] = []
   isDragging = false
+  isUpdatingSensor = false
 
   constructor(
     @Inject("AreaService") private areaService: AreaService,
@@ -72,18 +77,24 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
   }
 
   updateComponent() {
-    if (this.isDragging) return
+    if (this.isDragging || this.isUpdatingSensor) return
 
     forkJoin({
       areas: this.areaService.getAreas(),
       outputs: this.outputService.getOutputs(),
-      sensors: this.sensorService.getSensors()
+      sensors: this.sensorService.getSensors(),
+      sensorTypes: this.sensorService.getSensorTypes()
     })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe(results => {
         this.areas = results.areas.sort((a, b) => a.uiOrder - b.uiOrder)
+        this.sensorDropListIds = this.areas.flatMap(area => [
+          `area-sensors-${area.id}`,
+          `area-sensors-header-${area.id}`
+        ])
         this.outputs = results.outputs
         this.sensors = results.sensors
+        this.sensorTypes = results.sensorTypes
         this.loader.display(false)
         this.loader.disable(false)
       })
@@ -98,6 +109,10 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     })
 
     return results
+  }
+
+  getSensorTypeName(sensorTypeId: number) {
+    return this.sensorTypes.find(sensorType => sensorType.id === sensorTypeId)?.name ?? ""
   }
 
   getOutputs(areaId: number): Output[] {
@@ -168,7 +183,7 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     })
   }
 
-  onDragStarted(event: CdkDragStart<string[]>) {
+  onDragStarted(_event: CdkDragStart<string[]>) {
     this.isDragging = true
   }
 
@@ -182,5 +197,53 @@ export class AreaListComponent extends ConfigurationBaseComponent implements OnI
     this.isDragging = false
     // delayed update
     setTimeout(() => this.updateComponent(), 500)
+  }
+
+  onSensorDragStarted() {
+    this.isDragging = true
+  }
+
+  onSensorDragEnded(_event: CdkDragEnd<Sensor>) {
+    this.isDragging = false
+  }
+
+  onSensorDrop(event: CdkDragDrop<Sensor[], Sensor[]>, areaId: number) {
+    const sensor = event.item.data
+    const sourceAreaId = sensor.areaId
+    if (
+      !this.userCanEdit() ||
+      this.monitoringState !== MONITORING_STATE.READY ||
+      sensor.areaId === areaId
+    ) {
+      return
+    }
+
+    this.isUpdatingSensor = true
+    this.sensorService
+      .updateSensor({ ...sensor, areaId })
+      .pipe(finalize(() => (this.isUpdatingSensor = false)))
+      .subscribe({
+        next: updatedSensor => {
+          this.sensors = this.sensors.map(current =>
+            current.id === updatedSensor.id ? updatedSensor : current
+          )
+          if (this.getSensors(sourceAreaId).length === 0) {
+            this.onCloseSensorList(sourceAreaId)
+          }
+          this.onOpenSensorList(areaId)
+        },
+        error: () =>
+          this.snackBar.open($localize`:@@failed update:Failed to update!`, null, {
+            duration: environment.snackDuration
+          })
+      })
+  }
+
+  onOpenSensorList(areaId: number) {
+    this.sensorListOpened[areaId] = true
+  }
+
+  onCloseSensorList(areaId: number) {
+    this.sensorListOpened[areaId] = false
   }
 }

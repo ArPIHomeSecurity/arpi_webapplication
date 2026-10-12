@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@use "@angular/material" as mat;
 
 @mixin area-list-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
   .area-list {
@@ -11,8 +12,63 @@
     height: unset !important;
   }
 
+  .area-details {
+    padding: 16px 0px 0px 0px;
+  }
+
+  .area-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 50%;
+    background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 50);
+    color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+  }
+
+  .area-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+  }
+
   h3 {
     margin-bottom: 0px;
+  }
+
+  .sensor-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sensor-row {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    gap: 8px;
+  }
+
+  .sensor-type-icon,
+  .sensor-drag-handle {
+    flex: 0 0 auto;
+  }
+
+  .sensor-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .sensor-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  .sensor-drop-target.cdk-drop-list-receiving {
+    background-color: rgba(63, 81, 181, 0.12);
   }
 
   ul {

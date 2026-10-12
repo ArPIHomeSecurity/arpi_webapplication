@@ -118,7 +118,7 @@
         </mat-list-item>
         @if (isLoggedIn() && isConnected()) {
           <mat-list-item routerLink="/areas" routerLinkActive="active" (click)="smallScreen ? sidenav.close() : null">
-            <mat-icon class="material-symbols-outlined" matListItemIcon>crop</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>grid_view</mat-icon>
             <span i18n="@@areas menu link">Areas</span>
           </mat-list-item>
         }

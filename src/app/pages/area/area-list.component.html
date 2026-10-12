@@ -10,15 +10,32 @@
             [cdkDragDisabled]="!userCanEdit()"
             ngClass="area-card container-item"
           >
-            <mat-card-content>
-              <mat-card-title>{{ area.name }}</mat-card-title>
-              <mat-accordion multi>
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ area.name }}</mat-card-title>
+              </mat-card-title-group>
+              <div class="area-image" aria-hidden="true">
+                <mat-icon class="material-symbols-outlined area-icon">square</mat-icon>
+              </div>
+            </mat-card-header>
+            <mat-card-content class="area-details">
+              <mat-accordion multi displayMode="flat">
                 <mat-expansion-panel
                   class="sensors"
-                  (opened)="sensorListOpened[area.id] = true"
-                  (closed)="sensorListOpened[area.id] = false"
+                  (opened)="onOpenSensorList(area.id)"
+                  (closed)="onCloseSensorList(area.id)"
+                  [expanded]="sensorListOpened[area.id]"
                 >
-                  <mat-expansion-panel-header>
+                  <mat-expansion-panel-header
+                    cdkDropList
+                    class="sensor-drop-target"
+                    id="area-sensors-header-{{ area.id }}"
+                    [cdkDropListData]="getSensors(area.id)"
+                    [cdkDropListConnectedTo]="sensorDropListIds"
+                    [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                    [cdkDropListSortingDisabled]="true"
+                    (cdkDropListDropped)="onSensorDrop($event, area.id)"
+                  >
                     <mat-panel-title i18n="@@area sensors">Sensors</mat-panel-title>
                     @if (!sensorListOpened[area.id]) {
                       <mat-panel-description i18n="@@area number of sensors">
@@ -27,27 +44,79 @@
                     }
                   </mat-expansion-panel-header>
                   @if (getSensors(area.id).length > 0) {
-                    <div>
-                      <ul class="sensor-list">
-                        @for (sensor of getSensors(area.id); track sensor) {
-                          <li>
-                            {{ sensor.name }}
+                    <div
+                      class="sensor-list"
+                      cdkDropList
+                      id="area-sensors-{{ area.id }}"
+                      [cdkDropListData]="getSensors(area.id)"
+                      [cdkDropListConnectedTo]="sensorDropListIds"
+                      [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                      (cdkDropListDropped)="onSensorDrop($event, area.id)"
+                    >
+                      @for (sensor of getSensors(area.id); track sensor) {
+                        <div
+                          class="sensor-row"
+                          cdkDrag
+                          [cdkDragData]="sensor"
+                          [cdkDragDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                          (cdkDragStarted)="onSensorDragStarted()"
+                          (cdkDragEnded)="onSensorDragEnded($event)"
+                        >
+                          @if (userCanEdit()) {
+                            <button
+                              mat-icon-button
+                              cdkDragHandle
+                              class="sensor-drag-handle"
+                              [disabled]="monitoringState !== monitoringStates.READY"
+                              aria-label="Move sensor to another area"
+                              i18n-aria-label="@@move sensor to another area"
+                            >
+                              <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
+                            </button>
+                          }
+                          <mat-icon
+                            class="material-symbols-outlined sensor-type-icon"
+                            [fontIcon]="SensorType.getIconName(getSensorTypeName(sensor.typeId))"
+                            aria-hidden="true"
+                          ></mat-icon>
+                          <span class="sensor-name">{{ sensor.name }}</span>
+                          <div class="sensor-actions">
+                            <button
+                              mat-icon-button
+                              [routerLink]="['/sensors', sensor.id]"
+                              color="primary"
+                              aria-label="View sensor"
+                              i18n-aria-label="@@view sensor"
+                            >
+                              <mat-icon class="material-symbols-outlined">visibility</mat-icon>
+                            </button>
                             @if (userCanEdit()) {
                               <button
-                                mat-button
+                                mat-icon-button
                                 [routerLink]="['/sensor', sensor.id]"
-                                routerLinkActive="active"
                                 color="accent"
+                                aria-label="Edit sensor"
+                                i18n-aria-label="@@edit sensor"
                               >
-                                <mat-icon class="material-symbols-outlined" matListIcon>mode_edit</mat-icon>
+                                <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
                               </button>
                             }
-                          </li>
-                        }
-                      </ul>
+                          </div>
+                        </div>
+                      }
                     </div>
                   } @else {
-                    <h3 i18n="@@area no sensors">No sensors</h3>
+                    <div
+                      class="sensor-list"
+                      cdkDropList
+                      id="area-sensors-{{ area.id }}"
+                      [cdkDropListData]="getSensors(area.id)"
+                      [cdkDropListConnectedTo]="sensorDropListIds"
+                      [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                      (cdkDropListDropped)="onSensorDrop($event, area.id)"
+                    >
+                      <h3 i18n="@@area no sensors">No sensors</h3>
+                    </div>
                   }
                 </mat-expansion-panel>
                 <mat-expansion-panel
@@ -89,12 +158,9 @@
                 </mat-expansion-panel>
               </mat-accordion>
             </mat-card-content>
-            <!-- spacer -->
-            <mat-card-content><p></p></mat-card-content>
+
             @if (userCanEdit()) {
               <mat-divider></mat-divider>
-            }
-            @if (userCanEdit()) {
               <mat-card-actions>
                 <!-- drag and drop icon button-->
                 <button
