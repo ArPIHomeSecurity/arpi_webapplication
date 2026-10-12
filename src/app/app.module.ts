@@ -62,7 +62,7 @@ import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
-import { SensorDetailComponent, SensorListComponent } from "./pages/sensor"
+import { SensorDetailComponent, SensorListComponent, SensorViewComponent } from "./pages/sensor"
 import { UserDetailComponent, UserListComponent } from "./pages/user"
 import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
@@ -127,6 +127,7 @@ import { CapacitorService } from "./services/capacitor.service"
     SensorCardComponent,
     SensorListComponent,
     SensorDetailComponent,
+    SensorViewComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,

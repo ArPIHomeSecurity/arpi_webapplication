@@ -68,6 +68,14 @@ describe("SensorCardComponent", () => {
     expect(fixture.nativeElement.querySelectorAll("button").length).toBe(0)
   })
 
+  it("hides the drag handle when dragging is disabled", () => {
+    component.dragDisabled = true
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector(".drag-handle")).toBeNull()
+    expect(fixture.nativeElement.querySelectorAll("button").length).toBe(3)
+  })
+
   it("disables actions outside editable monitoring states", () => {
     component.monitoringState = MONITORING_STATE.STARTUP
     fixture.detectChanges()

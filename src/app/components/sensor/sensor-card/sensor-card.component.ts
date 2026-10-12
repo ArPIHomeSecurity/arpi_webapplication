@@ -19,6 +19,7 @@ export class SensorCardComponent {
   @Input() iconName: string
   @Input() attributeGroups: SensorAttribute[][] = []
   @Input() canEdit = false
+  @Input() dragDisabled = false
   @Input() monitoringState: MONITORING_STATE
 
   @Output() resetReferences = new EventEmitter<number>()

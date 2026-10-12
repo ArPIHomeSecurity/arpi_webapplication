@@ -1,0 +1,18 @@
+<div class="container sensor-view">
+  @if (sensor) {
+    <app-sensor-card
+      [sensor]="sensor"
+      [iconName]="iconName"
+      [attributeGroups]="attributeGroups"
+      [canEdit]="userCanEdit()"
+      [dragDisabled]="true"
+      [monitoringState]="monitoringState"
+      (resetReferences)="onResetReferences($event)"
+      (deleteRequested)="openDeleteDialog($event)"
+    ></app-sensor-card>
+  } @else if (notFound) {
+    <h1 i18n="@@sensor not found">The sensor was not found!</h1>
+  } @else if (loadError) {
+    <h1 i18n="@@backend error message">Connecting to the backend failed!</h1>
+  }
+</div>

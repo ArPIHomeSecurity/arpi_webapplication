@@ -19,7 +19,7 @@ import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
 import { OutputDetailComponent, OutputListComponent } from "./pages/output"
 import { PreferencesComponent } from "./pages/preferences/preferences.component"
-import { SensorDetailComponent, SensorListComponent } from "./pages/sensor"
+import { SensorDetailComponent, SensorListComponent, SensorViewComponent } from "./pages/sensor"
 import { UserDetailComponent, UserListComponent } from "./pages/user"
 import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
@@ -84,6 +84,11 @@ const appRoutes: Routes = [
   {
     path: "sensors",
     component: SensorListComponent,
+    canActivate: [AuthGuard, setupGuard]
+  },
+  {
+    path: "sensors/:id",
+    component: SensorViewComponent,
     canActivate: [AuthGuard, setupGuard]
   },
   {

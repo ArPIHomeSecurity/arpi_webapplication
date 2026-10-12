@@ -42,14 +42,16 @@
   @if (canEdit) {
     <mat-divider></mat-divider>
     <mat-card-actions>
-      <button
-        mat-icon-button
-        cdkDragHandle
-        class="drag-handle"
-        [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
-      >
-        <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
-      </button>
+      @if (!dragDisabled) {
+        <button
+          mat-icon-button
+          cdkDragHandle
+          class="drag-handle"
+          [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
+        >
+          <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
+        </button>
+      }
       <button
         mat-icon-button
         [routerLink]="['/sensor', sensor.id]"

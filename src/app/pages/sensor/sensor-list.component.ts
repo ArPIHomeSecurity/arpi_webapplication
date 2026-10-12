@@ -8,6 +8,7 @@ import { forkJoin, of } from "rxjs"
 import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { buildSensorAttributes } from "@app/components/sensor/sensor-attribute-builder"
 import { SensorAttribute } from "@app/components/sensor/sensor-card/sensor-card.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
@@ -126,22 +127,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       })
   }
 
-  getZoneName(zoneId: number) {
-    if (this.zones.length && zoneId != null) {
-      return this.zones.find(x => x.id === zoneId)?.name
-    }
-
-    return ""
-  }
-
-  getAreaName(areaId: number) {
-    if (this.areas.length && areaId != null) {
-      return this.areas.find(x => x.id === areaId)?.name
-    }
-
-    return ""
-  }
-
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length) {
       return this.sensorTypes.find(x => x.id === sensorTypeId)?.name ?? ""
@@ -151,90 +136,14 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   }
 
   getSensorAttributes(sensor: Sensor) {
-    const attributes: SensorAttribute[] = []
-
-    // Sensor type
-    const sensorTypeName = this.getSensorTypeName(sensor.typeId)
-    attributes.push({
-      icon: SensorType.getIconName(sensorTypeName),
-      content: SensorType.getLabel(sensorTypeName)
-    })
-
-    // Channel
-    const zigbeeDevice =
-      sensor.zigbeeDeviceId != null ? this.zigbeeDevicesById.get(sensor.zigbeeDeviceId) : undefined
-
-    attributes.push({
-      icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
-      content:
-        zigbeeDevice?.name ||
-        zigbeeDevice?.ieeeAddress ||
-        (sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-")
-    })
-
-    // Channel type (only for board version >= 3)
-    if (this.boardVersion >= 3 && sensor.zigbeeDeviceId == null) {
-      attributes.push({
-        icon: "device_hub",
-        content: this.getChannelTypeLabel(sensor.channelType)
-      })
-
-      // Contact type
-      attributes.push({
-        icon: "toggle_on",
-        content: this.getContactTypeLabel(sensor.sensorContactType)
-      })
-
-      // EOL count
-      attributes.push({
-        icon: "square",
-        content: this.getEOLCountLabel(sensor.sensorEolCount)
-      })
-    }
-
-    // Area
-    attributes.push({
-      icon: "crop",
-      content: this.getAreaName(sensor.areaId)
-    })
-
-    // Zone
-    attributes.push({
-      icon: "rectangle",
-      content: sensor.channel !== -1 ? this.getZoneName(sensor.zoneId) : "-"
-    })
-
-    // Silent alert
-    attributes.push({
-      icon: sensor.silentAlert ? "volume_mute" : "volume_up",
-      content: this.getSilentAlertLabel(sensor.silentAlert)
-    })
-
-    // Monitor settings
-    attributes.push({
-      icon: "tune",
-      content: this.getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
-    })
-
-    // Enabled status
-    attributes.push({
-      icon: sensor.enabled ? "check_circle" : "circle",
-      iconClass: sensor.enabled ? "sensor-status-icon-enabled" : "",
-      content: sensor.enabled
-        ? $localize`:@@sensor enabled:Enabled`
-        : $localize`:@@sensor disable:Disabled`
-    })
-
-    // Visibility
-    attributes.push({
-      icon: sensor.uiHidden ? "visibility_off" : "visibility",
-      iconClass: sensor.uiHidden ? "sensor-status-icon-hide" : "sensor-status-icon-show",
-      content: sensor.uiHidden
-        ? $localize`:@@sensor hidden:Hidden`
-        : $localize`:@@sensor visible:Visible`
-    })
-
-    return attributes
+    return buildSensorAttributes(
+      sensor,
+      this.sensorTypes,
+      this.zigbeeDevicesById,
+      this.zones,
+      this.areas,
+      this.boardVersion
+    )
   }
 
   getSensorAttributeGroups(sensor: Sensor) {
@@ -254,62 +163,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       groupsById.set(sensor.id, this.getSensorAttributeGroups(sensor))
     })
     return groupsById
-  }
-
-  private getChannelTypeLabel(channelType: ChannelTypes | null): string {
-    switch (channelType) {
-      case ChannelTypes.BASIC:
-        return $localize`:@@sensor channel basic:Basic`
-      case ChannelTypes.NORMAL:
-        return $localize`:@@sensor channel normal:Normal`
-      case ChannelTypes.CHANNEL_A:
-        return $localize`:@@sensor channel a:Channel A`
-      case ChannelTypes.CHANNEL_B:
-        return $localize`:@@sensor channel b:Channel B`
-      default:
-        return ""
-    }
-  }
-
-  private getContactTypeLabel(contactType: SensorContactTypes | null): string {
-    switch (contactType) {
-      case SensorContactTypes.NC:
-        return $localize`:@@sensor contact nc: Normally Closed (NC) `
-      case SensorContactTypes.NO:
-        return $localize`:@@sensor contact no: Normally Open (NO) `
-      default:
-        return ""
-    }
-  }
-
-  private getEOLCountLabel(eolCount: SensorEOLCount | null): string {
-    switch (eolCount) {
-      case SensorEOLCount.SINGLE:
-        return $localize`:@@sensor eol single:Single EOL`
-      case SensorEOLCount.DOUBLE:
-        return $localize`:@@sensor eol double:Double EOL`
-      default:
-        return ""
-    }
-  }
-
-  private getSilentAlertLabel(silentAlert: boolean | null): string {
-    if (silentAlert === false) return $localize`:@@sensor silent syren:Alarm with syren`
-    if (silentAlert === true) return $localize`:@@sensor silent alert:Silent alert`
-    return "-"
-  }
-
-  private getMonitorSettingsLabel(
-    monitorPeriod: number | null,
-    monitorThreshold: number | null
-  ): string {
-    if (monitorPeriod != null) {
-      return `${monitorPeriod !== null ? monitorPeriod + "s" : "-"}/${monitorThreshold}%`
-    }
-    if (monitorPeriod === null && monitorThreshold != null) {
-      return $localize`:@@sensor instant:Instant alert`
-    }
-    return "-"
   }
 
   userCanEdit() {
