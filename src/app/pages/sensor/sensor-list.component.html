@@ -3,103 +3,20 @@
     @if (sensors.length > 0) {
       <div cdkDropList (cdkDropListDropped)="onDrop($event)">
         @for (sensor of sensors; track sensor) {
-          <mat-card
+          <app-sensor-card
             id="sensor-{{ sensor.id }}"
             cdkDrag
             (cdkDragStarted)="onDragStarted($event)"
             [cdkDragDisabled]="!userCanEdit()"
-            class="sensor-card container-item"
-          >
-            <mat-card-header>
-              <mat-card-title-group>
-                <mat-card-title>{{ sensor.name }}</mat-card-title>
-                @if (sensor.error && !sensor.zigbeeDeviceId) {
-                  <mat-card-subtitle class="error-text">
-                    <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
-                    <span i18n="@@sensor error channel">Error on input channel</span>
-                  </mat-card-subtitle>
-                }
-                @if (sensor.error && sensor.zigbeeDeviceId) {
-                  <mat-card-subtitle class="error-text">
-                    <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
-                    <span i18n="@@sensor error zigbee">Error on Zigbee device</span>
-                  </mat-card-subtitle>
-                }
-                <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
-              </mat-card-title-group>
-              <div
-                class="sensor-image"
-                [ngClass]="{ alerting: sensor.alert, error: sensor.error, disabled: !sensor.enabled }"
-              >
-                <mat-icon class="material-symbols-outlined">
-                  {{ SensorType.getIconName(getSensorTypeName(sensor.typeId)) }}
-                </mat-icon>
-              </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="row">
-              <div class="attributes">
-                <div class="attributes-container">
-                  @for (
-                    attributeGroup of getSensorAttributeGroupsById(sensor.id);
-                    track attributeGroup;
-                    let i = $index
-                  ) {
-                    <mat-list class="attribute-list">
-                      @for (attribute of attributeGroup; track attribute) {
-                        <mat-list-item>
-                          <mat-icon matListItemIcon class="material-symbols-outlined" [ngClass]="attribute.iconClass">
-                            {{ attribute.icon }}
-                          </mat-icon>
-                          <span class="long-field" [innerHTML]="attribute.content"></span>
-                        </mat-list-item>
-                      }
-                    </mat-list>
-                  }
-                </div>
-              </div>
-            </mat-card-content>
-            @if (userCanEdit()) {
-              <mat-divider></mat-divider>
-            }
-            @if (userCanEdit()) {
-              <mat-card-actions>
-                <!-- drag and drop icon button-->
-                <button
-                  mat-icon-button
-                  cdkDragHandle
-                  class="drag-handle"
-                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
-                >
-                  <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  [routerLink]="['/sensor', sensor.id]"
-                  color="primary"
-                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
-                >
-                  <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  (click)="onResetReferences(sensor.id)"
-                  color="accent"
-                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
-                >
-                  <mat-icon class="material-symbols-outlined">refresh</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  (click)="openDeleteDialog(sensor.id)"
-                  color="warn"
-                  [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
-                >
-                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
-                </button>
-              </mat-card-actions>
-            }
-          </mat-card>
+            class="container-item"
+            [sensor]="sensor"
+            [iconName]="SensorType.getIconName(getSensorTypeName(sensor.typeId))"
+            [attributeGroups]="getSensorAttributeGroupsById(sensor.id)"
+            [canEdit]="userCanEdit()"
+            [monitoringState]="monitoringState"
+            (resetReferences)="onResetReferences($event)"
+            (deleteRequested)="openDeleteDialog($event)"
+          ></app-sensor-card>
         }
       </div>
     } @else {

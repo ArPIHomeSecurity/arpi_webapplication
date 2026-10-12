@@ -39,6 +39,7 @@ import { AppComponent } from "./app.component"
 // application components
 import { MessageComponent } from "./components/message/message.component"
 import { QuestionDialogComponent } from "./components/question-dialog/question-dialog.component"
+import { SensorCardComponent } from "./components/sensor/sensor-card/sensor-card.component"
 import { SystemStateComponent } from "./components/system-state/system-state.component"
 import { MCPTokenDialogComponent } from "./components/user/mcp-token-dialog/mcp-token-dialog.component"
 import { UserCardComponent } from "./components/user/user-card/user-card.component"
@@ -123,6 +124,7 @@ import { CapacitorService } from "./services/capacitor.service"
     PreferencesComponent,
 
     SensorComponent,
+    SensorCardComponent,
     SensorListComponent,
     SensorDetailComponent,
 

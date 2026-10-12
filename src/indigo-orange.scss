@@ -3,6 +3,7 @@
 @use "app/app.component.scss" as app;
 @use "app/components/system-state/system-state.component.scss" as system-state;
 @use "app/components/sensor/sensor.scss" as sensor;
+@use "app/components/sensor/sensor-card/sensor-card.component.scss" as sensor-card;
 @use "app/components/controller/controller.scss" as controller;
 @use "app/components/output/output.scss" as output;
 @use "app/pages/home/home.component.scss" as home;
@@ -65,7 +66,8 @@ $argus-dark-theme: mat.m2-define-dark-theme(
   @include controller.controller-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output.output-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include area-list.area-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list.sensor-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme();
+  @include sensor-card.sensor-card-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include zigbee-list.zigbee-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-list.output-list-theme($argus-light-theme, $argus-ok, $argus-alert, $argus-warn);
 
@@ -103,7 +105,8 @@ $argus-dark-theme: mat.m2-define-dark-theme(
   @include controller.controller-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output.output-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include area-list.area-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
-  @include sensor-list.sensor-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
+  @include sensor-list.sensor-list-theme();
+  @include sensor-card.sensor-card-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include zigbee-list.zigbee-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
   @include output-list.output-list-theme($argus-dark-theme, $argus-ok, $argus-alert, $argus-warn);
 

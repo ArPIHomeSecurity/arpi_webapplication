@@ -8,6 +8,7 @@ import { forkJoin, of } from "rxjs"
 import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { SensorAttribute } from "@app/components/sensor/sensor-card/sensor-card.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
   Area,
@@ -35,12 +36,6 @@ import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
-
-interface SensorAttribute {
-  icon: string
-  iconClass?: string
-  content: string
-}
 
 @Component({
   templateUrl: "sensor-list.component.html",
@@ -382,7 +377,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     }
   }
 
-  onDragStarted(event: CdkDragStart<string[]>) {
+  onDragStarted(_event: CdkDragStart<string[]>) {
     this.isDragging = true
   }
 

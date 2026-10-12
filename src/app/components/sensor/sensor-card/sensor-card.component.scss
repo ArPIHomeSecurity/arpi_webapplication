@@ -1,0 +1,95 @@
+@use "@angular/material" as mat;
+
+:host {
+  display: block;
+}
+
+@mixin sensor-card-theme($theme, $argus-ok, $argus-alert, $argus-warn) {
+  .sensor-card {
+    .mat-mdc-card-subtitle.error-text {
+      display: flex;
+      align-items: center;
+
+      .error-icon {
+        margin-right: 8px;
+        color: mat.m2-get-color-from-palette($argus-alert);
+      }
+    }
+
+    .attributes {
+      width: 100%;
+      overflow: hidden;
+
+      .attributes-container {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .mdc-list {
+        padding: 0;
+      }
+
+      .attribute-list {
+        margin: 0 0 auto;
+
+        .mat-mdc-list-item {
+          height: 30px;
+
+          .mat-icon {
+            margin-right: 16px;
+          }
+
+          .mat-list-item-content {
+            padding-left: 16px;
+          }
+
+          .long-field {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+
+    .sensor-image {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
+
+      &.alerting {
+        background-color: mat.m2-get-color-from-palette($argus-alert);
+        color: white;
+      }
+
+      &.error {
+        background-color: mat.m2-get-color-from-palette($argus-warn);
+        color: white;
+      }
+
+      &.disabled {
+        background-color: rgb(160, 160, 160);
+      }
+
+      mat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 36px;
+        line-height: 48px;
+      }
+    }
+
+    .sensor-status-icon-enabled {
+      color: mat.m2-get-color-from-palette($argus-ok);
+    }
+  }
+}
