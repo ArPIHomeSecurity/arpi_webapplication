@@ -1,5 +1,5 @@
 export * from "./area/area"
 export * from "./controller/controller"
 export * from "./output/output"
-export * from "./sensor/sensor"
 export * from "./sensor/sensor-card/sensor-card.component"
+export * from "./sensor/sensor/sensor"

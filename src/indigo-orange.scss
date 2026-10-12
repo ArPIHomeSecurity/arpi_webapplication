@@ -2,7 +2,7 @@
 @use "sass:map";
 @use "app/app.component.scss" as app;
 @use "app/components/system-state/system-state.component.scss" as system-state;
-@use "app/components/sensor/sensor.scss" as sensor;
+@use "app/components/sensor/sensor/sensor.scss" as sensor;
 @use "app/components/sensor/sensor-card/sensor-card.component.scss" as sensor-card;
 @use "app/components/controller/controller.scss" as controller;
 @use "app/components/output/output.scss" as output;
