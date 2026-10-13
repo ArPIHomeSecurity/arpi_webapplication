@@ -18,6 +18,7 @@ describe("AreaListComponent", () => {
   let role: string
   let monitoringState: MONITORING_STATE
   let updatedSensors: Sensor[]
+  let configuredAreas: Area[]
   let updateFails: boolean
   let snackbarMessages: string[]
 
@@ -35,6 +36,7 @@ describe("AreaListComponent", () => {
     role = "user"
     monitoringState = MONITORING_STATE.READY
     updatedSensors = []
+    configuredAreas = [area, destinationArea]
     updateFails = false
     snackbarMessages = []
 
@@ -42,7 +44,7 @@ describe("AreaListComponent", () => {
       declarations: [AreaListComponent],
       imports: [MatButtonModule, MatIconModule, RouterModule.forRoot([])],
       providers: [
-        { provide: "AreaService", useValue: { getAreas: () => of([area, destinationArea]) } },
+        { provide: "AreaService", useValue: { getAreas: () => of(configuredAreas) } },
         { provide: AUTHENTICATION_SERVICE, useValue: { getRole: () => role } },
         {
           provide: "EventService",
@@ -98,6 +100,17 @@ describe("AreaListComponent", () => {
     expect(buttons.length).toBe(1)
     expect(TestBed.inject(Router).serializeUrl(viewLink.urlTree)).toBe(`/sensors/${sensor.id}`)
     expect(fixture.debugElement.query(By.css(".sensor-drag-handle"))).toBeNull()
+  })
+
+  it("disables sensor dragging when there is only one area", () => {
+    role = "admin"
+    configuredAreas = [area]
+    fixture = TestBed.createComponent(AreaListComponent)
+    fixture.detectChanges()
+
+    const dragHandle = fixture.nativeElement.querySelector(".sensor-drag-handle")
+
+    expect(dragHandle.disabled).toBeTrue()
   })
 
   it("moves a sensor to another area and updates source and destination panels", () => {

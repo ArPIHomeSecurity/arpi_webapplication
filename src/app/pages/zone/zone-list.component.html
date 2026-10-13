@@ -124,7 +124,9 @@
                     id="zone-sensors-header-{{ zone.id }}"
                     [cdkDropListData]="getSensors(zone.id)"
                     [cdkDropListConnectedTo]="sensorDropListIds"
-                    [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                    [cdkDropListDisabled]="
+                      !userCanEdit() || monitoringState !== monitoringStates.READY || zones.length <= 1
+                    "
                     [cdkDropListSortingDisabled]="true"
                     (cdkDropListDropped)="onSensorDrop($event, zone.id)"
                   >
@@ -142,7 +144,9 @@
                       id="zone-sensors-{{ zone.id }}"
                       [cdkDropListData]="getSensors(zone.id)"
                       [cdkDropListConnectedTo]="sensorDropListIds"
-                      [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                      [cdkDropListDisabled]="
+                        !userCanEdit() || monitoringState !== monitoringStates.READY || zones.length <= 1
+                      "
                       (cdkDropListDropped)="onSensorDrop($event, zone.id)"
                     >
                       @for (sensor of getSensors(zone.id); track sensor) {
@@ -150,7 +154,9 @@
                           class="sensor-row"
                           cdkDrag
                           [cdkDragData]="sensor"
-                          [cdkDragDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                          [cdkDragDisabled]="
+                            !userCanEdit() || monitoringState !== monitoringStates.READY || zones.length <= 1
+                          "
                           (cdkDragStarted)="onSensorDragStarted()"
                           (cdkDragEnded)="onSensorDragEnded($event)"
                         >
@@ -159,7 +165,7 @@
                               mat-icon-button
                               cdkDragHandle
                               class="sensor-drag-handle"
-                              [disabled]="monitoringState !== monitoringStates.READY"
+                              [disabled]="monitoringState !== monitoringStates.READY || zones.length <= 1"
                               aria-label="Move sensor to another zone"
                               i18n-aria-label="@@move sensor to another zone"
                             >
@@ -204,7 +210,9 @@
                       id="zone-sensors-{{ zone.id }}"
                       [cdkDropListData]="getSensors(zone.id)"
                       [cdkDropListConnectedTo]="sensorDropListIds"
-                      [cdkDropListDisabled]="!userCanEdit() || monitoringState !== monitoringStates.READY"
+                      [cdkDropListDisabled]="
+                        !userCanEdit() || monitoringState !== monitoringStates.READY || zones.length <= 1
+                      "
                       (cdkDropListDropped)="onSensorDrop($event, zone.id)"
                     >
                       <h3 i18n="@@zone no sensors">No sensors</h3>
@@ -215,7 +223,6 @@
             </mat-card-content>
 
             @if (userCanEdit()) {
-              <mat-divider></mat-divider>
               <mat-card-actions>
                 <!-- drag and drop icon button-->
                 <button

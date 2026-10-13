@@ -16,6 +16,7 @@ describe("ZoneListComponent", () => {
   let role: string
   let monitoringState: MONITORING_STATE
   let updatedSensors: Sensor[]
+  let configuredZones: Zone[]
 
   const sensor = Object.assign(new Sensor(), {
     id: 17,
@@ -43,6 +44,7 @@ describe("ZoneListComponent", () => {
     role = "user"
     monitoringState = MONITORING_STATE.READY
     updatedSensors = []
+    configuredZones = [zone, destinationZone]
 
     await TestBed.configureTestingModule({
       declarations: [ZoneListComponent],
@@ -85,7 +87,7 @@ describe("ZoneListComponent", () => {
         },
         {
           provide: "ZoneService",
-          useValue: { getZones: () => of([zone, destinationZone]) }
+          useValue: { getZones: () => of(configuredZones) }
         },
         { provide: "MatDialog", useValue: {} },
         { provide: "MatSnackBar", useValue: {} }
@@ -130,6 +132,17 @@ describe("ZoneListComponent", () => {
       `/sensor/${sensor.id}`
     ])
     expect(fixture.debugElement.query(By.css(".sensor-drag-handle"))).not.toBeNull()
+  })
+
+  it("disables sensor dragging when there is only one zone", () => {
+    role = "admin"
+    configuredZones = [zone]
+    fixture = TestBed.createComponent(ZoneListComponent)
+    fixture.detectChanges()
+
+    const dragHandle = fixture.nativeElement.querySelector(".sensor-drag-handle")
+
+    expect(dragHandle.disabled).toBeTrue()
   })
 
   it("updates the sensor zone when an admin drops it in another zone", () => {
