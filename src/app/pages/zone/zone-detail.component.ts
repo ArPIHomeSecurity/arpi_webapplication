@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy, Inject } from "@angular/core"
-import { UntypedFormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
+import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 import { forkJoin, throwError } from "rxjs"
-import { finalize, catchError } from "rxjs/operators"
+import { catchError, finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { MONITORING_STATE, Sensor, Zone } from "@app/models"
 import {
   EventService,
@@ -21,6 +21,7 @@ import {
 import { positiveInteger } from "@app/utils"
 
 import { environment } from "@environments/environment"
+import { applyZonePresetToForm, ZonePreset, zonePresetMatchesForm } from "./zone-presets"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -36,6 +37,7 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
   sensors: Sensor[]
   zoneForm: FormGroup
   areaForm: FormGroup
+  selectedZonePreset: ZonePreset | null = "instant"
 
   constructor(
     @Inject("LoaderService") public loader: LoaderService,
@@ -134,6 +136,18 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         Validators.maxLength(128)
       ])
     })
+
+    this.baseSubscriptions ??= []
+    this.baseSubscriptions.push(
+      this.zoneForm.valueChanges.subscribe(() => {
+        if (
+          this.selectedZonePreset != null &&
+          !zonePresetMatchesForm(this.zoneForm, this.selectedZonePreset)
+        ) {
+          this.selectedZonePreset = null
+        }
+      })
+    )
   }
 
   onSubmit() {
@@ -268,5 +282,10 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
     }
 
     controls[delayName].updateValueAndValidity()
+  }
+
+  onZonePresetChanged(preset: ZonePreset) {
+    this.selectedZonePreset = preset
+    applyZonePresetToForm(this.zoneForm, preset)
   }
 }

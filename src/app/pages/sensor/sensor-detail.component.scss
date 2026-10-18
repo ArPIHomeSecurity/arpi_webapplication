@@ -57,3 +57,17 @@ mat-expansion-panel-header .title {
 mat-accordion {
   margin-bottom: 15px;
 }
+
+.zone-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+  margin: 12px 0;
+}
+
+.zone-presets mat-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+}

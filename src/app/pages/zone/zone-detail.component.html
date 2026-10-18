@@ -26,6 +26,20 @@
               ></textarea>
             </mat-form-field>
           </div>
+          @if (zoneId === undefined) {
+            <div class="zone-presets">
+              <label id="zone-preset-label" i18n="@@zone preset label">Zone setup</label>
+              <mat-radio-group
+                aria-labelledby="zone-preset-label"
+                [value]="selectedZonePreset"
+                (change)="onZonePresetChanged($event.value)"
+              >
+                <mat-radio-button value="tamper" i18n="@@zone preset tamper">Tamper</mat-radio-button>
+                <mat-radio-button value="instant" i18n="@@zone preset instant">Instant</mat-radio-button>
+                <mat-radio-button value="delayed" i18n="@@zone preset delayed">Delayed</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          }
           <mat-checkbox
             formControlName="disarmedAlert"
             color="primary"
