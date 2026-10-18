@@ -21,7 +21,7 @@ import {
 import { positiveInteger } from "@app/utils"
 
 import { environment } from "@environments/environment"
-import { applyZonePresetToForm, ZonePreset, zonePresetMatchesForm } from "./zone-presets"
+import { ZonePreset } from "./zone-presets"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -136,18 +136,6 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         Validators.maxLength(128)
       ])
     })
-
-    this.baseSubscriptions ??= []
-    this.baseSubscriptions.push(
-      this.zoneForm.valueChanges.subscribe(() => {
-        if (
-          this.selectedZonePreset != null &&
-          !zonePresetMatchesForm(this.zoneForm, this.selectedZonePreset)
-        ) {
-          this.selectedZonePreset = null
-        }
-      })
-    )
   }
 
   onSubmit() {
@@ -271,21 +259,5 @@ export class ZoneDetailComponent extends ConfigurationBaseComponent implements O
         }
       }
     })
-  }
-
-  alertWhenChanged(event, delayName) {
-    const controls = this.zoneForm.controls
-    if (event.checked) {
-      controls[delayName].setValidators([Validators.required, positiveInteger()])
-    } else {
-      controls[delayName].setValidators(null)
-    }
-
-    controls[delayName].updateValueAndValidity()
-  }
-
-  onZonePresetChanged(preset: ZonePreset) {
-    this.selectedZonePreset = preset
-    applyZonePresetToForm(this.zoneForm, preset)
   }
 }

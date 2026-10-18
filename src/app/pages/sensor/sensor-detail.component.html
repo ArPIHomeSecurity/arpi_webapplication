@@ -275,138 +275,14 @@
                 </mat-select>
               </mat-form-field>
               @if (sensor.zoneId === -1) {
-                <div>
-                  <form [formGroup]="zoneForm">
-                    <div class="column">
-                      <mat-form-field>
-                        <input
-                          matInput
-                          i18n-placeholder="@@zone name"
-                          placeholder="Zone name"
-                          formControlName="zoneName"
-                          required
-                        />
-                      </mat-form-field>
-                      <div class="zone-presets">
-                        <label id="sensor-zone-preset-label" i18n="@@zone preset label">Zone setup</label>
-                        <mat-radio-group
-                          aria-labelledby="sensor-zone-preset-label"
-                          [value]="selectedZonePreset"
-                          (change)="onZonePresetChanged($event.value)"
-                        >
-                          <mat-radio-button value="tamper" i18n="@@zone preset tamper">Tamper</mat-radio-button>
-                          <mat-radio-button value="instant" i18n="@@zone preset instant">Instant</mat-radio-button>
-                          <mat-radio-button value="delayed" i18n="@@zone preset delayed">Delayed</mat-radio-button>
-                        </mat-radio-group>
-                      </div>
-                      <mat-checkbox
-                        formControlName="disarmedAlert"
-                        color="primary"
-                        (change)="alertWhenChanged($event, 'disarmedDelay')"
-                        i18n="@@sensor alert disarmed"
-                      >
-                        Alert when disarmed
-                      </mat-checkbox>
-                      @if (zoneForm.get("disarmedAlert").value) {
-                        <mat-form-field>
-                          <input
-                            matInput
-                            i18n-placeholder="@@zone disarmed delay"
-                            placeholder="Delay alert when not armed"
-                            formControlName="disarmedDelay"
-                          />
-                          @if (zoneForm.get("disarmedDelay").invalid) {
-                            <mat-error>
-                              {{ zoneForm.get("disarmedDelay").getError("invalid") }}
-                            </mat-error>
-                          }
-                        </mat-form-field>
-                      }
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-checkbox
-                      formControlName="awayArmedAlert"
-                      color="primary"
-                      (change)="alertWhenChanged($event, 'awayAlertDelay')"
-                      i18n="@@sensor alert away"
-                    >
-                      Alert when away armed
-                    </mat-checkbox>
-                    <div class="row">
-                      @if (zoneForm.get("awayArmedAlert").value) {
-                        <mat-form-field>
-                          <input
-                            matInput
-                            i18n-placeholder="@@zone away alert delay"
-                            placeholder="Delay alert when armed away"
-                            formControlName="awayAlertDelay"
-                          />
-                          @if (zoneForm.get("awayAlertDelay").invalid) {
-                            <mat-error>
-                              {{ zoneForm.get("awayAlertDelay").getError("invalid") }}
-                            </mat-error>
-                          }
-                        </mat-form-field>
-                      }
-                      @if (zoneForm.get("awayArmedAlert").value) {
-                        <mat-form-field>
-                          <input
-                            matInput
-                            i18n-placeholder="@@zone away arm delay"
-                            placeholder="Delay arm when arming away"
-                            formControlName="awayArmDelay"
-                          />
-                          @if (zoneForm.get("awayAlertDelay").invalid) {
-                            <mat-error>
-                              {{ zoneForm.get("awayArmDelay").getError("invalid") }}
-                            </mat-error>
-                          }
-                        </mat-form-field>
-                      }
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-checkbox
-                      formControlName="stayArmedAlert"
-                      color="primary"
-                      (change)="alertWhenChanged($event, 'stayAlertDelay')"
-                      i18n="@@sensor alert stay"
-                    >
-                      Alert when stay armed
-                    </mat-checkbox>
-                    <div class="row">
-                      @if (zoneForm.get("stayArmedAlert").value) {
-                        <mat-form-field>
-                          <input
-                            matInput
-                            i18n-placeholder="@@zone stay alert delay"
-                            placeholder="Delay alert when armed stay"
-                            formControlName="stayAlertDelay"
-                          />
-                          @if (zoneForm.get("stayAlertDelay").invalid) {
-                            <mat-error>
-                              {{ zoneForm.get("stayAlertDelay").getError("invalid") }}
-                            </mat-error>
-                          }
-                        </mat-form-field>
-                      }
-                      @if (zoneForm.get("stayArmedAlert").value) {
-                        <mat-form-field>
-                          <input
-                            matInput
-                            i18n-placeholder="@@zone stay arm delay"
-                            placeholder="Delay arm when arming stay"
-                            formControlName="stayArmDelay"
-                          />
-                          @if (zoneForm.get("stayAlertDelay").invalid) {
-                            <mat-error>
-                              {{ zoneForm.get("stayArmDelay").getError("invalid") }}
-                            </mat-error>
-                          }
-                        </mat-form-field>
-                      }
-                    </div>
-                  </form>
-                </div>
+                <app-zone-configuration
+                  [form]="zoneForm"
+                  nameControlName="zoneName"
+                  nameLabel="Zone name"
+                  i18n-nameLabel="@@zone name"
+                  [selectedPreset]="selectedZonePreset"
+                  (selectedPresetChange)="selectedZonePreset = $event"
+                ></app-zone-configuration>
               }
             </mat-expansion-panel>
           </mat-accordion>

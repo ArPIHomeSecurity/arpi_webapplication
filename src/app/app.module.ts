@@ -68,7 +68,13 @@ import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
 import { AppHttpInterceptor } from "./app.http.interceptor"
 import { routing } from "./app.routing"
-import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from "./components"
+import {
+  AreaComponent,
+  ControllerComponent,
+  OutputComponent,
+  SensorComponent,
+  ZoneConfigurationComponent
+} from "./components"
 import { DemoComponent } from "./demo/demo.component"
 import { DemoHelpDialogComponent } from "./demo/demo.help.dialog.component"
 import { PageNotFoundComponent } from "./page-not-found.component"
@@ -131,6 +137,7 @@ import { CapacitorService } from "./services/capacitor.service"
 
     ZoneListComponent,
     ZoneDetailComponent,
+    ZoneConfigurationComponent,
 
     SystemStateComponent,
     PageNotFoundComponent,

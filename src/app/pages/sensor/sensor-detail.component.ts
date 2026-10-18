@@ -44,11 +44,7 @@ import {
 } from "@app/services"
 import { positiveInteger } from "@app/utils"
 
-import {
-  ZonePreset,
-  applyZonePresetToForm,
-  zonePresetMatchesForm
-} from "@app/pages/zone/zone-presets"
+import { ZonePreset } from "@app/pages/zone/zone-presets"
 import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
@@ -334,18 +330,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     } else {
       this.sensorForm.controls.eolCount.enable()
     }
-
-    this.baseSubscriptions ??= []
-    this.baseSubscriptions.push(
-      this.zoneForm.valueChanges.subscribe(() => {
-        if (
-          this.selectedZonePreset != null &&
-          !zonePresetMatchesForm(this.zoneForm, this.selectedZonePreset)
-        ) {
-          this.selectedZonePreset = null
-        }
-      })
-    )
   }
 
   private updateSensorSettingsValidators() {
@@ -788,7 +772,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
       this.selectedZonePreset = "instant"
-      applyZonePresetToForm(this.zoneForm, this.selectedZonePreset)
       controls.disarmedDelay.setValidators([Validators.required, positiveInteger()])
       controls.awayAlertDelay.setValidators([Validators.required, positiveInteger()])
       controls.stayAlertDelay.setValidators([Validators.required, positiveInteger()])
@@ -822,23 +805,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.areaForm.updateValueAndValidity()
     this.sensorForm.updateValueAndValidity()
-  }
-
-  alertWhenChanged(event, delayName) {
-    const { controls } = this.zoneForm
-    if (event.checked) {
-      controls[delayName].setValidators([Validators.required, positiveInteger()])
-    } else {
-      controls[delayName].clearValidators()
-      controls[delayName].setErrors(null)
-    }
-
-    controls[delayName].updateValueAndValidity()
-  }
-
-  onZonePresetChanged(preset: ZonePreset) {
-    this.selectedZonePreset = preset
-    applyZonePresetToForm(this.zoneForm, preset)
   }
 
   openDeleteDialog(sensorId: number) {
