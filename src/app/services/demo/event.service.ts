@@ -60,7 +60,9 @@ export class EventService {
       subject = this.outputState
     } else if (event === "alert_state_change") {
       subject = this.alertState
-    } else if (event === "sensors_state_change") {
+    } else if (
+      ["sensors_state_change", "sensors_error_change", "sensors_tamper_change"].includes(event)
+    ) {
       subject = this.sensorsState
     } else if (event === "syren_state_change") {
       subject = this.syrenState

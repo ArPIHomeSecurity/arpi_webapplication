@@ -717,6 +717,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
       alert: false,
       error: false,
+      tamper: false,
       enabled: formModel.enabled,
       silentAlert: silentAlert,
       monitorPeriod: formModel.monitorPeriod,

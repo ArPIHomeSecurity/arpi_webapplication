@@ -22,11 +22,6 @@
         }
       </div>
       <div class="sensor-indicators">
-        @if (sensor.error && !tamperSensor) {
-        <div class="sensor-state error-state">
-          <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
-        </div>
-        } @if (tamperSensor) {
         <div class="sensor-indicator-group">
           <mat-icon
             class="material-symbols-outlined sensor-indicator-type"
@@ -35,7 +30,7 @@
           ></mat-icon>
           <div
             class="sensor-state"
-            [ngClass]="{'enabled': tamperSensor.enabled === true, 'disabled': tamperSensor.enabled === false, 'alerting': tamperSensor.alert && tamperSensor.enabled === true, 'neutral': tamperSensor.enabled == null}"
+            [ngClass]="{'enabled': sensor.enabled === true && !sensor.tamper, 'disabled': sensor.enabled === false && !sensor.tamper, 'alerting': sensor.tamper, 'neutral': sensor.enabled == null && !sensor.tamper}"
             role="img"
             aria-label="Tamper sensor state"
             i18n-aria-label="@@sensor tamper state"
@@ -61,16 +56,6 @@
             }
           </div>
         </div>
-        } @else if (sensor.error !== true) {
-        <div
-          class="sensor-state"
-          [ngClass]="{'enabled': sensor.enabled === true && (delay != null || sensor.alert), 'disabled': sensor.enabled === false, 'alerting': sensor.alert && sensor.enabled === true, 'neutral': !(sensor.enabled === false || (sensor.enabled === true && (delay != null || sensor.alert)))}"
-        >
-          @if (sensor.enabled && delay > 0) {
-          <span class="delay">{{delay}}</span>
-          }
-        </div>
-        }
       </div>
     </mat-card-title-group>
   </mat-card-header>

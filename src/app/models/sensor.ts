@@ -37,6 +37,7 @@ export class Sensor {
 
   alert: boolean
   error: boolean
+  tamper: boolean
   enabled: boolean
   silentAlert: boolean
   monitorPeriod: number
@@ -44,30 +45,6 @@ export class Sensor {
 
   uiOrder: number = null
   uiHidden: boolean = null
-}
-
-export function findZigbeeSignalSensor(
-  sensor: Sensor,
-  sensors: Sensor[],
-  field: string
-): Sensor | undefined {
-  if (
-    sensor?.zigbeeDeviceId == null ||
-    sensor.zigbeeEndpoint == null ||
-    sensor.zigbeeClusterId == null ||
-    sensor.zigbeeAttributeId == null
-  ) {
-    return undefined
-  }
-
-  return sensors?.find(
-    candidate =>
-      candidate.zigbeeField === field &&
-      candidate.zigbeeDeviceId === sensor.zigbeeDeviceId &&
-      candidate.zigbeeEndpoint === sensor.zigbeeEndpoint &&
-      candidate.zigbeeClusterId === sensor.zigbeeClusterId &&
-      candidate.zigbeeAttributeId === sensor.zigbeeAttributeId
-  )
 }
 
 export class SensorType {

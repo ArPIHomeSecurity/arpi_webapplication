@@ -39,7 +39,6 @@
         @if (!sensor.uiHidden || sensor.alert) {
           <component-sensor
             [sensor]="sensor"
-            [sensors]="sensors"
             [sensorTypes]="sensorTypes"
             [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
             [zigbeeDevices]="zigbeeDevicesById"

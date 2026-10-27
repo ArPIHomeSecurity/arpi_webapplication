@@ -161,15 +161,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.subscriptions.push(
-      this.eventService.listen("sensors_state_change").subscribe(_ => {
-        this.sensorService.getSensors().subscribe(sensors => {
-          this.sensors = sensors.sort((a, b) =>
-            a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
-          )
-        })
-      })
-    )
+    const sensorStateEvents = [
+      "sensors_state_change",
+      "sensors_error_change",
+      "sensors_tamper_change"
+    ]
+    sensorStateEvents.forEach(event => {
+      this.subscriptions.push(
+        this.eventService.listen(event).subscribe(() => this.refreshSensors())
+      )
+    })
 
     this.subscriptions.push(
       this.eventService.listen("output_state_change").subscribe(output => {
@@ -226,6 +227,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.monitoringState = MONITORING_STATE.UNDEFINED
         this.onStateChanged()
       }
+    })
+  }
+
+  private refreshSensors() {
+    this.sensorService.getSensors().subscribe(sensors => {
+      this.sensors = sensors.sort((a, b) =>
+        a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
+      )
     })
   }
 
