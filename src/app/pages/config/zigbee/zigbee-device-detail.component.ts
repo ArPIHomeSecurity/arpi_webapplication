@@ -10,6 +10,8 @@ import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models
 import { EventService, LoaderService, MonitoringService, ZigbeeService } from "@app/services"
 import { environment } from "@environments/environment"
 
+import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "./consts"
+
 @Component({
   templateUrl: "zigbee-device-detail.component.html",
   styleUrls: ["zigbee-device-detail.component.scss"],
@@ -84,9 +86,9 @@ export class ZigbeeDeviceDetailComponent
     const sensorTypes = new Map<string, string>()
     for (const signal of this.device.metadata?.signals ?? []) {
       let sensorType: string
-      if (signal.clusterId === 0x0500) {
+      if (signal.clusterId === IAS_ZONE_TYPE) {
         sensorType = zigbeeZoneTypeLabel(signal.zoneType)
-      } else if (signal.clusterId === 0x0406) {
+      } else if (signal.clusterId === OCCUPANCY_SENSOR_TYPE) {
         sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
       } else {
         continue

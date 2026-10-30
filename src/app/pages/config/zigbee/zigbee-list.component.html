@@ -51,9 +51,16 @@
                           <div matListItemTitle>
                             {{ attribute.label }}
                           </div>
-                          <div matListItemLine>
-                            {{ attribute.value }}
-                          </div>
+                          @if (attribute.value) {
+                            <div matListItemLine>
+                              {{ attribute.value }}
+                            </div>
+                          }
+                          @for (value of attribute.values; track value) {
+                            <div matListItemLine>
+                              {{ value }}
+                            </div>
+                          }
                         </mat-list-item>
                       }
                     </mat-list>

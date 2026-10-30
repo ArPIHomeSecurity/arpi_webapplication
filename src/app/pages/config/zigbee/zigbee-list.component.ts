@@ -16,13 +16,15 @@ import {
 } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { environment } from "@environments/environment"
+import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "./consts"
 
 const scheduleMicrotask = Promise.resolve(null)
 
 interface ZigbeeAttribute {
   icon: string
   label: string
-  value: string
+  value?: string
+  values?: string[]
   iconClass?: string
 }
 
@@ -155,21 +157,21 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     const sensorTypes = new Map<string, string>()
     for (const signal of device.metadata?.signals ?? []) {
       let sensorType: string
-      if (signal.clusterId === 0x0500) {
+      if (signal.clusterId === IAS_ZONE_TYPE) {
         sensorType = zigbeeZoneTypeLabel(signal.zoneType)
-      } else if (signal.clusterId === 0x0406) {
+      } else if (signal.clusterId === OCCUPANCY_SENSOR_TYPE) {
         sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
       } else {
         continue
       }
 
       const key = `${signal.endpoint}:${signal.clusterId}`
-      sensorTypes.set(key, `${sensorType} (endpoint ${signal.endpoint})`)
+      sensorTypes.set(key, `${sensorType}`)
     }
     attributes.push({
       icon: "sensors",
       label: $localize`:@@zigbee sensor type:Sensor Type`,
-      value: [...sensorTypes.values()].join(", ") || "-"
+      values: [...sensorTypes.values()]
     })
 
     // Availability / Status

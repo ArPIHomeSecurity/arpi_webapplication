@@ -29,13 +29,20 @@ export function buildSensorAttributes(
 
   const zigbeeDevice =
     sensor.zigbeeDeviceId != null ? zigbeeDevicesById.get(sensor.zigbeeDeviceId) : undefined
+  const zigbeeDeviceName = zigbeeDevice?.name || zigbeeDevice?.ieeeAddress
+  const zigbeeClusterName = zigbeeDevice?.metadata?.signals?.find(
+    signal => signal.clusterId === sensor.zigbeeClusterId
+  )?.cluster
 
   attributes.push({
     icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
-    content:
-      zigbeeDevice?.name ||
-      zigbeeDevice?.ieeeAddress ||
-      (sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-")
+    content: zigbeeDeviceName
+      ? zigbeeClusterName
+        ? `${zigbeeDeviceName} / ${zigbeeClusterName}`
+        : zigbeeDeviceName
+      : sensor.channel !== -1
+        ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}`
+        : "-"
   })
 
   if (boardVersion >= 3 && sensor.zigbeeDeviceId == null) {
