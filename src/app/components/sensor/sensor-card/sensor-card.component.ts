@@ -5,7 +5,8 @@ import { MONITORING_STATE, Sensor } from "@app/models"
 export interface SensorAttribute {
   icon: string
   iconClass?: string
-  content: string
+  label: string
+  contents: string[]
 }
 
 @Component({

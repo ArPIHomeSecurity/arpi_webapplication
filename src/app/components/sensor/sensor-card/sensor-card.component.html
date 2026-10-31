@@ -31,7 +31,10 @@
                 <mat-icon matListItemIcon class="material-symbols-outlined" [ngClass]="attribute.iconClass">
                   {{ attribute.icon }}
                 </mat-icon>
-                <span class="long-field" [innerHTML]="attribute.content"></span>
+                <span matListItemTitle>{{ attribute.label }}</span>
+                @for (content of attribute.contents; track content) {
+                  <div matListItemLine class="long-field">{{ content }}</div>
+                }
               </mat-list-item>
             }
           </mat-list>

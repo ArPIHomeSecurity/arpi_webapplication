@@ -1,17 +1,19 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core"
+import { forkJoin, of } from "rxjs"
 
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
-import { finalize } from "rxjs/operators"
+import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
+import { MONITORING_STATE, Sensor, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import {
   AuthenticationService,
   EventService,
   LoaderService,
   MonitoringService,
+  SensorService,
   ZigbeeService
 } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
@@ -23,8 +25,8 @@ const scheduleMicrotask = Promise.resolve(null)
 interface ZigbeeAttribute {
   icon: string
   label: string
-  value?: string
   values?: string[]
+  linkedSensors?: Sensor[]
   iconClass?: string
 }
 
@@ -36,6 +38,7 @@ interface ZigbeeAttribute {
 })
 export class ZigbeeListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   devices: ZigbeeDevice[] | null = null
+  sensors: Sensor[] = []
   zigbeeSupported = true
   isPairing = false
   pairingTimeLeft = 0
@@ -48,6 +51,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     @Inject("LoaderService") public loader: LoaderService,
     @Inject("MonitoringService") public monitoringService: MonitoringService,
     @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
+    @Inject("SensorService") private sensorService: SensorService,
 
     public dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -81,12 +85,15 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
   }
 
   updateComponent() {
-    this.zigbeeService
-      .getDevices()
+    forkJoin({
+      devices: this.zigbeeService.getDevices(),
+      sensors: this.sensorService.getSensors().pipe(catchError(() => of([] as Sensor[])))
+    })
       .pipe(finalize(() => this.loader.display(false)))
       .subscribe({
-        next: devices => {
+        next: ({ devices, sensors }) => {
           this.zigbeeSupported = true
+          this.sensors = sensors
           this.devices = devices.sort((a, b) =>
             (a.name || a.ieeeAddress).localeCompare(b.name || b.ieeeAddress)
           )
@@ -97,6 +104,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
         error: error => {
           this.zigbeeSupported = error.status !== 404
           this.devices = []
+          this.sensors = []
           this.loader.display(false)
           this.loader.disable(false)
         }
@@ -105,53 +113,53 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
 
   getDeviceAttributes(device: ZigbeeDevice): ZigbeeAttribute[] {
     const attributes: ZigbeeAttribute[] = []
+    const linkedSensors = this.sensors.filter(sensor => sensor.zigbeeDeviceId === device.id)
 
     // IEEE Address
     attributes.push({
       icon: "fingerprint",
       label: $localize`:@@zigbee ieee:IEEE Address`,
-      value: device.ieeeAddress
+      values: [device.ieeeAddress]
     })
 
     // Network Address
     attributes.push({
       icon: "tag",
       label: $localize`:@@zigbee nwk:Network Address`,
-      value:
+      values: [
         device.networkAddress != null
           ? `0x${device.networkAddress.toString(16).toUpperCase().padStart(4, "0")}`
           : "-"
+      ]
     })
 
     // Model & Manufacturer
     attributes.push({
       icon: "devices_other",
       label: $localize`:@@zigbee model:Model`,
-      value: [device.manufacturer, device.model].filter(Boolean).join(" ") || "-"
+      values: [[device.manufacturer, device.model].filter(Boolean).join(" ") || "-"]
     })
 
     // Battery
     attributes.push({
       icon: "battery_std",
       label: $localize`:@@zigbee battery:Battery`,
-      value: device.batteryLevel != null ? `${device.batteryLevel * 100}%` : "-"
+      values: [device.batteryLevel != null ? `${device.batteryLevel * 100}%` : "-"]
     })
 
     // Signal Quality (LQI)
     attributes.push({
       icon: "network_check",
       label: $localize`:@@zigbee signal:Link Quality`,
-      value: device.signalQuality != null ? `${device.signalQuality} LQI` : "-"
+      values: [device.signalQuality != null ? `${device.signalQuality} LQI` : "-"]
     })
 
     // Connected Sensors
     attributes.push({
       icon: "sensors",
       label: $localize`:@@zigbee connected sensors:Sensors`,
-      value:
-        device.sensorCount != null && device.sensorCount > 0
-          ? $localize`:@@zigbee sensor count:${device.sensorCount} sensor(s)`
-          : $localize`:@@zigbee no sensors:None`
+      values: linkedSensors.length === 0 ? [$localize`:@@zigbee no sensors:None`] : [],
+      linkedSensors
     })
 
     const sensorTypes = new Map<string, string>()
@@ -180,11 +188,13 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     attributes.push({
       icon: isOnline ? "wifi" : isOffline ? "wifi_off" : "help_outline",
       label: $localize`:@@zigbee status:Status`,
-      value: isOnline
-        ? $localize`:@@zigbee online:Online`
-        : isOffline
-          ? $localize`:@@zigbee offline:Offline`
-          : $localize`:@@zigbee unknown:Unknown`,
+      values: [
+        isOnline
+          ? $localize`:@@zigbee online:Online`
+          : isOffline
+            ? $localize`:@@zigbee offline:Offline`
+            : $localize`:@@zigbee unknown:Unknown`
+      ],
       iconClass: isOnline ? "zigbee-status-online" : isOffline ? "zigbee-status-offline" : ""
     })
 
@@ -192,7 +202,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     attributes.push({
       icon: "schedule",
       label: $localize`:@@zigbee last seen:Last Seen`,
-      value: this.formatDate(device.lastSeen)
+      values: [this.formatDate(device.lastSeen)]
     })
 
     return attributes

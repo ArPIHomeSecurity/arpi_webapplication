@@ -12,6 +12,21 @@ export interface ZigbeeSignal {
 
 export type ZigbeeSignalSource = "attribute" | `command:${string}`
 
+export function getZigbeeSignalLabel(signal: ZigbeeSignal): string {
+  if (signal.field === "alarm") {
+    return $localize`:@@ias signal alarm:IAS Zone / Alarm`
+  }
+  if (signal.field === "tamper") {
+    return $localize`:@@ias signal tamper:IAS Zone / Tamper`
+  }
+  if (signal.cluster === "occupancy_sensing" && signal.attribute === "occupancy") {
+    return $localize`:@@zigbee occupancy signal:Occupancy Sensing / Occupancy`
+  }
+  return signal.cluster && signal.attribute
+    ? `${signal.cluster} / ${signal.attribute}`
+    : `${signal.clusterId} / ${signal.attributeId}`
+}
+
 export interface ZigbeeDevice {
   id: number
   ieeeAddress: string

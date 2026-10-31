@@ -6,7 +6,8 @@ import {
   SensorEOLCount,
   SensorType,
   ZigbeeDevice,
-  Zone
+  Zone,
+  getZigbeeSignalLabel
 } from "@app/models"
 
 import type { SensorAttribute } from "./sensor-card/sensor-card.component"
@@ -24,75 +25,123 @@ export function buildSensorAttributes(
 
   attributes.push({
     icon: SensorType.getIconName(sensorTypeName),
-    content: SensorType.getLabel(sensorTypeName)
+    label: $localize`:@@sensor type:Sensor type`,
+    contents: getContents(SensorType.getLabel(sensorTypeName))
   })
 
   const zigbeeDevice =
     sensor.zigbeeDeviceId != null ? zigbeeDevicesById.get(sensor.zigbeeDeviceId) : undefined
   const zigbeeDeviceName = zigbeeDevice?.name || zigbeeDevice?.ieeeAddress
-  const zigbeeClusterName = zigbeeDevice?.metadata?.signals?.find(
-    signal => signal.clusterId === sensor.zigbeeClusterId
-  )?.cluster
+  const zigbeeSignal = zigbeeDevice?.metadata?.signals?.find(
+    signal =>
+      signal.endpoint === sensor.zigbeeEndpoint &&
+      signal.clusterId === sensor.zigbeeClusterId &&
+      signal.attributeId === sensor.zigbeeAttributeId &&
+      (signal.field ?? null) === (sensor.zigbeeField ?? null)
+  )
+  const zigbeeSignalName = zigbeeSignal ? getZigbeeSignalLabel(zigbeeSignal) : undefined
 
   attributes.push({
     icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
-    content: zigbeeDeviceName
-      ? zigbeeClusterName
-        ? `${zigbeeDeviceName} / ${zigbeeClusterName}`
-        : zigbeeDeviceName
-      : sensor.channel !== -1
-        ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}`
-        : "-"
+    ...getSensorBindingContent(
+      zigbeeDeviceName,
+      zigbeeSignalName,
+      sensor.channel,
+      sensor.zigbeeDeviceId != null
+    )
   })
 
   if (boardVersion >= 3 && sensor.zigbeeDeviceId == null) {
     attributes.push({
       icon: "device_hub",
-      content: getChannelTypeLabel(sensor.channelType)
+      label: $localize`:@@sensor channel type:Channel type`,
+      contents: getContents(getChannelTypeLabel(sensor.channelType))
     })
     attributes.push({
       icon: "toggle_on",
-      content: getContactTypeLabel(sensor.sensorContactType)
+      label: $localize`:@@sensor contact type:Contact type`,
+      contents: getContents(getContactTypeLabel(sensor.sensorContactType))
     })
     attributes.push({
       icon: "square",
-      content: getEOLCountLabel(sensor.sensorEolCount)
+      label: $localize`:@@sensor eol count:EOL count`,
+      contents: getContents(getEOLCountLabel(sensor.sensorEolCount))
     })
   }
 
   attributes.push({
     icon: "crop",
-    content: areas.find(area => area.id === sensor.areaId)?.name ?? ""
+    label: $localize`:@@sensor area form:Area`,
+    contents: getContents(areas.find(area => area.id === sensor.areaId)?.name ?? "")
   })
   attributes.push({
     icon: "rectangle",
-    content:
+    label: $localize`:@@sensor zone form:Zone`,
+    contents: getContents(
       sensor.channel !== -1 ? (zones.find(zone => zone.id === sensor.zoneId)?.name ?? "") : "-"
+    )
   })
   attributes.push({
     icon: sensor.silentAlert ? "volume_mute" : "volume_up",
-    content: getSilentAlertLabel(sensor.silentAlert)
+    label: $localize`:@@sensor syren:Syren config`,
+    contents: getContents(getSilentAlertLabel(sensor.silentAlert))
   })
   attributes.push({
     icon: "tune",
-    content: getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
+    label: $localize`:@@sensor sensitivity:Sensor sensitivity`,
+    contents: getContents(getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold))
   })
   attributes.push({
     icon: sensor.enabled ? "check_circle" : "circle",
     iconClass: sensor.enabled ? "sensor-status-icon-enabled" : "",
-    content: sensor.enabled
-      ? $localize`:@@sensor enabled:Enabled`
-      : $localize`:@@sensor disable:Disabled`
+    label: $localize`:@@sensor status:Sensor status`,
+    contents: getContents(
+      sensor.enabled ? $localize`:@@sensor enabled:Enabled` : $localize`:@@sensor disable:Disabled`
+    )
   })
   attributes.push({
     icon: sensor.uiHidden ? "visibility_off" : "visibility",
     iconClass: sensor.uiHidden ? "sensor-status-icon-hide" : "sensor-status-icon-show",
-    content: sensor.uiHidden
-      ? $localize`:@@sensor hidden:Hidden`
-      : $localize`:@@sensor visible:Visible`
+    label: $localize`:@@sensor visibility:Visibility`,
+    contents: getContents(
+      sensor.uiHidden ? $localize`:@@sensor hidden:Hidden` : $localize`:@@sensor visible:Visible`
+    )
   })
 
   return attributes
+}
+
+function getSensorBindingContent(
+  deviceName: string | undefined,
+  signalName: string | undefined,
+  channel: number,
+  isZigbee: boolean
+): Pick<SensorAttribute, "label" | "contents"> {
+  switch (true) {
+    case deviceName != null && signalName != null:
+      return {
+        label: $localize`:@@sensor zigbee device:Zigbee device`,
+        contents: [deviceName, signalName]
+      }
+    case deviceName != null:
+      return { label: $localize`:@@sensor zigbee device:Zigbee device`, contents: [deviceName] }
+    case channel !== -1:
+      return {
+        label: $localize`:@@sensor channel:Channel`,
+        contents: [`CH${(channel + 1).toString().padStart(2, "0")}`]
+      }
+    default:
+      return {
+        label: isZigbee
+          ? $localize`:@@sensor zigbee device:Zigbee device`
+          : $localize`:@@sensor channel:Channel`,
+        contents: ["-"]
+      }
+  }
+}
+
+function getContents(content: string): string[] {
+  return content ? [content] : []
 }
 
 export function buildSensorAttributeGroups(

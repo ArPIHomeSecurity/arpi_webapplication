@@ -40,7 +40,8 @@
         margin: 0 0 auto;
 
         .mat-mdc-list-item {
-          height: 30px;
+          height: auto;
+          min-height: 30px;
 
           .mat-icon {
             margin-right: 16px;
@@ -51,9 +52,8 @@
           }
 
           .long-field {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+            white-space: normal;
+            overflow-wrap: anywhere;
           }
         }
       }

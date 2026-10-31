@@ -7,6 +7,7 @@ import {
   Sensor,
   SensorContactTypes,
   SensorEOLCount,
+  SensorType,
   ZigbeeDevice,
   ZigbeeSignal
 } from "@app/models"
@@ -65,8 +66,25 @@ describe("SensorDetailComponent IAS bindings", () => {
     component.updateForm(component.sensor)
   })
 
-  it("offers independently selectable alarm and tamper signals", () => {
-    expect(component.zigbeeSignals).toEqual([alarmSignal, tamperSignal])
+  it("offers only IAS alarm and occupancy signals", () => {
+    const occupancySignal: ZigbeeSignal = {
+      endpoint: "2",
+      cluster: "occupancy_sensing",
+      clusterId: 0x0406,
+      attribute: "occupancy",
+      attributeId: 0,
+      valueType: "Occupancy",
+      sources: ["attribute"]
+    }
+    const otherSignal: ZigbeeSignal = { ...occupancySignal, attribute: "other" }
+    component.zigbeeDevices = [
+      {
+        ...device,
+        metadata: { signals: [alarmSignal, tamperSignal, occupancySignal, otherSignal] }
+      }
+    ]
+
+    expect(component.zigbeeSignals).toEqual([alarmSignal, occupancySignal])
     expect(component.zigbeeSignalLabel(alarmSignal)).toBe("IAS Zone / Alarm")
     expect(component.zigbeeSignalLabel(tamperSignal)).toBe("IAS Zone / Tamper")
   })
@@ -115,6 +133,15 @@ describe("SensorDetailComponent IAS bindings", () => {
     expect(signalControl.valid).toBeTrue()
   })
 
+  it("disables a Zigbee device assigned to another sensor but not its current sensor", () => {
+    component.sensors = [Object.assign(new Sensor(), { id: 2, zigbeeDeviceId: device.id })]
+
+    expect(component.isZigbeeDeviceDisabled(device)).toBeTrue()
+
+    component.sensor.id = 2
+    expect(component.isZigbeeDeviceDisabled(device)).toBeFalse()
+  })
+
   it("restores wired-setting validation when switching back to wired mode", () => {
     component.boardVersion = 3
     Object.assign(component.sensor, {
@@ -157,6 +184,25 @@ describe("SensorDetailComponent IAS bindings", () => {
       sources: ["attribute"]
     }
     component.zigbeeDevices = [{ ...device, metadata: { signals: [ordinarySignal] } }]
-    expect(component.zigbeeSignalLabel(ordinarySignal)).toBe("occupancy_sensing / occupancy")
+    expect(component.zigbeeSignalLabel(ordinarySignal)).toBe("Occupancy Sensing / Occupancy")
+  })
+
+  it("sets the sensor type to Occupancy for the occupancy signal", () => {
+    const occupancyType = { id: 7, name: "Occupancy" } as SensorType
+    const occupancySignal: ZigbeeSignal = {
+      endpoint: "2",
+      cluster: "occupancy_sensing",
+      clusterId: 0x0406,
+      attribute: "occupancy",
+      attributeId: 0,
+      valueType: "Occupancy",
+      sources: ["attribute"]
+    }
+    component.sensorTypes = [occupancyType]
+    component.sensorForm.controls.zigbeeSignal.setValue(occupancySignal)
+
+    component.onZigbeeSignalChanged()
+
+    expect(component.sensorForm.controls.typeId.value).toBe(occupancyType.id)
   })
 })

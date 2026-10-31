@@ -31,6 +31,7 @@ import {
   ZigbeeSignal,
   ZigbeeZoneType,
   Zone,
+  getZigbeeSignalLabel,
   string2MonitoringState
 } from "@app/models"
 import {
@@ -44,6 +45,7 @@ import {
 } from "@app/services"
 import { positiveInteger } from "@app/utils"
 
+import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "@app/pages/config/zigbee/consts"
 import { ZonePreset } from "@app/pages/zone/zone-presets"
 import { environment } from "@environments/environment"
 
@@ -502,7 +504,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       )
     } else {
       const sensorType =
-        signal.clusterId === 0x0406
+        signal.clusterId === OCCUPANCY_SENSOR_TYPE && signal.attribute === "occupancy"
           ? this.sensorTypes.find(type => type.name === "Occupancy")
           : this.sensorTypeByZigbeeZoneType(signal.zoneType)
       this.sensorForm.controls.typeId.setValue(sensorType?.id)
@@ -551,20 +553,24 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     return this.zigbeeDevices.find(device => device.id === this.sensorForm?.value?.zigbeeDeviceId)
   }
 
+  isZigbeeDeviceDisabled(device: ZigbeeDevice): boolean {
+    return (
+      this.sensors?.some(
+        sensor => sensor.zigbeeDeviceId === device.id && sensor.id !== this.sensor?.id
+      ) ?? false
+    )
+  }
+
   get zigbeeSignals(): ZigbeeSignal[] {
-    return this.selectedZigbeeDevice?.metadata?.signals ?? []
+    return (this.selectedZigbeeDevice?.metadata?.signals ?? []).filter(
+      signal =>
+        (signal.clusterId === IAS_ZONE_TYPE && signal.field === "alarm") ||
+        (signal.clusterId === OCCUPANCY_SENSOR_TYPE && signal.attribute === "occupancy")
+    )
   }
 
   zigbeeSignalLabel(signal: ZigbeeSignal): string {
-    if (signal.field === "alarm") {
-      return $localize`:@@ias signal alarm:IAS Zone / Alarm`
-    }
-    if (signal.field === "tamper") {
-      return $localize`:@@ias signal tamper:IAS Zone / Tamper`
-    }
-    return signal.cluster && signal.attribute
-      ? `${signal.cluster} / ${signal.attribute}`
-      : `${signal.clusterId} / ${signal.attributeId}`
+    return getZigbeeSignalLabel(signal)
   }
 
   private findZigbeeSignal(sensor: Sensor): ZigbeeSignal | null {

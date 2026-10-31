@@ -51,14 +51,22 @@
                           <div matListItemTitle>
                             {{ attribute.label }}
                           </div>
-                          @if (attribute.value) {
-                            <div matListItemLine>
-                              {{ attribute.value }}
-                            </div>
-                          }
                           @for (value of attribute.values; track value) {
                             <div matListItemLine>
                               {{ value }}
+                            </div>
+                          }
+                          @for (linkedSensor of attribute.linkedSensors; track linkedSensor.id) {
+                            <div matListItemLine class="linked-sensor">
+                              <span>{{ linkedSensor.name }}</span>
+                              <a
+                                mat-icon-button
+                                [routerLink]="['/sensors', linkedSensor.id]"
+                                i18n-aria-label="@@zigbee view linked sensor"
+                                aria-label="View linked sensor"
+                              >
+                                <mat-icon class="material-symbols-outlined">visibility</mat-icon>
+                              </a>
                             </div>
                           }
                         </mat-list-item>

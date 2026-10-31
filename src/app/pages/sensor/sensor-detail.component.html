@@ -58,7 +58,7 @@
                 (selectionChange)="onZigbeeDeviceChanged()"
               >
                 @for (device of zigbeeDevices; track device) {
-                  <mat-option [value]="device.id">
+                  <mat-option [value]="device.id" [disabled]="isZigbeeDeviceDisabled(device)">
                     {{ device.name || device.ieeeAddress }}
                   </mat-option>
                 }

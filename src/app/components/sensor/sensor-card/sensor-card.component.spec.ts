@@ -32,7 +32,15 @@ describe("SensorCardComponent", () => {
     component = fixture.componentInstance
     component.sensor = sensor
     component.iconName = "sensors"
-    component.attributeGroups = [[{ icon: "label", content: "CH01" }]]
+    component.attributeGroups = [
+      [
+        {
+          icon: "label",
+          label: "Zigbee device",
+          contents: ["Front door", "IAS Zone / Alarm"]
+        }
+      ]
+    ]
     component.canEdit = true
     component.monitoringState = MONITORING_STATE.READY
   })
@@ -43,7 +51,8 @@ describe("SensorCardComponent", () => {
 
     expect(text).toContain("Front door")
     expect(text).toContain("Main entrance")
-    expect(text).toContain("CH01")
+    expect(text).toContain("Zigbee device")
+    expect(text).toContain("IAS Zone / Alarm")
   })
 
   it("emits reset and delete requests for the sensor", () => {
