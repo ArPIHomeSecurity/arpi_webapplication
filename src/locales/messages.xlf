@@ -48,6 +48,9 @@
       <trans-unit id="users menu link" datatype="html">
         <source>Users</source>
       </trans-unit>
+      <trans-unit id="view sensor" datatype="html">
+        <source>View sensor</source>
+      </trans-unit>
       <trans-unit id="webapp version label" datatype="html">
         <source>WebApp</source>
       </trans-unit>
@@ -110,6 +113,9 @@
       </trans-unit>
       <trans-unit id="network username" datatype="html">
         <source>Username</source>
+      </trans-unit>
+      <trans-unit id="next sensor" datatype="html">
+        <source>Next sensor</source>
       </trans-unit>
       <trans-unit id="network password" datatype="html">
         <source>Password</source>
@@ -252,6 +258,54 @@
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
       </trans-unit>
+      <trans-unit id="ias signal alarm" datatype="html">
+        <source>IAS Zone / Alarm</source>
+      </trans-unit>
+      <trans-unit id="ias signal tamper" datatype="html">
+        <source>IAS Zone / Tamper</source>
+      </trans-unit>
+      <trans-unit id="ias type cie" datatype="html">
+        <source>Control and indicating equipment</source>
+      </trans-unit>
+      <trans-unit id="ias type co" datatype="html">
+        <source>Carbon monoxide sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type contact" datatype="html">
+        <source>Contact switch</source>
+      </trans-unit>
+      <trans-unit id="ias type emergency" datatype="html">
+        <source>Personal emergency device</source>
+      </trans-unit>
+      <trans-unit id="ias type fire" datatype="html">
+        <source>Fire sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type glass" datatype="html">
+        <source>Glass break sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type key fob" datatype="html">
+        <source>Key fob</source>
+      </trans-unit>
+      <trans-unit id="ias type keypad" datatype="html">
+        <source>Keypad</source>
+      </trans-unit>
+      <trans-unit id="ias type motion" datatype="html">
+        <source>Motion sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type remote" datatype="html">
+        <source>Remote control</source>
+      </trans-unit>
+      <trans-unit id="ias type repeater" datatype="html">
+        <source>Security repeater</source>
+      </trans-unit>
+      <trans-unit id="ias type vibration" datatype="html">
+        <source>Vibration / movement sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type warning" datatype="html">
+        <source>Warning device</source>
+      </trans-unit>
+      <trans-unit id="ias type water" datatype="html">
+        <source>Water sensor</source>
+      </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
       </trans-unit>
@@ -357,6 +411,9 @@
       <trans-unit id="description" datatype="html">
         <source>Description</source>
       </trans-unit>
+      <trans-unit id="sensor emergency" datatype="html">
+        <source>Emergency</source>
+      </trans-unit>
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
       </trans-unit>
@@ -375,26 +432,14 @@
       <trans-unit id="zone name" datatype="html">
         <source>Zone name</source>
       </trans-unit>
-      <trans-unit id="sensor alert disarmed" datatype="html">
-        <source> Alert when disarmed </source>
-      </trans-unit>
       <trans-unit id="zone disarmed delay" datatype="html">
         <source>Delay alert when not armed</source>
-      </trans-unit>
-      <trans-unit id="sensor alert away" datatype="html">
-        <source> Alert when away armed </source>
       </trans-unit>
       <trans-unit id="zone away alert delay" datatype="html">
         <source>Delay alert when armed away</source>
       </trans-unit>
       <trans-unit id="zone away arm delay" datatype="html">
         <source>Delay arm when arming away</source>
-      </trans-unit>
-      <trans-unit id="sensor alert stay" datatype="html">
-        <source> Alert when stay armed </source>
-      </trans-unit>
-      <trans-unit id="zone stay alert delay" datatype="html">
-        <source>Delay alert when armed stay</source>
       </trans-unit>
       <trans-unit id="zone stay arm delay" datatype="html">
         <source>Delay arm when arming stay</source>
@@ -414,8 +459,17 @@
       <trans-unit id="sensor tamper" datatype="html">
         <source>Tamper</source>
       </trans-unit>
+      <trans-unit id="sensor tamper state" datatype="html">
+        <source>Tamper sensor state</source>
+      </trans-unit>
+      <trans-unit id="sensor occupancy" datatype="html">
+        <source>Occupancy</source>
+      </trans-unit>
       <trans-unit id="sensor open" datatype="html">
         <source>Open</source>
+      </trans-unit>
+      <trans-unit id="sensor position" datatype="html">
+        <source> Sensor <x id="INTERPOLATION" equiv-text="{{ sensorIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ sensors.length }}"/> </source>
       </trans-unit>
       <trans-unit id="sensor binding wired" datatype="html">
         <source>Wired</source>
@@ -537,6 +591,18 @@
       <trans-unit id="zone not found" datatype="html">
         <source>The zone was not found!</source>
       </trans-unit>
+      <trans-unit id="zone preset delayed" datatype="html">
+        <source>Delayed</source>
+      </trans-unit>
+      <trans-unit id="zone preset instant" datatype="html">
+        <source>Instant</source>
+      </trans-unit>
+      <trans-unit id="zone preset label" datatype="html">
+        <source>Zone setup</source>
+      </trans-unit>
+      <trans-unit id="zone preset tamper" datatype="html">
+        <source>Tamper</source>
+      </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
       </trans-unit>
@@ -600,11 +666,14 @@
       <trans-unit id="zigbee nwk" datatype="html">
         <source>Network Address</source>
       </trans-unit>
+      <trans-unit id="zigbee occupancy sensor" datatype="html">
+        <source>Occupancy sensor</source>
+      </trans-unit>
+      <trans-unit id="zigbee occupancy signal" datatype="html">
+        <source>Occupancy Sensing / Occupancy</source>
+      </trans-unit>
       <trans-unit id="zigbee offline" datatype="html">
         <source>Offline</source>
-      </trans-unit>
-      <trans-unit id="zigbee offline status" datatype="html">
-        <source>Device is offline</source>
       </trans-unit>
       <trans-unit id="zigbee online" datatype="html">
         <source>Online</source>
@@ -618,8 +687,8 @@
       <trans-unit id="zigbee pairing timer" datatype="html">
         <source> Pairing mode active (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/>s remaining). Put your Zigbee device into pairing mode. </source>
       </trans-unit>
-      <trans-unit id="zigbee sensor count" datatype="html">
-        <source><x id="PH" equiv-text="device.sensorCount"/> sensor(s)</source>
+      <trans-unit id="zigbee sensor type" datatype="html">
+        <source>Sensor Type</source>
       </trans-unit>
       <trans-unit id="zigbee signal" datatype="html">
         <source>Link Quality</source>
@@ -629,6 +698,12 @@
       </trans-unit>
       <trans-unit id="zigbee unknown" datatype="html">
         <source>Unknown</source>
+      </trans-unit>
+      <trans-unit id="zigbee unsupported" datatype="html">
+        <source>Zigbee is not supported by this server</source>
+      </trans-unit>
+      <trans-unit id="zigbee view linked sensor" datatype="html">
+        <source>View linked sensor</source>
       </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
@@ -650,6 +725,9 @@
       </trans-unit>
       <trans-unit id="zone none" datatype="html">
         <source>No zones found</source>
+      </trans-unit>
+      <trans-unit id="edit sensor" datatype="html">
+        <source>Edit sensor</source>
       </trans-unit>
       <trans-unit id="email1 failed" datatype="html">
         <source>Failed to send to email address 1!</source>
@@ -867,11 +945,26 @@
       <trans-unit id="unregister device action" datatype="html">
         <source>Unregister device</source>
       </trans-unit>
+      <trans-unit id="sensor glass" datatype="html">
+        <source>Glass</source>
+      </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
       </trans-unit>
+      <trans-unit id="sensor vibration" datatype="html">
+        <source>Vibration</source>
+      </trans-unit>
+      <trans-unit id="sensor visibility" datatype="html">
+        <source>Visibility</source>
+      </trans-unit>
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
+      </trans-unit>
+      <trans-unit id="sensor warning" datatype="html">
+        <source>Warning</source>
+      </trans-unit>
+      <trans-unit id="sensor water" datatype="html">
+        <source>Water</source>
       </trans-unit>
       <trans-unit id="output area" datatype="html">
         <source>Area</source>
@@ -918,6 +1011,9 @@
       <trans-unit id="preferences menu link" datatype="html">
         <source>Preferences</source>
       </trans-unit>
+      <trans-unit id="previous sensor" datatype="html">
+        <source>Previous sensor</source>
+      </trans-unit>
       <trans-unit id="sensor area form" datatype="html">
         <source>Area</source>
       </trans-unit>
@@ -936,6 +1032,9 @@
       <trans-unit id="alert monitor threshold" datatype="html">
         <source>Monitoring threshold [%]</source>
       </trans-unit>
+      <trans-unit id="all sensors" datatype="html">
+        <source>All sensors</source>
+      </trans-unit>
       <trans-unit id="events loud" datatype="html">
         <source>loud</source>
       </trans-unit>
@@ -948,6 +1047,12 @@
       <trans-unit id="sensor instant" datatype="html">
         <source>Instant alert</source>
       </trans-unit>
+      <trans-unit id="sensor key fob" datatype="html">
+        <source>Key fob</source>
+      </trans-unit>
+      <trans-unit id="sensor keypad" datatype="html">
+        <source>Keypad</source>
+      </trans-unit>
       <trans-unit id="sensor monitor period" datatype="html">
         <source>Monitoring period [s]</source>
       </trans-unit>
@@ -956,6 +1061,12 @@
       </trans-unit>
       <trans-unit id="sensor name" datatype="html">
         <source>Name</source>
+      </trans-unit>
+      <trans-unit id="sensor remote" datatype="html">
+        <source>Remote</source>
+      </trans-unit>
+      <trans-unit id="sensor repeater" datatype="html">
+        <source>Repeater</source>
       </trans-unit>
       <trans-unit id="sensor sensitivity" datatype="html">
         <source>Sensor sensitivity</source>
@@ -974,6 +1085,9 @@
       </trans-unit>
       <trans-unit id="sensor silent undefined" datatype="html">
         <source>System setting</source>
+      </trans-unit>
+      <trans-unit id="sensor status" datatype="html">
+        <source>Sensor status</source>
       </trans-unit>
       <trans-unit id="sensor syren" datatype="html">
         <source>Syren config</source>
@@ -1317,6 +1431,12 @@
       <trans-unit id="delete zone message" datatype="html">
         <source>Are you sure you want to delete the zone &quot;<x id="PH" equiv-text="zone.name"/>&quot;?</source>
       </trans-unit>
+      <trans-unit id="move sensor to another area" datatype="html">
+        <source>Move sensor to another area</source>
+      </trans-unit>
+      <trans-unit id="move sensor to another zone" datatype="html">
+        <source>Move sensor to another zone</source>
+      </trans-unit>
       <trans-unit id="my-user menu link" datatype="html">
         <source>My user</source>
       </trans-unit>
@@ -1416,6 +1536,9 @@
       <trans-unit id="biometric login description" datatype="html">
         <source> Use biometric login to access the security system. </source>
       </trans-unit>
+      <trans-unit id="biometric login title" datatype="html">
+        <source>Login with biometric</source>
+      </trans-unit>
       <trans-unit id="biometric no" datatype="html">
         <source>No</source>
       </trans-unit>
@@ -1451,6 +1574,12 @@
       </trans-unit>
       <trans-unit id="sensor channel type" datatype="html">
         <source>Channel type</source>
+      </trans-unit>
+      <trans-unit id="sensor co" datatype="html">
+        <source>CO</source>
+      </trans-unit>
+      <trans-unit id="sensor contact" datatype="html">
+        <source>Contact</source>
       </trans-unit>
       <trans-unit id="sensor contact nc" datatype="html">
         <source> Normally Closed (NC) </source>
@@ -1501,7 +1630,7 @@
         <source>Community Support</source>
       </trans-unit>
       <trans-unit id="location support link" datatype="html">
-        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;material-symbols-outlined&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
       </trans-unit>
       <trans-unit id="location support subtitle" datatype="html">
         <source> Join our Slack workspace for help and discussion </source>
@@ -1565,6 +1694,9 @@
       </trans-unit>
       <trans-unit id="sensor error zigbee" datatype="html">
         <source>Error on Zigbee device</source>
+      </trans-unit>
+      <trans-unit id="sensor fire" datatype="html">
+        <source>Fire</source>
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source>Software installation guide</source>

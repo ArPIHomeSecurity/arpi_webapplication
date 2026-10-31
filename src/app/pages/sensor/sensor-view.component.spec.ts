@@ -42,13 +42,16 @@ describe("SensorViewComponent", () => {
   })
 
   beforeEach(() => {
+    sensor.uiOrder = 1
     sensorService = jasmine.createSpyObj<SensorService>("SensorService", [
       "getSensor",
+      "getSensors",
       "getSensorTypes",
       "resetReference",
       "deleteSensor"
     ])
     sensorService.getSensor.and.returnValue(of(sensor))
+    sensorService.getSensors.and.returnValue(of([sensor]))
     sensorService.getSensorTypes.and.returnValue(of([{ id: 1, name: "Motion" } as SensorType]))
 
     const zigbeeService = jasmine.createSpyObj<ZigbeeService>("ZigbeeService", ["getDevices"])
@@ -97,7 +100,11 @@ describe("SensorViewComponent", () => {
     component.loadSensor()
 
     expect(sensorService.getSensor).toHaveBeenCalledOnceWith(sensor.id)
+    expect(sensorService.getSensors).toHaveBeenCalledOnceWith()
     expect(component.sensor).toBe(sensor)
+    expect(component.sensorIndex).toBe(0)
+    expect(component.previousSensorId).toBeNull()
+    expect(component.nextSensorId).toBeNull()
     expect(component.iconName).toBe("directions_run")
     expect(component.attributeGroups.flat().map(attribute => attribute.content)).toContain("Entry")
     expect(component.attributeGroups.flat().map(attribute => attribute.content)).toContain(
@@ -105,6 +112,48 @@ describe("SensorViewComponent", () => {
     )
     expect(component.notFound).toBeFalse()
     expect(component.loadError).toBeFalse()
+  })
+
+  it("sorts the collection by display order and navigates to adjacent sensors", () => {
+    const firstSensor = Object.assign(new Sensor(), { id: 12, uiOrder: 0 })
+    const lastSensor = Object.assign(new Sensor(), { id: 19, uiOrder: 2 })
+    sensor.uiOrder = 1
+    sensorService.getSensors.and.returnValue(of([lastSensor, sensor, firstSensor]))
+
+    component.loadSensor()
+
+    expect(component.sensors.map(item => item.id)).toEqual([
+      firstSensor.id,
+      sensor.id,
+      lastSensor.id
+    ])
+    expect(component.sensorIndex).toBe(1)
+    expect(component.previousSensorId).toBe(firstSensor.id)
+    expect(component.nextSensorId).toBe(lastSensor.id)
+
+    component.navigateToSensor(component.previousSensorId)
+    expect(router.navigate).toHaveBeenCalledOnceWith(["/sensors", firstSensor.id])
+  })
+
+  it("disables navigation at collection boundaries and ignores invalid destinations", () => {
+    const otherSensor = Object.assign(new Sensor(), { id: 19, uiOrder: 1 })
+    sensor.uiOrder = 0
+    sensorService.getSensors.and.returnValue(of([otherSensor, sensor]))
+
+    component.loadSensor()
+
+    expect(component.previousSensorId).toBeNull()
+    expect(component.nextSensorId).toBe(otherSensor.id)
+    component.navigateToSensor(null)
+    component.navigateToSensor(999)
+    expect(router.navigate).not.toHaveBeenCalled()
+
+    sensor.uiOrder = 2
+    sensorService.getSensors.and.returnValue(of([sensor, otherSensor]))
+    component.loadSensor()
+
+    expect(component.previousSensorId).toBe(otherSensor.id)
+    expect(component.nextSensorId).toBeNull()
   })
 
   it("exposes card actions only to admins and resets the selected sensor references", () => {

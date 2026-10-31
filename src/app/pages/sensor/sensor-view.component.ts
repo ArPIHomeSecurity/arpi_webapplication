@@ -34,6 +34,8 @@ const scheduleMicrotask = Promise.resolve(null)
 })
 export class SensorViewComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
   sensor: Sensor = undefined
+  sensors: Sensor[] = []
+  sensorIndex = -1
   iconName: string
   attributeGroups: SensorAttribute[][] = []
   notFound = false
@@ -82,9 +84,26 @@ export class SensorViewComponent extends ConfigurationBaseComponent implements O
     return this.authService.getRole() === "admin"
   }
 
+  get previousSensorId(): number | null {
+    return this.sensorIndex > 0 ? this.sensors[this.sensorIndex - 1].id : null
+  }
+
+  get nextSensorId(): number | null {
+    return this.sensorIndex >= 0 && this.sensorIndex < this.sensors.length - 1
+      ? this.sensors[this.sensorIndex + 1].id
+      : null
+  }
+
+  navigateToSensor(sensorId: number | null) {
+    if (sensorId === null || !this.sensors.some(candidate => candidate.id === sensorId)) return
+    this.router.navigate(["/sensors", sensorId])
+  }
+
   loadSensor(sensorId = Number(this.route.snapshot.paramMap.get("id"))) {
     if (!Number.isSafeInteger(sensorId) || sensorId <= 0) {
       this.sensor = null
+      this.sensors = []
+      this.sensorIndex = -1
       this.notFound = true
       this.loader.display(false)
       return
@@ -94,6 +113,7 @@ export class SensorViewComponent extends ConfigurationBaseComponent implements O
     this.loadError = false
     forkJoin({
       sensor: this.sensorService.getSensor(sensorId),
+      sensors: this.sensorService.getSensors().pipe(catchError(() => of([] as Sensor[]))),
       sensorTypes: this.sensorService.getSensorTypes(),
       zigbeeDevices: this.zigbeeService.getDevices().pipe(catchError(() => of([]))),
       zones: this.zoneService.getZones(),
@@ -104,6 +124,8 @@ export class SensorViewComponent extends ConfigurationBaseComponent implements O
       .subscribe({
         next: results => {
           this.sensor = results.sensor
+          this.sensors = results.sensors.sort((left, right) => left.uiOrder - right.uiOrder)
+          this.sensorIndex = this.sensors.findIndex(candidate => candidate.id === sensorId)
           const sensorTypes = results.sensorTypes.sort((left, right) => left.id - right.id)
           const sensorTypeName =
             sensorTypes.find(type => type.id === this.sensor.typeId)?.name ?? ""
