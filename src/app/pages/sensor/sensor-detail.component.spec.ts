@@ -8,6 +8,7 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
+  ZigbeeAvailability,
   ZigbeeDevice,
   ZigbeeSignal
 } from "@app/models"
@@ -21,15 +22,13 @@ describe("SensorDetailComponent IAS bindings", () => {
     clusterId: 0x0500,
     attribute: "zone_status",
     attributeId: 2,
-    valueType: "ZoneStatus",
-    sources: ["command:status_change_notification"],
     field: "alarm"
   }
   const tamperSignal: ZigbeeSignal = { ...alarmSignal, field: "tamper" }
   const device: ZigbeeDevice = {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
-    availability: "online",
+    availability: ZigbeeAvailability.ONLINE,
     metadata: {
       signals: [alarmSignal, tamperSignal]
     }
@@ -69,12 +68,10 @@ describe("SensorDetailComponent IAS bindings", () => {
   it("offers only IAS alarm and occupancy signals", () => {
     const occupancySignal: ZigbeeSignal = {
       endpoint: "2",
-      cluster: "occupancy_sensing",
+      cluster: "occupancy",
       clusterId: 0x0406,
       attribute: "occupancy",
-      attributeId: 0,
-      valueType: "Occupancy",
-      sources: ["attribute"]
+      attributeId: 0
     }
     const otherSignal: ZigbeeSignal = { ...occupancySignal, attribute: "other" }
     component.zigbeeDevices = [
@@ -176,12 +173,10 @@ describe("SensorDetailComponent IAS bindings", () => {
   it("labels ordinary structured signals from their cluster and attribute", () => {
     const ordinarySignal: ZigbeeSignal = {
       endpoint: "2",
-      cluster: "occupancy_sensing",
+      cluster: "occupancy",
       clusterId: 0x0406,
       attribute: "occupancy",
-      attributeId: 0,
-      valueType: "Occupancy",
-      sources: ["attribute"]
+      attributeId: 0
     }
     component.zigbeeDevices = [{ ...device, metadata: { signals: [ordinarySignal] } }]
     expect(component.zigbeeSignalLabel(ordinarySignal)).toBe("Occupancy Sensing / Occupancy")
@@ -191,12 +186,10 @@ describe("SensorDetailComponent IAS bindings", () => {
     const occupancyType = { id: 7, name: "Occupancy" } as SensorType
     const occupancySignal: ZigbeeSignal = {
       endpoint: "2",
-      cluster: "occupancy_sensing",
+      cluster: "occupancy",
       clusterId: 0x0406,
       attribute: "occupancy",
-      attributeId: 0,
-      valueType: "Occupancy",
-      sources: ["attribute"]
+      attributeId: 0
     }
     component.sensorTypes = [occupancyType]
     component.sensorForm.controls.zigbeeSignal.setValue(occupancySignal)

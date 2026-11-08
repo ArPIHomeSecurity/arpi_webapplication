@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { Sensor, ZigbeeDevice } from "@app/models"
+import { Sensor, ZigbeeAvailability, ZigbeeDevice } from "@app/models"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { ZigbeeListComponent } from "./zigbee-list.component"
 
@@ -14,7 +14,7 @@ describe("ZigbeeListComponent linked sensors", () => {
   const device: ZigbeeDevice = {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
-    availability: "online",
+    availability: ZigbeeAvailability.ONLINE,
     sensorCount: 1
   }
 

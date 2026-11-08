@@ -5,7 +5,12 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { ActivatedRoute, Router } from "@angular/router"
 import { of, throwError } from "rxjs"
 
-import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
+import {
+  MONITORING_STATE,
+  ZigbeeAvailability,
+  ZigbeeDevice,
+  zigbeeZoneTypeLabel
+} from "@app/models"
 import { ZigbeeDeviceDetailComponent } from "./zigbee-device-detail.component"
 
 describe("ZigbeeDeviceDetailComponent", () => {
@@ -21,7 +26,7 @@ describe("ZigbeeDeviceDetailComponent", () => {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
     name: "Hallway",
-    availability: "online"
+    availability: ZigbeeAvailability.ONLINE
   }
 
   beforeEach(async () => {

@@ -7,7 +7,13 @@ import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, Sensor, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
+import {
+  MONITORING_STATE,
+  Sensor,
+  ZigbeeAvailability,
+  ZigbeeDevice,
+  zigbeeZoneTypeLabel
+} from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -63,16 +69,26 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     super.initialize()
     this.editableStates.push(MONITORING_STATE.INVALID_CONFIG)
 
-    this.eventService.listen("zigbee_pairing_state_change").subscribe({
-      next: pairing_state => {
-        this.isPairing = pairing_state.state
-        this.pairingTimeLeft = parseInt(pairing_state.remain_seconds, 10)
-        this.progress = parseFloat(pairing_state.progress)
-        if (!this.isPairing) {
+    this.baseSubscriptions.push(
+      this.eventService.listen("zigbee_pairing_state_change").subscribe({
+        next: pairing_state => {
+          this.isPairing = pairing_state.state
+          this.pairingTimeLeft = parseInt(pairing_state.remain_seconds, 10)
+          this.progress = parseFloat(pairing_state.progress)
+          if (!this.isPairing) {
+            this.updateComponent()
+          }
+        }
+      })
+    )
+
+    this.baseSubscriptions.push(
+      this.eventService.listen("zigbee_state_change").subscribe({
+        next: () => {
           this.updateComponent()
         }
-      }
-    })
+      })
+    )
 
     scheduleMicrotask.then(() => {
       this.loader.display(true)
@@ -144,7 +160,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     attributes.push({
       icon: "battery_std",
       label: $localize`:@@zigbee battery:Battery`,
-      values: [device.batteryLevel != null ? `${device.batteryLevel * 100}%` : "-"]
+      values: [device.batteryLevel != null ? `${device.batteryLevel}%` : "-"]
     })
 
     // Signal Quality (LQI)
@@ -183,8 +199,8 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     })
 
     // Availability / Status
-    const isOnline = device.availability === "online"
-    const isOffline = device.availability === "offline"
+    const isOnline = device.availability === ZigbeeAvailability.ONLINE
+    const isOffline = device.availability === ZigbeeAvailability.OFFLINE
     attributes.push({
       icon: isOnline ? "wifi" : isOffline ? "wifi_off" : "help_outline",
       label: $localize`:@@zigbee status:Status`,

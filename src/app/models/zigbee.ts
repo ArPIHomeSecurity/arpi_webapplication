@@ -4,13 +4,15 @@ export interface ZigbeeSignal {
   clusterId: number
   attribute: string
   attributeId: number
-  valueType: string
-  sources: ZigbeeSignalSource[]
-  field?: "alarm" | "tamper"
+  field?: "alarm" | "tamper" | "trouble"
   zoneType?: number | null
 }
 
-export type ZigbeeSignalSource = "attribute" | `command:${string}`
+export enum ZigbeeAvailability {
+  ONLINE = "online",
+  OFFLINE = "offline",
+  UNKNOWN = "unknown"
+}
 
 export function getZigbeeSignalLabel(signal: ZigbeeSignal): string {
   if (signal.field === "alarm") {
@@ -19,7 +21,7 @@ export function getZigbeeSignalLabel(signal: ZigbeeSignal): string {
   if (signal.field === "tamper") {
     return $localize`:@@ias signal tamper:IAS Zone / Tamper`
   }
-  if (signal.cluster === "occupancy_sensing" && signal.attribute === "occupancy") {
+  if (signal.cluster === "occupancy" && signal.attribute === "occupancy") {
     return $localize`:@@zigbee occupancy signal:Occupancy Sensing / Occupancy`
   }
   return signal.cluster && signal.attribute
@@ -34,7 +36,7 @@ export interface ZigbeeDevice {
   manufacturer?: string
   model?: string
   name?: string
-  availability: "online" | "offline" | "unknown" | string
+  availability: ZigbeeAvailability
   lastSeen?: string
   batteryLevel?: number
   signalQuality?: number
