@@ -196,46 +196,56 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadStates() {
     // ALERT STATE
-    this.alertService.getAlert().subscribe(alert => {
-      this.alert = alert
-    })
+    this.subscriptions.push(
+      this.alertService.getAlert().subscribe(alert => {
+        this.alert = alert
+      })
+    )
 
     // ARM STATE
-    this.monitoringService.getArmState().subscribe({
-      next: armState => {
-        this.armState = armState
-        this.onStateChanged()
-      },
-      error: _ => {
-        this.armState = ARM_TYPE.UNDEFINED
-        this.onStateChanged()
-      }
-    })
+    this.subscriptions.push(
+      this.monitoringService.getArmState().subscribe({
+        next: armState => {
+          this.armState = armState
+          this.onStateChanged()
+        },
+        error: _ => {
+          this.armState = ARM_TYPE.UNDEFINED
+          this.onStateChanged()
+        }
+      })
+    )
 
     // SENSORS ALERT STATE
-    this.sensorService.getAlert().subscribe(alert => {
-      this.sensorAlert = alert
-    })
+    this.subscriptions.push(
+      this.sensorService.getAlert().subscribe(alert => {
+        this.sensorAlert = alert
+      })
+    )
 
     // MONITORING STATE
-    this.monitoringService.getMonitoringState().subscribe({
-      next: monitoringState => {
-        this.monitoringState = monitoringState
-        this.onStateChanged()
-      },
-      error: _ => {
-        this.monitoringState = MONITORING_STATE.UNDEFINED
-        this.onStateChanged()
-      }
-    })
+    this.subscriptions.push(
+      this.monitoringService.getMonitoringState().subscribe({
+        next: monitoringState => {
+          this.monitoringState = monitoringState
+          this.onStateChanged()
+        },
+        error: _ => {
+          this.monitoringState = MONITORING_STATE.UNDEFINED
+          this.onStateChanged()
+        }
+      })
+    )
   }
 
   private refreshSensors() {
-    this.sensorService.getSensors().subscribe(sensors => {
-      this.sensors = sensors.sort((a, b) =>
-        a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
-      )
-    })
+    this.subscriptions.push(
+      this.sensorService.getSensors().subscribe(sensors => {
+        this.sensors = sensors.sort((a, b) =>
+          a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
+        )
+      })
+    )
   }
 
   ngOnDestroy() {
