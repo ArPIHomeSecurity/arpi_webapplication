@@ -21,12 +21,16 @@ import { environment } from "@environments/environment"
 import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "./consts"
 
 const scheduleMicrotask = Promise.resolve(null)
+const dayInMilliseconds = 24 * 60 * 60 * 1000
+
+type AttributeSeverity = "warn" | "alert"
 
 interface ZigbeeAttribute {
   icon: string
   label: string
   values?: string[]
   linkedSensors?: Sensor[]
+  severity?: AttributeSeverity
 }
 
 @Component({
@@ -181,21 +185,24 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     attributes.push({
       icon: "battery_std",
       label: $localize`:@@zigbee battery:Battery`,
-      values: [device.batteryLevel != null ? `${device.batteryLevel}%` : "-"]
+      values: [device.batteryLevel != null ? `${device.batteryLevel}%` : "-"],
+      severity: this.getBatterySeverity(device.batteryLevel)
     })
 
     // Signal Quality (LQI)
     attributes.push({
       icon: "network_check",
       label: $localize`:@@zigbee signal:Link Quality`,
-      values: [device.signalQuality != null ? `${device.signalQuality} LQI` : "-"]
+      values: [device.signalQuality != null ? `${device.signalQuality} LQI` : "-"],
+      severity: this.getSignalSeverity(device.signalQuality)
     })
 
     // Last Seen
     attributes.push({
       icon: "schedule",
       label: $localize`:@@zigbee last seen:Last Seen`,
-      values: [this.formatDate(device.lastSeen)]
+      values: [this.formatDate(device.lastSeen)],
+      severity: this.getLastSeenSeverity(device.lastSeen)
     })
 
     return attributes
@@ -219,7 +226,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     return groupsById
   }
 
-  formatDate(dateString: string): string {
+  formatDate(dateString?: string): string {
     if (!dateString) return "-"
     try {
       const date = new Date(dateString)
@@ -227,6 +234,31 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     } catch {
       return dateString
     }
+  }
+
+  private getBatterySeverity(batteryLevel?: number): AttributeSeverity | undefined {
+    if (batteryLevel == null) return undefined
+    if (batteryLevel < 20) return "alert"
+    if (batteryLevel < 50) return "warn"
+    return undefined
+  }
+
+  private getSignalSeverity(signalQuality?: number): AttributeSeverity | undefined {
+    if (signalQuality == null) return undefined
+    if (signalQuality < 50) return "alert"
+    if (signalQuality < 100) return "warn"
+    return undefined
+  }
+
+  private getLastSeenSeverity(dateString?: string): AttributeSeverity | undefined {
+    if (!dateString) return undefined
+    const lastSeen = new Date(dateString).getTime()
+    if (isNaN(lastSeen)) return undefined
+
+    const daysSinceSeen = (Date.now() - lastSeen) / dayInMilliseconds
+    if (daysSinceSeen > 7) return "alert"
+    if (daysSinceSeen > 1) return "warn"
+    return undefined
   }
 
   userCanEdit(): boolean {

@@ -91,6 +91,18 @@
       color: mat.m2-get-color-from-palette($argus-alert);
       margin-right: 12px;
     }
+
+    .warn-item {
+      --mat-list-list-item-label-text-color: #{mat.m2-get-color-from-palette($argus-warn)};
+      --mat-list-list-item-supporting-text-color: #{mat.m2-get-color-from-palette($argus-warn)};
+      --mat-list-list-item-leading-icon-color: #{mat.m2-get-color-from-palette($argus-warn)};
+    }
+
+    .alert-item {
+      --mat-list-list-item-label-text-color: #{mat.m2-get-color-from-palette($argus-alert)};
+      --mat-list-list-item-supporting-text-color: #{mat.m2-get-color-from-palette($argus-alert)};
+      --mat-list-list-item-leading-icon-color: #{mat.m2-get-color-from-palette($argus-alert)};
+    }
   }
 
   .empty {

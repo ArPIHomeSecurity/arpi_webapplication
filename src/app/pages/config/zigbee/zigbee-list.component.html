@@ -41,7 +41,12 @@
                   ) {
                     <mat-list class="attribute-list">
                       @for (attribute of attributeGroup; track attribute.label) {
-                        <mat-list-item>
+                        <mat-list-item
+                          [class]="{
+                            'warn-item': attribute.severity === 'warn',
+                            'alert-item': attribute.severity === 'alert'
+                          }"
+                        >
                           <mat-icon class="material-symbols-outlined" matListItemIcon>
                             {{ attribute.icon }}
                           </mat-icon>
