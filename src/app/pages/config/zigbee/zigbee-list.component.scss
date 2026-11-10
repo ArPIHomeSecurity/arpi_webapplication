@@ -36,12 +36,6 @@
       background-color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 50);
       color: mat.m2-get-color-from-palette(mat.$m2-indigo-palette, 500);
 
-      &.offline {
-        opacity: 0.5;
-        background-color: #e0e0e0;
-        color: #757575;
-      }
-
       .device-icon {
         font-size: 28px;
         width: 28px;
@@ -90,14 +84,6 @@
           }
         }
       }
-    }
-
-    .zigbee-status-online {
-      color: mat.m2-get-color-from-palette($argus-ok);
-    }
-
-    .zigbee-status-offline {
-      color: mat.m2-get-color-from-palette($argus-alert);
     }
 
     .connected-warning {

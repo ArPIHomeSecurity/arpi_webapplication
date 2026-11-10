@@ -7,13 +7,7 @@ import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import {
-  MONITORING_STATE,
-  Sensor,
-  ZigbeeAvailability,
-  ZigbeeDevice,
-  zigbeeZoneTypeLabel
-} from "@app/models"
+import { MONITORING_STATE, Sensor, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -33,7 +27,6 @@ interface ZigbeeAttribute {
   label: string
   values?: string[]
   linkedSensors?: Sensor[]
-  iconClass?: string
 }
 
 @Component({
@@ -156,28 +149,6 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
       values: [[device.manufacturer, device.model].filter(Boolean).join(" ") || "-"]
     })
 
-    // Battery
-    attributes.push({
-      icon: "battery_std",
-      label: $localize`:@@zigbee battery:Battery`,
-      values: [device.batteryLevel != null ? `${device.batteryLevel}%` : "-"]
-    })
-
-    // Signal Quality (LQI)
-    attributes.push({
-      icon: "network_check",
-      label: $localize`:@@zigbee signal:Link Quality`,
-      values: [device.signalQuality != null ? `${device.signalQuality} LQI` : "-"]
-    })
-
-    // Connected Sensors
-    attributes.push({
-      icon: "sensors",
-      label: $localize`:@@zigbee connected sensors:Sensors`,
-      values: linkedSensors.length === 0 ? [$localize`:@@zigbee no sensors:None`] : [],
-      linkedSensors
-    })
-
     const sensorTypes = new Map<string, string>()
     for (const signal of device.metadata?.signals ?? []) {
       let sensorType: string
@@ -198,20 +169,26 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
       values: [...sensorTypes.values()]
     })
 
-    // Availability / Status
-    const isOnline = device.availability === ZigbeeAvailability.ONLINE
-    const isOffline = device.availability === ZigbeeAvailability.OFFLINE
+    // Connected Sensor
     attributes.push({
-      icon: isOnline ? "wifi" : isOffline ? "wifi_off" : "help_outline",
-      label: $localize`:@@zigbee status:Status`,
-      values: [
-        isOnline
-          ? $localize`:@@zigbee online:Online`
-          : isOffline
-            ? $localize`:@@zigbee offline:Offline`
-            : $localize`:@@zigbee unknown:Unknown`
-      ],
-      iconClass: isOnline ? "zigbee-status-online" : isOffline ? "zigbee-status-offline" : ""
+      icon: "sensors",
+      label: $localize`:@@zigbee connected sensors:Sensor`,
+      values: linkedSensors.length === 0 ? [$localize`:@@zigbee no sensors:None`] : [],
+      linkedSensors
+    })
+
+    // Battery
+    attributes.push({
+      icon: "battery_std",
+      label: $localize`:@@zigbee battery:Battery`,
+      values: [device.batteryLevel != null ? `${device.batteryLevel}%` : "-"]
+    })
+
+    // Signal Quality (LQI)
+    attributes.push({
+      icon: "network_check",
+      label: $localize`:@@zigbee signal:Link Quality`,
+      values: [device.signalQuality != null ? `${device.signalQuality} LQI` : "-"]
     })
 
     // Last Seen

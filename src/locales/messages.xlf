@@ -672,12 +672,6 @@
       <trans-unit id="zigbee occupancy signal" datatype="html">
         <source>Occupancy Sensing / Occupancy</source>
       </trans-unit>
-      <trans-unit id="zigbee offline" datatype="html">
-        <source>Offline</source>
-      </trans-unit>
-      <trans-unit id="zigbee online" datatype="html">
-        <source>Online</source>
-      </trans-unit>
       <trans-unit id="zigbee pairing failed" datatype="html">
         <source>Failed to start Zigbee pairing!</source>
       </trans-unit>
@@ -692,12 +686,6 @@
       </trans-unit>
       <trans-unit id="zigbee signal" datatype="html">
         <source>Link Quality</source>
-      </trans-unit>
-      <trans-unit id="zigbee status" datatype="html">
-        <source>Status</source>
-      </trans-unit>
-      <trans-unit id="zigbee unknown" datatype="html">
-        <source>Unknown</source>
       </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
         <source>Zigbee is not supported by this server</source>

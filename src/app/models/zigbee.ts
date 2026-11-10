@@ -8,12 +8,6 @@ export interface ZigbeeSignal {
   zoneType?: number | null
 }
 
-export enum ZigbeeAvailability {
-  ONLINE = "online",
-  OFFLINE = "offline",
-  UNKNOWN = "unknown"
-}
-
 export function getZigbeeSignalLabel(signal: ZigbeeSignal): string {
   if (signal.field === "alarm") {
     return $localize`:@@ias signal alarm:IAS Zone / Alarm`
@@ -36,7 +30,6 @@ export interface ZigbeeDevice {
   manufacturer?: string
   model?: string
   name?: string
-  availability: ZigbeeAvailability
   lastSeen?: string
   batteryLevel?: number
   signalQuality?: number

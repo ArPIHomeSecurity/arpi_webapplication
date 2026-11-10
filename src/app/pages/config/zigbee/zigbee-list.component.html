@@ -25,11 +25,8 @@
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title>{{ device.name || device.ieeeAddress }}</mat-card-title>
-                <mat-card-subtitle>
-                  {{ [device.manufacturer, device.model].join(" ") || device.ieeeAddress }}
-                </mat-card-subtitle>
               </mat-card-title-group>
-              <div class="device-image" [ngClass]="{ offline: device.availability === 'offline' }">
+              <div class="device-image">
                 <mat-icon class="material-symbols-outlined device-icon">router</mat-icon>
               </div>
             </mat-card-header>
@@ -45,7 +42,7 @@
                     <mat-list class="attribute-list">
                       @for (attribute of attributeGroup; track attribute.label) {
                         <mat-list-item>
-                          <mat-icon class="material-symbols-outlined" matListItemIcon [ngClass]="attribute.iconClass">
+                          <mat-icon class="material-symbols-outlined" matListItemIcon>
                             {{ attribute.icon }}
                           </mat-icon>
                           <div matListItemTitle>
@@ -61,6 +58,7 @@
                               <span>{{ linkedSensor.name }}</span>
                               <a
                                 mat-icon-button
+                                color="primary"
                                 [routerLink]="['/sensors', linkedSensor.id]"
                                 i18n-aria-label="@@zigbee view linked sensor"
                                 aria-label="View linked sensor"

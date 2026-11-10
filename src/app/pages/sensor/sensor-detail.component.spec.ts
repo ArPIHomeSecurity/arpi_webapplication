@@ -8,7 +8,6 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
-  ZigbeeAvailability,
   ZigbeeDevice,
   ZigbeeSignal
 } from "@app/models"
@@ -28,7 +27,6 @@ describe("SensorDetailComponent IAS bindings", () => {
   const device: ZigbeeDevice = {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
-    availability: ZigbeeAvailability.ONLINE,
     metadata: {
       signals: [alarmSignal, tamperSignal]
     }

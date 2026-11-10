@@ -448,14 +448,6 @@
         <source>Occupancy Sensing / Occupancy</source>
         <target state="new">Occupancy Sensing / Occupancy</target>
       </trans-unit>
-      <trans-unit id="zigbee offline" datatype="html">
-        <source>Offline</source>
-        <target state="new">Offline</target>
-      </trans-unit>
-      <trans-unit id="zigbee online" datatype="html">
-        <source>Online</source>
-        <target state="new">Online</target>
-      </trans-unit>
       <trans-unit id="zigbee pairing failed" datatype="html">
         <source>Failed to start Zigbee pairing!</source>
         <target state="new">Nem sikerült elindítani a Zigbee párosítást!</target>
@@ -475,14 +467,6 @@
       <trans-unit id="zigbee signal" datatype="html">
         <source>Link Quality</source>
         <target state="new">Kapcsolat minősége</target>
-      </trans-unit>
-      <trans-unit id="zigbee status" datatype="html">
-        <source>Status</source>
-        <target state="new">Állapot</target>
-      </trans-unit>
-      <trans-unit id="zigbee unknown" datatype="html">
-        <source>Unknown</source>
-        <target state="new">Ismeretlen</target>
       </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
         <source>Zigbee is not supported by this server</source>
