@@ -22,6 +22,7 @@
         }
       </div>
       <div class="sensor-indicators">
+        @if (sensor.tamper != null) {
         <div class="sensor-indicator-group">
           <mat-icon
             class="material-symbols-outlined sensor-indicator-type"
@@ -36,6 +37,7 @@
             i18n-aria-label="@@sensor tamper state"
           ></div>
         </div>
+        }
         <div class="sensor-indicator-group">
           <mat-icon
             class="material-symbols-outlined sensor-indicator-type"

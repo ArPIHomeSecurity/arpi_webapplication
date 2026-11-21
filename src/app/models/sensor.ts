@@ -34,7 +34,7 @@ export class Sensor {
 
   alert: boolean
   error: boolean
-  tamper: boolean
+  tamper: boolean | null
   enabled: boolean
   silentAlert: boolean
   monitorPeriod: number
