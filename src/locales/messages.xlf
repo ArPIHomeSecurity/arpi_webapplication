@@ -258,54 +258,6 @@
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
       </trans-unit>
-      <trans-unit id="ias signal alarm" datatype="html">
-        <source>IAS Zone / Alarm</source>
-      </trans-unit>
-      <trans-unit id="ias signal tamper" datatype="html">
-        <source>IAS Zone / Tamper</source>
-      </trans-unit>
-      <trans-unit id="ias type cie" datatype="html">
-        <source>Control and indicating equipment</source>
-      </trans-unit>
-      <trans-unit id="ias type co" datatype="html">
-        <source>Carbon monoxide sensor</source>
-      </trans-unit>
-      <trans-unit id="ias type contact" datatype="html">
-        <source>Contact switch</source>
-      </trans-unit>
-      <trans-unit id="ias type emergency" datatype="html">
-        <source>Personal emergency device</source>
-      </trans-unit>
-      <trans-unit id="ias type fire" datatype="html">
-        <source>Fire sensor</source>
-      </trans-unit>
-      <trans-unit id="ias type glass" datatype="html">
-        <source>Glass break sensor</source>
-      </trans-unit>
-      <trans-unit id="ias type key fob" datatype="html">
-        <source>Key fob</source>
-      </trans-unit>
-      <trans-unit id="ias type keypad" datatype="html">
-        <source>Keypad</source>
-      </trans-unit>
-      <trans-unit id="ias type motion" datatype="html">
-        <source>Motion sensor</source>
-      </trans-unit>
-      <trans-unit id="ias type remote" datatype="html">
-        <source>Remote control</source>
-      </trans-unit>
-      <trans-unit id="ias type repeater" datatype="html">
-        <source>Security repeater</source>
-      </trans-unit>
-      <trans-unit id="ias type vibration" datatype="html">
-        <source>Vibration / movement sensor</source>
-      </trans-unit>
-      <trans-unit id="ias type warning" datatype="html">
-        <source>Warning device</source>
-      </trans-unit>
-      <trans-unit id="ias type water" datatype="html">
-        <source>Water sensor</source>
-      </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
       </trans-unit>
@@ -417,8 +369,8 @@
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
       </trans-unit>
-      <trans-unit id="sensor zigbee signal" datatype="html">
-        <source>Signal</source>
+      <trans-unit id="sensor zigbee entity" datatype="html">
+        <source>Entity</source>
       </trans-unit>
       <trans-unit id="sensor zigbee device" datatype="html">
         <source>Zigbee device</source>
@@ -615,14 +567,41 @@
       <trans-unit id="zone arm delay" datatype="html">
         <source>Arm delay</source>
       </trans-unit>
+      <trans-unit id="zigbee attribute occupancy" datatype="html">
+        <source>Occupancy</source>
+      </trans-unit>
+      <trans-unit id="zigbee attribute on off" datatype="html">
+        <source>On/Off</source>
+      </trans-unit>
+      <trans-unit id="zigbee attribute present value" datatype="html">
+        <source>Present value</source>
+      </trans-unit>
+      <trans-unit id="zigbee attribute zone status" datatype="html">
+        <source>Zone status</source>
+      </trans-unit>
       <trans-unit id="zigbee battery" datatype="html">
         <source>Battery</source>
       </trans-unit>
       <trans-unit id="zigbee cant delete connected" datatype="html">
         <source>Cannot delete device connected to <x id="PH" equiv-text="device.sensorCount"/> sensor(s)!</source>
       </trans-unit>
+      <trans-unit id="zigbee cluster binary input" datatype="html">
+        <source>Binary Input</source>
+      </trans-unit>
+      <trans-unit id="zigbee cluster ias zone" datatype="html">
+        <source>IAS Zone</source>
+      </trans-unit>
+      <trans-unit id="zigbee cluster occupancy sensing" datatype="html">
+        <source>Occupancy Sensing</source>
+      </trans-unit>
+      <trans-unit id="zigbee cluster on off" datatype="html">
+        <source>On/Off</source>
+      </trans-unit>
+      <trans-unit id="zigbee cluster power configuration" datatype="html">
+        <source>Power Configuration</source>
+      </trans-unit>
       <trans-unit id="zigbee connected sensors" datatype="html">
-        <source>Sensors</source>
+        <source>Sensor</source>
       </trans-unit>
       <trans-unit id="zigbee device deleted" datatype="html">
         <source>Zigbee device deleted!</source>
@@ -665,12 +644,6 @@
       </trans-unit>
       <trans-unit id="zigbee nwk" datatype="html">
         <source>Network Address</source>
-      </trans-unit>
-      <trans-unit id="zigbee occupancy sensor" datatype="html">
-        <source>Occupancy sensor</source>
-      </trans-unit>
-      <trans-unit id="zigbee occupancy signal" datatype="html">
-        <source>Occupancy Sensing / Occupancy</source>
       </trans-unit>
       <trans-unit id="zigbee pairing failed" datatype="html">
         <source>Failed to start Zigbee pairing!</source>

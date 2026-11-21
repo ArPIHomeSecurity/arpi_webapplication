@@ -7,7 +7,7 @@ import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, Sensor, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
+import { MONITORING_STATE, Sensor, ZigbeeDevice } from "@app/models"
 import {
   AuthenticationService,
   EventService,
@@ -18,8 +18,6 @@ import {
 } from "@app/services"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
 import { environment } from "@environments/environment"
-import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "./consts"
-
 const scheduleMicrotask = Promise.resolve(null)
 const dayInMilliseconds = 24 * 60 * 60 * 1000
 
@@ -153,24 +151,15 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
       values: [[device.manufacturer, device.model].filter(Boolean).join(" ") || "-"]
     })
 
-    const sensorTypes = new Map<string, string>()
-    for (const signal of device.metadata?.signals ?? []) {
-      let sensorType: string
-      if (signal.clusterId === IAS_ZONE_TYPE) {
-        sensorType = zigbeeZoneTypeLabel(signal.zoneType)
-      } else if (signal.clusterId === OCCUPANCY_SENSOR_TYPE) {
-        sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
-      } else {
-        continue
-      }
-
-      const key = `${signal.endpoint}:${signal.clusterId}`
-      sensorTypes.set(key, `${sensorType}`)
-    }
+    const sensorTypes = new Set(
+      (device.metadata?.entities ?? [])
+        .filter(entity => entity.platform === "binary_sensor")
+        .map(entity => entity.deviceClass || entity.name)
+    )
     attributes.push({
       icon: "sensors",
       label: $localize`:@@zigbee sensor type:Sensor Type`,
-      values: [...sensorTypes.values()]
+      values: [...sensorTypes]
     })
 
     // Connected Sensor

@@ -6,11 +6,9 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
+import { MONITORING_STATE, ZigbeeDevice } from "@app/models"
 import { EventService, LoaderService, MonitoringService, ZigbeeService } from "@app/services"
 import { environment } from "@environments/environment"
-
-import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "./consts"
 
 @Component({
   templateUrl: "zigbee-device-detail.component.html",
@@ -83,24 +81,10 @@ export class ZigbeeDeviceDetailComponent
       return ""
     }
 
-    const sensorTypes = new Map<string, string>()
-    for (const signal of this.device.metadata?.signals ?? []) {
-      let sensorType: string
-      if (signal.clusterId === IAS_ZONE_TYPE) {
-        sensorType = zigbeeZoneTypeLabel(signal.zoneType)
-      } else if (signal.clusterId === OCCUPANCY_SENSOR_TYPE) {
-        sensorType = $localize`:@@zigbee occupancy sensor:Occupancy sensor`
-      } else {
-        continue
-      }
-
-      sensorTypes.set(
-        `${signal.endpoint}:${signal.clusterId}`,
-        `${sensorType} (endpoint ${signal.endpoint})`
-      )
-    }
-
-    return [this.device.manufacturer, ...sensorTypes.values()].filter(Boolean).join(" | ")
+    const entities = (this.device.metadata?.entities ?? [])
+      .filter(entity => entity.platform === "binary_sensor")
+      .map(entity => entity.name)
+    return [this.device.manufacturer, ...entities].filter(Boolean).join(" | ")
   }
 
   onSubmit() {

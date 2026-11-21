@@ -27,10 +27,7 @@ export class Sensor {
   typeId: number
 
   zigbeeDeviceId?: number
-  zigbeeEndpoint?: string
-  zigbeeClusterId?: number
-  zigbeeAttributeId?: number
-  zigbeeField?: string | null
+  zigbeeEntityId?: string
 
   areaId: number
   zoneId: number

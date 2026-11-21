@@ -372,6 +372,22 @@
         <source>Arm delay</source>
         <target state="translated">Élesítési késleltetés</target>
       </trans-unit>
+      <trans-unit id="zigbee attribute occupancy" datatype="html">
+        <source>Occupancy</source>
+        <target state="new">Jelenlét</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute on off" datatype="html">
+        <source>On/Off</source>
+        <target state="new">Be/Ki</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute present value" datatype="html">
+        <source>Present value</source>
+        <target state="new">Jelenlegi érték</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute zone status" datatype="html">
+        <source>Zone status</source>
+        <target state="new">Zóna állapota</target>
+      </trans-unit>
       <trans-unit id="zigbee battery" datatype="html">
         <source>Battery</source>
         <target state="new">Akkumulátor</target>
@@ -380,8 +396,28 @@
         <source>Cannot delete device connected to <x id="PH" equiv-text="device.sensorCount"/> sensor(s)!</source>
         <target state="new">Nem lehet törölni az eszközt, amely a <x id="PH" equiv-text="device.sensorCount"/> érzékelőhöz csatlakozik!</target>
       </trans-unit>
+      <trans-unit id="zigbee cluster binary input" datatype="html">
+        <source>Binary Input</source>
+        <target state="new">Bináris bemenet</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster ias zone" datatype="html">
+        <source>IAS Zone</source>
+        <target state="new">IAS zóna</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster occupancy sensing" datatype="html">
+        <source>Occupancy Sensing</source>
+        <target state="new">Jelenlét érzékelés</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster on off" datatype="html">
+        <source>On/Off</source>
+        <target state="new">Be/Ki</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster power configuration" datatype="html">
+        <source>Power Configuration</source>
+        <target state="new">Teljesítmény konfiguráció</target>
+      </trans-unit>
       <trans-unit id="zigbee connected sensors" datatype="html">
-        <source>Sensors</source>
+        <source>Sensor</source>
         <target state="new">Érzékelők</target>
       </trans-unit>
       <trans-unit id="zigbee device deleted" datatype="html">
@@ -439,14 +475,6 @@
       <trans-unit id="zigbee nwk" datatype="html">
         <source>Network Address</source>
         <target state="new">Hálózati cím</target>
-      </trans-unit>
-      <trans-unit id="zigbee occupancy sensor" datatype="html">
-        <source>Occupancy sensor</source>
-        <target state="new">Occupancy sensor</target>
-      </trans-unit>
-      <trans-unit id="zigbee occupancy signal" datatype="html">
-        <source>Occupancy Sensing / Occupancy</source>
-        <target state="new">Occupancy Sensing / Occupancy</target>
       </trans-unit>
       <trans-unit id="zigbee pairing failed" datatype="html">
         <source>Failed to start Zigbee pairing!</source>
@@ -790,9 +818,9 @@
         <source> Save </source>
         <target state="translated"> Mentés </target>
       </trans-unit>
-      <trans-unit id="sensor zigbee signal" datatype="html">
-        <source>Signal</source>
-        <target state="translated">Jel</target>
+      <trans-unit id="sensor zigbee entity" datatype="html">
+        <source>Entity</source>
+        <target state="translated">Entitás</target>
       </trans-unit>
       <trans-unit id="sensor zigbee device" datatype="html">
         <source>Zigbee device</source>
@@ -833,70 +861,6 @@
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
         <target state="translated">Konfiguráció frissítés</target>
-      </trans-unit>
-      <trans-unit id="ias signal alarm" datatype="html">
-        <source>IAS Zone / Alarm</source>
-        <target state="new">IAS Zone / Alarm</target>
-      </trans-unit>
-      <trans-unit id="ias signal tamper" datatype="html">
-        <source>IAS Zone / Tamper</source>
-        <target state="new">IAS Zone / Tamper</target>
-      </trans-unit>
-      <trans-unit id="ias type cie" datatype="html">
-        <source>Control and indicating equipment</source>
-        <target state="new">Control and indicating equipment</target>
-      </trans-unit>
-      <trans-unit id="ias type co" datatype="html">
-        <source>Carbon monoxide sensor</source>
-        <target state="new">Carbon monoxide sensor</target>
-      </trans-unit>
-      <trans-unit id="ias type contact" datatype="html">
-        <source>Contact switch</source>
-        <target state="new">Contact switch</target>
-      </trans-unit>
-      <trans-unit id="ias type emergency" datatype="html">
-        <source>Personal emergency device</source>
-        <target state="new">Personal emergency device</target>
-      </trans-unit>
-      <trans-unit id="ias type fire" datatype="html">
-        <source>Fire sensor</source>
-        <target state="new">Fire sensor</target>
-      </trans-unit>
-      <trans-unit id="ias type glass" datatype="html">
-        <source>Glass break sensor</source>
-        <target state="new">Glass break sensor</target>
-      </trans-unit>
-      <trans-unit id="ias type key fob" datatype="html">
-        <source>Key fob</source>
-        <target state="new">Key fob</target>
-      </trans-unit>
-      <trans-unit id="ias type keypad" datatype="html">
-        <source>Keypad</source>
-        <target state="new">Keypad</target>
-      </trans-unit>
-      <trans-unit id="ias type motion" datatype="html">
-        <source>Motion sensor</source>
-        <target state="new">Motion sensor</target>
-      </trans-unit>
-      <trans-unit id="ias type remote" datatype="html">
-        <source>Remote control</source>
-        <target state="new">Remote control</target>
-      </trans-unit>
-      <trans-unit id="ias type repeater" datatype="html">
-        <source>Security repeater</source>
-        <target state="new">Security repeater</target>
-      </trans-unit>
-      <trans-unit id="ias type vibration" datatype="html">
-        <source>Vibration / movement sensor</source>
-        <target state="new">Vibration / movement sensor</target>
-      </trans-unit>
-      <trans-unit id="ias type warning" datatype="html">
-        <source>Warning device</source>
-        <target state="new">Warning device</target>
-      </trans-unit>
-      <trans-unit id="ias type water" datatype="html">
-        <source>Water sensor</source>
-        <target state="new">Water sensor</target>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>

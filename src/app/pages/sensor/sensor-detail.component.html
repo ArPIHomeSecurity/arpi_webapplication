@@ -65,19 +65,19 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <mat-label i18n="@@sensor zigbee signal">Signal</mat-label>
+              <mat-label i18n="@@sensor zigbee entity">Entity</mat-label>
               <mat-select
-                formControlName="zigbeeSignal"
-                i18n-placeholder="@@sensor zigbee signal"
-                placeholder="Signal"
-                (selectionChange)="onZigbeeSignalChanged()"
+                formControlName="zigbeeEntity"
+                i18n-placeholder="@@sensor zigbee entity"
+                placeholder="Entity"
+                (selectionChange)="onZigbeeEntityChanged()"
               >
                 @for (
-                  signal of zigbeeSignals;
-                  track signal.endpoint + "/" + signal.clusterId + "/" + signal.attributeId + "/" + signal.field
+                  entity of zigbeeEntities;
+                  track entity.entityId
                 ) {
-                  <mat-option [value]="signal">
-                    {{ zigbeeSignalLabel(signal) }}
+                  <mat-option [value]="entity">
+                    {{ zigbeeEntityLabel(entity) }}
                   </mat-option>
                 }
               </mat-select>

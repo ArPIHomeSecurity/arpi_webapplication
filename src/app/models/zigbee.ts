@@ -1,26 +1,52 @@
-export interface ZigbeeSignal {
-  endpoint: string
-  cluster: string
-  clusterId: number
-  attribute: string
-  attributeId: number
-  field?: "alarm" | "tamper" | "trouble"
-  zoneType?: number | null
+export interface ZigbeeEntity {
+  entityId: string
+  uniqueId: string
+  platform: string
+  name: string
+  cluster?: string | null
+  attribute?: string | null
+  deviceClass?: string | null
+  value?: boolean | number | string | null
+  available?: boolean | null
 }
 
-export function getZigbeeSignalLabel(signal: ZigbeeSignal): string {
-  if (signal.field === "alarm") {
-    return $localize`:@@ias signal alarm:IAS Zone / Alarm`
+const zigbeeClusterLabels: Record<string, string> = {
+  binary_input: $localize`:@@zigbee cluster binary input:Binary Input`,
+  ias_zone: $localize`:@@zigbee cluster ias zone:IAS Zone`,
+  occupancy_sensing: $localize`:@@zigbee cluster occupancy sensing:Occupancy Sensing`,
+  on_off: $localize`:@@zigbee cluster on off:On/Off`,
+  power_configuration: $localize`:@@zigbee cluster power configuration:Power Configuration`
+}
+
+const zigbeeAttributeLabels: Record<string, string> = {
+  occupancy: $localize`:@@zigbee attribute occupancy:Occupancy`,
+  on_off: $localize`:@@zigbee attribute on off:On/Off`,
+  present_value: $localize`:@@zigbee attribute present value:Present value`,
+  zone_status: $localize`:@@zigbee attribute zone status:Zone status`
+}
+
+export function getZigbeeEntityLabel(entity: ZigbeeEntity): string {
+  const cluster = entity.cluster?.trim()
+  const attribute = entity.attribute?.trim()
+  const labelParts = [
+    cluster ? getTranslatedZigbeeName(cluster, zigbeeClusterLabels) : "",
+    attribute ? getTranslatedZigbeeName(attribute, zigbeeAttributeLabels) : ""
+  ].filter(Boolean)
+
+  if (labelParts.length > 0) {
+    return labelParts.join(" / ")
   }
-  if (signal.field === "tamper") {
-    return $localize`:@@ias signal tamper:IAS Zone / Tamper`
-  }
-  if (signal.cluster === "occupancy" && signal.attribute === "occupancy") {
-    return $localize`:@@zigbee occupancy signal:Occupancy Sensing / Occupancy`
-  }
-  return signal.cluster && signal.attribute
-    ? `${signal.cluster} / ${signal.attribute}`
-    : `${signal.clusterId} / ${signal.attributeId}`
+
+  return entity.name || entity.deviceClass || entity.entityId
+}
+
+function getTranslatedZigbeeName(name: string, translations: Record<string, string>): string {
+  const key = name.toLowerCase().replace(/[\s/-]+/g, "_")
+  return translations[key] ?? humanizeZigbeeName(name)
+}
+
+function humanizeZigbeeName(name: string): string {
+  return name.replace(/[_-]+/g, " ").replace(/\b[a-z]/g, character => character.toUpperCase())
 }
 
 export interface ZigbeeDevice {
@@ -34,7 +60,7 @@ export interface ZigbeeDevice {
   batteryLevel?: number
   signalQuality?: number
   sensorCount?: number
-  metadata?: { signals?: ZigbeeSignal[] } & Record<string, unknown>
+  metadata?: { entities?: ZigbeeEntity[] } & Record<string, unknown>
 }
 
 export const ZigbeeZoneType = {

@@ -7,7 +7,7 @@ import {
   SensorType,
   ZigbeeDevice,
   Zone,
-  getZigbeeSignalLabel
+  getZigbeeEntityLabel
 } from "@app/models"
 
 import type { SensorAttribute } from "./sensor-card/sensor-card.component"
@@ -32,20 +32,18 @@ export function buildSensorAttributes(
   const zigbeeDevice =
     sensor.zigbeeDeviceId != null ? zigbeeDevicesById.get(sensor.zigbeeDeviceId) : undefined
   const zigbeeDeviceName = zigbeeDevice?.name || zigbeeDevice?.ieeeAddress
-  const zigbeeSignal = zigbeeDevice?.metadata?.signals?.find(
-    signal =>
-      signal.endpoint === sensor.zigbeeEndpoint &&
-      signal.clusterId === sensor.zigbeeClusterId &&
-      signal.attributeId === sensor.zigbeeAttributeId &&
-      (signal.field ?? null) === (sensor.zigbeeField ?? null)
+  const zigbeeEntity = zigbeeDevice?.metadata?.entities?.find(
+    entity => entity.entityId === sensor.zigbeeEntityId
   )
-  const zigbeeSignalName = zigbeeSignal ? getZigbeeSignalLabel(zigbeeSignal) : undefined
+  const zigbeeEntityName = zigbeeEntity
+    ? getZigbeeEntityLabel(zigbeeEntity)
+    : undefined
 
   attributes.push({
     icon: sensor.zigbeeDeviceId != null ? "wifi" : "label",
     ...getSensorBindingContent(
       zigbeeDeviceName,
-      zigbeeSignalName,
+      zigbeeEntityName,
       sensor.channel,
       sensor.zigbeeDeviceId != null
     )

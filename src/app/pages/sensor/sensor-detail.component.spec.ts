@@ -9,26 +9,31 @@ import {
   SensorEOLCount,
   SensorType,
   ZigbeeDevice,
-  ZigbeeSignal
+  ZigbeeEntity
 } from "@app/models"
 import { SensorDetailComponent } from "./sensor-detail.component"
 
-describe("SensorDetailComponent IAS bindings", () => {
+describe("SensorDetailComponent Zigbee entity bindings", () => {
   let component: SensorDetailComponent
-  const alarmSignal: ZigbeeSignal = {
-    endpoint: "1",
-    cluster: "ias_zone",
-    clusterId: 0x0500,
-    attribute: "zone_status",
-    attributeId: 2,
-    field: "alarm"
+  const alarmEntity: ZigbeeEntity = {
+    entityId: "binary_sensor/door_contact",
+    uniqueId: "door_contact",
+    platform: "binary_sensor",
+    name: "Front Door",
+    deviceClass: "opening"
   }
-  const tamperSignal: ZigbeeSignal = { ...alarmSignal, field: "tamper" }
+  const tamperEntity: ZigbeeEntity = {
+    entityId: "binary_sensor/device_tamper",
+    uniqueId: "device_tamper",
+    platform: "binary_sensor",
+    name: "Tamper",
+    deviceClass: "tamper"
+  }
   const device: ZigbeeDevice = {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
     metadata: {
-      signals: [alarmSignal, tamperSignal]
+      entities: [alarmEntity, tamperEntity]
     }
   }
 
@@ -53,45 +58,67 @@ describe("SensorDetailComponent IAS bindings", () => {
       id: 1,
       typeId: 3,
       zigbeeDeviceId: device.id,
-      zigbeeEndpoint: "1",
-      zigbeeClusterId: 0x0500,
-      zigbeeAttributeId: 2,
-      zigbeeField: "tamper",
+      zigbeeEntityId: tamperEntity.entityId,
       zoneId: 1,
       areaId: 1
     })
     component.updateForm(component.sensor)
   })
 
-  it("offers only IAS alarm and occupancy signals", () => {
-    const occupancySignal: ZigbeeSignal = {
-      endpoint: "2",
-      cluster: "occupancy",
-      clusterId: 0x0406,
-      attribute: "occupancy",
-      attributeId: 0
+  it("offers binary sensor entities", () => {
+    const nonBinaryEntity: ZigbeeEntity = {
+      ...alarmEntity,
+      entityId: "sensor/battery_level",
+      platform: "sensor"
     }
-    const otherSignal: ZigbeeSignal = { ...occupancySignal, attribute: "other" }
     component.zigbeeDevices = [
       {
         ...device,
-        metadata: { signals: [alarmSignal, tamperSignal, occupancySignal, otherSignal] }
+        metadata: { entities: [...(device.metadata?.entities ?? []), nonBinaryEntity] }
       }
     ]
 
-    expect(component.zigbeeSignals).toEqual([alarmSignal, occupancySignal])
-    expect(component.zigbeeSignalLabel(alarmSignal)).toBe("IAS Zone / Alarm")
-    expect(component.zigbeeSignalLabel(tamperSignal)).toBe("IAS Zone / Tamper")
+    expect(component.zigbeeEntities).toEqual([alarmEntity, tamperEntity])
   })
 
-  it("round-trips the tamper binding without changing the manual sensor type", () => {
-    expect(component.sensorForm.controls.zigbeeSignal.value).toBe(tamperSignal)
+  it("round-trips the selected entity binding", () => {
+    expect(component.sensorForm.controls.zigbeeEntity.value).toBe(tamperEntity)
     const sensor = component.prepareSensor()
-    expect(sensor.zigbeeEndpoint).toBe("1")
-    expect(sensor.zigbeeClusterId).toBe(0x0500)
-    expect(sensor.zigbeeAttributeId).toBe(2)
-    expect(sensor.zigbeeField).toBe("tamper")
+    expect(sensor.zigbeeDeviceId).toBe(device.id)
+    expect(sensor.zigbeeEntityId).toBe(tamperEntity.entityId)
     expect(sensor.typeId).toBe(3)
+  })
+
+  it("requires an entity for Zigbee sensors", () => {
+    const entityControl = component.sensorForm.controls.zigbeeEntity
+
+    expect(entityControl.hasValidator(Validators.required)).toBeTrue()
+    entityControl.setValue(null)
+    expect(entityControl.invalid).toBeTrue()
+
+    entityControl.setValue(tamperEntity)
+    expect(entityControl.valid).toBeTrue()
+  })
+
+  it("keeps a device selectable while it has an unassigned entity", () => {
+    component.sensors = [
+      Object.assign(new Sensor(), {
+        id: 2,
+        zigbeeDeviceId: device.id,
+        zigbeeEntityId: tamperEntity.entityId
+      })
+    ]
+
+    expect(component.isZigbeeDeviceDisabled(device)).toBeFalse()
+
+    component.sensors.push(
+      Object.assign(new Sensor(), {
+        id: 3,
+        zigbeeDeviceId: device.id,
+        zigbeeEntityId: alarmEntity.entityId
+      })
+    )
+    expect(component.isZigbeeDeviceDisabled(device)).toBeTrue()
   })
 
   it("does not require or send wired settings in Zigbee mode", () => {
@@ -117,26 +144,6 @@ describe("SensorDetailComponent IAS bindings", () => {
     expect(sensor.sensorEolCount).toBeNull()
   })
 
-  it("requires a signal for Zigbee sensors", () => {
-    const signalControl = component.sensorForm.controls.zigbeeSignal
-
-    expect(signalControl.hasValidator(Validators.required)).toBeTrue()
-    signalControl.setValue(null)
-    expect(signalControl.invalid).toBeTrue()
-
-    signalControl.setValue(tamperSignal)
-    expect(signalControl.valid).toBeTrue()
-  })
-
-  it("disables a Zigbee device assigned to another sensor but not its current sensor", () => {
-    component.sensors = [Object.assign(new Sensor(), { id: 2, zigbeeDeviceId: device.id })]
-
-    expect(component.isZigbeeDeviceDisabled(device)).toBeTrue()
-
-    component.sensor.id = 2
-    expect(component.isZigbeeDeviceDisabled(device)).toBeFalse()
-  })
-
   it("restores wired-setting validation when switching back to wired mode", () => {
     component.boardVersion = 3
     Object.assign(component.sensor, {
@@ -156,7 +163,7 @@ describe("SensorDetailComponent IAS bindings", () => {
       component.sensorForm.controls.sensorContactType.hasValidator(Validators.required)
     ).toBeTrue()
     expect(component.sensorForm.controls.eolCount.hasValidator(Validators.required)).toBeTrue()
-    expect(component.sensorForm.controls.zigbeeSignal.hasValidator(Validators.required)).toBeFalse()
+    expect(component.sensorForm.controls.zigbeeEntity.hasValidator(Validators.required)).toBeFalse()
   })
 
   it("allows switching to wired mode before a channel is selected", () => {
@@ -168,32 +175,13 @@ describe("SensorDetailComponent IAS bindings", () => {
     }).not.toThrow()
   })
 
-  it("labels ordinary structured signals from their cluster and attribute", () => {
-    const ordinarySignal: ZigbeeSignal = {
-      endpoint: "2",
-      cluster: "occupancy",
-      clusterId: 0x0406,
-      attribute: "occupancy",
-      attributeId: 0
-    }
-    component.zigbeeDevices = [{ ...device, metadata: { signals: [ordinarySignal] } }]
-    expect(component.zigbeeSignalLabel(ordinarySignal)).toBe("Occupancy Sensing / Occupancy")
-  })
+  it("sets the sensor type from the selected entity device class", () => {
+    const tamperType = { id: 7, name: "Tamper" } as SensorType
+    component.sensorTypes = [tamperType]
+    component.sensorForm.controls.zigbeeEntity.setValue(tamperEntity)
 
-  it("sets the sensor type to Occupancy for the occupancy signal", () => {
-    const occupancyType = { id: 7, name: "Occupancy" } as SensorType
-    const occupancySignal: ZigbeeSignal = {
-      endpoint: "2",
-      cluster: "occupancy",
-      clusterId: 0x0406,
-      attribute: "occupancy",
-      attributeId: 0
-    }
-    component.sensorTypes = [occupancyType]
-    component.sensorForm.controls.zigbeeSignal.setValue(occupancySignal)
+    component.onZigbeeEntityChanged()
 
-    component.onZigbeeSignalChanged()
-
-    expect(component.sensorForm.controls.typeId.value).toBe(occupancyType.id)
+    expect(component.sensorForm.controls.typeId.value).toBe(tamperType.id)
   })
 })

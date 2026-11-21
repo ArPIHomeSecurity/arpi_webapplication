@@ -28,10 +28,9 @@ import {
   SensorEOLCount,
   SensorType,
   ZigbeeDevice,
-  ZigbeeSignal,
-  ZigbeeZoneType,
+  ZigbeeEntity,
   Zone,
-  getZigbeeSignalLabel,
+  getZigbeeEntityLabel,
   string2MonitoringState
 } from "@app/models"
 import {
@@ -45,7 +44,6 @@ import {
 } from "@app/services"
 import { positiveInteger } from "@app/utils"
 
-import { IAS_ZONE_TYPE, OCCUPANCY_SENSOR_TYPE } from "@app/pages/config/zigbee/consts"
 import { ZonePreset } from "@app/pages/zone/zone-presets"
 import { environment } from "@environments/environment"
 
@@ -256,7 +254,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
         bindingMode: new FormControl(sensor.zigbeeDeviceId != null ? "zigbee" : "wired"),
         zigbeeDeviceId: new FormControl(sensor.zigbeeDeviceId ?? null),
-        zigbeeSignal: new FormControl(this.findZigbeeSignal(sensor)),
+        zigbeeEntity: new FormControl(this.findZigbeeEntity(sensor)),
 
         enabled: sensor.enabled,
         silentAlert: new FormControl(),
@@ -359,7 +357,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const validators = zigbeeBinding ? Validators.required : null
     const controls = [
       this.sensorForm.controls.zigbeeDeviceId,
-      this.sensorForm.controls.zigbeeSignal
+      this.sensorForm.controls.zigbeeEntity
     ]
 
     controls.forEach(control => {
@@ -474,7 +472,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.channel.setValue(null)
     } else {
       this.sensorForm.controls.zigbeeDeviceId.setValue(null)
-      this.sensorForm.controls.zigbeeSignal.setValue(null)
+      this.sensorForm.controls.zigbeeEntity.setValue(null)
     }
     this.updateZigbeeBindingValidators()
     this.updateSensorSettingsValidators()
@@ -487,66 +485,33 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   onZigbeeDeviceChanged() {
-    this.sensorForm.controls.zigbeeSignal.setValue(null)
+    this.sensorForm.controls.zigbeeEntity.setValue(null)
     this.sensorForm.controls.typeId.setValue(undefined)
   }
 
-  onZigbeeSignalChanged() {
-    const signal = this.sensorForm.controls.zigbeeSignal.value as ZigbeeSignal | null
-    if (!signal) {
+  onZigbeeEntityChanged() {
+    const entity = this.sensorForm.controls.zigbeeEntity.value as ZigbeeEntity | null
+    if (!entity) {
       return
     }
 
-    // Override zone type for tamper signal
-    if (signal.field === "tamper") {
-      this.sensorForm.controls.typeId.setValue(
-        this.sensorTypes.find(type => type.name === "Tamper")?.id
-      )
-    } else {
-      const sensorType =
-        signal.clusterId === OCCUPANCY_SENSOR_TYPE && signal.attribute === "occupancy"
-          ? this.sensorTypes.find(type => type.name === "Occupancy")
-          : this.sensorTypeByZigbeeZoneType(signal.zoneType)
-      this.sensorForm.controls.typeId.setValue(sensorType?.id)
-    }
+    const sensorType = this.sensorTypeByZigbeeDeviceClass(entity.deviceClass)
+    this.sensorForm.controls.typeId.setValue(sensorType?.id)
   }
 
-  /**
-   * Maps a Zigbee zone type to the corresponding sensor type.
-   * @param zoneType The Zigbee zone type to map.
-   * @returns The corresponding sensor type, or undefined if no match is found.
-   */
-  sensorTypeByZigbeeZoneType(zoneType?: number | null): SensorType | undefined {
-    switch (zoneType) {
-      case ZigbeeZoneType.MOTION_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Motion")
-      case ZigbeeZoneType.CONTACT_SWITCH:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Contact")
-      case ZigbeeZoneType.FIRE_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Fire")
-      case ZigbeeZoneType.WATER_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Water")
-      case ZigbeeZoneType.CARBON_MONOXIDE_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "CO")
-      case ZigbeeZoneType.PERSONAL_EMERGENCY_DEVICE:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Emergency")
-      case ZigbeeZoneType.VIBRATION_MOVEMENT_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Vibration")
-      case ZigbeeZoneType.REMOTE_CONTROL:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Remote")
-      case ZigbeeZoneType.KEY_FOB:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Key fob")
-      case ZigbeeZoneType.KEYPAD:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Keypad")
-      case ZigbeeZoneType.WARNING_DEVICE:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Warning")
-      case ZigbeeZoneType.GLASS_BREAK_SENSOR:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Glass")
-      case ZigbeeZoneType.SECURITY_REPEATER:
-        return this.sensorTypes.find(sensorType => sensorType.name === "Repeater")
-      default:
-        return undefined
+  sensorTypeByZigbeeDeviceClass(deviceClass?: string | null): SensorType | undefined {
+    const typeByDeviceClass: Record<string, string> = {
+      carbon_monoxide: "CO",
+      moisture: "Water",
+      motion: "Motion",
+      occupancy: "Occupancy",
+      opening: "Contact",
+      smoke: "Fire",
+      tamper: "Tamper",
+      vibration: "Vibration"
     }
+    const sensorTypeName = deviceClass ? typeByDeviceClass[deviceClass] : undefined
+    return this.sensorTypes.find(sensorType => sensorType.name === sensorTypeName)
   }
 
   get selectedZigbeeDevice(): ZigbeeDevice | undefined {
@@ -554,39 +519,56 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   }
 
   isZigbeeDeviceDisabled(device: ZigbeeDevice): boolean {
+    const entityIds = (device.metadata?.entities ?? [])
+      .filter(entity => entity.platform === "binary_sensor")
+      .map(entity => entity.entityId)
+    return (
+      entityIds.length === 0 ||
+      entityIds.every(entityId =>
+        (this.sensor?.zigbeeDeviceId === device.id &&
+          this.sensor.zigbeeEntityId === entityId) ||
+          (this.sensors?.some(
+            sensor =>
+              sensor.id !== this.sensor?.id &&
+              sensor.zigbeeDeviceId === device.id &&
+              sensor.zigbeeEntityId === entityId
+          ) ??
+            false)
+      )
+    )
+  }
+
+  get zigbeeEntities(): ZigbeeEntity[] {
+    return (this.selectedZigbeeDevice?.metadata?.entities ?? []).filter(
+      entity =>
+        entity.platform === "binary_sensor" &&
+        !this.isZigbeeEntityDisabled(entity)
+    )
+  }
+
+  isZigbeeEntityDisabled(entity: ZigbeeEntity): boolean {
     return (
       this.sensors?.some(
-        sensor => sensor.zigbeeDeviceId === device.id && sensor.id !== this.sensor?.id
+        sensor =>
+          sensor.id !== this.sensor?.id &&
+          sensor.zigbeeDeviceId === this.selectedZigbeeDevice?.id &&
+          sensor.zigbeeEntityId === entity.entityId
       ) ?? false
     )
   }
 
-  get zigbeeSignals(): ZigbeeSignal[] {
-    return (this.selectedZigbeeDevice?.metadata?.signals ?? []).filter(
-      signal =>
-        (signal.clusterId === IAS_ZONE_TYPE && signal.field === "alarm") ||
-        (signal.clusterId === OCCUPANCY_SENSOR_TYPE && signal.attribute === "occupancy")
-    )
+  zigbeeEntityLabel(entity: ZigbeeEntity): string {
+    return getZigbeeEntityLabel(entity)
   }
 
-  zigbeeSignalLabel(signal: ZigbeeSignal): string {
-    return getZigbeeSignalLabel(signal)
-  }
-
-  private findZigbeeSignal(sensor: Sensor): ZigbeeSignal | null {
+  private findZigbeeEntity(sensor: Sensor): ZigbeeEntity | null {
     if (sensor.zigbeeDeviceId == null) {
       return null
     }
     return (
       this.zigbeeDevices
         .find(device => device.id === sensor.zigbeeDeviceId)
-        ?.metadata?.signals?.find(
-          signal =>
-            signal.endpoint === sensor.zigbeeEndpoint &&
-            signal.clusterId === sensor.zigbeeClusterId &&
-            signal.attributeId === sensor.zigbeeAttributeId &&
-            (signal.field ?? null) === (sensor.zigbeeField ?? null)
-        ) ?? null
+        ?.metadata?.entities?.find(entity => entity.entityId === sensor.zigbeeEntityId) ?? null
     )
   }
 
@@ -699,7 +681,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
 
     const isZigbee = formModel.bindingMode === "zigbee"
-    const zigbeeSignal = isZigbee ? (formModel.zigbeeSignal as ZigbeeSignal | null) : null
+    const zigbeeEntity = isZigbee ? (formModel.zigbeeEntity as ZigbeeEntity | null) : null
 
     return {
       id: this.sensor.id,
@@ -716,10 +698,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       zoneId: formModel.zoneId,
 
       zigbeeDeviceId: isZigbee ? formModel.zigbeeDeviceId : null,
-      zigbeeEndpoint: isZigbee ? zigbeeSignal?.endpoint : null,
-      zigbeeClusterId: isZigbee ? zigbeeSignal?.clusterId : null,
-      zigbeeAttributeId: isZigbee ? zigbeeSignal?.attributeId : null,
-      zigbeeField: isZigbee ? (zigbeeSignal?.field ?? null) : null,
+      zigbeeEntityId: isZigbee ? zigbeeEntity?.entityId : null,
 
       alert: false,
       error: false,
