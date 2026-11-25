@@ -4,10 +4,12 @@ import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-dr
 import { MatDialog } from "@angular/material/dialog"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
-import { forkJoin } from "rxjs"
-import { finalize } from "rxjs/operators"
+import { forkJoin, of } from "rxjs"
+import { catchError, finalize } from "rxjs/operators"
 
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { buildSensorAttributes } from "@app/components/sensor/sensor-attribute-builder"
+import { SensorAttribute } from "@app/components/sensor/sensor-card/sensor-card.component"
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
   Area,
@@ -17,6 +19,7 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
+  ZigbeeDevice,
   Zone
 } from "@app/models"
 import {
@@ -26,6 +29,7 @@ import {
   LoaderService,
   MonitoringService,
   SensorService,
+  ZigbeeService,
   ZoneService
 } from "@app/services"
 
@@ -34,16 +38,6 @@ import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
 
-type SensorAttributeIconType = "material" | "image"
-
-interface SensorAttribute {
-  icon: string
-  iconType: SensorAttributeIconType
-  iconSwitch?: number
-  iconClass?: string
-  content: string
-}
-
 @Component({
   templateUrl: "sensor-list.component.html",
   styleUrls: ["sensor-list.component.scss"],
@@ -51,6 +45,8 @@ interface SensorAttribute {
   standalone: false
 })
 export class SensorListComponent extends ConfigurationBaseComponent implements OnInit, OnDestroy {
+  readonly SensorType = SensorType
+
   @Input() onlyAlerting = false
 
   sensors: Sensor[] = null
@@ -59,6 +55,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
   areas: Area[] = []
   isDragging = false
   boardVersion: number
+  zigbeeDevicesById = new Map<number, ZigbeeDevice>()
   sensorAttributeGroupsById = new Map<number, SensorAttribute[][]>()
 
   channelTypes = ChannelTypes
@@ -72,6 +69,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     @Inject("LoaderService") public loader: LoaderService,
     @Inject("MonitoringService") public monitoringService: MonitoringService,
     @Inject("SensorService") private sensorService: SensorService,
+    @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
     @Inject("ZoneService") private zoneService: ZoneService,
 
     public dialog: MatDialog,
@@ -107,6 +105,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     forkJoin({
       sensors: this.sensorService.getSensors(this.onlyAlerting),
       sensorTypes: this.sensorService.getSensorTypes(),
+      zigbeeDevices: this.zigbeeService.getDevices().pipe(catchError(() => of([]))),
       zones: this.zoneService.getZones(),
       areas: this.areaService.getAreas(),
       boardVersion: this.monitoringService.getBoardVersion()
@@ -115,6 +114,9 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       .subscribe(results => {
         this.sensors = results.sensors.sort((a, b) => a.uiOrder - b.uiOrder)
         this.sensorTypes = results.sensorTypes
+        this.zigbeeDevicesById = new Map(
+          results.zigbeeDevices.map(device => [device.id, device] as [number, ZigbeeDevice])
+        )
         this.zones = results.zones
         this.areas = results.areas
         this.boardVersion = results.boardVersion
@@ -125,120 +127,23 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       })
   }
 
-  getZoneName(zoneId: number) {
-    if (this.zones.length && zoneId != null) {
-      return this.zones.find(x => x.id === zoneId).name
-    }
-
-    return ""
-  }
-
-  getAreaName(areaId: number) {
-    if (this.areas.length && areaId != null) {
-      return this.areas.find(x => x.id === areaId).name
-    }
-
-    return ""
-  }
-
   getSensorTypeName(sensorTypeId: number) {
     if (this.sensorTypes.length) {
-      return this.sensorTypes.find(x => x.id === sensorTypeId).name
+      return this.sensorTypes.find(x => x.id === sensorTypeId)?.name ?? ""
     }
 
     return ""
   }
 
   getSensorAttributes(sensor: Sensor) {
-    const attributes: SensorAttribute[] = []
-
-    // Sensor type
-    attributes.push({
-      icon: "sensor_icon",
-      iconType: "image",
-      iconSwitch: sensor.typeId,
-      content: this.getSensorTypeLabel(sensor.typeId)
-    })
-
-    // Channel
-    attributes.push({
-      icon: "label",
-      iconType: "material",
-      content: sensor.channel !== -1 ? `CH${(sensor.channel + 1).toString().padStart(2, "0")}` : "-"
-    })
-
-    // Channel type (only for board version >= 3)
-    if (this.boardVersion >= 3) {
-      attributes.push({
-        icon: "device_hub",
-        iconType: "material",
-        content: this.getChannelTypeLabel(sensor.channelType)
-      })
-
-      // Contact type
-      attributes.push({
-        icon: "toggle_on",
-        iconType: "material",
-        content: this.getContactTypeLabel(sensor.sensorContactType)
-      })
-
-      // EOL count
-      attributes.push({
-        icon: "square",
-        iconType: "material",
-        content: this.getEOLCountLabel(sensor.sensorEolCount)
-      })
-    }
-
-    // Area
-    attributes.push({
-      icon: "crop",
-      iconType: "material",
-      content: this.getAreaName(sensor.areaId)
-    })
-
-    // Zone
-    attributes.push({
-      icon: "rectangle",
-      iconType: "material",
-      content: sensor.channel !== -1 ? this.getZoneName(sensor.zoneId) : "-"
-    })
-
-    // Silent alert
-    attributes.push({
-      icon: sensor.silentAlert ? "volume_mute" : "volume_up",
-      iconType: "material",
-      content: this.getSilentAlertLabel(sensor.silentAlert)
-    })
-
-    // Monitor settings
-    attributes.push({
-      icon: "tune",
-      iconType: "material",
-      content: this.getMonitorSettingsLabel(sensor.monitorPeriod, sensor.monitorThreshold)
-    })
-
-    // Enabled status
-    attributes.push({
-      icon: sensor.enabled ? "check_circle" : "circle",
-      iconType: "material",
-      iconClass: sensor.enabled ? "sensor-status-icon-enabled" : "",
-      content: sensor.enabled
-        ? $localize`:@@sensor enabled:Enabled`
-        : $localize`:@@sensor disable:Disabled`
-    })
-
-    // Visibility
-    attributes.push({
-      icon: sensor.uiHidden ? "visibility_off" : "visibility",
-      iconType: "material",
-      iconClass: sensor.uiHidden ? "sensor-status-icon-hide" : "sensor-status-icon-show",
-      content: sensor.uiHidden
-        ? $localize`:@@sensor hidden:Hidden`
-        : $localize`:@@sensor visible:Visible`
-    })
-
-    return attributes
+    return buildSensorAttributes(
+      sensor,
+      this.sensorTypes,
+      this.zigbeeDevicesById,
+      this.zones,
+      this.areas,
+      this.boardVersion
+    )
   }
 
   getSensorAttributeGroups(sensor: Sensor) {
@@ -258,77 +163,6 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
       groupsById.set(sensor.id, this.getSensorAttributeGroups(sensor))
     })
     return groupsById
-  }
-
-  private getSensorTypeLabel(typeId: number): string {
-    switch (typeId) {
-      case 1:
-        return $localize`:@@sensor motion:Motion`
-      case 2:
-        return $localize`:@@sensor tamper:Tamper`
-      case 3:
-        return $localize`:@@sensor open:Open`
-      case 4:
-        return $localize`:@@sensor break:Break`
-      default:
-        return $localize`:@@sensor unknown:Unknown`
-    }
-  }
-
-  private getChannelTypeLabel(channelType: ChannelTypes): string {
-    switch (channelType) {
-      case ChannelTypes.BASIC:
-        return $localize`:@@sensor channel basic:Basic`
-      case ChannelTypes.NORMAL:
-        return $localize`:@@sensor channel normal:Normal`
-      case ChannelTypes.CHANNEL_A:
-        return $localize`:@@sensor channel a:Channel A`
-      case ChannelTypes.CHANNEL_B:
-        return $localize`:@@sensor channel b:Channel B`
-      default:
-        return ""
-    }
-  }
-
-  private getContactTypeLabel(contactType: SensorContactTypes): string {
-    switch (contactType) {
-      case SensorContactTypes.NC:
-        return $localize`:@@sensor contact nc:Normally Closed (NC)`
-      case SensorContactTypes.NO:
-        return $localize`:@@sensor contact no:Normally Open (NO)`
-      default:
-        return ""
-    }
-  }
-
-  private getEOLCountLabel(eolCount: SensorEOLCount): string {
-    switch (eolCount) {
-      case SensorEOLCount.SINGLE:
-        return $localize`:@@sensor eol single:Single EOL`
-      case SensorEOLCount.DOUBLE:
-        return $localize`:@@sensor eol double:Double EOL`
-      default:
-        return ""
-    }
-  }
-
-  private getSilentAlertLabel(silentAlert: boolean | null): string {
-    if (silentAlert === false) return $localize`:@@sensor silent syren:Alarm with syren`
-    if (silentAlert === true) return $localize`:@@sensor silent alert:Silent alert`
-    return "-"
-  }
-
-  private getMonitorSettingsLabel(
-    monitorPeriod: number | null,
-    monitorThreshold: number | null
-  ): string {
-    if (monitorPeriod != null) {
-      return `${monitorPeriod !== null ? monitorPeriod + "s" : "-"}/${monitorThreshold}%`
-    }
-    if (monitorPeriod === null && monitorThreshold != null) {
-      return $localize`:@@sensor instant:Instant alert`
-    }
-    return "-"
   }
 
   userCanEdit() {
@@ -396,7 +230,7 @@ export class SensorListComponent extends ConfigurationBaseComponent implements O
     }
   }
 
-  onDragStarted(event: CdkDragStart<string[]>) {
+  onDragStarted(_event: CdkDragStart<string[]>) {
     this.isDragging = true
   }
 

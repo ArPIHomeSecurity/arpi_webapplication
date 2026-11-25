@@ -14,19 +14,19 @@
       <mat-expansion-panel class="alert" color="warn">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon matListIcon class="blinking material-icons-outlined">warning</mat-icon>
+            <mat-icon matListIcon class="blinking material-symbols-outlined">warning</mat-icon>
             @if (alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">volume_mute</mat-icon>
+              <mat-icon matListIcon class="material-symbols-outlined">volume_mute</mat-icon>
             }
             @if (!alert.silent) {
-              <mat-icon matListIcon class="material-icons-outlined">volume_up</mat-icon>
+              <mat-icon matListIcon class="material-symbols-outlined">volume_up</mat-icon>
             }
             <div>{{ alert.startTime }}</div>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="column">
           @for (sensor of alert.sensors; track sensor) {
-            <component-sensor [sensor]="sensor" />
+            <component-sensor [sensor]="sensor" [zigbeeDevices]="zigbeeDevicesById" />
           }
         </div>
       </mat-expansion-panel>
@@ -36,7 +36,14 @@
   @if (areas.length == 1) {
     <div class="container-item areas">
       @for (sensor of sensors; track sensor) {
-        <component-sensor [sensor]="sensor" [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)" />
+        @if (!sensor.uiHidden || sensor.alert) {
+          <component-sensor
+            [sensor]="sensor"
+            [sensorTypes]="sensorTypes"
+            [delay]="getSensorDelay(sensor.areaId, sensor.zoneId)"
+            [zigbeeDevices]="zigbeeDevicesById"
+          />
+        }
       }
     </div>
   }
@@ -48,6 +55,7 @@
           [area]="area"
           [sensors]="getSensors(area.id)"
           [delays]="getSensorDelays(area.id)"
+          [zigbeeDevices]="zigbeeDevicesById"
           [monitoringState]="monitoringState"
         />
       }

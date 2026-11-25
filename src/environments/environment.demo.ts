@@ -19,7 +19,7 @@ import {
   UserService,
   ZoneService
 } from "@app/services/demo"
-import { NotificationService } from "@app/services/remote"
+import { NotificationService, ZigbeeService } from "@app/services/remote"
 
 export const environment = {
   production: false,
@@ -53,5 +53,6 @@ export const environment = {
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
+  zigbeeService: ZigbeeService,
   zoneService: ZoneService
 }

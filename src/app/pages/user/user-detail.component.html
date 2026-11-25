@@ -43,7 +43,7 @@
                 formControlName="oldAccessCode"
                 [type]="hideOld ? 'password' : 'text'"
               />
-              <mat-icon matSuffix (click)="hideOld = !hideOld">
+              <mat-icon class="material-symbols-outlined" matSuffix (click)="hideOld = !hideOld">
                 {{ hideOld ? "visibility_off" : "visibility" }}
               </mat-icon>
               @if (userForm.get("oldAccessCode").invalid) {
@@ -67,7 +67,7 @@
               [autocomplete]="isMyProfile ? 'on' : 'off'"
               [type]="hideNew ? 'password' : 'text'"
             />
-            <mat-icon matSuffix (click)="hideNew = !hideNew">
+            <mat-icon class="material-symbols-outlined" matSuffix (click)="hideNew = !hideNew">
               {{ hideNew ? "visibility_off" : "visibility" }}
             </mat-icon>
             @if (userForm.get("newAccessCode").invalid) {
@@ -96,7 +96,7 @@
           [disabled]="userForm.invalid || monitoringState != monitoringStates.READY"
           (click)="onSave()"
         >
-          <mat-icon>save</mat-icon>
+          <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (!isMyProfile) {
           <button
@@ -106,12 +106,12 @@
             (click)="openDeleteDialog(user.id)"
             [disabled]="monitoringState != monitoringStates.READY"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="material-symbols-outlined">delete</mat-icon>
           </button>
         }
         @if (!isMyProfile) {
           <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-            <mat-icon>cancel</mat-icon>
+            <mat-icon class="material-symbols-outlined">cancel</mat-icon>
           </button>
         }
       </mat-card-actions>

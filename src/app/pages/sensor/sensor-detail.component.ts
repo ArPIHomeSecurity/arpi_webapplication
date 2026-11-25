@@ -27,7 +27,10 @@ import {
   SensorContactTypes,
   SensorEOLCount,
   SensorType,
+  ZigbeeDevice,
+  ZigbeeEntity,
   Zone,
+  getZigbeeEntityLabel,
   string2MonitoringState
 } from "@app/models"
 import {
@@ -36,10 +39,12 @@ import {
   LoaderService,
   MonitoringService,
   SensorService,
+  ZigbeeService,
   ZoneService
 } from "@app/services"
 import { positiveInteger } from "@app/utils"
 
+import { ZonePreset } from "@app/pages/zone/zone-presets"
 import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
@@ -67,9 +72,12 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   areas: Area[]
   zones: Zone[]
   sensorTypes: SensorType[]
+  zigbeeDevices: ZigbeeDevice[] = []
+  zigbeeSupported = true
   sensorForm: FormGroup
   zoneForm: FormGroup
   areaForm: FormGroup
+  selectedZonePreset: ZonePreset | null = "instant"
   newZone = false
   boardVersion: number
 
@@ -78,6 +86,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
   sensorContactTypes = SensorContactTypes
   eolCounts = SensorEOLCount
 
+  getIconName = SensorType.getIconName
+
   constructor(
     @Inject("EventService") public eventService: EventService,
     @Inject("LoaderService") public loader: LoaderService,
@@ -85,6 +95,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     @Inject("SensorService") private sensorService: SensorService,
     @Inject("ZoneService") private zoneService: ZoneService,
     @Inject("AreaService") private areaService: AreaService,
+    @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
 
     public router: Router,
 
@@ -127,7 +138,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
         sensorTypes: this.sensorService.getSensorTypes(),
-        boardVersion: this.monitoringService.getBoardVersion()
+        boardVersion: this.monitoringService.getBoardVersion(),
+        zigbeeDevices: this.getZigbeeDevices()
       })
         .pipe(
           catchError(error => {
@@ -148,6 +160,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           )
           this.channels = this.generateChannels(this.sensors)
           this.boardVersion = results.boardVersion
+          this.zigbeeDevices = results.zigbeeDevices
 
           this.updateForm(this.sensor)
           this.onZoneSelected(this.sensor.zoneId)
@@ -160,7 +173,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         sensorTypes: this.sensorService.getSensorTypes(),
         zones: this.zoneService.getZones(),
         areas: this.areaService.getAreas(),
-        boardVersion: this.monitoringService.getBoardVersion()
+        boardVersion: this.monitoringService.getBoardVersion(),
+        zigbeeDevices: this.getZigbeeDevices()
       })
         .pipe(finalize(() => this.loader.display(false)))
         .subscribe(results => {
@@ -170,6 +184,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.areas = results.areas
           this.channels = this.generateChannels(this.sensors)
           this.boardVersion = results.boardVersion
+          this.zigbeeDevices = results.zigbeeDevices
 
           this.sensor = new Sensor()
           this.sensor.enabled = true
@@ -189,6 +204,19 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
           this.loader.display(false)
         })
     }
+  }
+
+  private getZigbeeDevices() {
+    return this.zigbeeService.getDevices().pipe(
+      catchError(error => {
+        if (error.status !== 404) {
+          return throwError(() => error)
+        }
+
+        this.zigbeeSupported = false
+        return of([])
+      })
+    )
   }
 
   ngOnDestroy() {
@@ -224,6 +252,10 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
         zoneId: new FormControl(sensor.zoneId, Validators.required),
         areaId: new FormControl(sensor.areaId, Validators.required),
 
+        bindingMode: new FormControl(sensor.zigbeeDeviceId != null ? "zigbee" : "wired"),
+        zigbeeDeviceId: new FormControl(sensor.zigbeeDeviceId ?? null),
+        zigbeeEntity: new FormControl(this.findZigbeeEntity(sensor)),
+
         enabled: sensor.enabled,
         silentAlert: new FormControl(),
         sensitivity: new FormControl(),
@@ -245,6 +277,8 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       },
       { validators: this.validateChannel() }
     )
+
+    this.updateZigbeeBindingValidators()
 
     if (sensor.silentAlert == null) {
       this.sensorForm.controls.silentAlert.setValue("undefined")
@@ -284,19 +318,12 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       this.sensorForm.controls.sensitivity.enable()
     }
 
-    if (this.boardVersion >= 3) {
-      this.sensorForm.controls.channelType.setValidators(Validators.required)
-      this.sensorForm.controls.sensorContactType.setValidators(Validators.required)
-      this.sensorForm.controls.eolCount.setValidators(Validators.required)
-    } else {
-      this.sensorForm.controls.channelType.clearValidators()
-      this.sensorForm.controls.sensorContactType.clearValidators()
-      this.sensorForm.controls.eolCount.clearValidators()
-    }
+    this.updateSensorSettingsValidators()
 
     if (
-      sensor.channelType === ChannelTypes.CHANNEL_A ||
-      sensor.channelType === ChannelTypes.CHANNEL_B
+      this.sensorForm.controls.bindingMode.value === "wired" &&
+      (sensor.channelType === ChannelTypes.CHANNEL_A ||
+        sensor.channelType === ChannelTypes.CHANNEL_B)
     ) {
       this.sensorForm.controls.eolCount.setValue(SensorEOLCount.SINGLE)
       this.sensorForm.controls.eolCount.disable()
@@ -305,13 +332,65 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
   }
 
+  private updateSensorSettingsValidators() {
+    const settingsRequired =
+      this.boardVersion >= 3 && this.sensorForm.controls.bindingMode.value === "wired"
+    const controls = [
+      this.sensorForm.controls.channelType,
+      this.sensorForm.controls.sensorContactType,
+      this.sensorForm.controls.eolCount
+    ]
+
+    controls.forEach(control => {
+      if (settingsRequired) {
+        control.setValidators(Validators.required)
+      } else {
+        control.clearValidators()
+      }
+      control.updateValueAndValidity({ onlySelf: true })
+    })
+    this.sensorForm.updateValueAndValidity()
+  }
+
+  private updateZigbeeBindingValidators() {
+    const zigbeeBinding = this.sensorForm.controls.bindingMode.value === "zigbee"
+    const validators = zigbeeBinding ? Validators.required : null
+    const controls = [
+      this.sensorForm.controls.zigbeeDeviceId,
+      this.sensorForm.controls.zigbeeEntity
+    ]
+
+    controls.forEach(control => {
+      if (validators) {
+        control.setValidators(validators)
+      } else {
+        control.clearValidators()
+      }
+      control.updateValueAndValidity({ onlySelf: true })
+    })
+    this.sensorForm.updateValueAndValidity()
+  }
+
   validateChannel(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (this.sensorForm == null) {
         return null
       }
 
+      // channel conflicts do not apply to Zigbee-bound sensors
+      if (this.sensorForm.value.bindingMode === "zigbee") {
+        this.sensorForm.controls.channel.setErrors(null)
+        this.sensorForm.controls.channelType.setErrors(null)
+        return null
+      }
+
       const selectedChannel = this.channels.find(ch => ch.channel === control.value.channel)
+      if (!selectedChannel) {
+        this.sensorForm.controls.channel.setErrors(null)
+        this.sensorForm.controls.channelType.setErrors(null)
+        return null
+      }
+
       const selectedChannelType = this.sensorForm.value.channelType
 
       // if selected channel type is A or B, allow only opposite type channels
@@ -388,6 +467,111 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     }
   }
 
+  onBindingModeChanged(mode: "wired" | "zigbee") {
+    if (mode === "zigbee") {
+      this.sensorForm.controls.channel.setValue(null)
+    } else {
+      this.sensorForm.controls.zigbeeDeviceId.setValue(null)
+      this.sensorForm.controls.zigbeeEntity.setValue(null)
+    }
+    this.updateZigbeeBindingValidators()
+    this.updateSensorSettingsValidators()
+    if (mode === "zigbee") {
+      this.sensorForm.controls.eolCount.enable()
+    } else {
+      this.onChannelTypeChanged({ value: this.sensorForm.controls.channelType.value })
+    }
+    this.sensorForm.controls.channel.updateValueAndValidity()
+  }
+
+  onZigbeeDeviceChanged() {
+    this.sensorForm.controls.zigbeeEntity.setValue(null)
+    this.sensorForm.controls.typeId.setValue(undefined)
+  }
+
+  onZigbeeEntityChanged() {
+    const entity = this.sensorForm.controls.zigbeeEntity.value as ZigbeeEntity | null
+    if (!entity) {
+      return
+    }
+
+    const sensorType = this.sensorTypeByZigbeeDeviceClass(entity.deviceClass)
+    this.sensorForm.controls.typeId.setValue(sensorType?.id)
+  }
+
+  sensorTypeByZigbeeDeviceClass(deviceClass?: string | null): SensorType | undefined {
+    const typeByDeviceClass: Record<string, string> = {
+      carbon_monoxide: "CO",
+      moisture: "Water",
+      motion: "Motion",
+      occupancy: "Occupancy",
+      opening: "Contact",
+      smoke: "Fire",
+      tamper: "Tamper",
+      vibration: "Vibration"
+    }
+    const sensorTypeName = deviceClass ? typeByDeviceClass[deviceClass] : undefined
+    return this.sensorTypes.find(sensorType => sensorType.name === sensorTypeName)
+  }
+
+  get selectedZigbeeDevice(): ZigbeeDevice | undefined {
+    return this.zigbeeDevices.find(device => device.id === this.sensorForm?.value?.zigbeeDeviceId)
+  }
+
+  isZigbeeDeviceDisabled(device: ZigbeeDevice): boolean {
+    const entityIds = (device.metadata?.entities ?? [])
+      .filter(entity => entity.platform === "binary_sensor")
+      .map(entity => entity.entityId)
+    return (
+      entityIds.length === 0 ||
+      entityIds.every(entityId =>
+        (this.sensor?.zigbeeDeviceId === device.id &&
+          this.sensor.zigbeeEntityId === entityId) ||
+          (this.sensors?.some(
+            sensor =>
+              sensor.id !== this.sensor?.id &&
+              sensor.zigbeeDeviceId === device.id &&
+              sensor.zigbeeEntityId === entityId
+          ) ??
+            false)
+      )
+    )
+  }
+
+  get zigbeeEntities(): ZigbeeEntity[] {
+    return (this.selectedZigbeeDevice?.metadata?.entities ?? []).filter(
+      entity =>
+        entity.platform === "binary_sensor" &&
+        !this.isZigbeeEntityDisabled(entity)
+    )
+  }
+
+  isZigbeeEntityDisabled(entity: ZigbeeEntity): boolean {
+    return (
+      this.sensors?.some(
+        sensor =>
+          sensor.id !== this.sensor?.id &&
+          sensor.zigbeeDeviceId === this.selectedZigbeeDevice?.id &&
+          sensor.zigbeeEntityId === entity.entityId
+      ) ?? false
+    )
+  }
+
+  zigbeeEntityLabel(entity: ZigbeeEntity): string {
+    return getZigbeeEntityLabel(entity)
+  }
+
+  private findZigbeeEntity(sensor: Sensor): ZigbeeEntity | null {
+    if (sensor.zigbeeDeviceId == null) {
+      return null
+    }
+    return (
+      this.zigbeeDevices
+        .find(device => device.id === sensor.zigbeeDeviceId)
+        ?.metadata?.entities?.find(entity => entity.entityId === sensor.zigbeeEntityId) ?? null
+    )
+  }
+
   onSensitivityChanged(event) {
     if (event.value === "custom") {
       this.sensorForm.controls.monitorPeriod.setValidators([Validators.required, positiveInteger()])
@@ -415,6 +599,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
     const area = this.prepareArea()
 
     if (
+      sensor.channel != null &&
       sensor.channel >= 0 &&
       this.channels[sensor.channel].sensor != null &&
       sensor.id !== this.channels[sensor.channel].sensor.id
@@ -495,22 +680,29 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
       formModel.monitorThreshold = 100
     }
 
+    const isZigbee = formModel.bindingMode === "zigbee"
+    const zigbeeEntity = isZigbee ? (formModel.zigbeeEntity as ZigbeeEntity | null) : null
+
     return {
       id: this.sensor.id,
       name: formModel.name,
       description: formModel.description,
 
-      channel: formModel.channel,
-      channelType: formModel.channelType,
-      sensorContactType: formModel.sensorContactType,
-      sensorEolCount: formModel.eolCount,
+      channel: isZigbee ? null : formModel.channel,
+      channelType: isZigbee ? null : formModel.channelType,
+      sensorContactType: isZigbee ? null : formModel.sensorContactType,
+      sensorEolCount: isZigbee ? null : formModel.eolCount,
       typeId: formModel.typeId,
 
       areaId: formModel.areaId,
       zoneId: formModel.zoneId,
 
+      zigbeeDeviceId: isZigbee ? formModel.zigbeeDeviceId : null,
+      zigbeeEntityId: isZigbee ? zigbeeEntity?.entityId : null,
+
       alert: false,
       error: false,
+      tamper: false,
       enabled: formModel.enabled,
       silentAlert: silentAlert,
       monitorPeriod: formModel.monitorPeriod,
@@ -565,6 +757,7 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     // if NEW zone selected
     if (this.sensor.zoneId === -1) {
+      this.selectedZonePreset = "instant"
       controls.disarmedDelay.setValidators([Validators.required, positiveInteger()])
       controls.awayAlertDelay.setValidators([Validators.required, positiveInteger()])
       controls.stayAlertDelay.setValidators([Validators.required, positiveInteger()])
@@ -598,18 +791,6 @@ export class SensorDetailComponent extends ConfigurationBaseComponent implements
 
     this.areaForm.updateValueAndValidity()
     this.sensorForm.updateValueAndValidity()
-  }
-
-  alertWhenChanged(event, delayName) {
-    const { controls } = this.zoneForm
-    if (event.checked) {
-      controls[delayName].setValidators([Validators.required, positiveInteger()])
-    } else {
-      controls[delayName].clearValidators()
-      controls[delayName].setErrors(null)
-    }
-
-    controls[delayName].updateValueAndValidity()
   }
 
   openDeleteDialog(sensorId: number) {

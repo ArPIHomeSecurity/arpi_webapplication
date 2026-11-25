@@ -11,6 +11,7 @@ import { KeypadComponent } from "./pages/config/keypad"
 import { NetworkComponent } from "./pages/config/network"
 import { NotificationsComponent } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
+import { ZigbeeDeviceDetailComponent, ZigbeeListComponent } from "./pages/config/zigbee"
 import { EventsComponent } from "./pages/events/events.component"
 import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
@@ -18,7 +19,7 @@ import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
 import { OutputDetailComponent, OutputListComponent } from "./pages/output"
 import { PreferencesComponent } from "./pages/preferences/preferences.component"
-import { SensorDetailComponent, SensorListComponent } from "./pages/sensor"
+import { SensorDetailComponent, SensorListComponent, SensorViewComponent } from "./pages/sensor"
 import { UserDetailComponent, UserListComponent } from "./pages/user"
 import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
@@ -86,6 +87,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard, setupGuard]
   },
   {
+    path: "sensors/:id",
+    component: SensorViewComponent,
+    canActivate: [AuthGuard, setupGuard]
+  },
+  {
     path: "sensor/add",
     component: SensorDetailComponent,
     canActivate: [AdminGuard, setupGuard]
@@ -138,6 +144,16 @@ const appRoutes: Routes = [
   {
     path: "config/network",
     component: NetworkComponent,
+    canActivate: [AdminGuard, setupGuard]
+  },
+  {
+    path: "config/zigbee",
+    component: ZigbeeListComponent,
+    canActivate: [AdminGuard, setupGuard]
+  },
+  {
+    path: "config/zigbee/:id",
+    component: ZigbeeDeviceDetailComponent,
     canActivate: [AdminGuard, setupGuard]
   },
   {

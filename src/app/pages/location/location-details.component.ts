@@ -17,6 +17,14 @@ import {
   testLocation
 } from "./location"
 
+export function getLocationPort(location: { port: string; protocol: string }): number {
+  if (location.port) {
+    return Number.parseInt(location.port, 10)
+  }
+
+  return location.protocol === "http:" ? 80 : 443
+}
+
 @Component({
   selector: "app-location-details",
   templateUrl: "./location-details.component.html",
@@ -131,12 +139,14 @@ export class LocationDetailsComponent {
   }
 
   defaultLocation(): Location {
+    const scheme = window.location.protocol.replace(":", "")
+
     return {
       id: null,
       name: this.firstLocation ? "Default" : "",
-      scheme: "https",
+      scheme: this.isMultiLocation ? "https" : scheme,
       primaryDomain: !this.isMultiLocation ? window.location.hostname : "",
-      primaryPort: !this.isMultiLocation ? parseInt(window.location.port) : null,
+      primaryPort: !this.isMultiLocation ? getLocationPort(window.location) : null,
       secondaryDomain: "",
       secondaryPort: null,
       version: null,
@@ -252,7 +262,7 @@ export class LocationDetailsComponent {
     return locations.some(l => l.id === this.location?.id)
   }
 
-  cantSave() {
+  isSaveDisabled(): boolean {
     // do not save if location Id is not set
     if (!this.location?.id) {
       return true
@@ -263,8 +273,17 @@ export class LocationDetailsComponent {
       return true
     }
 
-    // do not save if location form is invalid or pristine
-    if (this.locationForm?.invalid || this.locationForm?.pristine) {
+    // Pre-configured locations remain pristine until they have been tested.
+    // A completed test supplies the location ID and validates the initial values.
+    if (this.locationForm?.invalid || (this.locationForm?.pristine && this.testResult === null)) {
+      return true
+    }
+
+    // do not save if the test result is incomplete
+    if (
+      this.testResult !== null &&
+      (this.testResult.primary === null || this.testResult.secondary === null)
+    ) {
       return true
     }
 
@@ -273,13 +292,7 @@ export class LocationDetailsComponent {
       this.locationForm?.controls?.primaryDomain?.dirty ||
       this.locationForm?.controls?.secondaryDomain?.dirty
     ) {
-      if (this.testResult === null) {
-        return true
-      }
-
-      if (this.testResult.primary === null || this.testResult.secondary === null) {
-        return true
-      }
+      return this.testResult === null
     }
 
     return false

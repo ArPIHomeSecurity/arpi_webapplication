@@ -13,6 +13,7 @@ import {
   SensorType,
   string2ArmType,
   string2MonitoringState,
+  ZigbeeDevice,
   Zone
 } from "@app/models"
 import {
@@ -23,11 +24,13 @@ import {
   MonitoringService,
   OutputService,
   SensorService,
+  ZigbeeService,
   ZoneService
 } from "@app/services"
 
 import { environment } from "@environments/environment"
-import { forkJoin, Subscription } from "rxjs"
+import { forkJoin, of, Subscription } from "rxjs"
+import { catchError } from "rxjs/operators"
 
 import { CapacitorService } from "@app/services/capacitor.service"
 
@@ -46,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sensorAlert: boolean
   sensors: Sensor[]
   sensorTypes: SensorType[] = []
+  zigbeeDevicesById = new Map<number, ZigbeeDevice>()
   zones: Zone[] = []
   areas: Area[] = []
   outputs: Output[] = []
@@ -61,6 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     @Inject("MonitoringService") public monitoringService: MonitoringService,
     @Inject("OutputService") private outputService: OutputService,
     @Inject("SensorService") private sensorService: SensorService,
+    @Inject("ZigbeeService") private zigbeeService: ZigbeeService,
     @Inject("ZoneService") private zoneService: ZoneService,
     @Inject("CapacitorService") private capacitorService: CapacitorService,
 
@@ -78,6 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     forkJoin({
       sensors: this.sensorService.getSensors(),
       sensorTypes: this.sensorService.getSensorTypes(),
+      zigbeeDevices: this.zigbeeService.getDevices().pipe(catchError(() => of([]))),
       zones: this.zoneService.getZones(),
       areas: this.areaService.getAreas(),
       outputs: this.outputService.getOutputs()
@@ -87,6 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       )
       this.sensorTypes = results.sensorTypes.sort((st1, st2) =>
         st1.id > st2.id ? 1 : st1.id < st2.id ? -1 : 0
+      )
+      this.zigbeeDevicesById = new Map(
+        results.zigbeeDevices.map(device => [device.id, device] as [number, ZigbeeDevice])
       )
       this.zones = results.zones
       this.areas = results.areas.sort((a1, a2) =>
@@ -152,15 +161,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.subscriptions.push(
-      this.eventService.listen("sensors_state_change").subscribe(_ => {
-        this.sensorService.getSensors().subscribe(sensors => {
-          this.sensors = sensors.sort((a, b) =>
-            a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
-          )
-        })
-      })
-    )
+    const sensorStateEvents = [
+      "sensors_state_change",
+      "sensors_error_change",
+      "sensors_tamper_change"
+    ]
+    sensorStateEvents.forEach(event => {
+      this.subscriptions.push(
+        this.eventService.listen(event).subscribe(() => this.refreshSensors())
+      )
+    })
 
     this.subscriptions.push(
       this.eventService.listen("output_state_change").subscribe(output => {
@@ -186,38 +196,56 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadStates() {
     // ALERT STATE
-    this.alertService.getAlert().subscribe(alert => {
-      this.alert = alert
-    })
+    this.subscriptions.push(
+      this.alertService.getAlert().subscribe(alert => {
+        this.alert = alert
+      })
+    )
 
     // ARM STATE
-    this.monitoringService.getArmState().subscribe({
-      next: armState => {
-        this.armState = armState
-        this.onStateChanged()
-      },
-      error: _ => {
-        this.armState = ARM_TYPE.UNDEFINED
-        this.onStateChanged()
-      }
-    })
+    this.subscriptions.push(
+      this.monitoringService.getArmState().subscribe({
+        next: armState => {
+          this.armState = armState
+          this.onStateChanged()
+        },
+        error: _ => {
+          this.armState = ARM_TYPE.UNDEFINED
+          this.onStateChanged()
+        }
+      })
+    )
 
     // SENSORS ALERT STATE
-    this.sensorService.getAlert().subscribe(alert => {
-      this.sensorAlert = alert
-    })
+    this.subscriptions.push(
+      this.sensorService.getAlert().subscribe(alert => {
+        this.sensorAlert = alert
+      })
+    )
 
     // MONITORING STATE
-    this.monitoringService.getMonitoringState().subscribe({
-      next: monitoringState => {
-        this.monitoringState = monitoringState
-        this.onStateChanged()
-      },
-      error: _ => {
-        this.monitoringState = MONITORING_STATE.UNDEFINED
-        this.onStateChanged()
-      }
-    })
+    this.subscriptions.push(
+      this.monitoringService.getMonitoringState().subscribe({
+        next: monitoringState => {
+          this.monitoringState = monitoringState
+          this.onStateChanged()
+        },
+        error: _ => {
+          this.monitoringState = MONITORING_STATE.UNDEFINED
+          this.onStateChanged()
+        }
+      })
+    )
+  }
+
+  private refreshSensors() {
+    this.subscriptions.push(
+      this.sensorService.getSensors().subscribe(sensors => {
+        this.sensors = sensors.sort((a, b) =>
+          a.uiOrder > b.uiOrder ? 1 : a.uiOrder < b.uiOrder ? -1 : 0
+        )
+      })
+    )
   }
 
   ngOnDestroy() {

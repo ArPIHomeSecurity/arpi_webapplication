@@ -1,0 +1,130 @@
+@if (!zigbeeSupported) {
+  <div class="container zigbee-list">
+    <h1 class="empty" i18n="@@zigbee unsupported">Zigbee is not supported by this server</h1>
+  </div>
+} @else if (devices != null) {
+  <div class="container zigbee-list">
+    @if (isPairing) {
+      <mat-card class="pairing-banner container-item">
+        <mat-card-header>
+          <mat-spinner mat-card-avatar diameter="24"></mat-spinner>
+          <mat-card-subtitle i18n="@@zigbee pairing timer">
+            Pairing mode active ({{ pairingTimeLeft }}s remaining). Put your Zigbee device into pairing mode.
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-progress-bar mode="determinate" [value]="progress * 100"></mat-progress-bar>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (devices.length > 0) {
+      <div>
+        @for (device of devices; track device.id) {
+          <mat-card id="zigbee-{{ device.id }}" class="zigbee-card container-item">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ device.name || device.ieeeAddress }}</mat-card-title>
+              </mat-card-title-group>
+              <div class="device-image">
+                <mat-icon class="material-symbols-outlined device-icon">router</mat-icon>
+              </div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="row">
+              <div class="attributes">
+                <div class="attributes-container">
+                  @for (
+                    attributeGroup of getDeviceAttributeGroupsById(device.id);
+                    track attributeGroup;
+                    let i = $index
+                  ) {
+                    <mat-list class="attribute-list">
+                      @for (attribute of attributeGroup; track attribute.label) {
+                        <mat-list-item
+                          [class]="{
+                            'warn-item': attribute.severity === 'warn',
+                            'alert-item': attribute.severity === 'alert'
+                          }"
+                        >
+                          <mat-icon class="material-symbols-outlined" matListItemIcon>
+                            {{ attribute.icon }}
+                          </mat-icon>
+                          <div matListItemTitle>
+                            {{ attribute.label }}
+                          </div>
+                          @for (value of attribute.values; track value) {
+                            <div matListItemLine>
+                              {{ value }}
+                            </div>
+                          }
+                          @for (linkedSensor of attribute.linkedSensors; track linkedSensor.id) {
+                            <div matListItemLine class="linked-sensor">
+                              <span>{{ linkedSensor.name }}</span>
+                              <a
+                                mat-icon-button
+                                color="primary"
+                                [routerLink]="['/sensors', linkedSensor.id]"
+                                i18n-aria-label="@@zigbee view linked sensor"
+                                aria-label="View linked sensor"
+                              >
+                                <mat-icon class="material-symbols-outlined">visibility</mat-icon>
+                              </a>
+                            </div>
+                          }
+                        </mat-list-item>
+                      }
+                    </mat-list>
+                  }
+                </div>
+              </div>
+            </mat-card-content>
+            @if (userCanEdit()) {
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <button mat-icon-button color="primary" [routerLink]="['/config/zigbee', device.id]">
+                  <mat-icon class="material-symbols-outlined">edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="openDeleteDialog(device.id)"
+                  color="warn"
+                  [disabled]="!canDelete(device)"
+                >
+                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            }
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <div class="zigbee-list">
+        <h1 class="empty" i18n="@@zigbee none">No Zigbee devices found</h1>
+      </div>
+    }
+  </div>
+}
+
+@if (userCanEdit() && zigbeeSupported) {
+  <div class="list-actions">
+    <button
+      class="list-action"
+      mat-fab
+      color="accent"
+      [disabled]="monitoringState != monitoringStates.READY || isPairing"
+      (click)="onPairing()"
+    >
+      <mat-icon class="material-symbols-outlined">leak_add</mat-icon>
+    </button>
+    <button
+      class="list-action"
+      mat-mini-fab
+      color="accent"
+      [disabled]="monitoringState != monitoringStates.READY || isPairing"
+      (click)="onPairing()"
+    >
+      <mat-icon class="material-symbols-outlined">leak_add</mat-icon>
+    </button>
+  </div>
+}

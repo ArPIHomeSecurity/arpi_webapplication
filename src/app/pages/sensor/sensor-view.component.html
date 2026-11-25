@@ -1,0 +1,51 @@
+<div class="container sensor-view">
+  <div class="sensor-context">
+    <a mat-button routerLink="/sensors">
+      <mat-icon class="material-symbols-outlined">arrow_back</mat-icon>
+      <span i18n="@@all sensors">All sensors</span>
+    </a>
+    @if (sensor && sensorIndex >= 0) {
+      <div class="sensor-navigation">
+        <button
+          mat-icon-button
+          type="button"
+          [disabled]="previousSensorId === null"
+          (click)="navigateToSensor(previousSensorId)"
+          i18n-aria-label="@@previous sensor"
+          aria-label="Previous sensor"
+        >
+          <mat-icon class="material-symbols-outlined">chevron_left</mat-icon>
+        </button>
+        <span class="sensor-position" aria-live="polite" i18n="@@sensor position">
+          Sensor {{ sensorIndex + 1 }} of {{ sensors.length }}
+        </span>
+        <button
+          mat-icon-button
+          type="button"
+          [disabled]="nextSensorId === null"
+          (click)="navigateToSensor(nextSensorId)"
+          i18n-aria-label="@@next sensor"
+          aria-label="Next sensor"
+        >
+          <mat-icon class="material-symbols-outlined">chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+  @if (sensor) {
+    <app-sensor-card
+      [sensor]="sensor"
+      [iconName]="iconName"
+      [attributeGroups]="attributeGroups"
+      [canEdit]="userCanEdit()"
+      [dragDisabled]="true"
+      [monitoringState]="monitoringState"
+      (resetReferences)="onResetReferences($event)"
+      (deleteRequested)="openDeleteDialog($event)"
+    ></app-sensor-card>
+  } @else if (notFound) {
+    <h1 i18n="@@sensor not found">The sensor was not found!</h1>
+  } @else if (loadError) {
+    <h1 i18n="@@backend error message">Connecting to the backend failed!</h1>
+  }
+</div>

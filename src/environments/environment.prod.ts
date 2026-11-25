@@ -8,22 +8,23 @@
  */
 
 import {
-  AlertService,
-  AreaService,
-  ArmService,
-  AuthenticationService,
-  BiometricService,
-  CardService,
-  ConfigurationService,
-  EventService,
-  KeypadService,
-  LoaderService,
-  MonitoringService,
-  NotificationService,
-  OutputService,
-  SensorService,
-  UserService,
-  ZoneService,
+    AlertService,
+    AreaService,
+    ArmService,
+    AuthenticationService,
+    BiometricService,
+    CardService,
+    ConfigurationService,
+    EventService,
+    KeypadService,
+    LoaderService,
+    MonitoringService,
+    NotificationService,
+    OutputService,
+    SensorService,
+    UserService,
+    ZigbeeService,
+    ZoneService,
 } from '@app/services/remote';
 
 
@@ -60,5 +61,6 @@ export const environment = {
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
+  zigbeeService: ZigbeeService,
   zoneService: ZoneService,
 };

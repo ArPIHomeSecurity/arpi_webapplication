@@ -33,7 +33,7 @@
           color="warn"
           [disabled]="loading"
         >
-          <mat-icon>delete</mat-icon>
+          <mat-icon class="material-symbols-outlined">delete</mat-icon>
         </button>
       </div>
       <mat-form-field class="message-content">
@@ -53,7 +53,7 @@
   >
     <span i18n="@@notifications delete all">Delete all</span>
     @if (smsMessages != null && loading) {
-      <mat-icon>
+      <mat-icon class="material-symbols-outlined">
         <mat-spinner diameter="18" />
       </mat-icon>
     }

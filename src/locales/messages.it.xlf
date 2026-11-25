@@ -63,6 +63,10 @@
         <source>Users</source>
         <target>Utenti</target>
       </trans-unit>
+      <trans-unit id="view sensor" datatype="html">
+        <source>View sensor</source>
+        <target state="new">Visualizza sensore</target>
+      </trans-unit>
       <trans-unit id="webapp version label" datatype="html">
         <source>WebApp</source>
         <target state="new">WebApp</target>
@@ -146,6 +150,10 @@
       <trans-unit id="network username" datatype="html">
         <source>Username</source>
         <target>Nome utente</target>
+      </trans-unit>
+      <trans-unit id="next sensor" datatype="html">
+        <source>Next sensor</source>
+        <target state="translated">Sensore successivo</target>
       </trans-unit>
       <trans-unit id="network password" datatype="html">
         <source>Password</source>
@@ -474,9 +482,21 @@
         <source>Description</source>
         <target>Descrizione</target>
       </trans-unit>
+      <trans-unit id="sensor emergency" datatype="html">
+        <source>Emergency</source>
+        <target state="new">Emergency</target>
+      </trans-unit>
       <trans-unit id="sensor enabled" datatype="html">
         <source>Enabled</source>
         <target>Abilitato</target>
+      </trans-unit>
+      <trans-unit id="sensor zigbee entity" datatype="html">
+        <source>Entity</source>
+        <target state="translated">Entità</target>
+      </trans-unit>
+      <trans-unit id="sensor zigbee device" datatype="html">
+        <source>Zigbee device</source>
+        <target state="new">Zigbee dispositivo</target>
       </trans-unit>
       <trans-unit id="sensor zone" datatype="html">
         <source>Zone</source>
@@ -490,17 +510,9 @@
         <source>Zone name</source>
         <target>Nome della zona</target>
       </trans-unit>
-      <trans-unit id="sensor alert disarmed" datatype="html">
-        <source> Alert when disarmed </source>
-        <target> Allarme quando è disarmato </target>
-      </trans-unit>
       <trans-unit id="zone disarmed delay" datatype="html">
         <source>Delay alert when not armed</source>
         <target>Allarme ritardato quando non è armato</target>
-      </trans-unit>
-      <trans-unit id="sensor alert away" datatype="html">
-        <source> Alert when away armed </source>
-        <target state="translated"> Allarme quando si è assenti </target>
       </trans-unit>
       <trans-unit id="zone away alert delay" datatype="html">
         <source>Delay alert when armed away</source>
@@ -509,14 +521,6 @@
       <trans-unit id="zone away arm delay" datatype="html">
         <source>Delay arm when arming away</source>
         <target state="translated">Ritardo in attivazione</target>
-      </trans-unit>
-      <trans-unit id="sensor alert stay" datatype="html">
-        <source> Alert when stay armed </source>
-        <target state="translated"> Allarme quando attivo/armato </target>
-      </trans-unit>
-      <trans-unit id="zone stay alert delay" datatype="html">
-        <source>Delay alert when armed stay</source>
-        <target state="translated">Ritardo allarme in caso di permanenza attivo/armato</target>
       </trans-unit>
       <trans-unit id="zone stay arm delay" datatype="html">
         <source>Delay arm when arming stay</source>
@@ -542,9 +546,25 @@
         <source>Tamper</source>
         <target>Manomissione</target>
       </trans-unit>
+      <trans-unit id="sensor tamper state" datatype="html">
+        <source>Tamper sensor state</source>
+        <target state="new">Tamper sensor state</target>
+      </trans-unit>
+      <trans-unit id="sensor occupancy" datatype="html">
+        <source>Occupancy</source>
+        <target state="new">Occupancy</target>
+      </trans-unit>
       <trans-unit id="sensor open" datatype="html">
         <source>Open</source>
         <target>Aperto</target>
+      </trans-unit>
+      <trans-unit id="sensor position" datatype="html">
+        <source> Sensor <x id="INTERPOLATION" equiv-text="{{ sensorIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ sensors.length }}"/> </source>
+        <target state="translated"> Sensore <x id="INTERPOLATION" equiv-text="{{ sensorIndex + 1 }}"/> di <x id="INTERPOLATION_1" equiv-text="{{ sensors.length }}"/> </target>
+      </trans-unit>
+      <trans-unit id="sensor binding wired" datatype="html">
+        <source>Wired</source>
+        <target state="new">Cablato</target>
       </trans-unit>
       <trans-unit id="sensor break" datatype="html">
         <source>Break</source>
@@ -666,6 +686,14 @@
         <source>No users found</source>
         <target>Nessun utente trovato</target>
       </trans-unit>
+      <trans-unit id="delete zigbee device" datatype="html">
+        <source>Delete Zigbee Device</source>
+        <target state="new">Elimina dispositivo Zigbee</target>
+      </trans-unit>
+      <trans-unit id="delete zigbee device message" datatype="html">
+        <source>Are you sure you want to delete the device &quot;<x id="PH" equiv-text="device.name || device.ieeeAddress"/>&quot;?</source>
+        <target state="new">Siete sicuri di voler eliminare il dispositivo &quot;<x id="PH" equiv-text="device.name || device.ieeeAddress"/>&quot;?</target>
+      </trans-unit>
       <trans-unit id="delete zone" datatype="html">
         <source>Delete Zone</source>
         <target state="translated">Elimina zona</target>
@@ -694,6 +722,22 @@
         <source>The zone was not found!</source>
         <target state="translated">Zona non trovata!</target>
       </trans-unit>
+      <trans-unit id="zone preset delayed" datatype="html">
+        <source>Delayed</source>
+        <target state="new">Delayed</target>
+      </trans-unit>
+      <trans-unit id="zone preset instant" datatype="html">
+        <source>Instant</source>
+        <target state="new">Instant</target>
+      </trans-unit>
+      <trans-unit id="zone preset label" datatype="html">
+        <source>Zone setup</source>
+        <target state="new">Zone setup</target>
+      </trans-unit>
+      <trans-unit id="zone preset tamper" datatype="html">
+        <source>Tamper</source>
+        <target state="new">Tamper</target>
+      </trans-unit>
       <trans-unit id="zone configuration" datatype="html">
         <source>Configuration</source>
         <target>Configurazione</target>
@@ -709,6 +753,138 @@
       <trans-unit id="zone arm delay" datatype="html">
         <source>Arm delay</source>
         <target state="translated">Ritardo all&apos;attivazione</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute occupancy" datatype="html">
+        <source>Occupancy</source>
+        <target state="new">Occupazione</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute on off" datatype="html">
+        <source>On/Off</source>
+        <target state="new">On/Off</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute present value" datatype="html">
+        <source>Present value</source>
+        <target state="new">Valore attuale</target>
+      </trans-unit>
+      <trans-unit id="zigbee attribute zone status" datatype="html">
+        <source>Zone status</source>
+        <target state="new">Stato della zona</target>
+      </trans-unit>
+      <trans-unit id="zigbee battery" datatype="html">
+        <source>Battery</source>
+        <target state="new">Batteria</target>
+      </trans-unit>
+      <trans-unit id="zigbee cant delete connected" datatype="html">
+        <source>Cannot delete device connected to <x id="PH" equiv-text="device.sensorCount"/> sensor(s)!</source>
+        <target state="new">Impossibile eliminare il dispositivo collegato a <x id="PH" equiv-text="device.sensorCount"/> sensore(i)!</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster binary input" datatype="html">
+        <source>Binary Input</source>
+        <target state="new">Ingresso binario</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster ias zone" datatype="html">
+        <source>IAS Zone</source>
+        <target state="new">Zona IAS</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster occupancy sensing" datatype="html">
+        <source>Occupancy Sensing</source>
+        <target state="new">Rilevamento occupazione</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster on off" datatype="html">
+        <source>On/Off</source>
+        <target state="new">On/Off</target>
+      </trans-unit>
+      <trans-unit id="zigbee cluster power configuration" datatype="html">
+        <source>Power Configuration</source>
+        <target state="new">Configurazione alimentazione</target>
+      </trans-unit>
+      <trans-unit id="zigbee connected sensors" datatype="html">
+        <source>Sensor</source>
+        <target state="new">Sensori</target>
+      </trans-unit>
+      <trans-unit id="zigbee device deleted" datatype="html">
+        <source>Zigbee device deleted!</source>
+        <target state="new">Dispositivo Zigbee eliminato!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device form" datatype="html">
+        <source>Zigbee device</source>
+        <target state="new">Dispositivo Zigbee</target>
+      </trans-unit>
+      <trans-unit id="zigbee device load failed" datatype="html">
+        <source>Failed to load Zigbee device!</source>
+        <target state="new">Impossibile caricare il dispositivo Zigbee!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device name" datatype="html">
+        <source>Name</source>
+        <target state="new">Nome</target>
+      </trans-unit>
+      <trans-unit id="zigbee device not found" datatype="html">
+        <source>The Zigbee device was not found!</source>
+        <target state="new">Il dispositivo Zigbee non è stato trovato!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device update failed" datatype="html">
+        <source>Failed to update Zigbee device name!</source>
+        <target state="new">Impossibile aggiornare il nome del dispositivo Zigbee!</target>
+      </trans-unit>
+      <trans-unit id="zigbee device updated" datatype="html">
+        <source>Zigbee device name updated!</source>
+        <target state="new">Nome del dispositivo Zigbee aggiornato!</target>
+      </trans-unit>
+      <trans-unit id="zigbee ieee" datatype="html">
+        <source>IEEE Address</source>
+        <target state="new">Indirizzo IEEE</target>
+      </trans-unit>
+      <trans-unit id="zigbee last seen" datatype="html">
+        <source>Last Seen</source>
+        <target state="new">Ultimo accesso</target>
+      </trans-unit>
+      <trans-unit id="zigbee menu link" datatype="html">
+        <source>Zigbee</source>
+        <target state="new">Zigbee</target>
+      </trans-unit>
+      <trans-unit id="zigbee model" datatype="html">
+        <source>Model</source>
+        <target state="new">Modello</target>
+      </trans-unit>
+      <trans-unit id="zigbee no sensors" datatype="html">
+        <source>None</source>
+        <target state="new">Nessuno</target>
+      </trans-unit>
+      <trans-unit id="zigbee none" datatype="html">
+        <source>No Zigbee devices found</source>
+        <target state="new">Nessun dispositivo Zigbee trovato</target>
+      </trans-unit>
+      <trans-unit id="zigbee nwk" datatype="html">
+        <source>Network Address</source>
+        <target state="new">Indirizzo di rete</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing failed" datatype="html">
+        <source>Failed to start Zigbee pairing!</source>
+        <target state="new">Impossibile avviare l&apos;associazione Zigbee!</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing started" datatype="html">
+        <source>Zigbee pairing enabled for 60 seconds! Put your device into pairing mode.</source>
+        <target state="new">Associazione Zigbee abilitata per 60 secondi! Metti il tuo dispositivo in modalità di associazione.</target>
+      </trans-unit>
+      <trans-unit id="zigbee pairing timer" datatype="html">
+        <source> Pairing mode active (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/>s remaining). Put your Zigbee device into pairing mode. </source>
+        <target state="new"> Modalità di associazione attiva (<x id="INTERPOLATION" equiv-text="{{ pairingTimeLeft }}"/>s rimanenti). Metti il tuo dispositivo Zigbee in modalità di associazione. </target>
+      </trans-unit>
+      <trans-unit id="zigbee sensor type" datatype="html">
+        <source>Sensor Type</source>
+        <target state="new">Sensor Type</target>
+      </trans-unit>
+      <trans-unit id="zigbee signal" datatype="html">
+        <source>Link Quality</source>
+        <target state="new">Qualità del collegamento</target>
+      </trans-unit>
+      <trans-unit id="zigbee unsupported" datatype="html">
+        <source>Zigbee is not supported by this server</source>
+        <target state="new">Zigbee is not supported by this server</target>
+      </trans-unit>
+      <trans-unit id="zigbee view linked sensor" datatype="html">
+        <source>View linked sensor</source>
+        <target state="new">View linked sensor</target>
       </trans-unit>
       <trans-unit id="zone alert delay" datatype="html">
         <source>Alert delay</source>
@@ -737,6 +913,10 @@
       <trans-unit id="zone none" datatype="html">
         <source>No zones found</source>
         <target>Nessuna zona trovata</target>
+      </trans-unit>
+      <trans-unit id="edit sensor" datatype="html">
+        <source>Edit sensor</source>
+        <target state="new">Edit sensor</target>
       </trans-unit>
       <trans-unit id="email1 failed" datatype="html">
         <source>Failed to send to email address 1!</source>
@@ -1026,13 +1206,33 @@
         <source>Unregister device</source>
         <target state="translated">Disregistrare il dispositivo</target>
       </trans-unit>
+      <trans-unit id="sensor glass" datatype="html">
+        <source>Glass</source>
+        <target state="new">Glass</target>
+      </trans-unit>
       <trans-unit id="sensor hidden" datatype="html">
         <source>Hidden</source>
         <target>Nascosto</target>
       </trans-unit>
+      <trans-unit id="sensor vibration" datatype="html">
+        <source>Vibration</source>
+        <target state="new">Vibration</target>
+      </trans-unit>
+      <trans-unit id="sensor visibility" datatype="html">
+        <source>Visibility</source>
+        <target state="new">Visibility</target>
+      </trans-unit>
       <trans-unit id="sensor visible" datatype="html">
         <source>Visible</source>
         <target>Visibile</target>
+      </trans-unit>
+      <trans-unit id="sensor warning" datatype="html">
+        <source>Warning</source>
+        <target state="new">Warning</target>
+      </trans-unit>
+      <trans-unit id="sensor water" datatype="html">
+        <source>Water</source>
+        <target state="new">Water</target>
       </trans-unit>
       <trans-unit id="output area" datatype="html">
         <source>Area</source>
@@ -1094,6 +1294,10 @@
         <source>Preferences</source>
         <target state="new">Preferenze</target>
       </trans-unit>
+      <trans-unit id="previous sensor" datatype="html">
+        <source>Previous sensor</source>
+        <target state="translated">Sensore precedente</target>
+      </trans-unit>
       <trans-unit id="sensor area form" datatype="html">
         <source>Area</source>
         <target state="translated">Area</target>
@@ -1130,6 +1334,14 @@
         <source> Custom sensitivity </source>
         <target state="translated"> Sensibilità personalizzata </target>
       </trans-unit>
+      <trans-unit id="sensor remote" datatype="html">
+        <source>Remote</source>
+        <target state="new">Remote</target>
+      </trans-unit>
+      <trans-unit id="sensor repeater" datatype="html">
+        <source>Repeater</source>
+        <target state="new">Repeater</target>
+      </trans-unit>
       <trans-unit id="sensor sensitivity" datatype="html">
         <source>Sensor sensitivity</source>
         <target state="translated">Sensibilità del sensore</target>
@@ -1141,6 +1353,10 @@
       <trans-unit id="alert monitor threshold" datatype="html">
         <source>Monitoring threshold [%]</source>
         <target state="translated">Soglia di monitoraggio [%]</target>
+      </trans-unit>
+      <trans-unit id="all sensors" datatype="html">
+        <source>All sensors</source>
+        <target state="translated">Tutti i sensori</target>
       </trans-unit>
       <trans-unit id="events sensitivity" datatype="html">
         <source> sensitivity: <x id="INTERPOLATION" equiv-text="{{ sensor.monitorPeriod + &quot;s&quot; }}"/>/<x id="INTERPOLATION_1" equiv-text="{{ sensor.monitorThreshold }}"/>% </source>
@@ -1157,6 +1373,10 @@
       <trans-unit id="sensor name" datatype="html">
         <source>Name</source>
         <target state="translated">Nome</target>
+      </trans-unit>
+      <trans-unit id="sensor status" datatype="html">
+        <source>Sensor status</source>
+        <target state="new">Sensor status</target>
       </trans-unit>
       <trans-unit id="sensor syren" datatype="html">
         <source>Syren config</source>
@@ -1185,6 +1405,14 @@
       <trans-unit id="sensor instant" datatype="html">
         <source>Instant alert</source>
         <target state="translated">Allarme istantaneo</target>
+      </trans-unit>
+      <trans-unit id="sensor key fob" datatype="html">
+        <source>Key fob</source>
+        <target state="new">Key fob</target>
+      </trans-unit>
+      <trans-unit id="sensor keypad" datatype="html">
+        <source>Keypad</source>
+        <target state="new">Keypad</target>
       </trans-unit>
       <trans-unit id="events silent alert" datatype="html">
         <source>Silent alert</source>
@@ -1570,6 +1798,14 @@
         <source>Login</source>
         <target state="translated">Login</target>
       </trans-unit>
+      <trans-unit id="move sensor to another area" datatype="html">
+        <source>Move sensor to another area</source>
+        <target state="new">Move sensor to another area</target>
+      </trans-unit>
+      <trans-unit id="move sensor to another zone" datatype="html">
+        <source>Move sensor to another zone</source>
+        <target state="new">Move sensor to another zone</target>
+      </trans-unit>
       <trans-unit id="my-user menu link" datatype="html">
         <source>My user</source>
         <target state="translated">Il mio utente</target>
@@ -1778,6 +2014,10 @@
         <source> Use biometric login to access the security system. </source>
         <target state="translated"> Utilizzare il login biometrico per accedere al sistema di sicurezza. </target>
       </trans-unit>
+      <trans-unit id="biometric login title" datatype="html">
+        <source>Login with biometric</source>
+        <target state="new">Login with biometric</target>
+      </trans-unit>
       <trans-unit id="biometric title" datatype="html">
         <source>Log in to ArPI Home Security</source>
         <target state="translated">Accedi a ArPI Home Security</target>
@@ -1813,6 +2053,14 @@
       <trans-unit id="sensor contact type" datatype="html">
         <source>Contact type</source>
         <target state="translated">Tipo di contatto</target>
+      </trans-unit>
+      <trans-unit id="sensor co" datatype="html">
+        <source>CO</source>
+        <target state="new">CO</target>
+      </trans-unit>
+      <trans-unit id="sensor contact" datatype="html">
+        <source>Contact</source>
+        <target state="new">Contact</target>
       </trans-unit>
       <trans-unit id="sensor contact nc" datatype="html">
         <source> Normally Closed (NC) </source>
@@ -1935,8 +2183,8 @@
         <target state="new">Nome remoto</target>
       </trans-unit>
       <trans-unit id="location support link" datatype="html">
-        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <target state="new"> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <source> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;material-symbols-outlined&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <target state="new"> ArPI Home Security Slack <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;material-symbols-outlined&quot;&gt;"/>open_in_new<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
       </trans-unit>
       <trans-unit id="location get started" datatype="html">
         <source> Get Started: Add Location </source>
@@ -1950,9 +2198,17 @@
         <source> Try Demo </source>
         <target state="new"> Prova la demo </target>
       </trans-unit>
-      <trans-unit id="sensor error" datatype="html">
+      <trans-unit id="sensor error channel" datatype="html">
         <source>Error on input channel</source>
         <target state="new">Errore sul canale di input</target>
+      </trans-unit>
+      <trans-unit id="sensor error zigbee" datatype="html">
+        <source>Error on Zigbee device</source>
+        <target state="new">Error on Zigbee device</target>
+      </trans-unit>
+      <trans-unit id="sensor fire" datatype="html">
+        <source>Fire</source>
+        <target state="new">Fire</target>
       </trans-unit>
       <trans-unit id="location software installation guide" datatype="html">
         <source>Software installation guide</source>

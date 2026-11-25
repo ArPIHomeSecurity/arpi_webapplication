@@ -1,0 +1,84 @@
+<mat-card class="sensor-card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{ sensor.name }}</mat-card-title>
+      @if (sensor.error && !sensor.zigbeeDeviceId) {
+        <mat-card-subtitle class="error-text">
+          <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
+          <span i18n="@@sensor error channel">Error on input channel</span>
+        </mat-card-subtitle>
+      }
+      @if (sensor.error && sensor.zigbeeDeviceId) {
+        <mat-card-subtitle class="error-text">
+          <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
+          <span i18n="@@sensor error zigbee">Error on Zigbee device</span>
+        </mat-card-subtitle>
+      }
+      <mat-card-subtitle>{{ sensor.description }}</mat-card-subtitle>
+    </mat-card-title-group>
+    <div class="sensor-image" [ngClass]="{ alerting: sensor.alert, error: sensor.error, disabled: !sensor.enabled }">
+      <mat-icon class="material-symbols-outlined">{{ iconName }}</mat-icon>
+    </div>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content class="row">
+    <div class="attributes">
+      <div class="attributes-container">
+        @for (attributeGroup of attributeGroups; track attributeGroup) {
+          <mat-list class="attribute-list">
+            @for (attribute of attributeGroup; track attribute) {
+              <mat-list-item>
+                <mat-icon matListItemIcon class="material-symbols-outlined" [ngClass]="attribute.iconClass">
+                  {{ attribute.icon }}
+                </mat-icon>
+                <span matListItemTitle>{{ attribute.label }}</span>
+                @for (content of attribute.contents; track content) {
+                  <div matListItemLine class="long-field">{{ content }}</div>
+                }
+              </mat-list-item>
+            }
+          </mat-list>
+        }
+      </div>
+    </div>
+  </mat-card-content>
+  @if (canEdit) {
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      @if (!dragDisabled) {
+        <button
+          mat-icon-button
+          cdkDragHandle
+          class="drag-handle"
+          [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
+        >
+          <mat-icon class="material-symbols-outlined">drag_indicator</mat-icon>
+        </button>
+      }
+      <button
+        mat-icon-button
+        [routerLink]="['/sensor', sensor.id]"
+        color="primary"
+        [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
+      >
+        <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="resetReferences.emit(sensor.id)"
+        color="accent"
+        [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
+      >
+        <mat-icon class="material-symbols-outlined">refresh</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="deleteRequested.emit(sensor.id)"
+        color="warn"
+        [disabled]="![monitoringStates.READY, monitoringStates.INVALID_CONFIG].includes(monitoringState)"
+      >
+        <mat-icon class="material-symbols-outlined">delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  }
+</mat-card>

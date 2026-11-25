@@ -9,7 +9,9 @@ export enum MONITORING_STATE {
   ALERT_DELAY = 7,
   ALERT = 8,
   SABOTAGE = 9,
-  ERROR = 10
+  ERROR = 10,
+  ZIGBEE_PAIRING = 11,
+  REGISTER_CARD = 12
 }
 
 // monitoring system states from the backend

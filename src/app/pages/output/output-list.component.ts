@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from "@angular/core"
+import { Component, Inject, Input, OnDestroy, OnInit } from "@angular/core"
 
 import { CdkDragDrop, CdkDragStart, moveItemInArray } from "@angular/cdk/drag-drop"
 import { MatDialog } from "@angular/material/dialog"
@@ -7,15 +7,15 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { forkJoin } from "rxjs"
 import { finalize } from "rxjs/operators"
 
-import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import { QuestionDialogComponent } from "@app/components/question-dialog/question-dialog.component"
+import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
 import {
   Area,
   MONITORING_STATE,
   Output,
-  OutputType,
   OutputDefinitions,
-  OutputTriggerType
+  OutputTriggerType,
+  OutputType
 } from "@app/models"
 import {
   AreaService,
@@ -27,8 +27,8 @@ import {
   ZoneService
 } from "@app/services"
 
-import { environment } from "@environments/environment"
 import { AUTHENTICATION_SERVICE } from "@app/tokens"
+import { environment } from "@environments/environment"
 
 const scheduleMicrotask = Promise.resolve(null)
 
@@ -156,21 +156,25 @@ export class OutputListComponent extends ConfigurationBaseComponent implements O
     })
   }
 
-  getOutputType(channel: number): OutputType {
+  getOutputType(channel: number): OutputType | null {
     if (channel) {
-      return OutputDefinitions.get(channel).type
+      return OutputDefinitions.get(channel)?.type ?? null
     }
+
+    return null
   }
 
-  getOutputLabel(channel: number): string {
+  getOutputLabel(channel: number): string | null {
     if (channel) {
-      return OutputDefinitions.get(channel).label
+      return OutputDefinitions.get(channel)?.label ?? null
     }
+
+    return null
   }
 
   getAreaName(areaId: number): string {
     if (this.areas.length && areaId != null) {
-      return this.areas.find(x => x.id === areaId).name
+      return this.areas.find(x => x.id === areaId)?.name ?? ""
     }
 
     return ""

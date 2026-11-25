@@ -1,11 +1,3 @@
-# Browsers that we support
-# Angular 19 supports these browser versions
+# Match the Angular 21 browser support baseline.
 
-> 0.5%
-last 2 versions
-Firefox ESR
-
-not dead
-not IE 9-11 # For IE 9-11 support, remove 'not'.
-not op_mini all
-not KaiOS 2.5
+baseline widely available on 2025-10-20

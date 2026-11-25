@@ -82,19 +82,19 @@
                   <mat-panel-title [ngClass]="{ warn: event.disarm?.time == null }">
                     <div class="arm-icon">
                       @if (event.arm?.type == armTypes.AWAY) {
-                        <mat-icon matListIcon>directions_walk</mat-icon>
+                        <mat-icon class="material-symbols-outlined" matListIcon>directions_walk</mat-icon>
                       }
                       @if (event.arm?.type == armTypes.STAY) {
-                        <mat-icon matListIcon>hotel</mat-icon>
+                        <mat-icon class="material-symbols-outlined" matListIcon>hotel</mat-icon>
                       }
                       @if (event.arm?.type == armTypes.MIXED) {
-                        <mat-icon matListIcon>directions_walk</mat-icon>
+                        <mat-icon class="material-symbols-outlined" matListIcon>directions_walk</mat-icon>
                       }
                       @if (event.arm?.type == armTypes.MIXED) {
-                        <mat-icon matListIcon>hotel</mat-icon>
+                        <mat-icon class="material-symbols-outlined" matListIcon>hotel</mat-icon>
                       }
                       @if (!event.arm?.type) {
-                        <mat-icon matListIcon>verified_user</mat-icon>
+                        <mat-icon class="material-symbols-outlined" matListIcon>verified_user</mat-icon>
                       }
                     </div>
                     @if (event.arm) {
@@ -110,6 +110,7 @@
                     }
                     @if (event.alert) {
                       <mat-icon
+                        class="material-symbols-outlined"
                         [ngStyle]="{
                           color: event.disarm?.time == null ? 'white' : 'red',
                           margin: '10px'

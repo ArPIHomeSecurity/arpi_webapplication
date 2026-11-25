@@ -120,7 +120,7 @@
           [disabled]="outputForm.invalid || monitoringState != monitoringStates.READY"
           (click)="onSubmit()"
         >
-          <mat-icon>save</mat-icon>
+          <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (outputId > 0) {
           <button
@@ -130,11 +130,11 @@
             (click)="openDeleteDialog(output.id)"
             [disabled]="monitoringState != monitoringStates.READY"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="material-symbols-outlined">delete</mat-icon>
           </button>
         }
         <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
+          <mat-icon class="material-symbols-outlined">cancel</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+mat-checkbox {
+  margin: 15px 0 10px;
+}
+
+.zone-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+  margin: 12px 0;
+}
+
+.zone-presets mat-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+}

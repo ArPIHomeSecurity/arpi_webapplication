@@ -6,6 +6,7 @@ import { BehaviorSubject, fromEvent } from "rxjs"
 import { Capacitor } from "@capacitor/core"
 import { StatusBar, Style } from "@capacitor/status-bar"
 
+import { DOCUMENT } from "@angular/common"
 import { HttpClient } from "@angular/common/http"
 import { HumanizeDuration, HumanizeDurationLanguage } from "humanize-duration-ts"
 import { CountdownComponent } from "ngx-countdown"
@@ -25,6 +26,9 @@ import { PATH_PARSER, redirectTo } from "./utils"
   standalone: false
 })
 export class AppComponent implements OnInit {
+  private static readonly REDIRECT_MESSAGE_COOKIE = "redirectToRemoteDismissed"
+  private static readonly REDIRECT_MESSAGE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
+
   @ViewChild("sidenav") sidenav: MatSidenav
   @ViewChild("counter") private countdown: CountdownComponent
 
@@ -70,6 +74,7 @@ export class AppComponent implements OnInit {
     @Inject("ThemeService") private themeService: ThemeService,
     public router: Router,
     private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document,
 
     private host: ElementRef,
     private zone: NgZone,
@@ -81,6 +86,9 @@ export class AppComponent implements OnInit {
       boardVersion: ""
     }
     this.isSessionValid = false
+    if (this.isRedirectMessageDismissed()) {
+      this.redirectToRemote = false
+    }
   }
 
   async ngOnInit() {
@@ -180,6 +188,20 @@ export class AppComponent implements OnInit {
 
   getUserName() {
     return this.authenticationService.getUsername()
+  }
+
+  dismissRedirectMessage() {
+    this.redirectToRemote = false
+    this.document.cookie =
+      `${AppComponent.REDIRECT_MESSAGE_COOKIE}=true; ` +
+      `Max-Age=${AppComponent.REDIRECT_MESSAGE_COOKIE_MAX_AGE}; Path=/; SameSite=Lax`
+  }
+
+  private isRedirectMessageDismissed() {
+    const dismissedCookie = `${AppComponent.REDIRECT_MESSAGE_COOKIE}=true`
+    return this.document.cookie
+      .split(";")
+      .some(cookie => cookie.trim() === dismissedCookie)
   }
 
   isAdminUser() {

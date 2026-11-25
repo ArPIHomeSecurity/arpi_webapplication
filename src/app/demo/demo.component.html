@@ -1,23 +1,23 @@
 <mat-toolbar color="accent">
   <button mat-raised-button color="primary" (click)="help()" class="help">
     <span>ArPI - Simulator&nbsp;&nbsp;</span>
-    <mat-icon>help</mat-icon>
+    <mat-icon class="material-symbols-outlined">help</mat-icon>
   </button>
 
   <span class="spacer"></span>
 
   <button mat-raised-button (click)="putCard(1)" color="primary">
-    <mat-icon>credit_card</mat-icon>
+    <mat-icon class="material-symbols-outlined">credit_card</mat-icon>
   </button>
 
   @for (channel of channels; track channel; let i = $index) {
     <button mat-raised-button type="button" (click)="toogleChannel(i)" color="primary">
       <span>CH{{ i + 1 | number: "2.0-0" }}</span>
       @if (channel) {
-        <mat-icon>my_location</mat-icon>
+        <mat-icon class="material-symbols-outlined">my_location</mat-icon>
       }
       @if (!channel) {
-        <mat-icon>trip_origin</mat-icon>
+        <mat-icon class="material-symbols-outlined">trip_origin</mat-icon>
       }
     </button>
   }

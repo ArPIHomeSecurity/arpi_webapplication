@@ -1,0 +1,30 @@
+.sensor-context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sensor-navigation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sensor-position {
+  min-width: 9rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  .sensor-context {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .sensor-navigation {
+    margin-inline-start: auto;
+  }
+}

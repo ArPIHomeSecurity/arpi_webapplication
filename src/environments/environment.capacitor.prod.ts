@@ -19,6 +19,7 @@ import {
   OutputService,
   SensorService,
   UserService,
+  ZigbeeService,
   ZoneService
 } from "@app/services/remote"
 
@@ -55,5 +56,6 @@ export const environment = {
   outputService: OutputService,
   sensorService: SensorService,
   userService: UserService,
+  zigbeeService: ZigbeeService,
   zoneService: ZoneService
 }

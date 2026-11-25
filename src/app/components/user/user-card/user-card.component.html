@@ -1,10 +1,12 @@
 <mat-card class="user-card container-item">
   <mat-card-header>
     @if (user.role === roleTypes.ADMIN) {
-      <mat-icon mat-card-avatar matListIcon mat-card-avatar class="avatar">person</mat-icon>
+      <mat-icon mat-card-avatar matListIcon class="material-symbols-outlined avatar">
+        manage_accounts
+      </mat-icon>
     }
     @if (user.role === roleTypes.USER) {
-      <mat-icon matListIcon mat-card-avatar class="avatar">person_outline</mat-icon>
+      <mat-icon matListIcon mat-card-avatar class="material-symbols-outlined avatar">person</mat-icon>
     }
     <mat-card-title>{{ user.name }}</mat-card-title>
     @if (user.role === roleTypes.ADMIN) {
@@ -27,7 +29,7 @@
       <h3 matSubheader i18n="@@user device registration code">Device registration code</h3>
       @if (user.hasRegistrationCode) {
         <mat-list-item>
-          <mat-icon matListItemIcon>key</mat-icon>
+          <mat-icon class="material-symbols-outlined" matListItemIcon>key</mat-icon>
           <span matListItemTitle i18n="@@user registration">Expires on:</span>
           @if (user.registrationExpiry) {
             <span matListItemLine>{{ user.registrationExpiry }}</span>
@@ -42,7 +44,7 @@
             [disabled]="!canManageRegistration || disabled"
             (click)="openDeleteRegistrationCodeDialog()"
           >
-            <mat-icon color="warn">delete</mat-icon>
+            <mat-icon class="material-symbols-outlined" color="warn">delete</mat-icon>
           </button>
         </mat-list-item>
       }
@@ -56,7 +58,7 @@
             [disabled]="!canManageRegistration || disabled"
             (click)="openDeviceRegistrationDialog()"
           >
-            <mat-icon>add</mat-icon>
+            <mat-icon class="material-symbols-outlined">add</mat-icon>
           </button>
         </mat-list-item>
       }
@@ -67,7 +69,7 @@
       <h3 matSubheader i18n="@@user cards">Cards</h3>
       @for (card of cards; track card) {
         <mat-list-item>
-          <mat-icon matListItemIcon>credit_card</mat-icon>
+          <mat-icon class="material-symbols-outlined" matListItemIcon>credit_card</mat-icon>
           <mat-checkbox
             color="primary"
             [checked]="card.enabled"
@@ -82,7 +84,7 @@
               [disabled]="!canManageCards || disabled"
               (click)="openDeleteCardDialog(card.id)"
             >
-              <mat-icon>delete</mat-icon>
+              <mat-icon class="material-symbols-outlined">delete</mat-icon>
             </button>
           </div>
         </mat-list-item>
@@ -97,7 +99,7 @@
             [disabled]="!canManageCards || disabled"
             (click)="onClickRegisterCard()"
           >
-            <mat-icon>add</mat-icon>
+            <mat-icon class="material-symbols-outlined">add</mat-icon>
           </button>
         </mat-list-item>
       }
@@ -118,7 +120,7 @@
         <mat-divider></mat-divider>
         @if (hasSshKey) {
           <mat-list-item>
-            <mat-icon matListItemIcon>terminal</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>terminal</mat-icon>
             <span matListItemTitle i18n="@@user ssh key">SSH key</span>
             <button
               mat-icon-button
@@ -127,7 +129,7 @@
               [disabled]="!canManageSshKeys || disabled"
               (click)="openDeleteSshKeyDialog()"
             >
-              <mat-icon color="warn">delete</mat-icon>
+              <mat-icon class="material-symbols-outlined" color="warn">delete</mat-icon>
             </button>
           </mat-list-item>
         }
@@ -141,7 +143,7 @@
               [disabled]="!canManageSshKeys || disabled"
               (click)="openSshKeySetupDialog()"
             >
-              <mat-icon>add</mat-icon>
+              <mat-icon class="material-symbols-outlined">add</mat-icon>
             </button>
           </mat-list-item>
         }
@@ -151,7 +153,7 @@
       @if (user.role === roleTypes.ADMIN && hasMCPToken !== null) {
         @if (hasMCPToken === true) {
           <mat-list-item>
-            <mat-icon matListItemIcon>vpn_key</mat-icon>
+            <mat-icon class="material-symbols-outlined" matListItemIcon>vpn_key</mat-icon>
             <span matListItemTitle i18n="@@mcp token">MCP token</span>
             <button
               mat-icon-button
@@ -160,7 +162,7 @@
               [disabled]="!canManageMCP || disabled"
               (click)="removeMCPToken()"
             >
-              <mat-icon color="warn">delete</mat-icon>
+              <mat-icon class="material-symbols-outlined" color="warn">delete</mat-icon>
             </button>
           </mat-list-item>
         }
@@ -174,7 +176,7 @@
               [disabled]="!canManageMCP || disabled"
               (click)="getMCPToken()"
             >
-              <mat-icon>add</mat-icon>
+              <mat-icon class="material-symbols-outlined">add</mat-icon>
             </button>
           </mat-list-item>
         }
@@ -185,7 +187,7 @@
         <mat-divider></mat-divider>
         <h3 matSubheader i18n="@@user comment">Comment</h3>
         <mat-list-item>
-          <mat-icon matListItemIcon>notes</mat-icon>
+          <mat-icon class="material-symbols-outlined" matListItemIcon>notes</mat-icon>
           <span matListItemTitle>{{ user.comment }}</span>
         </mat-list-item>
       }
@@ -196,13 +198,15 @@
 
   <mat-card-actions>
     <button mat-icon-button color="primary" [disabled]="disabled" (click)="navigateToUserEdit()">
-      <mat-icon>mode_edit</mat-icon>
+      <mat-icon class="material-symbols-outlined">mode_edit</mat-icon>
     </button>
     <button mat-icon-button color="warn" [disabled]="!canManageUser || disabled" (click)="openDeleteUserDialog()">
-      <mat-icon>delete</mat-icon>
+      <mat-icon class="material-symbols-outlined">delete</mat-icon>
     </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
       <button
         mat-menu-item

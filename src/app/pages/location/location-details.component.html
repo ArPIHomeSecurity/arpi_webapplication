@@ -11,13 +11,13 @@
               </mat-form-field>
               @if (location.id != null && notificationsAvailable) {
                 <div class="notifications">
-                  <mat-icon matSuffix>notifications</mat-icon>
+                  <mat-icon class="material-symbols-outlined" matSuffix>notifications</mat-icon>
                   <mat-slide-toggle matSuffix color="primary" formControlName="notifications"></mat-slide-toggle>
                 </div>
               }
               @if (location.id != null && biometricAvailable) {
                 <div class="notifications">
-                  <mat-icon matSuffix>
+                  <mat-icon class="material-symbols-outlined" matSuffix>
                     @if (isBiometricEnabled()) {
                       fingerprint
                     } @else {
@@ -53,7 +53,7 @@
                       target="_blank"
                     >
                       <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
-                      <mat-icon>open_in_new</mat-icon>
+                      <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
                     </a>
                   </mat-hint>
                 }
@@ -72,10 +72,10 @@
               @if (testResult !== null) {
                 <div class="status">
                   @if (testResult.primary === true) {
-                    <mat-icon class="icon-accessible">check_circle</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-accessible">check_circle</mat-icon>
                   }
                   @if (testResult.primary === false) {
-                    <mat-icon class="icon-inaccessible">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-inaccessible">error</mat-icon>
                   }
                   @if (testResult.primary === null) {
                     <mat-spinner diameter="16" />
@@ -103,7 +103,7 @@
                       target="_blank"
                     >
                       <span i18n="@@location check" class="no-wrap">Check API version and certificate</span>
-                      <mat-icon>open_in_new</mat-icon>
+                      <mat-icon class="material-symbols-outlined">open_in_new</mat-icon>
                     </a>
                   </mat-hint>
                 }
@@ -122,13 +122,13 @@
               @if (testResult !== null) {
                 <div class="status">
                   @if (testResult.secondary === true) {
-                    <mat-icon class="icon-accessible">check_circle</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-accessible">check_circle</mat-icon>
                   }
                   @if (testResult.secondary === false) {
-                    <mat-icon class="icon-inaccessible">error</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-inaccessible">error</mat-icon>
                   }
                   @if (testResult.secondary === undefined) {
-                    <mat-icon class="icon-na">not_interested</mat-icon>
+                    <mat-icon class="material-symbols-outlined icon-na">not_interested</mat-icon>
                   }
                   @if (testResult.secondary === null) {
                     <mat-spinner diameter="16" />
@@ -152,7 +152,7 @@
               <dd>
                 {{ systemLocationName }}
                 <button mat-icon-button class="small" (click)="onSaveRemoteToLocalname()">
-                  <mat-icon>content_copy</mat-icon>
+                  <mat-icon class="material-symbols-outlined">content_copy</mat-icon>
                 </button>
               </dd>
             }
@@ -170,13 +170,13 @@
               <mat-divider></mat-divider>
               @if (isRegistered() === true) {
                 <div>
-                  <mat-icon class="icon-accessible">check_circle</mat-icon>
+                  <mat-icon class="material-symbols-outlined icon-accessible">check_circle</mat-icon>
                   <div class="text" i18n="@@location device registered">Device registered</div>
                 </div>
               }
               @if (isRegistered() === false) {
                 <div>
-                  <mat-icon class="icon-inaccessible">error</mat-icon>
+                  <mat-icon class="material-symbols-outlined icon-inaccessible">error</mat-icon>
                   <div class="text" i18n="@@location device not registered">Device NOT registered</div>
                 </div>
               }
@@ -190,10 +190,10 @@
       <mat-divider></mat-divider>
       <mat-card-actions align="end">
         <button mat-icon-button color="primary" (click)="executeLocationTest()" [disabled]="locationForm.invalid">
-          <mat-icon>search</mat-icon>
+          <mat-icon class="material-symbols-outlined">search</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="cantSave()">
-          <mat-icon>save</mat-icon>
+        <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="isSaveDisabled()">
+          <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (!newLocation && isMultiLocation) {
           <button
@@ -203,12 +203,12 @@
             (click)="openDeleteDialog()"
             [disabled]="selectedLocationId === location.id || location.id == null"
           >
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="material-symbols-outlined">delete</mat-icon>
           </button>
         }
         @if (!firstLocation) {
           <button mat-icon-button color="accent" type="button" (click)="onCancel()">
-            <mat-icon>cancel</mat-icon>
+            <mat-icon class="material-symbols-outlined">cancel</mat-icon>
           </button>
         }
       </mat-card-actions>

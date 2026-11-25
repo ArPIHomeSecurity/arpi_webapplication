@@ -39,6 +39,7 @@ import { AppComponent } from "./app.component"
 // application components
 import { MessageComponent } from "./components/message/message.component"
 import { QuestionDialogComponent } from "./components/question-dialog/question-dialog.component"
+import { SensorCardComponent } from "./components/sensor/sensor-card/sensor-card.component"
 import { SystemStateComponent } from "./components/system-state/system-state.component"
 import { MCPTokenDialogComponent } from "./components/user/mcp-token-dialog/mcp-token-dialog.component"
 import { UserCardComponent } from "./components/user/user-card/user-card.component"
@@ -56,17 +57,24 @@ import {
   SmsMessagesDialogComponent
 } from "./pages/config/notifications"
 import { SyrenComponent } from "./pages/config/syren"
+import { ZigbeeDeviceDetailComponent, ZigbeeListComponent } from "./pages/config/zigbee"
 import { HomeComponent } from "./pages/home"
 import { LocationDetailsComponent, LocationListComponent } from "./pages/location"
 import { LoginComponent } from "./pages/login"
 import { MyUserComponent } from "./pages/my-user/my-user.component"
-import { SensorDetailComponent, SensorListComponent } from "./pages/sensor"
+import { SensorDetailComponent, SensorListComponent, SensorViewComponent } from "./pages/sensor"
 import { UserDetailComponent, UserListComponent } from "./pages/user"
 import { ZoneDetailComponent, ZoneListComponent } from "./pages/zone"
 
 import { AppHttpInterceptor } from "./app.http.interceptor"
 import { routing } from "./app.routing"
-import { AreaComponent, ControllerComponent, OutputComponent, SensorComponent } from "./components"
+import {
+  AreaComponent,
+  ControllerComponent,
+  OutputComponent,
+  SensorComponent,
+  ZoneConfigurationComponent
+} from "./components"
 import { DemoComponent } from "./demo/demo.component"
 import { DemoHelpDialogComponent } from "./demo/demo.help.dialog.component"
 import { PageNotFoundComponent } from "./page-not-found.component"
@@ -98,6 +106,8 @@ import { CapacitorService } from "./services/capacitor.service"
     SmsMessagesDialogComponent,
     NetworkComponent,
     SyrenComponent,
+    ZigbeeListComponent,
+    ZigbeeDeviceDetailComponent,
 
     UserCardComponent,
     UserListComponent,
@@ -120,11 +130,14 @@ import { CapacitorService } from "./services/capacitor.service"
     PreferencesComponent,
 
     SensorComponent,
+    SensorCardComponent,
     SensorListComponent,
     SensorDetailComponent,
+    SensorViewComponent,
 
     ZoneListComponent,
     ZoneDetailComponent,
+    ZoneConfigurationComponent,
 
     SystemStateComponent,
     PageNotFoundComponent,
@@ -210,6 +223,7 @@ import { CapacitorService } from "./services/capacitor.service"
     { provide: "SensorService", useClass: environment.sensorService },
     { provide: "ThemeService", useClass: ThemeService },
     { provide: "UserService", useClass: environment.userService },
+    { provide: "ZigbeeService", useClass: environment.zigbeeService },
     { provide: "ZoneService", useClass: environment.zoneService },
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
