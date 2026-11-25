@@ -56,6 +56,7 @@ export interface ZigbeeDevice {
   manufacturer?: string
   model?: string
   name?: string
+  zoneType?: number | null
   lastSeen?: string
   batteryLevel?: number
   signalQuality?: number

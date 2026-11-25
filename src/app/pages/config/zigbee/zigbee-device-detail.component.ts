@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { finalize } from "rxjs/operators"
 
 import { ConfigurationBaseComponent } from "@app/configuration-base/configuration-base.component"
-import { MONITORING_STATE, ZigbeeDevice } from "@app/models"
+import { MONITORING_STATE, ZigbeeDevice, zigbeeZoneTypeLabel } from "@app/models"
 import { EventService, LoaderService, MonitoringService, ZigbeeService } from "@app/services"
 import { environment } from "@environments/environment"
 
@@ -54,7 +54,7 @@ export class ZigbeeDeviceDetailComponent
         next: device => {
           this.device = device
           this.deviceForm = this.formBuilder.group({
-            name: [device.name ?? "", [Validators.required, Validators.maxLength(12)]]
+            name: [device.name ?? "", [Validators.required, Validators.maxLength(64)]]
           })
         },
         error: error => {
@@ -81,10 +81,13 @@ export class ZigbeeDeviceDetailComponent
       return ""
     }
 
-    const entities = (this.device.metadata?.entities ?? [])
-      .filter(entity => entity.platform === "binary_sensor")
-      .map(entity => entity.name)
-    return [this.device.manufacturer, ...entities].filter(Boolean).join(" | ")
+    const details = [this.device.manufacturer]
+    const zoneType =
+      this.device.zoneType ?? (this.device.metadata as { zoneType?: number } | undefined)?.zoneType
+    if (zoneType != null) {
+      details.push(zigbeeZoneTypeLabel(zoneType))
+    }
+    return details.filter(Boolean).join(" | ")
   }
 
   onSubmit() {

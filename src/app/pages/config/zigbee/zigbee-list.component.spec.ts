@@ -24,7 +24,10 @@ describe("ZigbeeListComponent linked sensors", () => {
       providers: [
         { provide: AUTHENTICATION_SERVICE, useValue: {} },
         { provide: "EventService", useValue: {} },
-        { provide: "LoaderService", useValue: {} },
+        {
+          provide: "LoaderService",
+          useValue: { display: () => {}, disable: () => {}, clearMessage: () => {} }
+        },
         { provide: "MonitoringService", useValue: {} },
         { provide: "ZigbeeService", useValue: {} },
         { provide: "SensorService", useValue: {} },

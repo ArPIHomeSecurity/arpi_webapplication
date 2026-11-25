@@ -106,9 +106,9 @@ describe("SensorViewComponent", () => {
     expect(component.previousSensorId).toBeNull()
     expect(component.nextSensorId).toBeNull()
     expect(component.iconName).toBe("directions_run")
-    expect(component.attributeGroups.flat().map(attribute => attribute.contents)).toContain("Entry")
+    expect(component.attributeGroups.flat().map(attribute => attribute.contents)).toContain(["Entry"])
     expect(component.attributeGroups.flat().map(attribute => attribute.contents)).toContain(
-      "Ground floor"
+      ["Ground floor"]
     )
     expect(component.notFound).toBeFalse()
     expect(component.loadError).toBeFalse()

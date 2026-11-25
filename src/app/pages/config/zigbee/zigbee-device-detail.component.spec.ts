@@ -20,7 +20,8 @@ describe("ZigbeeDeviceDetailComponent", () => {
   const device: ZigbeeDevice = {
     id: 42,
     ieeeAddress: "00:11:22:33:44:55:66:77",
-    name: "Hallway"
+    name: "Hallway",
+    zoneType: 0x0015
   }
 
   beforeEach(async () => {

@@ -165,7 +165,7 @@ export class ZigbeeListComponent extends ConfigurationBaseComponent implements O
     // Connected Sensor
     attributes.push({
       icon: "sensors",
-      label: $localize`:@@zigbee connected sensors:Sensor`,
+      label: $localize`:@@zigbee connected sensors:Sensors`,
       values: linkedSensors.length === 0 ? [$localize`:@@zigbee no sensors:None`] : [],
       linkedSensors
     })
