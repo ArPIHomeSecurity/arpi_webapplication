@@ -192,7 +192,7 @@
         <button mat-icon-button color="primary" (click)="executeLocationTest()" [disabled]="locationForm.invalid">
           <mat-icon class="material-symbols-outlined">search</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="cantSave()">
+        <button mat-icon-button color="primary" (click)="onSubmit()" [disabled]="isSaveDisabled()">
           <mat-icon class="material-symbols-outlined">save</mat-icon>
         </button>
         @if (!newLocation && isMultiLocation) {
