@@ -343,6 +343,62 @@
         <source>Updating configuration</source>
         <target>Aggiornamento della configurazione</target>
       </trans-unit>
+      <trans-unit id="ias type cie" datatype="html">
+        <source>Control and indicating equipment</source>
+        <target state="new">Controlli e strumenti di indicazione</target>
+      </trans-unit>
+      <trans-unit id="ias type co" datatype="html">
+        <source>Carbon monoxide sensor</source>
+        <target state="new">Sensor di monossido di carbonio</target>
+      </trans-unit>
+      <trans-unit id="ias type contact" datatype="html">
+        <source>Contact switch</source>
+        <target state="new">Interruttore di contatto</target>
+      </trans-unit>
+      <trans-unit id="ias type emergency" datatype="html">
+        <source>Personal emergency device</source>
+        <target state="new">Dispositivo di emergenza personale</target>
+      </trans-unit>
+      <trans-unit id="ias type fire" datatype="html">
+        <source>Fire sensor</source>
+        <target state="new">Sensor di fuoco</target>
+      </trans-unit>
+      <trans-unit id="ias type glass" datatype="html">
+        <source>Glass break sensor</source>
+        <target state="new">Sensor di rottura del vetro</target>
+      </trans-unit>
+      <trans-unit id="ias type key fob" datatype="html">
+        <source>Key fob</source>
+        <target state="new">Telecomando</target>
+      </trans-unit>
+      <trans-unit id="ias type keypad" datatype="html">
+        <source>Keypad</source>
+        <target state="new">Keypad</target>
+      </trans-unit>
+      <trans-unit id="ias type motion" datatype="html">
+        <source>Motion sensor</source>
+        <target state="new">Sensor di movimento</target>
+      </trans-unit>
+      <trans-unit id="ias type remote" datatype="html">
+        <source>Remote control</source>
+        <target state="new">Telecomando</target>
+      </trans-unit>
+      <trans-unit id="ias type repeater" datatype="html">
+        <source>Security repeater</source>
+        <target state="new">Repetitore di sicurezza</target>
+      </trans-unit>
+      <trans-unit id="ias type vibration" datatype="html">
+        <source>Vibration / movement sensor</source>
+        <target state="new">Sensor di vibrazione / movimento</target>
+      </trans-unit>
+      <trans-unit id="ias type warning" datatype="html">
+        <source>Warning device</source>
+        <target state="new">Dispositivo di avviso</target>
+      </trans-unit>
+      <trans-unit id="ias type water" datatype="html">
+        <source>Water sensor</source>
+        <target state="new">Sensor d'acqua</target>
+      </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
         <target>Configurazione non valida</target>
@@ -623,8 +679,8 @@
         <target> Ottieni un nuovo codice </target>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
-        <source>Close</source>
-        <target>Chiudere</target>
+        <source> Close </source>
+        <target> Chiudere </target>
       </trans-unit>
       <trans-unit id="device code no expiry" datatype="html">
         <source>Unlimited time</source>
@@ -799,7 +855,7 @@
         <target state="new">Configurazione alimentazione</target>
       </trans-unit>
       <trans-unit id="zigbee connected sensors" datatype="html">
-        <source>Sensor</source>
+        <source>Sensors</source>
         <target state="new">Sensori</target>
       </trans-unit>
       <trans-unit id="zigbee device deleted" datatype="html">
@@ -878,9 +934,13 @@
         <source>Link Quality</source>
         <target state="new">Qualità del collegamento</target>
       </trans-unit>
+      <trans-unit id="zigbee unknown" datatype="html">
+        <source>Unknown</source>
+        <target state="new">Sconosciuto</target>
+      </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
         <source>Zigbee is not supported by this server</source>
-        <target state="new">Zigbee is not supported by this server</target>
+        <target state="new">Zigbee non è supportato da questo server</target>
       </trans-unit>
       <trans-unit id="zigbee view linked sensor" datatype="html">
         <source>View linked sensor</source>

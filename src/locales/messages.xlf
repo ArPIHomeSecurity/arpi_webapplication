@@ -258,6 +258,48 @@
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
       </trans-unit>
+      <trans-unit id="ias type cie" datatype="html">
+        <source>Control and indicating equipment</source>
+      </trans-unit>
+      <trans-unit id="ias type co" datatype="html">
+        <source>Carbon monoxide sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type contact" datatype="html">
+        <source>Contact switch</source>
+      </trans-unit>
+      <trans-unit id="ias type emergency" datatype="html">
+        <source>Personal emergency device</source>
+      </trans-unit>
+      <trans-unit id="ias type fire" datatype="html">
+        <source>Fire sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type glass" datatype="html">
+        <source>Glass break sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type key fob" datatype="html">
+        <source>Key fob</source>
+      </trans-unit>
+      <trans-unit id="ias type keypad" datatype="html">
+        <source>Keypad</source>
+      </trans-unit>
+      <trans-unit id="ias type motion" datatype="html">
+        <source>Motion sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type remote" datatype="html">
+        <source>Remote control</source>
+      </trans-unit>
+      <trans-unit id="ias type repeater" datatype="html">
+        <source>Security repeater</source>
+      </trans-unit>
+      <trans-unit id="ias type vibration" datatype="html">
+        <source>Vibration / movement sensor</source>
+      </trans-unit>
+      <trans-unit id="ias type warning" datatype="html">
+        <source>Warning device</source>
+      </trans-unit>
+      <trans-unit id="ias type water" datatype="html">
+        <source>Water sensor</source>
+      </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
       </trans-unit>
@@ -469,7 +511,7 @@
         <source> Get new code </source>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
-        <source>Close</source>
+        <source> Close </source>
       </trans-unit>
       <trans-unit id="device code no expiry" datatype="html">
         <source>Unlimited time</source>
@@ -601,7 +643,7 @@
         <source>Power Configuration</source>
       </trans-unit>
       <trans-unit id="zigbee connected sensors" datatype="html">
-        <source>Sensor</source>
+        <source>Sensors</source>
       </trans-unit>
       <trans-unit id="zigbee device deleted" datatype="html">
         <source>Zigbee device deleted!</source>
@@ -659,6 +701,9 @@
       </trans-unit>
       <trans-unit id="zigbee signal" datatype="html">
         <source>Link Quality</source>
+      </trans-unit>
+      <trans-unit id="zigbee unknown" datatype="html">
+        <source>Unknown</source>
       </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
         <source>Zigbee is not supported by this server</source>

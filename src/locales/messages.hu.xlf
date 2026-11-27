@@ -417,7 +417,7 @@
         <target state="new">Teljesítmény konfiguráció</target>
       </trans-unit>
       <trans-unit id="zigbee connected sensors" datatype="html">
-        <source>Sensor</source>
+        <source>Sensors</source>
         <target state="new">Érzékelők</target>
       </trans-unit>
       <trans-unit id="zigbee device deleted" datatype="html">
@@ -496,9 +496,13 @@
         <source>Link Quality</source>
         <target state="new">Kapcsolat minősége</target>
       </trans-unit>
+      <trans-unit id="zigbee unknown" datatype="html">
+        <source>Unknown</source>
+        <target state="new">Ismeretlen</target>
+      </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
         <source>Zigbee is not supported by this server</source>
-        <target state="new">Zigbee is not supported by this server</target>
+        <target state="new">A Zigbee nem támogatott ezen a kiszolgálón</target>
       </trans-unit>
       <trans-unit id="zigbee view linked sensor" datatype="html">
         <source>View linked sensor</source>
@@ -751,8 +755,8 @@
         <target state="translated"> Új kód igénylése </target>
       </trans-unit>
       <trans-unit id="close button" datatype="html">
-        <source>Close</source>
-        <target state="translated">Bezár</target>
+        <source> Close </source>
+        <target state="translated"> Bezár </target>
       </trans-unit>
       <trans-unit id="device code no expiry" datatype="html">
         <source>Unlimited time</source>
@@ -861,6 +865,62 @@
       <trans-unit id="updating state" datatype="html">
         <source>Updating configuration</source>
         <target state="translated">Konfiguráció frissítés</target>
+      </trans-unit>
+      <trans-unit id="ias type cie" datatype="html">
+        <source>Control and indicating equipment</source>
+        <target state="new">Vezérlő és jelező berendezés</target>
+      </trans-unit>
+      <trans-unit id="ias type co" datatype="html">
+        <source>Carbon monoxide sensor</source>
+        <target state="new">Szénmonoxid érzékelő</target>
+      </trans-unit>
+      <trans-unit id="ias type contact" datatype="html">
+        <source>Contact switch</source>
+        <target state="new">Kapcsoló</target>
+      </trans-unit>
+      <trans-unit id="ias type emergency" datatype="html">
+        <source>Personal emergency device</source>
+        <target state="new">Személyes vészhelyzet-eszköz</target>
+      </trans-unit>
+      <trans-unit id="ias type fire" datatype="html">
+        <source>Fire sensor</source>
+        <target state="new">Tűzérzékelő</target>
+      </trans-unit>
+      <trans-unit id="ias type glass" datatype="html">
+        <source>Glass break sensor</source>
+        <target state="new">Üveg törés érzékelő</target>
+      </trans-unit>
+      <trans-unit id="ias type key fob" datatype="html">
+        <source>Key fob</source>
+        <target state="new">Kulcstartó</target>
+      </trans-unit>
+      <trans-unit id="ias type keypad" datatype="html">
+        <source>Keypad</source>
+        <target state="new">Billentyűzet</target>
+      </trans-unit>
+      <trans-unit id="ias type motion" datatype="html">
+        <source>Motion sensor</source>
+        <target state="new">Mozgásérzékelő</target>
+      </trans-unit>
+      <trans-unit id="ias type remote" datatype="html">
+        <source>Remote control</source>
+        <target state="new">Távvezérlés</target>
+      </trans-unit>
+      <trans-unit id="ias type repeater" datatype="html">
+        <source>Security repeater</source>
+        <target state="new">Biztonsági ismétlő</target>
+      </trans-unit>
+      <trans-unit id="ias type vibration" datatype="html">
+        <source>Vibration / movement sensor</source>
+        <target state="new">Rezgés / mozgásérzékelő</target>
+      </trans-unit>
+      <trans-unit id="ias type warning" datatype="html">
+        <source>Warning device</source>
+        <target state="new">Figyelmeztető eszköz</target>
+      </trans-unit>
+      <trans-unit id="ias type water" datatype="html">
+        <source>Water sensor</source>
+        <target state="new">Vízérzékelő</target>
       </trans-unit>
       <trans-unit id="invalid state" datatype="html">
         <source>Invalid configuration</source>
