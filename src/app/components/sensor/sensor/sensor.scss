@@ -77,27 +77,6 @@
       border-color: rgba(mat.m2-get-color-from-palette($argus-ok), 0.5);
     }
 
-    .sensor-indicator-group {
-      display: inline-flex;
-      align-items: center;
-      margin: 0px 0px 0px 5px;
-      padding: 5px;
-      border: 1px solid rgba(0, 0, 0, 0.35);
-      border-radius: 5px;
-
-      .sensor-state {
-        margin: 0 4px;
-      }
-    }
-
-    .sensor-indicator-type {
-      width: 24px;
-      height: 24px;
-      margin: 0 4px;
-      font-size: 24px;
-      line-height: 24px;
-    }
-
     .sensor-state.neutral {
       background-color: white;
       border: 1px solid rgba(0, 0, 0, 0.4);
@@ -114,10 +93,9 @@
       border-color: rgba(80, 80, 80, 0.35);
     }
 
+    .sensor-state.alerting,
     .sensor-state.error-state {
-      background-color: mat.m2-get-color-from-palette($argus-alert);
-
-      .error-icon {
+      .state-icon {
         color: white;
 
         /* Center the icon within the circle */
@@ -126,6 +104,10 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
+    }
+
+    .sensor-state.error-state {
+      background-color: mat.m2-get-color-from-palette($argus-alert);
     }
 
     .sensor-image {

@@ -22,41 +22,24 @@
         }
       </div>
       <div class="sensor-indicators">
-        @if (sensor.tamper != null) {
-        <div class="sensor-indicator-group">
+        <div
+          class="sensor-state"
+          [class.error-state]="sensor.error && !sensor.tamper"
+          [ngClass]="{'enabled': !sensor.tamper && sensor.enabled === true && (delay != null || sensor.alert), 'disabled': !sensor.tamper && sensor.enabled === false, 'alerting': sensor.tamper || (sensor.alert && sensor.enabled === true), 'neutral': !sensor.tamper && (sensor.error === true || !(sensor.enabled === false || (sensor.enabled === true && (delay != null || sensor.alert))))}"
+          role="img"
+          [attr.aria-label]="sensor.name"
+        >
+          @if (sensor.tamper) {
           <mat-icon
-            class="material-symbols-outlined sensor-indicator-type"
+            class="material-symbols-outlined state-icon tamper-icon"
             [fontIcon]="SensorType.getIconName('Tamper')"
             aria-hidden="true"
           ></mat-icon>
-          <div
-            class="sensor-state"
-            [ngClass]="{'enabled': sensor.enabled === true && !sensor.tamper, 'disabled': sensor.enabled === false && !sensor.tamper, 'alerting': sensor.tamper, 'neutral': sensor.enabled == null && !sensor.tamper}"
-            role="img"
-            aria-label="Tamper sensor state"
-            i18n-aria-label="@@sensor tamper state"
-          ></div>
-        </div>
-        }
-        <div class="sensor-indicator-group">
-          <mat-icon
-            class="material-symbols-outlined sensor-indicator-type"
-            [fontIcon]="SensorType.getIconName(getSensorTypeName(sensor.typeId))"
-            aria-hidden="true"
-          ></mat-icon>
-          <div
-            class="sensor-state"
-            [class.error-state]="sensor.error"
-            [ngClass]="{'enabled': sensor.enabled === true && (delay != null || sensor.alert), 'disabled': sensor.enabled === false, 'alerting': sensor.alert && sensor.enabled === true, 'neutral': sensor.error === true || !(sensor.enabled === false || (sensor.enabled === true && (delay != null || sensor.alert)))}"
-            role="img"
-            [attr.aria-label]="sensor.name"
-          >
-            @if (sensor.error) {
-            <mat-icon class="material-symbols-outlined error-icon">error</mat-icon>
-            } @if (sensor.enabled && delay > 0) {
-            <span class="delay">{{delay}}</span>
-            }
-          </div>
+          } @else if (sensor.error) {
+          <mat-icon class="material-symbols-outlined state-icon error-icon" aria-hidden="true">error</mat-icon>
+          } @if (!sensor.tamper && sensor.enabled && delay > 0) {
+          <span class="delay">{{delay}}</span>
+          }
         </div>
       </div>
     </mat-card-title-group>
