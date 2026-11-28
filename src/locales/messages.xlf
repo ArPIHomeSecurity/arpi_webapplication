@@ -706,7 +706,7 @@
         <source>Unknown</source>
       </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
-        <source>Zigbee is not supported by this server</source>
+        <source>Zigbee is not supported by this location</source>
       </trans-unit>
       <trans-unit id="zigbee view linked sensor" datatype="html">
         <source>View linked sensor</source>

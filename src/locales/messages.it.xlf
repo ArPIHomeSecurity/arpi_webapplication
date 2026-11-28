@@ -939,8 +939,8 @@
         <target state="new">Sconosciuto</target>
       </trans-unit>
       <trans-unit id="zigbee unsupported" datatype="html">
-        <source>Zigbee is not supported by this server</source>
-        <target state="new">Zigbee non è supportato da questo server</target>
+        <source>Zigbee is not supported by this location</source>
+        <target state="new">Zigbee non è supportato da questa posizione</target>
       </trans-unit>
       <trans-unit id="zigbee view linked sensor" datatype="html">
         <source>View linked sensor</source>
