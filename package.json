@@ -1,6 +1,6 @@
 {
   "name": "argus",
-  "version": "1.15.3",
+  "version": "2.0.0",
   "license": "Argus 2018",
   "scripts": {
     "ng": "ng",
